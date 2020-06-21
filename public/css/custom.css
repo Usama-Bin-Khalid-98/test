@@ -1,0 +1,33 @@
+.gradient-bg-color{
+    -webkit-gradient(linear,right bottom,left top,from(#ff8a00),to(#da1b60));
+    background-image: linear-gradient(to top left,#716bde,#716bde);
+}
+.box-primary{
+    border-top-color: #7366d5 !important;
+}
+
+body{
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+    th {
+        font-size: 10px;
+    }
+
+}
+
+@media (min-width: 756px) {
+    .new-button{
+        margin: 3px 10px 12px;
+    }
+}
+.logo {
+    border-right:1px white solid;
+}
+
+@media (max-width: 992px) {
+.new-button{
+    margin: 5px 10px 25px;
+}
+}

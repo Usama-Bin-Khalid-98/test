@@ -1,0 +1,56 @@
+@media (max-width: 450px){
+    .login-page{
+    background-size:1000px;
+    }
+   }
+   @media (min-width:451px) and (max-width:768px){
+    .login-page{
+        background-size:212% ;
+    }
+   }
+   @media (width : 1024px)
+   {
+    .login-page{
+        background-size:100%;
+    }  
+   }
+
+   @media (min-width:1400px){
+    .login-page{
+        background-size:74%;
+    }   
+   }
+   .login-page{
+    background-image: url('http://localhost:8000/bg/5.png');
+    background-position: center;
+    background-repeat: no-repeat;
+   }
+   .login-logo a{
+    color:#fff;
+   }
+   .login-box-body{
+    color:#fff;
+   }
+   .btn-primary {
+    color: #7703a4;
+    background-color: #fff;
+    border-color: #fff;
+}
+.form-control-feedback{
+    color:#c21389 !important;
+}
+.btn-primary:hover{
+    background-color: #c21389;
+    border-color: #c21389;
+}
+
+.login-logo, .register-logo {
+    margin-top: 20px;
+    margin-bottom: 0px !important;
+}
+.login-btn{
+    margin-left: 22px;
+}
+.remember{
+    margin-left:16px;
+}
