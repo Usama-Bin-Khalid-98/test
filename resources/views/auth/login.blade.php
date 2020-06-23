@@ -49,8 +49,8 @@
                     <span class="focus-input100" data-placeholder="Password"></span>
                     @error('password')
                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                        <strong>{{ $message }}</strong>
+                    </span>
                     @enderror
                 </div>
 
@@ -62,13 +62,24 @@
                         </button>
                     </div>
                 </div>
+                <div class="text-center-login100 remember" style="margin-left: 26px;">
+                    <div class="checkbox icheck">
+                        <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} >
+                        {{ __('Remember Me') }}
+                    </div>
+                    @if (Route::has('password.request'))
+                        <a class="btn btn-link" href="{{ route('password.request') }}" style="color:#fff">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
+                </div>
 
                 <div class="text-center p-t-115">
 						<span class="txt1">
 							Don’t have an account?
 						</span>
 
-                    <a class="txt2" href="#">
+                    <a class="txt2" href="/register">
                         Sign Up
                     </a>
                 </div>

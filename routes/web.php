@@ -20,13 +20,20 @@ Route::get('/', function () {
 Route::get('/login', function() {
     return view('auth.login');
 });
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-// get users
-Route::get('/user', 'Auth\UserController@index');
-Route::post('/users', 'Auth\UserController@index');
+///// Dashboard
+Route::get('home', 'HomeController@index')->name('home');
+////// Users permissions
+Route::get('permission', 'Auth\UserController@permissions');
+// Users resource route.
+Route::resource('users', 'Auth/UserController');
+// Roles resource route.
+Route::resource('roles', 'Auth/RoleController');
+// Permissions resource route.
+Route::resource('permissions', 'Auth/PermissionController');
+
+
 //// Strategic Management
-Route::post('/strategic_management/basic_info', '@index');
-//get permissions
-Route::get('/permission', 'Auth\UserController@permissions');
+Route::post('strategic_management/basic_info', '@index');
