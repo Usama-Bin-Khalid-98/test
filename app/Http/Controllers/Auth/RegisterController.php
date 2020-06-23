@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class RegisterController extends Controller
 {
@@ -51,6 +52,16 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'year_estb' => ['required','date'],
+            'address' => ['required'],
+            'web_url' => ['required'],
+            'date_charter_granted' => ['required'],
+            'charter_number' => ['required'],
+            'charter_type_id' => ['required', 'numeric'],
+            'institute_type_id' => ['required', 'numeric'],
+            'sector' => ['required'],
+            'profit_status' => ['required'],
+            'hierarchical_context' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,10 +75,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        try {
         return User::create([
             'name' => $data['name'],
+            'contact_person' => $data['contact_person'],
+            'year_estb' => $data['year_estb'],
+            'address' => $data['address'],
+            'web_url' => $data['web_url'],
+            'date_charter_granted' => $data['date_charter_granted'],
+            'charter_number' => $data['charter_number'],
+            'charter_type_id' => $data['charter_type_id'],
+            'institute_type_id' => $data['institute_type_id'],
+            'sector' => $data['sector'],
+            'profit_status' => $data['profit_status'],
+            'hierarchical_context' => $data['hierarchical_context'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+    }catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
