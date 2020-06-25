@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CharterType extends Model
+class BusinessSchool extends Model
 {
     //
-
+    protected $guarded = [];
 }
