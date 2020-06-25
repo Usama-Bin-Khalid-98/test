@@ -21,6 +21,11 @@ Route::get('/login', function() {
     return view('auth.login');
 });
 
+// Registration Routes...
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register');
+
+
 Auth::routes();
 
 ///// Dashboard
@@ -36,4 +41,4 @@ Route::resource('permissions', 'Auth/PermissionController');
 
 
 //// Strategic Management
-Route::post('strategic_management/basic_info', '@index');
+Route::resource('strategic/basic-info','BasicInfoController');

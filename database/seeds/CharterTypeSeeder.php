@@ -25,7 +25,7 @@ class CharterTypeSeeder extends Seeder
        ];
 
        foreach ($charter_types as $type) {
-           \App\CharterType::create(['name' => $type]);
+           DB::table('charter_types')->insert(['name' => $type]);
        }
     }
 }

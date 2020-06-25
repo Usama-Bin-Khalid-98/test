@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StrategicManagement\RegistrationController;
+use App\BusinessSchool;
 use Illuminate\Http\Request;
 
-class RegistrationControllerController extends Controller
+class BusinessSchoolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class RegistrationControllerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\RegistrationController  $registrationController
+     * @param  \App\BusinessSchool  $businessSchool
      * @return \Illuminate\Http\Response
      */
-    public function show(RegistrationController $registrationController)
+    public function show(BusinessSchool $businessSchool)
     {
         //
     }
@@ -52,10 +52,10 @@ class RegistrationControllerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\RegistrationController  $registrationController
+     * @param  \App\BusinessSchool  $businessSchool
      * @return \Illuminate\Http\Response
      */
-    public function edit(RegistrationController $registrationController)
+    public function edit(BusinessSchool $businessSchool)
     {
         //
     }
@@ -64,10 +64,10 @@ class RegistrationControllerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\RegistrationController  $registrationController
+     * @param  \App\BusinessSchool  $businessSchool
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RegistrationController $registrationController)
+    public function update(Request $request, BusinessSchool $businessSchool)
     {
         //
     }
@@ -75,10 +75,10 @@ class RegistrationControllerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\RegistrationController  $registrationController
+     * @param  \App\BusinessSchool  $businessSchool
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RegistrationController $registrationController)
+    public function destroy(BusinessSchool $businessSchool)
     {
         //
     }

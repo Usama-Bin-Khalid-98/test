@@ -30,10 +30,6 @@
 					<span class="login100-form-title p-b-26">
 						NBEAC Login
 					</span>
-{{--                <span class="login100-form-title p-b-48">--}}
-{{--						<i class="zmdi zmdi-pin-account"></i>--}}
-{{--					</span>--}}
-
 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
                     <input class="input100" type="email" id="email" name="email" required @error('email')  is-invalid @enderror" value="{{ old('email') }}">

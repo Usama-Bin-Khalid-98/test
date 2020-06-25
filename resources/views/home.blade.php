@@ -26,8 +26,8 @@
       </ol>
     </section><!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
+      <!-- Small boxes (Stat box)  //////////   Admin Dashboard //////-->
+      <div class="row" style="display: none;">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box" style="background-color: #00c0ef;color:#fff;">
@@ -89,9 +89,73 @@
         </div>
         <!-- ./col -->
       </div>
+
+        {{--Business School Dashboard--}}
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box" style="background-color: #00c0ef;color:#fff;">
+                    <div class="inner">
+                        <h3>1</h3>
+
+                        <p>Chief Administrative Officer</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>5<sup style="font-size: 20px"></sup></h3>
+
+                        <p>Degree Programs</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-purple-gradient ">
+                    <div class="inner">
+                        <h3>4</h3>
+
+                        <p>Applications Received</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-light-blue-gradient">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>Total Students</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
       <!-- /.row -->
       <!-- Main row -->
-      <div class="row">
+      <div class="row" style="display: none;">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
           <!-- Custom tabs (Charts with tabs)-->

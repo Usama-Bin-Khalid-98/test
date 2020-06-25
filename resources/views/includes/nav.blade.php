@@ -4,7 +4,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user8-128x128.jpg" class="img-circle" alt="User Image">
+          <img src="{{ asset('dist/img/user8-128x128.jpg')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{ Auth::user()->name }}</p>
@@ -43,7 +43,7 @@
           {{ (request()->is('roles')) ? 'active' : '' }}
           {{ (request()->is('permission')) ? 'active' : '' }}
 
-          ">
+          " style="display: none;">
           <a href="#">
             <i class="fa fa-user text-blue" ></i> <span>Users</span>
             <span class="pull-right-container">
@@ -61,7 +61,7 @@
 
           </ul>
             </li>
-                   <li class=" treeview">
+          <li class=" treeview">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
              <span class="pull-right-container">
@@ -69,8 +69,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
-
+            <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="strategic/basic-info"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>BSSC</a></li>
@@ -81,6 +80,7 @@
           </ul>
         </li>
 
+          <div style="display:none;">
         <li class=" treeview">
           <a href="#">
             <i class="fa fa-user-plus text-orange"></i> <span>Curriculum</span>
@@ -133,8 +133,8 @@
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Students Gender Mix</a></li>
           </ul>
         </li>
-
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-black"></i>Settings</a></li>
+          </div>
+            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
 
           </ul>
         </li>

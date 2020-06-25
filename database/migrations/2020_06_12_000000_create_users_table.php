@@ -16,21 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',100);
-            $table->string('contact_person', 80);
-            $table->date('year_estb');
-            $table->string('address', 255);
-            $table->integer('cao_id' )->nullable();
-            $table->string('web_url',255);
-            $table->date('date_charter_granted' );
-            $table->string('charter_number', 255);
-            $table->integer('charter_type_id');
-            $table->integer('institute_type_id');
-            $table->enum('sector', ['public', 'private']);
-            $table->enum('profit_status',['For Profit', 'None Profit']);
-            $table->enum('hierarchical_context',['Affiliated', 'Constituent Part'] );
+            $table->integer('business_school_id');
             $table->string('email',100)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',255);
+            $table->string('user_type', 50);
+            $table->enum('status', ['enabled', 'disabled', 'pending', 'approved']);
             $table->rememberToken();
             $table->timestamps();
         });
