@@ -139,6 +139,18 @@
           </ul>
         </li>
 
+          <li class=" treeview {{(request()->is('research-summary'))?'active':''}}">
+              <a href="#">
+                  <i class="fa fa-user-plus text-orange"></i> <span>Facilities Information</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+          <ul class="treeview-menu">
+            <li class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{route('research-summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary of Research</a></li>
+          </ul>
+        </li>
+
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Admin</a></li>
 

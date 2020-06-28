@@ -15,7 +15,7 @@ class EntryRequirementController extends Controller
     public function index()
     {
         //
-        return view('strategic_management.curriculum.entry_req');
+        return view('registration.curriculum.entry_req');
     }
 
     /**
