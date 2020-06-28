@@ -81,7 +81,7 @@
         </li>
 
 
-        <li class=" treeview {{(request()->is('portfolio'))?'active':''}}" >
+        <li class=" treeview {{(request()->is('portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i> <span>Curriculum</span>
              <span class="pull-right-container">
@@ -92,14 +92,12 @@
             <li class="{{ (request()->is('portfolio')) ? 'active' : '' }}"><a href="{{route('portfolio')}}"><i class="fa fa-circle-o text-orange"></i>Programs Portfolio</a></li>
 
             <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{route('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Student Enrolment</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i> Graduated Students</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Students Gender Mix</a></li>
+            <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{route('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
+
 
           </ul>
         </li>
-        <li class=" treeview">
+        <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-orange"></i> <span>Students</span>
                   <span class="pull-right-container">
@@ -107,17 +105,13 @@
             </span>
               </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Programs Portfolio</a></li>
-
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Student Enrolment</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i> Graduated Students</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Students Gender Mix</a></li>
+            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{route('student-enrolment')}}"><i class="fa fa-circle-o text-orange"></i>Student Enrolment</a></li>
+            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{route('student-enrolment')}}"><i class="fa fa-circle-o text-orange"></i> Graduated Students</a></li>
+            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{route('student-enrolment')}}"><i class="fa fa-circle-o text-orange"></i>Students Gender Mix</a></li>
 
           </ul>
         </li>
-        <li class=" treeview">
+        <li class=" treeview {{(request()->is('faculty/work-load'))?'active':''}}{{(request()->is('faculty_stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-orange"></i> <span>Faculty</span>
                   <span class="pull-right-container">
@@ -126,11 +120,22 @@
               </a>
           <ul class="treeview-menu">
             <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Summary BSF</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T-1</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Student Enrolment</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i> Graduated Students</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Students Gender Mix</a></li>
+            <li  class="{{ (request()->is('faculty/workload')) ? 'active' : '' }}"><a href="{{route('workload')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T</a></li>
+{{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T-1</a></li>--}}
+            <li  class="{{ (request()->is('faculty_stability')) ? 'active' : '' }}"><a href="{{route('faculty_stability')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Stability</a></li>
+            <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{route('faculty-gender')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Gender Mix</a></li>
+          </ul>
+        </li>
+
+          <li class=" treeview {{(request()->is('research-summary'))?'active':''}}">
+              <a href="#">
+                  <i class="fa fa-user-plus text-orange"></i> <span>Research and Development</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+          <ul class="treeview-menu">
+            <li class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{route('research-summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary of Research</a></li>
           </ul>
         </li>
 
