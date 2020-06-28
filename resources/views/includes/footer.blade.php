@@ -38,11 +38,12 @@
 
  <script>
    $(document).ready(function(){
-
-     $('[data-toggle = "tooltip"]').tooltip();
+       $('.select2-selection').css('height','33px');
+       $('[data-toggle = "tooltip"]').tooltip();
 
      $('[data-toggle="popover"]').popover();
    });
+
  </script>
  </body>
 </html>
