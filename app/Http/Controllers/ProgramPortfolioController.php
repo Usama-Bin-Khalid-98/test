@@ -15,7 +15,7 @@ class ProgramPortfolioController extends Controller
     public function index()
     {
         //
-        return view('strategic_management.curriculum.portfolio');
+        return view('registration.curriculum.portfolio');
     }
 
     /**

@@ -214,7 +214,7 @@
                     </div>
 
                     <div class="col-md-3 " style="margin-left: 20px">
-                        <a href="/login" type="submit" class="badge badge-info">
+                        <a href="/login" type="submit" class="badge-info text-blue">
                             {{ __('Already have Account') }}
                         </a>
                     </div>
