@@ -15,19 +15,19 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               Strategic Basic Info
+                Approval of Strategic Plan
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Basic Info </li>
+                <li class="active"> Approval of Strategic Plan </li>
             </ol>
         </section>
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
                     <button class="btn gradient-bg-color"
-                           data-toggle="modal" data-target="#add-modal"
+{{--                           data-toggle="modal" data-target="#add-modal"--}}
                            style="color: white;"
                            value="Add New"
                             name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
@@ -35,26 +35,21 @@
             </div>
         </section>
 
+        {{--Dean section --}}
+        {{--Dean section --}}
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Strategic Basic Info</h3>
+                            <h3 class="box-title">Approval of Strategic Plan  Form</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
                                         <i class="fa fa-file-pdf-o"></i></button>
-{{--                                    <ul class="dropdown-menu" role="menu">--}}
-{{--                                        <li><a href="#">Action</a></li>--}}
-{{--                                        <li><a href="#">Another action</a></li>--}}
-{{--                                        <li><a href="#">Something else here</a></li>--}}
-{{--                                        <li class="divider"></li>--}}
-{{--                                        <li><a href="#">Separated link</a></li>--}}
-{{--                                    </ul>--}}
                                 </div>
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
@@ -62,115 +57,114 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="name">Business School Name</label>
-                                        <input type="text" name="name" value="{{$basic_info->name}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="contactPerson">Contact Person</label>
-                                        <input type="text" name="contact_person" value="{{$basic_info->contact_person}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Contact No</label>
-                                        <input type="text" name="contact_no" value="{{$basic_info->contact_no}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Year of Establishment</label>
-                                        <input type="text" name="year_estb" value="{{$basic_info->year_estb}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Web Url</label>
-                                        <input type="text" name="web_url" value="{{$basic_info->web_url}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Date Charter Granted</label>
-                                        <input type="text" name="date_charter_granted" value="{{$basic_info->date_charter_granted}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Charter Number</label>
-                                        <input type="text" name="charter_number" value="{{$basic_info->charter_number}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Charter Type</label>
-                                        <select name="charter_type_id" class="form-control select2" style="width: 100%;">
-                                            <option value="">Select Charter Type</option>
-                                            @foreach($chart_types as $type)
-                                                <option value="{{$type->id}}">{{$type->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Institute Type</label>
-                                        <select name="institute_type_id" class="form-control select2" style="width: 100%;">
-                                            <option value="">Select Institute Type</option>
-                                            @foreach($institute_type as $school)
-                                                <option value="{{$school->id}}">{{$school->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Period of the strategic plan</label>
+                                    <input type="text" name="time" value="" class="form-control">
+                                </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="type">{{ __('Profit Status') }} : </label>
-                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ $basic_info->profit_status == 'None Profit' ? 'checked' : '' }}> None Profit</p>
-                                        <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ $basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
 
-                                    </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Date of approval</label>
+                                    <input type="date" name="contact_no" value="" class="form-control">
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="type">{{ __('Hierarchical Context') }} : </label>
-                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Affiliated" {{ $basic_info->hierarchical_context == 'Affiliated' ? 'checked' : '' }}> Affiliated</p>
-                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Constituent Part" {{ $basic_info->hierarchical_context  == 'Constituent Part' ? 'checked' : '' }}> Constituent Part</p>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="name">Address</label>
-                                            <textarea name="address" class="form-control">{{$basic_info->address}}</textarea>
-                                        </div>
-                                    </div >
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="sector">{{ __('Sector') }} : </label>
-                                        <p><input type="radio" name="sector" class="flat-red" value="Public" {{ $basic_info->sector == 'public' ? 'checked' : '' }}> Public</p>
-                                        <p><input type="radio" name="sector" class="flat-red" value="Private" {{ $basic_info->sector == 'private' ? 'checked' : '' }}> Private</p>
-
-                                    </div>
-                                </div>
-
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Approving Authority</label>
+                                    <input type="text" name="authority" value="" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="type">{{ __('Status') }} : </label>
+                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
+                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group pull-right">
+                                    <label for="type">&nbsp;</label>
+                                    <input type="button" name="submit" value="Add" class="btn btn-info">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                        <!-- /.box -->
+                    </div>
+                    <!-- .box -->
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Approval of Strategic Plan List</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Period of the strategic plan</th>
+                                    <th>Date of Approval</th>
+                                    <th>Approving Authority</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>2 Months</td>
+                                    <td>25 June 2020</td>
+                                    <td>HEC</td>
+                                    <td><div class="badge bg-green">Active</div></td>
+                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                </tr>
+                                <tr>
+                                    <td>2 Months</td>
+                                    <td>25 June 2020</td>
+                                    <td>HEC</td>
+                                    <td><div class="badge bg-green">Active</div></td>
+                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                </tr>
+                                <tr>
+                                    <td>2 Months</td>
+                                    <td>25 June 2020</td>
+                                    <td>HEC</td>
+                                    <td><div class="badge bg-red">Inactive</div></td>
+                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                </tr>
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Period of the strategic plan</th>
+                                    <th>Date of Approval</th>
+                                    <th>Approving Authority</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
                         </div>
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
                 </div>
-
                 <!-- Main content -->
+
+
             </div>
+            <!-- /.row -->
+
+            <!-- /.row -->
+
+            <!-- /.content -->
+
+
         </section>
+
     </div>
 
     <div class="modal fade" id="edit-modal">

@@ -61,7 +61,7 @@
 
           </ul>
             </li>
-          <li class=" treeview">
+          <li class=" treeview {{(request()->is('strategic/basic-info'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/plan'))?'active':''}}">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
              <span class="pull-right-container">
@@ -69,29 +69,29 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="strategic/basic-info"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>BSSC</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Budgetary Information</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>Approval of Strategic Plan</a></li>
+            <li class="{{ (request()->is('strategic/basic-info')) ? 'active' : '' }} "><a href="{{route('basicInfo')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
+            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{route('scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
+            <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{route('contact')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
+            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
+            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{route('affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
+            <li  class="{{ (request()->is('strategic/budgetary-information')) ? 'active' : '' }} isDisabled"><a href="{{route('budgetaryInfo')}}"><i class="fa fa-circle-o"></i>Budgetary Information</a></li>
+            <li  class="{{ (request()->is('strategic/plan')) ? 'active' : '' }} isDisabled"><a href="{{route('plan')}}"><i class="fa fa-circle-o" ></i>Approval of Strategic Plan</a></li>
 
           </ul>
         </li>
 
-          <div style="display:none;">
-        <li class=" treeview">
+
+        <li class=" treeview {{(request()->is('portfolio'))?'active':''}}" >
           <a href="#">
-            <i class="fa fa-user-plus text-orange"></i> <span>Curriculum</span>
+            <i class="fa fa-file text-orange"></i> <span>Curriculum</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Programs Portfolio</a></li>
+            <li class="{{ (request()->is('portfolio')) ? 'active' : '' }}"><a href="{{route('portfolio')}}"><i class="fa fa-circle-o text-orange"></i>Programs Portfolio</a></li>
 
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
+            <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{route('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Student Enrolment</a></li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i> Graduated Students</a></li>
@@ -133,8 +133,9 @@
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Students Gender Mix</a></li>
           </ul>
         </li>
-          </div>
+
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
+            <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Admin</a></li>
 
           </ul>
         </li>
