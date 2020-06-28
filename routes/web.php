@@ -55,3 +55,13 @@ Route::get('/strategic/plan','StrategicPlanController@index')->name('plan');
 // Curriculum
 Route::get('/portfolio','ProgramPortfolioController@index')->name('portfolio');
 Route::get('/entry-requirements','EntryRequirementController@index')->name('entry-requirements');
+
+// Students
+Route::get('/student-enrolment','StudentEnrolmentController@index')->name('student-enrolment');
+// Faculty
+Route::get('/faculty/workload','WorkLoadController@index')->name('workload');
+Route::get('/faculty_stability','StabilityController@index')->name('faculty_stability');
+Route::get('/faculty-gender','FacultyGenderController@index')->name('faculty-gender');
+
+//research-summary
+Route::get('/research-summary','ResearchSummaryController@index')->name('research-summary');
