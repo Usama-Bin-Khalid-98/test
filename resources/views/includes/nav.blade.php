@@ -61,7 +61,7 @@
 
           </ul>
             </li>
-          <li class=" treeview {{(request()->is('strategic/basic-info'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/plan'))?'active':''}}">
+          <li class=" treeview {{(request()->is('strategic-basic-info'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/plan'))?'active':''}}">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
              <span class="pull-right-container">
@@ -69,13 +69,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('strategic/basic-info')) ? 'active' : '' }} "><a href="{{route('basicInfo')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
-            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{route('scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
-            <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{route('contact')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
-            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{route('statutory')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
-            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{route('affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
-            <li  class="{{ (request()->is('strategic/budgetary-information')) ? 'active' : '' }} isDisabled"><a href="{{route('budgetaryInfo')}}"><i class="fa fa-circle-o"></i>Budgetary Information</a></li>
-            <li  class="{{ (request()->is('strategic/plan')) ? 'active' : '' }} isDisabled"><a href="{{route('plan')}}"><i class="fa fa-circle-o" ></i>Approval of Strategic Plan</a></li>
+            <li class="{{ (request()->is('strategic-basicinfo')) ? 'active' : '' }} "><a href="{{url('strategic-basicinfo')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
+            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{url('scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
+            <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('contact')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
+            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('statutory')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
+            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
+            <li  class="{{ (request()->is('strategic/budgetary-information')) ? 'active' : '' }} isDisabled"><a href="{{url('budgetaryInfo')}}"><i class="fa fa-circle-o"></i>Budgetary Information</a></li>
+            <li  class="{{ (request()->is('strategic/plan')) ? 'active' : '' }} isDisabled"><a href="{{url('plan')}}"><i class="fa fa-circle-o" ></i>Approval of Strategic Plan</a></li>
 
           </ul>
         </li>
@@ -99,7 +99,7 @@
         </li>
         <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}">
               <a href="#">
-                  <i class="fa fa-user-plus text-orange"></i> <span>Students</span>
+                  <i class="fa fa-user text-blue"></i> <span>Students</span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -130,7 +130,7 @@
 
           <li class=" treeview {{(request()->is('research-summary'))?'active':''}}">
               <a href="#">
-                  <i class="fa fa-user-plus text-orange"></i> <span>Research and Development</span>
+                  <i class="fa fa-search text-purple"></i> <span>Research and Development</span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -142,7 +142,7 @@
 
           <li class=" treeview {{(request()->is(''))?'active':''}}">
               <a href="#">
-                  <i class="fa fa-user-plus text-orange"></i> <span>Facilities Information</span>
+                  <i class="fa fa-chrome text-green"></i> <span>Facilities Information</span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

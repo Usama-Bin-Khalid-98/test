@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\StrategicManagement;
 
 use App\BusinessSchool;
 use App\CharterType;
 use App\InstituteType;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Validator;
+
 
 class BasicInfoController extends Controller
 {
@@ -55,6 +59,8 @@ class BasicInfoController extends Controller
     public function store(Request $request)
     {
         //
+
+        echo 'coming here';
     }
 
     /**
@@ -83,12 +89,25 @@ class BasicInfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\BasicInfo  $basicInfo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BasicInfo $basicInfo)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            //$update = BasicInfo::find($basicInfo->id);
+            $validation= Validator::make($request->all(), $this->rules(), $this->messages());
+            if($validation->fails())
+            {
+                return response()->json($validation->messages()->all(), 422);
+            }else {
+                $update = BusinessSchool::where('id', $id)
+                          ->update($request->all());
+                return response()->json(['success' => 'Updated successfully.']);
+            }
+        }catch (Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -100,5 +119,28 @@ class BasicInfoController extends Controller
     public function destroy(BasicInfo $basicInfo)
     {
         //
+    }
+
+    protected function rules() {
+        return [
+            'contact_person' => 'required',
+            'contact_no' => 'required',
+            'year_estb' => 'required|date',
+            'web_url' => 'required',
+            'date_charter_granted' => 'required',
+            'charter_number' => 'required',
+            'institute_type_id' => 'required',
+            'charter_type_id' => 'required',
+            'hierarchical_context' => 'required',
+            'profit_status' => 'required',
+            'sector' => 'required',
+            'address' => 'required',
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

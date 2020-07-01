@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
@@ -59,59 +62,60 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
-
+                        <form>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Business School Name</label>
-                                        <input type="text" name="name" disabled value="{{$basic_info->name}}" class="form-control">
+                                        <input type="text" id="name" disabled value="{{$basic_info->name}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="contactPerson">Contact Person</label>
-                                        <input type="text" name="contact_person" value="{{$basic_info->contact_person}}" class="form-control">
+                                        <input type="text" id="contact_person" value="{{$basic_info->contact_person}}" class="form-control">
+                                        <input type="hidden" id="id" value="{{$basic_info->id}}">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Contact No</label>
-                                        <input type="text" name="contact_no" value="{{$basic_info->contact_no}}" class="form-control">
+                                        <input type="text" id="contact_no" value="{{$basic_info->contact_no}}" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Year of Establishment</label>
-                                        <input type="text" name="year_estb" value="{{$basic_info->year_estb}}" class="form-control">
+                                        <input type="text" id="year_estb" value="{{$basic_info->year_estb}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Web Url</label>
-                                        <input type="text" name="web_url" value="{{$basic_info->web_url}}" class="form-control">
+                                        <input type="text" id="web_url" value="{{$basic_info->web_url}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Date Charter Granted</label>
-                                        <input type="text" name="date_charter_granted" value="{{$basic_info->date_charter_granted}}" class="form-control">
+                                        <input type="text" id="date_charter_granted" value="{{$basic_info->date_charter_granted}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Charter Number</label>
-                                        <input type="text" name="charter_number" value="{{$basic_info->charter_number}}" class="form-control">
+                                        <input type="text" id="charter_number" value="{{$basic_info->charter_number}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Charter Type</label>
-                                        <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <select id="charter_type_id" class="form-control select2" style="width: 100%;">
                                             <option value="">Select Charter Type</option>
                                             @foreach($chart_types as $type)
-                                                <option value="{{$type->id}}">{{$type->name }}</option>
+                                                <option value="{{$type->id}}" {{$basic_info->charter_type_id==$type->id?'selected':''}}>{{$type->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -119,10 +123,10 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Institute Type</label>
-                                        <select name="institute_type_id" class="form-control select2" style="width: 100%;">
+                                        <select id="institute_type_id" class="form-control select2" style="width: 100%;">
                                             <option value="">Select Institute Type</option>
                                             @foreach($institute_type as $school)
-                                                <option value="{{$school->id}}">{{$school->name }}</option>
+                                                <option value="{{$school->id}}" {{$basic_info->institute_type_id==$school->id?'selected':''}}>{{$school->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -149,7 +153,7 @@
                                 <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Address</label>
-                                            <textarea name="address" class="form-control">{{$basic_info->address}}</textarea>
+                                            <textarea id="address" class="form-control">{{$basic_info->address}}</textarea>
                                         </div>
                                     </div >
                                 <div class="col-md-3">
@@ -164,14 +168,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">&nbsp;&nbsp;</label>
-                                        <input type="submit" name="submit" value="Update" class="btn btn-info">
-
+                                        <input type="button" name="update" id="update" value="Update" class="btn btn-info">
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                         <!-- /.box-body -->
+                        </form>
                     </div>
                     <!-- /.box -->
                 </div>
@@ -228,30 +232,6 @@
                                        name="code">
                             </div>
                         </div>
-                        {{-- <div class="col-lg-1">
-                            <div class="form-group">
-
-                                <label> Status
-                                 <input type="checkbox" name="status" class="flat-red" checked >
-                                </label>
-                                <select id="status" name="status" class="form-control">
-                                    <option>Select Status</option>
-                                    <option value="enabled">Enable</option>
-                                    <option value="disabled">Disable</option>
-                                </select>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="col-lg-2">
-                            <div class="form-group">
-
-                        <input type="button" onclick="updateUser()" class="btn btn-danger pull-right" value="Update"
-                               name="Update" id="Update" style="display: none;">
-                            </div>
-                        </div> --}}
-                    <!-- /.box-body -->
-                        {{-- <div class="box-footer">
-
-                    </div> --}}
 
                     </div>
                     <div class="modal-footer">
@@ -268,92 +248,97 @@
     <!-- /.modal -->
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-    <!-- DataTables -->
-    <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-    <script>
-        $(function () {
-            $('#example1').DataTable()
-            $('#example2').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-            })
-        })
-    </script>
+
     <script type="text/javascript">
 
+        // add required to input fields
+        // $('input').prop('required', true);
         //Initialize Select2 Elements
-        $('.select2').select2()
-
-        // //iCheck for checkbox and radio inputs
-        // $('input[type="checkbox"].minimal').iCheck({
-        //     checkboxClass: 'icheckbox_minimal-blue'
-        // });
-
+        $('.select2').select2();
         //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red').iCheck({
-            checkboxClass: 'icheckbox_flat-pink'
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass   : 'iradio_flat-green'
         })
 
+        $('#update').on('click', function (e) {
+            let id = $('#id').val();
+            let contact_person = $('#contact_person').val();
+            let contact_no = $('#contact_no').val();
+            let year_estb = $('#year_estb').val();
+            let web_url = $('#web_url').val();
+            let date_charter_granted = $('#date_charter_granted').val();
+            let charter_number = $('#charter_number').val();
+            let institute_type_id = $('#institute_type_id').val();
+            let charter_type_id = $('#charter_type_id').val();
+            let hierarchical_context = $('input[name=hierarchical_context]:checked').val();
+            let profit_status = $('input[name=profit_status]:checked').val();
+            let sector = $('input[name=sector]:checked').val();
+            let address = $('#address').val();
 
+            //console.log(contact_no);
+            //validation
+             !contact_person?addClass('contact_person'):removeClass('contact_person');
+             !contact_no?addClass('contact_no'):removeClass('contact_no');
+             !year_estb?addClass('year_estb'):removeClass('year_estb');
+             !web_url?addClass('web_url'):removeClass('web_url');
+             !date_charter_granted?addClass('date_charter_granted'):removeClass('date_charter_granted');
+             !charter_number?addClass('charter_number'):removeClass('charter_number');
+             !institute_type_id?addClass('institute_type_id'):removeClass('institute_type_id');
+             !charter_type_id?addClass('charter_type_id'):removeClass('charter_type_id');
+             !hierarchical_context?addClass('hierarchical_context'):removeClass('hierarchical_context');
+             !profit_status?addClass('profit_status'):removeClass('profit_status');
+             !sector?addClass('sector'):removeClass('sector');
+             !address?addClass('address'):removeClass('address');
 
-        function addUser() {
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{'users'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    user: user,
-                    code: code
-                },
-                success: function (response) {
-                    //var data = JSON.parse(response);
-                    alert(response);
-                    //location.replace('users');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        }
-
-
-        function update(id, name, code, status) {
-            $('#id').val(id);
-            $('#user').val(name);
-            $('#code').val(code);
-            $('#status').val(status);
-            $('#add_user').hide();
-            $('#Update').show();
-        }
-
-        function updateUser() {
-            var id = $('#id').val();
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
             $.ajax({
-                type: 'POST',
-                url: "{{'updateusers'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'PUT',
+                url: "{{url('strategic-basicinfo')}}/"+id,
                 data: {
                     id: id,
-                    user: user,
-                    code: code,
-                    status: status
+                    contact_person: contact_person,
+                    contact_no: contact_no,
+                    year_estb: year_estb,
+                    web_url: web_url,
+                    date_charter_granted: date_charter_granted,
+                    charter_number: charter_number,
+                    institute_type_id: institute_type_id,
+                    charter_type_id: charter_type_id,
+                    hierarchical_context: hierarchical_context,
+                    profit_status: profit_status,
+                    sector: sector,
+                    address: address
                 },
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
-                    alert('Update successfully');
-                    location.replace('users');
+                    Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response here', response);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+
+                    })
+
                 }
             });
-        }
+        });
 
     </script>
 
