@@ -42,7 +42,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Statutory Committee Form</h3>
+                            <h3 class="box-title">Provide information of statutory bodies. Also attach documentary information about the composition, name of members, role and functions of each statutory body.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -59,18 +59,33 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Degree Program</label>
-                                    <input type="text" name="name" value="" class="form-control">
+                                    <label for="name">Body Name</label>
+                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Body Name</option>
+                                        <option value="">Senate</option>
+                                        <option value="">Board of Trustees</option>
+                                        <option value="">Syndicate/ Board of Governors/ Executive Board</option>
+                                        <option value="">Academic Council</option>
+                                        <option value="">Board of Faculty</option>
+                                        <option value="">Board of Studies</option>
+                                        <option value="">Selection Board </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Level</label>
+                                    <label for="name">Designation</label>
                                     <select name="charter_type_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Level</option>
-                                        <option value="">Graduate</option>
-                                        <option value="">Under Graduate</option>
+                                        <option value="">Select Designation</option>
+                                        <option value="">Dean</option>
+                                        <option value="">HOD</option>
 {{--                                        @foreach($chart_types as $type)--}}
 {{--                                            <option value="{{$type->id}}">{{$type->name }}</option>--}}
 {{--                                        @endforeach--}}
@@ -80,18 +95,53 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Date of Program commencement</label>
+                                    <label for="name">Date of First Meeting</label>
                                     <input type="date" name="name" value="" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
-                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
+                                    <label for="name">Date of Second Meeting</label>
+                                    <input type="date" name="name" value="" class="form-control">
                                 </div>
                             </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Date of Third Meeting</label>
+                                    <input type="date" name="name" value="" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Date of Fourth Meeting</label>
+                                    <input type="date" name="name" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Attach File</label>
+                                    <input type="file" name="file" value="" >
+                                </div>
+                            </div>
+
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active--}}
+{{--                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                            <div class="col-md-3">
+                                <div class="form-group pull-right" style="margin-top: 20px;">
+                                    <label for="name"></label>
+                                    <input type="submit" name="submit" value="Add" class="btn btn-info">
+                                </div>
+                            </div>
+
 
                         </div>
                         <!-- /.box-body -->
@@ -107,7 +157,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Statutory Committee List</h3>
+                            <h3 class="box-title">Business school’s statutory committees.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -127,35 +177,52 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Degree Program</th>
-                                    <th>Level</th>
-                                    <th>Date of program commencement </th>
+                                    <th>Body Name</th>
+                                    <th>Name</th>
+                                    <th>Designation </th>
+                                    <th>First Meeting</th>
+                                    <th>Second Meeting</th>
+                                    <th>Third Meeting</th>
+                                    <th>Fourth Meeting</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>BSSE</td>
-                                    <td>Graduate</td>
-                                    <td>June 05 2020</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
+                                    <td>Senate</td>
+                                    <td>M.Ikramullah </td>
+                                    <td>Dean</td>
+                                    <td>January 05 2020</td>
+                                    <td>March 15 2020</td>
+                                    <td>April 05 2020</td>
+                                    <td>June 28 2020</td>
+                                    <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
+
                                 <tr>
-                                    <td>BSSE</td>
-                                    <td>Graduate</td>
-                                    <td>June 05 2020</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
+                                    <td>Board of Trustees</td>
+                                    <td>M.Zubair </td>
+                                    <td>Dean</td>
+                                    <td>February 15 2020</td>
+                                    <td>March 15 2020</td>
+                                    <td>April 25 2020</td>
+                                    <td>June 28 2020</td>
+                                    <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Degree Program</th>
-                                    <th>Level</th>
-                                    <th>Date of program commencement </th>
+                                    <th>Body Name</th>
+                                    <th>Name</th>
+                                    <th>Designation </th>
+                                    <th>First Meeting</th>
+                                    <th>Second Meeting</th>
+                                    <th>Third Meeting</th>
+                                    <th>Fourth Meeting</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

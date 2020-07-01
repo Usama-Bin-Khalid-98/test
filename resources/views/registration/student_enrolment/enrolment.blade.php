@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Students Enrolment Form</h3>
+                            <h3 class="box-title">Provide data on the applications received and student intake in the past three years for each program.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -108,12 +108,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Total Enrolment</label>
-                                    <input type="text" name="semesters" value="" class="form-control">
-                                </div>
-                            </div>
 {{--                            <div class="col-md-3">--}}
 {{--                                <div class="form-group">--}}
 {{--                                    <label for="type">{{ __('Status') }} : </label>--}}
@@ -135,7 +129,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Programs Portfolio List</h3>
+                            <h3 class="box-title">Applications received and student intake in the past three years for each program.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -207,7 +201,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Graduated students Form</h3>
+                            <h3 class="box-title">State the number of students who have graduated over the past three years for each program under review.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -274,7 +268,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Graduated students List</h3>
+                            <h3 class="box-title">Number of students who have graduated over the past three years for each program under review.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -328,7 +322,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Student Gender Mix</h3>
+                            <h3 class="box-title">State the current gender wise break down of students in each program under review.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -389,7 +383,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Student Gender Mix</h3>
+                            <h3 class="box-title">Current gender wise break down of students in each program under review.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

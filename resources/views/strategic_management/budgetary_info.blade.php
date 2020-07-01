@@ -40,7 +40,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Budgetary Info Form</h3>
+                            <h3 class="box-title">Provide Budgetary information of the business school</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -73,13 +73,13 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Budget proposed by BS</label>
+                                    <label for="name">Budget proposed by Business School</label>
                                     <input type="text" name="name" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Budget received by BS</label>
+                                    <label for="name">Budget received by Business School</label>
                                     <input type="text" name="name" value="" class="form-control">
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Affiliations List</h3>
+                            <h3 class="box-title">Budgetary information of the business school.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -138,38 +138,42 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Name of Member</th>
-                                    <th>Designation</th>
-                                    <th>Affiliation</th>
-                                    <th>Name of Statutory Body</th>
+                                    <th>Year</th>
+                                    <th>University Budget</th>
+                                    <th>University proposed Budget</th>
+                                    <th>Budget received by University</th>
+                                    <th>Budget Type</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Muhammad Zuhaib</td>
-                                    <td>Dean</td>
-                                    <td>HEC</td>
-                                    <td>Statutory Body</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
+                                    <td>2020</td>
+                                    <td>20,0000</td>
+                                    <td>20,0000</td>
+                                    <td>20,0000</td>
+                                    <td>Implicit</td>
+                                    <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
                                 <tr>
-                                    <td>Muhammad Zuhaib</td>
-                                    <td>Dean</td>
-                                    <td>HEC</td>
-                                    <td>Statutory Body</td>
+                                    <td>2020</td>
+                                    <td>20,0000</td>
+                                    <td>20,0000</td>
+                                    <td>20,0000</td>
+                                    <td>Implicit</td>
                                     <td><div class="badge bg-red">Inactive</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Name of Member</th>
-                                    <th>Designation</th>
-                                    <th>Affiliation</th>
-                                    <th>Name of Statutory Body</th>
+                                    <th>Year</th>
+                                    <th>University Budget</th>
+                                    <th>University proposed Budget</th>
+                                    <th>Budget received by University</th>
+                                    <th>Budget Type</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

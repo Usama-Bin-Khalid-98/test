@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Programs Portfolio Form</h3>
+                            <h3 class="box-title">Provide the portfolio of the program(s) under review.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -61,118 +61,19 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Program Name</label>
-                                    <input type="text" name="name" value="" class="form-control">
+                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Program</option>
+                                        <option value="">Computer Science</option>
+                                        <option value="">Management Sciences</option>
+                                        <option value="">Medical Sciences</option>
+                                        <option value="">Art & Design</option>
+                                    </select>
                                 </div>
                             </div>
-
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Total Semesters</label>
-                                    <input type="date" name="semesters" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
-                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
-                                </div>
-                            </div>
-                             <div class="col-md-6">
-                                <div class="form-group pull-right">
-                                    <label for="type">&nbsp;</label>
-                                    <input type="button" name="submit" value="Add" class="btn btn-info">
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /.box-body -->
-                        <!-- /.box -->
-                    </div>
-                    <!-- .box -->
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Programs Portfolio List</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Program Name</th>
-                                    <th>Total Semesters</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>BSSE</td>
-                                    <td>8</td>
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                <tr>
-                                    <td>BSSE</td>
-                                    <td>8</td>
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                <tr>
-                                    <td>BSSE</td>
-                                    <td>8</td>
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Program Name</th>
-                                    <th>Total Semesters</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- Main content -->
-            </div>
-        </section>
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title">Course Category Form</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                            </div>
-                        </div>
-
-                        <!-- /.box-header -->
-                        <div class="box-body">
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                    <select name="program" class="form-control">
-                                        <option value="">Select Program</option>
-                                        <option value="">BSSE</option>
-                                        <option value="">BCS</option>
-                                        <option value="">BBA</option>
-                                    </select>
+                                    <input type="text" name="semesters" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -218,7 +119,7 @@
                                         <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
                                 </div>
                             </div>
-                             <div class="col-md-6">
+                             <div class="col-md-12">
                                 <div class="form-group pull-right">
                                     <label for="type">&nbsp;</label>
                                     <input type="button" name="submit" value="Add" class="btn btn-info">
@@ -232,7 +133,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Course Category List</h3>
+                            <h3 class="box-title">Portfolio of the program(s) under review</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -252,7 +153,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>BSSE</td>
+                                    <td>Computer Science</td>
                                     <td>8</td>
                                     <td>Core</td>
                                     <td>44</td>
@@ -262,7 +163,7 @@
                                     <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr><tr>
-                                    <td>BSSE</td>
+                                    <td>Medical Sciences</td>
                                     <td>8</td>
                                     <td>Core</td>
                                     <td>44</td>
@@ -272,7 +173,7 @@
                                     <td><div class="badge bg-red">InActive</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr><tr>
-                                    <td>BSSE</td>
+                                    <td>Arts & Design</td>
                                     <td>8</td>
                                     <td>Core</td>
                                     <td>44</td>

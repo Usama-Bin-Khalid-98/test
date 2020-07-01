@@ -15,21 +15,21 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Faculty Work Load
+                Faculty Stability
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Faculty Work Load </li>
+                <li class="active"> Faculty Stability </li>
             </ol>
         </section>
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
                     <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
+                            {{--                           data-toggle="modal" data-target="#add-modal"--}}
+                            style="color: white;"
+                            value="Add New"
                             name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
                 </div>
             </div>
@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information of faculty workload over the last two semesters. Attach faculty workload policy.</h3>
+                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -60,8 +60,12 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" value="" class="form-control">
+                                    <label for="name">Faculty Name</label>
+                                    <select name="designation" class="form-control">
+                                        <option value="">Select Faculty</option>
+                                        <option value="">abc</option>
+                                        <option value="">xyz</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -75,36 +79,33 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Faculty Type</label>
+                                    <select name="designation" class="form-control">
+                                        <option value="">Select type</option>
+                                        <option value="">Permanent</option>
+                                        <option value="">Adjunct</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Thought in Programs</label>
+                                    <label for="name">Courses Allowed</label>
                                     <input type="text" name="program" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                   <label for="name">PHD</label>
+                                    <label for="name">Program 1</label>
                                     <input type="text" name="phd" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Master</label>
+                                    <label for="name">Program 2</label>
                                     <input type="text" name="master" value="" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                              <div class="form-group">
-                                  <label for="name">Bachelors</label>
-                                  <input type="text" name="bachelor" value="" class="form-control">
-                              </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Administrative responsibility</label>
-                                    <textarea type="text" name="responsibility" value="" class="form-control"></textarea>
                                 </div>
                             </div>
 
@@ -122,47 +123,67 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Information of faculty workload over the last two semesters</h3>
+                            <h3 class="box-title">Data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Faculty Name</th>
                                     <th>Designation</th>
-                                    <th>Taught in Program</th>
-                                    <th>PHD</th>
-                                    <th>Master</th>
-                                    <th>Bachelor</th>
-                                    <th>Administrative Responsibility</th>
+                                    <th>Type</th>
+                                    <th>Courses Allowed</th>
+                                    <th>Program 1</th>
+                                    <th>Program 2</th>
+                                    <th>FTE Program 1</th>
+                                    <th>FTE Program 2</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>prof. Alamjan</td>
-                                    <td>Professor</td>
-                                    <td>3</td>
-                                    <td>14</td>
+                                    <td>Faculty Name</td>
+                                    <td>prof</td>
+                                    <td>Permanent</td>
+                                    <td>13</td>
+                                    <td>5</td>
                                     <td>4</td>
-                                    <td>6</td>
-                                    <td>Administrative responsibility</td>
-                                    <td><div class="badge bg-green">Active</div></td>
+                                    <td>0.33</td>
+                                    <td>0.33</td>
+                                    <td><i class="badge bg-green">Active</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                </tr>
+                                <tr>
+                                    <td>Faculty Name</td>
+                                    <td>prof</td>
+                                    <td>Permanent</td>
+                                    <td>13</td>
+                                    <td>5</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>0.5</td>
+                                    <td><i class="badge bg-green">Active</i></td>
+                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td colspan="3"><strong>Total VFE</strong></td>
+                                    <td align="center" colspan="2"><strong>4.5</strong></td>
                                 </tr>
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Faculty Name</th>
                                     <th>Designation</th>
-                                    <th>Taught in Program</th>
-                                    <th>PHD</th>
-                                    <th>Master</th>
-                                    <th>Bachelor</th>
-                                    <th>Administrative responsibility</th>
+                                    <th>Type</th>
+                                    <th>Courses Allowed</th>
+                                    <th>Program 1</th>
+                                    <th>Program 2</th>
+                                    <th>FTE Program 1</th>
+                                    <th>FTE Program 2</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

@@ -41,7 +41,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Strategic Basic Info</h3>
+                            <h3 class="box-title">Provide basic information about the business school</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -66,7 +66,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Business School Name</label>
-                                        <input type="text" name="name" value="{{$basic_info->name}}" class="form-control">
+                                        <input type="text" name="name" disabled value="{{$basic_info->name}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -157,6 +157,14 @@
                                         <label for="sector">{{ __('Sector') }} : </label>
                                         <p><input type="radio" name="sector" class="flat-red" value="Public" {{ $basic_info->sector == 'public' ? 'checked' : '' }}> Public</p>
                                         <p><input type="radio" name="sector" class="flat-red" value="Private" {{ $basic_info->sector == 'private' ? 'checked' : '' }}> Private</p>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group pull-right" style="margin-top: 40px">
+                                        <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="submit" name="submit" value="Update" class="btn btn-info">
 
                                     </div>
                                 </div>

@@ -20,7 +20,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Scope of Accreditation</li>
+                <li class="active">Provide scope of accreditation.</li>
             </ol>
         </section>
         <section class="content-header">
@@ -42,7 +42,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Scope of Accreditation Form</h3>
+                            <h3 class="box-title">Provide scope of accreditation</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -60,7 +60,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Degree Program</label>
-                                    <input type="text" name="name" value="" class="form-control">
+                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Program</option>
+                                        <option value="">Computer Science</option>
+                                        <option value="">Management Sciences</option>
+                                        <option value="">Medical Sciences</option>
+                                        <option value="">Art & Design</option>
+                                        </select>
                                 </div>
                             </div>
 
@@ -107,7 +113,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Scope of Accreditation List</h3>
+                            <h3 class="box-title">Scope of Accreditations.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -136,17 +142,17 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>BSSE</td>
+                                    <td>Medical Sciences</td>
                                     <td>Graduate</td>
                                     <td>June 05 2020</td>
                                     <td><div class="badge bg-red">Inactive</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
                                 <tr>
-                                    <td>BSSE</td>
+                                    <td>Computer Sciences</td>
                                     <td>Graduate</td>
                                     <td>June 05 2020</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
+                                    <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
 

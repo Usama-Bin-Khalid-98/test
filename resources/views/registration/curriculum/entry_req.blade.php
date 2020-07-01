@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Entry Requirements Form</h3>
+                            <h3 class="box-title">Provide data on entry requirements for each program under review. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -57,122 +57,42 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <div class="col-md-12">
-                                <div class="form-row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label for="name">Program Name</label>
-                                            <select name="program" class="form-control">
-                                                <option value="">Select Program</option>
-                                                <option value="">BSSE</option>
-                                                <option value="">BCS</option>
-                                                <option value="">BBA</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Program Name</label>
+                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Program</option>
+                                        <option value="">Computer Science</option>
+                                        <option value="">Management Sciences</option>
+                                        <option value="">Medical Sciences</option>
+                                        <option value="">Art & Design</option>
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Eligibility criteria </label>
+                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Eligibility criteria </option>
+                                        <option value="">Matric/O-levels or equivalent</option>
+                                        <option value="">SAT/NAT/GAT</option>
+                                        <option value="">Grades in Specific Subjects</option>
+                                        <option value="">Entry test</option>
+                                        <option value="">Candidacy Interview</option>
+                                        <option value="">Work Experience</option>
+                                    </select>
+                                </div>
+                            </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Minimum requirements/Relative Weightage</label>
+                                    <input type="text" name="weightage" value="" class="form-control">
+                                </div>
+                              </div>
 
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label for="name">Matric/O-levels or equivalent</label>
-                                            <input type="text" name="weightage" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label for="name">Minimum requirements/Relative Weightage</label>
-                                            <input type="text" name="weightage" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="row">
-                                  <div class="col-md-5">
-                                      <div class="form-group">
-                                          <label for="name">SAT/NAT/GAT </label>
-                                          <input type="text" name="weightage" value="" class="form-control">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="name">Minimum Requirements/Relative Weightage</label>
-                                        <input type="text" name="weightage" value="" class="form-control">
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                  <div class="col-md-5">
-                                      <div class="form-group">
-                                          <label for="name">Grades in Specific Subjects</label>
-                                          <input type="text" name="weightage" value="" class="form-control">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="name">Minimum requirements/Relative Weightage</label>
-                                        <input type="text" name="weightage" value="" class="form-control">
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                  <div class="col-md-5">
-                                      <div class="form-group">
-                                          <label for="name">Entry test</label>
-                                          <input type="text" name="weightage" value="" class="form-control">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="name">Minimum requirements/Relative Weightage</label>
-                                        <input type="text" name="weightage" value="" class="form-control">
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                  <div class="col-md-5">
-                                      <div class="form-group">
-                                          <label for="name">Candidacy Interview</label>
-                                          <input type="text" name="weightage" value="" class="form-control">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="name">Minimum requirements/Relative Weightage</label>
-                                        <input type="text" name="weightage" value="" class="form-control">
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                  <div class="col-md-5">
-                                      <div class="form-group">
-                                          <label for="name">Work Experience</label>
-                                          <input type="text" name="weightage" value="" class="form-control">
-                                      </div>
-                                  </div>
-                                  <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="name">Minimum requirements/Relative Weightage</label>
-                                        <input type="text" name="weightage" value="" class="form-control">
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                 <div class="col-md-10">
+                                 <div class="col-md-12">
                                     <div class="form-group pull-right">
                                         <label for="type">&nbsp;</label>
                                         <input type="button" name="submit" value="Add" class="btn btn-info">
@@ -188,7 +108,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Entry Requirements List</h3>
+                            <h3 class="box-title">Entry Requirements for each program under review.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -204,21 +124,21 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>BSSE</td>
+                                    <td>Computer Science</td>
                                     <td>Matric/O-levels or equivalent</td>
                                     <td>Pass</td>
                                     <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
                                  <tr>
-                                    <td>BSSE</td>
+                                    <td>Art & Design</td>
                                     <td>Intermediate/A-levels or equivalent</td>
                                     <td>Pass</td>
                                     <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
                                  <tr>
-                                    <td>BSSE</td>
+                                    <td>Medical Sciences</td>
                                     <td>Matric/O-levels or equivalent</td>
                                     <td>Pass</td>
                                     <td><div class="badge bg-green">Active</div></td>
