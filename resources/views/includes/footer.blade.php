@@ -44,6 +44,13 @@
      $('[data-toggle="popover"]').popover();
    });
 
+   //// add, remove error class
+   let addClass = (e) => {
+       $('#'+e).parent().addClass('has-error');
+   }
+   let removeClass = (e) => {
+       $('#'+e).parent().removeClass('has-error')
+   }
  </script>
  </body>
 </html>

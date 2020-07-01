@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BusinessSchool;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BusinessSchoolController extends Controller
 {
@@ -22,9 +23,9 @@ class BusinessSchoolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
     }
 
     /**
@@ -35,7 +36,16 @@ class BusinessSchoolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //add School
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails()) {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        //$request->status = 'disabled';
+        $request->merge(['status' => 'disabled']);
+        $addSchool = BusinessSchool::create($request->all());
+        return response()->json(['success' => 'Your business school name sent for registration.'], 200);
+
     }
 
     /**
@@ -81,5 +91,20 @@ class BusinessSchoolController extends Controller
     public function destroy(BusinessSchool $businessSchool)
     {
         //
+    }
+
+    protected function rules(){
+        return
+        [
+            'name' => 'required',
+            'contact_no' => 'required'
+        ];
+    }
+
+    protected function messages(){
+        return
+        [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

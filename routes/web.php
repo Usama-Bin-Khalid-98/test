@@ -24,7 +24,7 @@ Route::get('/login', function() {
 // Registration Routes...
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
-
+Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
 
 Auth::routes();
 
@@ -44,7 +44,7 @@ Route::resource('permissions', 'Auth\PermissionController');
 
 
 //// Strategic Management
-Route::get('strategic/basic-info','BasicInfoController@index')->name('basicInfo');
+Route::resource('strategic-basicinfo','StrategicManagement\BasicInfoController');
 Route::get('/strategic/scope','ScopeController@index')->name('scope');
 Route::get('/strategic/contact-info','ContactInfoController@index')->name('contact');
 Route::get('/strategic/statutory-committees','StatutoryCommitteeController@index')->name('statutory');
