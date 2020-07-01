@@ -42,7 +42,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty Gender Mix</h3>
+                            <h3 class="box-title">Provide data on the gender mix of the business school faculty.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -120,7 +120,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty Gender Mix</h3>
+                            <h3 class="box-title">Gender mix of the business school faculty.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -144,6 +144,8 @@
                                     <td><i class="badge bg-green">Active</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
+
+
                                 <tr>
                                     <td>Male</td>
                                     <td>200</td>
@@ -156,7 +158,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Gender</th>
-                                    <th>Permanent/Regular</th>
+                                    <th>Permanent</th>
                                     <th>Adjunct</th>
                                     <th>Visiting</th>
                                     <th>Status</th>

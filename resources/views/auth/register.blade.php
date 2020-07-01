@@ -28,7 +28,7 @@
 <body>
 <div class="jumbotron jumbotron-fluid" style="padding-bottom: 0;">
     <div class="container">
-        <img src="{{URL::asset('dist/img/logo.jpg')}}" style="width: 100px">
+        <img src="{{URL::asset('dist/img/logo.png')}}" style="width: 100px">
         <span class="lead" style="font-size: 20px;"><strong>NBEAC</strong> (National Business Educaton Accreditatoin Council).</span>
     </div>
 </div>

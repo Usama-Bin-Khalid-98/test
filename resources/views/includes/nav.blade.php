@@ -72,7 +72,7 @@
             <li class="{{ (request()->is('strategic/basic-info')) ? 'active' : '' }} "><a href="{{route('basicInfo')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
             <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{route('scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
             <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{route('contact')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
-            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
+            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{route('statutory')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
             <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{route('affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
             <li  class="{{ (request()->is('strategic/budgetary-information')) ? 'active' : '' }} isDisabled"><a href="{{route('budgetaryInfo')}}"><i class="fa fa-circle-o"></i>Budgetary Information</a></li>
             <li  class="{{ (request()->is('strategic/plan')) ? 'active' : '' }} isDisabled"><a href="{{route('plan')}}"><i class="fa fa-circle-o" ></i>Approval of Strategic Plan</a></li>
@@ -123,6 +123,7 @@
             <li  class="{{ (request()->is('faculty/workload')) ? 'active' : '' }}"><a href="{{route('workload')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T</a></li>
 {{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T-1</a></li>--}}
             <li  class="{{ (request()->is('faculty_stability')) ? 'active' : '' }}"><a href="{{route('faculty_stability')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Stability</a></li>
+            <li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{route('visiting_faculty')}}"><i class="fa fa-circle-o text-orange"></i>Visiting Faculty</a></li>
             <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{route('faculty-gender')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Gender Mix</a></li>
           </ul>
         </li>
@@ -139,7 +140,7 @@
           </ul>
         </li>
 
-          <li class=" treeview {{(request()->is('research-summary'))?'active':''}}">
+          <li class=" treeview {{(request()->is(''))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-orange"></i> <span>Facilities Information</span>
                   <span class="pull-right-container">
@@ -147,10 +148,9 @@
             </span>
               </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{route('research-summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary of Research</a></li>
+            <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="{{route('research-summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary of Research</a></li>
           </ul>
         </li>
-
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Admin</a></li>
 

@@ -42,7 +42,9 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Research Summary Form</h3>
+                            <h3 class="box-title" style="width: 92%;">Provide a summary of research output of business school in last three academic years.
+                                Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly
+                                mentioning type of each item as impact factor or HEC category.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -56,7 +58,6 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Publication Type</label>

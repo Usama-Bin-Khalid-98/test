@@ -42,7 +42,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Affiliations Form</h3>
+                            <h3 class="box-title">Provide details of affiliations of all external (academic and corporate), national or international members in each of the statutory bodies mentioned above.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -60,7 +60,11 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Name of Member</label>
-                                    <input type="text" name="name" value="" class="form-control">
+                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Member</option>
+                                        <option value="">M.Zubair</option>
+                                        <option value="">M.Ikramullah</option>
+                                        </select>
                                 </div>
                             </div>
 
@@ -87,7 +91,16 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Name of Statutory Body</label>
-                                    <input type="text" name="name" value="" class="form-control">
+                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Body Name</option>
+                                        <option value="">Senate</option>
+                                        <option value="">Board of Trustees</option>
+                                        <option value="">Syndicate/ Board of Governors/ Executive Board</option>
+                                        <option value="">Academic Council</option>
+                                        <option value="">Board of Faculty</option>
+                                        <option value="">Board of Studies</option>
+                                        <option value="">Selection Board </option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -111,7 +124,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Affiliations List</h3>
+                            <h3 class="box-title">Affiliations</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -141,11 +154,11 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Muhammad Zuhaib</td>
+                                    <td>M.Zubair</td>
                                     <td>Dean</td>
-                                    <td>HEC</td>
-                                    <td>Statutory Body</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
+                                    <td>Affiliation</td>
+                                    <td>Senate</td>
+                                    <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
                                 <tr>

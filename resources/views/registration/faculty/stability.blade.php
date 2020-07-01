@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty Stability Form</h3>
+                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -123,7 +123,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty Stability List</h3>
+                            <h3 class="box-title">Data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -136,6 +136,8 @@
                                     <th>Courses Allowed</th>
                                     <th>Program 1</th>
                                     <th>Program 2</th>
+                                    <th>FTE Program 1</th>
+                                    <th>FTE Program 2</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -148,6 +150,8 @@
                                     <td>13</td>
                                     <td>5</td>
                                     <td>4</td>
+                                    <td>0.33</td>
+                                    <td>0.33</td>
                                     <td><i class="badge bg-green">Active</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
@@ -158,8 +162,15 @@
                                     <td>13</td>
                                     <td>5</td>
                                     <td>4</td>
+                                    <td>0</td>
+                                    <td>0.5</td>
                                     <td><i class="badge bg-green">Active</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td colspan="3"><strong>Total VFE</strong></td>
+                                    <td align="center" colspan="2"><strong>4.5</strong></td>
                                 </tr>
 
                                 </tbody>
@@ -171,6 +182,8 @@
                                     <th>Courses Allowed</th>
                                     <th>Program 1</th>
                                     <th>Program 2</th>
+                                    <th>FTE Program 1</th>
+                                    <th>FTE Program 2</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

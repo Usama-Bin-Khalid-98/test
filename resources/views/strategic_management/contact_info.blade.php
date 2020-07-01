@@ -20,7 +20,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Conctact Information</li>
+                <li class="active"> Contact Information</li>
             </ol>
         </section>
         <section class="content-header">
@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Chief Administrative Officer</h3>
+                            <h3 class="box-title">Provide contact information, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -100,6 +100,13 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="name">Attach CV</label>
+                                    <input type="file" name="file" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="type">{{ __('Status') }} : </label>
                                     <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
                                         <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
@@ -139,8 +146,9 @@
                                     <td><div class="badge bg-red">Inactive</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
+
                                 <tr>
-                                    <td>Muhammad Zaid</td>
+                                    <td>Zaid</td>
                                     <td>zaid@gmail.com</td>
                                     <td>+923185278733</td>
                                     <td>Dean</td>
@@ -149,25 +157,7 @@
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
                                 <tr>
-                                    <td>Muhammad Zaid</td>
-                                    <td>zaid@gmail.com</td>
-                                    <td>+923185278733</td>
-                                    <td>Dean</td>
-                                    <td>+51878973</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                <tr>
-                                    <td>Muhammad Zaid</td>
-                                    <td>zaid@gmail.com</td>
-                                    <td>+923185278733</td>
-                                    <td>Dean</td>
-                                    <td>+51878973</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                <tr>
-                                    <td>Muhammad Zaid</td>
+                                    <td>Muhammad Zuhaib</td>
                                     <td>zaid@gmail.com</td>
                                     <td>+923185278733</td>
                                     <td>Dean</td>

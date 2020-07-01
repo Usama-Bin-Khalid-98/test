@@ -47,7 +47,7 @@ Route::resource('permissions', 'Auth\PermissionController');
 Route::get('strategic/basic-info','BasicInfoController@index')->name('basicInfo');
 Route::get('/strategic/scope','ScopeController@index')->name('scope');
 Route::get('/strategic/contact-info','ContactInfoController@index')->name('contact');
-Route::get('/strategic/statutory-committees','ContactInfoController@index')->name('statutory-committees');
+Route::get('/strategic/statutory-committees','StatutoryCommitteeController@index')->name('statutory');
 Route::get('/strategic/affiliations','AffiliationController@index')->name('affiliations');
 Route::get('/strategic/budgetary-information','BudgetaryInfoController@index')->name('budgetaryInfo');
 Route::get('/strategic/plan','StrategicPlanController@index')->name('plan');
@@ -61,6 +61,7 @@ Route::get('/student-enrolment','StudentEnrolmentController@index')->name('stude
 // Faculty
 Route::get('/faculty/workload','WorkLoadController@index')->name('workload');
 Route::get('/faculty_stability','StabilityController@index')->name('faculty_stability');
+Route::get('/visiting_faculty','VisitingFacultyController@index')->name('visiting_faculty');
 Route::get('/faculty-gender','FacultyGenderController@index')->name('faculty-gender');
 
 //research-summary
