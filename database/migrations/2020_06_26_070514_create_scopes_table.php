@@ -33,6 +33,7 @@ class CreateScopesTable extends Migration
             $table->date('date_program');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

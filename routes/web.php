@@ -48,11 +48,12 @@ Route::prefix('strategic')->group(function () {
     Route::resource('scope','ScopeController');
     Route::resource('contact-info','ContactInfoController');
     Route::resource('statutory-committees','StatutoryCommitteeController');
+    Route::resource('affiliations','AffiliationController');
+    Route::resource('budgetary-information','BudgetaryInfoController');
+    Route::resource('plan','StrategicPlanController');
 
 });
-Route::get('/strategic/affiliations','AffiliationController@index')->name('affiliations');
-Route::get('/strategic/budgetary-information','BudgetaryInfoController@index')->name('budgetaryInfo');
-Route::get('/strategic/plan','StrategicPlanController@index')->name('plan');
+
 
 // Curriculum
 Route::get('/portfolio','ProgramPortfolioController@index')->name('portfolio');

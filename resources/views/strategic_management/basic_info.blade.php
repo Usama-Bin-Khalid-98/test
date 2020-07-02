@@ -184,67 +184,7 @@
             </div>
         </section>
     </div>
-
-    <div class="modal fade" id="edit-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Default Modal</h4>
-                </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
     <!-- /.modal -->
-
-    <div class="modal fade" id="add-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add User</h4>
-                </div>
-                <form role="form" action="" method="post">
-                    <div class="modal-body">
-
-                        @csrf
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="user"
-                                       placeholder=" User Name" name="name">
-                                <input type="hidden" class="form-control" id="id" name="id">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="code" placeholder="User Code"
-                                       name="code">
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn gradient-bg-color" style="color: white;" value="Submit"
-                               name="add_user" id="add_user">
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
     <!-- /.modal -->
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>

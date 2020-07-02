@@ -95,6 +95,20 @@ class ScopeController extends Controller
     public function update(Request $request, Scope $scope)
     {
         //
+        try {
+            $validation= Validator::make($request->all(), $this->rules(), $this->messages());
+            if($validation->fails())
+            {
+                return response()->json($validation->messages()->all(), 422);
+            }else {
+                $scope->update($request->all());
+                return response()->json(['success' => 'Updated successfully.'], 200);
+            }
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+
     }
 
     /**
@@ -105,6 +119,14 @@ class ScopeController extends Controller
      */
     public function destroy(Scope $scope)
     {
+        //dd($scope);
+        try {
+             Scope::destroy($scope->id);
+                return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
         //
     }
 

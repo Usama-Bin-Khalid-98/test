@@ -135,7 +135,7 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Degree Program</th>
@@ -145,14 +145,14 @@
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="showRecord">
                                 @foreach($scopes as $scope)
                                 <tr>
                                     <td>{{$scope->program->name}}</td>
                                     <td>{{$scope->level->name}}</td>
                                     <td>{{$scope->date_program}}</td>
                                     <td><i class="badge {{$scope->status =='active'?'bg-green':'bg-red'}}">{{$scope->status =='active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$scope->id}}" ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$scope->id}}" data-row='{"id":{{$scope->id}},"program_id":{{$scope->program->id}},"level_id":{{$scope->level->id}},"date_program":"{{$scope->date_program}}", "status":"{{$scope->status}}"}' data-toggle="modal" data-target="#edit-modal"></i> </td>
                                 </tr>
                                 @endforeach
 
@@ -169,10 +169,7 @@
                             </table>
                         </div>
                         <!-- /.box-body -->
-
                         <!-- /.box -->
-
-
                     </div>
                 </div>
             </div>
@@ -186,77 +183,54 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Default Modal</h4>
-                </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="add-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add User</h4>
+                    <h4 class="modal-title">Edit Scope of accreditation. </h4>
                 </div>
                 <form role="form" action="" method="post">
                     <div class="modal-body">
-
                         @csrf
-                        <div class="col-lg-6">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="user"
-                                       placeholder=" User Name" name="name">
-                                <input type="hidden" class="form-control" id="id" name="id">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="code" placeholder="User Code"
-                                       name="code">
-                            </div>
-                        </div>
-                        {{-- <div class="col-lg-1">
-                            <div class="form-group">
-
-                                <label> Status
-                                 <input type="checkbox" name="status" class="flat-red" checked >
-                                </label>
-                                <select id="status" name="status" class="form-control">
-                                    <option>Select Status</option>
-                                    <option value="enabled">Enable</option>
-                                    <option value="disabled">Disable</option>
+                                <label for="name">Degree Program</label>
+                                <select id="edit_program_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Program</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                        </div> --}}
-                        {{-- <div class="col-lg-2">
+                        </div>
+
+                        <div class="col-md-6">
                             <div class="form-group">
-
-                        <input type="button" onclick="updateUser()" class="btn btn-danger pull-right" value="Update"
-                               name="Update" id="Update" style="display: none;">
+                                <label for="name">Level</label>
+                                <select id="edit_level_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Level</option>
+                                    @foreach($levels as $level)
+                                        <option value="{{$level->id}}">{{$level->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div> --}}
-                    <!-- /.box-body -->
-                        {{-- <div class="box-footer">
+                        </div>
 
-                    </div> --}}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Date of Program commencement</label>
+                                <input type="date" id="edit_date_program" value="{{old('date_program')}}" class="form-control">
+                                <input type="hidden" id="id">
+                            </div>
+                        </div>
 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="type">{{ __('Status') }} : </label>
+                                <p><input type="radio" name="edit_status" class="flat-red" value="active" {{old('status')=='active'?'checked':''}}> Active
+                                    <input type="radio" name="edit_status" class="flat-red" value="inactive" {{old('status')=='inactive'?'checked':''}}>InActive</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn gradient-bg-color" style="color: white;" value="Submit"
-                               name="add_user" id="add_user">
+                        <input type="button" name="update" id="update" value="update" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -265,25 +239,21 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
-    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass   : 'iradio_flat-green'
+        });
         $(function () {
-            $('#example1').DataTable()
-            $('#example2').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-            })
+            $('#datatable').DataTable()
         })
     </script>
     <script type="text/javascript">
@@ -291,15 +261,6 @@
         //Initialize Select2 Elements
         $('.select2').select2()
 
-        // //iCheck for checkbox and radio inputs
-        // $('input[type="checkbox"].minimal').iCheck({
-        //     checkboxClass: 'icheckbox_minimal-blue'
-        // });
-
-        //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red').iCheck({
-            checkboxClass: 'icheckbox_flat-pink'
-        })
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -307,9 +268,9 @@
         });
         /*Add Scope*/
         $('#add').on('click', function (e) {
-            var program_id = $('#program_id').val();
-            var level_id = $('#level_id').val();
-            var date_program = $('#date_program').val();
+            let program_id = $('#program_id').val();
+            let level_id = $('#level_id').val();
+            let date_program = $('#date_program').val();
 
             !program_id?addClass('program_id'):removeClass('program_id');
             !level_id?addClass('level_id'):removeClass('level_id');
@@ -333,16 +294,103 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                        location.reload();
+                       location.reload();
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();
                         $.each(response.responseJSON, function (index, val) {
                             Notiflix.Notify.Failure(val);
                         })
-
                     }
                 })
+        });
+        ///// edit record
+        $('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+            $('#edit_program_id').select2().val(data.program_id).trigger('change');
+            $('#edit_level_id').select2().val(data.level_id).trigger('change');
+            $('#edit_date_program').val(data.date_program);
+            $('#id').val(data.id);
+            $('input[value='+data.status+']').iCheck('check');
+        });
+
+        $('#update').on('click', function () {
+            let program_id = $('#edit_program_id').val();
+            let level_id = $('#edit_level_id').val();
+            let date_program = $('#edit_date_program').val();
+            let id = $('#id').val();
+            let status = $('input[name=edit_status]:checked').val();
+
+            !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
+            !level_id?addClass('edit_level_id'):removeClass('edit_level_id');
+            !date_program?addClass('edit_date_program'):removeClass('edit_date_program');
+            if(!date_program || !level_id || !program_id)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+
+            $.ajax({
+                url:'{{url("strategic/scope")}}/'+id,
+                type:'PUT',
+                data: {program_id:program_id,level_id:level_id,date_program:date_program,status:status},
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    //console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        })
+
+        /// Delete Row
+        $('.delete').on('click', function (e) {
+            let id =  $(this).data('id');
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
+                function(){
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("strategic/scope")}}/'+id,
+                        type:'DELETE',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+                            location.reload();
+                           // console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+
         })
     </script>
 

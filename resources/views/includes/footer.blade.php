@@ -18,7 +18,6 @@
 {{--</script>--}}
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ URL::asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-
 <!-- daterangepicker -->
 <script src="{{ URL::asset('bower_components/moment/min/moment.min.js')}}"></script>
 <script src="{{ URL::asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
@@ -53,6 +52,11 @@
    let removeClass = (e) => {
        $('#'+e).parent().removeClass('has-error')
    }
+    Notiflix.Confirm.Init({
+     okButtonBackground:'#dd4b39',
+     titleColor:'#dd4b39'
+    });
+
  </script>
  </body>
 </html>
