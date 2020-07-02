@@ -15,6 +15,7 @@ class CreateStatutoryCommitteesTable extends Migration
     {
         Schema::create('statutory_committees', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

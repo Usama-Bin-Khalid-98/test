@@ -15,6 +15,7 @@ class CreateEntryRequirementsTable extends Migration
     {
         Schema::create('entry_requirements', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

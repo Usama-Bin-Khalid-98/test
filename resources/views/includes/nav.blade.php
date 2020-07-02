@@ -61,7 +61,7 @@
 
           </ul>
             </li>
-          <li class=" treeview {{(request()->is('strategic-basic-info'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/plan'))?'active':''}}">
+          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/plan'))?'active':''}}">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
              <span class="pull-right-container">
@@ -69,10 +69,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('strategic-basicinfo')) ? 'active' : '' }} "><a href="{{url('strategic-basicinfo')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
-            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{url('scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
-            <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('contact')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
-            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('statutory')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
+            <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} "><a href="{{url('strategic/basicinfo')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
+            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{url('strategic/scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
+            <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('strategic/contact-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
+            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('/strategic/statutory-committees')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
             <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
             <li  class="{{ (request()->is('strategic/budgetary-information')) ? 'active' : '' }} isDisabled"><a href="{{url('budgetaryInfo')}}"><i class="fa fa-circle-o"></i>Budgetary Information</a></li>
             <li  class="{{ (request()->is('strategic/plan')) ? 'active' : '' }} isDisabled"><a href="{{url('plan')}}"><i class="fa fa-circle-o" ></i>Approval of Strategic Plan</a></li>

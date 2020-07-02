@@ -30,9 +30,8 @@ Auth::routes();
 
 ///// Dashboard
 Route::get('home', 'HomeController@index')->name('home');
-Route::get('admin', function (){
-    return view('admin');
-});
+Route::get('admin', 'DashboardController@index');
+Route::patch('admin/{id}', 'DashboardController@schoolStatus');
 ////// Users permissions
 Route::get('permission', 'Auth\UserController@permissions');
 // Users resource route.
@@ -44,10 +43,13 @@ Route::resource('permissions', 'Auth\PermissionController');
 
 
 //// Strategic Management
-Route::resource('strategic-basicinfo','StrategicManagement\BasicInfoController');
-Route::get('/strategic/scope','ScopeController@index')->name('scope');
-Route::get('/strategic/contact-info','ContactInfoController@index')->name('contact');
-Route::get('/strategic/statutory-committees','StatutoryCommitteeController@index')->name('statutory');
+Route::prefix('strategic')->group(function () {
+    Route::resource('basicinfo','StrategicManagement\BasicInfoController');
+    Route::resource('scope','ScopeController');
+    Route::resource('contact-info','ContactInfoController');
+    Route::resource('statutory-committees','StatutoryCommitteeController');
+
+});
 Route::get('/strategic/affiliations','AffiliationController@index')->name('affiliations');
 Route::get('/strategic/budgetary-information','BudgetaryInfoController@index')->name('budgetaryInfo');
 Route::get('/strategic/plan','StrategicPlanController@index')->name('plan');

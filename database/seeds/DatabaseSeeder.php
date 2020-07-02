@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CharterTypeSeeder::class);
         $this->call(BusinessSchoolSeeder::class);
         $this->call(InstituteTypeSeeder::class);
+        $this->call(ProgramSeeder::class);
+        $this->call(LevelSeeder::class);
 
 
     }

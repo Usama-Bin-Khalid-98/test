@@ -13,13 +13,13 @@ class BusinessSchoolSeeder extends Seeder
     {
         //
         DB::table('business_schools')->insert([
-                ['name' => 'City University of Science & Technology Peshawar', 'status' => 'enabled'],
-                ['name' => 'Abasyn University Peshawar', 'status' => 'enabled'],
-                ['name' => 'Capital University of Science & Technology', 'status' => 'enabled'],
-                ['name' => 'Quaid-i-Azam University', 'status' => 'enabled'],
-                ['name' => 'Pakistan Institute of Engineering and Applied Sciences', 'status' => 'enabled'],
-                ['name' => 'National Defence University, Pakistan', 'status' => 'enabled'],
-                ['name' => 'Allama Iqbal Open University', 'status' => 'enabled']
+                ['name' => 'City University of Science & Technology Peshawar', 'status' => 'active'],
+                ['name' => 'Abasyn University Peshawar', 'status' => 'active'],
+                ['name' => 'Capital University of Science & Technology', 'status' => 'active'],
+                ['name' => 'Quaid-i-Azam University', 'status' => 'active'],
+                ['name' => 'Pakistan Institute of Engineering and Applied Sciences', 'status' => 'active'],
+                ['name' => 'National Defence University, Pakistan', 'status' => 'active'],
+                ['name' => 'Allama Iqbal Open University', 'status' => 'active']
             ]
         );
     }

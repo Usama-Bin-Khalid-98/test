@@ -93,7 +93,7 @@ class RegisterController extends Controller
                 'institute_type_id' => $data['institute_type_id'],
                 'sector' => $data['sector'],
                 'profit_status' => $data['profit_status'],
-                'status' => 'disabled',
+                'status' => 'inactive',
                 'hierarchical_context' => $data['hierarchical_context']
             ]);
 
@@ -125,9 +125,9 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        $institute_types=InstituteType::where('status', 'enabled')->get();
-        $chart_types=CharterType::where('status', 'enabled')->get();
-        $business_school=BusinessSchool::where('status', 'enabled')->get();
+        $institute_types=InstituteType::where('status', 'active')->get();
+        $chart_types=CharterType::where('status', 'active')->get();
+        $business_school=BusinessSchool::where('status', 'active')->get();
 
         return view('auth.register', compact('institute_types', 'chart_types','business_school'));
     }

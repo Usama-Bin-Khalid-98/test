@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="bower_components/morris.js/morris.css">
 <!-- jvectormap -->
 <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
 @include("includes.header")
 @include("includes.nav")
 
@@ -196,13 +198,20 @@
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-12 connectedSortable">
+        <section class="col-lg-6 connectedSortable">
             <!-- TO DO List -->
             <div class="box box-primary">
                 <div class="box-header">
-                    <i class="ion ion-clipboard"></i>
-
-                    <h3 class="box-title">New Registrations</h3>
+                    <h3 class="box-title">Business school registration Requests. </h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-file-pdf-o"></i></button>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -212,55 +221,28 @@
                         <thead>
                         <tr>
                             <th>Business School Name</th>
-                            <th>Email</th>
                             <th>Contact</th>
-                            <th>Job Title</th>
-                            <th>Office Contact</th>
                             <th>Status</th>
-                            <th>Action</th>
+{{--                            <th>Action</th>--}}
                         </tr>
                         </thead>
                         <tbody>
-
+                        @foreach($registrations as $school)
                         <tr>
-                            <td>Allama Iqbal Open University</td>
-                            <td>zaid@gmail.com</td>
-                            <td>+923185278733</td>
-                            <td>Dean</td>
-                            <td>+51878973</td>
-                            <td><div class="badge bg-red">Inactive</div></td>
-                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                            <td>{{$school->name}}</td>
+                            <td>{{$school->contact_no}}</td>
+                            <td><i class="badge {{$school->status=='disabled'?'bg-red':''}} status" data-id="{{$school->id}}" >Disabled</i></td>
+{{--                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>--}}
                         </tr>
-                        <tr>
-                            <td>Abasyn University Peshawar</td>
-                            <td>zaid@gmail.com</td>
-                            <td>+923185278733</td>
-                            <td>Dean</td>
-                            <td>+51878973</td>
-                            <td><div class="badge bg-red">Inactive</div></td>
-                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>City University of Science and information Technology</td>
-                            <td>zaid@gmail.com</td>
-                            <td>+923185278733</td>
-                            <td>Dean</td>
-                            <td>+51878973</td>
-                            <td><div class="badge bg-red">Inactive</div></td>
-                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                        </tr>
-
+                        @endforeach
 
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>Business School Name</th>
-                            <th>Email</th>
                             <th>Contact</th>
-                            <th>Job Title</th>
-                            <th>Office Contact</th>
                             <th>Status</th>
-                            <th>Action</th>
+{{--                            <th>Action</th>--}}
                         </tr>
                         </tfoot>
                     </table>
@@ -303,3 +285,52 @@
 <script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
+
+<script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+
+<script>
+
+    $('.status').on('click', function (e) {
+        var id = $(this).data('id');
+
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
+            function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+            // Yes button callback
+               $.ajax({
+                   url:'{{url("admin")}}/'+id,
+                   type:'PATCH',
+                   data: { id:id},
+                   beforeSend: function(){
+                       Notiflix.Loading.Pulse('Processing...');
+                   },
+                   // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                   success: function (response) {
+                       Notiflix.Loading.Remove();
+                       console.log("success resp ",response.success);
+                       if(response.success){
+                           Notiflix.Notify.Success(response.success);
+                       }
+
+                       location.reload();
+
+                       console.log('response here', response);
+                   },
+                   error:function(response, exception){
+                       Notiflix.Loading.Remove();
+                       $.each(response.responseJSON, function (index, val) {
+                           Notiflix.Notify.Failure(val);
+                       })
+
+                   }
+               })
+            },
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );
+    })
+</script>

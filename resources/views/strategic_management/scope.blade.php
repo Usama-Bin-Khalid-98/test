@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
@@ -29,8 +30,7 @@
                     <button class="btn gradient-bg-color"
                            data-toggle="modal" data-target="#add-modal"
                            style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
                 </div>
             </div>
         </section>
@@ -39,7 +39,7 @@
         <section class="content">
             <div class=" form row">
                 <div class="col-md-12">
-
+                <form>
                     <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">Provide scope of accreditation</h3>
@@ -60,12 +60,11 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Degree Program</label>
-                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                    <select id="program_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Program</option>
-                                        <option value="">Computer Science</option>
-                                        <option value="">Management Sciences</option>
-                                        <option value="">Medical Sciences</option>
-                                        <option value="">Art & Design</option>
+                                        @foreach($programs as $program)
+                                        <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
+                                        @endforeach
                                         </select>
                                 </div>
                             </div>
@@ -73,13 +72,11 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Level</label>
-                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                    <select id="level_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Level</option>
-                                        <option value="">Graduate</option>
-                                        <option value="">Under Graduate</option>
-{{--                                        @foreach($chart_types as $type)--}}
-{{--                                            <option value="{{$type->id}}">{{$type->name }}</option>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($levels as $level)
+                                            <option value="{{$level->id}}">{{$level->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -87,15 +84,22 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Date of Program commencement</label>
-                                    <input type="date" name="name" value="" class="form-control">
+                                    <input type="date" id="date_program" value="{{old('date_program')}}" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
-                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                    <p><input type="radio" name="status" class="flat-red" value="active" {{old('status')=='active'?'checked':''}}> Active--}}
+{{--                                        <input type="radio" name="status" class="flat-red" value="inactive" {{old('status')=='inactive'?'checked':''}}>InActive</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                            <div class="col-md-12">
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="button" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
 
@@ -103,6 +107,7 @@
                         <!-- /.box-body -->
 
                     </div>
+                </form>
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
@@ -141,20 +146,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($scopes as $scope)
                                 <tr>
-                                    <td>Medical Sciences</td>
-                                    <td>Graduate</td>
-                                    <td>June 05 2020</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
+                                    <td>{{$scope->program->name}}</td>
+                                    <td>{{$scope->level->name}}</td>
+                                    <td>{{$scope->date_program}}</td>
+                                    <td><i class="badge {{$scope->status =='active'?'bg-green':'bg-red'}}">{{$scope->status =='active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
-                                <tr>
-                                    <td>Computer Sciences</td>
-                                    <td>Graduate</td>
-                                    <td>June 05 2020</td>
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
+                                @endforeach
 
                                 </tbody>
                                 <tfoot>
@@ -267,6 +267,7 @@
     <!-- /.modal -->
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
@@ -299,61 +300,50 @@
         $('input[type="checkbox"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-pink'
         })
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        /*Add Scope*/
+        $('#add').on('click', function (e) {
+            var program_id = $('#program_id').val();
+            var level_id = $('#level_id').val();
+            var date_program = $('#date_program').val();
 
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !level_id?addClass('level_id'):removeClass('level_id');
+            !date_program?addClass('date_program'):removeClass('date_program');
+            if(!date_program || !level_id || !program_id)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("strategic/scope")}}',
+                    type:'POST',
+                    data: {program_id:program_id,level_id:level_id, date_program:date_program},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+                        location.reload();
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
 
-
-        function addUser() {
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{'users'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    user: user,
-                    code: code
-                },
-                success: function (response) {
-                    //var data = JSON.parse(response);
-                    alert(response);
-                    //location.replace('users');
-                }
-            });
-        }
-
-
-        function update(id, name, code, status) {
-            $('#id').val(id);
-            $('#user').val(name);
-            $('#code').val(code);
-            $('#status').val(status);
-            $('#add_user').hide();
-            $('#Update').show();
-        }
-
-        function updateUser() {
-            var id = $('#id').val();
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{'updateusers'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    id: id,
-                    user: user,
-                    code: code,
-                    status: status
-                },
-                success: function (response) {
-                    alert('Update successfully');
-                    location.replace('users');
-                }
-            });
-        }
-
+                    }
+                })
+        })
     </script>
 
 

@@ -15,6 +15,7 @@ class CreateFacultyGendersTable extends Migration
     {
         Schema::create('faculty_genders', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

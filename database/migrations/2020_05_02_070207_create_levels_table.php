@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAffiliationsTable extends Migration
+class CreateLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateAffiliationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('affiliations', function (Blueprint $table) {
-            $table->id();
+        Schema::create('levels', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name',100);
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateAffiliationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('affiliations');
+        Schema::dropIfExists('levels');
     }
 }

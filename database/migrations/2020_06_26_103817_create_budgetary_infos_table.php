@@ -15,6 +15,7 @@ class CreateBudgetaryInfosTable extends Migration
     {
         Schema::create('budgetary_infos', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

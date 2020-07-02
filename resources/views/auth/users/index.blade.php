@@ -22,9 +22,9 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <input type="submit" class="btn gradient-bg-color" 
+                    <input type="submit" class="btn gradient-bg-color"
                     data-toggle="modal" data-target="#add-modal"
-                    style="color: white;" 
+                    style="color: white;"
                     value="Add New"
                     name="add" id="add">
                 </div>
@@ -59,7 +59,7 @@
                         <!-- /.box-header -->
                         <!-- form start -->
                             <div class="box-body" style="display:none;">
-                                
+
                             </div>
                          </div>
                     <!-- /.box -->
@@ -109,13 +109,13 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->code}}</td>
-                                        <td>@if($user->status=='enabled')<span class="label gradient-bg-color">Enabled</span>@else
-                                                <span class="label label-danger">Disabled</span>@endif</td>
+                                        <td>@if($user->status=='active')<span class="label gradient-bg-color">Active</span>@else
+                                                <span class="label label-danger">Inactive</span>@endif</td>
                                         <td>
-                                            <i class="fa fa-fw fa-edit text-purple" 
+                                            <i class="fa fa-fw fa-edit text-purple"
                                             data-toggle="modal" data-target="#edit-model"
-                                            data-placement="left" 
-                                            title="Edit" 
+                                            data-placement="left"
+                                            title="Edit"
                                             onclick="update('{{$user->id}}',
                                                     '{{$user->name}}',
                                                     '{{$user->code}}',
@@ -178,7 +178,7 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-    
+
       <div class="modal fade" id="add-modal">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -189,7 +189,7 @@
             </div>
             <form role="form" action="users" method="post">
             <div class="modal-body">
-                   
+
                             @csrf
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -219,16 +219,16 @@
                             </div> --}}
                             {{-- <div class="col-lg-2">
                                 <div class="form-group">
-                                   
+
                             <input type="button" onclick="updateUser()" class="btn btn-danger pull-right" value="Update"
                                    name="Update" id="Update" style="display: none;">
                                 </div>
                             </div> --}}
                             <!-- /.box-body -->
                             {{-- <div class="box-footer">
-                            
+
                         </div> --}}
-                        
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
