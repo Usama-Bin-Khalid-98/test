@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 //namespace App\Http\Controllers\StrategicManagement;
 
+use App\Models\Common\Level;
+use App\Models\Common\Program;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class ScopeController extends Controller
 {
@@ -16,7 +20,10 @@ class ScopeController extends Controller
     public function index()
     {
         //
-        return view('strategic_management.scope');
+        $programs = Program::where('status', 'active')->get();
+        $levels = Level::where('status', 'active')->get();
+        $scopes = Scope::with('level', 'program')->get();
+        return view('strategic_management.scope', compact('programs', 'levels', 'scopes'));
     }
 
     /**
@@ -38,6 +45,22 @@ class ScopeController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            //$update = BasicInfo::find($basicInfo->id);
+            $validation= Validator::make($request->all(), $this->rules(), $this->messages());
+            if($validation->fails())
+            {
+                return response()->json($validation->messages()->all(), 422);
+            }else {
+                $school_id = auth()->user()->business_school_id;
+                $request->merge(['school_id' => $school_id] );
+                $create = Scope::create($request->all());
+                return response()->json(['success' => 'Updated successfully.'], 200);
+            }
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 400);
+        }
     }
 
     /**
@@ -83,5 +106,19 @@ class ScopeController extends Controller
     public function destroy(Scope $scope)
     {
         //
+    }
+
+    protected function rules() {
+        return [
+            'program_id' => 'required',
+            'level_id' => 'required',
+            'date_program' => 'required|date',
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

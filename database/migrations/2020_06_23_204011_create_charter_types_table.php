@@ -16,7 +16,7 @@ class CreateCharterTypesTable extends Migration
         Schema::create('charter_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',100);
-            $table->enum('status', ['enabled','disabled'])->default('enabled');
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

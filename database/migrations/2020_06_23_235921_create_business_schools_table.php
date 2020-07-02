@@ -28,7 +28,7 @@ class CreateBusinessSchoolsTable extends Migration
             $table->integer('institute_type_id')->nullable();
             $table->enum('sector', ['public', 'private'])->nullable();
             $table->enum('profit_status',['For Profit', 'None Profit'])->nullable();
-            $table->enum('status',['enabled', 'disabled']);
+            $table->enum('status',['active','inactive']);
             $table->enum('hierarchical_context',['Affiliated', 'Constituent Part'] )->nullable();
             $table->timestamps();
         });

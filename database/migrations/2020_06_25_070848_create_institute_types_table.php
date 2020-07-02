@@ -16,7 +16,7 @@ class CreateInstituteTypesTable extends Migration
         Schema::create('institute_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
-            $table->enum('status', ['enabled', 'disabled'])->default('enabled');
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

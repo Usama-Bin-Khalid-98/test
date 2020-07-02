@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',255);
             $table->string('user_type', 50);
-            $table->enum('status', ['enabled', 'disabled', 'pending', 'approved']);
+            $table->enum('status', ['active', 'inactive', 'pending', 'approved']);
             $table->rememberToken();
             $table->timestamps();
         });

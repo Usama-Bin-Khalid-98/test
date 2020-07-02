@@ -15,6 +15,7 @@ class CreateContactInfosTable extends Migration
     {
         Schema::create('contact_infos', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

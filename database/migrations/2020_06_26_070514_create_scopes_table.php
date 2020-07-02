@@ -15,9 +15,23 @@ class CreateScopesTable extends Migration
     {
         Schema::create('scopes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('degree_program', 100);
-            $table->string('level', 30);
+            $table->integer('school_id')->unsigned()->nullable();
+            $table->foreign('school_id')
+                ->references('id')
+                ->on('business_schools')
+                ->onDelete('cascade');;
+            $table->integer('program_id')->unsigned()->nullable();
+            $table->foreign('program_id')
+                ->references('id')
+                ->on('programs')
+                ->onDelete('cascade');;
+            $table->integer('level_id')->unsigned()->nullable();
+            $table->foreign('level_id')
+                ->references('id')
+                ->on('levels')
+                ->onDelete('cascade');;
             $table->date('date_program');
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

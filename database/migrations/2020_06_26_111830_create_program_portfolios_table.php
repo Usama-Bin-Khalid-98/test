@@ -15,6 +15,7 @@ class CreateProgramPortfoliosTable extends Migration
     {
         Schema::create('program_portfolios', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

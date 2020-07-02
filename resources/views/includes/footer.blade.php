@@ -36,7 +36,9 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('dist/js/demo.js')}}"></script>
 
+
  <script>
+     ///////// Common JS Code /////////
    $(document).ready(function(){
        $('.select2-selection').css('height','33px');
        $('[data-toggle = "tooltip"]').tooltip();

@@ -29,8 +29,8 @@ class BasicInfoController extends Controller
             // Basic Info
             $school_id = auth()->user()->business_school_id;
             $basic_info = BusinessSchool::where('id', $school_id)->get()->first();
-            $institute_type = InstituteType::where('status', 'enabled')->get();
-            $chart_types=CharterType::where('status', 'enabled')->get();
+            $institute_type = InstituteType::where('status', 'active')->get();
+            $chart_types=CharterType::where('status', 'active')->get();
 
         return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types'));
         }catch (\Exception $e) {

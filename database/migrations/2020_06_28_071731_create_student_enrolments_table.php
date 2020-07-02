@@ -15,6 +15,7 @@ class CreateStudentEnrolmentsTable extends Migration
     {
         Schema::create('student_enrolments', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

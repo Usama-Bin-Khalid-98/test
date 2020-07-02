@@ -15,6 +15,7 @@ class CreateStrategicPlansTable extends Migration
     {
         Schema::create('strategic_plans', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
     }
