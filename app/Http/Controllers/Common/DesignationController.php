@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Common;
 
-use App\Models\StrategicManagement\ContactInfo;
+use App\Models\StrategicManagement\Designation;
 use Illuminate\Http\Request;
+use App\Http\Controllers;
 
-class ContactInfoController extends Controller
+class DesignationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,6 @@ class ContactInfoController extends Controller
     public function index()
     {
         //
-        return view('strategic_management.contact_info');
     }
 
     /**
@@ -42,10 +42,10 @@ class ContactInfoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ContactInfo  $contactInfo
+     * @param  \App\Models\Common\Designation  $designation
      * @return \Illuminate\Http\Response
      */
-    public function show(ContactInfo $contactInfo)
+    public function show(Designation $designation)
     {
         //
     }
@@ -53,10 +53,10 @@ class ContactInfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ContactInfo  $contactInfo
+     * @param  \App\Models\Common\Designation  $designation
      * @return \Illuminate\Http\Response
      */
-    public function edit(ContactInfo $contactInfo)
+    public function edit(Designation $designation)
     {
         //
     }
@@ -65,10 +65,10 @@ class ContactInfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\ContactInfo  $contactInfo
+     * @param  \App\Models\Common\Designation  $designation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ContactInfo $contactInfo)
+    public function update(Request $request, Designation $designation)
     {
         //
     }
@@ -76,10 +76,10 @@ class ContactInfoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\ContactInfo  $contactInfo
+     * @param  \App\Models\Common\Designation  $designation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContactInfo $contactInfo)
+    public function destroy(Designation $designation)
     {
         //
     }

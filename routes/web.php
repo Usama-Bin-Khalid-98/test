@@ -45,8 +45,8 @@ Route::resource('permissions', 'Auth\PermissionController');
 //// Strategic Management
 Route::prefix('strategic')->group(function () {
     Route::resource('basicinfo','StrategicManagement\BasicInfoController');
-    Route::resource('scope','ScopeController');
-    Route::resource('contact-info','ContactInfoController');
+    Route::resource('scope','StrategicManagement\ScopeController');
+    Route::resource('contact-info','StrategicManagement\ContactInfoController');
     Route::resource('statutory-committees','StatutoryCommitteeController');
     Route::resource('affiliations','AffiliationController');
     Route::resource('budgetary-information','BudgetaryInfoController');

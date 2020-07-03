@@ -30,8 +30,7 @@
                     <button class="btn gradient-bg-color"
                            data-toggle="modal" data-target="#add-modal"
                            style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
                 </div>
             </div>
         </section>
@@ -55,68 +54,73 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
-
+                        <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
                         <!-- /.box-header -->
-                        <div class="box-body">
+                         <div class="box-body">
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Contact Person Name</label>
-                                    <input type="text" id="name" value="{{old('name')}}" class="form-control">
+                                    <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" id="email" value="{{old('contact_no')}}" class="form-control">
+                                    <input type="email" name="email" id="email" value="{{old('contact_no')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Contact No</label>
-                                    <input type="text" id="contact_no" value="{{old('contact_no')}}" class="form-control">
+                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Business School Contact</label>
-                                    <input type="text" id="school_contact" value="{{old('school_contact')}}" class="form-control">
+                                    <input type="text" name="school_contact" id="school_contact" value="{{old('school_contact')}}" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Job Title</label>
-                                    <select id="charter_type_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Job Title</option>
-
-                                        <option value="{{old('')}}">Dean</option>
-                                        <option value="{{old('')}}">HOD</option>
-                                        {{--                                        @foreach($chart_types as $type)--}}
-                                        {{--                                            <option value="{{$type->id}}">{{$type->name }}</option>--}}
-                                        {{--                                        @endforeach--}}
-                                    </select>
+                                    <label for="name">Designation</label>
+                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Designation</option>
+                                        @foreach($designations as $designation)
+                                        <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Attach CV</label>
-                                    <input type="file" name="file" >
+                                    <input type="file" name="cv" id="cv" >
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
-                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active--}}
+{{--                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                            <div class="col-md-12">
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
 
                         </div>
                         <!-- /.box-body -->
+                        </form>
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
@@ -134,41 +138,25 @@
                                     <th>Contact</th>
                                     <th>Job Title</th>
                                     <th>Office Contact</th>
+                                    <th>CV</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Muhammad Zaid</td>
-                                    <td>zaid@gmail.com</td>
-                                    <td>+923185278733</td>
-                                    <td>Dean</td>
-                                    <td>+51878973</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
 
+                                @foreach($contacts as $contact)
                                 <tr>
-                                    <td>Zaid</td>
-                                    <td>zaid@gmail.com</td>
-                                    <td>+923185278733</td>
-                                    <td>Dean</td>
-                                    <td>+51878973</td>
-                                    <td><div class="badge bg-red">Inactive</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                    <td>{{$contact->name}}</td>
+                                    <td>{{$contact->email}}</td>
+                                    <td>{{$contact->contact_no}}</td>
+                                    <td>{{$contact->designation->name}}</td>
+                                    <td>{{$contact->school_contact}}</td>
+                                    <td><a href="{{url($contact->cv)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":{{$contact->id}},"name":"{{$contact->name}}","email":"{{$contact->email}}","contact_no":"{{$contact->contact_no}}","school_contact":"{{$contact->school_contact}}","designation_id":{{$contact->designation_id}},"cv":"{{$contact->cv}}", "status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
-                                <tr>
-                                    <td>Muhammad Zuhaib</td>
-                                    <td>zaid@gmail.com</td>
-                                    <td>+923185278733</td>
-                                    <td>Dean</td>
-                                    <td>+51878973</td>
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-
-
+                                @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -177,6 +165,7 @@
                                     <th>Contact</th>
                                     <th>Job Title</th>
                                     <th>Office Contact</th>
+                                    <th>CV</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -205,16 +194,42 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Scope of accreditation. </h4>
                 </div>
-                <form role="form" action="" method="post">
+                <form role="form" id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">
-                        @csrf
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Degree Program</label>
-                                <select id="edit_program_id" class="form-control select2" style="width: 100%;">
-                                    <option value="{{old('')}}">Select Program</option>
-                                    @foreach($programs as $program)
-                                        <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
+                                <label for="name">Contact Person Name</label>
+                                <input type="text" name="name" id="edit_name" value="{{old('name')}}" class="form-control">
+                                <input type="hidden" id="edit_id">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="edit_email" value="{{old('contact_no')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Contact No</label>
+                                <input type="text" name="contact_no" id="edit_contact_no" value="{{old('contact_no')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Business School Contact</label>
+                                <input type="text" name="school_contact" id="edit_school_contact" value="{{old('school_contact')}}" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Designation</label>
+                                <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Designation</option>
+                                    @foreach($designations as $designation)
+                                        <option value="{{$designation->id}}">{{$designation->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -222,35 +237,24 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Level</label>
-                                <select id="edit_level_id" class="form-control select2" style="width: 100%;">
-                                    <option value="{{old('')}}">Select Level</option>
-                                    @foreach($levels as $level)
-                                        <option value="{{$level->id}}">{{$level->name }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="name">Attach CV</label>
+                                <input type="file" name="cv" id="edit_cv" >
+                                <input type="hidden" name="old_cv" id="old_cv" >
+                                <span class="text-blue" id="cv-name"></span>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Date of Program commencement</label>
-                                <input type="date" id="edit_date_program" value="{{old('date_program')}}" class="form-control">
-                                <input type="hidden" id="id">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
-                                <p><input type="radio" name="edit_status" class="flat-red" value="active" {{old('status')=='active'?'checked':''}}> Active
-                                    <input type="radio" name="edit_status" class="flat-red" value="inactive" {{old('status')=='inactive'?'checked':''}}>InActive</p>
+                                <p><input type="radio" name="status" class="flat-red" value="active" > Active
+                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="button" name="update" id="update" value="update" class="btn btn-info">
+                        <input type="submit" name="update" value="update" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -286,24 +290,37 @@
             }
         });
         /*Add Scope*/
-        $('#add').on('click', function (e) {
-            let program_id = $('#program_id').val();
-            let level_id = $('#level_id').val();
-            let date_program = $('#date_program').val();
+        $('#form').submit(function (e) {
+            let name = $('#name').val();
+            let email = $('#email').val();
+            let contact_no = $('#contact_no').val();
+            let school_contact = $('#school_contact').val();
+            let designation_id = $('#designation_id').val();
+            let cv = $('#cv').val();
 
-            !program_id?addClass('program_id'):removeClass('program_id');
-            !level_id?addClass('level_id'):removeClass('level_id');
-            !date_program?addClass('date_program'):removeClass('date_program');
-            if(!date_program || !level_id || !program_id)
+            !name?addClass('name'):removeClass('name');
+            !email?addClass('email'):removeClass('email');
+            !contact_no?addClass('contact_no'):removeClass('contact_no');
+            !school_contact?addClass('school_contact'):removeClass('school_contact');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
+            !cv?addClass('cv'):removeClass('cv');
+
+            if(!name || !email || !contact_no|| !school_contact || !designation_id || !cv)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
             }
             // Yes button callback
+            e.preventDefault();
+            var formData = new FormData(this);
+
             $.ajax({
-                url:'{{url("strategic/scope")}}',
+                url:'{{url("strategic/contact-info")}}',
                 type:'POST',
-                data: {program_id:program_id,level_id:level_id, date_program:date_program},
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -313,6 +330,7 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+                    console.log('response', response);
                     location.reload();
                 },
                 error:function(response, exception){
@@ -327,33 +345,51 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-            $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_level_id').select2().val(data.level_id).trigger('change');
-            $('#edit_date_program').val(data.date_program);
-            $('#id').val(data.id);
+            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_name').val(data.name);
+            $('#edit_email').val(data.email);
+            $('#edit_contact_no').val(data.contact_no);
+            $('#edit_school_contact').val(data.school_contact);
+            $('#cv-name').text(data.cv);
+            $('#edit_id').val(data.id);
+            $('#old_cv').val(data.cv);
+            // console.log('check', data.status);
+            // $('#update-form').attr('action', 'contact-info/'+data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-        $('#update').on('click', function () {
-            let program_id = $('#edit_program_id').val();
-            let level_id = $('#edit_level_id').val();
-            let date_program = $('#edit_date_program').val();
-            let id = $('#id').val();
-            let status = $('input[name=edit_status]:checked').val();
+        $('#updateForm').submit(function (e) {
+            let name = $('#edit_name').val();
+            let email = $('#edit_email').val();
+            let contact_no = $('#edit_contact_no').val();
+            let school_contact = $('#edit_school_contact').val();
+            let designation_id = $('#edit_designation_id').val();
+            let id = $('#edit_id').val();
 
-            !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
-            !level_id?addClass('edit_level_id'):removeClass('edit_level_id');
-            !date_program?addClass('edit_date_program'):removeClass('edit_date_program');
-            if(!date_program || !level_id || !program_id)
+            let status = $('input[name=edit_status]:checked').val();
+            !name?addClass('edit_name'):removeClass('edit_name');
+            !email?addClass('edit_email'):removeClass('edit_email');
+            !contact_no?addClass('edit_contact_no'):removeClass('edit_contact_no');
+            !school_contact?addClass('edit_school_contact'):removeClass('edit_school_contact');
+            !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
+
+            if(!name || !email || !contact_no || !school_contact || !designation_id)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
+                return false;
             }
-
+            e.preventDefault();
+             var formData = new FormData(this);
+            //var formData = $("#updateForm").serialize()
+            formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("strategic/scope")}}/'+id,
-                type:'PUT',
-                data: {program_id:program_id,level_id:level_id,date_program:date_program,status:status},
+                url:'{{url("strategic/contact-info")}}/'+id,
+                type:'POST',
+                // dataType:"JSON",
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -382,7 +418,7 @@
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("strategic/scope")}}/'+id,
+                        url:'{{url("strategic/contact-info")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
