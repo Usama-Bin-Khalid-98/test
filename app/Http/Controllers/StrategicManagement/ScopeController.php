@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-//namespace App\Http\Controllers\StrategicManagement;
+namespace App\Http\Controllers\StrategicManagement;
+use App\Http\Controllers\Controller;
 
 use App\Models\Common\Level;
 use App\Models\Common\Program;

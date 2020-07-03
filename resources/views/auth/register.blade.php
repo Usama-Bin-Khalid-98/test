@@ -350,7 +350,10 @@
 
 <script>
     //Flat red color scheme for iCheck
-
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green',
+        radioClass   : 'iradio_flat-green'
+    });
     //// add, remove error class
     let addClass = (e) => {
         $('#'+e).parent().addClass('has-error');
@@ -358,6 +361,7 @@
     let removeClass = (e) => {
         $('#'+e).parent().removeClass('has-error')
     }
+
 </script>
 @if ($errors->any())
     @foreach ($errors->all() as $error)

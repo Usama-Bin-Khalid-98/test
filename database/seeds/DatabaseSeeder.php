@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(InstituteTypeSeeder::class);
         $this->call(ProgramSeeder::class);
         $this->call(LevelSeeder::class);
+        $this->call(DesignationSeeder::class);
 
 
     }

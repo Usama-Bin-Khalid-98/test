@@ -174,7 +174,6 @@
                 </div>
             </div>
         </section>
-
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -294,7 +293,7 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                       location.reload();
+                        setTimeout(() => location.reload(), 1000);
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();
@@ -377,7 +376,6 @@
                                 Notiflix.Notify.Success(response.success);
                             }
                             location.reload();
-                           // console.log('response here', response);
                         },
                         error:function(response, exception){
                             Notiflix.Loading.Remove();
