@@ -27,7 +27,10 @@
         <div class="wrap-login100">
             <form class="login100-form validate-form" action="{{ route('login') }}" method="post">
                 @csrf
-					<span class="login100-form-title p-b-26">
+					<span class="login100-form-title" style="margin-bottom: 0px;">
+						<img src="{{URL::asset('dist/img/logo.png')}}" style="width: 100px">
+					</span>
+<span class="login100-form-title p-b-26">
 						NBEAC Login
 					</span>
 
