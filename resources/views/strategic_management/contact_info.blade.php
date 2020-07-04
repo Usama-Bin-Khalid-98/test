@@ -1,4 +1,4 @@
-@section('pageTitle', 'Users')
+@section('pageTitle', 'Contact Info')
 
 
 @if(Auth::user())

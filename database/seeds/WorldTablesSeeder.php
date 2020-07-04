@@ -1,25 +1,22 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\SQLiteConnection;
 
-class DatabaseSeeder extends Seeder
+class WorldTablesSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Auto generated seed file
      *
      * @return void
      */
     public function run()
     {
-       // $this->call(PermissionSeeder::class);
-        $this->call(CharterTypeSeeder::class);
-        $this->call(BusinessSchoolSeeder::class);
-        $this->call(InstituteTypeSeeder::class);
-        $this->call(ProgramSeeder::class);
-        $this->call(LevelSeeder::class);
-        $this->call(DesignationSeeder::class);
-
-        ////////////////////World////////////////////////
+        if (DB::connection() instanceof SQLiteConnection) {
+            DB::statement('PRAGMA FOREIGN_KEYS=0');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        }
 
         $this->call(WorldContinentsTableSeeder::class);
         $this->call(WorldContinentsLocaleTableSeeder::class);
@@ -29,8 +26,11 @@ class DatabaseSeeder extends Seeder
         $this->call(WorldDivisionsLocaleTableSeeder::class);
         $this->call(WorldCitiesTableSeeder::class);
         $this->call(WorldCitiesLocaleTableSeeder::class);
-        $this->call(WorldLanguagesTableSeeder::class);
 
-
+        if (DB::connection() instanceof SQLiteConnection) {
+            DB::statement('PRAGMA FOREIGN_KEYS=1');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        }
     }
 }

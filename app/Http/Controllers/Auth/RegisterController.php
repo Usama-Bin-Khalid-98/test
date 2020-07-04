@@ -6,13 +6,14 @@ use App\BusinessSchool;
 use App\CharterType;
 use App\Http\Controllers\Controller;
 use App\InstituteType;
+use App\Models\StrategicManagement\Designation;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-
+use Khsing\World\World;
 class RegisterController extends Controller
 {
     /*
@@ -128,7 +129,8 @@ class RegisterController extends Controller
         $institute_types=InstituteType::where('status', 'active')->get();
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
-
-        return view('auth.register', compact('institute_types', 'chart_types','business_school'));
+        $designations=Designation::where('status', 'active')->get();
+        $countries = World::Countries();
+        return view('auth.register-new', compact('institute_types', 'chart_types','business_school','designations', 'countries'));
     }
 }

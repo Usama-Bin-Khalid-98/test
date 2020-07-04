@@ -46,3 +46,21 @@ h3 {
 i,#status {
     cursor: pointer;
 }
+
+a span,.status
+{
+    margin-left: 10px;
+}
+.select2 {
+    width: 100% !important;
+}
+
+@media (max-width: 360px) {
+    .timeline-item{
+        min-width: 100%;
+        margin-left: 0px !important;
+    }
+    .box-body {
+        padding: 0px;
+    }
+}
