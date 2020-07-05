@@ -50,7 +50,7 @@
                 <div class="form-group col-md-4">
                     <label for="school_name">{{ __('Business School Name') }}</label>
                     <div class="input-group">
-                    <select name="school_name" class="form-control">
+                    <select name="business_school_id" class="form-control">
                         <option value="">Select Business School</option>
                         @foreach($business_school as $school)
                         <option value="{{$school->id}}">{{$school->name}}</option>
