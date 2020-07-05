@@ -13,7 +13,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-use Khsing\World\World;
+use PragmaRX\Countries\Package\Countries;
+
 class RegisterController extends Controller
 {
     /*
@@ -55,7 +56,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'school_name' => ['required', 'string', 'max:255'],
+            'business_school_id' => ['required', 'string', 'max:255'],
             'year_estb' => ['required', 'date'],
             'address' => ['required'],
             'web_url' => ['required'],
@@ -79,10 +80,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $businessSchool = BusinessSchool::where('id', $data['school_name']);
+        $businessSchool = BusinessSchool::where('id', $data['business_school_id']);
 
         try {
-            $update = BusinessSchool::find($data['school_name']);
+            $update = BusinessSchool::find($data['business_school_id']);
             $update->update([
                 'contact_person' => $data['contact_person'],
                 'year_estb' => $data['year_estb'],
@@ -105,7 +106,7 @@ class RegisterController extends Controller
         try {
             return User::create([
                 'name' => $data['contact_person'],
-                'business_school_id' => $data['school_name'],
+                'business_school_id' => $data['business_school_id'],
                 'email' => $data['email'],
                 'status' => 'pending',
                 'user_type' => 'school',
@@ -126,11 +127,16 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
+        $countries = Countries::all();
+        $cities = Countries::where('name.common', 'Pakistan')->first()
+            ->hydrate('cities')
+            ->cities
+            ->sortBy('name');
+
         $institute_types=InstituteType::where('status', 'active')->get();
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
         $designations=Designation::where('status', 'active')->get();
-        $countries = World::Countries();
-        return view('auth.register-new', compact('institute_types', 'chart_types','business_school','designations', 'countries'));
+        return view('auth.register', compact('institute_types', 'chart_types','business_school','designations'));
     }
 }

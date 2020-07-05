@@ -28,6 +28,8 @@
             <!-- row -->
             <div class="row">
                 <div class="col-md-12">
+                    <form action="{{ url('register') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                     <!-- The time line -->
                     <ul class="timeline">
                         <!-- timeline time label -->
@@ -38,6 +40,7 @@
 {{--                        </li>--}}
                         <!-- /.timeline-label -->
                         <!-- timeline item -->
+
                         <li>
                             <i class="fa fa-user bg-green"></i>
 
@@ -48,7 +51,6 @@
                                 <h3 class="timeline-header"><a href="#" class="text-blue">Personal Info</a></h3>
 
                                 <div class="timeline-body">
-                                    <form action="{{ route('register') }}" id="PersonalForm" method="POST" enctype="multipart/form-data">
                                         <!-- /.box-header -->
                                         <div class="box-body">
 
@@ -106,22 +108,21 @@
                                                     <label for="name">Country</label>
                                                     <select name="country_id" id="country_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Country</option>
-                                                        @foreach($countries as $country)
-                                                            <option value="{{$country->id}}">{{$country->name}}</option>
-                                                        @endforeach
+{{--                                                        @foreach($countries as $country)--}}
+{{--                                                            <option value="{{$country->id}}">{{$country->name}}</option>--}}
+{{--                                                        @endforeach--}}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">City</label>
-                                                    <select name="city" id="city" class="form-control select2" style="width: 100%;">
+                                                    <select name="city_id" id="city_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select City</option>
-                                                        <option value="">Select City</option>
-                                                        <option value="">Select City</option>
-                                                        {{--                                                        @foreach($designations as $designation)--}}
-                                                        {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
-                                                        {{--                                                        @endforeach--}}
+
+{{--                                                        @foreach($countries as $city)--}}
+{{--                                                            <option value="{{$city->city->id}}">{{$city->city->name}}</option>--}}
+{{--                                                        @endforeach--}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -142,7 +143,6 @@
                                             </div>
                                         </div>
                                         <!-- /.box-body -->
-                                    </form>
                                 </div>
                             </div>
                         </li>
@@ -154,35 +154,31 @@
                             <div class="timeline-item">
                                 <div class="box box-primary"></div>
                                 <span class="time"><i class="fa fa-institution"></i> </span>
-
                                 <h3 class="timeline-header no-border"><a href="#">Business School</a></h3>
                                 <div class="timeline-body">
-                                    <form action="javascript:void(0)" id="schoolForm" method="POST" enctype="multipart/form-data">
                                         <!-- /.box-header -->
                                         <div class="box-body">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">Business/Institute</label>
-                                                    <select name="business_institute" id="business_institute" class="form-control select2" style="width: 100%;">
+                                                    <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Business/Institute</option>
-                                                        <option value="">Select</option>
-                                                        <option value="">Select</option>
-                                                        {{--                                                        @foreach($designations as $designation)--}}
-                                                        {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
-                                                        {{--                                                        @endforeach--}}
+                                                        @foreach($business_school as $school)
+                                                            <option value="{{$school->id}}">{{$school->name}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">Discipline</label>
-                                                    <select name="discipline" id="discipline" class="form-control select2" style="width: 100%;">
+                                                    <select name="discipline_id" id="discipline_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Discipline</option>
-                                                        <option value="">Select </option>
-                                                        <option value="">Select </option>
-                                                        {{--                                                        @foreach($designations as $designation)--}}
-                                                        {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
-                                                        {{--                                                        @endforeach--}}
+                                                        <option value="">Discipline 1 </option>
+                                                        <option value="">Discipline 2 </option>
+{{--                                                        @foreach($designations as $designation)--}}
+{{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
+{{--                                                        @endforeach--}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -191,11 +187,11 @@
                                                     <label for="name">Department Name</label>
                                                     <select name="department_id" id="department_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Department</option>
-                                                        <option value="">Select </option>
-                                                        <option value="">Select</option>
-                                                        {{--                                                        @foreach($designations as $designation)--}}
-                                                        {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
-                                                        {{--                                                        @endforeach--}}
+                                                        <option value="1">Computer Science </option>
+                                                        <option value="2">Management Science</option>
+{{--                                                        @foreach($designations as $designation)--}}
+{{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
+{{--                                                        @endforeach--}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -207,7 +203,6 @@
                                             </div>
                                         </div>
                                         <!-- /.box-body -->
-                                    </form>
                                 </div>
                             </div>
                         </li>
@@ -219,34 +214,29 @@
                             <div class="timeline-item">
                                 <div class="box box-primary"></div>
                                 <span class="time"><i class="fa fa-search"></i></span>
-
                                 <h3 class="timeline-header"><a href="#">Peer Reviewer</a></h3>
-
                                 <div class="timeline-body">
-                                    <form action="javascript:void(0)" id="PeerReviewForm" method="POST" enctype="multipart/form-data">
                                         <!-- /.box-header -->
                                         <div class="box-body">
 
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="name">Role</label>
-                                                    <select name="role" id="role" class="form-control select2" style="width: 100%;">
-                                                        <option value="">Select Role</option>
-                                                        <option value="">Select Role</option>
-                                                        <option value="">Select Role</option>
-                                                        {{--                                                        @foreach($designations as $designation)--}}
-                                                        {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
-                                                        {{--                                                        @endforeach--}}
-                                                    </select>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-md-4">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label for="name">Role</label>--}}
+{{--                                                    <select name="role" id="role" class="form-control select2" style="width: 100%;">--}}
+{{--                                                        <option value="">Select Role</option>--}}
+{{--                                                        @foreach($designations as $designation)--}}
+{{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
+{{--                                                        @endforeach--}}
+{{--                                                    </select>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">Current Position</label>
                                                     <select name="current_position" id="current_position" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Position</option>
-                                                        <option value="">Select </option>
-                                                        <option value="">Select</option>
+                                                        <option value="1">HOD </option>
+                                                        <option value="2">Professor</option>
                                                         {{--                                                        @foreach($designations as $designation)--}}
                                                         {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
                                                         {{--                                                        @endforeach--}}
@@ -258,8 +248,8 @@
                                                     <label for="name">Region</label>
                                                     <select name="region" id="region" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Region</option>
-                                                        <option value="">Select Region</option>
-                                                        <option value="">Select Region</option>
+                                                        <option value="1"> Region one</option>
+                                                        <option value="2"> Region second</option>
                                                         {{--                                                        @foreach($designations as $designation)--}}
                                                         {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
                                                         {{--                                                        @endforeach--}}
@@ -271,8 +261,8 @@
                                                     <label for="name">Sector</label>
                                                     <select name="sector" id="sector" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Sector</option>
-                                                        <option value="">Select Sector</option>
-                                                        <option value="">Select Sector</option>
+                                                        <option value="1"> Sector 1</option>
+                                                        <option value="2"> Sector 2</option>
                                                         {{--                                                        @foreach($designations as $designation)--}}
                                                         {{--                                                            <option value="{{$designation->id}}">{{$designation->name}}</option>--}}
                                                         {{--                                                        @endforeach--}}
@@ -363,9 +353,9 @@
                                                     <label for="name">Recommended by</label>
                                                    <select name="recommended" class="form-control select2" >
                                                        <option value="">Select Recommended by</option>
-                                                       <option value="">Select Recommended by</option>
-                                                       <option value="">Select Recommended by</option>
-                                                       <option value="">Select Recommended by</option>
+                                                       <option value="1"> Recommended by</option>
+                                                       <option value="2"> Recommended by</option>
+                                                       <option value="3"> Recommended by</option>
                                                    </select>
                                                 </div>
                                             </div>
@@ -377,7 +367,6 @@
                                             </div>
                                         </div>
                                         <!-- /.box-body -->
-                                    </form>
                                 </div>
                             </div>
                         </li>
@@ -391,7 +380,7 @@
                                 <h3 class="timeline-header"><a href="#">Sign Up</a></h3>
 
                                 <div class="timeline-body">
-                                   <input type="submit" name="submit" class="btn btn-info" value="Register">
+                                   <button type="submit" class="btn btn-info"> {{ __('Register') }}</button>
                                     <a href="{{url('login')}}" class="pull-right">already have account</a>
                                 </div>
                                 <div class="">
@@ -401,8 +390,10 @@
                             </div>
                         </li>
 
+
                         <!-- /.row -->
                     </ul>
+                    </form>
                 </div>
                 <!-- /.col -->
             </div>
@@ -431,6 +422,7 @@
         });
 
         $('input[name=account_type]').on('ifChecked', function(e){
+            $('button[name=submit]').removeAttr('disabled');
             console.log('change school type', $(this).val());
             let toggle = $(this).val();
             (toggle==='business_school')?$('#business-school-tab').toggle('slow'):$('#business-school-tab').fadeOut('slow');
