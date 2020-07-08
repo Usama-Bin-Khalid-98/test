@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\StrategicManagement;
 
 use App\Models\StrategicManagement\Affiliation;
+use App\Models\StrategicManagement\Designation;
+use App\Models\StrategicManagement\StatutoryCommittee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +18,11 @@ class AffiliationController extends Controller
     public function index()
     {
         //
-        return view('strategic_management.affiliations');
+        $designations = Designation::all();
+        $statutory_committee = StatutoryCommittee::all();
+        $affiliations = Affiliation::with('designation', 'statutory_committee');
+        //dd($affiliations);
+        return view('strategic_management.affiliations', compact('designations', 'statutory_committee'));
     }
 
     /**

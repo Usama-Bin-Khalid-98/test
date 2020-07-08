@@ -62,8 +62,9 @@
                                     <label for="name">Name of Member</label>
                                     <select name="charter_type_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Member</option>
-                                        <option value="">M.Zubair</option>
-                                        <option value="">M.Ikramullah</option>
+                                        @foreach($statutory_committee as $committee)
+                                        <option value="{{$committee->id}}">{{$committee->name}}</option>
+                                        @endforeach
                                         </select>
                                 </div>
                             </div>
@@ -73,11 +74,9 @@
                                     <label for="name">Designation</label>
                                     <select name="charter_type_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Designation</option>
-                                        <option value="">Dean</option>
-                                        <option value="">HOD</option>
-{{--                                        @foreach($chart_types as $type)--}}
-{{--                                            <option value="{{$type->id}}">{{$type->name }}</option>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

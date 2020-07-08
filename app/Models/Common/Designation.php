@@ -17,4 +17,9 @@ class Designation extends Model
     public function statutory_body() {
         return $this->hasOne(StatutoryCommittee::class);
     }
+
+    public function statutory_committee()
+    {
+        return $this->hasOne(StatutoryCommittee::class);
+    }
 }

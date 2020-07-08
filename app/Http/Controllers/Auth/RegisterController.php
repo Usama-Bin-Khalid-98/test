@@ -137,6 +137,6 @@ class RegisterController extends Controller
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
         $designations=Designation::where('status', 'active')->get();
-        return view('auth.register', compact('institute_types', 'chart_types','business_school','designations'));
+        return view('auth.register-new', compact('institute_types', 'chart_types','business_school','designations'));
     }
 }
