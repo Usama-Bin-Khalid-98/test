@@ -21,6 +21,9 @@ class CreateStatutoryCommitteesTable extends Migration
                 ->on('statutory_bodies');
             $table->string('name', 100);
             $table->integer('designation_id')->unsigned();
+            $table->foreign('designation_id')
+                ->references('id')
+                ->on('designations');
             $table->date('date_first_meeting');
             $table->date('date_second_meeting');
             $table->date('date_third_meeting');

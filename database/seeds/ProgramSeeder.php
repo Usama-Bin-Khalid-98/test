@@ -19,4 +19,5 @@ class ProgramSeeder extends Seeder
             ['name' => 'Art & Design']
         ]);
     }
+
 }

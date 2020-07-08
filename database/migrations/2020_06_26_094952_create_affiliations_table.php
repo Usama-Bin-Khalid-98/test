@@ -18,8 +18,9 @@ class CreateAffiliationsTable extends Migration
             $table->integer('statutory_committee_id')->unsigned();
             $table->foreign('statutory_committee_id')
                 ->references('id')
-                ->on('statutory_committees')
-                ->onDelete('cas');
+                ->on('statutory_committees');
+//                ->onDelete('cascade');
+            $table->string('affiliation', 255);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });
