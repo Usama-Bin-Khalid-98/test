@@ -14,7 +14,12 @@ class CreateAffiliationsTable extends Migration
     public function up()
     {
         Schema::create('affiliations', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('statutory_committee_id')->unsigned();
+            $table->foreign('statutory_committee_id')
+                ->references('id')
+                ->on('statutory_committees')
+                ->onDelete('cas');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
         });

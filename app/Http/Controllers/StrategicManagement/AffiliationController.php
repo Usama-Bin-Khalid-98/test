@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\StrategicManagement;
 
 use App\Models\StrategicManagement\Affiliation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AffiliationController extends Controller
 {

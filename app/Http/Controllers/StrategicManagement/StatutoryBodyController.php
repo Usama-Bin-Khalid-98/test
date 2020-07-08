@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\StrategicManagement;
 
-use App\Models\StrategicManagement\StatutoryCommittee;
+use App\Models\StrategicManagement\StatutoryBody;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class StatutoryCommitteeController extends Controller
+class StatutoryBodyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,6 @@ class StatutoryCommitteeController extends Controller
     public function index()
     {
         //
-        return view('strategic_management.statutory_committee');
     }
 
     /**
@@ -42,10 +42,10 @@ class StatutoryCommitteeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\StatutoryCommittee  $statutoryCommittee
+     * @param  \App\Models\StrategicManagement\StatutoryBody  $statutoryBody
      * @return \Illuminate\Http\Response
      */
-    public function show(StatutoryCommittee $statutoryCommittee)
+    public function show(StatutoryBody $statutoryBody)
     {
         //
     }
@@ -53,10 +53,10 @@ class StatutoryCommitteeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\StatutoryCommittee  $statutoryCommittee
+     * @param  \App\Models\StrategicManagement\StatutoryBody  $statutoryBody
      * @return \Illuminate\Http\Response
      */
-    public function edit(StatutoryCommittee $statutoryCommittee)
+    public function edit(StatutoryBody $statutoryBody)
     {
         //
     }
@@ -65,10 +65,10 @@ class StatutoryCommitteeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\StatutoryCommittee  $statutoryCommittee
+     * @param  \App\Models\StrategicManagement\StatutoryBody  $statutoryBody
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StatutoryCommittee $statutoryCommittee)
+    public function update(Request $request, StatutoryBody $statutoryBody)
     {
         //
     }
@@ -76,10 +76,10 @@ class StatutoryCommitteeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\StatutoryCommittee  $statutoryCommittee
+     * @param  \App\Models\StrategicManagement\StatutoryBody  $statutoryBody
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StatutoryCommittee $statutoryCommittee)
+    public function destroy(StatutoryBody $statutoryBody)
     {
         //
     }
