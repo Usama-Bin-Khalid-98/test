@@ -14,8 +14,20 @@ class CreateStatutoryCommitteesTable extends Migration
     public function up()
     {
         Schema::create('statutory_committees', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('statutory_body_id')->unsigned();
+            $table->foreign('statutory_body_id')
+                ->references('id')
+                ->on('statutory_bodies');
+            $table->string('name', 100);
+            $table->integer('designation_id')->unsigned();
+            $table->date('date_first_meeting');
+            $table->date('date_second_meeting');
+            $table->date('date_third_meeting');
+            $table->date('date_fourth_meeting');
+            $table->string('file', 255)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

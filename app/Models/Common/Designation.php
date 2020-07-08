@@ -13,4 +13,8 @@ class Designation extends Model
     {
         return $this->hasOne(ContactInfo::class);
     }
+
+    public function statutory_body() {
+        return $this->hasOne(StatutoryCommittee::class);
+    }
 }

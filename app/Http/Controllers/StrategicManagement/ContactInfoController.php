@@ -20,7 +20,7 @@ class ContactInfoController extends Controller
     public function index()
     {
         //
-        $designations = Designation::where('status', 'active')->get();
+        $designations = Designation::all();
         $contacts = ContactInfo::with('designation')->get();
         ///dd($contacts);
         return view('strategic_management.contact_info', compact('designations', 'contacts'));
