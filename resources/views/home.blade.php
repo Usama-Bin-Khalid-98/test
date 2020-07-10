@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="bower_components/morris.js/morris.css">
 <!-- jvectormap -->
 <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+<link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
+
 @include("includes.header")
 @include("includes.nav")
 
@@ -320,6 +322,8 @@
   </div>
 
 
+
+<script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
 
 @include("includes.footer")
  @else

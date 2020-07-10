@@ -25,6 +25,7 @@ Route::get('/login', function() {
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
+Route::get('get-cities', 'Auth\RegisterController@get_cities');
 
 Auth::routes();
 

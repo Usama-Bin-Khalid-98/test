@@ -231,6 +231,45 @@
         </section>
     </div>
 </div>
+
+<!-- /.modal -->
+
+<div class="modal fade" id="add-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Apply for Business School Name Registration.</h4>
+            </div>
+            <form role="form" method="post">
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Business School Name</label>
+                            <input type="text" class="form-control" id="name" placeholder=" Business School Name" name="name">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="contact_no">Contact Number</label>
+                            <input type="text" class="form-control" id="contact_no" placeholder="Contact Number" name="contact_no">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="button" class="btn btn-info" value="Submit" id="add">
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <div class="container-fluid" >
     <footer class="main-footer" style="margin-left: 0px;">
         <div class="pull-right hidden-xs">
