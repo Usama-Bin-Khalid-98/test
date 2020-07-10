@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
         $this->call(LevelSeeder::class);
         $this->call(DesignationSeeder::class);
         $this->call(DepartmentSeeder::class);
+        $this->call(DisciplineSeeder::class);
+        $this->call(ReviewerRoleSeeder::class);
+        $this->call(RegionSeeder::class);
+        $this->call(SectorSeeder::class);
+        $this->call(DegreeSeeder::class);
 
     }
 }

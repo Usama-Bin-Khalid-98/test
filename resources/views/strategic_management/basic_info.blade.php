@@ -185,10 +185,10 @@
         </section>
     </div>
     <!-- /.modal -->
-    <!-- /.modal -->
-    @include("../includes.footer")
-    <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+    @include("../includes.footer")
+    <!-- /.modal -->
+    <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 
