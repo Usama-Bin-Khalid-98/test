@@ -18,9 +18,9 @@ class ResearchSummaryController extends Controller
      */
     public function index()
     {
-        
+
         $summaries = ResearchSummary::get();
-    
+
         return view('registration.research_summary.index', compact('summaries'));
     }
 
@@ -49,16 +49,16 @@ class ResearchSummaryController extends Controller
         }
         try {
 
-                    ResearchSummary::create([
-                        'total_items' => $request->total_items,
-                        'contributing_core_faculty' => $request->contributing_core_faculty,
-                        'jointly_produced_other' => $request->jointly_produced_other,
-                        'jointly_produced_same' => $request->jointly_produced_same,
-                        'jointly_produced_multiple' => $request->jointly_produced_multiple
-                ]);
+            ResearchSummary::create([
+                'total_items' => $request->total_items,
+                'contributing_core_faculty' => $request->contributing_core_faculty,
+                'jointly_produced_other' => $request->jointly_produced_other,
+                'jointly_produced_same' => $request->jointly_produced_same,
+                'jointly_produced_multiple' => $request->jointly_produced_multiple
+            ]);
 
-                    return response()->json(['success' => 'Research Summary Information added successfully.']);
-                
+            return response()->json(['success' => 'Research Summary Information added successfully.']);
+
 
         }catch (Exception $e)
         {
@@ -105,14 +105,14 @@ class ResearchSummaryController extends Controller
 
         try {
 
-           ResearchSummary::where('id', $researchSummary->id)->update([
-               'total_items' => $request->total_items,
-               'contributing_core_faculty' => $request->contributing_core_faculty,
-               'jointly_produced_other' => $request->jointly_produced_other,
-               'jointly_produced_same' => $request->jointly_produced_same,
-               'jointly_produced_multiple' => $request->jointly_produced_multiple,
-               'status' => $request->status,
-           ]);
+            ResearchSummary::where('id', $researchSummary->id)->update([
+                'total_items' => $request->total_items,
+                'contributing_core_faculty' => $request->contributing_core_faculty,
+                'jointly_produced_other' => $request->jointly_produced_other,
+                'jointly_produced_same' => $request->jointly_produced_same,
+                'jointly_produced_multiple' => $request->jointly_produced_multiple,
+                'status' => $request->status,
+            ]);
             return response()->json(['success' => 'Research Summary Information updated successfully.']);
 
         }catch (Exception $e)
@@ -129,13 +129,13 @@ class ResearchSummaryController extends Controller
      */
     public function destroy(ResearchSummary $researchSummary)
     {
-          try {
-             ResearchSummary::destroy($researchSummary->id);
-                return response()->json(['success' => 'Record deleted successfully.']);
-         }catch (Exception $e)
-             {
-                return response()->json(['error' => 'Failed to delete record.']);
-             }
+        try {
+            ResearchSummary::destroy($researchSummary->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
     }
 
 
