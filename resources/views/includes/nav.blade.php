@@ -128,29 +128,20 @@
           </ul>
         </li>
 
-          <li class=" treeview {{(request()->is('research-summary'))?'active':''}}">
-              <a href="#">
-                  <i class="fa fa-search text-purple"></i> <span>Research and Development</span>
-                  <span class="pull-right-container">
+           <li class=" treeview {{(request()->is('research-summary'))?'active':''}} ">
+          <a href="#">
+            <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
+             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-              </a>
+          </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{route('research-summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary of Research</a></li>
+            <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
+
           </ul>
         </li>
 
-          <li class=" treeview {{(request()->is(''))?'active':''}}">
-              <a href="#">
-                  <i class="fa fa-chrome text-green"></i> <span>Facilities Information</span>
-                  <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-              </a>
-          <ul class="treeview-menu">
-            <li class="{{ (request()->is('')) ? 'active' : '' }}"><a href="{{route('research-summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary of Research</a></li>
-          </ul>
-        </li>
+         
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Admin</a></li>
 

@@ -69,4 +69,4 @@ Route::get('/visiting_faculty','VisitingFacultyController@index')->name('visitin
 Route::get('/faculty-gender','FacultyGenderController@index')->name('faculty-gender');
 
 //research-summary
-Route::get('/research-summary','ResearchSummaryController@index')->name('research-summary');
+Route::resource('research-summary','ResearchSummaryController');
