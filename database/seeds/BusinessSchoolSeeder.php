@@ -13,6 +13,7 @@ class BusinessSchoolSeeder extends Seeder
     {
         //
         DB::table('business_schools')->insert([
+
                 ['name' => 'City University of Science & Technology Peshawar', 'status' => 'active'],
                 ['name' => 'Abasyn University Peshawar', 'status' => 'active'],
                 ['name' => 'Capital University of Science & Technology', 'status' => 'active'],

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Research\ResearchSummary;
+use App\PublicationType;
+use App\BusinessSchool;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -19,9 +21,11 @@ class ResearchSummaryController extends Controller
     public function index()
     {
 
-        $summaries = ResearchSummary::get();
-
-        return view('registration.research_summary.index', compact('summaries'));
+        $publications = PublicationType::where('status', 'active')->get();
+        $businesses = BusinessSchool::where('status', 'active')->get();
+        $summaries = ResearchSummary::with('publication_type', 'business_school')->get();
+        ///dd($contacts);
+        return view('registration.research_summary.index', compact('publications', 'businesses', 'summaries'));
     }
 
     /**
@@ -50,6 +54,9 @@ class ResearchSummaryController extends Controller
         try {
 
             ResearchSummary::create([
+                'publication_type_id' => $request->publication_type_id,
+                'business_school_id' => $request->business_school_id,
+                'year' => $request->year,
                 'total_items' => $request->total_items,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
                 'jointly_produced_other' => $request->jointly_produced_other,
@@ -106,6 +113,9 @@ class ResearchSummaryController extends Controller
         try {
 
             ResearchSummary::where('id', $researchSummary->id)->update([
+                'publication_type_id' => $request->publication_type_id,
+                'business_school_id' => $request->business_school_id,
+                'year' => $request->year,
                 'total_items' => $request->total_items,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
                 'jointly_produced_other' => $request->jointly_produced_other,
@@ -141,6 +151,9 @@ class ResearchSummaryController extends Controller
 
     protected function rules() {
         return [
+            'publication_type_id' => 'required',
+            'business_school_id' => 'required',
+            'year' => 'required',
             'total_items' => 'required',
             'contributing_core_faculty' => 'required',
             'jointly_produced_other' => 'required',
@@ -151,6 +164,9 @@ class ResearchSummaryController extends Controller
 
     protected function update_rules() {
         return [
+             'publication_type_id' => 'required',
+            'business_school_id' => 'required',
+            'year' => 'required',
             'total_items' => 'required',
             'contributing_core_faculty' => 'required',
             'jointly_produced_other' => 'required',
