@@ -84,7 +84,30 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year</label>
-                                    <input type="text" name="year" id="year" value="" placeholder="year" class="form-control">
+                                    <select name="year" id="year" class="form-control select2">
+                                        <option value="">Select Year</option>
+                                        <option value="2000">2000</option>
+                                        <option value="2001">2001</option>
+                                        <option value="2002">2002</option>
+                                        <option value="2003">2003</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                        <option value="2006">2006</option>
+                                        <option value="2007">2007</option>
+                                        <option value="2008">2008</option>
+                                        <option value="2009">2009</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -240,7 +263,30 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Year</label>
-                                    <input type="text" name="year" id="edit_year" value="{{old('year')}}" class="form-control">
+                                    <select name="year" id="edit_year"  class="form-control select2">
+                                        <option value="">Select Year</option>
+                                        <option value="2000">2000</option>
+                                        <option value="2001">2001</option>
+                                        <option value="2002">2002</option>
+                                        <option value="2003">2003</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                        <option value="2006">2006</option>
+                                        <option value="2007">2007</option>
+                                        <option value="2008">2008</option>
+                                        <option value="2009">2009</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                    </select>
                                 
                             </div>
                         </div>
@@ -389,7 +435,7 @@
             // Initialize Select2
              $('#edit_publication_type_id').select2().val(data.publication_type_id).trigger('change');
              $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
-            $('#edit_year').val(data.year);
+            $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_total_items').val(data.total_items);
             $('#edit_contributing_core_faculty').val(data.contributing_core_faculty);
             $('#edit_jointly_produced_other').val(data.jointly_produced_other);
