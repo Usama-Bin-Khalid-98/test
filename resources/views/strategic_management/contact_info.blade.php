@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="box box-primary" style="border: 1px solid; padding: 10px; box-shadow: 5px 10px 18px #716bde;">
+                    <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">Provide contact information, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
                             <div class="box-tools pull-right">
@@ -118,19 +118,14 @@
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
-                    <div class="box box-primary" style="border: 1px solid; padding: 10px; box-shadow: 5px 10px 18px #716bde;">
+                    <div class="box " >
                         <div class="box-header">
                             <h3 class="box-title">CAO</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-hover">
-                                <thead style="background-color: #DCDCDC;">
+                            <table id="datatable" class="table table-bordered table-stripped">
+                                <thead >
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -157,7 +152,7 @@
                                 </tr>
                                 @endforeach
                                 </tbody>
-                                <tfoot style="background-color: #DCDCDC;">
+                                <tfoot >
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
