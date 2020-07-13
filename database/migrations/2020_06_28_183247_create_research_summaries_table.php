@@ -15,6 +15,10 @@ class CreateResearchSummariesTable extends Migration
     {
         Schema::create('research_summaries', function (Blueprint $table) {
             $table->id();
+            $table->integer('publication_type_id')->unsigned();
+            $table->foreign('publication_type_id')
+                ->references('id')
+                ->on('publication_types');
             $table->integer('business_school_id')->unsigned();
             $table->foreign('business_school_id')
                 ->references('id')

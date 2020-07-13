@@ -130,7 +130,7 @@
 
            <li class=" treeview {{(request()->is('research-summary'))?'active':''}} ">
           <a href="#">
-            <i class="fa fa-users " style="color: #D81B60"></i> <span>Research And Development</span>
+            <i class="fa fa-users " style="color: #D81B60"></i> <span>Research Development</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
