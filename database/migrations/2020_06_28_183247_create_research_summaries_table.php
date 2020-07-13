@@ -15,6 +15,18 @@ class CreateResearchSummariesTable extends Migration
     {
         Schema::create('research_summaries', function (Blueprint $table) {
             $table->id();
+            $table->integer('business_school_id')->unsigned();
+            $table->foreign('business_school_id')
+                ->references('id')
+                ->on('business_schools');
+            $table->string('year', 10);
+            $table->string('total_items', 10);
+            $table->string('contributing_core_faculty', 10);
+            $table->string('jointly_produced_other', 10);
+            $table->string('jointly_produced_same', 10);
+            $table->string('jointly_produced_multiple', 10);
+            $table->enum('status', ['active','inactive'])->default('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

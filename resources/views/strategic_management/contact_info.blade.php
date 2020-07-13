@@ -47,17 +47,12 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                            
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
-                        <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
-                        <!-- /.box-header -->
                          <div class="box-body">
-
+                             <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Contact Person Name</label>
@@ -117,21 +112,20 @@
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
-
+                           </form>
                         </div>
                         <!-- /.box-body -->
-                        </form>
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
-                    <div class="box">
+                    <div class="box " >
                         <div class="box-header">
                             <h3 class="box-title">CAO</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
-                                <thead>
+                            <table id="datatable" class="table table-bordered table-stripped">
+                                <thead >
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -158,7 +152,7 @@
                                 </tr>
                                 @endforeach
                                 </tbody>
-                                <tfoot>
+                                <tfoot >
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
