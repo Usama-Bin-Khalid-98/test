@@ -13,23 +13,17 @@ class DisciplineSeeder extends Seeder
     {
         //
         DB::table('disciplines')->insert([
-            ['name' => 'Anthropology'],
-            ['name' => 'Archaeology'],
-            ['name' => 'Economics'],
-            ['name' => 'Geography'],
-            ['name' => 'Political science'],
-            ['name' => 'Psychology'],
-            ['name' => 'Social Work'],
-            ['name' => 'Biology'],
-            ['name' => 'Chemistry'],
-            ['name' => 'Physics'],
-            ['name' => 'Computer Science'],
-            ['name' => 'Mathematics'],
-            ['name' => 'Statistics'],
+            ['name' => 'Agriculture & Veterinary'],
+            ['name' => 'Arts & Design'],
             ['name' => 'Business Administration'],
-            ['name' => 'Engineering and technology'],
-            ['name' => 'Medicine and health'],
-            ['name' => 'Physical Education']
+            ['name' => 'Commerce, Management Sciences'],
+            ['name' => 'Engineering & Technology'],
+            ['name' => 'Economics'],
+            ['name' => 'General'],
+            ['name' => 'Medical'],
+            ['name' => 'Medicine and Healthcare'],
+            ['name' => 'Public Administration'],
+            ['name' => 'Science & Technology']
         ]);
     }
 }

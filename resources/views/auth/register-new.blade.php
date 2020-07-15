@@ -6,13 +6,15 @@
 <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
 
 
+
+
 </head>
 <body>
 
 <div class="jumbotron jumbotron-fluid" style="padding-bottom: 0;">
     <div class="container">
         <img src="{{URL::asset('dist/img/logo.png')}}" style="width: 100px">
-        <span class="lead" style="font-size: 20px;"><strong>NBEAC</strong> (National Business Educaton Accreditatoin Council).</span>
+        <span class="lead" style="font-size: 20px;"><strong>NBEAC</strong> (National Business Education Accreditation Council).</span>
     </div>
 </div>
 <div class="container" >
@@ -81,7 +83,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="email">CNIC</label>
-                                                    <input type="text" name="cnic" id="cnic" value="{{old('cnic')}}" class="form-control">
+                                                    <input type="text" data-inputmask="'mask': '99999-9999999-9'" name="cnic" id="cnic" value="{{old('cnic')}}" class="form-control">
                                                     @error('cnic')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -90,7 +92,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">Contact No</label>
-                                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')}}" class="form-control">
+                                                    <input type="text" data-inputmask="'mask': '0399-99999999'" name="contact_no" id="contact_no" value="{{old('contact_no')}}" class="form-control" maxlength="12">
                                                     @error('contact_no')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -230,6 +232,7 @@
                                                 <div class="form-group">
                                                     <label for="email">Bank Deposit Slip</label>
                                                     <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">
+                                                    <span class="text-blue">up to 5 mb file allowed. </span>
                                                 </div>
                                             </div>
                                             </div>
@@ -514,9 +517,13 @@
     <!-- /.content-wrapper -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
+    <script>
+        $(":input").inputmask();
 
+    </script>
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script>
         //Initialize Select2 Elements

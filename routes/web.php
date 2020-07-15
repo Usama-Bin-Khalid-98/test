@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -21,11 +20,18 @@ Route::get('/login', function() {
     return view('auth.login');
 });
 
+Auth::routes(['verify' => true]);
 // Registration Routes...
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
 Route::get('get-cities', 'Auth\RegisterController@get_cities');
+Route::get('mailsend', 'Auth\RegisterController@mailsend');
+
+
+Route::get('profile', function () {
+    // Only verified users may enter...
+})->middleware('verified');
 
 Auth::routes();
 

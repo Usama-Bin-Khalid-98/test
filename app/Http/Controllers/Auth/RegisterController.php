@@ -6,6 +6,7 @@ use App\BusinessSchool;
 use App\CharterType;
 use App\Http\Controllers\Controller;
 use App\InstituteType;
+use App\Mail\RegisterationMail;
 use App\Models\Common\Degree;
 use App\Models\Common\Discipline;
 use App\Models\Common\Program;
@@ -19,6 +20,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
@@ -243,5 +245,21 @@ class RegisterController extends Controller
             ->sortBy('name');
 
         return $cities;
+    }
+
+    public function mailsend()
+    {
+
+        try {
+            $messge = 'here is the message';
+            Mail::to('awaisrazzaa@gmail.com')->send(new RegisterationMail($messge));
+
+            // Mail::to('walayat.iplex@gmail.com')->send(new RegistrationMail());
+            return 'done';
+        }catch (Exception $e)
+        {
+            var_dump($e->getMessage());
+        }
+
     }
 }
