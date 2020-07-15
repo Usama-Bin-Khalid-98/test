@@ -13,7 +13,7 @@ class CreatePublicationTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('publication_type', function (Blueprint $table) {
+        Schema::create('publication_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
             $table->enum('status', ['active','inactive'])->default('active');

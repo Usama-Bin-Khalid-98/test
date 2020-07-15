@@ -11,7 +11,7 @@ class PublicationTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('publication_type')->insert([
+        DB::table('publication_types')->insert([
 
                 ['name' => 'Impact factor journals', 'status' => 'active'],
                 ['name' => 'HEC category W', 'status' => 'active'],
