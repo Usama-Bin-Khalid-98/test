@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faculty\Stability;
 use Illuminate\Http\Request;
 
-class StabilityController extends Controller
+class FacultySummaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,8 @@ class StabilityController extends Controller
      */
     public function index()
     {
+        return view('registration.faculty.summary_faculty');
         //
-        return view('registration.faculty.stability');
     }
 
     /**
@@ -42,10 +41,10 @@ class StabilityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Faculty\Stability  $stability
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Stability $stability)
+    public function show($id)
     {
         //
     }
@@ -53,10 +52,10 @@ class StabilityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Faculty\Stability  $stability
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Stability $stability)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +64,10 @@ class StabilityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faculty\Stability  $stability
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stability $stability)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +75,10 @@ class StabilityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Faculty\Stability  $stability
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Stability $stability)
+    public function destroy($id)
     {
         //
     }

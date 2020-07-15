@@ -70,9 +70,12 @@ Route::get('/entry-requirements','EntryRequirementController@index')->name('entr
 Route::resource('student-enrolment','StudentEnrolmentController');
 // Faculty
 Route::get('/faculty/workload','WorkLoadController@index')->name('workload');
-Route::get('/faculty_stability','StabilityController@index')->name('faculty_stability');
+Route::get('/faculty_cources','FacultyTeachingCources@index')->name('faculty_cources');
 Route::get('/visiting_faculty','VisitingFacultyController@index')->name('visiting_faculty');
 Route::get('/faculty-gender','FacultyGenderController@index')->name('faculty-gender');
+Route::get('/faculty_summary','FacultySummaryController@index')->name('faculty_summary');
+Route::get('/faculty_student_ratio','FacultyStudentRatio@index')->name('faculty_student_ratio');
+Route::get('/faculty_stability','FacultyStabilityController@index')->name('faculty_stability');
 
 
 //research-summary

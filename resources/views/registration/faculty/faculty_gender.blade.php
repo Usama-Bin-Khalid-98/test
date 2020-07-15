@@ -85,25 +85,15 @@
                                     <input type="text" name="courses" value="" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                               <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Adjunct</label>
-                                    <input type="text" name="courses" value="" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Visiting</label>
-                                    <input type="text" name="courses" value="" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
-                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
+                                    <label for="name">Faculty Type</label>
+                                    <select name="designation" class="form-control">
+                                        <option value="">Select type</option>
+                                        <option value="">Permanent</option>
+                                         <option value="">Visiting</option>
+                                        <option value="">Adjunct</option>
+                                    </select>
                                 </div>
                             </div>
                              <div class="col-md-12">

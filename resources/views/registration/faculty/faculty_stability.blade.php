@@ -15,12 +15,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Faculty Work Load
+                Faculty Stability
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Faculty Work Load </li>
+                <li class="active"> Faculty Stability </li>
             </ol>
         </section>
         <section class="content-header">
@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information of faculty workload over the last two semesters. Attach faculty workload policy.</h3>
+                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -58,53 +58,45 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <select name="designation" class="form-control">
-                                        <option value="">Select Designation</option>
-                                        <option value="">Professor</option>
-                                        <option value="">Assist Professor</option>
-                                        <option value="">HOD</option>
-                                    </select>
-                                </div>
-                            </div>
+                          
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Thought in Programs</label>
-                                    <input type="text" name="program" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                   <label for="name">PHD</label>
-                                    <input type="text" name="phd" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Master</label>
-                                    <input type="text" name="master" value="" class="form-control">
+                                    <label for="name"> Year</label>
+                                    <input type="date" name="year" value="" class="form-control">
                                 </div>
                             </div>
 
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Total Faculty</label>
+                                    <input type="text" name="phd" value="xyz" class="form-control">
+                                    
+                                </div>
+                            </div>
+                            
                             <div class="col-md-3">
-                              <div class="form-group">
-                                  <label for="name">Bachelors</label>
-                                  <input type="text" name="bachelor" value="" class="form-control">
-                              </div>
+                                <div class="form-group">
+                                   <label for="name">Resigned</label>
+                                    <input type="text" name="resigned" value="" class="form-control">
+                                </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Administrative responsibility</label>
-                                    <textarea type="text" name="responsibility" value="" class="form-control"></textarea>
+                                    <label for="name">Retired</label>
+                                    <input type="text" name="retired" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Terminated</label>
+                                    <input type="text" name="terminated" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">New Induction</label>
+                                    <input type="text" name="newinduction " value="" class="form-control">
                                 </div>
                             </div>
 
@@ -122,51 +114,49 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Information of faculty workload over the last two semesters</h3>
+                            <h3 class="box-title">Data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Designation</th>
-                                    <th>Taught in Program</th>
-                                    <th>PHD</th>
-                                    <th>Master</th>
-                                    <th>Bachelor</th>
-                                    <th>Administrative Responsibility</th>
-                                    <th>Status</th>
                                     <th>year</th>
+                                    <th>Total Faculty</th>
+                                    <th>Retired</th>
+                                    <th>Resigned</th>
+                                    <th>Terminated</th>
+                                    <th>New Induction</th>
+                                    
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>prof. Alamjan</td>
-                                    <td>Professor</td>
-                                    <td>3</td>
-                                    <td>14</td>
-                                    <td>4</td>
-                                    <td>6</td>
-                                    <td>Administrative responsibility</td>
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td>2015</td>
+                                    <td>2019</td>
+                                    <td>100</td>
+                                    <td>25</td>
+                                    <td>25</td>
+                                    <td>25</td>
+                                    <td>25</td>
+                                    
+                                    <td><i class="badge bg-green">Active</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
+                                
+                               
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Designation</th>
-                                    <th>Taught in Program</th>
-                                    <th>PHD</th>
-                                    <th>Master</th>
-                                    <th>Bachelor</th>
-                                    <th>Administrative responsibility</th>
+                                   <th>year</th>
+                                    <th>Total Faculty</th>
+                                    <th>Retired</th>
+                                    <th>Resigned</th>
+                                    <th>Terminated</th>
+                                    <th>New Induction</th>
                                     <th>Status</th>
-                                    <th>year</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
