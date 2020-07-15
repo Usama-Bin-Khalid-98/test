@@ -61,7 +61,7 @@ Route::get('/portfolio','ProgramPortfolioController@index')->name('portfolio');
 Route::get('/entry-requirements','EntryRequirementController@index')->name('entry-requirements');
 
 // Students
-Route::get('/student-enrolment','StudentEnrolmentController@index')->name('student-enrolment');
+Route::resource('student-enrolment','StudentEnrolmentController');
 // Faculty
 Route::get('/faculty/workload','WorkLoadController@index')->name('workload');
 Route::get('/faculty_stability','StabilityController@index')->name('faculty_stability');

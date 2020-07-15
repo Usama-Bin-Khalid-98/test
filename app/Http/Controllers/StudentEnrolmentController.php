@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StudentEnrolment;
+use App\Models\Common\UniviersityInformation;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
 
 class StudentEnrolmentController extends Controller
 {
@@ -14,8 +20,12 @@ class StudentEnrolmentController extends Controller
      */
     public function index()
     {
-        //
-        return view('registration.student_enrolment.enrolment');
+        $uniinfo = UniviersityInformation::get();
+        $programs = Program::where('status', 'active')->get();
+
+        $enrolments = StudentEnrolment::with('Uni','program')->get();
+
+         return view('registration.student_enrolment.enrolment', compact('uniinfo','programs','enrolments'));
     }
 
     /**
@@ -36,7 +46,35 @@ class StudentEnrolmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            StudentEnrolment::create([
+                'uni_id' => $request->uni_id,
+                'year' => $request->year,
+                'bs_level' => $request->bs_level,
+                'ms_level' => $request->ms_level,
+                'phd_level' => $request->phd_level,
+                'total_students' => $request->total_students,
+                'program_id' => $request->program_id,
+                'grad_std_t' => $request->grad_std_t,
+                'grad_std_t_2' => $request->grad_std_tt,
+                'grad_std_t_3' => $request->grad_std_ttt,
+                'male' => $request->male,
+                'female' => $request->female,
+            ]);
+
+            return response()->json(['success' => 'Student enrolment added successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -70,7 +108,35 @@ class StudentEnrolmentController extends Controller
      */
     public function update(Request $request, StudentEnrolment $studentEnrolment)
     {
-        //
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            StudentEnrolment::where('id', $studentEnrolment->id)->update([
+                'uni_id' => $request->uni_id,
+                'year' => $request->year,
+                'bs_level' => $request->bs_level,
+                'ms_level' => $request->ms_level,
+                'phd_level' => $request->phd_level,
+                'total_students' => $request->total_students,
+                'program_id' => $request->program_id,
+                'grad_std_t' => $request->grad_std_t,
+                'grad_std_t_2' => $request->grad_std_t_2,
+                'grad_std_t_3' => $request->grad_std_t_3,
+                'male' => $request->male,
+                'female' => $request->female,
+                'status' => $request->status,
+            ]);
+            return response()->json(['success' => 'Student Enrolement updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -81,6 +147,52 @@ class StudentEnrolmentController extends Controller
      */
     public function destroy(StudentEnrolment $studentEnrolment)
     {
-        //
+        try {
+            StudentEnrolment::destroy($studentEnrolment->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'uni_id' => 'required',
+            'year' => 'required',
+            'bs_level' => 'required',
+            'ms_level' => 'required',
+            'phd_level' => 'required',
+            'total_students' => 'required',
+            'program_id' => 'required',
+            'grad_std_t' => 'required',
+            'grad_std_tt' => 'required',
+            'grad_std_ttt' => 'required',
+            'male' => 'required',
+            'female' => 'required'
+        ];
+    }
+
+     protected function update_rules() {
+        return [
+             'uni_id' => 'required',
+            'year' => 'required',
+            'bs_level' => 'required',
+            'ms_level' => 'required',
+            'phd_level' => 'required',
+            'total_students' => 'required',
+            'program_id' => 'required',
+            'grad_std_t' => 'required',
+            'grad_std_t_2' => 'required',
+            'grad_std_t_3' => 'required',
+            'male' => 'required',
+            'female' => 'required'
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }
