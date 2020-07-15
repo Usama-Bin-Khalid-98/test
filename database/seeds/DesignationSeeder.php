@@ -14,10 +14,10 @@ class DesignationSeeder extends Seeder
         //
         DB::table('designations')->insert([
             ['name' => 'Dean'],
-            ['name' => 'HOD'],
+            ['name' => 'HoD'],
+            ['name' => 'Focal Person'],
             ['name' => 'Professor'],
-            ['name' => 'Associate Professor'],
-            ['name' => 'Assistant Professor']
+            ['name' => 'Associate Professor']
         ]);
     }
 }
