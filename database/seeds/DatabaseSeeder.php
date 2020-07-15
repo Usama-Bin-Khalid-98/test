@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RegionSeeder::class);
         $this->call(SectorSeeder::class);
         $this->call(DegreeSeeder::class);
+        $this->call(PublicationTypeSeeder::class);
 
     }
 }
