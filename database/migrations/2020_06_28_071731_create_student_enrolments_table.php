@@ -15,8 +15,29 @@ class CreateStudentEnrolmentsTable extends Migration
     {
         Schema::create('student_enrolments', function (Blueprint $table) {
             $table->id();
+            $table->integer('uni_id')->unsigned()->nullable();
+            $table->foreign('uni_id')
+                ->references('id')
+                ->on('univiersity_information')
+                ->onDelete('cascade');;
+            $table->string('year', 100);
+            $table->string('bs_level', 100);
+            $table->string('ms_level', 100);
+            $table->string('phd_level', 100);
+            $table->string('total_students', 100);
+            $table->integer('program_id')->unsigned()->nullable();
+            $table->foreign('program_id')
+                ->references('id')
+                ->on('programs')
+                ->onDelete('cascade');;
+            $table->string('grad_std_t', 100);
+            $table->string('grad_std_t_2', 100);
+            $table->string('grad_std_t_3', 100);
+            $table->string('male', 100);
+            $table->string('female', 100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
