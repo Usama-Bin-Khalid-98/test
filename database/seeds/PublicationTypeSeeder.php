@@ -11,6 +11,7 @@ class PublicationTypeSeeder extends Seeder
      */
     public function run()
     {
+        //
         DB::table('publication_types')->insert([
 
                 ['name' => 'Impact factor journals', 'status' => 'active'],

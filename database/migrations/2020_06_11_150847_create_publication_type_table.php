@@ -29,6 +29,6 @@ class CreatePublicationTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publication_type');
+        Schema::dropIfExists('publication_types');
     }
 }
