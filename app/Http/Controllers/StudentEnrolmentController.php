@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StudentEnrolment;
-use App\Models\Common\UniviersityInformation;
+use App\BusinessSchool;
 use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,10 +20,10 @@ class StudentEnrolmentController extends Controller
      */
     public function index()
     {
-        $uniinfo = UniviersityInformation::get();
+        $uniinfo = BusinessSchool::get();
         $programs = Program::where('status', 'active')->get();
 
-        $enrolments = StudentEnrolment::with('Uni','program')->get();
+        $enrolments = StudentEnrolment::with('business_school','program')->get();
 
          return view('registration.student_enrolment.enrolment', compact('uniinfo','programs','enrolments'));
     }
@@ -54,7 +54,7 @@ class StudentEnrolmentController extends Controller
         try {
 
             StudentEnrolment::create([
-                'uni_id' => $request->uni_id,
+                'business_school_id' => $request->uni_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,
@@ -117,7 +117,7 @@ class StudentEnrolmentController extends Controller
         try {
 
             StudentEnrolment::where('id', $studentEnrolment->id)->update([
-                'uni_id' => $request->uni_id,
+                'business_school_id' => $request->uni_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,

@@ -64,7 +64,7 @@
                                     <select name="uni_id" id="uni_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select University</option>
                                         @foreach($uniinfo as $uni)
-                                         <option value="{{$uni->id}}">{{$uni->uni_name}}</option>
+                                         <option value="{{$uni->id}}">{{$uni->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -212,7 +212,7 @@
                                 <tbody>
                                 @foreach($enrolments as $enrolement)
                                 <tr>
-                                    <td>{{$enrolement->Uni->uni_name}}</td>
+                                    <td>{{$enrolement->business_school->name?? ""}}</td>
                                     <td>{{$enrolement->year}}</td>
                                     <td>{{$enrolement->bs_level}}</td>
                                     <td>{{$enrolement->ms_level}}</td>
@@ -225,7 +225,7 @@
                                     <td>{{$enrolement->male}}</td>
                                     <td>{{$enrolement->female}}</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":{{$enrolement->id}},"uni_id":{{$enrolement->uni_id}},"year":{{$enrolement->year}},"bs_level":{{$enrolement->bs_level}},"ms_level":{{$enrolement->ms_level}},"phd_level":{{$enrolement->phd_level}},"total_students":{{$enrolement->total_students}},"program_id":{{$enrolement->program_id}},"grad_std_t":{{$enrolement->grad_std_t}},"grad_std_t_2":{{$enrolement->grad_std_t_2}},"grad_std_t_3":{{$enrolement->grad_std_t_3}},"male":{{$enrolement->male}},"female":{{$enrolement->female}},"status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":{{$enrolement->id}},"uni_id":{{$enrolement->business_school_id}},"year":{{$enrolement->year}},"bs_level":{{$enrolement->bs_level}},"ms_level":{{$enrolement->ms_level}},"phd_level":{{$enrolement->phd_level}},"total_students":{{$enrolement->total_students}},"program_id":{{$enrolement->program_id}},"grad_std_t":{{$enrolement->grad_std_t}},"grad_std_t_2":{{$enrolement->grad_std_t_2}},"grad_std_t_3":{{$enrolement->grad_std_t_3}},"male":{{$enrolement->male}},"female":{{$enrolement->female}},"status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                     
                                 </tr>
                                 @endforeach
@@ -506,7 +506,7 @@
                                 <select name="uni_id" id="edit_uni_id" class="form-control select2" style="width: 100%;">
                                     <option value="">Select University</option>
                                     @foreach($uniinfo as $uni)
-                                        <option value="{{$uni->id}}">{{$uni->uni_name}}</option>
+                                        <option value="{{$uni->id}}">{{$uni->name}}</option>
                                     @endforeach
                                 </select>
                                 <input type="hidden" id="edit_id">
