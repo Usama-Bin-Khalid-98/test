@@ -19,34 +19,31 @@ Route::get('/', function () {
 Route::get('/login', function() {
     return view('auth.login');
 });
-
-Auth::routes(['verify' => true]);
 // Registration Routes...
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
-Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
-Route::get('get-cities', 'Auth\RegisterController@get_cities');
-Route::get('mailsend', 'Auth\RegisterController@mailsend');
 
-
-Route::get('profile', function () {
-    // Only verified users may enter...
-})->middleware('verified');
 
 Auth::routes();
+    // Only verified users may enter...
+    Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
+    Route::get('get-cities', 'Auth\RegisterController@get_cities');
+    Route::get('mailsend', 'Auth\RegisterController@mailsend');
+    Route::get('home', 'HomeController@index')->name('home');
+    Route::get('admin', 'DashboardController@index');
 
-///// Dashboard
-Route::get('home', 'HomeController@index')->name('home');
-Route::get('admin', 'DashboardController@index');
-Route::patch('admin/{id}', 'DashboardController@schoolStatus');
-////// Users permissions
-Route::get('permission', 'Auth\UserController@permissions');
-// Users resource route.
-Route::resource('users', 'Auth\UserController');
-// Roles resource route.
-Route::resource('roles', 'Auth\RoleController');
-// Permissions resource route.
-Route::resource('permissions', 'Auth\PermissionController');
+
+
+    ///// Dashboard
+    Route::patch('admin/{id}', 'DashboardController@schoolStatus');
+    ////// Users permissions
+    Route::get('permission', 'Auth\UserController@permissions');
+    // Users resource route.
+    Route::resource('users', 'Auth\UserController');
+    // Roles resource route.
+    Route::resource('roles', 'Auth\RoleController');
+    // Permissions resource route.
+    Route::resource('permissions', 'Auth\PermissionController');
 
 
 //// Strategic Management

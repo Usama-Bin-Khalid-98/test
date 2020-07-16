@@ -2,6 +2,7 @@
 
 namespace App\Models\StrategicManagement;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Designation extends Model
@@ -21,5 +22,10 @@ class Designation extends Model
     public function statutory_committee()
     {
         return $this->hasOne(StatutoryCommittee::class);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
     }
 }
