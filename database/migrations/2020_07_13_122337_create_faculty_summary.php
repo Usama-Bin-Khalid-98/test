@@ -24,9 +24,9 @@ class CreateFacultySummary extends Migration
             $table->integer('lookup_faculty_program_id')->unsigned();
             $table->foreign('lookup_faculty_program_id')->references('id')->on('lookup_faculty_program');
            
-            $table->integer('lookup_faculty_qualification_id')->unsigned();
-            $table->foreign('lookup_faculty_qualification_id')->references('id')
-            ->on('lookup_faculty_qualification');
+            $table->integer('programs_id')->unsigned();
+            $table->foreign('program_id')->references('id')
+            ->on('programs');
        
             $table->integer('faculty_available');
             $table->timestamps();

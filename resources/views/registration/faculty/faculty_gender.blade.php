@@ -57,17 +57,13 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
-                            <div class="col-md-3">
+                           <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                    <select name="program" class="form-control">
-                                        <option value="">Select Program</option>
-                                        <option value="">BSSE</option>
-                                        <option value="">BCS</option>
-                                        <option value="">BBA</option>
-                                    </select>
+                                    <label for="name">year</label>
+                                    <input type="text" name="courses" value="" class="form-control">
                                 </div>
                             </div>
+
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -79,12 +75,14 @@
                                     </select>
                                 </div>
                             </div>
+                          
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Permanent/Regular</label>
+                                    <label for="name">Numbers</label>
                                     <input type="text" name="courses" value="" class="form-control">
                                 </div>
                             </div>
+
                                <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Faculty Type</label>
