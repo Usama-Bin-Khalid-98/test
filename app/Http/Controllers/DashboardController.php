@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\BusinessSchool;
 use App\Dashboard;
+use App\Mail\ActivationMail;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Exception;
 
@@ -19,7 +22,8 @@ class DashboardController extends Controller
     {
         //
         // get Registrations data
-        $registrations = BusinessSchool::where('status', 'disabled')->get();
+        $registrations = User::where('status', 'pending')->get();
+       // dd($registrations);
         return view('admin.index', compact('registrations'));
     }
 
@@ -37,7 +41,11 @@ class DashboardController extends Controller
             if($validation->fails()){
                 return response()->json($validation->messages()->all(), 422);
             }
-            BusinessSchool::where('id', $id)->update(['status' => 'active']);
+            User::where('id', $id)->update(['status' => 'active']);
+
+            $content = User::with('designation', 'department', 'business_school')->where('id',$id)->first();
+            //dd($content->email);
+            Mail::to($content->email)->queue(new ActivationMail($content));
             return response()->json(['success' => 'Status updated Successfully'], 200);
         }catch (Exception $e)
         {

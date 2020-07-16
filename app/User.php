@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\Common\Department;
+use App\Models\StrategicManagement\Designation;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -34,4 +36,18 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+    public function business_school()
+    {
+        return $this->belongsTo(BusinessSchool::class);
+    }
 }
+
