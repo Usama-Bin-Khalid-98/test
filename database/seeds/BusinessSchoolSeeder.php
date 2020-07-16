@@ -17,7 +17,6 @@ class BusinessSchoolSeeder extends Seeder
                 [ 'id'=>'1','name' => 'City University of Science & Technology Peshawar', 'status' => 'active'],
                 ['id'=>'2','name' => 'Abasyn University Peshawar', 'status' => 'active'],
                 ['id'=>'3','name' => 'Capital University of Science & Technology', 'status' => 'active'],
-
                 ['id'=>'4','name' => 'Air University, Islamabad', 'status' => 'active'],
                 ['id'=>'5','name' => 'Allama Iqbal Open University, Islamabad (AIOU)', 'status' => 'active'],
                 ['id'=>'6','name' => 'Bahria University, Islamabad', 'status' => 'active'],
@@ -31,7 +30,7 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'14','name' => 'National Defense University, Islamabad', 'status' => 'active'],
                 ['id'=>'15','name' => 'National Textile University, Faisalabad', 'status' => 'active'],
                 ['id'=>'16','name' => 'National University of Modern Languages, Islamabad', 'status' => 'active'],
-                ['id'=>'17','id'=>'1','name' => 'National University of Sciences & Technology, Islamabad', 'status' => 'active'],
+                ['id'=>'17','name' => 'National University of Sciences & Technology, Islamabad', 'status' => 'active'],
                 ['id'=>'18','name' => 'NFC Institute of Engineering & Technology, Multan', 'status' => 'active'],
                 ['id'=>'19','name' => 'Pakistan Institute of Development Economics (PIDE), Islamabad', 'status' => 'active'],
                 ['id'=>'20','name' => 'Pakistan Institute of Engineering & Applied Sciences, Islamabad (PIEAS)', 'status' => 'active'],
@@ -204,8 +203,7 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'185','name' => '', 'status' => 'active'],
                 ['id'=>'186','name' => '', 'status' => 'active'],
                 ['id'=>'187','name' => '', 'status' => 'active'],
-
-                      ['id'=>'188','name' => '', 'status' => 'active'],
+                ['id'=>'188','name' => '', 'status' => 'active'],
                 ['id'=>'189','name' => 'Muhammad Ali Jinnah University, Karachi', 'status' => 'active'],
                 ['id'=>'190','name' => 'Newport Institute of Communications & Economics, Karachi', 'status' => 'active'],
                 ['id'=>'191','name' => 'Preston Institute of Management, Science and Technology, Karachi', 'status' => 'active'],
