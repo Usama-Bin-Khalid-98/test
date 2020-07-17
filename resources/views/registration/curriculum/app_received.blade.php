@@ -1,4 +1,4 @@
-@section('pageTitle', 'Program Portfolio')
+@section('pageTitle', 'Application Received')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Program Portfolio
+                Application Received
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Program Portfolio </li>
+                <li class="active"> Application Received </li>
             </ol>
         </section>
         <section class="content-header">
@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide the portfolio of the program(s) under review.</h3>
+                            <h3 class="box-title">Application Received Form. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -58,7 +58,7 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <form action="javascript:void(0)" id="form" method="POST">
+                        	 <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Program Name</label>
@@ -72,55 +72,47 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Semesters</label>
-                                    <input type="text" name="total_semesters" id="total_semesters" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Course Type</label>
-                                   <select name="course_type_id" id="course_type_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Course</option>
-                                        @foreach($courses as $course)
-                                         <option value="{{$course->id}}">{{$course->name}}</option>
+                                    <label for="name">Semesters</label>
+                                   <select name="semester_id" id="semester_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Semester</option>
+                                        @foreach($semesters as $criteria)
+                                         <option value="{{$criteria->id}}">{{$criteria->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
                             </div>
+                               <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Applications Received</label>
+                                    <input type="text" name="app_received" id="app_received" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Admission Offered</label>
+                                    <input type="text" name="admission_offered" id="admission_offered" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Student Intake</label>
+                                    <textarea name="student_intake" id="student_intake" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Semester Commencement Date</label>
+                                    <input type="date" name="semester_comm_date" id="semester_comm_date" class="form-control">
+                                </div>
+                            </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Number of Course</label>
-                                    <input type="text" name="no_of_course" id="no_of_course" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Credit Hours</label>
-                                    <input type="text" name="credit_hours" id="credit_hours" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Internship Requirements</label>
-                                    <textarea name="internship_req" id="internship_req" class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">FYP Requirements</label>
-                                    <textarea name="fyp_req" id="fyp_req" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        
-                             <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
-                        </form>
-
+                           </form>
                         </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
@@ -128,49 +120,47 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Portfolio of the program(s) under review</h3>
+                            <h3 class="box-title">Application Received List.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
-                                <tr>
+                                 <tr>
                                     <th>Program</th>
-                                    <th>Total Semesters</th>
-                                    <th>Course Type</th>
-                                    <th>No of Courses</th>
-                                    <th>Credit Hours</th>
-                                    <th>Internship Requirement</th>
-                                    <th>FYP Requirement</th>
+                                    <th>Semesters</th>
+                                    <th>Application Received</th>
+                                    <th>Admission Offered</th>
+                                    <th>Student Intake</th>
+                                    <th>Semester Commencement Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                 @foreach($portfolios as $portfolio)
+                                
+                                @foreach($apps as $portfolio)
                                 <tr>
                                     <td>{{$portfolio->program->name}}</td>
-                                    <td>{{$portfolio->total_semesters}}</td>
-                                    <td>{{$portfolio->course_type->name}}</td>
-                                    <td>{{$portfolio->no_of_course}}</td>
-                                    <td>{{$portfolio->credit_hours}}</td>
-                                    <td>{{$portfolio->internship_req}}</td>
-                                    <td>{{$portfolio->fyp_req}}</td>
+                                    <td>{{$portfolio->semester->name}}</td>
+                                    <td>{{$portfolio->app_received}}</td>
+                                    <td>{{$portfolio->admission_offered}}</td>
+                                    <td>{{$portfolio->student_intake}}</td>
+                                    <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"semester_id":{{$portfolio->semester_id}},"status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                     
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
-                                <tr>
+                                 <tr>
                                     <th>Program</th>
-                                    <th>Total Semesters</th>
-                                    <th>Course Type</th>
-                                    <th>No of Courses</th>
-                                    <th>Credit Hours</th>
-                                    <th>Internship Requirement</th>
-                                    <th>FYP Requirement</th>
+                                    <th>Semesters</th>
+                                    <th>Application Received</th>
+                                    <th>Admission Offered</th>
+                                    <th>Student Intake</th>
+                                    <th>Semester Commencement Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -186,13 +176,13 @@
         </section>
     </div>
 
-     <div class="modal fade" id="edit-modal">
+    <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Program Portfoliot. </h4>
+                    <h4 class="modal-title">Edit Application Received. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
@@ -211,38 +201,42 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">Total Semesters</label>
-                                    <input type="text" name="total_semesters" id="edit_total_semesters" value="{{old('edit_total_semesters')}}" class="form-control">
-                                
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Course Type</label>
-                                <select name="course_type_id" id="edit_course_type_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select Course</option>
-                                    @foreach($courses as $course)
+                                <label for="name">Semester</label>
+                                <select name="semester_id" id="edit_semester_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Semester</option>
+                                    @foreach($semesters as $course)
                                         <option value="{{$course->id}}">{{$course->name}}</option>
                                     @endforeach
                                 </select>
                                
                             </div>
                         </div>
-                         <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">Number of Course</label>
-                                    <input type="text" name="no_of_course" id="edit_no_of_course" value="{{old('edit_no_of_course')}}" class="form-control">
-                                
-                            </div>
-                        </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Credit Hours</label>
-                                    <input type="text" name="credit_hours" 
-                                    id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
+                                <div class="form-group">
+                                    <label for="name">Applications Received</label>
+                                    <input type="text" name="app_received" id="edit_app_received" class="form-control">
+                                </div>
                             </div>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Admission Offered</label>
+                                    <input type="text" name="admission_offered" id="edit_admission_offered" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Student Intake</label>
+                                    <textarea name="student_intake" id="edit_student_intake" class="form-control"></textarea>
+                                </div>
+                            </div>
+
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Semester Commencement Date</label>
+                                    <input type="date" name="semester_comm_date" id="edit_semester_comm_date" value="{{old('edit_semester_comm_date')}}" class="form-control">
+                                </div>
+                            </div>
+                        
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -265,7 +259,8 @@
     <!-- /.modal -->
 
     
-    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+    <!-- /.modal -->
+   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -292,24 +287,24 @@
             }
         });
 
-             $('#form').submit(function (e) {
+
+
+         $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
-            let total_semesters = $('#total_semesters').val();
-            let course_type_id = $('#course_type_id').val();
-            let no_of_course = $('#no_of_course').val();
-            let credit_hours = $('#credit_hours').val();
-            let internship_req = $('#internship_req').val();
-            let fyp_req = $('#fyp_req').val();
+            let semester_id = $('#semester_id').val();
+            let app_received = $('#app_received').val();
+            let admission_offered = $('#admission_offered').val();
+            let student_intake = $('#student_intake').val();
+            let semester_comm_date = $('#semester_comm_date').val();
 
             !program_id?addClass('program_id'):removeClass('program_id');
-            !total_semesters?addClass('total_semesters'):removeClass('total_semesters');
-            !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
-            !no_of_course?addClass('no_of_course'):removeClass('no_of_course');
-            !credit_hours?addClass('credit_hours'):removeClass('credit_hours');
-            !internship_req?addClass('internship_req'):removeClass('internship_req');
-            !fyp_req?addClass('fyp_req'):removeClass('fyp_req');
+            !semester_id?addClass('semester_id'):removeClass('semester_id');
+            !app_received?addClass('app_received'):removeClass('app_received');
+            !admission_offered?addClass('admission_offered'):removeClass('admission_offered');
+            !student_intake?addClass('student_intake'):removeClass('student_intake');
+            !semester_comm_date?addClass('semester_comm_date'):removeClass('semester_comm_date');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            if(!program_id || !semester_id || !app_received || !admission_offered || !student_intake || !semester_comm_date)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -319,7 +314,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("program-portfolio")}}',
+                url:'{{url("application-received")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -346,34 +341,26 @@
             })
         });
 
-$('.edit').on('click', function () {
+
+         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_total_semesters').val(data.total_semesters);
-            $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
-            $('#edit_no_of_course').val(data.no_of_course);
-            $('#edit_credit_hours').val(data.credit_hours);
+            $('#edit_semester_id').select2().val(data.semester_id).trigger('change');
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
             let program_id = $('#edit_program_id').val();
-            let total_semesters = $('#edit_total_semesters').val();
-            let course_type_id = $('#edit_course_type_id').val();
-            let no_of_course = $('#edit_no_of_course').val();
-            let credit_hours = $('#edit_credit_hours').val();
+            let semester_id = $('#edit_semester_id').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
-            !total_semesters?addClass('edit_total_semesters'):removeClass('edit_total_semesters');
-            !course_type_id?addClass('edit_course_type_id'):removeClass('edit_course_type_id');
-            !no_of_course?addClass('edit_no_of_course'):removeClass('edit_no_of_course');
-            !credit_hours?addClass('edit_credit_hours'):removeClass('edit_credit_hours');
+            !semester_id?addClass('edit_semester_id'):removeClass('edit_semester_id');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours)
+            if(!program_id || !semester_id )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -383,7 +370,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("program-portfolio")}}/'+id,
+                url:'{{url("application-received")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -411,14 +398,14 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-        
-$('.delete').on('click', function (e) {
+
+         $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("program-portfolio")}}/'+id,
+                        url:'{{url("application-received")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -448,7 +435,12 @@ $('.delete').on('click', function (e) {
 
         })
 
+
+
         
+
+        
+
     </script>
 
 
