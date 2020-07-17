@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SectorSeeder::class);
         $this->call(DegreeSeeder::class);
         $this->call(PublicationTypeSeeder::class);
+        $this->call(EligibilityCriteriaSeeder::class);
 
     }
 }

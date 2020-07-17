@@ -117,15 +117,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                
+
                                 @foreach($entryRequirements as $req)
                                 <tr>
                                     <td>{{$req->program->name}}</td>
                                     <td>{{$req->eligibility_criteria->name}}</td>
                                     <td>{{$req->min_req}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i data-row='{"id":{{$req->id}},"program_id":{{$req->program_id}},"eligibility_criteria_id":{{$req->eligibility_criteria_id}},"status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
-                                    
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}", "program_id":"{{$req->program_id}}", "eligibility_criteria_id":"{{$req->eligibility_criteria_id}}", "min_req":"{{$req->min_req}}", "status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -181,7 +181,7 @@
                                         <option value="{{$course->id}}">{{$course->name}}</option>
                                     @endforeach
                                 </select>
-                               
+
                             </div>
                         </div>
 
@@ -191,7 +191,7 @@
                                     <input type="text" name="min_req" id="edit_min_req" value="{{old('edit_min_req')}}" class="form-control">
                                 </div>
                               </div>
-                        
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -213,7 +213,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -241,8 +241,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-
 
          $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
@@ -292,10 +290,11 @@
 
 
          $('.edit').on('click', function () {
-            let data = JSON.parse(JSON.stringify($(this).data('row')));
-            
+            // let data = JSON.parse(JSON.stringify($(this).data('row')));
+             let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_eligibility_criteria_id').select2().val(data.eligibility_criteria_id).trigger('change');
+            $('#edit_min_req').val(data.min_req);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -386,9 +385,9 @@ $('#updateForm').submit(function (e) {
 
 
 
-        
 
-        
+
+
 
     </script>
 
