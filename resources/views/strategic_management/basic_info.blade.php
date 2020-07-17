@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide basic information about the business school</h3>
+                            <h3 class="box-title">Provide basic information about the business school in Table 1.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -74,21 +74,34 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="contactPerson">Contact Person</label>
-                                        <input type="text" id="contact_person" value="{{@$basic_info->contact_person}}" class="form-control">
+                                        <label for="contactPerson">Contact Person Name</label>
+                                        <input type="text" id="contact_person" disabled value="{{@$user_info->name}}" class="form-control">
                                         <input type="hidden" id="id" value="{{@$basic_info->id}}">
                                     </div>
                                 </div>
+{{--                                <div class="col-md-3">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="name">Contact No</label>--}}
+{{--                                        <input type="text" id="contact_no" value="{{@$user_info->contact_no}}" class="form-control" >--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Contact No</label>
-                                        <input type="text" id="contact_no" value="{{@$basic_info->contact_no}}" class="form-control" >
+                                    <div class="form-group" style="margin-bottom: 17px">
+                                        <label for="designation">Chief administrative officer</label>
+                                        <select class="form-control select2" >
+                                            <option value="">Select Designation</option>
+                                            @foreach($designations as $designation)
+                                                <option id="{{$designation->id}}" {{$designation->id==$user_info->designation_id?'selectd':''}}>{{$designation->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Year of Establishment</label>
-                                        <input type="text" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
+                                        <label for="name">Year of establishment(parent inst)</label>
+                                        <input type="date" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -100,12 +113,12 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Date Charter Granted</label>
-                                        <input type="text" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" class="form-control">
+                                        <input type="date" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Charter Number</label>
+                                        <label for="name">Reference number of charter</label>
                                         <input type="text" id="charter_number" value="{{@$basic_info->charter_number}}" class="form-control">
                                     </div>
                                 </div>
@@ -136,7 +149,7 @@
                             <div class="form-row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="type">{{ __('Profit Status') }} : </label>
+                                        <label for="type">{{ __('Profit/Non-profit Status') }} : </label>
                                         <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'None Profit' ? 'checked' : '' }}> None Profit</p>
                                         <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ @$basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
 
@@ -207,7 +220,7 @@
         $('#update').on('click', function (e) {
             let id = $('#id').val();
             let contact_person = $('#contact_person').val();
-            let contact_no = $('#contact_no').val();
+            // let contact_no = $('#contact_no').val();
             let year_estb = $('#year_estb').val();
             let web_url = $('#web_url').val();
             let date_charter_granted = $('#date_charter_granted').val();
@@ -222,7 +235,7 @@
             //console.log(contact_no);
             //validation
              !contact_person?addClass('contact_person'):removeClass('contact_person');
-             !contact_no?addClass('contact_no'):removeClass('contact_no');
+             // !contact_no?addClass('contact_no'):removeClass('contact_no');
              !year_estb?addClass('year_estb'):removeClass('year_estb');
              !web_url?addClass('web_url'):removeClass('web_url');
              !date_charter_granted?addClass('date_charter_granted'):removeClass('date_charter_granted');
@@ -245,7 +258,7 @@
                 data: {
                     id: id,
                     contact_person: contact_person,
-                    contact_no: contact_no,
+                    // contact_no: contact_no,
                     year_estb: year_estb,
                     web_url: web_url,
                     date_charter_granted: date_charter_granted,

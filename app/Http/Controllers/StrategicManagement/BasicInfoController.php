@@ -5,8 +5,10 @@ namespace App\Http\Controllers\StrategicManagement;
 use App\BusinessSchool;
 use App\CharterType;
 use App\InstituteType;
+use App\Models\StrategicManagement\Designation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,12 +29,13 @@ class BasicInfoController extends Controller
     {
         try {
             // Basic Info
-            $school_id = auth()->user()->business_school_id;
+            $school_id = Auth::user()->business_school_id;
             $basic_info = BusinessSchool::where('id', $school_id)->get()->first();
             $institute_type = InstituteType::where('status', 'active')->get();
             $chart_types=CharterType::where('status', 'active')->get();
-
-        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types'));
+            $designations = Designation::where('status', 'active')->get();
+            $user_info = Auth::user();
+        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types','user_info','designations'));
         }catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -93,6 +96,7 @@ class BasicInfoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd('coning here');
         try {
             //$update = BasicInfo::find($basicInfo->id);
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
