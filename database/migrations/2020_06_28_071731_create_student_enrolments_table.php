@@ -15,10 +15,10 @@ class CreateStudentEnrolmentsTable extends Migration
     {
         Schema::create('student_enrolments', function (Blueprint $table) {
             $table->id();
-            $table->integer('uni_id')->unsigned()->nullable();
-            $table->foreign('uni_id')
+            $table->integer('business_school_id')->unsigned()->nullable();
+            $table->foreign('business_school_id')
                 ->references('id')
-                ->on('univiersity_information')
+                ->on('business_schools')
                 ->onDelete('cascade');;
             $table->string('year', 100);
             $table->string('bs_level', 100);

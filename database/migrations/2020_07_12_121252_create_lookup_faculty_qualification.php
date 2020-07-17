@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePublicationTypeTable extends Migration
+class CreateLookupFacultyQualification extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreatePublicationTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('publication_type', function (Blueprint $table) {
+        Schema::create('lookup_faculty_qualification', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255);
-            $table->enum('status', ['active','inactive'])->default('active');
-            $table->softDeletes();
+            $table->string('qualification',100);
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreatePublicationTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publication_type');
+        Schema::dropIfExists('lookup_faculty_qualification');
     }
 }

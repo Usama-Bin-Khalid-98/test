@@ -4,9 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PublicationType extends Model
+class drink extends Model
 {
     //
-    protected $guarded = [];
-
 }

@@ -11,6 +11,9 @@ class CampusSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // DB::table('campuses')->insert([
+        //   ['location'=>''],
+        // ]);
+
     }
 }

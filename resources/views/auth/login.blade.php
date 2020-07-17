@@ -25,6 +25,7 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
+
             <form class="login100-form validate-form" action="{{ route('login') }}" method="post">
                 @csrf
 					<span class="login100-form-title" style="margin-bottom: 0px;">
@@ -88,7 +89,6 @@
 </div>
 
 
-
 <!--===============================================================================================-->
 <!-- jQuery 3 -->
 <script src="{{URL::asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
@@ -99,11 +99,25 @@
 <script src="{{URL::asset('login_form/js/main.js')}}"></script>
 <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
 
+@if (Session::has('message'))
+    <script>
+    Notiflix.Notify.Failure('{{Session::get("message") }}');
+    </script>
+@endif
+
 @error('email')
 @if(@$message)
 <script>
     Notiflix.Notify.Failure('{{ $message }}');
 </script>
+@endif
+@enderror
+
+@error('password')
+@if(@$message)
+    <script>
+        Notiflix.Notify.Failure('{{ $message }}');
+    </script>
 @endif
 @enderror
 </body>
