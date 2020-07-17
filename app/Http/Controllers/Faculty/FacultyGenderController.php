@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
 
 use App\Models\Faculty\FacultyGender;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 class FacultyGenderController extends Controller
 {
     /**

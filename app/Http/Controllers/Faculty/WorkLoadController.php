@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
 
+use App\Http\Controllers\Controller;
 use App\Models\Faculty\WorkLoad;
+use App\Models\StrategicManagement\Designation;
 use Illuminate\Http\Request;
 
 class WorkLoadController extends Controller
@@ -15,7 +17,8 @@ class WorkLoadController extends Controller
     public function index()
     {
         //
-        return view('registration.faculty.workload');
+        $designations = Designation::where('status', 'active')->get();
+        return view('registration.faculty.workload', compact('designations'));
     }
 
     /**

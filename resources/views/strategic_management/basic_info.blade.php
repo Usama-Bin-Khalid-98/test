@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide basic information about the business school</h3>
+                            <h3 class="box-title">Provide basic information about the business school in Table 1.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -69,44 +69,57 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Business School Name</label>
-                                        <input type="text" id="name" disabled value="{{$basic_info->name}}" class="form-control">
+                                        <input type="text" id="name" disabled value="{{@$basic_info->name}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="contactPerson">Contact Person</label>
-                                        <input type="text" id="contact_person" value="{{$basic_info->contact_person}}" class="form-control">
-                                        <input type="hidden" id="id" value="{{$basic_info->id}}">
+                                        <label for="contactPerson">Contact Person Name</label>
+                                        <input type="text" id="contact_person" disabled value="{{@$user_info->name}}" class="form-control">
+                                        <input type="hidden" id="id" value="{{@$basic_info->id}}">
                                     </div>
                                 </div>
+{{--                                <div class="col-md-3">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="name">Contact No</label>--}}
+{{--                                        <input type="text" id="contact_no" value="{{@$user_info->contact_no}}" class="form-control" >--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Contact No</label>
-                                        <input type="text" id="contact_no" value="{{$basic_info->contact_no}}" class="form-control" >
+                                    <div class="form-group" style="margin-bottom: 17px">
+                                        <label for="designation">Chief administrative officer</label>
+                                        <select id="designation_id" name="designation_id" class="form-control select2" style="width: 100%;">
+                                            <option value="">Select Designation</option>
+                                            @foreach(@$designations as $designation)
+                                                <option value="{{@$designation->id}}" {{@$designation->id==@$user_info->designation_id?'selected':''}} >{{@$designation->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Year of Establishment</label>
-                                        <input type="text" id="year_estb" value="{{$basic_info->year_estb}}" class="form-control">
+                                        <label for="name">Year of establishment(parent inst)</label>
+                                        <input type="date" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Web Url</label>
-                                        <input type="text" id="web_url" value="{{$basic_info->web_url}}" class="form-control">
+                                        <input type="text" id="web_url" value="{{@$basic_info->web_url}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Date Charter Granted</label>
-                                        <input type="text" id="date_charter_granted" value="{{$basic_info->date_charter_granted}}" class="form-control">
+                                        <input type="date" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Charter Number</label>
-                                        <input type="text" id="charter_number" value="{{$basic_info->charter_number}}" class="form-control">
+                                        <label for="name">Reference number of charter</label>
+                                        <input type="text" id="charter_number" value="{{@$basic_info->charter_number}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -114,8 +127,8 @@
                                         <label for="name">Charter Type</label>
                                         <select id="charter_type_id" class="form-control select2" style="width: 100%;">
                                             <option value="">Select Charter Type</option>
-                                            @foreach($chart_types as $type)
-                                                <option value="{{$type->id}}" {{$basic_info->charter_type_id==$type->id?'selected':''}}>{{$type->name }}</option>
+                                            @foreach(@$chart_types as $type)
+                                                <option value="{{@$type->id}}" {{@$basic_info->charter_type_id==$type->id?'selected':''}}>{{@$type->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -125,8 +138,8 @@
                                         <label for="name">Institute Type</label>
                                         <select id="institute_type_id" class="form-control select2" style="width: 100%;">
                                             <option value="">Select Institute Type</option>
-                                            @foreach($institute_type as $school)
-                                                <option value="{{$school->id}}" {{$basic_info->institute_type_id==$school->id?'selected':''}}>{{$school->name }}</option>
+                                            @foreach(@$institute_type as $school)
+                                                <option value="{{@$school->id}}" {{@$basic_info->institute_type_id==@$school->id?'selected':''}}>{{@$school->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -136,31 +149,31 @@
                             <div class="form-row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="type">{{ __('Profit Status') }} : </label>
-                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ $basic_info->profit_status == 'None Profit' ? 'checked' : '' }}> None Profit</p>
-                                        <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ $basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
+                                        <label for="type">{{ __('Profit/Non-profit Status') }} : </label>
+                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'None Profit' ? 'checked' : '' }}> None Profit</p>
+                                        <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ @$basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="type">{{ __('Hierarchical Context') }} : </label>
-                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Affiliated" {{ $basic_info->hierarchical_context == 'Affiliated' ? 'checked' : '' }}> Affiliated</p>
-                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Constituent Part" {{ $basic_info->hierarchical_context  == 'Constituent Part' ? 'checked' : '' }}> Constituent Part</p>
+                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Affiliated" {{ @$basic_info->hierarchical_context == 'Affiliated' ? 'checked' : '' }}> Affiliated</p>
+                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Constituent Part" {{ @$basic_info->hierarchical_context  == 'Constituent Part' ? 'checked' : '' }}> Constituent Part</p>
 
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="name">Address</label>
-                                            <textarea id="address" class="form-control">{{$basic_info->address}}</textarea>
+                                            <textarea id="address" class="form-control">{{@$basic_info->address}}</textarea>
                                         </div>
                                     </div >
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="sector">{{ __('Sector') }} : </label>
-                                        <p><input type="radio" name="sector" class="flat-red" value="Public" {{ $basic_info->sector == 'public' ? 'checked' : '' }}> Public</p>
-                                        <p><input type="radio" name="sector" class="flat-red" value="Private" {{ $basic_info->sector == 'private' ? 'checked' : '' }}> Private</p>
+                                        <p><input type="radio" name="sector" class="flat-red" value="Public" {{ @$basic_info->sector == 'public' ? 'checked' : '' }}> Public</p>
+                                        <p><input type="radio" name="sector" class="flat-red" value="Private" {{ @$basic_info->sector == 'private' ? 'checked' : '' }}> Private</p>
 
                                     </div>
                                 </div>
@@ -197,7 +210,9 @@
         // add required to input fields
         // $('input').prop('required', true);
         //Initialize Select2 Elements
-        $('.select2').select2();
+        $('#designation_id').select2();
+        $('#charter_type_id').select2();
+        $('#institute_type_id').select2();
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -207,7 +222,7 @@
         $('#update').on('click', function (e) {
             let id = $('#id').val();
             let contact_person = $('#contact_person').val();
-            let contact_no = $('#contact_no').val();
+            // let contact_no = $('#contact_no').val();
             let year_estb = $('#year_estb').val();
             let web_url = $('#web_url').val();
             let date_charter_granted = $('#date_charter_granted').val();
@@ -218,11 +233,12 @@
             let profit_status = $('input[name=profit_status]:checked').val();
             let sector = $('input[name=sector]:checked').val();
             let address = $('#address').val();
+            let designation_id = $('#designation_id').val();
 
             //console.log(contact_no);
             //validation
              !contact_person?addClass('contact_person'):removeClass('contact_person');
-             !contact_no?addClass('contact_no'):removeClass('contact_no');
+             // !contact_no?addClass('contact_no'):removeClass('contact_no');
              !year_estb?addClass('year_estb'):removeClass('year_estb');
              !web_url?addClass('web_url'):removeClass('web_url');
              !date_charter_granted?addClass('date_charter_granted'):removeClass('date_charter_granted');
@@ -233,6 +249,7 @@
              !profit_status?addClass('profit_status'):removeClass('profit_status');
              !sector?addClass('sector'):removeClass('sector');
              !address?addClass('address'):removeClass('address');
+             !designation_id?addClass('designation_id'):removeClass('designation_id');
 
             $.ajaxSetup({
                 headers: {
@@ -241,11 +258,11 @@
             });
             $.ajax({
                 type: 'PUT',
-                url: "{{url('strategic-basicinfo')}}/"+id,
+                url: "{{url('strategic/basicinfo')}}/"+id,
                 data: {
                     id: id,
                     contact_person: contact_person,
-                    contact_no: contact_no,
+                    // contact_no: contact_no,
                     year_estb: year_estb,
                     web_url: web_url,
                     date_charter_granted: date_charter_granted,
@@ -255,7 +272,8 @@
                     hierarchical_context: hierarchical_context,
                     profit_status: profit_status,
                     sector: sector,
-                    address: address
+                    address: address,
+                    designation_id:designation_id
                 },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');

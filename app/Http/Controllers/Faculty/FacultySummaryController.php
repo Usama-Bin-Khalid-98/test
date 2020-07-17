@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
+use App\Http\Controllers\Controller;
 
+use App\Models\Common\Degree;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
 
-class FacultyStudentRatio extends Controller
+class FacultySummaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +16,11 @@ class FacultyStudentRatio extends Controller
      */
     public function index()
     {
+        $degrees = Degree::where('status', 'active')->get();
+        $programs = Program::where('status', 'active')->get();
+
+        return view('registration.faculty.summary_faculty', compact('degrees','programs'));
         //
-        return view('registration.faculty.faculty_student_ratio');
     }
 
     /**

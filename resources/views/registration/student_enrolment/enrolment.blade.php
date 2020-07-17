@@ -43,8 +43,8 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">.Provide data on the applications received and student intake in the past three years for each program.<br>.State the number of students who have graduated over the past three years for each program under review.<br>.State the current gender wise break down of students in each program under review.</h3>
-                            <div class="box-tools pull-right">
+                            <h3 class="box-title">Provide the data on student enrolment  of the business school for the last three years in Table 3.1</h3>
+                                <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
@@ -56,22 +56,11 @@
                         </div>
 
                         <!-- /.box-header -->
+                        <form action="javascript:void(0)" id="form" method="POST">
+
                         <div class="box-body">
-                           <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">University</label>
-                                    <select name="uni_id" id="uni_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select University</option>
-                                        @foreach($uniinfo as $uni)
-                                         <option value="{{$uni->id}}">{{$uni->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                            <div class="form-group">
                                     <label for="name">Year</label>
                                     <select name="year" id="year"  class="form-control select2">
                                         <option value="">Select Year</option>
@@ -99,7 +88,7 @@
                                     </select>
 
                             </div>
-                        </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">16 Year Programs</label>
@@ -120,14 +109,17 @@
                                     <input type="text" name="phd_level" id="phd_level" class="form-control">
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Total Students</label>
-                                    <input type="text" name="total_students" id="total_students" class="form-control">
-                                </div>
-                            </div>
-
+                            <div class="box box-primary">
+                        <div class="box-body">
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Total Students</label>--}}
+{{--                                    <input type="text" name="total_students" id="total_students" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+                            <h3 class="box-title">State the number of students who have graduated over the past three years for each program under review in Table 3.2</h3>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Program Name</label>
@@ -158,15 +150,21 @@
                                     <input type="text" name="grad_std_ttt" id="grad_std_ttt" class="form-control">
                                 </div>
                             </div>
+
+                        </div>
+                            </div>
+                            <div class="box box-primary">
+                            <div class="box-body">
+                                <h3 class="box-title">State the current gender wise break down of students in each program under review in Table 3.3</h3>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Male</label>
+                                    <label for="name">Male(%)</label>
                                     <input type="text" name="male" id="male" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Female</label>
+                                    <label for="name">Female(%)</label>
                                     <input type="text" name="female" id="female" class="form-control">
                                 </div>
                             </div>
@@ -178,15 +176,16 @@
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
- </form>
                         </div>
+                            </div>
+                    </form>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">.Applications received and student intake in the past three years for each program.<br>.State the number of students who have graduated over the past three years for each program under review.<br>.Current gender wise break down of students in each program under review.</h3>
+                            <h3 class="box-title">List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -226,7 +225,7 @@
                                     <td>{{$enrolement->female}}</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":{{$enrolement->id}},"uni_id":{{$enrolement->business_school_id}},"year":{{$enrolement->year}},"bs_level":{{$enrolement->bs_level}},"ms_level":{{$enrolement->ms_level}},"phd_level":{{$enrolement->phd_level}},"total_students":{{$enrolement->total_students}},"program_id":{{$enrolement->program_id}},"grad_std_t":{{$enrolement->grad_std_t}},"grad_std_t_2":{{$enrolement->grad_std_t_2}},"grad_std_t_3":{{$enrolement->grad_std_t_3}},"male":{{$enrolement->male}},"female":{{$enrolement->female}},"status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-                                    
+
                                 </tr>
                                 @endforeach
 
@@ -258,236 +257,6 @@
                 <!-- Main content -->
             </div>
         </section>
-
-<!--         <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title">State the number of students who have graduated over the past three years for each program under review.</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                            </div>
-                        </div>
-
-                         /.box-header 
-                        <div class="box-body">
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                    <select name="program" class="form-control">
-                                        <option value="">Select Program</option>
-                                        <option value="">BSSE</option>
-                                        <option value="">BCS</option>
-                                        <option value="">BBA</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-2</label>
-                                    <input type="text" name="courses" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-1</label>
-                                    <input type="text" name="courses" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t</label>
-                                    <input type="text" name="courses" value="" class="form-control">
-                                </div>
-                            </div>
-
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
-{{--                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active--}}
-{{--                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-                             <div class="col-md-12">
-                                <div class="form-group pull-right">
-                                    <label for="type">&nbsp;</label>
-                                    <input type="button" name="submit" value="Add" class="btn btn-info">
-                                </div>
-                            </div>
-
-                        </div>
-                       
-                    </div>
-                   
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Number of students who have graduated over the past three years for each program under review.</h3>
-                        </div>
-                        /.box-header
-                        <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Program</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>BSSE</td>
-                                    <td>2020</td>
-                                    <td></td>
-                                    <td>2020</td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                <tr>
-                                    <td>BSSE</td>
-                                    <td>2020</td>
-                                    <td></td>
-                                    <td>2020</td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Program</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        /.box-body 
-                    </div>
-                  
-                </div>
-               
-            </div>
-        </section> -->
-
-       <!--  <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title">State the current gender wise break down of students in each program under review.</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                            </div>
-                        </div>
-
-                      
-                        <div class="box-body">
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                    <select name="program" class="form-control">
-                                        <option value="">Select Program</option>
-                                        <option value="">BSSE</option>
-                                        <option value="">BCS</option>
-                                        <option value="">BBA</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Male</label>
-                                    <input type="text" name="courses" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Female</label>
-                                    <input type="text" name="courses" value="" class="form-control">
-                                </div>
-                            </div>
-
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
-{{--                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active--}}
-{{--                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-                             <div class="col-md-12">
-                                <div class="form-group pull-right">
-                                    <label for="type">&nbsp;</label>
-                                    <input type="button" name="submit" value="Add" class="btn btn-info">
-                                </div>
-                            </div>
-
-                        </div>
-                       
-                    </div>
-                 
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Current gender wise break down of students in each program under review.</h3>
-                        </div>
-                     
-                        <div class="box-body">
-                            <table id="program" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Program</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>BSSE</td>
-                                    <td>200</td>
-                                    <td>130</td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                <tr>
-                                    <td>BSSE</td>
-                                    <td>200</td>
-                                    <td>130</td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Program</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                      
-                    </div>
-                 
-                </div>
-             
-            </div>
-        </section> -->
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -500,18 +269,6 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">University</label>
-                                <select name="uni_id" id="edit_uni_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select University</option>
-                                    @foreach($uniinfo as $uni)
-                                        <option value="{{$uni->id}}">{{$uni->name}}</option>
-                                    @endforeach
-                                </select>
-                                <input type="hidden" id="edit_id">
-                            </div>
-                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -540,7 +297,7 @@
                                         <option value="2019">2019</option>
                                         <option value="2020">2020</option>
                                     </select>
-                                
+
                             </div>
                         </div>
 
@@ -548,7 +305,7 @@
                             <div class="form-group">
                                     <label for="name">16 year Program</label>
                                     <input type="text" name="bs_level" id="edit_bs_level" value="{{old('bs_level')}}" class="form-control">
-                                
+
                             </div>
                         </div>
 
@@ -556,20 +313,20 @@
                             <div class="form-group">
                                     <label for="name">18 year Program</label>
                                     <input type="text" name="ms_level" id="edit_ms_level" value="{{old('ms_level')}}" class="form-control">
-                                
+
                             </div>
                         </div>
                          <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Doctoral Program</label>
                                     <input type="text" name="phd_level" id="edit_phd_level" value="{{old('phd_level')}}" class="form-control">
-                                
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Total Students</label>
-                                    <input type="text" name="total_students" 
+                                    <input type="text" name="total_students"
                                     id="edit_total_students" value="{{old('total_students')}}" class="form-control">
                             </div>
                         </div>
@@ -582,21 +339,21 @@
                                         <option value="{{$program->id}}">{{$program->name}}</option>
                                     @endforeach
                                 </select>
-                               
+
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Year t</label>
-                                    <input type="text" name="grad_std_t" 
+                                    <input type="text" name="grad_std_t"
                                     id="edit_grad_std_t" value="{{old('edit_grad_std_t')}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Year t-2</label>
-                                    <input type="text" name="grad_std_t_2" 
+                                    <input type="text" name="grad_std_t_2"
                                     id="edit_grad_std_t_2" value="{{old('edit_grad_std_t_2')}}" class="form-control">
                             </div>
                         </div>
@@ -604,23 +361,23 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Year t-3</label>
-                                    <input type="text" name="grad_std_t_3" 
+                                    <input type="text" name="grad_std_t_3"
                                     id="edit_grad_std_t_3" value="{{old('edit_grad_std_t_3')}}" class="form-control">
                             </div>
                         </div>
-                       
+
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Male</label>
-                                    <input type="text" name="male" 
+                                    <input type="text" name="male"
                                     id="edit_male" value="{{old('edit_male')}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Female</label>
-                                    <input type="text" name="female" 
+                                    <input type="text" name="female"
                                     id="edit_female" value="{{old('female')}}" class="form-control">
                             </div>
                         </div>
@@ -645,7 +402,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
@@ -674,7 +431,7 @@
         });
 
         $('#form').submit(function (e) {
-            let uni_id = $('#uni_id').val();
+            // let uni_id = $('#uni_id').val();
             let year = $('#year').val();
             let bs_level = $('#bs_level').val();
             let ms_level = $('#ms_level').val();
@@ -687,7 +444,6 @@
             let male = $('#male').val();
             let female = $('#female').val();
 
-            !uni_id?addClass('uni_id'):removeClass('uni_id');
             !year?addClass('year'):removeClass('year');
             !bs_level?addClass('bs_level'):removeClass('bs_level');
             !ms_level?addClass('ms_level'):removeClass('ms_level');
@@ -700,7 +456,7 @@
             !male?addClass('male'):removeClass('male');
             !female?addClass('female'):removeClass('female');
 
-            if(!uni_id || !year || !bs_level || !ms_level || !phd_level || !total_students || !program_id || !grad_std_t || !grad_std_tt || !grad_std_ttt || !male || !female)
+            if(!year || !bs_level || !ms_level || !phd_level || !program_id || !grad_std_t || !grad_std_tt || !grad_std_ttt || !male || !female)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -741,7 +497,6 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-            $('#edit_uni_id').select2().val(data.uni_id).trigger('change');
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_bs_level').val(data.bs_level);
             $('#edit_ms_level').val(data.ms_level);
@@ -758,7 +513,6 @@
         });
 
         $('#updateForm').submit(function (e) {
-            let uni_id = $('#edit_uni_id').val();
             let year = $('#edit_year').val();
             let bs_level = $('#edit_bs_level').val();
             let ms_level = $('#edit_ms_level').val();
@@ -773,7 +527,6 @@
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !uni_id?addClass('edit_uni_id'):removeClass('edit_uni_id');
             !year?addClass('edit_year'):removeClass('edit_year');
             !bs_level?addClass('edit_bs_level'):removeClass('edit_bs_level');
             !ms_level?addClass('edit_ms_level'):removeClass('edit_ms_level');
@@ -786,7 +539,7 @@
             !male?addClass('male'):removeClass('male');
             !female?addClass('female'):removeClass('female');
 
-            if(!uni_id || !year || !bs_level || !ms_level || !phd_level || !total_students || !program_id || !grad_std_t || !grad_std_t_2 || !grad_std_t_3 || !male|| !female)
+            if(!year || !bs_level || !ms_level || !phd_level || !total_students || !program_id || !grad_std_t || !grad_std_t_2 || !grad_std_t_3 || !male|| !female)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -863,7 +616,7 @@
 
 
 
-       
+
 
     </script>
 

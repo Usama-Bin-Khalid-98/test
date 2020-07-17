@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faculty\VisitingFaculty;
+use App\Models\Common\CourseType;
 use Illuminate\Http\Request;
 
-class VisitingFacultyController extends Controller
+class CourseTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,6 @@ class VisitingFacultyController extends Controller
     public function index()
     {
         //
-        return view('registration.faculty.visiting_faculty');
     }
 
     /**
@@ -42,10 +41,10 @@ class VisitingFacultyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  \App\Models\Common\CourseType  $courseType
      * @return \Illuminate\Http\Response
      */
-    public function show(VisitingFaculty $visitingFaculty)
+    public function show(CourseType $courseType)
     {
         //
     }
@@ -53,10 +52,10 @@ class VisitingFacultyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  \App\Models\Common\CourseType  $courseType
      * @return \Illuminate\Http\Response
      */
-    public function edit(VisitingFaculty $visitingFaculty)
+    public function edit(CourseType $courseType)
     {
         //
     }
@@ -65,10 +64,10 @@ class VisitingFacultyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  \App\Models\Common\CourseType  $courseType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VisitingFaculty $visitingFaculty)
+    public function update(Request $request, CourseType $courseType)
     {
         //
     }
@@ -76,10 +75,10 @@ class VisitingFacultyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  \App\Models\Common\CourseType  $courseType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VisitingFaculty $visitingFaculty)
+    public function destroy(CourseType $courseType)
     {
         //
     }

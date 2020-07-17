@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information of faculty workload over the last two semesters. Attach faculty workload policy.</h3>
+                            <h3 class="box-title">Provide information of faculty workload over the last two semesters. Attach faculty workload policy in table 4.2</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -67,18 +67,18 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                    <select name="designation" class="form-control">
+                                    <select name="designation_id" id="designation_id" class="form-control">
                                         <option value="">Select Designation</option>
-                                        <option value="">Professor</option>
-                                        <option value="">Assist Professor</option>
-                                        <option value="">HOD</option>
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Thought in Programs</label>
+                                    <label for="name">Taught in all programs</label>
                                     <input type="text" name="program" value="" class="form-control">
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Master</label>
+                                    <label for="name">Masters</label>
                                     <input type="text" name="master" value="" class="form-control">
                                 </div>
                             </div>

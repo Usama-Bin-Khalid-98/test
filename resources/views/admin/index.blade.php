@@ -266,7 +266,7 @@
   </div>
 
 
-
+<script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
 @include("includes.footer")
  @else
 {{"Login to Access this page"}}
@@ -286,7 +286,7 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
 
-<script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+
 
 <script>
 

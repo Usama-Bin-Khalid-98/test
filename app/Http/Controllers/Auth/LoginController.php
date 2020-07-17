@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
+use Session;
 class LoginController extends Controller
 {
     /*
@@ -26,6 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -35,6 +37,27 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+//        if (Auth::attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
+//            // The user is active, not suspended, and exists.
+//        }
+
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        Session::flash('message', "Your account is not activated or.");
+        return [
+            'email' => $request->{$this->username()},
+            'password' => $request->password,
+            'status' => 'active',
+        ];
+    }
+
 }

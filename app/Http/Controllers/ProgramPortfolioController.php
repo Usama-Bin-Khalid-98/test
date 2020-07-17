@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\ProgramPortfolio;
+use App\Models\Common\Program;
+use App\Models\Common\CourseType;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
 
 class ProgramPortfolioController extends Controller
 {
@@ -14,8 +20,13 @@ class ProgramPortfolioController extends Controller
      */
     public function index()
     {
-        //
-        return view('registration.curriculum.portfolio');
+        
+        $programs = Program::where('status', 'active')->get();
+        $courses = CourseType::where('status', 'active')->get();
+
+        $portfolios  = ProgramPortfolio::with('program','course_type')->get();
+
+         return view('registration.curriculum.portfolio', compact('programs','courses','portfolios'));
     }
 
     /**
@@ -36,7 +47,30 @@ class ProgramPortfolioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            ProgramPortfolio::create([
+                'program_id' => $request->program_id,
+                'total_semesters' => $request->total_semesters,
+                'course_type_id' => $request->course_type_id,
+                'no_of_course' => $request->no_of_course,
+                'credit_hours' => $request->credit_hours,
+                'internship_req' => $request->internship_req,
+                'fyp_req' => $request->fyp_req
+            ]);
+
+            return response()->json(['success' => 'Program Portfolio added successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -70,7 +104,30 @@ class ProgramPortfolioController extends Controller
      */
     public function update(Request $request, ProgramPortfolio $programPortfolio)
     {
-        //
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            ProgramPortfolio::where('id', $programPortfolio->id)->update([
+                'program_id' => $request->program_id,
+                'total_semesters' => $request->total_semesters,
+                'course_type_id' => $request->course_type_id,
+                'no_of_course' => $request->no_of_course,
+                'credit_hours' => $request->credit_hours,
+                'internship_req' => $request->internship_req,
+                'fyp_req' => $request->fyp_req,
+                'status' => $request->status,
+            ]);
+            return response()->json(['success' => 'Program Portfolio updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -81,6 +138,42 @@ class ProgramPortfolioController extends Controller
      */
     public function destroy(ProgramPortfolio $programPortfolio)
     {
-        //
+        try {
+            ProgramPortfolio::destroy($programPortfolio->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'program_id' => 'required',
+            'total_semesters' => 'required',
+            'course_type_id' => 'required',
+            'no_of_course' => 'required',
+            'credit_hours' => 'required',
+            'internship_req' => 'required',
+            'fyp_req' => 'required'
+        ];
+    }
+
+     protected function update_rules() {
+        return [
+             'program_id' => 'required',
+            'total_semesters' => 'required',
+            'course_type_id' => 'required',
+            'no_of_course' => 'required',
+            'credit_hours' => 'required',
+            'internship_req' => 'required',
+            'fyp_req' => 'required'
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class FacultySummaryController extends Controller
+class FacultyStabilityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +14,7 @@ class FacultySummaryController extends Controller
      */
     public function index()
     {
-        return view('registration.faculty.summary_faculty');
-        //
+        return view ('registration.faculty.faculty_stability');
     }
 
     /**

@@ -1,26 +1,27 @@
-@section('pageTitle', 'Users')
+@section('pageTitle', 'Program Portfolio')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-    <!-- Select2 -->
+     <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Programs Portfolio
+                Program Portfolio
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Programs Portfolio </li>
+                <li class="active"> Program Portfolio </li>
             </ol>
         </section>
         <section class="content-header">
@@ -43,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide the portfolio of the program(s) under review.</h3>
+                            <h3 class="box-title">Provide the portfolio of the program(s) under review in Table 2.1.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -57,74 +58,67 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-
+                            <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                    <select name="charter_type_id" class="form-control select2" style="width: 100%;">
+                                    <label for="name">Program under review</label>
+                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Program</option>
-                                        <option value="">Computer Science</option>
-                                        <option value="">Management Sciences</option>
-                                        <option value="">Medical Sciences</option>
-                                        <option value="">Art & Design</option>
-                                    </select>
+                                        @foreach($programs as $program)
+                                         <option value="{{$program->id}}">{{$program->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Semesters</label>
-                                    <input type="text" name="semesters" value="" class="form-control">
+                                    <label for="name">Number of Semesters</label>
+                                    <input type="text" name="total_semesters" id="total_semesters" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Course Type</label>
-                                    <select name="program" class="form-control">
-                                        <option value="">Select Course Type</option>
-                                        <option value="">Core</option>
-                                        <option value="">Elective</option>
-                                        <option value="">Support</option>
-                                    </select>
+                                    <label for="name">Course Category</label>
+                                   <select name="course_type_id" id="course_type_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Course</option>
+                                        @foreach($courses as $course)
+                                         <option value="{{$course->id}}">{{$course->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Number of Course</label>
-                                    <input type="text" name="courses" value="" class="form-control">
+                                    <label for="name">Number of Courses</label>
+                                    <input type="text" name="no_of_course" id="no_of_course" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Credit Hours</label>
-                                    <input type="text" name="credit_hours" value="" class="form-control">
+                                    <input type="text" name="credit_hours" id="credit_hours" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Internship Requirements</label>
-                                    <textarea name="credit_hours" value="" class="form-control"></textarea>
+                                    <textarea name="internship_req" id="internship_req" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">FYP Requirements</label>
-                                    <textarea name="credit_hours" value="" class="form-control"></textarea>
+                                    <label for="name">FYP viva/thesis comprehensive</label>
+                                    <textarea name="fyp_req" id="fyp_req" class="form-control"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active
-                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>
-                                </div>
-                            </div>
+
                              <div class="col-md-12">
-                                <div class="form-group pull-right">
-                                    <label for="type">&nbsp;</label>
-                                    <input type="button" name="submit" value="Add" class="btn btn-info">
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
+                        </form>
 
                         </div>
                         <!-- /.box-body -->
@@ -137,7 +131,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="program" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Program</th>
@@ -152,37 +146,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                 @foreach($portfolios as $portfolio)
                                 <tr>
-                                    <td>Computer Science</td>
-                                    <td>8</td>
-                                    <td>Core</td>
-                                    <td>44</td>
-                                    <td>32</td>
-                                    <td>Internship Requirements here</td>
-                                    <td>FYP Requirements here</td>
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr><tr>
-                                    <td>Medical Sciences</td>
-                                    <td>8</td>
-                                    <td>Core</td>
-                                    <td>44</td>
-                                    <td>32</td>
-                                    <td>Internship Requirements here</td>
-                                    <td>FYP Requirements here</td>
-                                    <td><div class="badge bg-red">InActive</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr><tr>
-                                    <td>Arts & Design</td>
-                                    <td>8</td>
-                                    <td>Core</td>
-                                    <td>44</td>
-                                    <td>32</td>
-                                    <td>Internship Requirements here</td>
-                                    <td>FYP Requirements here</td>
-                                    <td><div class="badge bg-red">InActive</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                    <td>{{$portfolio->program->name}}</td>
+                                    <td>{{$portfolio->total_semesters}}</td>
+                                    <td>{{$portfolio->course_type->name}}</td>
+                                    <td>{{$portfolio->no_of_course}}</td>
+                                    <td>{{$portfolio->credit_hours}}</td>
+                                    <td>{{$portfolio->internship_req}}</td>
+                                    <td>{{$portfolio->fyp_req}}</td>
+                                    <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                                    
                                 </tr>
+                                @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -208,83 +185,88 @@
         </section>
     </div>
 
-    <div class="modal fade" id="edit-modal">
+     <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Default Modal</h4>
+                    <h4 class="modal-title">Edit Program Portfoliot. </h4>
                 </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="add-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add User</h4>
-                </div>
-                <form role="form" action="" method="post">
+                <form role="form" id="updateForm" >
                     <div class="modal-body">
-
-                        @csrf
-                        <div class="col-lg-6">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="user"
-                                       placeholder=" User Name" name="name">
-                                <input type="hidden" class="form-control" id="id" name="id">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="code" placeholder="User Code"
-                                       name="code">
-                            </div>
-                        </div>
-                        {{-- <div class="col-lg-1">
-                            <div class="form-group">
-
-                                <label> Status
-                                 <input type="checkbox" name="status" class="flat-red" checked >
-                                </label>
-                                <select id="status" name="status" class="form-control">
-                                    <option>Select Status</option>
-                                    <option value="enabled">Enable</option>
-                                    <option value="disabled">Disable</option>
+                                <label for="name">Program</label>
+                                <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Program</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->id}}">{{$program->name}}</option>
+                                    @endforeach
                                 </select>
+                               <input type="hidden" id="edit_id">
                             </div>
-                        </div> --}}
-                        {{-- <div class="col-lg-2">
+                        </div>
+
+                        <div class="col-md-6">
                             <div class="form-group">
+                                    <label for="name">Total Semesters</label>
+                                    <input type="text" name="total_semesters" id="edit_total_semesters" value="{{old('edit_total_semesters')}}" class="form-control">
 
-                        <input type="button" onclick="updateUser()" class="btn btn-danger pull-right" value="Update"
-                               name="Update" id="Update" style="display: none;">
                             </div>
-                        </div> --}}
-                    <!-- /.box-body -->
-                        {{-- <div class="box-footer">
+                        </div>
 
-                    </div> --}}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Course Type</label>
+                                <select name="course_type_id" id="edit_course_type_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Course</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                    @endforeach
+                                </select>
 
+                            </div>
+                        </div>
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                    <label for="name">Number of Course</label>
+                                    <input type="text" name="no_of_course" id="edit_no_of_course" value="{{old('edit_no_of_course')}}" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Credit Hours</label>
+                                    <input type="text" name="credit_hours"
+                                    id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
+                            </div>
+                        </div>
+
+                         <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Internship Requirements</label>
+                                    <textarea name="internship_req" id="edit_internship_req" value="{{old('edit_internship_req')}}" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">FYP Requirements</label>
+                                    <textarea name="fyp_req" id="edit_fyp_req" value="{{old('edit_fyp_req')}}" class="form-control"></textarea>
+                                </div>
+                            </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="type">{{ __('Status') }} : </label>
+                                <p><input type="radio" name="status" class="flat-red" value="active" > Active
+                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn gradient-bg-color" style="color: white;" value="Submit"
-                               name="add_user" id="add_user">
+                        <input type="submit" name="update" value="update" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -293,6 +275,9 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -300,81 +285,187 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-    {{----}}
     <script>
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass   : 'iradio_flat-green'
+        });
         $(function () {
-            $('#example1').DataTable()
-            $('#program').DataTable()
+            $('#datatable').DataTable()
         })
     </script>
     <script type="text/javascript">
 
-        //Initialize Select2 Elements
         $('.select2').select2()
 
-        // //iCheck for checkbox and radio inputs
-        // $('input[type="checkbox"].minimal').iCheck({
-        //     checkboxClass: 'icheckbox_minimal-blue'
-        // });
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-        //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red').iCheck({
-            checkboxClass: 'icheckbox_flat-pink'
+             $('#form').submit(function (e) {
+            let program_id = $('#program_id').val();
+            let total_semesters = $('#total_semesters').val();
+            let course_type_id = $('#course_type_id').val();
+            let no_of_course = $('#no_of_course').val();
+            let credit_hours = $('#credit_hours').val();
+            let internship_req = $('#internship_req').val();
+            let fyp_req = $('#fyp_req').val();
+
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !total_semesters?addClass('total_semesters'):removeClass('total_semesters');
+            !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
+            !no_of_course?addClass('no_of_course'):removeClass('no_of_course');
+            !credit_hours?addClass('credit_hours'):removeClass('credit_hours');
+            !internship_req?addClass('internship_req'):removeClass('internship_req');
+            !fyp_req?addClass('fyp_req'):removeClass('fyp_req');
+
+            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            // Yes button callback
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url:'{{url("program-portfolio")}}',
+                type:'POST',
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        });
+
+$('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+
+            $('#edit_program_id').select2().val(data.program_id).trigger('change');
+            $('#edit_total_semesters').val(data.total_semesters);
+            $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
+            $('#edit_no_of_course').val(data.no_of_course);
+            $('#edit_credit_hours').val(data.credit_hours);
+            $('#edit_internship_req').val(data.internship_req);
+            $('#edit_fyp_req').val(data.fyp_req);
+            $('#edit_id').val(data.id);
+            $('input[value='+data.status+']').iCheck('check');
+        });
+
+$('#updateForm').submit(function (e) {
+            let program_id = $('#edit_program_id').val();
+            let total_semesters = $('#edit_total_semesters').val();
+            let course_type_id = $('#edit_course_type_id').val();
+            let no_of_course = $('#edit_no_of_course').val();
+            let credit_hours = $('#edit_credit_hours').val();
+            let internship_req = $('#edit_internship_req').val();
+            let fyp_req = $('#edit_fyp_req').val();
+            let id = $('#edit_id').val();
+
+            let status = $('input[name=edit_status]:checked').val();
+            !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
+            !total_semesters?addClass('edit_total_semesters'):removeClass('edit_total_semesters');
+            !course_type_id?addClass('edit_course_type_id'):removeClass('edit_course_type_id');
+            !no_of_course?addClass('edit_no_of_course'):removeClass('edit_no_of_course');
+            !credit_hours?addClass('edit_credit_hours'):removeClass('edit_credit_hours');
+            !internship_req?addClass('edit_internship_req'):removeClass('edit_internship_req');
+            !fyp_req?addClass('edit_fyp_req'):removeClass('edit_fyp_req');
+
+            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            e.preventDefault();
+             var formData = new FormData(this);
+            //var formData = $("#updateForm").serialize()
+            formData.append('_method', 'PUT');
+            $.ajax({
+                url:'{{url("program-portfolio")}}/'+id,
+                type:'POST',
+                // dataType:"JSON",
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    //console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        });
+
+
+$('.delete').on('click', function (e) {
+            let id =  $(this).data('id');
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
+                function(){
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("program-portfolio")}}/'+id,
+                        type:'DELETE',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+                            location.reload();
+                            // console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+
         })
 
-
-
-        function addUser() {
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{'users'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    user: user,
-                    code: code
-                },
-                success: function (response) {
-                    //var data = JSON.parse(response);
-                    alert(response);
-                    //location.replace('users');
-                }
-            });
-        }
-
-
-        function update(id, name, code, status) {
-            $('#id').val(id);
-            $('#user').val(name);
-            $('#code').val(code);
-            $('#status').val(status);
-            $('#add_user').hide();
-            $('#Update').show();
-        }
-
-        function updateUser() {
-            var id = $('#id').val();
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{'updateusers'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    id: id,
-                    user: user,
-                    code: code,
-                    status: status
-                },
-                success: function (response) {
-                    alert('Update successfully');
-                    location.replace('users');
-                }
-            });
-        }
 
     </script>
 

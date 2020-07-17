@@ -29,6 +29,7 @@ class CreateContactInfosTable extends Migration
             $table->foreign('business_school_id')
                 ->references('id')
                 ->on('business_schools');
+            $table->string('focal_person', 100)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

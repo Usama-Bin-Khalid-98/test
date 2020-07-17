@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\EligibilityCriteria;
 use Illuminate\Http\Request;
 
-class FacultyTeachingCources extends Controller
+class EligibilityCriteriaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class FacultyTeachingCources extends Controller
      */
     public function index()
     {
-        return view('registration.faculty.faculty_teaching_cources');
+        //
     }
 
     /**
@@ -40,10 +41,10 @@ class FacultyTeachingCources extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Common\EligibilityCriteria  $eligibilityCriteria
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(EligibilityCriteria $eligibilityCriteria)
     {
         //
     }
@@ -51,10 +52,10 @@ class FacultyTeachingCources extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Common\EligibilityCriteria  $eligibilityCriteria
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EligibilityCriteria $eligibilityCriteria)
     {
         //
     }
@@ -63,10 +64,10 @@ class FacultyTeachingCources extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Common\EligibilityCriteria  $eligibilityCriteria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EligibilityCriteria $eligibilityCriteria)
     {
         //
     }
@@ -74,10 +75,10 @@ class FacultyTeachingCources extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Common\EligibilityCriteria  $eligibilityCriteria
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EligibilityCriteria $eligibilityCriteria)
     {
         //
     }
