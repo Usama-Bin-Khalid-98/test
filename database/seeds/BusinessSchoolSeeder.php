@@ -17,7 +17,6 @@ class BusinessSchoolSeeder extends Seeder
                 [ 'id'=>'1','name' => 'City University of Science & Technology Peshawar', 'status' => 'active'],
                 ['id'=>'2','name' => 'Abasyn University Peshawar', 'status' => 'active'],
                 ['id'=>'3','name' => 'Capital University of Science & Technology', 'status' => 'active'],
-
                 ['id'=>'4','name' => 'Air University, Islamabad', 'status' => 'active'],
                 ['id'=>'5','name' => 'Allama Iqbal Open University, Islamabad (AIOU)', 'status' => 'active'],
                 ['id'=>'6','name' => 'Bahria University, Islamabad', 'status' => 'active'],
@@ -31,7 +30,7 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'14','name' => 'National Defense University, Islamabad', 'status' => 'active'],
                 ['id'=>'15','name' => 'National Textile University, Faisalabad', 'status' => 'active'],
                 ['id'=>'16','name' => 'National University of Modern Languages, Islamabad', 'status' => 'active'],
-                ['id'=>'17','id'=>'1','name' => 'National University of Sciences & Technology, Islamabad', 'status' => 'active'],
+                ['id'=>'17','name' => 'National University of Sciences & Technology, Islamabad', 'status' => 'active'],
                 ['id'=>'18','name' => 'NFC Institute of Engineering & Technology, Multan', 'status' => 'active'],
                 ['id'=>'19','name' => 'Pakistan Institute of Development Economics (PIDE), Islamabad', 'status' => 'active'],
                 ['id'=>'20','name' => 'Pakistan Institute of Engineering & Applied Sciences, Islamabad (PIEAS)', 'status' => 'active'],
@@ -100,7 +99,6 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'84','name' => 'Shaheed Zulfiqar Ali Bhutto University of Law, Karachi', 'status' => 'active'],
                 ['id'=>'85','name' => 'University of Karachi, Karachi', 'status' => 'active'],
                 ['id'=>'86','name' => 'University of Sindh, Jamshoro', 'status' => 'active'],
-                ['name' => 'Shaheed Benazir Bhutto University of Veterinary And Animal Sciences, Sakrand', 'status' => 'active'],
                 ['id'=>'87','name' => 'Benazir Bhutto Shaheed University of Technology & Skill Development, Khairpur Mirs', 'status' => 'active'],
                 ['id'=>'88','name' => 'University of Sufism and Modern Sciences, Bhitshah', 'status' => 'active'],
                 ['id'=>'89','name' => 'Government College University, Hyderabad', 'status' => 'active'],
@@ -201,11 +199,14 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'182','name' => 'Karachi Institute of Economics & Technology, Karachi', 'status' => 'active'],
                 ['id'=>'183','name' => 'KASB Institute of Technology, Karachi', 'status' => 'active'],
                 ['id'=>'184','name' => 'Karachi School for Business & Leadership, Karachi', 'status' => 'active'],
-                ['id'=>'185','name' => '', 'status' => 'active'],
-                ['id'=>'186','name' => '', 'status' => 'active'],
-                ['id'=>'187','name' => '', 'status' => 'active'],
-
-                      ['id'=>'188','name' => '', 'status' => 'active'],
+                ['id'=>'185','name' => 'Preston University, Karachi
+', 'status' => 'active'],
+                ['id'=>'186','name' => 'Shaheed Zulfikar Ali Bhutto Institute of Science & Technology (SZABIST), Karachi
+', 'status' => 'active'],
+                ['id'=>'187','name' => 'Shaheed Benazir Bhutto City University, Karachi
+', 'status' => 'active'],
+                ['id'=>'188','name' => 'Sir Syed University of Engineering & Technology, Karachi
+', 'status' => 'active'],
                 ['id'=>'189','name' => 'Muhammad Ali Jinnah University, Karachi', 'status' => 'active'],
                 ['id'=>'190','name' => 'Newport Institute of Communications & Economics, Karachi', 'status' => 'active'],
                 ['id'=>'191','name' => 'Preston Institute of Management, Science and Technology, Karachi', 'status' => 'active'],
@@ -232,10 +233,11 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'212','name' => 'Sarhad University of Science and Information Technology, Peshawar ', 'status' => 'active'],
                 ['id'=>'213','name' => 'BRAINS Institute, Peshawar', 'status' => 'active'],
                 ['id'=>'214','name' => 'Al-Hamd Islamic University, Quetta', 'status' => 'active'],
-                ['id'=>'214','name' => 'Al-Khair University, AJ&K (Banned for new intake of students w.e.f  Fall, 2016 in all subjects and levels)
+                ['id'=>'215','name' => 'Al-Khair University, AJ&K (Banned for new intake of students w.e.f  Fall, 2016 in all subjects and levels)
 ', 'status' => 'active'],
-                ['id'=>'215','name' => 'Mohi-ud-Din Islamic University, AJK ', 'status' => 'active']
-               
+                ['id'=>'216','name' => 'Mohi-ud-Din Islamic University, AJK ', 'status' => 'active'],
+                ['id'=> '217 ','name' => 'Shaheed Benazir Bhutto University of Veterinary And Animal Sciences, Sakrand', 'status' => 'active'],
+
             ]
         );
     }
