@@ -306,6 +306,7 @@
         ///// edit record
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            console.log('type ', typeof data);
             // Initialize Select2
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_level_id').select2().val(data.level_id).trigger('change');

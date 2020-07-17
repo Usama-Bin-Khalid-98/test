@@ -232,7 +232,7 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'215','name' => 'Al-Khair University, AJ&K (Banned for new intake of students w.e.f  Fall, 2016 in all subjects and levels)
 ', 'status' => 'active'],
                 ['id'=>'216','name' => 'Mohi-ud-Din Islamic University, AJK ', 'status' => 'active'],
-                ['id'=> '217','name' => 'Shaheed Benazir Bhutto University of Veterinary And Animal Sciences, Sakrand', 'status' => 'active'],
+                ['id'=> '217 ','name' => 'Shaheed Benazir Bhutto University of Veterinary And Animal Sciences, Sakrand', 'status' => 'active'],
 
             ]
         );
