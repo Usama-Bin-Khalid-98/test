@@ -19,7 +19,7 @@
                 <small></small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li> 
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
                 <li class="active"> Faculty Summary </li>
             </ol>
         </section>
@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information of faculty numbers over the last two semesters.</h3>
+                            <h3 class="box-title">Provide information about core business school faculty : present aggregate numbers in Table 4.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -58,43 +58,41 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
-                           
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Faculty Qualification</label>
-                                    <select name="designation" class="form-control">
+                                    <select name="designation" class="form-control select2">
                                         <option value="">Select Qualification</option>
-                                        <option value="">PHD</option>
-                                        <option value="">Masters</option>
-                                        <option value="">Bachelors</option>
-                                         <option value="">Others</option>
+                                        @foreach($degrees as $degree)
+                                        <option value="{{$degree->id}}">{{$degree->name}}</option>
+                                        @endforeach
+
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Curces/Programs</label>
+                                    <label for="name">Courses/Programs</label>
                                     <select name="designation" class="form-control">
                                         <option value="">Select Program</option>
-                                        <option value="">Bussiness Administration</option>
-                                        <option value="">Public Administration</option>
-                                        <option value="">Managment Sciences</option>
-                                        <option value="">Commerce/Econimics</option>
-                                         <option value="">Others</option>
+                                        @foreach($programs as $program)
+                                            <option value="{{$program->id}}">{{$program->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
-                            
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                    <label for="name">Number of Faculty</label>
                                     <input type="text" name="phd" value="" class="form-control">
                                 </div>
                             </div>
-                           
-                           
+
+
 
                             <div class="col-md-12">
                                 <div class="form-group pull-right">
@@ -117,7 +115,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                   
+
                                     <th>Qualification</th>
                                     <th>Public Administration</th>
                                     <th>Business Administration</th>
@@ -125,16 +123,16 @@
                                     <th>Comerece</th>
                                     <th>Others</th>
                                     <th>Total Faculty</th>
-                                 
-                                   
-                                    
-                                    
-                                    
+
+
+
+
+
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                   
+
                                     <td>PHD</td>
                                     <td>12</td>
                                     <td>14</td>
@@ -142,10 +140,10 @@
                                     <td>13</td>
                                     <td>16</td>
                                     <td>76</td>
-                                    
-                                    
-                                 
-                                    
+
+
+
+
                                     <td><div class="badge bg-green">Active</div></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
                                 </tr>
@@ -160,7 +158,7 @@
                                     <th>Comerece</th>
                                     <th>Others</th>
                                     <th>total faculty</th>
-                                 
+
                                 </tr>
                                 </tfoot>
                             </table>

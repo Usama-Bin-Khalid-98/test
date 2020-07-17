@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
 
-use App\Models\Faculty\WorkLoad;
+use App\Models\Faculty\VisitingFaculty;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class WorkLoadController extends Controller
+class VisitingFacultyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class WorkLoadController extends Controller
     public function index()
     {
         //
-        return view('registration.faculty.workload');
+        return view('registration.faculty.visiting_faculty');
     }
 
     /**
@@ -42,10 +43,10 @@ class WorkLoadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Faculty\WorkLoad  $workLoad
+     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
      * @return \Illuminate\Http\Response
      */
-    public function show(WorkLoad $workLoad)
+    public function show(VisitingFaculty $visitingFaculty)
     {
         //
     }
@@ -53,10 +54,10 @@ class WorkLoadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Faculty\WorkLoad  $workLoad
+     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
      * @return \Illuminate\Http\Response
      */
-    public function edit(WorkLoad $workLoad)
+    public function edit(VisitingFaculty $visitingFaculty)
     {
         //
     }
@@ -65,10 +66,10 @@ class WorkLoadController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faculty\WorkLoad  $workLoad
+     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, WorkLoad $workLoad)
+    public function update(Request $request, VisitingFaculty $visitingFaculty)
     {
         //
     }
@@ -76,10 +77,10 @@ class WorkLoadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Faculty\WorkLoad  $workLoad
+     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
      * @return \Illuminate\Http\Response
      */
-    public function destroy(WorkLoad $workLoad)
+    public function destroy(VisitingFaculty $visitingFaculty)
     {
         //
     }
