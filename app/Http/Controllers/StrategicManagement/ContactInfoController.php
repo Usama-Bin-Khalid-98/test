@@ -68,6 +68,7 @@ class ContactInfoController extends Controller
                         'contact_no' => $request->contact_no,
                         'school_contact' => $request->school_contact,
                         'designation_id' => $request->designation_id,
+                        'focal_person' => $request->focal_person,
                         'cv' => $path.'/'.$imageName,
                         'business_school_id' => auth()->user()->business_school_id
                 ]);
@@ -117,6 +118,7 @@ class ContactInfoController extends Controller
     public function update(Request $request, ContactInfo $contactInfo)
     {
         //
+       // dd($request->all());
         $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
         {
@@ -139,6 +141,7 @@ class ContactInfoController extends Controller
                     'contact_no' => $request->contact_no,
                     'school_contact' => $request->school_contact,
                     'designation_id' => $request->designation_id,
+                    'focal_person' => $request->focal_person,
                     'cv' => $path.'/'.$imageName,
                     'business_school_id' => auth()->user()->business_school_id
                     ]
@@ -152,6 +155,7 @@ class ContactInfoController extends Controller
                'contact_no' => $request->contact_no,
                'school_contact' => $request->school_contact,
                'designation_id' => $request->designation_id,
+               'focal_person' => $request->focal_person,
                'status' => $request->status,
            ]);
             return response()->json(['success' => 'Contact Information updated successfully.']);

@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Application Received Form. </h3>
+                            <h3 class="box-title">2.3.	Provide data on the applications received and student intake in the past three years for each program in Table 2.3 </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -138,7 +138,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                
+
                                 @foreach($apps as $portfolio)
                                 <tr>
                                     <td>{{$portfolio->program->name}}</td>
@@ -208,7 +208,7 @@
                                         <option value="{{$course->id}}">{{$course->name}}</option>
                                     @endforeach
                                 </select>
-                               
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -236,7 +236,7 @@
                                     <input type="date" name="semester_comm_date" id="edit_semester_comm_date" value="{{old('edit_semester_comm_date')}}" class="form-control">
                                 </div>
                             </div>
-                        
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -258,7 +258,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -344,7 +344,7 @@
 
          $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            
+
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_semester_id').select2().val(data.semester_id).trigger('change');
             $('#edit_app_received').val(data.app_received);
@@ -449,9 +449,9 @@ $('#updateForm').submit(function (e) {
 
 
 
-        
 
-        
+
+
 
     </script>
 

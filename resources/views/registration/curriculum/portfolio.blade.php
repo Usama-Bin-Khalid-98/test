@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide the portfolio of the program(s) under review.</h3>
+                            <h3 class="box-title">Provide the portfolio of the program(s) under review in Table 2.1.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -61,7 +61,7 @@
                             <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program Name</label>
+                                    <label for="name">Program under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Program</option>
                                         @foreach($programs as $program)
@@ -72,13 +72,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Semesters</label>
+                                    <label for="name">Number of Semesters</label>
                                     <input type="text" name="total_semesters" id="total_semesters" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Course Type</label>
+                                    <label for="name">Course Category</label>
                                    <select name="course_type_id" id="course_type_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Course</option>
                                         @foreach($courses as $course)
@@ -90,7 +90,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Number of Course</label>
+                                    <label for="name">Number of Courses</label>
                                     <input type="text" name="no_of_course" id="no_of_course" class="form-control">
                                 </div>
                             </div>
@@ -108,14 +108,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">FYP Requirements</label>
+                                    <label for="name">FYP viva/thesis comprehensive</label>
                                     <textarea name="fyp_req" id="fyp_req" class="form-control"></textarea>
                                 </div>
                             </div>
-                        
+
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
-                                    <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -213,7 +212,7 @@
                             <div class="form-group">
                                     <label for="name">Total Semesters</label>
                                     <input type="text" name="total_semesters" id="edit_total_semesters" value="{{old('edit_total_semesters')}}" class="form-control">
-                                
+
                             </div>
                         </div>
 
@@ -226,20 +225,20 @@
                                         <option value="{{$course->id}}">{{$course->name}}</option>
                                     @endforeach
                                 </select>
-                               
+
                             </div>
                         </div>
                          <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Number of Course</label>
                                     <input type="text" name="no_of_course" id="edit_no_of_course" value="{{old('edit_no_of_course')}}" class="form-control">
-                                
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Credit Hours</label>
-                                    <input type="text" name="credit_hours" 
+                                    <input type="text" name="credit_hours"
                                     id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
                             </div>
                         </div>
@@ -277,7 +276,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
@@ -361,7 +360,7 @@
 
 $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            
+
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_total_semesters').val(data.total_semesters);
             $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
@@ -430,7 +429,7 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-        
+
 $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
@@ -467,7 +466,7 @@ $('.delete').on('click', function (e) {
 
         })
 
-        
+
     </script>
 
 

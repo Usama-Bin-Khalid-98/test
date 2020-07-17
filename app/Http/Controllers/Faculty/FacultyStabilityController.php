@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
 
-use App\Models\Faculty\VisitingFaculty;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class VisitingFacultyController extends Controller
+class FacultyStabilityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class VisitingFacultyController extends Controller
      */
     public function index()
     {
-        //
-        return view('registration.faculty.visiting_faculty');
+        return view ('registration.faculty.faculty_stability');
     }
 
     /**
@@ -42,10 +41,10 @@ class VisitingFacultyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(VisitingFaculty $visitingFaculty)
+    public function show($id)
     {
         //
     }
@@ -53,10 +52,10 @@ class VisitingFacultyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(VisitingFaculty $visitingFaculty)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +64,10 @@ class VisitingFacultyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VisitingFaculty $visitingFaculty)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +75,10 @@ class VisitingFacultyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Faculty\VisitingFaculty  $visitingFaculty
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VisitingFaculty $visitingFaculty)
+    public function destroy($id)
     {
         //
     }

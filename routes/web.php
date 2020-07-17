@@ -63,14 +63,15 @@ Route::resource('application-received','ApplicationReceivedController');
 
 // Students
 Route::resource('student-enrolment','StudentEnrolmentController');
+
 // Faculty
-Route::get('/faculty/workload','WorkLoadController@index')->name('workload');
-Route::get('/faculty_cources','FacultyTeachingCources@index')->name('faculty_cources');
-Route::get('/visiting_faculty','VisitingFacultyController@index')->name('visiting_faculty');
-Route::get('/faculty-gender','FacultyGenderController@index')->name('faculty-gender');
-Route::get('/faculty_summary','FacultySummaryController@index')->name('faculty_summary');
-Route::get('/faculty_student_ratio','FacultyStudentRatio@index')->name('faculty_student_ratio');
-Route::get('/faculty_stability','FacultyStabilityController@index')->name('faculty_stability');
+Route::get('/faculty_summary','Faculty\FacultySummaryController@index')->name('faculty_summary');
+Route::get('/faculty/workload','Faculty\WorkLoadController@index')->name('workload');
+Route::get('/visiting_faculty','Faculty\VisitingFacultyController@index')->name('visiting_faculty');
+Route::get('/faculty_student_ratio','Faculty\FacultyStudentRatio@index')->name('faculty_student_ratio');
+Route::get('/faculty_stability','Faculty\FacultyStabilityController@index')->name('faculty_stability');
+Route::get('/faculty_courses','Faculty\FacultyTeachingCources@index')->name('faculty_courses');
+Route::get('/faculty-gender','Faculty\FacultyGenderController@index')->name('faculty-gender');
 
 
 //research-summary
