@@ -199,6 +199,7 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'182','name' => 'Karachi Institute of Economics & Technology, Karachi', 'status' => 'active'],
                 ['id'=>'183','name' => 'KASB Institute of Technology, Karachi', 'status' => 'active'],
                 ['id'=>'184','name' => 'Karachi School for Business & Leadership, Karachi', 'status' => 'active'],
+<<<<<<< HEAD
                 ['id'=>'185','name' => 'Preston University, Karachi
 ', 'status' => 'active'],
                 ['id'=>'186','name' => 'Shaheed Zulfikar Ali Bhutto Institute of Science & Technology (SZABIST), Karachi
@@ -207,6 +208,12 @@ class BusinessSchoolSeeder extends Seeder
 ', 'status' => 'active'],
                 ['id'=>'188','name' => 'Sir Syed University of Engineering & Technology, Karachi
 ', 'status' => 'active'],
+=======
+                ['id'=>'185','name' => '', 'status' => 'active'],
+                ['id'=>'186','name' => '', 'status' => 'active'],
+                ['id'=>'187','name' => '', 'status' => 'active'],
+                ['id'=>'188','name' => '', 'status' => 'active'],
+>>>>>>> 72e13fb02c223442c2c577d15987c897ec6f5497
                 ['id'=>'189','name' => 'Muhammad Ali Jinnah University, Karachi', 'status' => 'active'],
                 ['id'=>'190','name' => 'Newport Institute of Communications & Economics, Karachi', 'status' => 'active'],
                 ['id'=>'191','name' => 'Preston Institute of Management, Science and Technology, Karachi', 'status' => 'active'],
