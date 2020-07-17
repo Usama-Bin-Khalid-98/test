@@ -156,8 +156,8 @@
                                     <td>{{$portfolio->internship_req}}</td>
                                     <td>{{$portfolio->fyp_req}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
-
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                                    
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -242,6 +242,19 @@
                                     id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
                             </div>
                         </div>
+
+                         <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Internship Requirements</label>
+                                    <textarea name="internship_req" id="edit_internship_req" value="{{old('edit_internship_req')}}" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">FYP Requirements</label>
+                                    <textarea name="fyp_req" id="edit_fyp_req" value="{{old('edit_fyp_req')}}" class="form-control"></textarea>
+                                </div>
+                            </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -353,6 +366,8 @@ $('.edit').on('click', function () {
             $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
             $('#edit_no_of_course').val(data.no_of_course);
             $('#edit_credit_hours').val(data.credit_hours);
+            $('#edit_internship_req').val(data.internship_req);
+            $('#edit_fyp_req').val(data.fyp_req);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -363,6 +378,8 @@ $('#updateForm').submit(function (e) {
             let course_type_id = $('#edit_course_type_id').val();
             let no_of_course = $('#edit_no_of_course').val();
             let credit_hours = $('#edit_credit_hours').val();
+            let internship_req = $('#edit_internship_req').val();
+            let fyp_req = $('#edit_fyp_req').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
@@ -371,8 +388,10 @@ $('#updateForm').submit(function (e) {
             !course_type_id?addClass('edit_course_type_id'):removeClass('edit_course_type_id');
             !no_of_course?addClass('edit_no_of_course'):removeClass('edit_no_of_course');
             !credit_hours?addClass('edit_credit_hours'):removeClass('edit_credit_hours');
+            !internship_req?addClass('edit_internship_req'):removeClass('edit_internship_req');
+            !fyp_req?addClass('edit_fyp_req'):removeClass('edit_fyp_req');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours)
+            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

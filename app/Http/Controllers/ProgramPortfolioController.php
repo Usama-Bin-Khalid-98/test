@@ -118,6 +118,8 @@ class ProgramPortfolioController extends Controller
                 'course_type_id' => $request->course_type_id,
                 'no_of_course' => $request->no_of_course,
                 'credit_hours' => $request->credit_hours,
+                'internship_req' => $request->internship_req,
+                'fyp_req' => $request->fyp_req,
                 'status' => $request->status,
             ]);
             return response()->json(['success' => 'Program Portfolio updated successfully.']);
@@ -163,7 +165,9 @@ class ProgramPortfolioController extends Controller
             'total_semesters' => 'required',
             'course_type_id' => 'required',
             'no_of_course' => 'required',
-            'credit_hours' => 'required'
+            'credit_hours' => 'required',
+            'internship_req' => 'required',
+            'fyp_req' => 'required'
         ];
     }
 

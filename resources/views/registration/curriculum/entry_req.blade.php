@@ -302,13 +302,15 @@
 $('#updateForm').submit(function (e) {
             let program_id = $('#edit_program_id').val();
             let eligibility_criteria_id = $('#edit_eligibility_criteria_id').val();
+            let min_req = $('#edit_min_req').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
             !eligibility_criteria_id?addClass('edit_eligibility_criteria_id'):removeClass('edit_eligibility_criteria_id');
+            !min_req?addClass('edit_min_req'):removeClass('edit_min_req');
 
-            if(!program_id || !eligibility_criteria_id )
+            if(!program_id || !eligibility_criteria_id || !min_req )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
