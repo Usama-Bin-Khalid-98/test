@@ -148,7 +148,7 @@
                                     <td>{{$portfolio->student_intake}}</td>
                                     <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"semester_id":{{$portfolio->semester_id}},"status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","semester_id":"{{$portfolio->semester_id}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                     
                                 </tr>
                                 @endforeach
@@ -214,19 +214,19 @@
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Applications Received</label>
-                                    <input type="text" name="app_received" id="edit_app_received" class="form-control">
+                                    <input type="text" name="app_received" id="edit_app_received" value="{{old('edit_app_received')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Admission Offered</label>
-                                    <input type="text" name="admission_offered" id="edit_admission_offered" class="form-control">
+                                    <input type="text" name="admission_offered" id="edit_admission_offered" value="{{old('edit_admission_offered')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Student Intake</label>
-                                    <textarea name="student_intake" id="edit_student_intake" class="form-control"></textarea>
+                                    <textarea name="student_intake" id="edit_student_intake" value="{{old('edit_student_intake')}}" class="form-control"></textarea>
                                 </div>
                             </div>
 
@@ -347,6 +347,10 @@
             
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_semester_id').select2().val(data.semester_id).trigger('change');
+            $('#edit_app_received').val(data.app_received);
+            $('#edit_admission_offered').val(data.admission_offered);
+            $('#edit_student_intake').val(data.student_intake);
+            $('#edit_semester_comm_date').val(data.semester_comm_date);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -354,13 +358,21 @@
 $('#updateForm').submit(function (e) {
             let program_id = $('#edit_program_id').val();
             let semester_id = $('#edit_semester_id').val();
+            let app_received = $('#edit_app_received').val();
+            let admission_offered = $('#edit_admission_offered').val();
+            let student_intake = $('#edit_student_intake').val();
+            let semester_comm_date = $('#edit_semester_comm_date').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
             !semester_id?addClass('edit_semester_id'):removeClass('edit_semester_id');
+            !app_received?addClass('edit_app_received'):removeClass('edit_app_received');
+            !admission_offered?addClass('edit_admission_offered'):removeClass('edit_admission_offered');
+            !student_intake?addClass('edit_student_intake'):removeClass('edit_student_intake');
+            !semester_comm_date?addClass('edit_semester_comm_date'):removeClass('edit_semester_comm_date');
 
-            if(!program_id || !semester_id )
+            if(!program_id || !semester_id || !app_received || !admission_offered || !student_intake || !semester_comm_date)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

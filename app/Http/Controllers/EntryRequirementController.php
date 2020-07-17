@@ -111,6 +111,7 @@ class EntryRequirementController extends Controller
             EntryRequirement::where('id', $entryRequirement->id)->update([
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
+                'min_req' => $request->min_req,
                 'status' => $request->status
             ]);
             return response()->json(['success' => 'Entry Requirements updated successfully.']);
@@ -150,7 +151,8 @@ class EntryRequirementController extends Controller
      protected function update_rules() {
         return [
             'program_id' => 'required',
-            'eligibility_criteria_id' => 'required'
+            'eligibility_criteria_id' => 'required',
+            'min_req' => 'required'
         ];
     }
 

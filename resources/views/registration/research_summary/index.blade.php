@@ -187,7 +187,7 @@
                                 <tbody>
                                @foreach($summaries as $summary)
                                 <tr>
-                                    <td>{{$summary->publication_type->name}}</td>
+                                    <td>{{$summary->publication_type->name??""}}</td>
                                     <td>{{$summary->business_school->name}}</td>
                                     <td>{{$summary->year}}</td>
                                     <td>{{$summary->total_items}}</td>

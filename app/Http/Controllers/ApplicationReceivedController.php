@@ -114,6 +114,10 @@ class ApplicationReceivedController extends Controller
             ApplicationReceived::where('id', $applicationReceived->id)->update([
                 'program_id' => $request->program_id,
                 'semester_id' => $request->semester_id,
+                'app_received' => $request->app_received,
+                'admission_offered' => $request->admission_offered,
+                'student_intake' => $request->student_intake,
+                'semester_comm_date' => $request->semester_comm_date,
                 'status' => $request->status
             ]);
             return response()->json(['success' => 'Application Received updated successfully.']);
@@ -155,7 +159,11 @@ class ApplicationReceivedController extends Controller
      protected function update_rules() {
         return [
             'program_id' => 'required',
-            'semester_id' => 'required'
+            'semester_id' => 'required',
+            'app_received' => 'required',
+            'admission_offered' => 'required',
+            'student_intake' => 'required',
+            'semester_comm_date' => 'required'
         ];
     }
 
