@@ -136,7 +136,7 @@ class RegisterController extends Controller
                 $update = BusinessSchool::find($data['business_school_id']);
                 $update->update([
                     'contact_person' => $data['name'],
-                    'status' => 'inactive',
+//                    'status' => 'inactive',
                 ]);
 
             } catch (Exception $e) {

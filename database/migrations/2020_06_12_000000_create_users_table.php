@@ -16,16 +16,16 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',100);
-            $table->integer('designation_id')->unsigned();
+            $table->integer('designation_id')->unsigned()->nullable();
             // personal info
             $table->string('cnic', 80);
             $table->string('contact_no', 25);
-            $table->string('country');
-            $table->string('city');
+            $table->string('country')->nullable();
+            $table->string('city')->nullable();
             $table->string('address', 255)->nullable();
 
             //business school
-            $table->integer('business_school_id')->unsigned();
+            $table->integer('business_school_id')->unsigned()->nullable();
             $table->foreign('business_school_id')
                 ->references('id')
                 ->on('business_schools');
