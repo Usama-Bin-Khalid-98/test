@@ -30,6 +30,24 @@ class UserSeeder extends Seeder
             'status' => 'active',
             ],
 
+
         ]);
+
+    DB::table('users')->insert([
+        [
+            'name' => 'Muhammad Saboor Sethi',
+            'designation_id' => 1,
+            'cnic' => '17101-1234324-1',
+            'contact_no' => '+92-51-90800206',
+            'email' => 'city@gmail.com',
+            'password' => Hash::make('admin!@#$'),
+            'business_school_id' => 1,
+            'country' => 'pakistan',
+            'city' => 'peshawar',
+            'user_type' => 'business_school',
+            'status' => 'active',
+        ]
+    ]);
     }
+
 }
