@@ -23,16 +23,13 @@ Route::get('/login', function() {
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
-
-Auth::routes();
+Auth::routes(['verify' => true]);
     // Only verified users may enter...
     Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
     Route::get('mailsend', 'Auth\RegisterController@mailsend');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('admin', 'DashboardController@index');
-
-
 
     ///// Dashboard
     Route::patch('admin/{id}', 'DashboardController@schoolStatus');
@@ -60,8 +57,9 @@ Route::prefix('strategic')->group(function () {
 
 
 // Curriculum
-Route::get('/portfolio','ProgramPortfolioController@index')->name('portfolio');
-Route::get('/entry-requirements','EntryRequirementController@index')->name('entry-requirements');
+Route::resource('program-portfolio','ProgramPortfolioController');
+Route::resource('entry-requirements','EntryRequirementController');
+Route::resource('application-received','ApplicationReceivedController');
 
 // Students
 Route::resource('student-enrolment','StudentEnrolmentController');

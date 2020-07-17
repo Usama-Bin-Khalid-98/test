@@ -81,7 +81,7 @@
         </li>
 
 
-        <li class=" treeview {{(request()->is('portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}" >
+        <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i> <span>Curriculum</span>
              <span class="pull-right-container">
@@ -89,10 +89,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('portfolio')) ? 'active' : '' }}"><a href="{{route('portfolio')}}"><i class="fa fa-circle-o text-orange"></i>Programs Portfolio</a></li>
+            <li class="{{ (request()->is('program-portfolio')) ? 'active' : '' }}"><a href="{{url('program-portfolio')}}"><i class="fa fa-circle-o text-orange"></i>Programs Portfolio</a></li>
 
-            <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{route('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
-            <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{route('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
+            <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
+            <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
 
 
           </ul>

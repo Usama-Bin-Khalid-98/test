@@ -99,7 +99,6 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'84','name' => 'Shaheed Zulfiqar Ali Bhutto University of Law, Karachi', 'status' => 'active'],
                 ['id'=>'85','name' => 'University of Karachi, Karachi', 'status' => 'active'],
                 ['id'=>'86','name' => 'University of Sindh, Jamshoro', 'status' => 'active'],
-                ['name' => 'Shaheed Benazir Bhutto University of Veterinary And Animal Sciences, Sakrand', 'status' => 'active'],
                 ['id'=>'87','name' => 'Benazir Bhutto Shaheed University of Technology & Skill Development, Khairpur Mirs', 'status' => 'active'],
                 ['id'=>'88','name' => 'University of Sufism and Modern Sciences, Bhitshah', 'status' => 'active'],
                 ['id'=>'89','name' => 'Government College University, Hyderabad', 'status' => 'active'],
@@ -230,10 +229,11 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'212','name' => 'Sarhad University of Science and Information Technology, Peshawar ', 'status' => 'active'],
                 ['id'=>'213','name' => 'BRAINS Institute, Peshawar', 'status' => 'active'],
                 ['id'=>'214','name' => 'Al-Hamd Islamic University, Quetta', 'status' => 'active'],
-                ['id'=>'214','name' => 'Al-Khair University, AJ&K (Banned for new intake of students w.e.f  Fall, 2016 in all subjects and levels)
+                ['id'=>'215','name' => 'Al-Khair University, AJ&K (Banned for new intake of students w.e.f  Fall, 2016 in all subjects and levels)
 ', 'status' => 'active'],
-                ['id'=>'215','name' => 'Mohi-ud-Din Islamic University, AJK ', 'status' => 'active']
-               
+                ['id'=>'216','name' => 'Mohi-ud-Din Islamic University, AJK ', 'status' => 'active'],
+                ['id'=> '217','name' => 'Shaheed Benazir Bhutto University of Veterinary And Animal Sciences, Sakrand', 'status' => 'active'],
+
             ]
         );
     }
