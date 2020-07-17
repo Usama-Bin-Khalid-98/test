@@ -105,9 +105,7 @@
             </span>
               </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}"><i class="fa fa-circle-o text-orange"></i>Student Enrolment</a></li>
-            <li  class=""><a href=""><i class="fa fa-circle-o text-orange"></i> Graduated Students</a></li>
-            <li  class=""><a href=""><i class="fa fa-circle-o text-orange"></i>Students Gender Mix</a></li> 
+            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}"><i class="fa fa-circle-o text-orange"></i>Students Details</a></li>
 
           </ul>
         </li>
@@ -143,7 +141,7 @@
           </ul>
         </li>
 
-         
+
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Admin</a></li>
 

@@ -12,10 +12,11 @@ class SemesterSeeder extends Seeder
     public function run()
     {
         DB::table('semesters')->insert([
-
-                ['name' => 'Fall', 'status' => 'active'],
-                ['name' => 'Spring', 'status' => 'active'],
-                ['name' => 'Fall_t', 'status' => 'active']
+                ['name' => 'Fall t-2', 'status' => 'active'],
+                ['name' => 'Spring t-2', 'status' => 'active'],
+                ['name' => 'Fall t-1', 'status' => 'active'],
+                ['name' => 'Spring t-1', 'status' => 'active'],
+                ['name' => 'Fall t', 'status' => 'active']
             ]
         );
     }

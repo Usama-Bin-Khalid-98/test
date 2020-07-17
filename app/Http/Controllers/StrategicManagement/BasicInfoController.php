@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Validator;
+use  App\User;
 
 
 class BasicInfoController extends Controller
@@ -96,7 +97,8 @@ class BasicInfoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd('coning here');
+
+
         try {
             //$update = BasicInfo::find($basicInfo->id);
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
@@ -104,8 +106,29 @@ class BasicInfoController extends Controller
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
+
                 $update = BusinessSchool::where('id', $id)
-                          ->update($request->all());
+                          ->update(
+                              [
+                                  'contact_person' => $request->contact_person,
+                                  'year_estb' => $request->year_estb,
+                                  'address' => $request->address,
+                                  'web_url' => $request->web_url,
+                                  'year_estb' => $request->year_estb,
+                                  'date_charter_granted' => $request->date_charter_granted,
+                                  'charter_number' => $request->charter_number,
+                                  'charter_type_id' => $request->charter_type_id,
+                                  'institute_type_id' => $request->institute_type_id,
+                                  'sector' => $request->sector,
+                                  'profit_status' => $request->profit_status,
+                                  'hierarchical_context' => $request->hierarchical_context,
+
+                                  ]
+                          );
+                //dd('coning else', $update);
+                $updateUser = User::find(Auth::id())
+                          ->update(['designation_id'=> $request->designation_id]);
+
                 return response()->json(['success' => 'Updated successfully.']);
             }
         }catch (Exception $e)
@@ -128,7 +151,7 @@ class BasicInfoController extends Controller
     protected function rules() {
         return [
             'contact_person' => 'required',
-            'contact_no' => 'required',
+//            'contact_no' => 'required',
             'year_estb' => 'required|date',
             'web_url' => 'required',
             'date_charter_granted' => 'required',
@@ -139,6 +162,7 @@ class BasicInfoController extends Controller
             'profit_status' => 'required',
             'sector' => 'required',
             'address' => 'required',
+            'designation_id' => 'required',
         ];
     }
 

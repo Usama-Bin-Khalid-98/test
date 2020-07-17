@@ -89,10 +89,10 @@
                                 <div class="col-md-3">
                                     <div class="form-group" style="margin-bottom: 17px">
                                         <label for="designation">Chief administrative officer</label>
-                                        <select class="form-control select2" >
+                                        <select id="designation_id" name="designation_id" class="form-control select2" style="width: 100%;">
                                             <option value="">Select Designation</option>
-                                            @foreach($designations as $designation)
-                                                <option id="{{$designation->id}}" {{$designation->id==$user_info->designation_id?'selectd':''}}>{{$designation->name}}</option>
+                                            @foreach(@$designations as $designation)
+                                                <option value="{{@$designation->id}}" {{@$designation->id==@$user_info->designation_id?'selected':''}} >{{@$designation->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -163,7 +163,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="name">Address</label>
                                             <textarea id="address" class="form-control">{{@$basic_info->address}}</textarea>
@@ -210,7 +210,9 @@
         // add required to input fields
         // $('input').prop('required', true);
         //Initialize Select2 Elements
-        $('.select2').select2();
+        $('#designation_id').select2();
+        $('#charter_type_id').select2();
+        $('#institute_type_id').select2();
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -231,6 +233,7 @@
             let profit_status = $('input[name=profit_status]:checked').val();
             let sector = $('input[name=sector]:checked').val();
             let address = $('#address').val();
+            let designation_id = $('#designation_id').val();
 
             //console.log(contact_no);
             //validation
@@ -246,6 +249,7 @@
              !profit_status?addClass('profit_status'):removeClass('profit_status');
              !sector?addClass('sector'):removeClass('sector');
              !address?addClass('address'):removeClass('address');
+             !designation_id?addClass('designation_id'):removeClass('designation_id');
 
             $.ajaxSetup({
                 headers: {
@@ -254,7 +258,7 @@
             });
             $.ajax({
                 type: 'PUT',
-                url: "{{url('strategic-basicinfo')}}/"+id,
+                url: "{{url('strategic/basicinfo')}}/"+id,
                 data: {
                     id: id,
                     contact_person: contact_person,
@@ -268,7 +272,8 @@
                     hierarchical_context: hierarchical_context,
                     profit_status: profit_status,
                     sector: sector,
-                    address: address
+                    address: address,
+                    designation_id:designation_id
                 },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
