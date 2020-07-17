@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntryRequirementsTable extends Migration
+class CreateEligibilityCriteriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateEntryRequirementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('entry_requirements', function (Blueprint $table) {
+        Schema::create('eligibility_criterias', function (Blueprint $table) {
             $table->id();
+            $table->string('name',100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateEntryRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entry_requirements');
+        Schema::dropIfExists('eligibility_criterias');
     }
 }

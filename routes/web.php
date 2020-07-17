@@ -57,8 +57,9 @@ Route::prefix('strategic')->group(function () {
 
 
 // Curriculum
-Route::get('/portfolio','ProgramPortfolioController@index')->name('portfolio');
-Route::get('/entry-requirements','EntryRequirementController@index')->name('entry-requirements');
+Route::resource('program-portfolio','ProgramPortfolioController');
+Route::resource('entry-requirements','EntryRequirementController');
+Route::resource('application-received','ApplicationReceivedController');
 
 // Students
 Route::resource('student-enrolment','StudentEnrolmentController');
