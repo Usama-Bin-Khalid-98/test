@@ -43,11 +43,11 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide contact information, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
+                            <h3 class="box-title">Provide contact information in table 1.3, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                            
+
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>

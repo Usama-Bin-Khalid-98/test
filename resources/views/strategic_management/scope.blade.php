@@ -21,7 +21,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Provide scope of accreditation.</li>
+                <li class="active">Provide scope of accreditation Table 1.2</li>
             </ol>
         </section>
         <section class="content-header">
