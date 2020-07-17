@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\Request;
+use Sessoin;
 
 class VerificationController extends Controller
 {
@@ -36,7 +38,25 @@ class VerificationController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        Session::flash('message', "Your account is not activated or");
+        return [
+            'email' => $request->{$this->username()},
+            'password' => $request->password,
+            'status' => 'active',
+        ];
+
     }
 }

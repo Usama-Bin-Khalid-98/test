@@ -15,10 +15,10 @@ class CreateFacultyGender extends Migration
     {
         Schema::create('faculty_gender', function (Blueprint $table) {
             $table->increments('id');
-            // $table->integer('business_school_id')->unsigned();
-            // $table->foreign('business_school_id')
-            //     ->references('id')
-            //     ->on('business_schools');
+            $table->integer('business_school_id')->unsigned();
+            $table->foreign('business_school_id')
+                ->references('id')
+                ->on('business_schools');
 
             $table->integer('lookup_faculty_type_id')->unsigned();
             $table->foreign('lookup_faculty_type_id')
