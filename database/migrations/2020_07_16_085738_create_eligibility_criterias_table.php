@@ -17,6 +17,7 @@ class CreateEligibilityCriteriasTable extends Migration
             $table->id();
             $table->string('name',100);
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

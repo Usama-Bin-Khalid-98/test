@@ -32,10 +32,12 @@ class CreateFacultyTeachingCourses extends Migration
                 ->references('id')
                 ->on('lookup_faculty_desination');
 
- $table->integer('max_courses _allowed');
-  $table->integer('tc_program1');
-  $table->integer('tc_program2');
-    
+            $table->integer('max_courses _allowed');
+            $table->integer('tc_program1');
+            $table->integer('tc_program2');
+            $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
+
             $table->timestamps();
         });
     }

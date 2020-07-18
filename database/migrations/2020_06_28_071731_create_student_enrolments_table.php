@@ -36,6 +36,7 @@ class CreateStudentEnrolmentsTable extends Migration
             $table->string('male', 100);
             $table->string('female', 100);
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

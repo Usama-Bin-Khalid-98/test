@@ -121,6 +121,7 @@ class BasicInfoController extends Controller
                                   'institute_type_id' => $request->institute_type_id,
                                   'sector' => $request->sector,
                                   'profit_status' => $request->profit_status,
+                                  'isCompleted' => 'yes',
                                   'hierarchical_context' => $request->hierarchical_context,
 
                                   ]

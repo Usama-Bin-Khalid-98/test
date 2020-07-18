@@ -16,6 +16,7 @@ class CreateStabilitiesTable extends Migration
         Schema::create('stabilities', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->enum('isComplete',['yes','no'])->default('no');
         });
     }
 
