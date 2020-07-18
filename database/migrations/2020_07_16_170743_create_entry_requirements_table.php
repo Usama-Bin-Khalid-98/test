@@ -20,8 +20,9 @@ class CreateEntryRequirementsTable extends Migration
                 ->references('id')
                 ->on('programs');
             $table->unsignedBigInteger('eligibility_criteria_id');
-            $table->string('min_req',100);    
-            $table->enum('status', ['active','inactive'])->default('active'); 
+            $table->string('min_req',100);
+            $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
 

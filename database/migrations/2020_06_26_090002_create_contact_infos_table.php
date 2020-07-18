@@ -25,6 +25,7 @@ class CreateContactInfosTable extends Migration
                 ->on('designations');
             $table->string('cv', 255);
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('business_school_id')->unsigned();
             $table->foreign('business_school_id')
                 ->references('id')

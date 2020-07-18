@@ -21,13 +21,14 @@ class CreateFacultyStability extends Migration
                 ->references('id')
                 ->on('business_schools');
 
-                $table->integer('total_faculty');
-                $table->integer('year');
-                $table->integer('resigned');
-                $table->integer('retired');
-                $table->integer('terminated');
-                $table->integer('new_induction');
-
+            $table->integer('total_faculty');
+            $table->integer('year');
+            $table->integer('resigned');
+            $table->integer('retired');
+            $table->integer('terminated');
+            $table->integer('new_induction');
+            $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
 
             $table->timestamps();
         });

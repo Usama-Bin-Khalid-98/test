@@ -21,11 +21,12 @@ class CreateProgramPortfoliosTable extends Migration
                 ->on('programs');
             $table->string('total_semesters',100);
             $table->unsignedBigInteger('course_type_id');
-            $table->string('no_of_course',100);   
-            $table->string('credit_hours',100);  
-            $table->string('internship_req',100);  
-            $table->string('fyp_req',100); 
-            $table->enum('status', ['active','inactive'])->default('active'); 
+            $table->string('no_of_course',100);
+            $table->string('credit_hours',100);
+            $table->string('internship_req',100);
+            $table->string('fyp_req',100);
+            $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
 

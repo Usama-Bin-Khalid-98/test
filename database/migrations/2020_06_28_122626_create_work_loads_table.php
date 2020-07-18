@@ -16,6 +16,7 @@ class CreateWorkLoadsTable extends Migration
         Schema::create('work_loads', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->enum('isComplete',['yes','no'])->default('no');
         });
     }
 

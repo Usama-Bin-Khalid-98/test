@@ -28,7 +28,10 @@ class CreateFacultyGender extends Migration
             $table->integer('year');
             $table->integer('male');
             $table->integer('female');
+            $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
+
         });
     }
 

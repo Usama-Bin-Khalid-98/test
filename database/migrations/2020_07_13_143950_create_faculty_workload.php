@@ -20,7 +20,7 @@ class CreateFacultyWorkload extends Migration
              $table->foreign('business_school_id')
              ->references('id')
              ->on('business_schools');
-            
+
             $table->string('faculty_name',50)->nullable();
 
           //  $table->integer('faculty_designation_id')->unsigned();
@@ -41,6 +41,8 @@ class CreateFacultyWorkload extends Migration
              $table->string('admin_responsibilities',100)->nullable();
              $table->string('year',100)->nullable();
              //$table->varchar('policy',50)->nullable();
+            $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
         });
     }

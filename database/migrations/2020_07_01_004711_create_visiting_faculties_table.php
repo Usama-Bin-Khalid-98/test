@@ -16,6 +16,7 @@ class CreateVisitingFacultiesTable extends Migration
         Schema::create('visiting_faculties', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->enum('isComplete',['yes','no'])->default('no');
         });
     }
 

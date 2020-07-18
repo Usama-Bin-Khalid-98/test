@@ -21,6 +21,7 @@ class CreateCampusesTable extends Migration
                 ->on('business_schools');
             $table->string('location');
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->softDeletes();
             $table->timestamps();
         });

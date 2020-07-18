@@ -32,6 +32,7 @@ class CreateScopesTable extends Migration
                 ->onDelete('cascade');;
             $table->date('date_program');
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

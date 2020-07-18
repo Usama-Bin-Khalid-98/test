@@ -69,7 +69,14 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} "><a href="{{url('strategic/basicinfo')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information</a></li>
+            <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
+                <a href="{{url('strategic/basicinfo')}}">
+                    <i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information
+                    <span class="pull-right-container">
+                    <span class="label label-primary pull-right">4</span>
+                    </span>
+                </a>
+            </li>
             <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{url('strategic/scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
             <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('strategic/contact-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
             <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('/strategic/statutory-committees')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
@@ -152,9 +159,8 @@
 
           </ul>
         </li>
-
-
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
+            <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Eligibility Screening</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Admin</a></li>
 
           </ul>
