@@ -15,8 +15,12 @@ class CreateStrategicPlansTable extends Migration
     {
         Schema::create('strategic_plans', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['active','inactive'])->default('active');
+            $table->string('plan_period',100);
+            $table->string('aproval_date',100);
+            $table->string('aproving_authority',100);
+            $table->enum('status', ['active','inactive'])->default('active'); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

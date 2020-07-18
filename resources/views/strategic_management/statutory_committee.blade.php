@@ -1,4 +1,4 @@
-@section('pageTitle', 'Users')
+@section('pageTitle', 'Statutory Committee')
 
 
 @if(Auth::user())
@@ -51,10 +51,9 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
-                        <form method="post" id="add" enctype="multipart/form-data">
                         <!-- /.box-header -->
                         <div class="box-body">
-
+                             <form action="javascript:void(0)" method="post" id="add" enctype="multipart/form-data">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Body Name</label>
@@ -118,14 +117,6 @@
                                     <input type="file" name="file" value="" id="file" >
                                 </div>
                             </div>
-
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
-{{--                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active--}}
-{{--                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
 
                             <div class="col-md-3">
                                 <div class="form-group pull-right" style="margin-top: 20px;">
@@ -391,9 +382,11 @@
             !designation_id?addClass('designation_id'):removeClass('designation_id');
             !date_first_meeting?addClass('date_first_meeting'):removeClass('date_first_meeting');
             !date_second_meeting?addClass('date_second_meeting'):removeClass('date_second_meeting');
+            !date_third_meeting?addClass('date_third_meeting'):removeClass('date_third_meeting');
+            !date_fourth_meeting?addClass('date_fourth_meeting'):removeClass('date_fourth_meeting');
             !file?addClass('file'):removeClass('file');
 
-            if(!name || !statutory_body_id || !designation_id|| !date_first_meeting || !date_second_meeting || !file)
+            if(!name || !statutory_body_id || !designation_id|| !date_first_meeting || !date_second_meeting || !date_third_meeting || !date_fourth_meeting || !file)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

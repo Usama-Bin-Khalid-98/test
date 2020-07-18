@@ -15,14 +15,22 @@ class CreateAffiliationsTable extends Migration
     {
         Schema::create('affiliations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('statutory_committee_id')->unsigned();
-            $table->foreign('statutory_committee_id')
+            $table->integer('statutory_committees_id')->unsigned();
+            $table->foreign('statutory_committees_id')
                 ->references('id')
                 ->on('statutory_committees');
-//                ->onDelete('cascade');
-            $table->string('affiliation', 255);
-            $table->enum('status', ['active','inactive'])->default('active');
+            $table->integer('designation_id')->unsigned();
+            $table->foreign('designation_id')
+                ->references('id')
+                ->on('designations');
+            $table->string('affiliation',255);
+            $table->integer('statutory_bodies_id')->unsigned();
+            $table->foreign('statutory_bodies_id')
+                ->references('id')
+                ->on('statutory_bodies');   
+            $table->enum('status', ['active','inactive'])->default('active'); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

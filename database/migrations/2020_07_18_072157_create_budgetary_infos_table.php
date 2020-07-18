@@ -15,8 +15,14 @@ class CreateBudgetaryInfosTable extends Migration
     {
         Schema::create('budgetary_infos', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['active','inactive'])->default('active');
+            $table->string('year',100);
+            $table->string('uni_budget',100);
+            $table->string('uni_proposed_budget',100);
+            $table->string('budget_receive',100);
+            $table->string('budget_type',100);
+            $table->enum('status', ['active','inactive'])->default('active'); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

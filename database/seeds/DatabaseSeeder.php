@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CourseTypeSeeder::class);
         $this->call(EligibilityCriteriaSeeder::class);
         $this->call(SemesterSeeder::class);
+        $this->call(StatutoryBodySeeder::class);
 
     }
 }

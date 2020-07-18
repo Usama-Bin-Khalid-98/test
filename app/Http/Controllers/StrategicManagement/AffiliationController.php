@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\StrategicManagement;
 
-use App\Models\StrategicManagement\Affiliation;
-use App\Models\StrategicManagement\Designation;
 use App\Models\StrategicManagement\StatutoryCommittee;
+use App\Models\StrategicManagement\Designation;
+use App\Models\StrategicManagement\StatutoryBody;
+use App\Models\StrategicManagement\Affiliation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
 
 class AffiliationController extends Controller
 {
@@ -17,12 +21,14 @@ class AffiliationController extends Controller
      */
     public function index()
     {
-        //
-        $designations = Designation::all();
+        
         $statutory_committee = StatutoryCommittee::all();
-        $affiliations = Affiliation::with('designation', 'statutory_committee');
+        $designations = Designation::all();
+        $bodies = StatutoryBody::all();
+
+        $affiliations = Affiliation::with('statutory_committees','designation','statutory_bodies')->get();
         //dd($affiliations);
-        return view('strategic_management.affiliations', compact('designations', 'statutory_committee'));
+        return view('strategic_management.affiliations', compact('statutory_committee','designations','bodies','affiliations'));
     }
 
     /**
@@ -43,7 +49,27 @@ class AffiliationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            Affiliation::create([
+                'statutory_committees_id' => $request->statutory_committees_id,
+                'designation_id' => $request->designation_id,
+                'affiliation' => $request->affiliation,
+                'statutory_bodies_id' => $request->statutory_bodies_id
+            ]);
+
+            return response()->json(['success' => ' Affiliations added successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -77,7 +103,27 @@ class AffiliationController extends Controller
      */
     public function update(Request $request, Affiliation $affiliation)
     {
-        //
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            Affiliation::where('id', $affiliation->id)->update([
+                'statutory_committees_id' => $request->statutory_committees_id,
+                'designation_id' => $request->designation_id,
+                'affiliation' => $request->affiliation,
+                'statutory_bodies_id' => $request->statutory_bodies_id,
+                'status' => $request->status
+            ]);
+            return response()->json(['success' => 'Affiliations updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -88,6 +134,37 @@ class AffiliationController extends Controller
      */
     public function destroy(Affiliation $affiliation)
     {
-        //
+        try {
+            Affiliation::destroy($affiliation->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+
+            'statutory_committees_id' => 'required',
+            'designation_id' => 'required',
+            'affiliation' => 'required',
+            'statutory_bodies_id' => 'required'
+        ];
+    }
+
+     protected function update_rules() {
+        return [
+            'statutory_committees_id' => 'required',
+            'designation_id' => 'required',
+            'affiliation' => 'required',
+            'statutory_bodies_id' => 'required'
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }
