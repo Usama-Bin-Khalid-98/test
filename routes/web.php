@@ -50,8 +50,8 @@ Route::prefix('strategic')->group(function () {
     Route::resource('contact-info','StrategicManagement\ContactInfoController');
     Route::resource('statutory-committees','StrategicManagement\StatutoryCommitteeController');
     Route::resource('affiliations','StrategicManagement\AffiliationController');
-    Route::resource('budgetary-information','BudgetaryInfoController');
-    Route::resource('plan','StrategicPlanController');
+    Route::resource('budgetary-info','BudgetaryInfoController');
+    Route::resource('strategic-plan','StrategicPlanController');
 
 });
 

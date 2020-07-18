@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StrategicPlan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
 
 class StrategicPlanController extends Controller
 {
@@ -14,8 +18,10 @@ class StrategicPlanController extends Controller
      */
     public function index()
     {
-        //
-        return view('strategic_management.plan');
+
+        $plans  = StrategicPlan::get();
+
+         return view('strategic_management.plan', compact('plans'));
     }
 
     /**
@@ -36,7 +42,26 @@ class StrategicPlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            StrategicPlan::create([
+                'plan_period' => $request->plan_period,
+                'aproval_date' => $request->aproval_date,
+                'aproving_authority' => $request->aproving_authority
+            ]);
+
+            return response()->json(['success' => 'Strategic Plan added successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -70,7 +95,26 @@ class StrategicPlanController extends Controller
      */
     public function update(Request $request, StrategicPlan $strategicPlan)
     {
-        //
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            StrategicPlan::where('id', $strategicPlan->id)->update([
+                'plan_period' => $request->plan_period,
+                'aproval_date' => $request->aproval_date,
+                'aproving_authority' => $request->aproving_authority,
+                'status' => $request->status
+            ]);
+            return response()->json(['success' => 'Strategic Plan updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -81,6 +125,34 @@ class StrategicPlanController extends Controller
      */
     public function destroy(StrategicPlan $strategicPlan)
     {
-        //
+        try {
+            StrategicPlan::destroy($strategicPlan->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'plan_period' => 'required',
+            'aproval_date' => 'required',
+            'aproving_authority' => 'required'
+        ];
+    }
+
+     protected function update_rules() {
+        return [
+            'plan_period' => 'required',
+            'aproval_date' => 'required',
+            'aproving_authority' => 'required'
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

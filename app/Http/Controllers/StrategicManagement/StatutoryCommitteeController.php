@@ -45,16 +45,13 @@ class StatutoryCommitteeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
-        //dd($request);
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-//            dd($fileName);
+
             $path = ''; $fileName = '';
             if($request->file('file')) {
                 $fileName = $request->name . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
@@ -117,7 +114,7 @@ class StatutoryCommitteeController extends Controller
     public function update(Request $request, StatutoryCommittee $statutoryCommittee)
     {
         //
-        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -171,12 +168,27 @@ class StatutoryCommitteeController extends Controller
 
     protected function rules() {
         return [
-            'name' => 'required',
             'statutory_body_id' => 'required',
+            'name' => 'required',
+            'designation_id' => 'required',
             'date_first_meeting' => 'required',
             'date_second_meeting' => 'required',
+            'date_third_meeting' => 'required',
+            'date_fourth_meeting' => 'required',
+            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048'
+        ];
+    }
+
+    protected function update_rules() {
+        return [
+            'statutory_body_id' => 'required',
+            'name' => 'required',
             'designation_id' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'date_first_meeting' => 'required',
+            'date_second_meeting' => 'required',
+            'date_third_meeting' => 'required',
+            'date_fourth_meeting' => 'required',
+            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048'
         ];
     }
 
