@@ -21,7 +21,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Provide scope of accreditation.</li>
+                <li class="active">Provide scope of accreditation </li>
             </ol>
         </section>
         <section class="content-header">
@@ -42,7 +42,7 @@
                 <form>
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide scope of accreditation</h3>
+                            <h3 class="box-title">Provide scope of accreditation in table 1.2</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

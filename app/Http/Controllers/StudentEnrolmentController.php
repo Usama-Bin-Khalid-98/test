@@ -7,6 +7,7 @@ use App\BusinessSchool;
 use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
@@ -52,14 +53,14 @@ class StudentEnrolmentController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
+            $uni_id = Auth::user()->business_school_id;
             StudentEnrolment::create([
-                'business_school_id' => $request->uni_id,
+                'business_school_id' => $uni_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
-                'total_students' => $request->total_students,
+                'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level,
                 'program_id' => $request->program_id,
                 'grad_std_t' => $request->grad_std_t,
                 'grad_std_t_2' => $request->grad_std_tt,
@@ -116,13 +117,14 @@ class StudentEnrolmentController extends Controller
 
         try {
 
+            $uni_id = Auth::user()->business_school_id;
             StudentEnrolment::where('id', $studentEnrolment->id)->update([
-                'business_school_id' => $request->uni_id,
+                'business_school_id' => $uni_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
-                'total_students' => $request->total_students,
+                'total_students' =>  $request->bs_level+ $request->ms_level+$request->phd_level,
                 'program_id' => $request->program_id,
                 'grad_std_t' => $request->grad_std_t,
                 'grad_std_t_2' => $request->grad_std_t_2,
@@ -158,12 +160,10 @@ class StudentEnrolmentController extends Controller
 
     protected function rules() {
         return [
-            'uni_id' => 'required',
             'year' => 'required',
             'bs_level' => 'required',
             'ms_level' => 'required',
             'phd_level' => 'required',
-            'total_students' => 'required',
             'program_id' => 'required',
             'grad_std_t' => 'required',
             'grad_std_tt' => 'required',
@@ -175,12 +175,10 @@ class StudentEnrolmentController extends Controller
 
      protected function update_rules() {
         return [
-             'uni_id' => 'required',
             'year' => 'required',
             'bs_level' => 'required',
             'ms_level' => 'required',
             'phd_level' => 'required',
-            'total_students' => 'required',
             'program_id' => 'required',
             'grad_std_t' => 'required',
             'grad_std_t_2' => 'required',

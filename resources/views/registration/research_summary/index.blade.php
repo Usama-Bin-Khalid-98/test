@@ -45,11 +45,11 @@
                         <div class="box-header">
                             <h3 class="box-title" style="width: 92%;">Provide a summary of research output of business school in last three academic years.
                                 Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly
-                                mentioning type of each item as impact factor or HEC category.</h3>
+                                mentioning type of each item as impact factor or HEC category. Table 5.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                
+
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                                         @endforeach
                                         </select>
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -127,7 +127,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Jointly Produced Other</label>
-                                    <input type="text" name="jointly_produced_other" 
+                                    <input type="text" name="jointly_produced_other"
                                     id="jointly_produced_other" value="" placeholder="Jointly Produced Other" class="form-control">
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Jointly Produced Same</label>
-                                    <input type="text" name="jointly_produced_same" 
+                                    <input type="text" name="jointly_produced_same"
                                     id="jointly_produced_same" value="" placeholder="Jointly Produced Same " class="form-control">
                                 </div>
                             </div>
@@ -143,12 +143,12 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Jointly Produced Multiple</label>
-                                    <input type="text" name="jointly_produced_multiple" 
+                                    <input type="text" name="jointly_produced_multiple"
                                     id="jointly_produced_multiple" value="" placeholder="Jointly Produced Multiple" class="form-control">
                                 </div>
                             </div>
 
-                           
+
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -165,7 +165,7 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Research Summary List</h3>
-                            
+
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -287,7 +287,7 @@
                                         <option value="2019">2019</option>
                                         <option value="2020">2020</option>
                                     </select>
-                                
+
                             </div>
                         </div>
 
@@ -295,7 +295,7 @@
                             <div class="form-group">
                                     <label for="name">Total Items</label>
                                     <input type="text" name="total_items" id="edit_total_items" value="{{old('total_items')}}" class="form-control">
-                                
+
                             </div>
                         </div>
 
@@ -308,14 +308,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Jointly Produced Other</label>
-                                    <input type="text" name="jointly_produced_other" 
+                                    <input type="text" name="jointly_produced_other"
                                     id="edit_jointly_produced_other" value="{{old('jointly_produced_other')}}"  class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Jointly Produced Same</label>
-                                    <input type="text" name="jointly_produced_same" 
+                                    <input type="text" name="jointly_produced_same"
                                     id="edit_jointly_produced_same" value="{{old('jointly_produced_same')}}" class="form-control">
                             </div>
                         </div>
@@ -323,7 +323,7 @@
                          <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Jointly Produced Multiple</label>
-                                    <input type="text" name="jointly_produced_multiple" 
+                                    <input type="text" name="jointly_produced_multiple"
                                     id="edit_jointly_produced_multiple" value="{{old('jointly_produced_multiple')}}"  class="form-control">
                             </div>
                         </div>
@@ -346,7 +346,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    
+
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>

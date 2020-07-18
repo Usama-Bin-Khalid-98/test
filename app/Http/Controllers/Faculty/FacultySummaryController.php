@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
+use App\Http\Controllers\Controller;
 
+use App\Models\Common\Degree;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
 
 class FacultySummaryController extends Controller
@@ -13,7 +16,10 @@ class FacultySummaryController extends Controller
      */
     public function index()
     {
-        return view('registration.faculty.summary_faculty');
+        $degrees = Degree::where('status', 'active')->get();
+        $programs = Program::where('status', 'active')->get();
+
+        return view('registration.faculty.summary_faculty', compact('degrees','programs'));
         //
     }
 

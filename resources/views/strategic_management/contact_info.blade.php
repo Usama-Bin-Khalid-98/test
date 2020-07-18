@@ -43,11 +43,11 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide contact information, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
+                            <h3 class="box-title">Provide contact information in table 1.3, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                            
+
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -55,27 +55,34 @@
                              <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Contact Person Name</label>
-                                    <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
+                                    <label for="name">Contact Person Name here</label>
+                                    <input type="text" name="name" id="name" value="{{old('name')??Auth::user()->name}}" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" id="email" value="{{old('contact_no')}}" class="form-control">
+                                    <input type="email" name="email" id="email" value="{{old('contact_no')??Auth::user()->email}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Contact No</label>
-                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')}}" class="form-control">
+                                    <label for="name">Tel (off)</label>
+                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')??Auth::user()->contact_no}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School Contact</label>
-                                    <input type="text" name="school_contact" id="school_contact" value="{{old('school_contact')}}" class="form-control">
+                                    <label for="name">Tel (cell) </label>
+                                    <input type="text" name="school_contact" id="school_contact" value="{{old('school_contact')??Auth::user()->contact_no}}" class="form-control">
+                                </div>
+                            </div>
+
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">NBEAC focal person (if different) </label>
+                                    <input type="text" name="focal_person" id="focal_person" value="{{old('focal_person')}}" class="form-control">
                                 </div>
                             </div>
 
@@ -148,7 +155,7 @@
                                     <td>{{$contact->school_contact}}</td>
                                     <td><a href="{{url($contact->cv)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":{{$contact->id}},"name":"{{$contact->name}}","email":"{{$contact->email}}","contact_no":"{{$contact->contact_no}}","school_contact":"{{$contact->school_contact}}","designation_id":{{$contact->designation_id}},"cv":"{{$contact->cv}}", "status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":{{$contact->id}},"name":"{{$contact->name}}","email":"{{$contact->email}}","contact_no":"{{$contact->contact_no}}","school_contact":"{{$contact->school_contact}}","designation_id":{{$contact->designation_id}},"cv":"{{$contact->cv}}","focal_person":"{{$contact->focal_person}}", "status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -228,8 +235,13 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">NBEAC focal person (if different) </label>
+                                <input type="text" name="focal_person" id="edit_focal_person" value="{{old('edit_focal_person')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Attach CV</label>
                                 <input type="file" name="cv" id="edit_cv" >
@@ -290,6 +302,7 @@
             let contact_no = $('#contact_no').val();
             let school_contact = $('#school_contact').val();
             let designation_id = $('#designation_id').val();
+            let focal_person = $('#focal_person').val();
             let cv = $('#cv').val();
 
             !name?addClass('name'):removeClass('name');
@@ -347,6 +360,7 @@
             $('#cv-name').text(data.cv);
             $('#edit_id').val(data.id);
             $('#old_cv').val(data.cv);
+            $('#edit_focal_person').val(data.focal_person);
             // console.log('check', data.status);
             // $('#update-form').attr('action', 'contact-info/'+data.id);
             $('input[value='+data.status+']').iCheck('check');
@@ -359,6 +373,7 @@
             let school_contact = $('#edit_school_contact').val();
             let designation_id = $('#edit_designation_id').val();
             let id = $('#edit_id').val();
+            let edit_focal_person = $('#edit_focal_person').val();
 
             let status = $('input[name=edit_status]:checked').val();
             !name?addClass('edit_name'):removeClass('edit_name');
@@ -394,7 +409,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     //console.log('response', response);
-                    location.reload();
+                    //location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

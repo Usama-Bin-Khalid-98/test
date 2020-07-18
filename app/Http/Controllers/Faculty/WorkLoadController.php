@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
 
-use App\Models\Faculty\FacultyGender;
+use App\Http\Controllers\Controller;
+use App\Models\Faculty\WorkLoad;
+use App\Models\StrategicManagement\Designation;
 use Illuminate\Http\Request;
 
-class FacultyGenderController extends Controller
+class WorkLoadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,8 @@ class FacultyGenderController extends Controller
     public function index()
     {
         //
-        return view('registration.faculty.faculty_gender');
+        $designations = Designation::where('status', 'active')->get();
+        return view('registration.faculty.workload', compact('designations'));
     }
 
     /**
@@ -42,10 +45,10 @@ class FacultyGenderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Faculty\FacultyGender  $facultyGender
+     * @param  \App\Models\Faculty\WorkLoad  $workLoad
      * @return \Illuminate\Http\Response
      */
-    public function show(FacultyGender $facultyGender)
+    public function show(WorkLoad $workLoad)
     {
         //
     }
@@ -53,10 +56,10 @@ class FacultyGenderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Faculty\FacultyGender  $facultyGender
+     * @param  \App\Models\Faculty\WorkLoad  $workLoad
      * @return \Illuminate\Http\Response
      */
-    public function edit(FacultyGender $facultyGender)
+    public function edit(WorkLoad $workLoad)
     {
         //
     }
@@ -65,10 +68,10 @@ class FacultyGenderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faculty\FacultyGender  $facultyGender
+     * @param  \App\Models\Faculty\WorkLoad  $workLoad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FacultyGender $facultyGender)
+    public function update(Request $request, WorkLoad $workLoad)
     {
         //
     }
@@ -76,10 +79,10 @@ class FacultyGenderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Faculty\FacultyGender  $facultyGender
+     * @param  \App\Models\Faculty\WorkLoad  $workLoad
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FacultyGender $facultyGender)
+    public function destroy(WorkLoad $workLoad)
     {
         //
     }
