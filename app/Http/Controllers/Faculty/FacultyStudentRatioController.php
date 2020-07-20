@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Faculty;
 
-use App\Models\Faculty\FacultyStability;
+use App\Models\Faculty\FacultyStudentRatio;
 use App\BusinessSchool;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 
-class FacultyStabilityController extends Controller
+class FacultyStudentRatioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +21,11 @@ class FacultyStabilityController extends Controller
     public function index()
     {
         $businesses = BusinessSchool::where('status', 'active')->get();
+        $programs = Program::where('status', 'active')->get();
 
-        $stabilities = FacultyStability::with('business_school')->get();
+        $ratios = FacultyStudentRatio::with('business_school','program')->get();
 
-         return view('registration.faculty.faculty_stability', compact('businesses','stabilities'));
+         return view('registration.faculty.faculty_student_ratio', compact('businesses','programs','ratios'));
     }
 
     /**
@@ -51,17 +53,14 @@ class FacultyStabilityController extends Controller
         }
         try {
 
-            FacultyStability::create([
+            FacultyStudentRatio::create([
                 'business_school_id' => $request->business_school_id,
-                'total_faculty' => $request->total_faculty,
+                'program_id' => $request->program_id,
                 'year' => $request->year,
-                'resigned' => $request->resigned,
-                'retired' => $request->retired,
-                'terminated' => $request->terminated,
-                'new_induction' => $request->new_induction
+                'total_enrollments' => $request->total_enrollments
             ]);
 
-            return response()->json(['success' => 'Faculty Stability added successfully.']);
+            return response()->json(['success' => 'Faculty Student Ratio added successfully.']);
 
 
         }catch (Exception $e)
@@ -99,7 +98,7 @@ class FacultyStabilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FacultyStability $facultyStability)
+    public function update(Request $request, FacultyStudentRatio $facultyStudentRatio)
     {
         $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
@@ -109,18 +108,15 @@ class FacultyStabilityController extends Controller
 
         try {
 
-            FacultyStability::where('id', $facultyStability->id)->update([
+            FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
                'business_school_id' => $request->business_school_id,
-                'total_faculty' => $request->total_faculty,
+                'program_id' => $request->program_id,
                 'year' => $request->year,
-                'resigned' => $request->resigned,
-                'retired' => $request->retired,
-                'terminated' => $request->terminated,
-                'new_induction' => $request->new_induction,
+                'total_enrollments' => $request->total_enrollments,
                 'status' => $request->status,
                 'isComplete' => $request->isComplete
             ]);
-            return response()->json(['success' => 'Faculty Stability updated successfully.']);
+            return response()->json(['success' => 'Faculty Student Ratio updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -134,10 +130,10 @@ class FacultyStabilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FacultyStability $facultyStability)
+    public function destroy(FacultyStudentRatio $facultyStudentRatio)
     {
         try {
-            FacultyStability::destroy($facultyStability->id);
+            FacultyStudentRatio::destroy($facultyStudentRatio->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -148,24 +144,18 @@ class FacultyStabilityController extends Controller
     protected function rules() {
         return [
             'business_school_id' => 'required',
-            'total_faculty' => 'required',
+            'program_id' => 'required',
             'year' => 'required',
-            'resigned' => 'required',
-            'retired' => 'required',
-            'terminated' => 'required',
-            'new_induction' => 'required'
+            'total_enrollments' => 'required'
         ];
     }
 
      protected function update_rules() {
         return [
             'business_school_id' => 'required',
-            'total_faculty' => 'required',
+            'program_id' => 'required',
             'year' => 'required',
-            'resigned' => 'required',
-            'retired' => 'required',
-            'terminated' => 'required',
-            'new_induction' => 'required'
+            'total_enrollments' => 'required'
         ];
     }
 

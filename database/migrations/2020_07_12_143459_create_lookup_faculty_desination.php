@@ -13,9 +13,8 @@ class CreateLookupFacultyDesination extends Migration
      */
     public function up()
     {
-        Schema::create('lookup_faculty_desination', function (Blueprint $table) {
+        Schema::create('lookup_facultydesignations', function (Blueprint $table) {
             $table->increments('id');
-            
             $table->string('faculty_designation');
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ class CreateLookupFacultyDesination extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lookup_faculty_desination');
+        Schema::dropIfExists('lookup_facultydesignations');
     }
 }

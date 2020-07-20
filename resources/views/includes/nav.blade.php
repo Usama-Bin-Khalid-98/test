@@ -116,7 +116,7 @@
 
           </ul>
         </li>
-        <li class=" treeview {{(request()->is('faculty/workload'))?'active':''}}{{(request()->is('faculty_stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('visiting_faculty'))?'active':''}}{{(request()->is('faculty_courses'))?'active':''}}{{(request()->is('faculty_student_ratio'))?'active':''}}">
+        <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('visiting_faculty'))?'active':''}}{{(request()->is('faculty_courses'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-orange"></i> <span>Faculty</span>
                   <span class="pull-right-container">
@@ -125,12 +125,12 @@
               </a>
           <ul class="treeview-menu">
             <li class="{{ (request()->is('faculty_summary')) ? 'active' : '' }}"><a href="{{route('faculty_summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary BSF</a></li>
-            <li  class="{{ (request()->is('faculty/workload')) ? 'active' : '' }}"><a href="{{route('workload')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T</a></li>
+            <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T</a></li>
             <li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{route('visiting_faculty')}}"><i class="fa fa-circle-o text-orange"></i>Visiting Faculty</a></li>
             <li  class="{{ (request()->is('faculty_courses')) ? 'active' : '' }}"><a href="{{route('faculty_courses')}}"><i class="fa fa-circle-o text-orange"></i>Visiting Faculty Equivalent</a></li>
-             <li  class="{{ (request()->is('faculty_student_ratio')) ? 'active' : '' }}"><a href="{{route('faculty_student_ratio')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Student Ratio</a></li>
-             <li  class="{{ (request()->is('faculty_stability')) ? 'active' : '' }}"><a href="{{route('faculty_stability')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Stability</a></li>
-            <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{route('faculty-gender')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Gender Mix</a></li>
+             <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Student Ratio</a></li>
+             <li  class="{{ (request()->is('faculty-stability')) ? 'active' : '' }}"><a href="{{url('faculty-stability')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Stability</a></li>
+            <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{url('faculty-gender')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Gender Mix</a></li>
           </ul>
         </li>
 
