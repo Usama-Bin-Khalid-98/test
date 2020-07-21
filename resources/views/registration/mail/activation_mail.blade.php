@@ -4,15 +4,15 @@
     <meta charset="utf-8">
 </head>
 <body>
-<p>Dear {{$content['name']}}</p>
+<p>Dear {{@$content['name']}}</p>
 <p>Your Account has been activated by the administrator of NBEAC:</p>
-<p>Name: {{$content['name']}}</p>
-<p>Designation: {{$content->designation->name}}</p>
-<p>email: {{$content['email']}}</p>
-<p>contact No: {{$content['contact_no']}}</p>
-<p>Institute: {{$content->business_school->name}}</p>
-<p>Department: {{$content->department->name}}</p>
-<p>Account Type: {{$content['user_type']}}</p>
+<p>Name: {{@$content['name']}}</p>
+<p>Designation: {{@$content->designation->name}}</p>
+<p>email: {{@$content['email']}}</p>
+<p>contact No: {{@$content['contact_no']}}</p>
+<p>Institute: {{@$content->business_school->name}}</p>
+<p>Department: {{@$content->department->name}}</p>
+<p>Account Type: {{@$content['user_type']}}</p>
 {{--<p>address: {{$content['address']}}</p>--}}
 
 

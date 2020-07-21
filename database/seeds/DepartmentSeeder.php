@@ -14,11 +14,11 @@ class DepartmentSeeder extends Seeder
         //
         DB::table('departments')->insert([
             ['name' => 'Department of Business Administration (DBA)'],
-             ['name' => 'Department of Business Management (DBM)'],
-              ['name' => 'Department of Management Sciences (DMS)'],
-               ['name' => 'Faculty of Management Sciences (FMS)'],
-                ['name' => 'Other']
-                 
+            ['name' => 'Department of Business Management (DBM)'],
+            ['name' => 'Department of Management Sciences (DMS)'],
+            ['name' => 'Faculty of Management Sciences (FMS)'],
+            ['name' => 'Other']
+
         ]);
     }
 }

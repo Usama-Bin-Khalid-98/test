@@ -11,19 +11,19 @@ class DisciplineSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Business Administration, Commerce, Management Sciences, Public Administration, Economics  ///sent by client
         DB::table('disciplines')->insert([
-            ['name' => 'Agriculture & Veterinary'],
-            ['name' => 'Arts & Design'],
+//            ['name' => 'Agriculture & Veterinary'],
+//            ['name' => 'Arts & Design'],
             ['name' => 'Business Administration'],
-            ['name' => 'Commerce, Management Sciences'],
-            ['name' => 'Engineering & Technology'],
-            ['name' => 'Economics'],
-            ['name' => 'General'],
-            ['name' => 'Medical'],
-            ['name' => 'Medicine and Healthcare'],
+            ['name' => 'Commerce'],
+            ['name' => 'Management Sciences'],
             ['name' => 'Public Administration'],
-            ['name' => 'Science & Technology']
+            ['name' => 'Economics'],
+//            ['name' => 'General'],
+//            ['name' => 'Medical'],
+//            ['name' => 'Medicine and Healthcare'],
+//            ['name' => 'Science & Technology']
         ]);
     }
 }
