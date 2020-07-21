@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\StrategicManagement;
 
-use App\Models\StrategicManagement\Designation;
+use App\Models\Common\Designation;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\Models\StrategicManagement\StatutoryCommittee;
 use App\Http\Controllers\Controller;

@@ -104,7 +104,7 @@ class ResearchSummaryController extends Controller
      */
     public function update(Request $request, ResearchSummary $researchSummary)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -162,18 +162,7 @@ class ResearchSummaryController extends Controller
         ];
     }
 
-    protected function update_rules() {
-        return [
-             'publication_type_id' => 'required',
-            'business_school_id' => 'required',
-            'year' => 'required',
-            'total_items' => 'required',
-            'contributing_core_faculty' => 'required',
-            'jointly_produced_other' => 'required',
-            'jointly_produced_same' => 'required',
-            'jointly_produced_multiple' => 'required'
-        ];
-    }
+
 
 
     protected function messages() {

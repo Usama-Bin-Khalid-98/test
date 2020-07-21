@@ -3,6 +3,7 @@
 namespace App\Models\StrategicManagement;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Common\Designation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StatutoryCommittee extends Model

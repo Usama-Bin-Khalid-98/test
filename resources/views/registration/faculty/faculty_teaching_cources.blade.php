@@ -1,26 +1,26 @@
-@section('pageTitle', 'Users')
+@section('pageTitle', 'Visiting Faculty ')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-    <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Faculty Stability
+                Visiting Faculty 
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Faculty Stability </li>
+                <li class="active">Visiting Faculty</li>
             </ol>
         </section>
         <section class="content-header">
@@ -58,62 +58,66 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
+                           <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Faculty Name</label>
-                                    <input type="text" name="phd" value="xyz" class="form-control">
-                                    
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <select name="designation" class="form-control">
-                                        <option value="">Select Designation</option>
-                                        <option value="">Professor</option>
-                                        <option value="">Associate Professor</option>
-                                        <option value="">Assistant Professor</option>
-                                        <option value="">Lecturer</option>
-                                        <option value="">Lab Engineer</option>
-                                    </select>
+                                    <label for="name">Business School</label>
+                                   <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Business School</option>
+                                        @foreach($businesses as $business)
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Faculty Type</label>
-                                    <select name="designation" class="form-control">
-                                        <option value="">Select type</option>
-                                        <option value="">Permanent</option>
-                                        <option value="">Adjunct</option>
-                                    </select>
+                                   <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Faculty Type</option>
+                                        @foreach($faculty_types as $faculty)
+                                         <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Designation</label>
+                                   <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                         <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">MAX Courses Allowed</label>
+                                    <input type="number" name="max_cources_allowed" id="max_cources_allowed" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Program 1</label>
+                                    <input type="number" name="tc_program1" id="tc_program1" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Program 2</label>
+                                    <input type="number" name="tc_program2" id="tc_program2" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name"> Max Courses Allowed</label>
-                                    <input type="text" name="program" value="" class="form-control">
+                             <div class="col-md-12">
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                   <label for="name">Teaching cources Program 1</label>
-                                    <input type="text" name="phd" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Teaching cources Program 2</label>
-                                    <input type="text" name="master" value="" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group pull-right">
-                                    <label for="type">&nbsp;</label>
-                                    <input type="button" name="submit" value="Add" class="btn btn-info">
-                                </div>
-                            </div>
+                        </form>
 
                         </div>
                         <!-- /.box-body -->
@@ -126,64 +130,47 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Faculty Name</th>
+                                    <th>Business School</th>
+                                    <th>Faculty Type</th>
                                     <th>Designation</th>
-                                    <th>Type</th>
-                                    <th>Courses Allowed</th>
+                                    <th>Max Cources Allowed</th>
                                     <th>Program 1</th>
                                     <th>Program 2</th>
-                                    <th>FTE Program 1</th>
-                                    <th>FTE Program 2</th>
                                     <th>Status</th>
+                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($visitings as $req)
                                 <tr>
-                                    <td>Faculty Name</td>
-                                    <td>prof</td>
-                                    <td>Permanent</td>
-                                    <td>13</td>
-                                    <td>5</td>
-                                    <td>4</td>
-                                    <td>0.33</td>
-                                    <td>0.33</td>
-                                    <td><i class="badge bg-green">Active</i></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
+                                    <td>{{$req->business_school->name}}</td>
+                                    <td>{{$req->lookup_faculty_type->faculty_type}}</td>
+                                    <td>{{$req->designation->name}}</td>
+                                    <td>{{$req->max_cources_allowed}}</td>
+                                    <td>{{$req->tc_program1}}</td>
+                                    <td>{{$req->tc_program2}}</td>
+                                    <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","tc_program1":"{{$req->tc_program1}}","tc_program2":"{{$req->tc_program2}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+
                                 </tr>
-                                <tr>
-                                    <td>Faculty Name</td>
-                                    <td>prof</td>
-                                    <td>Permanent</td>
-                                    <td>13</td>
-                                    <td>5</td>
-                                    <td>4</td>
-                                    <td>0</td>
-                                    <td>0.5</td>
-                                    <td><i class="badge bg-green">Active</i></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"></td>
-                                    <td colspan="3"><strong>Total VFE</strong></td>
-                                    <td align="center" colspan="2"><strong>4.5</strong></td>
-                                </tr>
+                                @endforeach
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Faculty Name</th>
+                                    <th>Business School</th>
+                                    <th>Faculty Type</th>
                                     <th>Designation</th>
-                                    <th>Type</th>
-                                    <th>Courses Allowed</th>
+                                    <th>Max Cources Allowed</th>
                                     <th>Program 1</th>
                                     <th>Program 2</th>
-                                    <th>FTE Program 1</th>
-                                    <th>FTE Program 2</th>
                                     <th>Status</th>
+                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -199,83 +186,93 @@
 
     </div>
 
-    <div class="modal fade" id="edit-modal">
+   <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Default Modal</h4>
+                    <h4 class="modal-title">Edit Faculty Student Ratio. </h4>
                 </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="add-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add User</h4>
-                </div>
-                <form role="form" action="" method="post">
+                <form role="form" id="updateForm" >
                     <div class="modal-body">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Business School</label>
+                                   <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Business School</option>
+                                        @foreach($businesses as $business)
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                                <input type="hidden" id="edit_id">
+                            </div>
 
-                        @csrf
-                        <div class="col-lg-6">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Faculty Type</label>
+                                   <select name="lookup_faculty_type_id" id="edit_lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Faculty Type</option>
+                                        @foreach($faculty_types as $faculty)
+                                         <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Designation</label>
+                                   <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Designation</option>
+                                        @foreach($designations as $business)
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Max Cources allowed</label>
+                                    <input type="number" name="max_cources_allowed" id="edit_max_cources_allowed" value="{{old('edit_max_cources_allowed')}}" class="form-control">
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Program1</label>
+                                    <input type="number" name="tc_program1" id="edit_tc_program1" value="{{old('edit_tc_program1')}}" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">program2</label>
+                                    <input type="number" name="tc_program2" id="edit_tc_program2" value="{{old('edit_tc_program2')}}" class="form-control">
+                                </div>
+                              </div>
+                            
+
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="user"
-                                       placeholder=" User Name" name="name">
-                                <input type="hidden" class="form-control" id="id" name="id">
+                                <label for="type">{{ __('Status') }} : </label>
+                                <p><input type="radio" name="status" class="flat-red" value="active" > Active
+                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="code" placeholder="User Code"
-                                       name="code">
+                                <label for="type">{{ __('isCompleted') }} : </label>
+                                <p><input type="radio" name="isCompleted" class="flat-red" value="yes" >Yes
+                                    <input type="radio" name="isCompleted" class="flat-red" value="no">No</p>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-1">
-                            <div class="form-group">
-
-                                <label> Status
-                                 <input type="checkbox" name="status" class="flat-red" checked >
-                                </label>
-                                <select id="status" name="status" class="form-control">
-                                    <option>Select Status</option>
-                                    <option value="enabled">Enable</option>
-                                    <option value="disabled">Disable</option>
-                                </select>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="col-lg-2">
-                            <div class="form-group">
-
-                        <input type="button" onclick="updateUser()" class="btn btn-danger pull-right" value="Update"
-                               name="Update" id="Update" style="display: none;">
-                            </div>
-                        </div> --}}
-                    <!-- /.box-body -->
-                        {{-- <div class="box-footer">
-
-                    </div> --}}
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn gradient-bg-color" style="color: white;" value="Submit"
-                               name="add_user" id="add_user">
+                        <input type="submit" name="update" value="update" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -284,6 +281,9 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+    <!-- /.modal -->
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -291,81 +291,184 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-    {{----}}
     <script>
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass   : 'iradio_flat-green'
+        });
         $(function () {
-            $('#example1').DataTable()
-            $('#program').DataTable()
+            $('#datatable').DataTable()
         })
     </script>
     <script type="text/javascript">
 
-        //Initialize Select2 Elements
         $('.select2').select2()
 
-        // //iCheck for checkbox and radio inputs
-        // $('input[type="checkbox"].minimal').iCheck({
-        //     checkboxClass: 'icheckbox_minimal-blue'
-        // });
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-        //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red').iCheck({
-            checkboxClass: 'icheckbox_flat-pink'
+         $('#form').submit(function (e) {
+            let business_school_id = $('#business_school_id').val();
+            let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
+            let designation_id = $('#designation_id').val();
+            let max_cources_allowed = $('#max_cources_allowed').val();
+            let tc_program1 = $('#tc_program1').val();
+            let tc_program2 = $('#tc_program2').val();
+
+            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
+            !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
+            !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
+            !tc_program1?addClass('tc_program1'):removeClass('tc_program1');
+            !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
+
+            if(!business_school_id || !lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            // Yes button callback
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url:'{{url("faculty-teaching")}}',
+                type:'POST',
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        });
+
+
+         $('.edit').on('click', function () {
+            // let data = JSON.parse(JSON.stringify($(this).data('row')));
+             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
+            $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
+            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_max_cources_allowed').val(data.max_cources_allowed);
+            $('#edit_tc_program1').val(data.tc_program1);
+            $('#edit_tc_program2').val(data.tc_program2);
+            $('#edit_id').val(data.id);
+            $('input[value='+data.status+']').iCheck('check');
+            $('input[value='+data.isCompleted+']').iCheck('check');
+        });
+
+$('#updateForm').submit(function (e) {
+            let business_school_id = $('#edit_business_school_id').val();
+            let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
+            let designation_id = $('#edit_designation_id').val();
+            let max_cources_allowed = $('#edit_max_cources_allowed').val();
+            let tc_program1 = $('#edit_tc_program1').val();
+            let tc_program2 = $('#edit_tc_program2').val();
+            let id = $('#edit_id').val();
+
+            let status = $('input[name=edit_status]:checked').val();
+            let isCompleted= $('input[name=edit_isCompleted]:checked').val();
+            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
+            !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
+            !designation_id?addClass('edit_designation_id'):removeClass('edit_lookup_faculty_designation_id');
+            !max_cources_allowed?addClass('edit_max_cources_allowed'):removeClass('edit_max_cources_allowed');
+            !tc_program1?addClass('edit_tc_program1'):removeClass('edit_tc_program1');
+            !tc_program2?addClass('edit_tc_program2'):removeClass('edit_tc_program2');
+
+            if(!business_school_id || !lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2 )
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            e.preventDefault();
+             var formData = new FormData(this);
+            //var formData = $("#updateForm").serialize()
+            formData.append('_method', 'PUT');
+            $.ajax({
+                url:'{{url("faculty-teaching")}}/'+id,
+                type:'POST',
+                // dataType:"JSON",
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    //console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        });
+
+
+         $('.delete').on('click', function (e) {
+            let id =  $(this).data('id');
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
+                function(){
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("faculty-teaching")}}/'+id,
+                        type:'DELETE',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+                            location.reload();
+                            // console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+
         })
-
-
-
-        function addUser() {
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{'users'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    user: user,
-                    code: code
-                },
-                success: function (response) {
-                    //var data = JSON.parse(response);
-                    alert(response);
-                    //location.replace('users');
-                }
-            });
-        }
-
-
-        function update(id, name, code, status) {
-            $('#id').val(id);
-            $('#user').val(name);
-            $('#code').val(code);
-            $('#status').val(status);
-            $('#add_user').hide();
-            $('#Update').show();
-        }
-
-        function updateUser() {
-            var id = $('#id').val();
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
-            $.ajax({
-                type: 'POST',
-                url: "{{'updateusers'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    id: id,
-                    user: user,
-                    code: code,
-                    status: status
-                },
-                success: function (response) {
-                    alert('Update successfully');
-                    location.replace('users');
-                }
-            });
-        }
 
     </script>
 

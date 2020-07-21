@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Faculty;
 
-use App\Models\StrategicManagement\StrategicPlan;
+use App\Models\Faculty\FacultyStudentRatio;
+use App\BusinessSchool;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 
-class StrategicPlanController extends Controller
+class FacultyStudentRatioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +20,12 @@ class StrategicPlanController extends Controller
      */
     public function index()
     {
+        $businesses = BusinessSchool::where('status', 'active')->get();
+        $programs = Program::where('status', 'active')->get();
 
-        $plans  = StrategicPlan::get();
+        $ratios = FacultyStudentRatio::with('business_school','program')->get();
 
-         return view('strategic_management.plan', compact('plans'));
+         return view('registration.faculty.faculty_student_ratio', compact('businesses','programs','ratios'));
     }
 
     /**
@@ -49,13 +53,14 @@ class StrategicPlanController extends Controller
         }
         try {
 
-            StrategicPlan::create([
-                'plan_period' => $request->plan_period,
-                'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority
+            FacultyStudentRatio::create([
+                'business_school_id' => $request->business_school_id,
+                'program_id' => $request->program_id,
+                'year' => $request->year,
+                'total_enrollments' => $request->total_enrollments
             ]);
 
-            return response()->json(['success' => 'Strategic Plan added successfully.']);
+            return response()->json(['success' => 'Faculty Student Ratio added successfully.']);
 
 
         }catch (Exception $e)
@@ -67,10 +72,10 @@ class StrategicPlanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(StrategicPlan $strategicPlan)
+    public function show($id)
     {
         //
     }
@@ -78,10 +83,10 @@ class StrategicPlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(StrategicPlan $strategicPlan)
+    public function edit($id)
     {
         //
     }
@@ -90,10 +95,10 @@ class StrategicPlanController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StrategicPlan $strategicPlan)
+    public function update(Request $request, FacultyStudentRatio $facultyStudentRatio)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -103,13 +108,15 @@ class StrategicPlanController extends Controller
 
         try {
 
-            StrategicPlan::where('id', $strategicPlan->id)->update([
-                'plan_period' => $request->plan_period,
-                'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority,
-                'status' => $request->status
+            FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
+               'business_school_id' => $request->business_school_id,
+                'program_id' => $request->program_id,
+                'year' => $request->year,
+                'total_enrollments' => $request->total_enrollments,
+                'status' => $request->status,
+                'isCompleted' => $request->isCompleted
             ]);
-            return response()->json(['success' => 'Strategic Plan updated successfully.']);
+            return response()->json(['success' => 'Faculty Student Ratio updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -120,13 +127,13 @@ class StrategicPlanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StrategicPlan $strategicPlan)
+    public function destroy(FacultyStudentRatio $facultyStudentRatio)
     {
         try {
-            StrategicPlan::destroy($strategicPlan->id);
+            FacultyStudentRatio::destroy($facultyStudentRatio->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -136,13 +143,12 @@ class StrategicPlanController extends Controller
 
     protected function rules() {
         return [
-            'plan_period' => 'required',
-            'aproval_date' => 'required',
-            'aproving_authority' => 'required'
+            'business_school_id' => 'required',
+            'program_id' => 'required',
+            'year' => 'required',
+            'total_enrollments' => 'required'
         ];
     }
-
-
 
     protected function messages() {
         return [

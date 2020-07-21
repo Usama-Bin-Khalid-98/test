@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Faculty;
 
+use App\Models\Faculty\FacultyStability;
+use App\BusinessSchool;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
+use App\Models\StrategicManagement\Designation;
 
 class FacultyStabilityController extends Controller
 {
@@ -14,7 +20,11 @@ class FacultyStabilityController extends Controller
      */
     public function index()
     {
-        return view ('registration.faculty.faculty_stability');
+        $businesses = BusinessSchool::where('status', 'active')->get();
+
+        $stabilities = FacultyStability::with('business_school')->get();
+
+         return view('registration.faculty.faculty_stability', compact('businesses','stabilities'));
     }
 
     /**
@@ -35,7 +45,30 @@ class FacultyStabilityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            FacultyStability::create([
+                'business_school_id' => $request->business_school_id,
+                'total_faculty' => $request->total_faculty,
+                'year' => $request->year,
+                'resigned' => $request->resigned,
+                'retired' => $request->retired,
+                'terminated' => $request->terminated,
+                'new_induction' => $request->new_induction
+            ]);
+
+            return response()->json(['success' => 'Faculty Stability added successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -67,9 +100,33 @@ class FacultyStabilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, FacultyStability $facultyStability)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            FacultyStability::where('id', $facultyStability->id)->update([
+               'business_school_id' => $request->business_school_id,
+                'total_faculty' => $request->total_faculty,
+                'year' => $request->year,
+                'resigned' => $request->resigned,
+                'retired' => $request->retired,
+                'terminated' => $request->terminated,
+                'new_induction' => $request->new_induction,
+                'status' => $request->status,
+                'isCompleted' => $request->isCompleted
+            ]);
+            return response()->json(['success' => 'Faculty Stability updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -78,8 +135,32 @@ class FacultyStabilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(FacultyStability $facultyStability)
     {
-        //
+        try {
+            FacultyStability::destroy($facultyStability->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'business_school_id' => 'required',
+            'total_faculty' => 'required',
+            'year' => 'required',
+            'resigned' => 'required',
+            'retired' => 'required',
+            'terminated' => 'required',
+            'new_induction' => 'required'
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

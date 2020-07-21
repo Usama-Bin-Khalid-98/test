@@ -13,7 +13,7 @@ class CreateFacultyWorkload extends Migration
      */
     public function up()
     {
-        Schema::create('faculty_workload', function (Blueprint $table) {
+        Schema::create('work_load', function (Blueprint $table) {
             $table->increments('id');
 
              $table->integer('business_school_id')->unsigned();
@@ -28,13 +28,13 @@ class CreateFacultyWorkload extends Migration
              // ->references('id')
              // ->on('lookup_faculty_desination');
 
-             $table->integer('lookup_faculty_designation_id')->unsigned();
-            $table->foreign('lookup_faculty_designation_id')
+             $table->integer('designation_id')->unsigned();
+            $table->foreign('designation_id')
                 ->references('id')
-                ->on('lookup_faculty_desination');
+                ->on('designations');
 
 
-             $table->integer('total_cources')->nullable();
+             $table->integer('total_courses')->nullable();
              $table->integer('phd')->nullable();
              $table->integer('masters')->nullable();
              $table->integer('bachleors')->nullable();
@@ -42,8 +42,9 @@ class CreateFacultyWorkload extends Migration
              $table->string('year',100)->nullable();
              //$table->varchar('policy',50)->nullable();
             $table->enum('status',['active','inactive'])->default('active');
-            $table->enum('isComplete',['yes','no'])->default('no');
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -54,6 +55,6 @@ class CreateFacultyWorkload extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty_workload');
+        Schema::dropIfExists('work_load');
     }
 }
