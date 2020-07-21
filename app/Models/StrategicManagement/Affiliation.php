@@ -5,7 +5,7 @@ namespace App\Models\StrategicManagement;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\StrategicManagement\Affiliation;
 use App\Models\StrategicManagement\StatutoryCommittee;
-use App\Models\StrategicManagement\Designation;
+use App\Models\Common\Designation;
 use App\Models\StrategicManagement\StatutoryBody;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

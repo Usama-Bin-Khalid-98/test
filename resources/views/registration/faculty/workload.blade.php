@@ -79,7 +79,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                   <select name="lookup_faculty_designation_id" id="lookup_faculty_designation_id" class="form-control select2" style="width: 100%;">
+                                   <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Designation</option>
                                         @foreach($designations as $business)
                                          <option value="{{$business->id}}">{{$business->name}}</option>
@@ -198,8 +198,8 @@
                                     <td>{{$req->admin_responsibilities}}</td>
                                     <td>{{$req->year}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$req->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$req->isComplete == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","faculty_name":"{{$req->faculty_name}}","lookup_faculty_designation_id":"{{$req->lookup_faculty_designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachelors":"{{$req->bachelors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isComplete":"{{$req->isComplete}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                    <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachelors":"{{$req->bachelors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -266,10 +266,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                   <select name="lookup_faculty_designation_id" id="edit_lookup_faculty_designation_id" class="form-control select2" style="width: 100%;">
+                                   <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Designation</option>
                                         @foreach($designations as $business)
-                                         <option value="{{$business->id}}">{{$business->faculty_designation}}</option>
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -350,9 +350,9 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="type">{{ __('isComplete') }} : </label>
-                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" >Yes
-                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
+                                <label for="type">{{ __('isCompleted') }} : </label>
+                                <p><input type="radio" name="isCompleted" class="flat-red" value="yes" >Yes
+                                    <input type="radio" name="isCompleted" class="flat-red" value="no">No</p>
                             </div>
                         </div>
                     </div>
@@ -400,7 +400,7 @@
          $('#form').submit(function (e) {
             let business_school_id = $('#business_school_id').val();
             let faculty_name = $('#faculty_name').val();
-            let lookup_faculty_designation_id = $('#lookup_faculty_designation_id').val();
+            let designation_id = $('#designation_id').val();
             let total_courses = $('#total_courses').val();
             let phd = $('#phd').val();
             let masters = $('#masters').val();
@@ -410,7 +410,7 @@
 
             !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
             !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
-            !lookup_faculty_designation_id?addClass('lookup_faculty_designation_id'):removeClass('lookup_faculty_designation_id');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
             !total_courses?addClass('total_courses'):removeClass('total_courses');
             !phd?addClass('phd'):removeClass('phd');
             !masters?addClass('masters'):removeClass('masters');
@@ -418,7 +418,7 @@
             !admin_responsibilities?addClass('admin_responsibilities'):removeClass('admin_responsibilities');
             !year?addClass('year'):removeClass('year');
 
-            if(!business_school_id || !faculty_name || !lookup_faculty_designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year)
+            if(!business_school_id || !faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -461,7 +461,7 @@
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_faculty_name').val(data.faculty_name);
-            $('#edit_lookup_faculty_designation_id').select2().val(data.lookup_faculty_designation_id).trigger('change');
+            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_total_courses').val(data.total_courses);
             $('#edit_phd').val(data.phd);
             $('#edit_masters').val(data.masters);
@@ -470,13 +470,13 @@
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
-            $('input[value='+data.isComplete+']').iCheck('check');
+            $('input[value='+data.isCompleted+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
             let business_school_id = $('#edit_business_school_id').val();
             let faculty_name = $('#edit_faculty_name').val();
-            let lookup_faculty_designation_id = $('#edit_lookup_faculty_designation_id').val();
+            let designation_id = $('#edit_designation_id').val();
             let total_courses = $('#edit_total_courses').val();
             let phd = $('#edit_phd').val();
             let masters = $('#edit_masters').val();
@@ -486,10 +486,10 @@ $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            let isComplete = $('input[name=edit_isComplete]:checked').val();
+            let isCompleted = $('input[name=edit_isCompleted]:checked').val();
             !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !faculty_name?addClass('edit_faculty_name'):removeClass('edit_faculty_name');
-            !lookup_faculty_designation_id?addClass('edit_lookup_faculty_designation_id'):removeClass('edit_lookup_faculty_designation_id');
+            !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
             !total_courses?addClass('edit_total_courses'):removeClass('edit_total_courses');
             !phd?addClass('edit_phd'):removeClass('edit_phd');
             !masters?addClass('edit_masters'):removeClass('edit_masters');
@@ -497,7 +497,7 @@ $('#updateForm').submit(function (e) {
             !admin_responsibilities?addClass('edit_admin_responsibilities'):removeClass('edit_admin_responsibilities');
             !year?addClass('edit_year'):removeClass('edit_year');
 
-            if(!business_school_id || !faculty_name || !lookup_faculty_designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year )
+            if(!business_school_id || !faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
