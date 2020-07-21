@@ -67,11 +67,11 @@ Route::resource('student-enrolment','StudentEnrolmentController');
 // Faculty
 Route::get('/faculty_summary','Faculty\FacultySummaryController@index')->name('faculty_summary');
 Route::get('/visiting_faculty','Faculty\VisitingFacultyController@index')->name('visiting_faculty');
-Route::get('/faculty_courses','Faculty\FacultyTeachingCources@index')->name('faculty_courses');
 Route::resource('faculty-gender','Faculty\FacultyGenderController');
 Route::resource('faculty-stability','Faculty\FacultyStabilityController');
 Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
 Route::resource('work-load','Faculty\WorkloadController');
+Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
 
 
 //research-summary
