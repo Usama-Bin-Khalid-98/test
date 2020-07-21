@@ -100,7 +100,7 @@ class FacultyGenderController extends Controller
      */
     public function update(Request $request, FacultyGender $facultyGender)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -115,7 +115,7 @@ class FacultyGenderController extends Controller
                 'male' => $request->male,
                 'female' => $request->female,
                 'status' => $request->status,
-                'isComplete' => $request->isComplete
+                'isCompleted' => $request->isCompleted
             ]);
             return response()->json(['success' => 'Faculty Gender updated successfully.']);
 
@@ -143,16 +143,6 @@ class FacultyGenderController extends Controller
     }
 
     protected function rules() {
-        return [
-            'business_school_id' => 'required',
-            'lookup_faculty_type_id' => 'required',
-            'year' => 'required',
-            'male' => 'required',
-            'female' => 'required'
-        ];
-    }
-
-     protected function update_rules() {
         return [
             'business_school_id' => 'required',
             'lookup_faculty_type_id' => 'required',

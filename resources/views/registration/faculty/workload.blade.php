@@ -82,7 +82,7 @@
                                    <select name="lookup_faculty_designation_id" id="lookup_faculty_designation_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Designation</option>
                                         @foreach($designations as $business)
-                                         <option value="{{$business->id}}">{{$business->faculty_designation}}</option>
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -190,7 +190,7 @@
                                 <tr>
                                     <td>{{$req->business_school->name}}</td>
                                     <td>{{$req->faculty_name}}</td>
-                                    <td>{{$req->lookup_faculty_designation->faculty_designation}}</td>
+                                    <td>{{$req->designation->name}}</td>
                                     <td>{{$req->total_courses}}</td>
                                     <td>{{$req->phd}}</td>
                                     <td>{{$req->masters}}</td>

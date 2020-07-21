@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Faculty;
 use App\Http\Controllers\Controller;
 use App\Models\Faculty\FacultyTeachingCources;
 use App\BusinessSchool;
-use App\LookupFacultyDesignation;
+use App\Models\Common\Designation;
 use App\LookupFacultyType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -23,10 +23,10 @@ class FacultyTeachingCourcesController extends Controller
     public function index()
     {
          $businesses = BusinessSchool::where('status', 'active')->get();
-         $designations = LookupFacultyDesignation::get();
+         $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
 
-         $visitings = FacultyTeachingCources::with('business_school','lookup_faculty_type','lookup_faculty_designation')->get();
+         $visitings = FacultyTeachingCources::with('business_school','lookup_faculty_type','designation')->get();
 
          return view('registration.faculty.faculty_teaching_cources', compact('businesses','designations','faculty_types','visitings'));
     }
@@ -105,7 +105,7 @@ class FacultyTeachingCourcesController extends Controller
      */
     public function update(Request $request, FacultyTeachingCources $facultyTeaching)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -121,7 +121,7 @@ class FacultyTeachingCourcesController extends Controller
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
                 'status' => $request->status,
-                'isComplete' => $request->isComplete
+                'isCompleted' => $request->isCompleted
             ]);
             return response()->json(['success' => 'Visiting Faculty updated successfully.']);
 
@@ -151,17 +151,6 @@ class FacultyTeachingCourcesController extends Controller
     protected function rules() {
         return [
             'business_school_id' => 'required',
-            'lookup_faculty_type_id' => 'required',
-            'lookup_faculty_designation_id' => 'required',
-            'max_cources_allowed' => 'required',
-            'tc_program1' => 'required',
-            'tc_program2' => 'required'
-        ];
-    }
-
-     protected function update_rules() {
-        return [
-             'business_school_id' => 'required',
             'lookup_faculty_type_id' => 'required',
             'lookup_faculty_designation_id' => 'required',
             'max_cources_allowed' => 'required',

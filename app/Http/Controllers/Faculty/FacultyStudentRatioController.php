@@ -100,7 +100,7 @@ class FacultyStudentRatioController extends Controller
      */
     public function update(Request $request, FacultyStudentRatio $facultyStudentRatio)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -114,7 +114,7 @@ class FacultyStudentRatioController extends Controller
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
                 'status' => $request->status,
-                'isComplete' => $request->isComplete
+                'isCompleted' => $request->isCompleted
             ]);
             return response()->json(['success' => 'Faculty Student Ratio updated successfully.']);
 
@@ -142,15 +142,6 @@ class FacultyStudentRatioController extends Controller
     }
 
     protected function rules() {
-        return [
-            'business_school_id' => 'required',
-            'program_id' => 'required',
-            'year' => 'required',
-            'total_enrollments' => 'required'
-        ];
-    }
-
-     protected function update_rules() {
         return [
             'business_school_id' => 'required',
             'program_id' => 'required',

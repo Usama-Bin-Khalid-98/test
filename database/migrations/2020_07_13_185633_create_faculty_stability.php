@@ -28,7 +28,7 @@ class CreateFacultyStability extends Migration
             $table->integer('terminated');
             $table->integer('new_induction');
             $table->enum('status',['active','inactive'])->default('active');
-            $table->enum('isComplete',['yes','no'])->default('no');
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

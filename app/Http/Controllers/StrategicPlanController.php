@@ -95,7 +95,7 @@ class StrategicPlanController extends Controller
      */
     public function update(Request $request, StrategicPlan $strategicPlan)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -142,13 +142,7 @@ class StrategicPlanController extends Controller
         ];
     }
 
-     protected function update_rules() {
-        return [
-            'plan_period' => 'required',
-            'aproval_date' => 'required',
-            'aproving_authority' => 'required'
-        ];
-    }
+
 
     protected function messages() {
         return [

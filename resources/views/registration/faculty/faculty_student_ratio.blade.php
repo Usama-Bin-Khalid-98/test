@@ -153,8 +153,8 @@
                                     <td>{{$req->year}}</td>
                                     <td>{{$req->total_enrollments}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$req->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$req->isComplete == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isComplete":"{{$req->isComplete}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                    <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -268,9 +268,9 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="type">{{ __('isComplete') }} : </label>
-                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" >Yes
-                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
+                                <label for="type">{{ __('isCompleted') }} : </label>
+                                <p><input type="radio" name="isCompleted" class="flat-red" value="yes" >Yes
+                                    <input type="radio" name="isCompleted" class="flat-red" value="no">No</p>
                             </div>
                         </div>
                     </div>
@@ -370,7 +370,7 @@
             $('#edit_total_enrollments').val(data.total_enrollments);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
-            $('input[value='+data.isComplete+']').iCheck('check');
+            $('input[value='+data.isCompleted+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
@@ -381,7 +381,7 @@ $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            let isComplete = $('input[name=edit_isComplete]:checked').val();
+            let isCompleted = $('input[name=edit_isCompleted]:checked').val();
             !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
             !year?addClass('edit_year'):removeClass('edit_year');

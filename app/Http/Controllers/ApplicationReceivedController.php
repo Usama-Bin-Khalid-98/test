@@ -103,7 +103,7 @@ class ApplicationReceivedController extends Controller
      */
     public function update(Request $request, ApplicationReceived $applicationReceived)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -156,16 +156,7 @@ class ApplicationReceivedController extends Controller
         ];
     }
 
-     protected function update_rules() {
-        return [
-            'program_id' => 'required',
-            'semester_id' => 'required',
-            'app_received' => 'required',
-            'admission_offered' => 'required',
-            'student_intake' => 'required',
-            'semester_comm_date' => 'required'
-        ];
-    }
+
 
     protected function messages() {
         return [

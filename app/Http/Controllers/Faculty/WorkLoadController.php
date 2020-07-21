@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty\WorkLoad;
+use App\Models\Faculty\Designation;
 use App\BusinessSchool;
-use App\LookupFacultyDesignation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -21,9 +21,9 @@ class WorkLoadController extends Controller
     public function index()
     {
          $businesses = BusinessSchool::where('status', 'active')->get();
-         $designations = LookupFacultyDesignation::get();
+         $designations = Designation::all();
 
-         $workloads = WorkLoad::with('business_school','lookup_faculty_designation')->get();
+         $workloads = WorkLoad::with('business_school','designation')->get();
 
          return view('registration.faculty.workload', compact('businesses','designations','workloads'));
     }
@@ -105,7 +105,7 @@ class WorkLoadController extends Controller
      */
     public function update(Request $request, WorkLoad $workLoad)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -124,7 +124,7 @@ class WorkLoadController extends Controller
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'year' => $request->year,
                 'status' => $request->status,
-                'isComplete' => $request->isComplete
+                'isCompleted' => $request->isCompleted
             ]);
             return response()->json(['success' => 'Faculty Workload updated successfully.']);
 
@@ -154,20 +154,6 @@ class WorkLoadController extends Controller
     protected function rules() {
         return [
             'business_school_id' => 'required',
-            'faculty_name' => 'required',
-            'lookup_faculty_designation_id' => 'required',
-            'total_courses' => 'required',
-            'phd' => 'required',
-            'masters' => 'required',
-            'bachelors' => 'required',
-            'admin_responsibilities' => 'required',
-            'year' => 'required'
-        ];
-    }
-
-     protected function update_rules() {
-        return [
-             'business_school_id' => 'required',
             'faculty_name' => 'required',
             'lookup_faculty_designation_id' => 'required',
             'total_courses' => 'required',

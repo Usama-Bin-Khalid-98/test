@@ -28,10 +28,10 @@ class CreateFacultyWorkload extends Migration
              // ->references('id')
              // ->on('lookup_faculty_desination');
 
-             $table->integer('lookup_faculty_designation_id')->unsigned();
-            $table->foreign('lookup_faculty_designation_id')
+             $table->integer('designation_id')->unsigned();
+            $table->foreign('designation_id')
                 ->references('id')
-                ->on('lookup_faculty_desination');
+                ->on('designations');
 
 
              $table->integer('total_courses')->nullable();
@@ -42,7 +42,7 @@ class CreateFacultyWorkload extends Migration
              $table->string('year',100)->nullable();
              //$table->varchar('policy',50)->nullable();
             $table->enum('status',['active','inactive'])->default('active');
-            $table->enum('isComplete',['yes','no'])->default('no');
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -4,7 +4,7 @@ namespace App\Models\Faculty;
 
 use Illuminate\Database\Eloquent\Model;
 use App\BusinessSchool;
-use App\LookupFacultyDesignation;
+use App\Models\Common\Designation;
 use App\LookupFacultyType;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,7 +22,7 @@ class FacultyTeachingCources extends Model
         return $this->belongsTo(LookupFacultyType::class);
     }
 
-    public function lookup_faculty_designation() {
-        return $this->belongsTo(LookupFacultyDesignation::class);
+    public function designation() {
+        return $this->belongsTo(Designation::class);
     }
 }

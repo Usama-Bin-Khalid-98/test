@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use App\Models\StrategicManagement\Designation;
 
 class FacultyStabilityController extends Controller
 {
@@ -101,7 +102,7 @@ class FacultyStabilityController extends Controller
      */
     public function update(Request $request, FacultyStability $facultyStability)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -118,7 +119,7 @@ class FacultyStabilityController extends Controller
                 'terminated' => $request->terminated,
                 'new_induction' => $request->new_induction,
                 'status' => $request->status,
-                'isComplete' => $request->isComplete
+                'isCompleted' => $request->isCompleted
             ]);
             return response()->json(['success' => 'Faculty Stability updated successfully.']);
 
@@ -146,18 +147,6 @@ class FacultyStabilityController extends Controller
     }
 
     protected function rules() {
-        return [
-            'business_school_id' => 'required',
-            'total_faculty' => 'required',
-            'year' => 'required',
-            'resigned' => 'required',
-            'retired' => 'required',
-            'terminated' => 'required',
-            'new_induction' => 'required'
-        ];
-    }
-
-     protected function update_rules() {
         return [
             'business_school_id' => 'required',
             'total_faculty' => 'required',

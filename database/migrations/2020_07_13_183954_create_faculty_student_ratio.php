@@ -27,7 +27,7 @@ class CreateFacultyStudentRatio extends Migration
             $table->string('year',100);
             $table->integer('total_enrollments');
             $table->enum('status',['active','inactive'])->default('active');
-            $table->enum('isComplete',['yes','no'])->default('no');
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -84,10 +84,10 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                   <select name="lookup_faculty_designation_id" id="lookup_faculty_designation_id" class="form-control select2" style="width: 100%;">
+                                   <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Designation</option>
                                         @foreach($designations as $business)
-                                         <option value="{{$business->id}}">{{$business->faculty_designation}}</option>
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -149,13 +149,13 @@
                                 <tr>
                                     <td>{{$req->business_school->name}}</td>
                                     <td>{{$req->lookup_faculty_type->faculty_type}}</td>
-                                    <td>{{$req->lookup_faculty_designation->faculty_designation}}</td>
+                                    <td>{{$req->designation->name}}</td>
                                     <td>{{$req->max_cources_allowed}}</td>
                                     <td>{{$req->tc_program1}}</td>
                                     <td>{{$req->tc_program2}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$req->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$req->isComplete == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","lookup_faculty_designation_id":"{{$req->lookup_faculty_designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","tc_program1":"{{$req->tc_program1}}","tc_program2":"{{$req->tc_program2}}","status":"{{$req->status}}","isComplete":"{{$req->isComplete}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                    <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","tc_program1":"{{$req->tc_program1}}","tc_program2":"{{$req->tc_program2}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -224,10 +224,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                   <select name="lookup_faculty_designation_id" id="edit_lookup_faculty_designation_id" class="form-control select2" style="width: 100%;">
+                                   <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Designation</option>
                                         @foreach($designations as $business)
-                                         <option value="{{$business->id}}">{{$business->faculty_designation}}</option>
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -264,9 +264,9 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="type">{{ __('isComplete') }} : </label>
-                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" >Yes
-                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
+                                <label for="type">{{ __('isCompleted') }} : </label>
+                                <p><input type="radio" name="isCompleted" class="flat-red" value="yes" >Yes
+                                    <input type="radio" name="isCompleted" class="flat-red" value="no">No</p>
                             </div>
                         </div>
                     </div>
@@ -313,19 +313,19 @@
          $('#form').submit(function (e) {
             let business_school_id = $('#business_school_id').val();
             let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
-            let lookup_faculty_designation_id = $('#lookup_faculty_designation_id').val();
+            let designation_id = $('#designation_id').val();
             let max_cources_allowed = $('#max_cources_allowed').val();
             let tc_program1 = $('#tc_program1').val();
             let tc_program2 = $('#tc_program2').val();
 
             !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
             !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
-            !lookup_faculty_designation_id?addClass('lookup_faculty_designation_id'):removeClass('lookup_faculty_designation_id');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
             !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
             !tc_program1?addClass('tc_program1'):removeClass('tc_program1');
             !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
 
-            if(!business_school_id || !lookup_faculty_type_id || !lookup_faculty_designation_id || !max_cources_allowed || !tc_program1 || !tc_program2)
+            if(!business_school_id || !lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -368,34 +368,34 @@
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
-            $('#edit_lookup_faculty_designation_id').select2().val(data.lookup_faculty_designation_id).trigger('change');
+            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_max_cources_allowed').val(data.max_cources_allowed);
             $('#edit_tc_program1').val(data.tc_program1);
             $('#edit_tc_program2').val(data.tc_program2);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
-            $('input[value='+data.isComplete+']').iCheck('check');
+            $('input[value='+data.isCompleted+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
             let business_school_id = $('#edit_business_school_id').val();
             let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
-            let lookup_faculty_designation_id = $('#edit_lookup_faculty_designation_id').val();
+            let designation_id = $('#edit_designation_id').val();
             let max_cources_allowed = $('#edit_max_cources_allowed').val();
             let tc_program1 = $('#edit_tc_program1').val();
             let tc_program2 = $('#edit_tc_program2').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            let isComplete = $('input[name=edit_isComplete]:checked').val();
+            let isCompleted= $('input[name=edit_isCompleted]:checked').val();
             !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
-            !lookup_faculty_designation_id?addClass('edit_lookup_faculty_designation_id'):removeClass('edit_lookup_faculty_designation_id');
+            !designation_id?addClass('edit_designation_id'):removeClass('edit_lookup_faculty_designation_id');
             !max_cources_allowed?addClass('edit_max_cources_allowed'):removeClass('edit_max_cources_allowed');
             !tc_program1?addClass('edit_tc_program1'):removeClass('edit_tc_program1');
             !tc_program2?addClass('edit_tc_program2'):removeClass('edit_tc_program2');
 
-            if(!business_school_id || !lookup_faculty_type_id || !lookup_faculty_designation_id || !max_cources_allowed || !tc_program1 || !tc_program2 )
+            if(!business_school_id || !lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2 )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

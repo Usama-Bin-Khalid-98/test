@@ -23,15 +23,15 @@ class CreateFacultyTeachingCourses extends Migration
             $table->foreign('lookup_faculty_type_id')
                 ->references('id')
                 ->on('lookup_faculty_type');
-            $table->integer('lookup_faculty_designation_id')->unsigned();
-            $table->foreign('lookup_faculty_designation_id')
+            $table->integer('designation_id')->unsigned();
+            $table->foreign('designation_id')
                 ->references('id')
-                ->on('lookup_faculty_desination');
+                ->on('designations');
             $table->integer('max_cources _allowed');
             $table->integer('tc_program1');
             $table->integer('tc_program2');
             $table->enum('status',['active','inactive'])->default('active');
-            $table->enum('isComplete',['yes','no'])->default('no');
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->timestamps();
             $table->Softdeletes();
         });

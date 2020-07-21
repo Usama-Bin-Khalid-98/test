@@ -104,7 +104,7 @@ class ProgramPortfolioController extends Controller
      */
     public function update(Request $request, ProgramPortfolio $programPortfolio)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -159,17 +159,7 @@ class ProgramPortfolioController extends Controller
         ];
     }
 
-     protected function update_rules() {
-        return [
-             'program_id' => 'required',
-            'total_semesters' => 'required',
-            'course_type_id' => 'required',
-            'no_of_course' => 'required',
-            'credit_hours' => 'required',
-            'internship_req' => 'required',
-            'fyp_req' => 'required'
-        ];
-    }
+
 
     protected function messages() {
         return [
