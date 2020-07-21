@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models\StrategicManagement;
-namespace App\Models\Faculty;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -23,11 +22,6 @@ class Designation extends Model
     public function statutory_committee()
     {
         return $this->hasOne(StatutoryCommittee::class);
-    }
-
-    public function work_load()
-    {
-        return $this->hasOne(WorkLoad::class);
     }
 
     public function user()

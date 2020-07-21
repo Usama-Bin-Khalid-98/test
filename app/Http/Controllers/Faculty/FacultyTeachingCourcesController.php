@@ -59,7 +59,7 @@ class FacultyTeachingCourcesController extends Controller
             FacultyTeachingCources::create([
                 'business_school_id' => $request->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                'lookup_faculty_designation_id' => $request->lookup_faculty_designation_id,
+                'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2
@@ -116,7 +116,7 @@ class FacultyTeachingCourcesController extends Controller
             FacultyTeachingCources::where('id', $facultyTeaching->id)->update([
                 'business_school_id' => $request->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                'lookup_faculty_designation_id' => $request->lookup_faculty_designation_id,
+                'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
@@ -152,7 +152,7 @@ class FacultyTeachingCourcesController extends Controller
         return [
             'business_school_id' => 'required',
             'lookup_faculty_type_id' => 'required',
-            'lookup_faculty_designation_id' => 'required',
+            'designation_id' => 'required',
             'max_cources_allowed' => 'required',
             'tc_program1' => 'required',
             'tc_program2' => 'required'

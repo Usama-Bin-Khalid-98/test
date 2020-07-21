@@ -4,6 +4,7 @@ namespace App\Models\Faculty;
 
 use Illuminate\Database\Eloquent\Model;
 use App\BusinessSchool;
+use App\Models\Common\Designation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WorkLoad extends Model

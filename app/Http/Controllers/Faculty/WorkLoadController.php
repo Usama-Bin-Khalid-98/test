@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty\WorkLoad;
-use App\Models\Faculty\Designation;
 use App\BusinessSchool;
+use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -56,7 +56,7 @@ class WorkLoadController extends Controller
             WorkLoad::create([
                 'business_school_id' => $request->business_school_id,
                 'faculty_name' => $request->faculty_name,
-                'lookup_faculty_designation_id' => $request->lookup_faculty_designation_id,
+                'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
                 'phd' => $request->phd,
                 'masters' => $request->masters,
@@ -116,7 +116,7 @@ class WorkLoadController extends Controller
             WorkLoad::where('id', $workLoad->id)->update([
                 'business_school_id' => $request->business_school_id,
                 'faculty_name' => $request->faculty_name,
-                'lookup_faculty_designation_id' => $request->lookup_faculty_designation_id,
+                'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
                 'phd' => $request->phd,
                 'masters' => $request->masters,
@@ -155,7 +155,7 @@ class WorkLoadController extends Controller
         return [
             'business_school_id' => 'required',
             'faculty_name' => 'required',
-            'lookup_faculty_designation_id' => 'required',
+            'designation_id' => 'required',
             'total_courses' => 'required',
             'phd' => 'required',
             'masters' => 'required',
