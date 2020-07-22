@@ -109,7 +109,7 @@ class StudentEnrolmentController extends Controller
      */
     public function update(Request $request, StudentEnrolment $studentEnrolment)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -173,20 +173,7 @@ class StudentEnrolmentController extends Controller
         ];
     }
 
-     protected function update_rules() {
-        return [
-            'year' => 'required',
-            'bs_level' => 'required',
-            'ms_level' => 'required',
-            'phd_level' => 'required',
-            'program_id' => 'required',
-            'grad_std_t' => 'required',
-            'grad_std_t_2' => 'required',
-            'grad_std_t_3' => 'required',
-            'male' => 'required',
-            'female' => 'required'
-        ];
-    }
+
 
     protected function messages() {
         return [

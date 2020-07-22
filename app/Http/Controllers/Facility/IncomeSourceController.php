@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Faculty;
+namespace App\Http\Controllers\Facility;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-class FacultyStudentRatio extends Controller
+use Illuminate\Http\Request;
+
+class IncomeSourceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,6 @@ class FacultyStudentRatio extends Controller
     public function index()
     {
         //
-        return view('registration.faculty.faculty_student_ratio');
     }
 
     /**

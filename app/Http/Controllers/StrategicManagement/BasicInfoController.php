@@ -5,7 +5,7 @@ namespace App\Http\Controllers\StrategicManagement;
 use App\BusinessSchool;
 use App\CharterType;
 use App\InstituteType;
-use App\Models\StrategicManagement\Designation;
+use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

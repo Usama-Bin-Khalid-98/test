@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <label for="name">Program Name</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Program</option>
+                                        <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
                                          <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach
@@ -74,7 +74,7 @@
                                 <div class="form-group">
                                     <label for="name">Eligibility Criteria</label>
                                    <select name="eligibility_criteria_id" id="eligibility_criteria_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Eligibility Criteria</option>
+                                        <option selected disabled>Select Eligibility Criteria</option>
                                         @foreach($criterias as $criteria)
                                          <option value="{{$criteria->id}}">{{$criteria->name}}</option>
                                         @endforeach

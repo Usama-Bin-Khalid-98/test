@@ -61,7 +61,7 @@
                                 <div class="form-group">
                                     <label for="name">Publication Type</label>
                                     <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Publication Type</option>
+                                        <option selected disabled>Select Publication Type</option>
                                         @foreach($publications as $publication)
                                          <option value="{{$publication->id}}">{{$publication->name}}</option>
                                         @endforeach
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label for="name">Business School</label>
                                     <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Business School</option>
+                                        <option selected disabled>Select Business School</option>
                                         @foreach($businesses as $business)
                                          <option value="{{$business->id}}">{{$business->name}}</option>
                                         @endforeach
@@ -85,7 +85,7 @@
                                 <div class="form-group">
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2">
-                                        <option value="">Select Year</option>
+                                        <option selected disabled>Select Year</option>
                                         <option value="2000">2000</option>
                                         <option value="2001">2001</option>
                                         <option value="2002">2002</option>
