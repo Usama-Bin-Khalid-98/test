@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <label for="name">Year</label>
                                     <select name="year" id="year"  class="form-control select2">
-                                        <option value="">Select Year</option>
+                                        <option selected disabled>Select Year</option>
                                         <option value="2000">2000</option>
                                         <option value="2001">2001</option>
                                         <option value="2002">2002</option>
@@ -124,7 +124,7 @@
                                 <div class="form-group">
                                     <label for="name">Program Name</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Program</option>
+                                        <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
                                          <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach

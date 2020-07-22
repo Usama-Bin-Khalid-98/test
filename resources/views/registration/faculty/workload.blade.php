@@ -122,7 +122,7 @@
                                 <div class="form-group">
                                     <label for="name">Year</label>
                                     <select name="year" id="year"  class="form-control select2">
-                                        <option value="">Select Year</option>
+                                        <option selected disabled>Select Year</option>
                                         <option value="2000">2000</option>
                                         <option value="2001">2001</option>
                                         <option value="2002">2002</option>
