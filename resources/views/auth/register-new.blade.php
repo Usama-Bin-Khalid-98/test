@@ -220,7 +220,7 @@
                                                     <label for="name">Department Name</label>
                                                     <select name="department_id" id="department_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Department</option>
-                                                        @foreach($programs as $program)
+                                                        @foreach($departments as $program)
                                                             <option value="{{$program->id}}" {{old('department_id')==$program->id?'selected':''}}>{{$program->name}}</option>
                                                         @endforeach
                                                     </select>
@@ -232,7 +232,7 @@
                                                 <div class="form-group">
                                                     <label for="email">Bank Deposit Slip</label>
                                                     <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">
-                                                    <span class="text-blue">up to 5 mb file allowed. </span>
+                                                    <span class="text-blue">Max 2mb file size allowed. </span>
                                                 </div>
                                             </div>
                                             </div>

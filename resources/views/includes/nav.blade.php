@@ -61,7 +61,7 @@
 
           </ul>
             </li>
-          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
+          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}}{{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
              <span class="pull-right-container">
@@ -69,11 +69,19 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">
+                <a href="{{url('strategic/invoices')}}">
+                    <i class="fa fa-circle-o" style="color: #D81B60"></i> Invoices
+                    <span class="pull-right-container">
+                    <span class="label label-danger pull-right">In</span>
+                    </span>
+                </a>
+            </li>
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
                     <i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information
                     <span class="pull-right-container">
-                    <span class="label label-primary pull-right">4</span>
+                    <span class="label label-danger pull-right">4</span>
                     </span>
                 </a>
             </li>

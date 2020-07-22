@@ -15,4 +15,8 @@ class Program extends Model
     public function scope() {
         return $this->hasOne(Scope::class);
     }
+    public function slip()
+    {
+        return $this->hasOne(Slip::class);
+    }
 }

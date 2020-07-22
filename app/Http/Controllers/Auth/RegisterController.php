@@ -8,11 +8,13 @@ use App\Http\Controllers\Controller;
 use App\InstituteType;
 use App\Mail\RegisterationMail;
 use App\Models\Common\Degree;
+use App\Models\Common\Department;
 use App\Models\Common\Discipline;
 use App\Models\Common\Program;
 use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\Designation;
 use App\Providers\RouteServiceProvider;
 use App\User;
@@ -21,10 +23,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
-
+use Illuminate\Support\Facades\Input;
 class RegisterController extends Controller
 {
     /*
@@ -78,6 +81,7 @@ class RegisterController extends Controller
                 'business_school_id' => 'required',
                 'discipline_id' => 'required',
                 'department_id' => 'required',
+                'slip.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password_confirmation' => ['required', 'string', 'min:8'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -127,8 +131,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-       // dd($data->all());
-
         $businessSchool = BusinessSchool::where('id', $data['business_school_id']);
 
         if($data['account_type']== 'business_school') {
@@ -144,6 +146,23 @@ class RegisterController extends Controller
             }
 
             try {
+                $path = ''; $imageName = '';
+                if(@$data['slip']) {
+                    $filename = $data['name']."-slip-".time().'.'.$data['slip']->extension();
+                    //dd(trim($imageName));
+                    $path = 'uploads/schools/slips';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $data['slip']->move($path, $filename);
+
+                    Slip::create([
+                        'business_school_id' => $data['business_school_id'],
+                        'program_id' => $data['department_id'],
+                        'slip' => $path.'/'.$filename,
+                        'status' => 'paid',
+                    ]);
+
+                }
                 return User::create([
                     'name' => $data['name'],
                     'designation_id' => $data['designation_id'],
@@ -175,7 +194,6 @@ class RegisterController extends Controller
                     'country' => $data['country'],
                     'city' => $data['city'],
                     'address' => $data['address'],
-
                     'business_school_id' => $data['institute'],
                     'reviewer_role_id' => $data['reviewer_role_id'],
                     'region_id' => $data['region_id'],
@@ -219,7 +237,7 @@ class RegisterController extends Controller
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
         $designations=Designation::where('status', 'active')->get();
-        $programs = Program::where('status', 'active')->get();
+        $departments = Department::where('status', 'active')->get();
         $disciplines = Discipline::where('status', 'active')->get();
         $regions = Region::where('status', 'active')->get();
         $reviewerRoles = ReviewerRole::where('status', 'active')->get();
@@ -231,7 +249,7 @@ class RegisterController extends Controller
         return view('auth.register-new', compact(
             'institute_types', 'chart_types',
             'business_school','designations','countries',
-            'programs', 'disciplines','regions', 'reviewerRoles',
+            'departments', 'disciplines','regions', 'reviewerRoles',
             'sectors', 'degrees','users')
         );
     }

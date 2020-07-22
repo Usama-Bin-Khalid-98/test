@@ -46,6 +46,7 @@ Auth::routes(['verify' => true]);
 //// Strategic Management
 Route::prefix('strategic')->group(function () {
     Route::resource('basicinfo','StrategicManagement\BasicInfoController');
+    Route::resource('invoices','StrategicManagement\SlipController');
     Route::resource('scope','StrategicManagement\ScopeController');
     Route::resource('contact-info','StrategicManagement\ContactInfoController');
     Route::resource('statutory-committees','StrategicManagement\StatutoryCommitteeController');

@@ -198,7 +198,7 @@
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-6 connectedSortable">
+        <section class="col-lg-12 connectedSortable">
             <!-- TO DO List -->
             <div class="box box-primary">
                 <div class="box-header">
@@ -221,17 +221,27 @@
                         <thead>
                         <tr>
                             <th>Business School Name</th>
+                            <th>Contact Person Name</th>
                             <th>Contact</th>
+                            <th>Email</th>
+                            <th>Invoice Slip</th>
+                            <th>Account Type</th>
                             <th>Status</th>
 {{--                            <th>Action</th>--}}
                         </tr>
                         </thead>
+
                         <tbody>
-                        @foreach($registrations as $school)
+
+                        @foreach($registrations as $user)
                         <tr>
-                            <td>{{$school->name}}</td>
-                            <td>{{$school->contact_no}}</td>
-                            <td><i class="badge {{$school->status=='disabled'?'bg-red':''}} status" data-id="{{$school->id}}" >Disabled</i></td>
+                            <td>{{$user->business_school->name}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->contact_no}}</td>
+                            <td>{{$user->email}}</td>
+                            <td><a href="{{$user->business_school->slip[0]->slip}}">Invoice Slip</a></td>
+                            <td>{{$user->user_type}}</td>
+                            <td><i class="badge {{$user->status=='disabled'?'bg-red':''}} status" data-id="{{$user->id}}" style="background: red" >Disabled</i></td>
 {{--                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>--}}
                         </tr>
                         @endforeach
@@ -240,7 +250,11 @@
                         <tfoot>
                         <tr>
                             <th>Business School Name</th>
+                            <th>Contact Person Name</th>
                             <th>Contact</th>
+                            <th>Email</th>
+                            <th>Invoice Slip</th>
+                            <th>Account Type</th>
                             <th>Status</th>
 {{--                            <th>Action</th>--}}
                         </tr>
@@ -271,7 +285,6 @@
  @else
 {{"Login to Access this page"}}
 <script type="text/javascript">window.location.replace('login');</script>
-
  @endif
 <!-- Morris.js charts -->
 <script src="bower_components/raphael/raphael.min.js"></script>
@@ -286,10 +299,7 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
 
-
-
 <script>
-
     $('.status').on('click', function (e) {
         var id = $(this).data('id');
 
