@@ -19,7 +19,6 @@ class CreateBusinessSchoolsTable extends Migration
             $table->string('contact_person', 80)->nullable();
             $table->date('year_estb')->nullable();
             $table->integer('slip_id')->unsigned()->nullable();
-
             $table->string('address', 255)->nullable();
             $table->integer('cao_id' )->nullable();
             $table->string('web_url',255)->nullable();
