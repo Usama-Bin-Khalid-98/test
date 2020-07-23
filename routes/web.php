@@ -77,3 +77,6 @@ Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
 
 //research-summary
 Route::resource('research-summary','ResearchSummaryController');
+
+//Facilities-information
+Route::resource('financial-info','FinancialInfoController');

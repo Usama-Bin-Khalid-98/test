@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
         $this->call(StatutoryBodySeeder::class);
         $this->call(FacultyTypeSeeder::class);
         $this->call(SurveyQuestionSeeder::class);
-
+        $this->call(IncomeSourceSeeder::class);
+        $this->call(FacilityTypeSeeder::class);
+        $this->call(FacilitySeeder::class);
     }
 }
