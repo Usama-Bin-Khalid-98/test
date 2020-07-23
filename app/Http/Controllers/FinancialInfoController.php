@@ -25,7 +25,7 @@ class FinancialInfoController extends Controller
         $income = IncomeSource::all();
 
 
-        $infos = FinancialInfo::with('income_source')->get();
+        $infos = FinancialInfo::with('business_school','income_source')->get();
         ///dd($contacts);
         return view('registration.facilities_information.financial_info', compact('income','infos'));
     }
