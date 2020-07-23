@@ -80,3 +80,4 @@ Route::resource('research-summary','ResearchSummaryController');
 
 //Facilities-information
 Route::resource('financial-info','FinancialInfoController');
+Route::resource('business-school-facility','BusinessSchoolFacilityController');
