@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility\BusinessSchoolFacility;
 use Illuminate\Http\Request;
+use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Auth;
+use DB;
 
 class BusinessSchoolFacilityController extends Controller
 {
@@ -20,13 +22,12 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function index()
     {
+        $facility_types = Facility::with('facility_type')->get();
 
-        $facility = Facility::get();
-
-        $facilities = BusinessSchoolFacility::with('business_school','facility')->get();
+        $facilitiess = BusinessSchoolFacility::with('business_school','facility')->get();
 
 
-        return view('registration.facilities_information.business_school_facility', compact('facility','facilities'));
+        return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));
     }
 
     /**
@@ -138,7 +139,7 @@ class BusinessSchoolFacilityController extends Controller
 
     protected function rules() {
         return [
-            'facility_id' => 'required'
+           
         ];
     }
 
@@ -147,4 +148,8 @@ class BusinessSchoolFacilityController extends Controller
             'required' => 'The :attribute can not be blank.'
         ];
     }
+
+    
+
+        
 }

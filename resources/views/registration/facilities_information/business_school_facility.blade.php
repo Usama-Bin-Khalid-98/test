@@ -58,18 +58,35 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                          <form action="javascript:void(0)" id="form" method="POST">
-                            
-                           <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Business School Facilities</label>
-                                    <select name="facility_id" id="facility_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School Facility</option>
-                                        @foreach($facility as $source)
-                                         <option value="{{$source->id}}">{{$source->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
+
+                             <table class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th>Facility Types </th>
+                                    <th>Facilities</th>
+                                    <th>Select</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                   @foreach($facility_types as $type)
+                                <tr>
+                                    <td><input type="text" readonly name="facility_type[]" value="{{$type->facility_type->name}}" class="form-control">
+                                    </td>
+                                    <td><input type="text" readonly name="name" value="{{$type->name}}" class="form-control">
+                                         <input type="hidden"  name="facility_id[]" id="facility_id[]" value="{{$type->id}}"data-id="{{$type->id}}" class="form-control" >
+                                    </td>
+
+                                    <td>{{Form::radio("isChecked[".$type->id."]", 'yes')}}Yes
+                                    {{Form::radio("isChecked[".$type->id."]", 'no')}}No</td>
+                                </tr>
+                                @endforeach
+                               
+                                </tbody>
+                            </table>
+                        
+
+
                             
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -101,7 +118,7 @@
                                 </thead>
                                 <tbody>
 
-                                   @foreach($facilities as $summary)
+                                   @foreach($facilitiess as $summary)
                                 <tr>
                                     <td>{{$summary->business_school->name}}</td>
                                     <td>{{$summary->facility->name}}</td>
@@ -140,18 +157,6 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Business School Facilities</label>
-                                    <select name="facility_id" id="edit_facility_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School Facilities</option>
-                                        @foreach($facility as $source)
-                                         <option value="{{$source->id}}">{{$source->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                 <input type="hidden" id="edit_id">
-                            </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -204,15 +209,11 @@
         });
 
          $('#form').submit(function (e) {
-            let facility_id = $('#facility_id').val();
+            let facilitiesVal = $('input[name="facility_id"]').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
 
-            !facility_id?addClass('facility_id'):removeClass('facility_id');
+            !facilitiesVal?addClass('facilitiesVal'):removeClass('facilitiesVal');
 
-            if(!facility_id )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
-            }
+            
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
