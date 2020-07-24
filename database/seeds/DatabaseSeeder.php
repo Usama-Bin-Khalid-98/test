@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SemesterSeeder::class);
         $this->call(StatutoryBodySeeder::class);
         $this->call(FacultyTypeSeeder::class);
+        $this->call(QuestionSeeder::class);
         $this->call(SurveyQuestionSeeder::class);
         $this->call(IncomeSourceSeeder::class);
         $this->call(FacilityTypeSeeder::class);

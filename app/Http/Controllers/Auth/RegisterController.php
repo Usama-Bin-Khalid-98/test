@@ -11,11 +11,12 @@ use App\Models\Common\Degree;
 use App\Models\Common\Department;
 use App\Models\Common\Discipline;
 use App\Models\Common\Program;
+use App\Models\Common\Question;
 use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
 use App\Models\Common\Slip;
-use App\Models\StrategicManagement\Designation;
+use App\Models\Common\Designation;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -244,13 +245,14 @@ class RegisterController extends Controller
         $sectors = Sector::where('status', 'active')->get();
         $degrees = Degree::where('status', 'active')->get();
         $users = \App\User::where('user_type', 'peer_reviewer');
+        $questions = Question::where('status', 'active')->get();
         //dd($users);
 
         return view('auth.register-new', compact(
             'institute_types', 'chart_types',
             'business_school','designations','countries',
             'departments', 'disciplines','regions', 'reviewerRoles',
-            'sectors', 'degrees','users')
+            'sectors', 'degrees','users', 'questions')
         );
     }
 
