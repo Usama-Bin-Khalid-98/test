@@ -120,7 +120,7 @@
 
                                 @foreach($entryRequirements as $req)
                                 <tr>
-                                    <td>{{$req->program->name}}</td>
+                                    <td>{{$req->program->name??""}}</td>
                                     <td>{{$req->eligibility_criteria->name}}</td>
                                     <td>{{$req->min_req}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
