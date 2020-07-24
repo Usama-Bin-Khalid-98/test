@@ -77,8 +77,8 @@
                                          <input type="hidden"  name="facility_id[]" id="facility_id[]" value="{{$type->id}}"data-id="{{$type->id}}" class="form-control" >
                                     </td>
 
-                                    <td>{{Form::radio("isChecked[".$type->id."]", 'yes')}}Yes
-                                    {{Form::radio("isChecked[".$type->id."]", 'no')}}No</td>
+                                    <td><input type="radio" data-id="{{$type->id}}" value="yes" name="isChecked{{$type->id}}" > <span>Yes</span>
+<input type="radio" data-id="{{$type->id}}" value="no" name="isChecked{{$type->id}}"> <span>No</span></td>
                                 </tr>
                                 @endforeach
                                
@@ -210,8 +210,10 @@
 
          $('#form').submit(function (e) {
             let facilitiesVal = $('input[name="facility_id"]').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
+            let isChecked = $('input[name="isChecked"]').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
 
             !facilitiesVal?addClass('facilitiesVal'):removeClass('facilitiesVal');
+            !isChecked?addClass('isChecked'):removeClass('isChecked');
 
             
             // Yes button callback
