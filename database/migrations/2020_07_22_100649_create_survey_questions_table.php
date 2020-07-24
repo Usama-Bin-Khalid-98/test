@@ -14,8 +14,15 @@ class CreateSurveyQuestionsTable extends Migration
     public function up()
     {
         Schema::create('survey_questions', function (Blueprint $table) {
-            $table->id();
-            $table->string('question',255);
+            $table->increments('id');
+            $table->integer('question_id')->unsigned();
+            $table->foreign('question_id')
+                ->references('id')
+                ->on('questions');
+            $table->integer('business_school_id')->unsigned();
+            $table->foreign('business_school_id')
+                ->references('id')
+                ->on('business_schools');
             $table->enum('isChecked',['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
