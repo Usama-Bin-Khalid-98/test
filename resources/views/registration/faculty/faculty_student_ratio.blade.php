@@ -149,7 +149,7 @@
                                 @foreach($ratios as $req)
                                 <tr>
                                     <td>{{$req->business_school->name}}</td>
-                                    <td>{{$req->program->name}}</td>
+                                    <td>{{$req->programs->name??""}}</td>
                                     <td>{{$req->year}}</td>
                                     <td>{{$req->total_enrollments}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
