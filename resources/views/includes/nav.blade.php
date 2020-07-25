@@ -154,7 +154,7 @@
           </ul>
         </li>
 
-          <li class=" treeview {{(request()->is('facilities-information'))?'active':''}} ">
+          <li class=" treeview {{(request()->is('financial-info'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i><span>Facilities Information</span>
              <span class="pull-right-container">
@@ -162,7 +162,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('facilities-information')) ? 'active' : '' }}"><a href="{{url('research-summary')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Research Summary</a></li>
+            <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Financial Info</a></li>
           </ul>
         </li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>

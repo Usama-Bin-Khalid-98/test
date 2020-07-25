@@ -12,19 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('auth.login');
-});
+    Route::get('/', function () {
+        return view('auth.login');
+    });
 
-Route::get('/login', function() {
-    return view('auth.login');
-});
-// Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-Route::post('survey', 'SurveyQuestionnaireController@store');
+    Route::get('/login', function() {
+        return view('auth.login');
+    });
+    // Registration Routes...
+    Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+    Route::post('register', 'Auth\RegisterController@register');
+    Route::post('survey', 'SurveyQuestionnaireController@store');
 
-Auth::routes(['verify' => true]);
+    Auth::routes(['verify' => true]);
     // Only verified users may enter...
     Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
@@ -74,6 +74,7 @@ Auth::routes(['verify' => true]);
     Route::resource('work-load','Faculty\WorkloadController');
     Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
 
-
     //research-summary
     Route::resource('research-summary','ResearchSummaryController');
+    //Facilities-information
+    Route::resource('financial-info','FinancialInfoController');
