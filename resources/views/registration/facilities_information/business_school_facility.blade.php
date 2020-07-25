@@ -30,8 +30,7 @@
                     <button class="btn gradient-bg-color"
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
                            style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
                 </div>
             </div>
         </section>
@@ -71,23 +70,26 @@
 
                                    @foreach($facility_types as $type)
                                 <tr>
-                                    <td><input type="text" readonly name="facility_type" value="{{$type->facility_type->name}}" class="form-control">
+                                    <td>
+                                        <strong>@if(!$loop->first && $type->facility_type->name !== $facility_types[$loop->index -1]->facility_type->name) {{$type->facility_type->name}} @endif</strong>
                                     </td>
-                                    <td><input type="text" readonly name="name" value="{{$type->name}}" class="form-control">
-                                         <input type="hidden"  name="facility_id"  value="{{$type->id}}" data-id="{{$type->id}}" class="form-control" >
+                                    <td>
+                                        <p>{{$type->name}}</p>
                                     </td>
 
-                                    <td><input type="radio" data-id="{{$type->id}}" value="yes" name="isChecked{{$type->id}}" > <span>Yes</span>
-                                    <input type="radio" data-id="{{$type->id}}" value="no" name="isChecked{{$type->id}}"> <span>No</span></td>
+                                    <td>
+                                        <input type="radio" data-id="{{$type->id}}" value="yes" name="isChecked{{$type->id}}" > <span>Yes</span>
+                                        <input type="radio" data-id="{{$type->id}}" checked value="no" name="isChecked{{$type->id}}"> <span>No</span>
+                                    </td>
                                 </tr>
                                 @endforeach
-                               
+
                                 </tbody>
                             </table>
-                        
 
 
-                            
+
+
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -126,7 +128,7 @@
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility_id}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                               
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -165,7 +167,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -179,7 +181,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -209,25 +211,37 @@
         });
 
          $('#form').submit(function (e) {
-            /*let facilitiesVal = $('input[name="facility_id"]').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();*/
-
-            let facility_id = $('input[name="facility_id"]').map(function() { 
-                        return this.value;
+             // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
+             console.log('submit button clicked');
+            let facility_id = $('input:radio:checked').map(function(index, val) {
+                        return {"id":$(val).data('id'), "isChecked":$(val).val()};
                       }).get();
 
-            !facility_id?addClass('facility_id'):removeClass('facility_id');
-            
-            // Yes button callback
-            e.preventDefault();
-            var formData = new FormData(this);
+            // let data = [];
+            // for( i =0; i < facility_id.length; i++)
+            // {
+            //    data[i].id = facility_id[i].id;
+            // }
+            //console.log('data facilities', data);
+           // return;
+             //console.log(data);
+             //return ;
+            // !facility_id?addClass('facility_id'):removeClass('facility_id');
+            //  if(!facility_id )
+            //  {
+            //      Notiflix.Notify.Warning("Fill all the required Fields.");
+            //      return false;
+            //  }
 
+            // let data = JSON.parse(JSON.stringify(facility_id));
+            // Yes button callback
             $.ajax({
                 url:'{{url("business-school-facility")}}',
                 type:'POST',
-                data: formData,
-                cache:false,
-                contentType:false,
-                processData:false,
+                data: {"data":JSON.parse(JSON.stringify(facility_id))},
+                // cache:false,
+                // contentType:false,
+                // processData:false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -238,7 +252,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    //location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -258,7 +272,7 @@
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
+        $('#updateForm').submit(function (e) {
             let facility_id = $('#edit_facility_id').val();
             let id = $('#edit_id').val();
 
