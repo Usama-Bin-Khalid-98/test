@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Models\Common\Department;
-use App\Models\StrategicManagement\Designation;
+use App\Models\Common\Designation;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
