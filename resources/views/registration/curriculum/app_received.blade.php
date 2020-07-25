@@ -141,7 +141,7 @@
 
                                 @foreach($apps as $portfolio)
                                 <tr>
-                                    <td>{{$portfolio->program->name}}</td>
+                                    <td>{{$portfolio->program->name??""}}</td>
                                     <td>{{$portfolio->semester->name}}</td>
                                     <td>{{$portfolio->app_received}}</td>
                                     <td>{{$portfolio->admission_offered}}</td>

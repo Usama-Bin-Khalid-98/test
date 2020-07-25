@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Models\StrategicManagement\Designation;
+use Auth;
 
 class FacultyStabilityController extends Controller
 {
@@ -20,11 +21,11 @@ class FacultyStabilityController extends Controller
      */
     public function index()
     {
-        $businesses = BusinessSchool::where('status', 'active')->get();
+        
 
         $stabilities = FacultyStability::with('business_school')->get();
 
-         return view('registration.faculty.faculty_stability', compact('businesses','stabilities'));
+         return view('registration.faculty.faculty_stability', compact('stabilities'));
     }
 
     /**
@@ -53,7 +54,7 @@ class FacultyStabilityController extends Controller
         try {
 
             FacultyStability::create([
-                'business_school_id' => $request->business_school_id,
+                'business_school_id' => Auth::user()->business_school_id,
                 'total_faculty' => $request->total_faculty,
                 'year' => $request->year,
                 'resigned' => $request->resigned,
@@ -111,7 +112,6 @@ class FacultyStabilityController extends Controller
         try {
 
             FacultyStability::where('id', $facultyStability->id)->update([
-               'business_school_id' => $request->business_school_id,
                 'total_faculty' => $request->total_faculty,
                 'year' => $request->year,
                 'resigned' => $request->resigned,
@@ -148,7 +148,6 @@ class FacultyStabilityController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'total_faculty' => 'required',
             'year' => 'required',
             'resigned' => 'required',

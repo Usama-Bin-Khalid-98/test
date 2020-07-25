@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
+
+
 class FacultyGenderController extends Controller
 {
     /**
@@ -19,12 +22,12 @@ class FacultyGenderController extends Controller
      */
     public function index()
     {
-        $businesses = BusinessSchool::where('status', 'active')->get();
+        
         $faculty_type = LookupFacultyType::get();
 
         $genders = FacultyGender::with('business_school','lookup_faculty_type')->get();
 
-         return view('registration.faculty.faculty_gender', compact('businesses','faculty_type','genders'));
+         return view('registration.faculty.faculty_gender', compact('faculty_type','genders'));
     }
 
     /**
@@ -53,7 +56,7 @@ class FacultyGenderController extends Controller
         try {
 
             FacultyGender::create([
-                'business_school_id' => $request->business_school_id,
+                'business_school_id' => Auth::user()->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'year' => $request->year,
                 'male' => $request->male,
@@ -109,7 +112,6 @@ class FacultyGenderController extends Controller
         try {
 
             FacultyGender::where('id', $facultyGender->id)->update([
-                'business_school_id' => $request->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'year' => $request->year,
                 'male' => $request->male,
@@ -144,7 +146,6 @@ class FacultyGenderController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'lookup_faculty_type_id' => 'required',
             'year' => 'required',
             'male' => 'required',

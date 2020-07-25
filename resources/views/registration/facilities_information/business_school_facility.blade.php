@@ -71,14 +71,14 @@
 
                                    @foreach($facility_types as $type)
                                 <tr>
-                                    <td><input type="text" readonly name="facility_type[]" value="{{$type->facility_type->name}}" class="form-control">
+                                    <td><input type="text" readonly name="facility_type" value="{{$type->facility_type->name}}" class="form-control">
                                     </td>
                                     <td><input type="text" readonly name="name" value="{{$type->name}}" class="form-control">
-                                         <input type="hidden"  name="facility_id[]" id="facility_id[]" value="{{$type->id}}"data-id="{{$type->id}}" class="form-control" >
+                                         <input type="hidden"  name="facility_id"  value="{{$type->id}}" data-id="{{$type->id}}" class="form-control" >
                                     </td>
 
                                     <td><input type="radio" data-id="{{$type->id}}" value="yes" name="isChecked{{$type->id}}" > <span>Yes</span>
-<input type="radio" data-id="{{$type->id}}" value="no" name="isChecked{{$type->id}}"> <span>No</span></td>
+                                    <input type="radio" data-id="{{$type->id}}" value="no" name="isChecked{{$type->id}}"> <span>No</span></td>
                                 </tr>
                                 @endforeach
                                
@@ -209,12 +209,13 @@
         });
 
          $('#form').submit(function (e) {
-            let facilitiesVal = $('input[name="facility_id"]').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
-            let isChecked = $('input[name="isChecked"]').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
+            /*let facilitiesVal = $('input[name="facility_id"]').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();*/
 
-            !facilitiesVal?addClass('facilitiesVal'):removeClass('facilitiesVal');
-            !isChecked?addClass('isChecked'):removeClass('isChecked');
+            let facility_id = $('input[name="facility_id"]').map(function() { 
+                        return this.value;
+                      }).get();
 
+            !facility_id?addClass('facility_id'):removeClass('facility_id');
             
             // Yes button callback
             e.preventDefault();

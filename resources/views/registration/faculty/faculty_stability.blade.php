@@ -62,17 +62,6 @@
                         <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="name">Total Faculty</label>
                                     <input type="number" name="total_faculty" id="total_faculty" class="form-control">
                                 </div>
@@ -182,7 +171,7 @@
                                     <td>{{$req->new_induction}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","total_faculty":"{{$req->total_faculty}}","year":"{{$req->year}}","resigned":"{{$req->resigned}}","retired":"{{$req->retired}}","terminated":"{{$req->terminated}}","new_induction":"{{$req->new_induction}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","total_faculty":"{{$req->total_faculty}}","year":"{{$req->year}}","resigned":"{{$req->resigned}}","retired":"{{$req->retired}}","terminated":"{{$req->terminated}}","new_induction":"{{$req->new_induction}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -226,24 +215,13 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Total Faculty</label>
                                     <input type="number" name="total_faculty" id="edit_total_faculty" value="{{old('edit_total_faculty')}}" class="form-control">
                                 </div>
+                                <input type="hidden" id="edit_id">
                             </div>
                             
                            <div class="col-md-6">
@@ -363,7 +341,6 @@
         });
 
          $('#form').submit(function (e) {
-            let business_school_id = $('#business_school_id').val();
             let total_faculty = $('#total_faculty').val();
             let year = $('#year').val();
             let resigned = $('#resigned').val();
@@ -371,7 +348,7 @@
             let terminated = $('#terminated').val();
             let new_induction = $('#new_induction').val();
 
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
+            
             !total_faculty?addClass('total_faculty'):removeClass('total_faculty');
             !year?addClass('year'):removeClass('year');
             !resigned?addClass('resigned'):removeClass('resigned');
@@ -379,7 +356,7 @@
             !terminated?addClass('terminated'):removeClass('terminated');
             !new_induction?addClass('new_induction'):removeClass('new_induction');
 
-            if(!business_school_id || !total_faculty || !year || !resigned || !retired || !terminated || !new_induction)
+            if(!total_faculty || !year || !resigned || !retired || !terminated || !new_induction)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -420,7 +397,6 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_total_faculty').val(data.total_faculty);
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_resigned').val(data.resigned);
@@ -433,7 +409,6 @@
         });
 
 $('#updateForm').submit(function (e) {
-            let business_school_id = $('#edit_business_school_id').val();
             let total_faculty = $('#edit_total_faculty').val();
             let year = $('#edit_year').val();
             let resigned = $('#edit_resigned').val();
@@ -444,7 +419,6 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
-            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !total_faculty?addClass('edit_total_faculty'):removeClass('edit_total_faculty');
             !year?addClass('edit_year'):removeClass('edit_year');
             !resigned?addClass('edit_resigned'):removeClass('edit_resigned');
@@ -452,7 +426,7 @@ $('#updateForm').submit(function (e) {
             !terminated?addClass('edit_terminated'):removeClass('edit_terminated');
             !new_induction?addClass('edit_new_induction'):removeClass('edit_new_induction');
 
-            if(!business_school_id || !total_faculty || !year || !resigned || !retired || !terminated || !new_induction )
+            if(!total_faculty || !year || !resigned || !retired || !terminated || !new_induction )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

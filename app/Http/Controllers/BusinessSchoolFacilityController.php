@@ -60,6 +60,7 @@ class BusinessSchoolFacilityController extends Controller
                 'facility_id' => $request->facility_id
             ]);
 
+
             return response()->json(['success' => 'Business School Facility added successfully.']);
 
 

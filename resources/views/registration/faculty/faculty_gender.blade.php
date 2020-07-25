@@ -60,17 +60,6 @@
                          <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="name">Faculty Type</label>
                                    <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Faculty Type</option>
@@ -166,7 +155,7 @@
                                     <td>{{$req->female}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","year":"{{$req->year}}","male":"{{$req->male}}","female":"{{$req->female}}", "status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","year":"{{$req->year}}","male":"{{$req->male}}","female":"{{$req->female}}", "status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -204,18 +193,7 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Faculty Type</label>
@@ -226,6 +204,7 @@
                                         @endforeach
                                         </select>
                                 </div>
+                                <input type="hidden" id="edit_id">
                             </div>
                            <div class="col-md-6">
                                 <div class="form-group">
@@ -331,19 +310,17 @@
         });
 
          $('#form').submit(function (e) {
-            let business_school_id = $('#business_school_id').val();
             let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
             let year = $('#year').val();
             let male = $('#male').val();
             let female = $('#female').val();
 
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
             !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
             !year?addClass('year'):removeClass('year');
             !male?addClass('male'):removeClass('male');
             !female?addClass('female'):removeClass('female');
 
-            if(!business_school_id || !lookup_faculty_type_id || !year || !male || !female)
+            if(!lookup_faculty_type_id || !year || !male || !female)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -384,7 +361,6 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_male').val(data.male);
@@ -395,7 +371,6 @@
         });
 
 $('#updateForm').submit(function (e) {
-            let business_school_id = $('#edit_business_school_id').val();
             let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
             let year = $('#edit_year').val();
             let male = $('#edit_male').val();
@@ -404,13 +379,12 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
-            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
             !year?addClass('edit_year'):removeClass('edit_year');
             !male?addClass('edit_male'):removeClass('edit_male');
             !female?addClass('edit_female'):removeClass('edit_female');
 
-            if(!business_school_id || !lookup_faculty_type_id || !year || !male || !female )
+            if(!lookup_faculty_type_id || !year || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
