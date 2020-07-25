@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class FacultyStudentRatioController extends Controller
 {
@@ -20,12 +21,12 @@ class FacultyStudentRatioController extends Controller
      */
     public function index()
     {
-        $businesses = BusinessSchool::where('status', 'active')->get();
+        
         $programs = Program::where('status', 'active')->get();
 
         $ratios = FacultyStudentRatio::with('business_school','program')->get();
 
-         return view('registration.faculty.faculty_student_ratio', compact('businesses','programs','ratios'));
+         return view('registration.faculty.faculty_student_ratio', compact('programs','ratios'));
     }
 
     /**
@@ -54,7 +55,7 @@ class FacultyStudentRatioController extends Controller
         try {
 
             FacultyStudentRatio::create([
-                'business_school_id' => $request->business_school_id,
+                'business_school_id' => Auth::user()->business_school_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments
@@ -109,7 +110,6 @@ class FacultyStudentRatioController extends Controller
         try {
 
             FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
-               'business_school_id' => $request->business_school_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
@@ -143,7 +143,6 @@ class FacultyStudentRatioController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'program_id' => 'required',
             'year' => 'required',
             'total_enrollments' => 'required'

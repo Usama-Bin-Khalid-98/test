@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ResearchSummaryController extends Controller
 {
@@ -22,10 +23,9 @@ class ResearchSummaryController extends Controller
     {
 
         $publications = PublicationType::where('status', 'active')->get();
-        $businesses = BusinessSchool::where('status', 'active')->get();
         $summaries = ResearchSummary::with('publication_type', 'business_school')->get();
         ///dd($contacts);
-        return view('registration.research_summary.index', compact('publications', 'businesses', 'summaries'));
+        return view('registration.research_summary.index', compact('publications', 'summaries'));
     }
 
     /**
@@ -55,7 +55,7 @@ class ResearchSummaryController extends Controller
 
             ResearchSummary::create([
                 'publication_type_id' => $request->publication_type_id,
-                'business_school_id' => $request->business_school_id,
+                'business_school_id' => Auth::user()->business_school_id,
                 'year' => $request->year,
                 'total_items' => $request->total_items,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
@@ -114,7 +114,6 @@ class ResearchSummaryController extends Controller
 
             ResearchSummary::where('id', $researchSummary->id)->update([
                 'publication_type_id' => $request->publication_type_id,
-                'business_school_id' => $request->business_school_id,
                 'year' => $request->year,
                 'total_items' => $request->total_items,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
@@ -152,7 +151,6 @@ class ResearchSummaryController extends Controller
     protected function rules() {
         return [
             'publication_type_id' => 'required',
-            'business_school_id' => 'required',
             'year' => 'required',
             'total_items' => 'required',
             'contributing_core_faculty' => 'required',

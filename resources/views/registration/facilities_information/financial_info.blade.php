@@ -646,7 +646,7 @@ $('#updateForm').submit(function (e) {
             let year_one = $('#edit_year_one').val();
             let year_t = $('#edit_year_t').val();
             let year_t_plus_one = $('#edit_year_t_plus_one').val();
-            let year_t_plus_two = $('#edit_year_t_plus_two').valtwo
+            let year_t_plus_two = $('#edit_year_t_plus_two').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
@@ -658,7 +658,7 @@ $('#updateForm').submit(function (e) {
             !year_t_plus_one?addClass('edit_year_t_plus_one'):removeClass('edit_year_t_plus_one');
             !year_t_plus_two?addClass('edit_year_t_plus_two'):removeClass('edit_year_t_plus_two');
 
-            if(!income_source_id || !year_three || !year_two || !year_one || !year_t || !year_t_plus_one )
+            if(!income_source_id || !year_three || !year_two || !year_one || !year_t || !year_t_plus_one || !year_t_plus_two )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

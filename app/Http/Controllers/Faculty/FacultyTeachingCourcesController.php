@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 
 class FacultyTeachingCourcesController extends Controller
@@ -22,13 +23,13 @@ class FacultyTeachingCourcesController extends Controller
      */
     public function index()
     {
-         $businesses = BusinessSchool::where('status', 'active')->get();
+         
          $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
 
          $visitings = FacultyTeachingCources::with('business_school','lookup_faculty_type','designation')->get();
 
-         return view('registration.faculty.faculty_teaching_cources', compact('businesses','designations','faculty_types','visitings'));
+         return view('registration.faculty.faculty_teaching_cources', compact('designations','faculty_types','visitings'));
     }
 
     /**
@@ -57,7 +58,7 @@ class FacultyTeachingCourcesController extends Controller
         try {
 
             FacultyTeachingCources::create([
-                'business_school_id' => $request->business_school_id,
+                'business_school_id' => Auth::user()->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
@@ -114,7 +115,6 @@ class FacultyTeachingCourcesController extends Controller
         try {
 
             FacultyTeachingCources::where('id', $facultyTeaching->id)->update([
-                'business_school_id' => $request->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
@@ -150,7 +150,6 @@ class FacultyTeachingCourcesController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'lookup_faculty_type_id' => 'required',
             'designation_id' => 'required',
             'max_cources_allowed' => 'required',

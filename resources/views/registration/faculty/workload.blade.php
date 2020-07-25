@@ -61,17 +61,6 @@
                            <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="name">Faculty Name</label>
                                     <input type="text" name="faculty_name" id="faculty_name" class="form-control">
                                 </div>
@@ -199,7 +188,7 @@
                                     <td>{{$req->year}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachelors":"{{$req->bachelors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachelors":"{{$req->bachelors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -243,24 +232,13 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Faculty Name</label>
                                     <input type="text" name="faculty_name" id="edit_faculty_name" value="{{old('edit_total_enrollments')}}" class="form-control">
                                 </div>
+                                <input type="hidden" id="edit_id">
                               </div>
 
                             <div class="col-md-6">
@@ -398,7 +376,6 @@
         });
 
          $('#form').submit(function (e) {
-            let business_school_id = $('#business_school_id').val();
             let faculty_name = $('#faculty_name').val();
             let designation_id = $('#designation_id').val();
             let total_courses = $('#total_courses').val();
@@ -408,7 +385,6 @@
             let admin_responsibilities = $('#admin_responsibilities').val();
             let year = $('#year').val();
 
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
             !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
             !designation_id?addClass('designation_id'):removeClass('designation_id');
             !total_courses?addClass('total_courses'):removeClass('total_courses');
@@ -418,7 +394,7 @@
             !admin_responsibilities?addClass('admin_responsibilities'):removeClass('admin_responsibilities');
             !year?addClass('year'):removeClass('year');
 
-            if(!business_school_id || !faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year)
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -459,7 +435,6 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_faculty_name').val(data.faculty_name);
             $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_total_courses').val(data.total_courses);
@@ -474,7 +449,6 @@
         });
 
 $('#updateForm').submit(function (e) {
-            let business_school_id = $('#edit_business_school_id').val();
             let faculty_name = $('#edit_faculty_name').val();
             let designation_id = $('#edit_designation_id').val();
             let total_courses = $('#edit_total_courses').val();
@@ -487,7 +461,6 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
-            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !faculty_name?addClass('edit_faculty_name'):removeClass('edit_faculty_name');
             !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
             !total_courses?addClass('edit_total_courses'):removeClass('edit_total_courses');
@@ -497,7 +470,7 @@ $('#updateForm').submit(function (e) {
             !admin_responsibilities?addClass('edit_admin_responsibilities'):removeClass('edit_admin_responsibilities');
             !year?addClass('edit_year'):removeClass('edit_year');
 
-            if(!business_school_id || !faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year )
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

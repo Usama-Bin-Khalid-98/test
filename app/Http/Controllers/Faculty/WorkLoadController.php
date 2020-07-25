@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class WorkLoadController extends Controller
 {
@@ -20,12 +21,11 @@ class WorkLoadController extends Controller
      */
     public function index()
     {
-         $businesses = BusinessSchool::where('status', 'active')->get();
          $designations = Designation::all();
 
          $workloads = WorkLoad::with('business_school','designation')->get();
 
-         return view('registration.faculty.workload', compact('businesses','designations','workloads'));
+         return view('registration.faculty.workload', compact('designations','workloads'));
     }
 
     /**
@@ -54,7 +54,7 @@ class WorkLoadController extends Controller
         try {
 
             WorkLoad::create([
-                'business_school_id' => $request->business_school_id,
+                'business_school_id' => Auth::user()->business_school_id,
                 'faculty_name' => $request->faculty_name,
                 'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
@@ -114,7 +114,6 @@ class WorkLoadController extends Controller
         try {
 
             WorkLoad::where('id', $workLoad->id)->update([
-                'business_school_id' => $request->business_school_id,
                 'faculty_name' => $request->faculty_name,
                 'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
@@ -153,7 +152,6 @@ class WorkLoadController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'faculty_name' => 'required',
             'designation_id' => 'required',
             'total_courses' => 'required',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Facility;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Facility\FacilityType;
 
 class FacilityTypeController extends Controller
 {
@@ -81,5 +82,10 @@ class FacilityTypeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getFacilities(FacilityType $facilityType)
+    {
+        return $facilityType->facility()->select('id', 'name')->get();
     }
 }
