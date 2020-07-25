@@ -15,8 +15,8 @@ class Slip extends Model
         return $this->belongsTo(BusinessSchool::class);
     }
 
-    public function program()
+    public function department()
     {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Department::class);
     }
 }

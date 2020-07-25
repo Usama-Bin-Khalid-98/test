@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class SurveyQuestionSeeder extends Seeder
+class SurveyQuestionnaireSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class SurveyQuestionSeeder extends Seeder
      */
     public function run()
     {
-    	//
+        //
     }
 }

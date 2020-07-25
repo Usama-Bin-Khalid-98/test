@@ -15,4 +15,9 @@ class Department extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function slip()
+    {
+        return $this->hasOne(Slip::class);
+    }
 }

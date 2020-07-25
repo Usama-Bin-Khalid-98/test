@@ -59,11 +59,11 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="program">Degree Program</label>
-                                    <select id="program_id" name="program_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Program</option>
-                                        @foreach($programs as $program)
-                                        <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
+                                    <label for="program">Degree Department</label>
+                                    <select id="department_id" name="department_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                        <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -145,7 +145,7 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Degree Program</th>
+                                    <th>Department</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Status</th>
@@ -155,18 +155,18 @@
                                 <tbody id="showRecord">
                                 @foreach($invoices as $invoice)
                                 <tr>
-                                    <td>{{$invoice->program->name}}</td>
+                                    <td>{{@$invoice->department->name}}</td>
                                     <td><a href="{{$invoice->slip}}">Invoice</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td><i class="badge {{$invoice->status =='active'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}" ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}" data-row='{"id":"{{$invoice->id}}","program_id":"{{$invoice->program->id}}","slip":"{{$invoice->slip}}","date":"{{$invoice->transaction_date}}","status":"{{$invoice->status}}","comments":"{{$invoice->comments}}"}' data-toggle="modal" data-target="#edit-modal"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}" ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}" data-row='{"id":"{{$invoice->id}}","program_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","date":"{{$invoice->transaction_date}}","status":"{{$invoice->status}}","comments":"{{$invoice->comments}}"}' data-toggle="modal" data-target="#edit-modal"></i> </td>
                                 </tr>
                                 @endforeach
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Degree Program</th>
+                                    <th>Department</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Status</th>
@@ -197,10 +197,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Degree Program</label>
-                                <select id="edit_program_id" name="program_id" class="form-control select2" style="width: 100%;">
+                                <select id="edit_department_id" name="department_id" class="form-control select2" style="width: 100%;">
                                     <option value="">Select Program</option>
-                                    @foreach($programs as $program)
-                                        <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
+                                    @foreach($departments as $department)
+                                        <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -283,15 +283,14 @@
         /*Add Scope*/
         $('#addForm').on('submit', function (e) {
 
-            let program_id = $('#program_id').val();
+            let department_id = $('#department_id').val();
             let transaction_date = $('#transaction_date').val();
-            let comments = $('#comments').val();
             let slip = $('#slip').val();
 
-            !program_id?addClass('program_id'):removeClass('program_id');
+            !department_id?addClass('department_id'):removeClass('department_id');
             !transaction_date?addClass('transaction_date'):removeClass('transaction_date');
             !slip?addClass('slip'):removeClass('slip');
-            if(!transaction_date || !program_id || !slip)
+            if(!transaction_date || !department_id || !slip)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

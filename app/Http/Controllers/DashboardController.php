@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\BusinessSchool;
 use App\Dashboard;
 use App\Mail\ActivationMail;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Exception;
+use Mockery\Exception;
 
 class DashboardController extends Controller
 {

@@ -82,7 +82,7 @@
                 <a href="{{url('strategic/basicinfo')}}">
                     <i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information
                     <span class="pull-right-container">
-                    <span class="label label-danger pull-right">4</span>
+                    <span class="label label-success pull-right">C</span>
                     </span>
                 </a>
             </li>
@@ -157,7 +157,7 @@
 
           <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}} ">
           <a href="#">
-            <i class="fa fa-users " style="color: #D81B60"></i> <span>Facilities Information</span>
+            <i class="fa fa-users " style="color: #D81B60"></i><span>Facilities Information</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

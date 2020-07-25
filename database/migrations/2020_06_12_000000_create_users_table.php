@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->string('address', 255)->nullable();
-
             //business school
             $table->integer('business_school_id')->unsigned()->nullable();
             $table->foreign('business_school_id')
@@ -31,7 +30,6 @@ class CreateUsersTable extends Migration
                 ->on('business_schools');
             $table->integer('discipline_id')->unsigned()->nullable();
             $table->integer('department_id')->unsigned()->nullable();
-
             //peer review
             $table->integer('reviewer_role_id')->nullable();
             $table->integer('region_id')->unsigned()->nullable();

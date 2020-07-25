@@ -26,7 +26,7 @@ class CreateSlipsTable extends Migration
             $table->string('slip')->nullable();
             $table->date('transaction_date')->nullable();
             $table->enum('status', ['active', 'inactive','pending', 'paid','approved'])->nullable();
-            $table->string('comments', 255);
+            $table->string('comments', 255)->nullable();
             $table->timestamps();
         });
     }

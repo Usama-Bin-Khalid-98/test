@@ -5,7 +5,11 @@
 <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
 
-
+<style>
+    td {
+        padding: 5px;
+    }
+</style>
 
 
 </head>
@@ -23,7 +27,7 @@
         <div class="content-wrapper" style="margin-left: 0px;">
         <!-- Content Header (Page header) -->
         <section class="content-header text-center">
-            <h1>Registration Form</h1>
+            <h1>Membership Form</h1>
         </section>
 
         <!-- Main content -->
@@ -234,20 +238,20 @@
                                                         <input type="hidden" id="questionnaire" name="questionnaire">
                                                         <span class="input-group-btn">
                                                           <button type="button" data-toggle="modal" data-target="#question-modal"  class="btn btn-info btn-flat">
-                                                              <i class="fa fa-question-circle"></i>
+                                                              click to fill the questionnaire
                                                           </button>
                                                         </span>
-                                                        <span class="text-red">Fill the questionnaire before submit</span>
+                                                        <span class="text-red">Click on question mark button to till the questionnaire before submission.</span>
                                                     </div>
                                                 </div>
 
-                                            <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="email">Bank Deposit Slip</label>
-                                                        <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">
-                                                        <span class="text-blue">Max 2mb file size allowed. </span>
-                                                    </div>
-                                                </div>
+{{--                                            <div class="col-md-4">--}}
+{{--                                                    <div class="form-group">--}}
+{{--                                                        <label for="email">Bank Deposit Slip</label>--}}
+{{--                                                        <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">--}}
+{{--                                                        <span class="text-blue">Max 2mb file size allowed. </span>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                             </div>
                                         </div>
                                         <!-- /.box-body -->
@@ -537,7 +541,7 @@
                                 @foreach($questions as $question)
                                         <tr class="questions-row">
                                             <td>
-                                                <strong>{{$loop->iteration}}: {{$question->question}}</strong>
+                                                <p>{{$loop->iteration}}: {{$question->question}}</p>
                                                 <p class="questions-row" row-id="{{$question->id}}">
                                                     <input type="radio" data-id="{{$question->id}}" name="question{{$question->id}}" id="yes" value="yes" class="flat-red" {{ old('status') == 'status' ? 'checked' : '' }}> <span> yes</span>
                                                     <input type="radio" data-id="{{$question->id}}" name="question{{$question->id}}" id="no"  value="no" checked class="flat-red" {{ old('status') == 'status' ? 'checked' : '' }}> <span> no</span>
@@ -583,10 +587,16 @@
             radioClass   : 'iradio_flat-green'
         });
 
+
         $('input[name=account_type]').on('ifChecked', function(e){
-            $('button[name=submit]').removeAttr('disabled');
+            console.log(' account type ', $(this).val());
+            if($(this).val() !== 'business_school') {
+                $('button[name=submit]').removeAttr('disabled');
+            }
+
             console.log('change school type', $(this).val());
             let toggle = $(this).val();
+
             (toggle==='business_school')?$('#business-school-tab').toggle('slow'):$('#business-school-tab').fadeOut('slow');
             (toggle==='peer_review')?$('#peer-review-tab').toggle('slow'):$('#peer-review-tab').fadeOut('slow');
 
@@ -598,9 +608,16 @@
             }
         });
         $("#submit").on('click', function () {
+
+            let business_school_id = $('#business_school_id').val();
+            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
+            if(!business_school_id){
+                Notiflix.Notify.Failure("Please select business school.");
+                return false;
+            }
             let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
 
-            let data = {};
+            let data = {business_school_id:business_school_id};
             radioVal.forEach(function (index) {
                 if(index.value === 'no')
                 {
@@ -614,23 +631,23 @@
             });
 
             $.ajax({
-                type: 'GET',
-                url: "{{url('survay')}}",
-                data: {
-                    country: country
+                type: 'POST',
+                url: "{{url('survey')}}",
+                data: data,
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
                 },
                 // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    $('button[name=submit]').removeAttr('disabled');
+                    $('#question-modal').modal('hide');
                     console.log('response here', response);
-                    var data =[];
-                    //$('#city').val(null);
-                    $("#city").empty();
-                    Object.keys(response).forEach(function (index) {
-                        data.push({id:response[index].name, text:response[index].name});
-                    })
-                    $('#city').select2({
-                        data
-                    });
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -676,12 +693,13 @@
 
     <script>
         $('#add').on('click', function () {
-            let name = $('#name').val();
-            let contact_no = $('#contact_no').val();
+            let name = $('#school_name').val();
+            let contact_no = $('#school_contact_no').val();
 
             !name?addClass('name'):removeClass('name');
             !contact_no?addClass('contact_no'):removeClass('contact_no');
             if(!name || !contact_no){
+                Notiflix.Notify.Failure("fill all the required fields.");
                 return;
             }
 

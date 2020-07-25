@@ -82,7 +82,7 @@ class RegisterController extends Controller
                 'business_school_id' => 'required',
                 'discipline_id' => 'required',
                 'department_id' => 'required',
-                'slip.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+//                'slip.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password_confirmation' => ['required', 'string', 'min:8'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -135,35 +135,35 @@ class RegisterController extends Controller
         $businessSchool = BusinessSchool::where('id', $data['business_school_id']);
 
         if($data['account_type']== 'business_school') {
-            try {
-                $update = BusinessSchool::find($data['business_school_id']);
-                $update->update([
-                    'contact_person' => $data['name'],
-//                    'status' => 'inactive',
-                ]);
-
-            } catch (Exception $e) {
-                return $e->getMessage();
-            }
+//            try {
+//                $update = BusinessSchool::find($data['business_school_id']);
+////                $update->update([
+////                    'contact_person' => $data['name'],
+//////                    'status' => 'inactive',
+////                ]);
+//
+//            } catch (Exception $e) {
+//                return $e->getMessage();
+//            }
 
             try {
                 $path = ''; $imageName = '';
-                if(@$data['slip']) {
-                    $filename = $data['name']."-slip-".time().'.'.$data['slip']->extension();
-                    //dd(trim($imageName));
-                    $path = 'uploads/schools/slips';
-                    $diskName = env('DISK');
-                    $disk = Storage::disk($diskName);
-                    $data['slip']->move($path, $filename);
-
-                    Slip::create([
-                        'business_school_id' => $data['business_school_id'],
-                        'program_id' => $data['department_id'],
-                        'slip' => $path.'/'.$filename,
-                        'status' => 'paid',
-                    ]);
-
-                }
+//                if(@$data['slip']) {
+//                    $filename = $data['name']."-slip-".time().'.'.$data['slip']->extension();
+//                    //dd(trim($imageName));
+//                    $path = 'uploads/schools/slips';
+//                    $diskName = env('DISK');
+//                    $disk = Storage::disk($diskName);
+//                    $data['slip']->move($path, $filename);
+//
+//                    Slip::create([
+//                        'business_school_id' => $data['business_school_id'],
+//                        'program_id' => $data['department_id'],
+//                        'slip' => $path.'/'.$filename,
+//                        'status' => 'paid',
+//                    ]);
+//
+//                }
                 return User::create([
                     'name' => $data['name'],
                     'designation_id' => $data['designation_id'],

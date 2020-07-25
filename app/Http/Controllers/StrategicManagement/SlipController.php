@@ -4,6 +4,7 @@ namespace App\Http\Controllers\StrategicManagement;
 
 use App\BusinessSchool;
 use App\Http\Controllers\Controller;
+use App\Models\Common\Department;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
 use Illuminate\Http\Request;
@@ -23,10 +24,12 @@ class SlipController extends Controller
     public function index()
     {
         //
-        $school_id = Auth::user()->business_school_id;
-         $invoices = Slip::with('program')->where('business_school_id', $school_id)->get();
-        $programs = Program::where('status', 'active')->get();
-        return view('strategic_management.invoices_slip', compact('invoices','programs'));
+        @$school_id = Auth::user()->business_school_id;
+
+        @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
+        //dd($invoices);
+        @$departments = Department::where('status', 'active')->get();
+        return view('strategic_management.invoices_slip', compact('invoices','departments'));
     }
 
     /**
@@ -64,7 +67,7 @@ class SlipController extends Controller
 
             Slip::create([
                 'business_school_id' => Auth::user()->business_school_id,
-                'program_id' => $request->program_id,
+                'program_id' => $request->department_id,
                 'slip' => $path.'/'.$filename,
                 'status' => 'paid',
             ]);

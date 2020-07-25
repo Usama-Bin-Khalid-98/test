@@ -239,8 +239,8 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->contact_no}}</td>
                             <td>{{$user->email}}</td>
-                            <td><a href="{{$user->business_school->slip[0]->slip}}">Invoice Slip</a></td>
-                            <td>{{$user->user_type}}</td>
+                            <td><a href="{{@$user->business_school->slip[0]->slip}}">{{$user->user_type==='peer_review'?'no slip':'Invoice Slip'}}</a></td>
+                            <td>{{$user->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>
                             <td><i class="badge {{$user->status=='disabled'?'bg-red':''}} status" data-id="{{$user->id}}" style="background: red" >Disabled</i></td>
 {{--                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>--}}
                         </tr>
