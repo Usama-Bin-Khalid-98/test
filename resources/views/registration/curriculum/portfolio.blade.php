@@ -148,7 +148,7 @@
                                 <tbody>
                                  @foreach($portfolios as $portfolio)
                                 <tr>
-                                    <td>{{$portfolio->program->name}}</td>
+                                    <td>{{$portfolio->program->name??""}}</td>
                                     <td>{{$portfolio->total_semesters}}</td>
                                     <td>{{$portfolio->course_type->name}}</td>
                                     <td>{{$portfolio->no_of_course}}</td>

@@ -34,6 +34,7 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul> -->
         </li>
+        <li  class="{{ (request()->is('config')) ? 'active' : '' }}"><a href="/config"><i class="fa fa-cog text-black"></i>Configuration</a></li>
 
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
@@ -154,7 +155,7 @@
           </ul>
         </li>
 
-          <li class=" treeview {{(request()->is('financial-info'))?'active':''}} ">
+          <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i><span>Facilities Information</span>
              <span class="pull-right-container">
@@ -163,6 +164,8 @@
           </a>
           <ul class="treeview-menu">
             <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Financial Info</a></li>
+             <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Business School Facility</a></li>
+
           </ul>
         </li>
             <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>

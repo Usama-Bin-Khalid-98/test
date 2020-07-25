@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
     Route::get('mailsend', 'Auth\RegisterController@mailsend');
     Route::get('home', 'HomeController@index')->name('home');
+    Route::get('config', 'ConfigController@index')->name('config');
     Route::get('admin', 'DashboardController@index');
 
     ///// Dashboard
@@ -76,5 +77,10 @@ use Illuminate\Support\Facades\Route;
 
     //research-summary
     Route::resource('research-summary','ResearchSummaryController');
-    //Facilities-information
-    Route::resource('financial-info','FinancialInfoController');
+ 
+//Facilities-information
+Route::resource('financial-info','FinancialInfoController');
+Route::resource('business-school-facility','BusinessSchoolFacilityController');
+
+Route::resource('course-type','CourseTypeController');
+

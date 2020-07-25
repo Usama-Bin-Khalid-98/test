@@ -60,17 +60,6 @@
                             <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="name">Program</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
@@ -154,7 +143,7 @@
                                     <td>{{$req->total_enrollments}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -194,18 +183,6 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -217,6 +194,7 @@
                                         @endforeach
                                         </select>
                                 </div>
+                                <input type="hidden" id="edit_id">
                             </div>
                             
                            <div class="col-md-6">
@@ -313,17 +291,16 @@
         });
 
          $('#form').submit(function (e) {
-            let business_school_id = $('#business_school_id').val();
             let program_id = $('#program_id').val();
             let year = $('#year').val();
             let total_enrollments = $('#total_enrollments').val();
 
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
+            
             !program_id?addClass('program_id'):removeClass('program_id');
             !year?addClass('year'):removeClass('year');
             !total_enrollments?addClass('total_enrollments'):removeClass('total_enrollments');
 
-            if(!business_school_id || !program_id || !year || !total_enrollments)
+            if(!program_id || !year || !total_enrollments)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -364,7 +341,6 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_total_enrollments').val(data.total_enrollments);
@@ -374,7 +350,6 @@
         });
 
 $('#updateForm').submit(function (e) {
-            let business_school_id = $('#edit_business_school_id').val();
             let program_id = $('#edit_program_id').val();
             let year = $('#edit_year').val();
             let total_enrollments = $('#edit_total_enrollments').val();
@@ -382,12 +357,11 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
-            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
             !year?addClass('edit_year'):removeClass('edit_year');
             !total_enrollments?addClass('edit_total_enrollments'):removeClass('edit_total_enrollments');
 
-            if(!business_school_id || !program_id || !year || !total_enrollments )
+            if(!program_id || !year || !total_enrollments )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
