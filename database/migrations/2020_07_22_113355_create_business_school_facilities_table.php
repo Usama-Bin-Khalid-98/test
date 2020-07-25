@@ -23,6 +23,7 @@ class CreateBusinessSchoolFacilitiesTable extends Migration
             $table->foreign('facility_id')
                 ->references('id')
                 ->on('facilities');
+            $table->enum('isChecked', ['yes', 'no'])->nullable();
             $table->enum('status', ['active', 'inactive'])->nullable();
             $table->softDeletes();
             $table->timestamps();

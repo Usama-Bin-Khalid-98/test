@@ -6,11 +6,11 @@ use App\Models\Facility\BusinessSchoolFacility;
 use Illuminate\Http\Request;
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use Auth;
 use DB;
 
 class BusinessSchoolFacilityController extends Controller
@@ -48,6 +48,8 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
+
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -55,13 +57,20 @@ class BusinessSchoolFacilityController extends Controller
         }
         try {
 
-            BusinessSchoolFacility::create([
-                'business_school_id' => Auth::user()->business_school_id,
-                'facility_id' => $request->facility_id
-            ]);
+            Auth::user()->business_school_id;
 
+            foreach ($request->all()['data'] as $facility){
+                //dd($facility['id']);
+                BusinessSchoolFacility::create([
+                    'business_school_id' => Auth::user()->business_school_id,
+                    'facility_id' => $facility['id'],
+                    'isChecked' => $facility['isChecked'],
+                    'status' => 'active'
+                ]);
 
-            return response()->json(['success' => 'Business School Facility added successfully.']);
+            }
+
+            return response()->json(['success' => 'Business School Facility added successfully.'], 200);
 
 
         }catch (Exception $e)
@@ -140,7 +149,7 @@ class BusinessSchoolFacilityController extends Controller
 
     protected function rules() {
         return [
-           
+//                'id' => 'required'
         ];
     }
 
@@ -150,7 +159,7 @@ class BusinessSchoolFacilityController extends Controller
         ];
     }
 
-    
 
-        
+
+
 }
