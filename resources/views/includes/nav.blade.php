@@ -34,6 +34,7 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul> -->
         </li>
+        <li  class="{{ (request()->is('config')) ? 'active' : '' }}"><a href="/config"><i class="fa fa-cog text-black"></i>Configuration</a></li>
 
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
