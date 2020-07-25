@@ -190,7 +190,7 @@
                                         <!-- /.box-header -->
                                         <div class="box-body">
                                             <div class="form-row">
-                                                <div class="form-group col-md-4">
+                                                <div class="form-group col-md-4" style="margin-bottom: 10px">
                                                     <label for="name" class="@error('business_school_id')text-red @enderror">Business/Institute</label>
                                                     <div class="input-group">
                                                         <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
@@ -228,13 +228,26 @@
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="email">Bank Deposit Slip</label>
-                                                    <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">
-                                                    <span class="text-blue">Max 2mb file size allowed. </span>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="Desk Review">Desk Review Questionnaire</label>
+                                                        <input type="hidden" id="questionnaire" name="questionnaire">
+                                                        <span class="input-group-btn">
+                                                          <button type="button" data-toggle="modal" data-target="#question-modal"  class="btn btn-info btn-flat">
+                                                              <i class="fa fa-question-circle"></i>
+                                                          </button>
+                                                        </span>
+                                                        <span class="text-red">Fill the questionnaire before submit</span>
+                                                    </div>
                                                 </div>
-                                            </div>
+
+                                            <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="email">Bank Deposit Slip</label>
+                                                        <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">
+                                                        <span class="text-blue">Max 2mb file size allowed. </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- /.box-body -->
@@ -509,7 +522,43 @@
                 <!-- /.modal-dialog -->
             </div>
             <!-- /.modal -->
+            <!-- /.modal -->
+            <div class="modal fade" id="question-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Questionnaire.</h4>
+                        </div>
+                        <form role="form" method="post">
+                            <div class="modal-body">
+                                <table id="questions">
+                                @foreach($questions as $question)
+                                        <tr class="questions-row">
+                                            <td>
+                                                <strong>{{$loop->iteration}}: {{$question->question}}</strong>
+                                                <p class="questions-row" row-id="{{$question->id}}">
+                                                    <input type="radio" data-id="{{$question->id}}" name="question{{$question->id}}" id="yes" value="yes" class="flat-red" {{ old('status') == 'status' ? 'checked' : '' }}> <span> yes</span>
+                                                    <input type="radio" data-id="{{$question->id}}" name="question{{$question->id}}" id="no"  value="no" checked class="flat-red" {{ old('status') == 'status' ? 'checked' : '' }}> <span> no</span>
+                                                </p>
+                                            </td>
+                                </tr>
+                                @endforeach
+                                </table>
 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <input type="button" class="btn btn-info" value="Submit" id="submit">
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
         </section>
         <!-- /.content -->
     </div>
@@ -543,13 +592,58 @@
 
         });
 
-        $('#country').on('change', function () {
-            let country= $(this).val();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $("#submit").on('click', function () {
+            let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
+
+            let data = {};
+            radioVal.forEach(function (index) {
+                if(index.value === 'no')
+                {
+                    console.log('index here', index.valu);
+                    Notiflix.Notify.Failure("Sorry, Your business school is not eligible for the accreditation.");
+                    throw new Error('This is not an error. This is just to abort javascript execution');
+                }
+                else if(index.value === 'yes'){
+                    data[index.id] = index;
                 }
             });
+
+            $.ajax({
+                type: 'GET',
+                url: "{{url('survay')}}",
+                data: {
+                    country: country
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    console.log('response here', response);
+                    var data =[];
+                    //$('#city').val(null);
+                    $("#city").empty();
+                    Object.keys(response).forEach(function (index) {
+                        data.push({id:response[index].name, text:response[index].name});
+                    })
+                    $('#city').select2({
+                        data
+                    });
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+        })
+
+        $('#country').on('change', function () {
+            let country= $(this).val();
             $.ajax({
                 type: 'GET',
                 url: "{{url('get-cities')}}",
