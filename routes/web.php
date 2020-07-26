@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
     Route::post('survey', 'SurveyQuestionnaireController@store');
+    Route::get('get-campuses', 'CampusController@getCampuses');
 
     Auth::routes(['verify' => true]);
     // Only verified users may enter...
@@ -77,7 +78,7 @@ use Illuminate\Support\Facades\Route;
 
     //research-summary
     Route::resource('research-summary','ResearchSummaryController');
- 
+
 //Facilities-information
 Route::resource('financial-info','FinancialInfoController');
 Route::resource('business-school-facility','BusinessSchoolFacilityController');
