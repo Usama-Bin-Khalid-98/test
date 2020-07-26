@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StrategicPlan;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +21,7 @@ class StrategicPlanController extends Controller
     public function index()
     {
 
-        $plans  = StrategicPlan::get();
+        $plans  = StrategicPlan::with('user')->get();;
 
          return view('strategic_management.plan', compact('plans'));
     }
@@ -51,7 +52,7 @@ class StrategicPlanController extends Controller
         try {
 
             StrategicPlan::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority
