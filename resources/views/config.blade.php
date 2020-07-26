@@ -80,6 +80,9 @@
     <a  href="#course_type" data-toggle="tab">Course Type</a>
   </li>
   <li>
+    <a  href="#dept" data-toggle="tab">Department</a>
+  </li>
+  <li>
     <a  href="#" data-toggle="tab">Programs</a>
   </li>
   <li>
@@ -121,7 +124,6 @@
                 <!-- /.post -->
               </div>
               <div class="tab-pane" id="course_type">
-                <!-- Post -->
                 
                   <div class="user-block">
                     <div class="col-md-12">
@@ -236,7 +238,121 @@
         <!-- /.modal-dialog -->
     </div>
               </div>
-              <!-- /.tab-pane -->
+              <!-- ////////////////////////////////////////////////////////////////////// -->
+              <div class="tab-pane" id="dept">
+                
+                  <div class="user-block">
+                    <div class="col-md-12">
+                                <div class="form-group pull-right" style="margin-top: 20px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input  data-toggle="modal" data-target="#dept-modal" value="Add New" class="btn btn-info">
+                                </div>
+                            </div>
+                  </div>
+                
+                <div class="box box-primary">
+                        <div class="box-header ">
+                            <h3 class="box-title">Department List</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="datatable2" class="table table-bordered table-striped">
+                                 <thead>
+                                <tr>
+                                    <th>Dept Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                               
+                                <tr>
+                                    <td>Computer Science</td>
+                                    <td><i class="badge bg-green">Active</i></td>
+                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" data-toggle="modal" data-target="#edit-dept-modal"></i></td>
+                                </tr>
+           
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Dept Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="modal fade" id="dept-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Department form. </h4>
+                </div>
+                <form action="javascript:void(0)" id="form" method="POST">
+                    <div class="modal-body">
+
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="name" id="name" placeholder="Enter Department Name"  class="form-control">
+                                </div>
+                              </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" name="add_dept" id="add_dept" value="Add" class="btn btn-info">
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+     <div class="modal fade" id="edit-dept-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Department</h4>
+                </div>
+                <form role="form" id="updateForm" >
+                    <div class="modal-body">
+                        
+
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Department</label>
+                                    <input type="text" name="name" id="edit_name" value="{{old('edit_name')}}" class="form-control">
+                                </div>
+                                <input type="hidden" id="edit_id">
+                              </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="type">{{ __('Status') }} : </label>
+                                <p><input type="radio" name="status" class="flat-red" value="active" > Active
+                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" name="update_dept" value="update" class="btn btn-info">
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+              </div>
+             <!-- ///////////////////////////////////////////////////////////////////// -->
               <div class="tab-pane" id="timeline">
                 <!-- The timeline -->
                 <ul class="timeline timeline-inverse">
@@ -422,6 +538,9 @@
         });
         $(function () {
             $('#datatable1').DataTable()
+        })
+        $(function () {
+            $('#datatable2').DataTable()
         })
     </script>
     <script type="text/javascript">
