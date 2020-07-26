@@ -126,7 +126,7 @@
                                     <td>{{$summary->facility->name}}</td>
                                     <td><i class="badge {{$summary->isChecked == 'yes'?'bg-green':'bg-red'}}">{{$summary->isChecked == 'yes'?'Yes':'No'}}</i></td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility_id}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility->name}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
                                 @endforeach
 
@@ -161,11 +161,12 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
+                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Facility</label>
-                                    <input type="number" readonly name="facility_id" id="edit_facility_id" value="{{old('edit_facility_id')}}" class="form-control">
+                                    <input type="text" readonly name="facility_id" id="edit_facility_id" value="{{old('edit_facility_id')}}" class="form-control">
                                 </div>
+                                <input type="hidden" id="edit_id">
                               </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -173,7 +174,6 @@
                                 <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
                                     <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
                             </div>
-                            <input type="hidden" id="edit_id">
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -182,8 +182,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

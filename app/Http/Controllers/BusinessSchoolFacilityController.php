@@ -25,7 +25,7 @@ class BusinessSchoolFacilityController extends Controller
     {
         $facility_types = Facility::with('facility_type')->get();
 
-        $facilitiess = BusinessSchoolFacility::with('business_school','facility')->get();
+        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->get();
 
 
         return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));
