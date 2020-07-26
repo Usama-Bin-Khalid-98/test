@@ -21,8 +21,8 @@ class DashboardController extends Controller
     {
         //
         // get Registrations data
-        $registrations = User::with('business_school')->where('status', 'pending')->get();
-       // dd($registrations);
+        $registrations = User::with('business_school', 'campus')->where('status', 'pending')->get();
+       //dd($registrations);
 
         return view('admin.index', compact('registrations'));
     }
