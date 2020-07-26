@@ -28,6 +28,11 @@ class CreateUsersTable extends Migration
             $table->foreign('business_school_id')
                 ->references('id')
                 ->on('business_schools');
+            /// campus id
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
+                ->references('id')
+                ->on('campuses');
             $table->integer('discipline_id')->unsigned()->nullable();
             $table->integer('department_id')->unsigned()->nullable();
             //peer review

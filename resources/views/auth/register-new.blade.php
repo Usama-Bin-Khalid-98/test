@@ -50,6 +50,19 @@
                         <!-- timeline item -->
 
                         <li>
+                            <i class="fa fa-info-circle" style="color:#ffffff;background: #00a65a;"></i>
+
+                            <div class="timeline-item">
+                                <div class="box box-success"></div>
+                                <span class="time"><i class="fa fa-info"></i></span>
+
+                                <h3 class="timeline-header"><a href="#" class="text-success">Instructions for the application preparation</a></h3>
+                                <div class="timeline-body">
+                                    <p>1.	Before starting the registration application, please go through the guidelines given in Section III of the <a href="https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf"> NBEAC Accreditation Process Manual</a></p>
+                                </div>
+                            </div>
+                        </li>
+                            <li>
                             <i class="fa fa-user bg-green"></i>
 
                             <div class="timeline-item">
@@ -193,7 +206,7 @@
                                 <div class="timeline-body">
                                         <!-- /.box-header -->
                                         <div class="box-body">
-                                            <div class="form-row">
+                                            <div class="form-row col-md-12">
                                                 <div class="form-group col-md-4" style="margin-bottom: 10px">
                                                     <label for="name" class="@error('business_school_id')text-red @enderror">Business/Institute</label>
                                                     <div class="input-group">
@@ -208,6 +221,18 @@
                                                         </span>
                                                     </div>
                                                 </div>
+                                            </div>
+
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="campus">Campus</label>
+                                                    <select name="campus_id" id="campus_id" class="form-control select2">
+                                                        <option value="">Select Campus</option>
+                                                    </select>
+                                                </div>
+
+
                                                 <div class="form-group col-md-4">
                                                     <label for="name">Discipline</label>
                                                     <select name="discipline_id" id="discipline_id" class="form-control select2" style="width: 100%;">
@@ -232,7 +257,7 @@
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="Desk Review">Desk Review Questionnaire</label>
                                                         <input type="hidden" id="questionnaire" name="questionnaire">
@@ -241,7 +266,21 @@
                                                               click to fill the questionnaire
                                                           </button>
                                                         </span>
-                                                        <span class="text-red">Click on question mark button to till the questionnaire before submission.</span>
+                                                        <span class="text-red">Fill the questionnaire before submission.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+{{--                                                        <label for="Desk Review">Undertaking : </label>--}}
+                                                        <input type="checkbox" id="undertaking" name="undertaking" class="flat-red" {{old('undertaking') === 'on'?'checked':''}}>
+                                                        <span class="text-red">
+                                                             I, the undersigned, fully understand and agree with the
+                                                          <a data-toggle="modal" data-target="#undertaking-modal">
+                                                             terms and conditions
+                                                          </a>
+                                                            of the NBEAC given.
+                                                        </span>
+
                                                     </div>
                                                 </div>
 
@@ -563,6 +602,37 @@
                 <!-- /.modal-dialog -->
             </div>
             <!-- /.modal -->
+
+            <!-- /.modal -->
+            <div class="modal fade" id="undertaking-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Undertaking</h4>
+                        </div>
+                            <div class="modal-body">
+                                <ul>
+                                    <li>I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below.</li>
+                                    <li>I confirm the accuracy of the information provided in the registration application, and as the authorized representative commit the business school to go through the NBEAC accreditation process.</li>
+                                    <li>I agree that the business school under review will pay the NBEAC accreditation fee as defined in the NBEAC Fee Schedule https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2, which is effective at the date of the submission of this application form.</li>
+                                    <li>I confirm that we shall provide any relevant documents to the NBEAC committee in case they ask for during the screening process, and will accept the decisions of NBEAC with respect to the registration process. The NBEAC, its directors, employees and consultants shall not be liable for any direct or indirect, foreseeable or unforeseeable damages resulting from the conception and implementation of the standards, the accreditation process, or the final decision of the NBEAC about registration.</li>
+                                    <li>In case the business school unilaterally decides to stop the process, a cancellation request must be submitted to the NBEAC Secretariat.</li>
+                                </ul>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+{{--                                <input type="button" class="btn btn-info" value="Submit" id="submit">--}}
+                            </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
         </section>
         <!-- /.content -->
     </div>
@@ -677,6 +747,38 @@
                         data.push({id:response[index].name, text:response[index].name});
                     })
                     $('#city').select2({
+                        data
+                    });
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+        })
+
+        $('#business_school_id').on('change', function () {
+            let id= $(this).val();
+            console.log('school id', id);
+            $.ajax({
+                type: 'GET',
+                url: "{{url('get-campuses')}}",
+                data: {
+                    id: id
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    console.log('response here', response);
+                    var data =[{'id':'', 'text':'Main Campus'}];
+                    $('#campus_id').val(null);
+                    $("#campus_id").empty();
+                    Object.keys(response).forEach(function (index) {
+                        data.push({id:response[index].id, text:response[index].location});
+                    })
+                    $('#campus_id').select2({
                         data
                     });
                 },

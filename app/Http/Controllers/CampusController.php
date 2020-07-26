@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\Campus;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class CampusController extends Controller
 {
@@ -47,6 +48,18 @@ class CampusController extends Controller
     public function show(Campus $campus)
     {
         //
+    }
+
+
+    public function getCampuses(Request $request)
+    {
+        try {
+            return $campuses = Campus::where('business_school_id', $request->id)->get();
+        }catch (Exception $e)
+        {
+            return $e->getMessage();
+        }
+
     }
 
     /**
