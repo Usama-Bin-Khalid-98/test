@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class EntryRequirementController extends Controller
 {
@@ -55,6 +56,7 @@ class EntryRequirementController extends Controller
         try {
 
             EntryRequirement::create([
+                'business_school_id' => Auth::user()->business_school_id,
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
                 'min_req' => $request->min_req

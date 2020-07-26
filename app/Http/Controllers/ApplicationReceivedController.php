@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ApplicationReceivedController extends Controller
 {
@@ -55,6 +56,7 @@ class ApplicationReceivedController extends Controller
         try {
 
             ApplicationReceived::create([
+                'business_school_id' => Auth::user()->business_school_id,
                 'program_id' => $request->program_id,
                 'semester_id' => $request->semester_id,
                 'app_received' => $request->app_received,

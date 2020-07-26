@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class StrategicPlanController extends Controller
 {
@@ -50,6 +51,7 @@ class StrategicPlanController extends Controller
         try {
 
             StrategicPlan::create([
+                'business_school_id' => Auth::user()->business_school_id,
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority

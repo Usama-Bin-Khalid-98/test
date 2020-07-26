@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ProgramPortfolioController extends Controller
 {
@@ -24,7 +25,7 @@ class ProgramPortfolioController extends Controller
         $programs = Program::where('status', 'active')->get();
         $courses = CourseType::where('status', 'active')->get();
 
-        $portfolios  = ProgramPortfolio::with('program','course_type')->get();
+        $portfolios  = ProgramPortfolio::with('business_school','program','course_type')->get();
 
          return view('registration.curriculum.portfolio', compact('programs','courses','portfolios'));
     }
@@ -55,6 +56,7 @@ class ProgramPortfolioController extends Controller
         try {
 
             ProgramPortfolio::create([
+                'business_school_id' => Auth::user()->business_school_id,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility\BusinessSchoolFacility;
 use Illuminate\Http\Request;
+use App\BusinessSchool;
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
 use Illuminate\Support\Facades\Auth;
@@ -119,8 +120,8 @@ class BusinessSchoolFacilityController extends Controller
         try {
 
             BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
-                'facility_id' => $request->facility_id,
-                'status' => $request->status,
+                'isChecked' => $request->isChecked,
+                'status' => $request->status
             ]);
             return response()->json(['success' => 'Business School Facility updated successfully.']);
 

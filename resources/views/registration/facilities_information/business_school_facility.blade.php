@@ -112,8 +112,9 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
+                                    
                                     <th>Business School Facilities</th>
+                                    <th>isChecked</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -122,18 +123,19 @@
 
                                    @foreach($facilitiess as $summary)
                                 <tr>
-                                    <td>{{$summary->business_school->name}}</td>
                                     <td>{{$summary->facility->name}}</td>
+                                    <td><i class="badge {{$summary->isChecked == 'yes'?'bg-green':'bg-red'}}">{{$summary->isChecked == 'yes'?'Yes':'No'}}</i></td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility_id}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility_id}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
+                                    
                                     <th>Business School Facilities</th>
+                                    <th>isChecked</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -155,10 +157,24 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Faculty Gender. </h4>
+                    <h4 class="modal-title">Edit Business School Facility. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Facility</label>
+                                    <input type="number" readonly name="facility_id" id="edit_facility_id" value="{{old('edit_facility_id')}}" class="form-control">
+                                </div>
+                              </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="type">{{ __('isChecked') }} : </label>
+                                <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
+                                    <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
+                            </div>
+                            <input type="hidden" id="edit_id">
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -267,23 +283,18 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_facility_id').select2().val(data.facility_id).trigger('change');
+            $('#edit_facility_id').val(data.facility_id);
             $('#edit_id').val(data.id);
+            $('input[value='+data.isChecked+']').iCheck('check');
             $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
-            let facility_id = $('#edit_facility_id').val();
             let id = $('#edit_id').val();
-
+            let isChecked = $('input[name=edit_isChecked]:checked').val();
             let status = $('input[name=edit_status]:checked').val();
-            !facility_id?addClass('edit_facility_id'):removeClass('edit_facility_id');
 
-            if(!facility_id )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
+            
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()

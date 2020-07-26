@@ -11,7 +11,7 @@ class QuestionSeeder extends Seeder
      */
     public function run()
     {
-        //
+
         DB::table('questions')->insert([
                 ['id'=>'1','question' => 'Do you confirm that at least three batches of the students have graduated for the program you are applying for?', 'status' => 'active'],
                 ['id'=>'2','question' => 'Does the business school follow a specific vision and mission?', 'status' => 'active'],

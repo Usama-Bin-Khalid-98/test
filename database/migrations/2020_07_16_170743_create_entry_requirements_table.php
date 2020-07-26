@@ -15,6 +15,10 @@ class CreateEntryRequirementsTable extends Migration
     {
         Schema::create('entry_requirements', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('business_school_id')->unsigned();
+            $table->foreign('business_school_id')
+                ->references('id')
+                ->on('business_schools');
             $table->integer('program_id')->unsigned();
             $table->foreign('program_id')
                 ->references('id')
