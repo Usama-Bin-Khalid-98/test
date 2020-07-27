@@ -16,13 +16,24 @@ use Auth;
 class FacultyGenderController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        
+
         $faculty_type = LookupFacultyType::get();
 
         $genders = FacultyGender::with('business_school','lookup_faculty_type')->get();

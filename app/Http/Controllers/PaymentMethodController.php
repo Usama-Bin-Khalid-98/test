@@ -1,24 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Facility;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Common\PaymentMethod;
 use Illuminate\Http\Request;
-use App\Models\Facility\FacilityType;
 
-class FacilityTypeController extends Controller
+class PaymentMethodController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(['auth','verified']);
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -53,10 +41,10 @@ class FacilityTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Common\PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PaymentMethod $paymentMethod)
     {
         //
     }
@@ -64,10 +52,10 @@ class FacilityTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Common\PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PaymentMethod $paymentMethod)
     {
         //
     }
@@ -76,10 +64,10 @@ class FacilityTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Common\PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, PaymentMethod $paymentMethod)
     {
         //
     }
@@ -87,16 +75,11 @@ class FacilityTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Common\PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PaymentMethod $paymentMethod)
     {
         //
-    }
-
-    public function getFacilities(FacilityType $facilityType)
-    {
-        return $facilityType->facility()->select('id', 'name')->get();
     }
 }

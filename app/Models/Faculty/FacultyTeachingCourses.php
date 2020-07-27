@@ -8,10 +8,10 @@ use App\Models\Common\Designation;
 use App\LookupFacultyType;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class FacultyTeachingCources extends Model
+class FacultyTeachingCourses extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = [];
 
     public function business_school() {
