@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class AffiliationController extends Controller
 {
@@ -57,10 +58,12 @@ class AffiliationController extends Controller
         try {
 
             Affiliation::create([
+                'campus_id' => Auth::user()->campus_id,
                 'statutory_committees_id' => $request->statutory_committees_id,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id
+                
             ]);
 
             return response()->json(['success' => ' Affiliations added successfully.']);

@@ -101,9 +101,11 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Business School Name</th>
+                                    <th>Campus</th>
                                     <th>Period of the strategic plan</th>
                                     <th>Date of Approval</th>
                                     <th>Approving Authority</th>
@@ -114,6 +116,8 @@
                                 <tbody>
                                @foreach($plans as $plan)
                                 <tr>
+                                    <td>{{$plan->user->business_school->name??""}}</td>
+                                    <td>{{$plan->user->campus->location??'Main Campus'}}</td>
                                     <td>{{$plan->plan_period}}</td>
                                     <td>{{$plan->aproval_date}}</td>
                                     <td>{{$plan->aproving_authority}}</td>
@@ -126,6 +130,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Business School Name</th>
+                                    <th>Campus</th>
                                     <th>Period of the strategic plan</th>
                                     <th>Date of Approval</th>
                                     <th>Approving Authority</th>

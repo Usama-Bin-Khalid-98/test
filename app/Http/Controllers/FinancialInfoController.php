@@ -56,7 +56,7 @@ class FinancialInfoController extends Controller
         try {
 
             FinancialInfo::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'income_source_id' => $request->income_source_id,
                 'year_three' => $request->year_three,
                 'year_two' => $request->year_two,

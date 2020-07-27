@@ -1,10 +1,10 @@
-@section('pageTitle', 'Business School Facility')
+@section('pageTitle', 'Student Gender Mix')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-    <!-- Select2 -->
+     <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Business School Facility
+                Students Gender mix
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Business School Facility</li>
+                <li class="active"> Students Gender mix </li>
             </ol>
         </section>
         <section class="content-header">
@@ -30,19 +30,20 @@
                     <button class="btn gradient-bg-color"
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
                            style="color: white;"
-                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
+                           value="Add New"
+                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
                 </div>
             </div>
         </section>
-
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-primary">
+
+                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Business School Facility.</h3>
+                            <h3 class="box-title">State the current gender wise break down of students in each program under review in Table 3.3</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -56,48 +57,39 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                         <form action="javascript:void(0)" id="form" method="POST">
+                             <form action="javascript:void(0)" id="form" method="POST">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Program Name</label>
+                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Program</option>
+                                        @foreach($programs as $program)
+                                         <option value="{{$program->id}}">{{$program->name}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
 
-                             <table class="table table-bordered ">
-                                <thead>
-                                <tr>
-                                    <th>Facility Types </th>
-                                    <th>Facilities</th>
-                                    <th>Select</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Male(%)</label>
+                                    <input type="text" name="male" id="male" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Female(%)</label>
+                                    <input type="text" name="female" id="female" class="form-control">
+                                </div>
+                            </div>
 
-                                   @foreach($facility_types as $type)
-                                <tr>
-                                    <td>
-                                        <strong>@if(!$loop->first && $type->facility_type->name !== $facility_types[$loop->index -1]->facility_type->name) {{$type->facility_type->name}} @endif</strong>
-                                    </td>
-                                    <td>
-                                        <p>{{$type->name}}</p>
-                                    </td>
-
-                                    <td>
-                                        <input type="radio" data-id="{{$type->id}}" value="yes" name="isChecked{{$type->id}}" > <span>Yes</span>
-                                        <input type="radio" data-id="{{$type->id}}" checked value="no" name="isChecked{{$type->id}}"> <span>No</span>
-                                    </td>
-                                </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
-
-
-
-
-                             <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
-                        </form>
-
+                           </form>
                         </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
@@ -105,37 +97,38 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Business School Facilities Table.</h3>
+                            <h3 class="box-title">List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    
-                                    <th>Business School Facilities</th>
-                                    <th>isChecked</th>
+                                    <th>Program</th>
+                                    <th>Male(%)</th>
+                                    <th>Female(%)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                   @foreach($facilitiess as $summary)
+                               @foreach($genders as $enrolement)
                                 <tr>
-                                    <td>{{$summary->facility->name}}</td>
-                                    <td><i class="badge {{$summary->isChecked == 'yes'?'bg-green':'bg-red'}}">{{$summary->isChecked == 'yes'?'Yes':'No'}}</i></td>
-                                    <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility->name}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                                    <td>{{$enrolement->program->name}}</td>
+                                    <td>{{$enrolement->male}}</td>
+                                    <td>{{$enrolement->female}}</td>
+                                    <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","program_id":"{{$enrolement->program_id}}","male":"{{$enrolement->male}}","female":"{{$enrolement->female}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+
                                 </tr>
                                 @endforeach
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    
-                                    <th>Business School Facilities</th>
-                                    <th>isChecked</th>
+                                    <th>Program</th>
+                                    <th>Male(%)</th>
+                                    <th>Female(%)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -157,24 +150,41 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Business School Facility. </h4>
+                    <h4 class="modal-title">Edit Student Enrolment. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                         <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Facility</label>
-                                    <input type="text" readonly name="facility_id" id="edit_facility_id" value="{{old('edit_facility_id')}}" class="form-control">
-                                </div>
-                                <input type="hidden" id="edit_id">
-                              </div>
+
+                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="type">{{ __('isChecked') }} : </label>
-                                <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
+                                <label for="name">Program</label>
+                                <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Program</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->id}}">{{$program->name}}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                            <input type="hidden" name="id" id="edit_id">
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Male</label>
+                                    <input type="text" name="male"
+                                    id="edit_male" value="{{old('edit_male')}}" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Female</label>
+                                    <input type="text" name="female"
+                                    id="edit_female" value="{{old('female')}}" class="form-control">
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -196,7 +206,6 @@
     <!-- /.modal -->
 
 
-    <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
@@ -224,38 +233,32 @@
             }
         });
 
-         $('#form').submit(function (e) {
-             // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
-             console.log('submit button clicked');
-            let facility_id = $('input:radio:checked').map(function(index, val) {
-                        return {"id":$(val).data('id'), "isChecked":$(val).val()};
-                      }).get();
+        $('#form').submit(function (e) {
+            // let uni_id = $('#uni_id').val();
+            let program_id = $('#program_id').val();
+            let male = $('#male').val();
+            let female = $('#female').val();
 
-            // let data = [];
-            // for( i =0; i < facility_id.length; i++)
-            // {
-            //    data[i].id = facility_id[i].id;
-            // }
-            //console.log('data facilities', data);
-           // return;
-             //console.log(data);
-             //return ;
-            // !facility_id?addClass('facility_id'):removeClass('facility_id');
-            //  if(!facility_id )
-            //  {
-            //      Notiflix.Notify.Warning("Fill all the required Fields.");
-            //      return false;
-            //  }
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !male?addClass('male'):removeClass('male');
+            !female?addClass('female'):removeClass('female');
 
-            // let data = JSON.parse(JSON.stringify(facility_id));
+            if(!program_id || !male || !female )
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
             // Yes button callback
+            e.preventDefault();
+            var formData = new FormData(this);
+
             $.ajax({
-                url:'{{url("business-school-facility")}}',
+                url:'{{url("student-gender")}}',
                 type:'POST',
-                data: {"data":JSON.parse(JSON.stringify(facility_id))},
-                // cache:false,
-                // contentType:false,
-                // processData:false,
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -266,7 +269,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -278,27 +281,39 @@
         });
 
 
-         $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_facility_id').val(data.facility_id);
+        $('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+           
+            $('#edit_program_id').select2().val(data.program_id).trigger('change');
+            $('#edit_male').val(data.male);
+            $('#edit_female').val(data.female);;
             $('#edit_id').val(data.id);
-            $('input[value='+data.isChecked+']').iCheck('check');
             $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
+            let program_id = $('#edit_program_id').val();
+            let male = $('#edit_male').val();
+            let female = $('#edit_female').val();
             let id = $('#edit_id').val();
-            let isChecked = $('input[name=edit_isChecked]:checked').val();
-            let status = $('input[name=edit_status]:checked').val();
 
-            
+            let status = $('input[name=edit_status]:checked').val();
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !male?addClass('male'):removeClass('male');
+            !female?addClass('female'):removeClass('female');
+
+            if(!program_id || !male || !female )
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("business-school-facility")}}/'+id,
+                url:'{{url("student-gender")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -326,14 +341,13 @@
             })
         });
 
-
-         $('.delete').on('click', function (e) {
+        $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("business-school-facility")}}/'+id,
+                        url:'{{url("student-gender")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -362,6 +376,11 @@
                 } );
 
         })
+
+
+
+
+
 
     </script>
 

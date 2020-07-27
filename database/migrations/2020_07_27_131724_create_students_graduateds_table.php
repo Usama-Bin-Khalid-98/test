@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFinancialInfosTable extends Migration
+class CreateStudentsGraduatedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,22 @@ class CreateFinancialInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('financial_infos', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('students_graduateds', function (Blueprint $table) {
+            $table->id();
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-            $table->integer('income_source_id')->unsigned();
-            $table->foreign('income_source_id')
+            $table->integer('program_id')->unsigned()->nullable();
+            $table->foreign('program_id')
                 ->references('id')
-                ->on('income_sources');
-            $table->year('year_three');
-            $table->year('year_two');
-            $table->year('year_one');
-            $table->year('year_t');
-            $table->year('year_t_plus_one');
-            $table->year('year_t_plus_two');
+                ->on('programs')
+                ->onDelete('cascade');;
+            $table->string('grad_std_t', 100);
+            $table->string('grad_std_t_2', 100);
+            $table->string('grad_std_t_3', 100);
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -42,6 +41,6 @@ class CreateFinancialInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('financial_infos');
+        Schema::dropIfExists('students_graduateds');
     }
 }

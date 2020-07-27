@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class BudgetaryInfoController extends Controller
 {
@@ -60,6 +61,7 @@ class BudgetaryInfoController extends Controller
         try {
 
             BudgetaryInfo::create([
+                'business_school_id' => Auth::user()->business_school_id,
                 'year' => $request->year,
                 'uni_budget' => $request->uni_budget,
                 'uni_proposed_budget' => $request->uni_proposed_budget,

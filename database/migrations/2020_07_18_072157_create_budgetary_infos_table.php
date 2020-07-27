@@ -15,6 +15,10 @@ class CreateBudgetaryInfosTable extends Migration
     {
         Schema::create('budgetary_infos', function (Blueprint $table) {
             $table->id();
+            $table->integer('business_school_id')->unsigned();
+            $table->foreign('business_school_id')
+                ->references('id')
+                ->on('business_schools');
             $table->string('year',100);
             $table->string('uni_budget',100);
             $table->string('uni_proposed_budget',100);

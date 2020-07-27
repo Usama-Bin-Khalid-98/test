@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Facility\BusinessSchoolFacility;
+use App\StudentGender;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
-use App\BusinessSchool;
-use App\Models\Facility\FacilityType;
-use App\Models\Facility\Facility;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Controller;
-use DB;
 
-class BusinessSchoolFacilityController extends Controller
+class StudentGenderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +20,10 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function index()
     {
-        $facility_types = Facility::with('facility_type')->get();
+        $programs = Program::get();
+        $genders = StudentGender::get();
 
-        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->get();
-
-
-        return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));
+        return view('registration.student_enrolment.student_gender', compact('programs','genders'));
     }
 
     /**
@@ -49,29 +44,21 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
-
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $uni_id = Auth::user()->campus_id;
+            StudentGender::create([
+                'campus_id' => $uni_id,
+                'program_id' => $request->program_id,
+                'male' => $request->male,
+                'female' => $request->female
+            ]);
 
-            Auth::user()->business_school_id;
-
-            foreach ($request->all()['data'] as $facility){
-                //dd($facility['id']);
-                BusinessSchoolFacility::create([
-                    'business_school_id' => Auth::user()->business_school_id,
-                    'facility_id' => $facility['id'],
-                    'isChecked' => $facility['isChecked'],
-                    'status' => 'active'
-                ]);
-
-            }
-
-            return response()->json(['success' => 'Business School Facility added successfully.'], 200);
+            return response()->json(['success' => 'Student Gender Inserted successfully.']);
 
 
         }catch (Exception $e)
@@ -83,10 +70,10 @@ class BusinessSchoolFacilityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Facility\BusinessSchoolFacility  $businessSchoolFacility
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function show(BusinessSchoolFacility $businessSchoolFacility)
+    public function show(StudentGender $studentGender)
     {
         //
     }
@@ -94,10 +81,10 @@ class BusinessSchoolFacilityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Facility\BusinessSchoolFacility  $businessSchoolFacility
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function edit(BusinessSchoolFacility $businessSchoolFacility)
+    public function edit(StudentGender $studentGender)
     {
         //
     }
@@ -106,10 +93,10 @@ class BusinessSchoolFacilityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Facility\BusinessSchoolFacility  $businessSchoolFacility
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BusinessSchoolFacility $businessSchoolFacility)
+    public function update(Request $request, StudentGender $studentGender)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -118,12 +105,13 @@ class BusinessSchoolFacilityController extends Controller
         }
 
         try {
-
-            BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
-                'isChecked' => $request->isChecked,
-                'status' => $request->status
+            StudentGender::where('id', $studentGender->id)->update([
+                'program_id' => $request->program_id,
+                'male' => $request->male,
+                'female' => $request->female,
+                'status' => $request->status,
             ]);
-            return response()->json(['success' => 'Business School Facility updated successfully.']);
+            return response()->json(['success' => 'Student Gender mix updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -134,13 +122,13 @@ class BusinessSchoolFacilityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Facility\BusinessSchoolFacility  $businessSchoolFacility
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BusinessSchoolFacility $businessSchoolFacility)
+    public function destroy(StudentGender $studentGender)
     {
-         try {
-            BusinessSchoolFacility::destroy($businessSchoolFacility->id);
+       try {
+            studentGender::destroy($studentGender->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -150,17 +138,17 @@ class BusinessSchoolFacilityController extends Controller
 
     protected function rules() {
         return [
-//                'id' => 'required'
+            'program_id' => 'required',
+            'male' => 'required',
+            'female' => 'required'
         ];
     }
+
+
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.'
         ];
     }
-
-
-
-
 }

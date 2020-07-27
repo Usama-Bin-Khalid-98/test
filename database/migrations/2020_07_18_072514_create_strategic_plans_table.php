@@ -15,6 +15,10 @@ class CreateStrategicPlansTable extends Migration
     {
         Schema::create('strategic_plans', function (Blueprint $table) {
             $table->id();
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
+                ->references('id')
+                ->on('campuses');
             $table->string('plan_period',100);
             $table->string('aproval_date',100);
             $table->string('aproving_authority',100);

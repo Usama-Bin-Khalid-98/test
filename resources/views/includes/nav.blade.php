@@ -129,7 +129,7 @@
 
           </ul>
         </li>
-        <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}">
+        <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}{{(request()->is('students-graduated'))?'active':''}}{{(request()->is('student-gender'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user text-blue"></i> <span>Students</span>
                   <span class="pull-right-container">
@@ -137,7 +137,9 @@
             </span>
               </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}"><i class="fa fa-circle-o text-orange"></i>Students Details</a></li>
+            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}"><i class="fa fa-circle-o text-orange"></i>Students Enrollment</a></li>
+            <li  class="{{ (request()->is('students-graduated')) ? 'active' : '' }}"><a href="{{url('students-graduated')}}"><i class="fa fa-circle-o text-orange"></i>Students Graduated</a></li>
+            <li  class="{{ (request()->is('student-gender')) ? 'active' : '' }}"><a href="{{url('student-gender')}}"><i class="fa fa-circle-o text-orange"></i>Students Gender mix</a></li>
 
           </ul>
         </li>

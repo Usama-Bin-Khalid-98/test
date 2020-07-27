@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StrategicManagement\StrategicPlan;
-use App\User;
+use App\StudentsGraduated;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
-class StrategicPlanController extends Controller
+class StudentsGraduatedController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,11 @@ class StrategicPlanController extends Controller
      */
     public function index()
     {
+        $programs = Program::where('status', 'active')->get();
 
-        $plans  = StrategicPlan::with('user')->get();;
+        $students = StudentsGraduated::with('program')->get();
 
-         return view('strategic_management.plan', compact('plans'));
+        return view('registration.student_enrolment.students_graduated', compact('programs','students'));
     }
 
     /**
@@ -50,15 +51,16 @@ class StrategicPlanController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            StrategicPlan::create([
-                'campus_id' => Auth::user()->campus_id,
-                'plan_period' => $request->plan_period,
-                'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority
+            $uni_id = Auth::user()->campus_id;
+            StudentsGraduated::create([
+                'campus_id' => $uni_id,
+                'program_id' => $request->program_id,
+                'grad_std_t' => $request->grad_std_t,
+                'grad_std_t_2' => $request->grad_std_tt,
+                'grad_std_t_3' => $request->grad_std_ttt
             ]);
 
-            return response()->json(['success' => 'Strategic Plan added successfully.']);
+            return response()->json(['success' => 'Student Graduated Inserted successfully.']);
 
 
         }catch (Exception $e)
@@ -70,10 +72,10 @@ class StrategicPlanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function show(StrategicPlan $strategicPlan)
+    public function show(StudentsGraduated $studentsGraduated)
     {
         //
     }
@@ -81,10 +83,10 @@ class StrategicPlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function edit(StrategicPlan $strategicPlan)
+    public function edit(StudentsGraduated $studentsGraduated)
     {
         //
     }
@@ -93,26 +95,26 @@ class StrategicPlanController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StrategicPlan $strategicPlan)
+    public function update(Request $request, StudentsGraduated $studentsGraduated)
     {
-        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
         }
 
         try {
-
-            StrategicPlan::where('id', $strategicPlan->id)->update([
-                'plan_period' => $request->plan_period,
-                'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority,
-                'status' => $request->status
+            StudentsGraduated::where('id', $studentsGraduated->id)->update([
+                'program_id' => $request->program_id,
+                'grad_std_t' => $request->grad_std_t,
+                'grad_std_t_2' => $request->grad_std_t_2,
+                'grad_std_t_3' => $request->grad_std_t_3,
+                'status' => $request->status,
             ]);
-            return response()->json(['success' => 'Strategic Plan updated successfully.']);
+            return response()->json(['success' => 'Student Graduated updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -123,13 +125,13 @@ class StrategicPlanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\StrategicPlan  $strategicPlan
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StrategicPlan $strategicPlan)
+    public function destroy(StudentsGraduated $studentsGraduated)
     {
         try {
-            StrategicPlan::destroy($strategicPlan->id);
+            StudentsGraduated::destroy($studentsGraduated->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -139,9 +141,19 @@ class StrategicPlanController extends Controller
 
     protected function rules() {
         return [
-            'plan_period' => 'required',
-            'aproval_date' => 'required',
-            'aproving_authority' => 'required'
+            'program_id' => 'required',
+            'grad_std_t' => 'required',
+            'grad_std_tt' => 'required',
+            'grad_std_ttt' => 'required'
+        ];
+    }
+
+    protected function update_rules() {
+        return [
+            'program_id' => 'required',
+            'grad_std_t' => 'required',
+            'grad_std_t_2' => 'required',
+            'grad_std_t_3' => 'required'
         ];
     }
 

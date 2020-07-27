@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\ProgramPortfolio;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use App\Models\Common\CourseType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ProgramPortfolioController extends Controller
 {
@@ -21,12 +22,12 @@ class ProgramPortfolioController extends Controller
     public function index()
     {
         
-        $programs = Program::where('status', 'active')->get();
+        $scopes = Scope::with('program')->get();
         $courses = CourseType::where('status', 'active')->get();
 
-        $portfolios  = ProgramPortfolio::with('program','course_type')->get();
+        $portfolios  = ProgramPortfolio::with('business_school','program','course_type')->get();
 
-         return view('registration.curriculum.portfolio', compact('programs','courses','portfolios'));
+         return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
     }
 
     /**
@@ -55,6 +56,7 @@ class ProgramPortfolioController extends Controller
         try {
 
             ProgramPortfolio::create([
+                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
