@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StrategicManagement\ProgramPortfolio;
-use App\Models\StrategicManagement\Scope;
-use App\Models\Common\CourseType;
+use App\StudentGender;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
-class ProgramPortfolioController extends Controller
+class StudentGenderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,13 +20,10 @@ class ProgramPortfolioController extends Controller
      */
     public function index()
     {
-        
-        $scopes = Scope::with('program')->get();
-        $courses = CourseType::where('status', 'active')->get();
+        $programs = Program::get();
+        $genders = StudentGender::get();
 
-        $portfolios  = ProgramPortfolio::with('business_school','program','course_type')->get();
-
-         return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
+        return view('registration.student_enrolment.student_gender', compact('programs','genders'));
     }
 
     /**
@@ -54,19 +50,15 @@ class ProgramPortfolioController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            ProgramPortfolio::create([
-                'campus_id' => Auth::user()->campus_id,
+            $uni_id = Auth::user()->campus_id;
+            StudentGender::create([
+                'campus_id' => $uni_id,
                 'program_id' => $request->program_id,
-                'total_semesters' => $request->total_semesters,
-                'course_type_id' => $request->course_type_id,
-                'no_of_course' => $request->no_of_course,
-                'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req
+                'male' => $request->male,
+                'female' => $request->female
             ]);
 
-            return response()->json(['success' => 'Program Portfolio added successfully.']);
+            return response()->json(['success' => 'Student Gender Inserted successfully.']);
 
 
         }catch (Exception $e)
@@ -78,10 +70,10 @@ class ProgramPortfolioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function show(ProgramPortfolio $programPortfolio)
+    public function show(StudentGender $studentGender)
     {
         //
     }
@@ -89,10 +81,10 @@ class ProgramPortfolioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProgramPortfolio $programPortfolio)
+    public function edit(StudentGender $studentGender)
     {
         //
     }
@@ -101,10 +93,10 @@ class ProgramPortfolioController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProgramPortfolio $programPortfolio)
+    public function update(Request $request, StudentGender $studentGender)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -113,18 +105,13 @@ class ProgramPortfolioController extends Controller
         }
 
         try {
-
-            ProgramPortfolio::where('id', $programPortfolio->id)->update([
+            StudentGender::where('id', $studentGender->id)->update([
                 'program_id' => $request->program_id,
-                'total_semesters' => $request->total_semesters,
-                'course_type_id' => $request->course_type_id,
-                'no_of_course' => $request->no_of_course,
-                'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req,
+                'male' => $request->male,
+                'female' => $request->female,
                 'status' => $request->status,
             ]);
-            return response()->json(['success' => 'Program Portfolio updated successfully.']);
+            return response()->json(['success' => 'Student Gender mix updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -135,13 +122,13 @@ class ProgramPortfolioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentGender  $studentGender
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProgramPortfolio $programPortfolio)
+    public function destroy(StudentGender $studentGender)
     {
-        try {
-            ProgramPortfolio::destroy($programPortfolio->id);
+       try {
+            studentGender::destroy($studentGender->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -152,12 +139,8 @@ class ProgramPortfolioController extends Controller
     protected function rules() {
         return [
             'program_id' => 'required',
-            'total_semesters' => 'required',
-            'course_type_id' => 'required',
-            'no_of_course' => 'required',
-            'credit_hours' => 'required',
-            'internship_req' => 'required',
-            'fyp_req' => 'required'
+            'male' => 'required',
+            'female' => 'required'
         ];
     }
 

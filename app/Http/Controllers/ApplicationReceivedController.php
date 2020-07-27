@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\ApplicationReceived;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use App\Models\Common\Semester;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,12 +33,12 @@ class ApplicationReceivedController extends Controller
     public function index()
     {
 
-        $programs = Program::where('status', 'active')->get();
+        $scopes = Scope::with('program')->get();
         $semesters = Semester::where('status', 'active')->get();
 
         $apps  = ApplicationReceived::with('program','semester')->get();
 
-        return view('registration.curriculum.app_received', compact('programs','semesters','apps'));
+        return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
     }
 
     /**
@@ -67,7 +67,7 @@ class ApplicationReceivedController extends Controller
         try {
 
             ApplicationReceived::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'semester_id' => $request->semester_id,
                 'app_received' => $request->app_received,

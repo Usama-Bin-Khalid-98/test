@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StrategicManagement\ProgramPortfolio;
-use App\Models\StrategicManagement\Scope;
-use App\Models\Common\CourseType;
+use App\StudentsGraduated;
+use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
-class ProgramPortfolioController extends Controller
+class StudentsGraduatedController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,13 +20,11 @@ class ProgramPortfolioController extends Controller
      */
     public function index()
     {
-        
-        $scopes = Scope::with('program')->get();
-        $courses = CourseType::where('status', 'active')->get();
+        $programs = Program::where('status', 'active')->get();
 
-        $portfolios  = ProgramPortfolio::with('business_school','program','course_type')->get();
+        $students = StudentsGraduated::with('program')->get();
 
-         return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
+        return view('registration.student_enrolment.students_graduated', compact('programs','students'));
     }
 
     /**
@@ -54,19 +51,16 @@ class ProgramPortfolioController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            ProgramPortfolio::create([
-                'campus_id' => Auth::user()->campus_id,
+            $uni_id = Auth::user()->campus_id;
+            StudentsGraduated::create([
+                'campus_id' => $uni_id,
                 'program_id' => $request->program_id,
-                'total_semesters' => $request->total_semesters,
-                'course_type_id' => $request->course_type_id,
-                'no_of_course' => $request->no_of_course,
-                'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req
+                'grad_std_t' => $request->grad_std_t,
+                'grad_std_t_2' => $request->grad_std_tt,
+                'grad_std_t_3' => $request->grad_std_ttt
             ]);
 
-            return response()->json(['success' => 'Program Portfolio added successfully.']);
+            return response()->json(['success' => 'Student Graduated Inserted successfully.']);
 
 
         }catch (Exception $e)
@@ -78,10 +72,10 @@ class ProgramPortfolioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function show(ProgramPortfolio $programPortfolio)
+    public function show(StudentsGraduated $studentsGraduated)
     {
         //
     }
@@ -89,10 +83,10 @@ class ProgramPortfolioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProgramPortfolio $programPortfolio)
+    public function edit(StudentsGraduated $studentsGraduated)
     {
         //
     }
@@ -101,30 +95,26 @@ class ProgramPortfolioController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProgramPortfolio $programPortfolio)
+    public function update(Request $request, StudentsGraduated $studentsGraduated)
     {
-        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
         }
 
         try {
-
-            ProgramPortfolio::where('id', $programPortfolio->id)->update([
+            StudentsGraduated::where('id', $studentsGraduated->id)->update([
                 'program_id' => $request->program_id,
-                'total_semesters' => $request->total_semesters,
-                'course_type_id' => $request->course_type_id,
-                'no_of_course' => $request->no_of_course,
-                'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req,
+                'grad_std_t' => $request->grad_std_t,
+                'grad_std_t_2' => $request->grad_std_t_2,
+                'grad_std_t_3' => $request->grad_std_t_3,
                 'status' => $request->status,
             ]);
-            return response()->json(['success' => 'Program Portfolio updated successfully.']);
+            return response()->json(['success' => 'Student Graduated updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -135,13 +125,13 @@ class ProgramPortfolioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\ProgramPortfolio  $programPortfolio
+     * @param  \App\StudentsGraduated  $studentsGraduated
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProgramPortfolio $programPortfolio)
+    public function destroy(StudentsGraduated $studentsGraduated)
     {
         try {
-            ProgramPortfolio::destroy($programPortfolio->id);
+            StudentsGraduated::destroy($studentsGraduated->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -152,12 +142,18 @@ class ProgramPortfolioController extends Controller
     protected function rules() {
         return [
             'program_id' => 'required',
-            'total_semesters' => 'required',
-            'course_type_id' => 'required',
-            'no_of_course' => 'required',
-            'credit_hours' => 'required',
-            'internship_req' => 'required',
-            'fyp_req' => 'required'
+            'grad_std_t' => 'required',
+            'grad_std_tt' => 'required',
+            'grad_std_ttt' => 'required'
+        ];
+    }
+
+    protected function update_rules() {
+        return [
+            'program_id' => 'required',
+            'grad_std_t' => 'required',
+            'grad_std_t_2' => 'required',
+            'grad_std_t_3' => 'required'
         ];
     }
 

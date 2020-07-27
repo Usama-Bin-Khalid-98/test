@@ -58,7 +58,7 @@ class AffiliationController extends Controller
         try {
 
             Affiliation::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'statutory_committees_id' => $request->statutory_committees_id,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,

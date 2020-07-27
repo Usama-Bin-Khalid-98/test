@@ -137,13 +137,13 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Name of Statutory Body</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
-                                    <th>Name of Statutory Body</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -151,10 +151,11 @@
                                 <tbody>
                                @foreach($affiliations as $affiliation)
                                 <tr>
+                                    
+                                    <td>{{$affiliation->statutory_bodies->name}}</td>
                                     <td>{{$affiliation->statutory_committees->name}}</td>
                                     <td>{{$affiliation->designation->name}}</td>
                                     <td>{{$affiliation->affiliation}}</td>
-                                    <td>{{$affiliation->statutory_bodies->name}}</td>
                                     <td><i class="badge {{$affiliation->status == 'active'?'bg-green':'bg-red'}}">{{$affiliation->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","statutory_committees_id":"{{$affiliation->statutory_committees_id}}","designation_id":"{{$affiliation->designation_id}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
@@ -164,10 +165,10 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Name of Statutory Body</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
-                                    <th>Name of Statutory Body</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

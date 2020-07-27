@@ -72,179 +72,40 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year t-3</label>
-                                    <select name="year_three" id="year_three" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_three" id="year_three" class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year t-2</label>
-                                    <select name="year_two" id="year_two" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_two" id="year_two" class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year t-1</label>
-                                    <select name="year_one" id="year_one" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_one" id="year_one" class="form-control">
                                 </div>
-                            </div>
+                              </div>
+                            
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year t</label>
-                                    <select name="year_t" id="year_t" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_t" id="year_t" class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                              </div>
+                              <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year t+1</label>
-                                    <select name="year_t_plus_one" id="year_t_plus_one" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_t_plus_one" id="year_t_plus_one" class="form-control">
                                 </div>
-                            </div>
+                              </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year t+2</label>
-                                    <select name="year_t_plus_two" id="year_t_plus_two" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_t_plus_two" id="year_t_plus_two" class="form-control">
                                 </div>
-                            </div>
-                            
-
+                              </div>
                             
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -348,177 +209,40 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year t-3</label>
-                                    <select name="year_three" id="edit_year_three" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_three" id="edit_year_three" value="{{old('edit_year_three')}}" class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+                              </div>
+                              <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year t-2</label>
-                                    <select name="year_two" id="edit_year_two" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_two" id="edit_year_two" value="{{old('edit_year_two')}}" class="form-control">
                                 </div>
-                            </div>
+                              </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year t-1</label>
-                                    <select name="year_one" id="edit_year_one" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_one" id="edit_year_one" value="{{old('edit_year_one')}}" class="form-control">
                                 </div>
-                            </div>
+                              </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year t</label>
-                                    <select name="year_t" id="edit_year_t" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_t" id="edit_year_t" value="{{old('edit_year_t')}}" class="form-control">
                                 </div>
-                            </div>
+                              </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year t+1</label>
-                                    <select name="year_t_plus_one" id="edit_year_t_plus_one" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_t_plus_one" id="edit_year_t_plus_one" value="{{old('edit_year_t_plus_one')}}" class="form-control">
                                 </div>
-                            </div>
+                              </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year t+2</label>
-                                    <select name="year_t_plus_two" id="edit_year_t_plus_two" class="form-control select2">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
+                                    <input type="text" name="year_t_plus_two" id="edit_year_t_plus_two" value="{{old('edit_year_t_plus_two')}}" class="form-control">
                                 </div>
-                            </div>
+                              </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -629,12 +353,12 @@
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_income_source_id').select2().val(data.income_source_id).trigger('change');
-            $('#edit_year_three').select2().val(data.year_three).trigger('change');
-            $('#edit_year_two').select2().val(data.year_two).trigger('change');
-            $('#edit_year_one').select2().val(data.year_one).trigger('change');
-            $('#edit_year_t').select2().val(data.year_t).trigger('change');
-            $('#edit_year_t_plus_one').select2().val(data.year_t_plus_one).trigger('change');
-            $('#edit_year_t_plus_two').select2().val(data.year_t_plus_two).trigger('change');
+            $('#edit_year_three').val(data.year_three);
+            $('#edit_year_two').val(data.year_two);
+            $('#edit_year_one').val(data.year_one);
+            $('#edit_year_t').val(data.year_t);
+            $('#edit_year_t_plus_one').val(data.year_t_plus_one);
+            $('#edit_year_t_plus_two').val(data.year_t_plus_two);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });

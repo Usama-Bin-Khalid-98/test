@@ -64,8 +64,8 @@
                                     <label for="name">Program Name</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
-                                        @foreach($programs as $program)
-                                         <option value="{{$program->id}}">{{$program->name}}</option>
+                                        @foreach($scopes as $scope)
+                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -186,17 +186,18 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
+                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Program</label>
-                                <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select Program</option>
-                                    @foreach($programs as $program)
-                                        <option value="{{$program->id}}">{{$program->name}}</option>
-                                    @endforeach
-                                </select>
-                               <input type="hidden" id="edit_id">
-                            </div>
+                                    <label for="name">Program Name</label>
+                                   <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Program</option>
+                                        @foreach($scopes as $scope)
+                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                                <input type="hidden" id="edit_id">
                         </div>
 
                         <div class="col-md-6">

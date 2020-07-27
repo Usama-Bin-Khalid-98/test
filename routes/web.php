@@ -67,6 +67,8 @@ use Illuminate\Support\Facades\Route;
 
     // Students
     Route::resource('student-enrolment','StudentEnrolmentController');
+    Route::resource('students-graduated','StudentsGraduatedController');
+    Route::resource('student-gender','StudentGenderController');
 
     // Faculty
     Route::get('/faculty_summary','Faculty\FacultySummaryController@index')->name('faculty_summary');

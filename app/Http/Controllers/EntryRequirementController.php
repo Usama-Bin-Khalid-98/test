@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\EntryRequirement;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use App\Models\Common\EligibilityCriteria;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,12 +21,12 @@ class EntryRequirementController extends Controller
      */
     public function index()
     {
-        $programs = Program::where('status', 'active')->get();
+        $scopes = Scope::with('program')->get();
         $criterias = EligibilityCriteria::where('status', 'active')->get();
 
         $entryRequirements  = EntryRequirement::with('program','eligibility_criteria')->get();
 
-         return view('registration.curriculum.entry_req', compact('programs','criterias','entryRequirements'));
+         return view('registration.curriculum.entry_req', compact('scopes','criterias','entryRequirements'));
         
     }
 
@@ -56,7 +56,7 @@ class EntryRequirementController extends Controller
         try {
 
             EntryRequirement::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
                 'min_req' => $request->min_req
