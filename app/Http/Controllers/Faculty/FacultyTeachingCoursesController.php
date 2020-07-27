@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
-use App\Models\Faculty\FacultyTeachingCources;
+use App\Models\Faculty\FacultyTeachingCourses;
 use App\BusinessSchool;
 use App\Models\Common\Designation;
 use App\LookupFacultyType;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 
 
-class FacultyTeachingCourcesController extends Controller
+class FacultyTeachingCoursesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,13 +23,13 @@ class FacultyTeachingCourcesController extends Controller
      */
     public function index()
     {
-         
+
          $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
 
-         $visitings = FacultyTeachingCources::with('business_school','lookup_faculty_type','designation')->get();
+         $visitings = FacultyTeachingCourses::with('business_school','lookup_faculty_type','designation')->get();
 
-         return view('registration.faculty.faculty_teaching_cources', compact('designations','faculty_types','visitings'));
+         return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings'));
     }
 
     /**

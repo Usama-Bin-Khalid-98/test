@@ -27,7 +27,7 @@ class CreateFacultyTeachingCourses extends Migration
             $table->foreign('designation_id')
                 ->references('id')
                 ->on('designations');
-            $table->integer('max_cources _allowed');
+            $table->integer('max_courses _allowed');
             $table->integer('tc_program1');
             $table->integer('tc_program2');
             $table->enum('status',['active','inactive'])->default('active');

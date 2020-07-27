@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WorkLoad extends Model
 {
-    use SoftDeletes;
-    
+//    use SoftDeletes;
+
     protected $guarded = [];
 
     public function business_school() {

@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class FacultyStudentRatio extends Model
 {
     use SoftDeletes;
-    
+    protected $table = 'faculty_student_ratio';
+
     protected $guarded = [];
 
     public function business_school() {

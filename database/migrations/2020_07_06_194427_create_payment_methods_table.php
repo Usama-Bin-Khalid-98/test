@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLookupFacultyType extends Migration
+class CreatePaymentMethodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateLookupFacultyType extends Migration
      */
     public function up()
     {
-        Schema::create('lookup_faculty_types', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('faculty_type');
-
+            $table->string('name', 100);
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateLookupFacultyType extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lookup_faculty_types');
+        Schema::dropIfExists('payment_methods');
     }
 }
