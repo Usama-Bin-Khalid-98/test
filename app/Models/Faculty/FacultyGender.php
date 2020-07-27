@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class FacultyGender extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = [];
 
     public function business_school() {
