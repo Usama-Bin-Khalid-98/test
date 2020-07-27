@@ -58,7 +58,19 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                            <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
+                               <div class="col-md-3">
+                                   <div class="form-group">
+                                       <label for="name">Name of Statutory Body</label>
+                                       <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                           <option selected disabled >Select Body Name</option>
+                                           @foreach($bodies as $designation)
+                                               <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+
+                               <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Name of Member</label>
                                     <select name="statutory_committees_id" id="statutory_committees_id" class="form-control select2" style="width: 100%;">
@@ -86,17 +98,6 @@
                                 <div class="form-group">
                                     <label for="name">Affiliation</label>
                                     <input type="text" name="affiliation" id="affiliation" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Name of Statutory Body</label>
-                                    <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled >Select Body Name</option>
-                                        @foreach($bodies as $designation)
-                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
 
@@ -151,7 +152,7 @@
                                 <tbody>
                                @foreach($affiliations as $affiliation)
                                 <tr>
-                                    
+
                                     <td>{{$affiliation->statutory_bodies->name}}</td>
                                     <td>{{$affiliation->statutory_committees->name}}</td>
                                     <td>{{$affiliation->designation->name}}</td>
@@ -161,7 +162,7 @@
 
                                 </tr>
                                 @endforeach
-                               
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -198,6 +199,18 @@
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Name of Statutory Body</label>
+                                <select name="statutory_bodies_id" id="edit_statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                    <option selected disabled >Select Body Name</option>
+                                    @foreach($bodies as $designation)
+                                        <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Name of Member</label>
                                     <select name="statutory_committees_id" id="edit_statutory_committees_id" class="form-control select2" style="width: 100%;">
@@ -209,7 +222,7 @@
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
-                        
+
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
@@ -228,18 +241,6 @@
                                     <input type="text" name="affiliation" id="edit_affiliation" value="{{old('edit_affiliation')}}"  class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Name of Statutory Body</label>
-                                    <select name="statutory_bodies_id" id="edit_statutory_bodies_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled >Select Body Name</option>
-                                        @foreach($bodies as $designation)
-                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -261,7 +262,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -439,7 +440,7 @@ $('#updateForm').submit(function (e) {
         })
 
 
-        
+
 
     </script>
 
