@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
+
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
@@ -56,26 +57,26 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Contact Person Name here</label>
-                                    <input type="text" name="name" id="name" value="{{old('name')??Auth::user()->name}}" class="form-control">
+                                    <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" id="email" value="{{old('contact_no')??Auth::user()->email}}" class="form-control">
+                                    <input type="email" name="email" id="email" value="{{old('contact_no')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Tel (off)</label>
-                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')??Auth::user()->contact_no}}" class="form-control">
+                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Tel (cell) </label>
-                                    <input type="text" name="school_contact" id="school_contact" value="{{old('school_contact')??Auth::user()->contact_no}}" class="form-control">
+                                    <input type="text" name="school_contact" id="school_contact" value="{{old('school_contact')}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
                                 </div>
                             </div>
 
@@ -102,6 +103,7 @@
                                 <div class="form-group">
                                     <label for="name">Attach CV</label>
                                     <input type="file" name="cv" id="cv" >
+                                    <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
 
@@ -214,7 +216,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Contact No</label>
-                                <input type="text" name="contact_no" id="edit_contact_no" value="{{old('contact_no')}}" class="form-control">
+                                <input type="text" name="contact_no" id="edit_contact_no" value="{{old('contact_no')}}" class="form-control" data-inputmask="'mask': '+92-55-99999999'" maxlength="15">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -277,6 +279,10 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
+    <script>
+        $(":input").inputmask();
+    </script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
