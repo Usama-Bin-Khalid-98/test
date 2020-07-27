@@ -17,6 +17,7 @@ class CreateFacultyGendersTable extends Migration
             $table->id();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

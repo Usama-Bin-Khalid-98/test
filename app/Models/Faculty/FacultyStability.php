@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class FacultyStability extends Model
 {
     use SoftDeletes;
-    
+    protected $table ='faculty_stability';
+
     protected $guarded = [];
 
     public function business_school() {
