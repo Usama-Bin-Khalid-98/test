@@ -13,6 +13,17 @@ use Mockery\Exception;
 class DashboardController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,9 +32,8 @@ class DashboardController extends Controller
     {
         //
         // get Registrations data
-        $registrations = User::with('business_school', 'campus')->where('status', 'pending')->get();
+       $registrations = User::with('business_school')->where('status', 'pending')->get();
        //dd($registrations);
-
         return view('admin.index', compact('registrations'));
     }
 

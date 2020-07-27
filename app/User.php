@@ -48,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function business_school()
     {
-        return $this->belongsTo(BusinessSchool::class)->with('slip');
+        return $this->belongsTo(BusinessSchool::class)->with('slip')->with('campus');
     }
 
     public function campus()

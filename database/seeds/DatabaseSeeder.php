@@ -39,5 +39,6 @@ class DatabaseSeeder extends Seeder
         $this->call(IncomeSourceSeeder::class);
         $this->call(FacilityTypeSeeder::class);
         $this->call(FacilitySeeder::class);
+        $this->call(PaymentMethodSeeder::class);
     }
 }

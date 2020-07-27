@@ -5,6 +5,7 @@ namespace App\Http\Controllers\StrategicManagement;
 use App\BusinessSchool;
 use App\Http\Controllers\Controller;
 use App\Models\Common\Department;
+use App\Models\Common\PaymentMethod;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
 use Illuminate\Http\Request;
@@ -25,11 +26,21 @@ class SlipController extends Controller
     {
         //
         @$school_id = Auth::user()->business_school_id;
-
         @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
         //dd($invoices);
         @$departments = Department::where('status', 'active')->get();
-        return view('strategic_management.invoices_slip', compact('invoices','departments'));
+        $payment_methods = PaymentMethod::where('status', 'active')->get();
+        //// generate invoice ///////////
+        $latest = Slip::latest()->first();
+        $invoice_no ='';
+        if (! $latest) {
+            $invoice_no =  '0001';
+        }else {
+            $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
+            $invoice_no = sprintf('%04d', $string + 1);
+        }
+        //dd($invoice_no);
+        return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods'));
     }
 
     /**
@@ -78,6 +89,33 @@ class SlipController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function generateInvoice(Request $request)
+    {
+        //dd($request->all());
+        //
+        try {
+            Slip::create([
+                'business_school_id' => Auth::user()->business_school_id,
+                'invoice_no' => $request->invoice_no,
+                'department_id' => $request->department_id,
+                'status' => 'pending',
+            ]);
+            return response()->json(['success' => 'Invoice Slip added successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+
 
     /**
      * Display the specified resource.
