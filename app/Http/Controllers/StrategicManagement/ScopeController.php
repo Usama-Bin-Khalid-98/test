@@ -52,8 +52,8 @@ class ScopeController extends Controller
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
-                $school_id = auth()->user()->business_school_id;
-                $request->merge(['school_id' => $school_id] );
+                $campus_id = auth()->user()->campus_id;
+                $request->merge(['campus_id' => $campus_id] );
                 $create = Scope::create($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }

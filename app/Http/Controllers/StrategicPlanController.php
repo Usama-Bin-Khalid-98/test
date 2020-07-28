@@ -21,7 +21,7 @@ class StrategicPlanController extends Controller
     public function index()
     {
 
-        $plans  = StrategicPlan::with('user')->get();;
+        $plans  = StrategicPlan::with('campus')->get();;
 
          return view('strategic_management.plan', compact('plans'));
     }

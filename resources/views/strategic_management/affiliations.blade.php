@@ -142,6 +142,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
@@ -154,6 +156,8 @@
                                @foreach($affiliations as $affiliation)
                                 <tr>
 
+                                    <td>{{$affiliation->campus->business_school->name}}</td>
+                                    <td>{{$affiliation->campus->location}}</td>
                                     <td>{{$affiliation->name}}</td>
                                     <td>{{$affiliation->designation->name}}</td>
                                     <td>{{$affiliation->affiliation}}</td>
@@ -167,6 +171,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
@@ -339,7 +345,7 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_statutory_committees_id').select2().val(data.statutory_committees_id).trigger('change');
+            $('#edit_name').val(data.name);
             $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_affiliation').val(data.affiliation);
             $('#edit_statutory_bodies_id').select2().val(data.statutory_bodies_id).trigger('change');
@@ -348,19 +354,19 @@
         });
 
 $('#updateForm').submit(function (e) {
-            let statutory_committees_id = $('#edit_statutory_committees_id').val();
+            let name = $('#edit_name').val();
             let designation_id = $('#edit_designation_id').val();
             let affiliation = $('#edit_affiliation').val();
             let statutory_bodies_id = $('#edit_statutory_bodies_id').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !statutory_committees_id?addClass('edit_statutory_committees_id'):removeClass('edit_statutory_committees_id');
+            !name?addClass('edit_name'):removeClass('edit_name');
             !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
             !affiliation?addClass('edit_affiliation'):removeClass('edit_affiliation');
             !statutory_bodies_id?addClass('edit_statutory_bodies_id'):removeClass('edit_statutory_bodies_id');
 
-            if(!statutory_committees_id || !designation_id || !affiliation || !statutory_bodies_id)
+            if(!name || !designation_id || !affiliation || !statutory_bodies_id)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

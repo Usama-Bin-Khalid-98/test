@@ -16,7 +16,6 @@ class CreateLookupFacultyType extends Migration
         Schema::create('lookup_faculty_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('faculty_type');
-
             $table->timestamps();
         });
     }

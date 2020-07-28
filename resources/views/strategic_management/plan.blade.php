@@ -114,8 +114,8 @@
                                 <tbody>
                                @foreach($plans as $plan)
                                 <tr>
-                                    <td>{{$plan->user->business_school->name??""}}</td>
-                                    <td>{{$plan->user->campus->location??'Main Campus'}}</td>
+                                    <td>{{$plan->campus->business_school->name}}</td>
+                                    <td>{{$plan->campus->location}}</td>
                                     <td>{{$plan->plan_period}}</td>
                                     <td>{{$plan->aproval_date}}</td>
                                     <td>{{$plan->aproving_authority}}</td>
