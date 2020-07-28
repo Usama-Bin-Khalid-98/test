@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Models\Faculty\FacultyStudentRatio;
 use App\BusinessSchool;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +22,7 @@ class FacultyStudentRatioController extends Controller
     public function index()
     {
         
-        $programs = Program::where('status', 'active')->get();
+        $programs = Scope::with('program')->get();
 
         $ratios = FacultyStudentRatio::with('business_school','program')->get();
 

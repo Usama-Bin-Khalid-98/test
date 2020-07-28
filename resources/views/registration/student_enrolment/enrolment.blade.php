@@ -62,33 +62,15 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="year"  class="form-control select2">
+                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
+                                </div>
+                            </div>
 
-                            </div>
-                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">16 Year Programs</label>
@@ -134,7 +116,6 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>University</th>
                                     <th>Year</th>
                                     <th>16 Year</th>
                                     <th>18 Year</th>
@@ -147,14 +128,13 @@
                                 <tbody>
                                 @foreach($enrolments as $enrolement)
                                 <tr>
-                                    <td>{{$enrolement->business_school->name?? ""}}</td>
                                     <td>{{$enrolement->year}}</td>
                                     <td>{{$enrolement->bs_level}}</td>
                                     <td>{{$enrolement->ms_level}}</td>
                                     <td>{{$enrolement->phd_level}}</td>
                                     <td>{{$enrolement->total_students}}</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":{{$enrolement->id}},"uni_id":{{$enrolement->business_school_id}},"year":{{$enrolement->year}},"bs_level":{{$enrolement->bs_level}},"ms_level":{{$enrolement->ms_level}},"phd_level":{{$enrolement->phd_level}},"total_students":{{$enrolement->total_students}},"status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","year":{{$enrolement->year}},"bs_level":"{{$enrolement->bs_level}}","ms_level":"{{$enrolement->ms_level}}","phd_level":"{{$enrolement->phd_level}}","total_students":"{{$enrolement->total_students}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
@@ -162,7 +142,6 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>University</th>
                                     <th>Year</th>
                                     <th>16 Year</th>
                                     <th>18 Year</th>
@@ -195,35 +174,17 @@
                     <div class="modal-body">
 
                         <div class="col-md-6">
-                            <div class="form-group">
+                                <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="edit_year"  class="form-control select2">
-                                        <option value="">Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
-
+                                </div>
+                                <input type="hidden" name="id" id="edit_id">
                             </div>
-                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -250,7 +211,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Total Students</label>
-                                    <input type="text" name="total_students"
+                                    <input type="text" readonly name="total_students"
                                     id="edit_total_students" value="{{old('total_students')}}" class="form-control">
                             </div>
                         </div>
@@ -309,15 +270,13 @@
             let bs_level = $('#bs_level').val();
             let ms_level = $('#ms_level').val();
             let phd_level = $('#phd_level').val();
-            let total_students = $('#total_students').val();
 
             !year?addClass('year'):removeClass('year');
             !bs_level?addClass('bs_level'):removeClass('bs_level');
             !ms_level?addClass('ms_level'):removeClass('ms_level');
             !phd_level?addClass('phd_level'):removeClass('phd_level');
-            !total_students?addClass('total_students'):removeClass('total_students');
 
-            if(!year || !bs_level || !ms_level || !phd_level || !total_students )
+            if(!year || !bs_level || !ms_level || !phd_level  )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -372,7 +331,6 @@
             let bs_level = $('#edit_bs_level').val();
             let ms_level = $('#edit_ms_level').val();
             let phd_level = $('#edit_phd_level').val();
-            let total_students = $('#edit_total_students').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
@@ -380,9 +338,8 @@
             !bs_level?addClass('edit_bs_level'):removeClass('edit_bs_level');
             !ms_level?addClass('edit_ms_level'):removeClass('edit_ms_level');
             !phd_level?addClass('edit_phd_level'):removeClass('edit_phd_level');
-            !total_students?addClass('edit_total_students'):removeClass('edit_total_students');
 
-            if(!year || !bs_level || !ms_level || !phd_level || !total_students )
+            if(!year || !bs_level || !ms_level || !phd_level)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

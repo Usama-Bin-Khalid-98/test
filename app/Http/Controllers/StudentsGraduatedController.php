@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\StudentsGraduated;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ class StudentsGraduatedController extends Controller
      */
     public function index()
     {
-        $programs = Program::where('status', 'active')->get();
+        $programs = Scope::with('program')->get();
 
         $students = StudentsGraduated::with('program')->get();
 
