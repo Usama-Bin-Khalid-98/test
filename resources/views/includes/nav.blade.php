@@ -186,7 +186,7 @@
 
           </ul>
         </li>
-{{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>--}}
+            <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-gears text-black"></i>Desk Review</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-laptop text-black"></i>Eligibility Screening</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-user text- black"></i>Admin</a></li>
             <li  class="{{ (request()->is('config')) ? 'active' : '' }}"><a href="/config"><i class="fa fa-gears text-black"></i>Configuration</a></li>

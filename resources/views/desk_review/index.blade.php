@@ -1,6 +1,4 @@
-@section('pageTitle', 'Business School Facility')
-
-
+@section('pageTitle', 'Desk Review')
 @if(Auth::user())
 
     @include("../includes.head")
@@ -16,12 +14,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Business School Facility
+                Basic Eligibility Criteria (1-6): Fulfilled/Not Fulfilled with Criteria Number
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Business School Facility</li>
+                <li class="active">Desk Review</li>
             </ol>
         </section>
         <section class="content-header">
@@ -36,22 +34,23 @@
         </section>
 
         {{--Dean section --}}
-        {{--Dean section --}}
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Business School Facility.</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                            </div>
+                            <h3 >Applied for:</h3>
+                            <h3 >Application Received:</h3>
+                            <h3 >Basic Eligibility Criteria (1-6): Fulfilled/Not Fulfilled with Criteria Number</h3>
+{{--                            <div class="box-tools pull-right">--}}
+{{--                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>--}}
+{{--                                </button>--}}
+{{--                                <div class="btn-group">--}}
+{{--                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">--}}
+{{--                                        <i class="fa fa-file-pdf-o"></i></button>--}}
+{{--                                </div>--}}
+{{--                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>--}}
+{{--                            </div>--}}
                         </div>
 
                         <!-- /.box-header -->
@@ -61,28 +60,30 @@
                              <table class="table table-bordered ">
                                 <thead>
                                 <tr>
-                                    <th>Facility Types </th>
-                                    <th>Facilities</th>
-                                    <th>Select</th>
+                                    <th>Data provided by University</th>
+                                    <th>NBEAC Criteria</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                   @foreach($facility_types as $type)
                                 <tr>
-                                    <td>
-                                        <strong>@if(!$loop->first && $type->facility_type->name !== $facility_types[$loop->index -1]->facility_type->name) {{$type->facility_type->name}} @endif</strong>
-                                    </td>
-                                    <td>
-                                        <p>{{$type->name}}</p>
-                                    </td>
+                                    <td style="width: 50%">
+                                        1.	Programs started (Table-1.2 date of program commencement)
+                                        i.	BBA started in
+                                        ii.	MBA(1.5) started in
+                                        iii.	MBA(2.5) started in
 
-                                    <td>
-                                        <input type="radio" data-id="{{$type->id}}" value="yes" name="isChecked{{$type->id}}" > <span>Yes</span>
-                                        <input type="radio" data-id="{{$type->id}}" checked value="no" name="isChecked{{$type->id}}"> <span>No</span>
+                                    </td>
+                                    <td style="width: 50%">
+                                        At least 3 batches of the degree should have passed to consider the program for accreditation.
+                                        i.	BBA after 5.5 years of program started
+                                        ii.	MBA 1.5 after 2.5 years of program started
+                                        iii.	MBA 2.5 after 3.5 years of program started
+                                        iv.	MBA 3.5 after 5 years of program started.
+
                                     </td>
                                 </tr>
-                                @endforeach
+
 
                                 </tbody>
                             </table>
@@ -121,14 +122,14 @@
                                 </thead>
                                 <tbody>
 
-                                   @foreach($facilitiess as $summary)
-                                <tr>
-                                    <td>{{$summary->facility->name}}</td>
-                                    <td><i class="badge {{$summary->isChecked == 'yes'?'bg-green':'bg-red'}}">{{$summary->isChecked == 'yes'?'Yes':'No'}}</i></td>
-                                    <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility->name}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
-                                </tr>
-                                @endforeach
+{{--                                   @foreach($facilitiess as $summary)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{$summary->facility->name}}</td>--}}
+{{--                                    <td><i class="badge {{$summary->isChecked == 'yes'?'bg-green':'bg-red'}}">{{$summary->isChecked == 'yes'?'Yes':'No'}}</i></td>--}}
+{{--                                    <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>--}}
+{{--                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility->name}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>--}}
+{{--                                </tr>--}}
+{{--                                @endforeach--}}
 
                                 </tbody>
                                 <tfoot>

@@ -82,9 +82,8 @@ use Illuminate\Support\Facades\Route;
     //research-summary
     Route::resource('research-summary','ResearchSummaryController');
 
-//Facilities-information
-Route::resource('financial-info','FinancialInfoController');
-Route::resource('business-school-facility','BusinessSchoolFacilityController');
-
-Route::resource('course-type','CourseTypeController');
-
+    //Facilities-information
+    Route::resource('financial-info','FinancialInfoController');
+    Route::resource('business-school-facility','BusinessSchoolFacilityController');
+    Route::resource('course-type','CourseTypeController');
+    Route::resource('desk-review', 'DeskReviewController');
