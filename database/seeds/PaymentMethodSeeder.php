@@ -14,7 +14,7 @@ class PaymentMethodSeeder extends Seeder
         //
         DB::table('payment_methods')->insert([
             ['name' => 'Online Bank'],
-            ['name' => 'Check'],
+            ['name' => 'Cheque'],
             ['name' => 'EasyPaisa'],
             ['name' => 'PayOrder/Demand Draft']
         ]);

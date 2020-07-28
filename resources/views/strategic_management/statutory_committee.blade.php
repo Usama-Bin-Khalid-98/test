@@ -119,7 +119,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 20px;">
                                     <label for="name"></label>
                                     <input type="submit" name="add" value="Add" class="btn btn-info">

@@ -58,27 +58,17 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                            <form action="javascript:void(0)" id="form" method="POST">
-                               <div class="col-md-3">
-                                   <div class="form-group">
-                                       <label for="name">Name of Statutory Body</label>
-                                       <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
-                                           <option selected disabled >Select Body Name</option>
-                                           @foreach($bodies as $designation)
-                                               <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                           @endforeach
-                                       </select>
-                                   </div>
-                               </div>
 
                                <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Name of Member</label>
-                                    <select name="statutory_committees_id" id="statutory_committees_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled >Select Member</option>
-                                        @foreach($statutory_committee as $committee)
-                                        <option value="{{$committee->id}}">{{$committee->name}}</option>
-                                        @endforeach
-                                        </select>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{old('name')}}">
+{{--                                    <select name="statutory_committees_id" id="statutory_committees_id" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled >Select Member</option>--}}
+{{--                                        @foreach($statutory_committee as $committee)--}}
+{{--                                        <option value="{{$committee->id}}">{{$committee->name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                        </select>--}}
                                 </div>
                             </div>
 
@@ -93,15 +83,26 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Affiliation</label>
-                                    <input type="text" name="affiliation" id="affiliation" class="form-control">
-                                </div>
+                           <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="name">Affiliation</label>
+                                <input type="text" name="affiliation" id="affiliation" class="form-control">
                             </div>
+                           </div>
+                           <div class="col-md-3">
+                               <div class="form-group">
+                                   <label for="name">Name of Statutory Body (if)</label>
+                                   <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                       <option selected disabled >Select Body Name</option>
+                                       @foreach($bodies as $designation)
+                                           <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                       @endforeach
+                                   </select>
+                               </div>
+                           </div>
 
-                            <div class="col-md-12">
+
+                               <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
@@ -141,10 +142,10 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Name of Statutory Body</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
+                                    <th>Statutory Body Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -153,12 +154,12 @@
                                @foreach($affiliations as $affiliation)
                                 <tr>
 
-                                    <td>{{$affiliation->statutory_bodies->name}}</td>
-                                    <td>{{$affiliation->statutory_committees->name}}</td>
+                                    <td>{{$affiliation->name}}</td>
                                     <td>{{$affiliation->designation->name}}</td>
                                     <td>{{$affiliation->affiliation}}</td>
+                                    <td>{{@$affiliation->statutory_bodies->name}}</td>
                                     <td><i class="badge {{$affiliation->status == 'active'?'bg-green':'bg-red'}}">{{$affiliation->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","statutory_committees_id":"{{$affiliation->statutory_committees_id}}","designation_id":"{{$affiliation->designation_id}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","name":"{{$affiliation->name}}","designation_id":"{{$affiliation->designation_id}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -166,10 +167,10 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Name of Statutory Body</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
+                                    <th>Statutory Body Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -213,12 +214,7 @@
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Name of Member</label>
-                                    <select name="statutory_committees_id" id="edit_statutory_committees_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled >Select Member</option>
-                                        @foreach($statutory_committee as $committee)
-                                        <option value="{{$committee->id}}">{{$committee->name}}</option>
-                                        @endforeach
-                                        </select>
+                                    <input type="text" name="name" id="edit_name" class="form-control" value="{{old('name')}}">
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
@@ -292,17 +288,17 @@
         });
 
          $('#form').submit(function (e) {
-            let statutory_committees_id = $('#statutory_committees_id').val();
             let designation_id = $('#designation_id').val();
             let affiliation = $('#affiliation').val();
+            let name = $('#name').val();
             let statutory_bodies_id = $('#statutory_bodies_id').val();
 
-            !statutory_committees_id?addClass('statutory_committees_id'):removeClass('statutory_committees_id');
+            !name?addClass('name'):removeClass('name');
             !designation_id?addClass('designation_id'):removeClass('designation_id');
             !affiliation?addClass('affiliation'):removeClass('affiliation');
-            !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
+            // !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
 
-            if(!statutory_committees_id || !designation_id || !affiliation || !statutory_bodies_id)
+            if(!designation_id || !affiliation || !name)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
