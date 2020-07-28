@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DeskReview;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 
 class DeskReviewController extends Controller
@@ -15,6 +16,7 @@ class DeskReviewController extends Controller
     public function index()
     {
         //
+        $accreditation=  Scope::where('status', 'active');
         return view('desk_review.index');
     }
 

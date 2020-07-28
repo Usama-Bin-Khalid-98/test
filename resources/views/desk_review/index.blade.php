@@ -59,37 +59,120 @@
 
                              <table class="table table-bordered ">
                                 <thead>
-                                <tr>
-                                    <th>Data provided by University</th>
-                                    <th>NBEAC Criteria</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                                    <tr>
+                                        <th style="width: 50%">Data provided by University</th>
+                                        <th style="width: 50%">NBEAC Criteria</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                                <tr>
-                                    <td style="width: 50%">
-                                        1.	Programs started (Table-1.2 date of program commencement)
-                                        i.	BBA started in
-                                        ii.	MBA(1.5) started in
-                                        iii.	MBA(2.5) started in
+                                    <tr>
 
-                                    </td>
-                                    <td style="width: 50%">
-                                        At least 3 batches of the degree should have passed to consider the program for accreditation.
-                                        i.	BBA after 5.5 years of program started
-                                        ii.	MBA 1.5 after 2.5 years of program started
-                                        iii.	MBA 2.5 after 3.5 years of program started
-                                        iv.	MBA 3.5 after 5 years of program started.
+                                        <td>
+                                            1. Programs started (Table-1.2 date of program commencement)
+                                            <ol type="i">
+                                                <li>BBA started in</li>
+                                                <li>MBA(1.5) started in</li>
+                                                <li>MBA(2.5) started in</li>
+                                            </ol>
 
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>
+                                            <ol type="i">
+                                                <li>BBA after 5.5 years of program started</li>
+                                                <li>MBA 1.5 after 2.5 years of program started</li>
+                                                <li>MBA 2.5 after 3.5 years of program started</li>
+                                                <li>MBA 3.5 after 5 years of program started.</li>
+                                            </ol>
 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            2. Vision and Mission statements ( Question 1.7)
 
+                                        </td>
+                                        <td>
+                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.
+                                            There should be documentary evidence that vision and mission are approved by any statutory body.
+                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                           3. Strategic Plan (Question 1.8)
+                                        </td>
+                                        <td>
+                                            Strategic Plan should exist for 03-05 years
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> 4. Student Intake(Table 2.3)</td>
+                                        <td> Student Intake(Table 2.3) </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td> 5. Student enrollment </td>
+                                        <td>
+                                            <strong>Class Size:</strong>
+                                            <ol type="i">
+                                                <li>Undergraduate/ semester: 20-55 students</li>
+                                                <li>Graduates/semester: 15-45 students</li>
+                                            </ol>
+                                            <p>There should be minimum of 15 full time faculty members related to Management Sciences/ Business Administration field. (condition for Table 4.1)
+                                                Preferably, there should be 03 faculty members at Prof/Associate Prof level, however, minimum 02 Associate Professors and 03 at Assistant Professors are required to become eligible for accreditation process. (Condition for Table 4.3a)</p>
+
+                                            <p>Faculty Diversity(In breeding)	Less Than 25%</p>
+                                            <p>International Exposure of the faculty	20%</p>
+                                            <p>FT:PT= 70:30 (Condition for table 4.4.)</p>
+                                            <p>Student to Teacher Ratio=25:1 (undergraduate) 20:1 (graduate)
+                                            (Condition for Table 4.4.)</p>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught)
+                                        </td>
+                                        <td>
+                                            <strong>Following is the recommended Course load</strong>
+                                            Lecturer= 3-4 per semester/ 6-8 per annum
+                                            Assistant Professor= 3 per semester/6 per annum
+                                            Associate Professor/ Professor=2-3 per semester/4-6 per annum
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            7. Research Output last three years (Table 5.1 summary of research output)
+                                        </td>
+                                        <td>
+                                            Following is the recommended Course load
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            8. Bandwidth =  GB (table 6.2 Laboratories)
+                                        </td>
+                                        <td>
+                                            Bandwidth Internet service (desirable) = 1 MB access rate
+                                            Student to Computer ratio: 1:20
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            9. Student to Computer ratio is 	 (table 6.2 Laboratories)
+                                        </td>
+                                        <td>Student to Computer ratio: 1:20</td>
+                                    </tr>
+                                 </ol>
                                 </tbody>
                             </table>
-
-
-
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
