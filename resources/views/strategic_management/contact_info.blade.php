@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide contact information in table 1.3, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
+                            <h3 class="box-title">Provide contact information in the Table 1.3. Furthermore, attach CVs of the dean, head of the business school, and focal person as Appendix-1A.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -54,9 +54,23 @@
                         </div>
                          <div class="box-body">
                              <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
+                                 <div class="col-md-3">
+                                     <div class="form-group">
+                                         <label for="name">Designation</label>
+                                         <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                             <option value="">Select Designation</option>
+                                             <option value="">Dean of school</option>
+                                             <option value="">Head of school </option>
+                                             <option value="">NBEAC focal person </option>
+                                             @foreach($designations as $designation)
+                                                 <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                             @endforeach
+                                         </select>
+                                     </div>
+                                 </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Contact Person Name here</label>
+                                    <label for="name">Name</label>
                                     <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
                                 </div>
                             </div>
@@ -80,24 +94,12 @@
                                 </div>
                             </div>
 
-                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">NBEAC focal person (if different) </label>
-                                    <input type="text" name="focal_person" id="focal_person" value="{{old('focal_person')}}" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Designation</option>
-                                        @foreach($designations as $designation)
-                                         <option value="{{$designation->id}}">{{$designation->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
+{{--                             <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">NBEAC focal person (if different) </label>--}}
+{{--                                    <input type="text" name="focal_person" id="focal_person" value="{{old('focal_person')}}" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="col-md-3">
                                 <div class="form-group">

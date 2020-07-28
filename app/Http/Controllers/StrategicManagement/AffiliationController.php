@@ -22,7 +22,7 @@ class AffiliationController extends Controller
      */
     public function index()
     {
-        
+
         $statutory_committee = StatutoryCommittee::all();
         $designations = Designation::all();
         $bodies = StatutoryBody::all();
@@ -59,11 +59,11 @@ class AffiliationController extends Controller
 
             Affiliation::create([
                 'campus_id' => Auth::user()->campus_id,
-                'statutory_committees_id' => $request->statutory_committees_id,
+                'name' => $request->name,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id
-                
+
             ]);
 
             return response()->json(['success' => ' Affiliations added successfully.']);
@@ -115,7 +115,7 @@ class AffiliationController extends Controller
         try {
 
             Affiliation::where('id', $affiliation->id)->update([
-                'statutory_committees_id' => $request->statutory_committees_id,
+                'name' => $request->name,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id,
@@ -149,10 +149,10 @@ class AffiliationController extends Controller
     protected function rules() {
         return [
 
-            'statutory_committees_id' => 'required',
+            'name' => 'required',
             'designation_id' => 'required',
             'affiliation' => 'required',
-            'statutory_bodies_id' => 'required'
+//            'statutory_bodies_id' => 'required'
         ];
     }
 
