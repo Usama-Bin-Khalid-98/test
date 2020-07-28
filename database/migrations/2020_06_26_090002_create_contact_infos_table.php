@@ -26,10 +26,10 @@ class CreateContactInfosTable extends Migration
             $table->string('cv', 255);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
-            $table->integer('business_school_id')->unsigned();
-            $table->foreign('business_school_id')
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('business_schools');
+                ->on('campuses');
             $table->string('focal_person', 100)->nullable();
             $table->softDeletes();
             $table->timestamps();

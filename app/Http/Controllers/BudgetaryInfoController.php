@@ -30,7 +30,7 @@ class BudgetaryInfoController extends Controller
      */
     public function index()
     {
-        $budgets  = BudgetaryInfo::get();
+        $budgets  = BudgetaryInfo::with('campus')->get();
 
          return view('strategic_management.budgetary_info', compact('budgets'));
     }
@@ -61,7 +61,7 @@ class BudgetaryInfoController extends Controller
         try {
 
             BudgetaryInfo::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'year' => $request->year,
                 'uni_budget' => $request->uni_budget,
                 'uni_proposed_budget' => $request->uni_proposed_budget,

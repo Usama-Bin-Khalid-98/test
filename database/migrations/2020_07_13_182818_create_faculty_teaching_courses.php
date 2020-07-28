@@ -15,14 +15,14 @@ class CreateFacultyTeachingCourses extends Migration
     {
         Schema::create('faculty_teaching_courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('business_school_id')->unsigned();
-            $table->foreign('business_school_id')
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('business_schools');
+                ->on('campuses');
             $table->integer('lookup_faculty_type_id')->unsigned();
             $table->foreign('lookup_faculty_type_id')
                 ->references('id')
-                ->on('lookup_faculty_type');
+                ->on('lookup_faculty_types');
             $table->integer('designation_id')->unsigned();
             $table->foreign('designation_id')
                 ->references('id')

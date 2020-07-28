@@ -15,6 +15,10 @@ class CreateStatutoryCommitteesTable extends Migration
     {
         Schema::create('statutory_committees', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
+                ->references('id')
+                ->on('campuses');
             $table->integer('statutory_body_id')->unsigned();
             $table->foreign('statutory_body_id')
                 ->references('id')

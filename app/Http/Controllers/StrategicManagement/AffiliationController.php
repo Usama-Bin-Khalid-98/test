@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\StrategicManagement;
 
-use App\Models\StrategicManagement\StatutoryCommittee;
 use App\Models\Common\Designation;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\Models\StrategicManagement\Affiliation;
@@ -23,13 +22,13 @@ class AffiliationController extends Controller
     public function index()
     {
 
-        $statutory_committee = StatutoryCommittee::all();
+        
         $designations = Designation::all();
         $bodies = StatutoryBody::all();
 
-        $affiliations = Affiliation::with('statutory_committees','designation','statutory_bodies')->get();
+        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->get();
         //dd($affiliations);
-        return view('strategic_management.affiliations', compact('statutory_committee','designations','bodies','affiliations'));
+        return view('strategic_management.affiliations', compact('designations','bodies','affiliations'));
     }
 
     /**

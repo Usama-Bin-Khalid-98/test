@@ -139,9 +139,11 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>University Budget</th>
                                     <th>University proposed Budget</th>
@@ -154,6 +156,8 @@
                                 <tbody>
                                 @foreach($budgets as $budget)
                                 <tr>
+                                    <td>{{$budget->campus->business_school->name}}</td>
+                                    <td>{{$budget->campus->location}}</td>
                                     <td>{{$budget->year}}</td>
                                     <td>{{$budget->uni_budget}}</td>
                                     <td>{{$budget->uni_proposed_budget}}</td>
@@ -167,6 +171,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>University Budget</th>
                                     <th>University proposed Budget</th>
