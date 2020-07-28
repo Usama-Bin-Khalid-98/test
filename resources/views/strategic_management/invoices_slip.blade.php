@@ -215,7 +215,7 @@
                                     <td><a href="{{$invoice->slip}}">Invoice</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td><i class="badge {{$invoice->status =='active'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':'Inactive'}}</i></td>
-                                    <td><span data-toggle="tooltip" title="Add Invoice Slip"><i class="fa fa-money text-info invoice-add" data-id="{{$invoice->id}}" data-toggle="modal"  data-target="#invoice_modal" ></i> </span>|<i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}" ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}" data-row='{"id":"{{$invoice->id}}","program_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","date":"{{$invoice->transaction_date}}","status":"{{$invoice->status}}","comments":"{{$invoice->comments}}"}' data-toggle="modal" data-target="#edit-modal"></i> </td>
+                                    <td>@if($invoice->status!== 'paid')<span data-toggle="tooltip" title="Add Invoice Slip" data-id="{{$invoice->id}}"><i class="fa fa-money text-info invoice-add" data-toggle="modal"  data-target="#invoice_modal" ></i> </span>|@endif <i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}" ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}" data-row='{"id":"{{$invoice->id}}","program_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","date":"{{$invoice->transaction_date}}","status":"{{$invoice->status}}","comments":"{{$invoice->comments}}"}' data-toggle="modal" data-target="#edit-modal"></i> </td>
                                 </tr>
                                 @endforeach
 
@@ -287,6 +287,12 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Cheque No</label>
+                                <input type="text" id="edit_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
+                            </div>
+                        </div>
 
                         <div class="col-md-12">
                             <div class="form-group">
@@ -316,7 +322,7 @@
                     <h4 class="modal-title">Add Invoice Slip for Department Registration </h4>
                 </div>
                     <div class="modal-body">
-                        <form action="javascript:void(0)" method="post" enctype="multipart/form-data" id="addInvoice">
+                        <form action="javascript:void(0)" method="POST" enctype="multipart/form-data" id="Invoice">
                             <div class="box box-primary">
                                 <!-- /.box-header -->
                                 <div class="box-body">
@@ -350,6 +356,14 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="name">Cheque No</label>
+                                            <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="slip">Bank Deposit Slip</label>
@@ -365,23 +379,21 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="type">{{ __('Status') }} : </label>
-                                            <p><input type="radio" name="status" class="flat-red" value="active" > Active
-                                                <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-md-6">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                            <p><input type="radio" name="status" class="flat-red" value="active" > Active--}}
+{{--                                                <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
                                 </div>
                                 <!-- /.box-body -->
                             </div>
-                        </form>
-                        <!-- /.box -->
-                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" value="update" class="btn btn-info">
+                        <input type="submit" value="update" name="submit" id="update-button" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -416,11 +428,17 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
+        })
+
+        $("#invoice_modal").on('shown.bs.modal', function (e) {
+            console.log('this value', $(this));
+            console.log('modal showed', $(this).data('id'));
+        })
         /*Add Scope*/
-        $('#addInvoice').on('submit', function (e) {
+        $('#Invoice').on('submit', function (e) {
 
             let invoice_no = $('#update_invoice_no').val();
+            let cheque_no = $('#cheque_no').val();
             let transaction_date = $('#transaction_date').val();
             let slip = $('#slip').val();
             let payment_method = $('#payment_method').val();
@@ -437,7 +455,7 @@
                 // Yes button callback
                 let formData = new FormData(this);
                 $.ajax({
-                    url:'{{url("strategic/invoices")}}',
+                    url:'{{url("strategic/invoices")}}/'+id,
                     type:'PUT',
                     data: formData,
                     cache:false,
@@ -452,7 +470,8 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                        setTimeout(() => location.reload(), 1000);
+                        console.log('invoices', response);
+                       // setTimeout(() => location.reload(), 1000);
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();
@@ -510,15 +529,6 @@
             $('#id').val(data.id);
             $('#old_name').text(data.slip);
             $('#edit_comments').val(data.comments);
-        });
-
-        ///// edit invoice
-        $('.invoice-add').on('click', function () {
-           // let data = JSON.parse(JSON.stringify($(this).data('row')));
-            let id = $(this).data('id');
-            console.log('id is  ', id);
-            // Initialize Select2
-            $('#id').val(id);
         });
 
         $('#update').on('submit', function () {
