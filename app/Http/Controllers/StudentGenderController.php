@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\StudentGender;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ class StudentGenderController extends Controller
      */
     public function index()
     {
-        $programs = Program::get();
+        $programs = Scope::with('program')->get();
         $genders = StudentGender::get();
 
         return view('registration.student_enrolment.student_gender', compact('programs','genders'));

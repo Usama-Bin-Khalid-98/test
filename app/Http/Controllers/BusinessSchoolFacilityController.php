@@ -58,15 +58,12 @@ class BusinessSchoolFacilityController extends Controller
         }
         try {
 
-            Auth::user()->business_school_id;
-
             foreach ($request->all()['data'] as $facility){
                 //dd($facility['id']);
                 BusinessSchoolFacility::create([
-                    'business_school_id' => Auth::user()->business_school_id,
+                    'campus_id' => Auth::user()->campus_id,
                     'facility_id' => $facility['id'],
-                    'isChecked' => $facility['isChecked'],
-                    'status' => 'active'
+                    'remark' => $facility['remark']
                 ]);
 
             }
@@ -120,7 +117,7 @@ class BusinessSchoolFacilityController extends Controller
         try {
 
             BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
-                'isChecked' => $request->isChecked,
+                'remark' => $request->remark,
                 'status' => $request->status
             ]);
             return response()->json(['success' => 'Business School Facility updated successfully.']);

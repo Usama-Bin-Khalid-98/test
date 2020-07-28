@@ -63,7 +63,7 @@
                                 <tr>
                                     <th>Facility Types </th>
                                     <th>Facilities</th>
-                                    <th>Select</th>
+                                    <th>Remarks</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -77,9 +77,12 @@
                                         <p>{{$type->name}}</p>
                                     </td>
 
-                                    <td>
+                                    <!-- <td>
                                         <input type="radio" data-id="{{$type->id}}" value="yes" name="isChecked{{$type->id}}" > <span>Yes</span>
                                         <input type="radio" data-id="{{$type->id}}" checked value="no" name="isChecked{{$type->id}}"> <span>No</span>
+                                    </td> -->
+                                    <td>
+                                        <input type="text"  name="remark{{$type->id}}" data-id="{{$type->id}}">
                                     </td>
                                 </tr>
                                 @endforeach
@@ -114,7 +117,7 @@
                                 <tr>
                                     
                                     <th>Business School Facilities</th>
-                                    <th>isChecked</th>
+                                    <th>Remarks</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -124,9 +127,9 @@
                                    @foreach($facilitiess as $summary)
                                 <tr>
                                     <td>{{$summary->facility->name}}</td>
-                                    <td><i class="badge {{$summary->isChecked == 'yes'?'bg-green':'bg-red'}}">{{$summary->isChecked == 'yes'?'Yes':'No'}}</i></td>
+                                    <td>{{$summary->remark}}</i></td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility->name}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility->name}}","remark":"{{$summary->remark}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
                                 @endforeach
 
@@ -169,12 +172,11 @@
                                 <input type="hidden" id="edit_id">
                               </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isChecked') }} : </label>
-                                <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <label for="name">Remark</label>
+                                    <input type="text"  name="remark" id="edit_remark" value="{{old('edit_remark')}}" class="form-control">
+                                </div>
+                              </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -227,9 +229,10 @@
          $('#form').submit(function (e) {
              // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
              console.log('submit button clicked');
-            let facility_id = $('input:radio:checked').map(function(index, val) {
-                        return {"id":$(val).data('id'), "isChecked":$(val).val()};
-                      }).get();
+
+            let facility_id = $('input[type="text"]').map(function(index, val) {
+                 return {"id":$(val).data('id'), "remark":$(val).val()};
+             }).get();
 
             // let data = [];
             // for( i =0; i < facility_id.length; i++)
@@ -282,14 +285,14 @@
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_facility_id').val(data.facility_id);
+            $('#edit_remark').val(data.remark);
             $('#edit_id').val(data.id);
-            $('input[value='+data.isChecked+']').iCheck('check');
             $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
-            let isChecked = $('input[name=edit_isChecked]:checked').val();
+            let remark = $('#edit_remark').val();
             let status = $('input[name=edit_status]:checked').val();
 
             

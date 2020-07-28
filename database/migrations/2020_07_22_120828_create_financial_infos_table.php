@@ -23,12 +23,12 @@ class CreateFinancialInfosTable extends Migration
             $table->foreign('income_source_id')
                 ->references('id')
                 ->on('income_sources');
-            $table->year('year_three');
-            $table->year('year_two');
-            $table->year('year_one');
-            $table->year('year_t');
-            $table->year('year_t_plus_one');
-            $table->year('year_t_plus_two');
+            $table->string('year_three',250);
+            $table->string('year_two',250);
+            $table->string('year_one',250);
+            $table->string('year_t',250);
+            $table->string('year_t_plus_one',250);
+            $table->string('year_t_plus_two',250);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
             $table->softDeletes();

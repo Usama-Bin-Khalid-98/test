@@ -64,7 +64,7 @@
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
-                                         <option value="{{$program->id}}">{{$program->name}}</option>
+                                         <option value="{{$program->program->id}}">{{$program->program->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -162,7 +162,7 @@
                                 <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
                                     <option value="">Select Program</option>
                                     @foreach($programs as $program)
-                                        <option value="{{$program->id}}">{{$program->name}}</option>
+                                        <option value="{{$program->program->id}}">{{$program->program->name}}</option>
                                     @endforeach
                                 </select>
 
