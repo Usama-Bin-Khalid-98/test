@@ -42,6 +42,7 @@ class UserSeeder extends Seeder
             'email' => 'city@gmail.com',
             'password' => Hash::make('admin!@#$'),
             'business_school_id' => 1,
+            'campus_id' => 1,
             'country' => 'pakistan',
             'city' => 'peshawar',
             'user_type' => 'business_school',

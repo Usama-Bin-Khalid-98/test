@@ -273,7 +273,7 @@
                                                     <div class="form-group">
 {{--                                                        <label for="Desk Review">Undertaking : </label>--}}
                                                         <input type="checkbox" id="undertaking" name="undertaking" class="flat-red" {{old('undertaking') === 'on'?'checked':''}}>
-                                                        <span class="text-red">
+                                                        <span class="text-black">
                                                              I, the undersigned, fully understand and agree with the
                                                           <a data-toggle="modal" data-target="#undertaking-modal">
                                                              terms and conditions
@@ -772,7 +772,7 @@
                 // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
                     console.log('response here', response);
-                    var data =[{'id':'', 'text':'Main Campus'}];
+                    var data =[];
                     $('#campus_id').val(null);
                     $("#campus_id").empty();
                     Object.keys(response).forEach(function (index) {

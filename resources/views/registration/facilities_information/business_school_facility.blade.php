@@ -82,7 +82,7 @@
                                         <input type="radio" data-id="{{$type->id}}" checked value="no" name="isChecked{{$type->id}}"> <span>No</span>
                                     </td> -->
                                     <td>
-                                        <input type="text"  name="remark{{$type->id}}" data-id="{{$type->id}}">
+                                        <input type="textval" name="remark{{$type->id}}" data-id="{{$type->id}}" class="form-control">
                                     </td>
                                 </tr>
                                 @endforeach
@@ -230,10 +230,10 @@
              // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
              console.log('submit button clicked');
 
-            let facility_id = $('input[type="text"]').map(function(index, val) {
+            let facility_id = $('input[type="textval"]').map(function(index, val) {
+                console.log('indes ', index, 'val', val);
                  return {"id":$(val).data('id'), "remark":$(val).val()};
              }).get();
-
             // let data = [];
             // for( i =0; i < facility_id.length; i++)
             // {

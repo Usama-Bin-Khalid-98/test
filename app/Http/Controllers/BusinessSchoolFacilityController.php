@@ -49,7 +49,7 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
+       // dd($request->all());
 
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -58,13 +58,18 @@ class BusinessSchoolFacilityController extends Controller
         }
         try {
 
-            foreach ($request->all()['data'] as $facility){
-                //dd($facility['id']);
+            foreach ($request->all() as $key => $facility){
+                //dd();ount]['id']);
+                foreach ($facility as $value){
+                    //dd($value['id']);
                 BusinessSchoolFacility::create([
                     'campus_id' => Auth::user()->campus_id,
-                    'facility_id' => $facility['id'],
-                    'remark' => $facility['remark']
+                    'facility_id' => $value['id'],
+                    'remark' => $value['remark']
                 ]);
+
+                }
+
 
             }
 
