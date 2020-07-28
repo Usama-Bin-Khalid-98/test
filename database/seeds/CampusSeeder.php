@@ -168,8 +168,11 @@ class CampusSeeder extends Seeder
            [ 'business_school_id' => '131' , 'location' => 'london'],
            [ 'business_school_id' => '132' , 'location' => '​Sialkot'],
            [ 'business_school_id' => '179' , 'location' => 'Sawat'],
+           ///// Campuses
            [ 'business_school_id' => '1' , 'location' => 'Peshawar'],
            [ 'business_school_id' => '2' , 'location' => 'Peshawar'],
+           [ 'business_school_id' => '2' , 'location' => 'Islamabad'],
+           [ 'business_school_id' => '3' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '3' , 'location' => 'Kohat'],
            [ 'business_school_id' => '4' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '5' , 'location' => 'Islamabad'],

@@ -23,7 +23,7 @@ class CreateBusinessSchoolFacilitiesTable extends Migration
             $table->foreign('facility_id')
                 ->references('id')
                 ->on('facilities');
-            $table->string('remark',250);
+            $table->string('remark',250)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->softDeletes();
             $table->timestamps();
