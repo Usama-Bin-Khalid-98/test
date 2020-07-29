@@ -143,8 +143,9 @@
                             <table id="datatable" class="table table-bordered table-stripped">
                                 <thead>
                                 <tr>
-                                    <th>Publication Type</th>
                                     <th>Business School</th>
+                                    <th>Campus</th>
+                                    <th>Publication Type</th>
                                     <th>Year</th>
                                     <th>Total Items</th>
                                     <th>Contributing Core Faculty</th>
@@ -158,8 +159,9 @@
                                 <tbody>
                                @foreach($summaries as $summary)
                                 <tr>
-                                    <td>{{$summary->publication_type->name??""}}</td>
-                                    <td>{{$summary->business_school->name}}</td>
+                                    <td>{{$summary->campus->business_school->name}}</td>
+                                    <td>{{$summary->campus->location}}</td>
+                                    <td>{{$summary->publication_type->name}}</td>
                                     <td>{{$summary->year}}</td>
                                     <td>{{$summary->total_items}}</td>
                                     <td>{{$summary->contributing_core_faculty}}</td>
@@ -173,8 +175,9 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Publication Type</th>
                                     <th>Business School</th>
+                                    <th>Campus</th>
+                                    <th>Publication Type</th>
                                     <th>Year</th>
                                     <th>Total Items</th>
                                     <th>Contributing Core Faculty</th>

@@ -36,7 +36,7 @@ class FacultyGenderController extends Controller
 
         $faculty_type = LookupFacultyType::get();
 
-        $genders = FacultyGender::with('business_school','lookup_faculty_type')->get();
+        $genders = FacultyGender::with('campus','lookup_faculty_type')->get();
 
          return view('registration.faculty.faculty_gender', compact('faculty_type','genders'));
     }
@@ -67,7 +67,7 @@ class FacultyGenderController extends Controller
         try {
 
             FacultyGender::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'year' => $request->year,
                 'male' => $request->male,

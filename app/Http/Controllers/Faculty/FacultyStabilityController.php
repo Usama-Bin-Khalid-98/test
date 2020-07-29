@@ -34,7 +34,7 @@ class FacultyStabilityController extends Controller
     {
 
 
-        $stabilities = FacultyStability::with('business_school')->get();
+        $stabilities = FacultyStability::with('campus')->get();
 
          return view('registration.faculty.faculty_stability', compact('stabilities'));
     }
@@ -65,7 +65,7 @@ class FacultyStabilityController extends Controller
         try {
 
             FacultyStability::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'total_faculty' => $request->total_faculty,
                 'year' => $request->year,
                 'resigned' => $request->resigned,

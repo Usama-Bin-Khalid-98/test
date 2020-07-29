@@ -129,6 +129,7 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Total Faculty</th>
                                     <th>Year</th>
                                     <th>Retired</th>
@@ -143,7 +144,8 @@
                                 <tbody>
                              @foreach($stabilities as $req)
                                 <tr>
-                                    <td>{{$req->business_school->name}}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
                                     <td>{{$req->total_faculty}}</td>
                                     <td>{{$req->year}}</td>
                                     <td>{{$req->resigned}}</td>
@@ -163,6 +165,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Total Faculty</th>
                                     <th>Year</th>
                                     <th>Retired</th>

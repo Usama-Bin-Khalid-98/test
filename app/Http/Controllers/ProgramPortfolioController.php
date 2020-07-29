@@ -25,7 +25,7 @@ class ProgramPortfolioController extends Controller
         $scopes = Scope::with('program')->get();
         $courses = CourseType::where('status', 'active')->get();
 
-        $portfolios  = ProgramPortfolio::with('business_school','program','course_type')->get();
+        $portfolios  = ProgramPortfolio::with('campus','program','course_type')->get();
 
          return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
     }

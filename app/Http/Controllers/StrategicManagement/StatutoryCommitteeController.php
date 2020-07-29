@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
+use Auth;
 
 class StatutoryCommitteeController extends Controller
 {
@@ -61,6 +62,7 @@ class StatutoryCommitteeController extends Controller
                 $request->file('file')->move($path, $fileName);
 
                 StatutoryCommittee::create([
+                    'campus_id' => Auth::user()->campus_id,
                     'statutory_body_id' => $request->statutory_body_id,
                     'name' => $request->name,
                     'designation_id' => $request->designation_id,

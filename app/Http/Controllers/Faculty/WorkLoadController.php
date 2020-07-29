@@ -23,7 +23,7 @@ class WorkLoadController extends Controller
     {
          $designations = Designation::all();
 
-         $workloads = WorkLoad::with('business_school','designation')->get();
+         $workloads = WorkLoad::with('campus','designation')->get();
 
          return view('registration.faculty.workload', compact('designations','workloads'));
     }
@@ -54,13 +54,13 @@ class WorkLoadController extends Controller
         try {
 
             WorkLoad::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'faculty_name' => $request->faculty_name,
                 'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
                 'phd' => $request->phd,
                 'masters' => $request->masters,
-                'bachelors' => $request->bachelors,
+                'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'year' => $request->year
             ]);
@@ -119,7 +119,7 @@ class WorkLoadController extends Controller
                 'total_courses' => $request->total_courses,
                 'phd' => $request->phd,
                 'masters' => $request->masters,
-                'bachelors' => $request->bachelors,
+                'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'year' => $request->year,
                 'status' => $request->status,
@@ -157,7 +157,7 @@ class WorkLoadController extends Controller
             'total_courses' => 'required',
             'phd' => 'required',
             'masters' => 'required',
-            'bachelors' => 'required',
+            'bachleors' => 'required',
             'admin_responsibilities' => 'required',
             'year' => 'required'
         ];

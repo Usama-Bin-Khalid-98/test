@@ -36,7 +36,7 @@ class ApplicationReceivedController extends Controller
         $scopes = Scope::with('program')->get();
         $semesters = Semester::where('status', 'active')->get();
 
-        $apps  = ApplicationReceived::with('program','semester')->get();
+        $apps  = ApplicationReceived::with('campus','program','semester')->get();
 
         return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
     }

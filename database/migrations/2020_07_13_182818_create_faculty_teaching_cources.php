@@ -13,7 +13,7 @@ class CreateFacultyTeachingCourses extends Migration
      */
     public function up()
     {
-        Schema::create('faculty_teaching_courses', function (Blueprint $table) {
+        Schema::create('faculty_teaching_cources', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
@@ -27,7 +27,7 @@ class CreateFacultyTeachingCourses extends Migration
             $table->foreign('designation_id')
                 ->references('id')
                 ->on('designations');
-            $table->integer('max_courses _allowed');
+            $table->integer('max_cources_allowed');
             $table->integer('tc_program1');
             $table->integer('tc_program2');
             $table->enum('status',['active','inactive'])->default('active');
@@ -44,6 +44,6 @@ class CreateFacultyTeachingCourses extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty_teaching_courses');
+        Schema::dropIfExists('faculty_teaching_cources');
     }
 }

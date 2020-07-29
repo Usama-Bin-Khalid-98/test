@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">MAX Courses Allowed</label>
+                                    <label for="name">MAX Cources Allowed</label>
                                     <input type="number" name="max_cources_allowed" id="max_cources_allowed" class="form-control">
                                 </div>
                             </div>
@@ -123,6 +123,7 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
                                     <th>Max Cources Allowed</th>
@@ -136,7 +137,8 @@
                                 <tbody>
                                 @foreach($visitings as $req)
                                 <tr>
-                                    <td>{{$req->business_school->name}}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
                                     <td>{{$req->lookup_faculty_type->faculty_type}}</td>
                                     <td>{{$req->designation->name}}</td>
                                     <td>{{$req->max_cources_allowed}}</td>
@@ -153,6 +155,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
                                     <th>Max Cources Allowed</th>

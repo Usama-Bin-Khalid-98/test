@@ -109,6 +109,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program Name</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>
@@ -120,7 +122,9 @@
 
                                 @foreach($entryRequirements as $req)
                                 <tr>
-                                    <td>{{$req->program->name??""}}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
+                                    <td>{{$req->program->name}}</td>
                                     <td>{{$req->eligibility_criteria->name}}</td>
                                     <td>{{$req->min_req}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
@@ -131,6 +135,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program Name</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>

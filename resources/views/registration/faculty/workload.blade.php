@@ -97,7 +97,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Bachelors</label>
-                                    <input type="number" name="bachelors" id="bachelors" class="form-control">
+                                    <input type="number" name="bachleors" id="bachleors" class="form-control">
                                 </div>
                             </div>
 
@@ -143,6 +143,7 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Faculty Name</th>
                                     <th>Designation</th>
                                     <th>Total Courses</th>
@@ -159,18 +160,19 @@
                                 <tbody>
                                @foreach($workloads as $req)
                                 <tr>
-                                    <td>{{$req->business_school->name}}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
                                     <td>{{$req->faculty_name}}</td>
                                     <td>{{$req->designation->name}}</td>
                                     <td>{{$req->total_courses}}</td>
                                     <td>{{$req->phd}}</td>
                                     <td>{{$req->masters}}</td>
-                                    <td>{{$req->bachelors}}</td>
+                                    <td>{{$req->bachleors}}</td>
                                     <td>{{$req->admin_responsibilities}}</td>
                                     <td>{{$req->year}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachelors":"{{$req->bachelors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -179,6 +181,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Faculty Name</th>
                                     <th>Designation</th>
                                     <th>Total Courses</th>
@@ -258,7 +261,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Bachelors</label>
-                                    <input type="number" name="bachelors" id="edit_bachelors" value="{{old('edit_bachelors')}}" class="form-control">
+                                    <input type="number" name="bachleors" id="edit_bachleors" value="{{old('edit_bachleors')}}" class="form-control">
                                 </div>
                               </div>
 
@@ -345,7 +348,7 @@
             let total_courses = $('#total_courses').val();
             let phd = $('#phd').val();
             let masters = $('#masters').val();
-            let bachelors = $('#bachelors').val();
+            let bachleors = $('#bachleors').val();
             let admin_responsibilities = $('#admin_responsibilities').val();
             let year = $('#year').val();
 
@@ -354,11 +357,11 @@
             !total_courses?addClass('total_courses'):removeClass('total_courses');
             !phd?addClass('phd'):removeClass('phd');
             !masters?addClass('masters'):removeClass('masters');
-            !bachelors?addClass('bachelors'):removeClass('bachelors');
+            !bachleors?addClass('bachleors'):removeClass('bachleors');
             !admin_responsibilities?addClass('admin_responsibilities'):removeClass('admin_responsibilities');
             !year?addClass('year'):removeClass('year');
 
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year)
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !year)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -404,7 +407,7 @@
             $('#edit_total_courses').val(data.total_courses);
             $('#edit_phd').val(data.phd);
             $('#edit_masters').val(data.masters);
-            $('#edit_bachelors').val(data.bachelors);
+            $('#edit_bachleors').val(data.bachleors);
             $('#edit_admin_responsibilities').val(data.admin_responsibilities);
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_id').val(data.id);
@@ -418,7 +421,7 @@ $('#updateForm').submit(function (e) {
             let total_courses = $('#edit_total_courses').val();
             let phd = $('#edit_phd').val();
             let masters = $('#edit_masters').val();
-            let bachelors = $('#edit_bachelors').val();
+            let bachleors = $('#edit_bachleors').val();
             let admin_responsibilities = $('#edit_admin_responsibilities').val();
             let year = $('#edit_year').val();
             let id = $('#edit_id').val();
@@ -430,11 +433,11 @@ $('#updateForm').submit(function (e) {
             !total_courses?addClass('edit_total_courses'):removeClass('edit_total_courses');
             !phd?addClass('edit_phd'):removeClass('edit_phd');
             !masters?addClass('edit_masters'):removeClass('edit_masters');
-            !bachelors?addClass('edit_bachelors'):removeClass('edit_bachelors');
+            !bachleors?addClass('edit_bachleors'):removeClass('edit_bachleors');
             !admin_responsibilities?addClass('edit_admin_responsibilities'):removeClass('edit_admin_responsibilities');
             !year?addClass('edit_year'):removeClass('edit_year');
 
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachelors || !admin_responsibilities || !year )
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !year )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
