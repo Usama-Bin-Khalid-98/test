@@ -194,8 +194,6 @@ class CampusSeeder extends Seeder
            [ 'business_school_id' => '135' , 'location' => 'Peshawar'],
            [ 'business_school_id' => '135' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '135' , 'location' => 'Chiniot'],
-           [ 'business_school_id' => '203' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '203' , 'location' => 'Peshawar'],
            [ 'business_school_id' => '173' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '173' , 'location' => 'Karachi'],
            [ 'business_school_id' => '154' , 'location' => 'Multan'],
@@ -225,7 +223,9 @@ class CampusSeeder extends Seeder
            ///// Campuses
            [ 'business_school_id' => '1' , 'location' => 'Peshawar'],
            [ 'business_school_id' => '2' , 'location' => 'Peshawar'],
+           [ 'business_school_id' => '2' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '3' , 'location' => 'Kohat'],
+           [ 'business_school_id' => '3' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '4' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '5' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '8' , 'location' => 'Karachi'],

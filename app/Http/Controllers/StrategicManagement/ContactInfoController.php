@@ -70,7 +70,7 @@ class ContactInfoController extends Controller
                         'designation_id' => $request->designation_id,
                         'focal_person' => $request->focal_person,
                         'cv' => $path.'/'.$imageName,
-                        'business_school_id' => auth()->user()->business_school_id
+                        'campus_id' => auth()->user()->campus_id
                 ]);
 
                     return response()->json(['success' => 'Contact Information added successfully.']);

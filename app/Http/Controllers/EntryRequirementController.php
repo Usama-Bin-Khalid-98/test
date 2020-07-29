@@ -24,7 +24,7 @@ class EntryRequirementController extends Controller
         $scopes = Scope::with('program')->get();
         $criterias = EligibilityCriteria::where('status', 'active')->get();
 
-        $entryRequirements  = EntryRequirement::with('program','eligibility_criteria')->get();
+        $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->get();
 
          return view('registration.curriculum.entry_req', compact('scopes','criterias','entryRequirements'));
         

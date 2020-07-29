@@ -19,10 +19,10 @@ class CreateResearchSummariesTable extends Migration
             $table->foreign('publication_type_id')
                 ->references('id')
                 ->on('publication_types');
-            $table->integer('business_school_id')->unsigned();
-            $table->foreign('business_school_id')
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('business_schools');
+                ->on('campuses');
             $table->string('year', 10);
             $table->string('total_items', 10);
             $table->string('contributing_core_faculty', 10);

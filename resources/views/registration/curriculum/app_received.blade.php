@@ -127,6 +127,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                  <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Semesters</th>
                                     <th>Application Received</th>
@@ -141,7 +143,9 @@
 
                                 @foreach($apps as $portfolio)
                                 <tr>
-                                    <td>{{$portfolio->program->name??""}}</td>
+                                    <td>{{$portfolio->campus->business_school->name}}</td>
+                                    <td>{{$portfolio->campus->location}}</td>
+                                    <td>{{$portfolio->program->name}}</td>
                                     <td>{{$portfolio->semester->name}}</td>
                                     <td>{{$portfolio->app_received}}</td>
                                     <td>{{$portfolio->admission_offered}}</td>
@@ -155,6 +159,8 @@
                                 </tbody>
                                 <tfoot>
                                  <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Semesters</th>
                                     <th>Application Received</th>

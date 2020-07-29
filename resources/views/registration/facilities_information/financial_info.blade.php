@@ -130,6 +130,7 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Income Source</th>
                                     <th>Year t-3</th>
                                     <th>Year t-2</th>
@@ -145,7 +146,8 @@
 
                                     @foreach($infos as $summary)
                                 <tr>
-                                    <td>{{$summary->business_school->name}}</td>
+                                    <td>{{$summary->campus->business_school->name}}</td>
+                                    <td>{{$summary->campus->location}}</td>
                                     <td>{{$summary->income_source->particular}}</td>
                                     <td>{{$summary->year_three}}</td>
                                     <td>{{$summary->year_two}}</td>
@@ -162,6 +164,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Income Source</th>
                                     <th>Year t-3</th>
                                     <th>Year t-2</th>
