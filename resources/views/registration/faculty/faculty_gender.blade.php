@@ -118,6 +118,7 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Faculty Type</th>
                                     <th>Year</th>
                                     <th>Male</th>
@@ -130,7 +131,8 @@
                                 <tbody>
                                @foreach($genders as $req)
                                 <tr>
-                                    <td>{{$req->business_school->name }}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
                                     <td>{{$req->lookup_faculty_type->faculty_type}}</td>
                                     <td>{{$req->year}}</td>
                                     <td>{{$req->male}}</td>
@@ -145,6 +147,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Faculty Type</th>
                                     <th>Year</th>
                                     <th>Male</th>

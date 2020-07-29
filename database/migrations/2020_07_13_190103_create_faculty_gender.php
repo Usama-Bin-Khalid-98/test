@@ -13,18 +13,16 @@ class CreateFacultyGender extends Migration
      */
     public function up()
     {
-        Schema::create('faculty_gender', function (Blueprint $table) {
+        Schema::create('faculty_genders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('business_school_id')->unsigned();
-            $table->foreign('business_school_id')
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('business_schools');
-
-            $table->integer('lookup_faculty_type_id')->unsigned();
+                ->on('campuses');
+            $table->integer('lookup_faculty_type_id')->unsigned()->nullable();
             $table->foreign('lookup_faculty_type_id')
                 ->references('id')
                 ->on('lookup_faculty_types');
-
             $table->integer('year');
             $table->integer('male');
             $table->integer('female');
@@ -42,6 +40,6 @@ class CreateFacultyGender extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty_gender');
+        Schema::dropIfExists('faculty_genders');
     }
 }

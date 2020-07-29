@@ -77,7 +77,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('faculty-stability','Faculty\FacultyStabilityController');
     Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
     Route::resource('work-load','Faculty\WorkloadController');
-    Route::resource('faculty-teaching','Faculty\FacultyTeachingCoursesController');
+    Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
 
     //research-summary
     Route::resource('research-summary','ResearchSummaryController');

@@ -24,7 +24,7 @@ class FacultyStudentRatioController extends Controller
         
         $programs = Scope::with('program')->get();
 
-        $ratios = FacultyStudentRatio::with('business_school','program')->get();
+        $ratios = FacultyStudentRatio::with('campus','program')->get();
 
          return view('registration.faculty.faculty_student_ratio', compact('programs','ratios'));
     }
@@ -55,7 +55,7 @@ class FacultyStudentRatioController extends Controller
         try {
 
             FacultyStudentRatio::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments

@@ -107,6 +107,7 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program name</th>
                                     <th>Year</th>
                                     <th>Total Enrollments</th>
@@ -118,7 +119,8 @@
                                 <tbody>
                                 @foreach($ratios as $req)
                                 <tr>
-                                    <td>{{$req->business_school->name}}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
                                     <td>{{$req->program->name}}</td>
                                     <td>{{$req->year}}</td>
                                     <td>{{$req->total_enrollments}}</td>
@@ -132,6 +134,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program name</th>
                                     <th>Year</th>
                                     <th>Total Enrollments</th>

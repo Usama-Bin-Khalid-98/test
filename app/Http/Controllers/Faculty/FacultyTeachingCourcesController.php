@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
-use App\Models\Faculty\FacultyTeachingCourses;
+use App\Models\Faculty\FacultyTeachingCources;
 use App\BusinessSchool;
 use App\Models\Common\Designation;
 use App\LookupFacultyType;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 
 
-class FacultyTeachingCoursesController extends Controller
+class FacultyTeachingCourcesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class FacultyTeachingCoursesController extends Controller
          $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
 
-         $visitings = FacultyTeachingCourses::with('business_school','lookup_faculty_type','designation')->get();
+         $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->get();
 
          return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings'));
     }
@@ -58,7 +58,7 @@ class FacultyTeachingCoursesController extends Controller
         try {
 
             FacultyTeachingCources::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,

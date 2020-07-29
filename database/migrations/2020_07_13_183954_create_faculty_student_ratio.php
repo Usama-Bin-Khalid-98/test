@@ -15,10 +15,10 @@ class CreateFacultyStudentRatio extends Migration
     {
         Schema::create('faculty_student_ratio', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('business_school_id')->unsigned();
-            $table->foreign('business_school_id')
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('business_schools');
+                ->on('campuses');
 
             $table->integer('program_id')->unsigned();
             $table->foreign('program_id')
