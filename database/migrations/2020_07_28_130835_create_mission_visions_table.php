@@ -21,6 +21,7 @@ class CreateMissionVisionsTable extends Migration
                 ->on('campuses');
             $table->text('mission');
             $table->text('vision');
+            $table->string('file', 255);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->softDeletes();

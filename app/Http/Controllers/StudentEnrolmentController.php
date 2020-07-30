@@ -24,7 +24,7 @@ class StudentEnrolmentController extends Controller
         $uniinfo = BusinessSchool::get();
         $programs = Program::where('status', 'active')->get();
 
-        $enrolments = StudentEnrolment::with('business_school','program')->get();
+        $enrolments = StudentEnrolment::with('campus','program')->get();
 
          return view('registration.student_enrolment.enrolment', compact('uniinfo','programs','enrolments'));
     }

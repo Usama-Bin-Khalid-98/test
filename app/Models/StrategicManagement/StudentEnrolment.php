@@ -3,8 +3,8 @@
 namespace App\Models\StrategicManagement;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Common\Campus;
 use App\Models\Common\Program;
-use App\BusinessSchool;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StudentEnrolment extends Model
@@ -17,8 +17,8 @@ class StudentEnrolment extends Model
         return $this->belongsTo(Program::class);
     }
 
-    public function business_school()
+    public function campus()
     {
-        return $this->belongsTo(BusinessSchool::class);
+        return $this->belongsTo(Campus::class);
     }
 }

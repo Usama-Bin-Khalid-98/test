@@ -110,6 +110,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Year t</th>
                                     <th>Year t-2</th>
@@ -121,6 +123,8 @@
                                 <tbody>
                                @foreach($students as $enrolement)
                                 <tr>
+                                    <td>{{$enrolement->campus->business_school->name}}</td>
+                                    <td>{{$enrolement->campus->location}}</td>
                                     <td>{{$enrolement->program->name}}</td>
                                     <td>{{$enrolement->grad_std_t}}</td>
                                     <td>{{$enrolement->grad_std_t_2}}</td>
@@ -134,6 +138,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Year t</th>
                                     <th>Year t-2</th>

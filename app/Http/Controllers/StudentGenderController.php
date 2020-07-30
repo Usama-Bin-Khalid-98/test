@@ -21,7 +21,7 @@ class StudentGenderController extends Controller
     public function index()
     {
         $programs = Scope::with('program')->get();
-        $genders = StudentGender::get();
+        $genders = StudentGender::with('campus','program')->get();
 
         return view('registration.student_enrolment.student_gender', compact('programs','genders'));
     }

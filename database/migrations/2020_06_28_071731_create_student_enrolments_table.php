@@ -24,16 +24,6 @@ class CreateStudentEnrolmentsTable extends Migration
             $table->string('ms_level', 100);
             $table->string('phd_level', 100);
             $table->string('total_students', 100);
-            $table->integer('program_id')->unsigned()->nullable();
-            $table->foreign('program_id')
-                ->references('id')
-                ->on('programs')
-                ->onDelete('cascade');;
-            $table->string('grad_std_t', 100);
-            $table->string('grad_std_t_2', 100);
-            $table->string('grad_std_t_3', 100);
-            $table->string('male', 100);
-            $table->string('female', 100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();

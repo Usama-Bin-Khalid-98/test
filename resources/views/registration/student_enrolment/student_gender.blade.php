@@ -104,6 +104,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Male(%)</th>
                                     <th>Female(%)</th>
@@ -114,6 +116,8 @@
                                 <tbody>
                                @foreach($genders as $enrolement)
                                 <tr>
+                                    <td>{{$enrolement->campus->business_school->name}}</td>
+                                    <td>{{$enrolement->campus->location}}</td>
                                     <td>{{$enrolement->program->name}}</td>
                                     <td>{{$enrolement->male}}</td>
                                     <td>{{$enrolement->female}}</td>
@@ -126,6 +130,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Male(%)</th>
                                     <th>Female(%)</th>

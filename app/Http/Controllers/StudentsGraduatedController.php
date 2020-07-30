@@ -22,7 +22,7 @@ class StudentsGraduatedController extends Controller
     {
         $programs = Scope::with('program')->get();
 
-        $students = StudentsGraduated::with('program')->get();
+        $students = StudentsGraduated::with('campus','program')->get();
 
         return view('registration.student_enrolment.students_graduated', compact('programs','students'));
     }
