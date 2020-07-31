@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DeskReview;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DeskReviewController extends Controller
 {
@@ -16,7 +17,11 @@ class DeskReviewController extends Controller
     public function index()
     {
         //
-        $accreditation=  Scope::where('status', 'active');
+        $campus_id = Auth::user()->campus_id;
+        $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
+        dd($accreditation);
+        //// get scope
+        //$scope = Scope::where('')
         return view('desk_review.index');
     }
 

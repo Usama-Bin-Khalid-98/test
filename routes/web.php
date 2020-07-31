@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
     Route::get('mailsend', 'Auth\RegisterController@mailsend');
     Route::get('home', 'HomeController@index')->name('home');
-    Route::get('config', 'ConfigController@index')->name('config');
     Route::get('admin', 'DashboardController@index');
 
     ///// Dashboard
@@ -41,9 +40,9 @@ use Illuminate\Support\Facades\Route;
     // Users resource route.
     Route::resource('users', 'Auth\UserController');
     // Roles resource route.
-    Route::resource('roles', 'Auth\RoleController');
+//    Route::resource('roles', 'Auth\RoleController');
     // Permissions resource route.
-    Route::resource('permissions', 'Auth\PermissionController');
+//    Route::resource('permissions', 'Auth\PermissionController');
 
     //// Strategic Management
     Route::prefix('strategic')->group(function () {
@@ -87,3 +86,17 @@ use Illuminate\Support\Facades\Route;
     Route::resource('business-school-facility','BusinessSchoolFacilityController');
     Route::resource('course-type','CourseTypeController');
     Route::resource('desk-review', 'DeskReviewController');
+
+
+   // Route::get('config', 'ConfigController@index')->name('config');
+  Route::prefix('config')->group(function (){
+//        Route::resource('{table}', 'ConfigController');
+//   });
+
+    Route::Get('/{table}', 'ConfigController@index');
+    Route::Get('/{table}/create', 'ConfigController@create'); // {user:username}/add
+    Route::Post('/{table}', 'ConfigController@store');
+    Route::GET('/{table}/edit', 'ConfigController@edit');
+    Route::PUT('/{table}/{id}', 'ConfigController@update');
+    Route::DELETE('/{table}/{id}', 'ConfigController@destroy');
+  });
