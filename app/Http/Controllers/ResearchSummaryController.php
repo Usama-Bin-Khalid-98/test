@@ -61,7 +61,8 @@ class ResearchSummaryController extends Controller
                 'contributing_core_faculty' => $request->contributing_core_faculty,
                 'jointly_produced_other' => $request->jointly_produced_other,
                 'jointly_produced_same' => $request->jointly_produced_same,
-                'jointly_produced_multiple' => $request->jointly_produced_multiple
+                'jointly_produced_multiple' => $request->jointly_produced_multiple,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Research Summary Information added successfully.']);
@@ -121,6 +122,7 @@ class ResearchSummaryController extends Controller
                 'jointly_produced_same' => $request->jointly_produced_same,
                 'jointly_produced_multiple' => $request->jointly_produced_multiple,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Research Summary Information updated successfully.']);
 
@@ -139,6 +141,9 @@ class ResearchSummaryController extends Controller
     public function destroy(ResearchSummary $researchSummary)
     {
         try {
+            ResearchSummary::where('id', $researchSummary->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             ResearchSummary::destroy($researchSummary->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

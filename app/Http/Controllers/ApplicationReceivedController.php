@@ -73,7 +73,8 @@ class ApplicationReceivedController extends Controller
                 'app_received' => $request->app_received,
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
-                'semester_comm_date' => $request->semester_comm_date
+                'semester_comm_date' => $request->semester_comm_date,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Application Received added successfully.']);
@@ -131,7 +132,8 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Application Received updated successfully.']);
 
@@ -150,6 +152,9 @@ class ApplicationReceivedController extends Controller
     public function destroy(ApplicationReceived $applicationReceived)
     {
         try {
+            ApplicationReceived::where('id', $applicationReceived->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             ApplicationReceived::destroy($applicationReceived->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

@@ -62,7 +62,8 @@ class WorkLoadController extends Controller
                 'masters' => $request->masters,
                 'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
-                'year' => $request->year
+                'year' => $request->year,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty WorkLoad added successfully.']);
@@ -123,7 +124,8 @@ class WorkLoadController extends Controller
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'year' => $request->year,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Workload updated successfully.']);
 
@@ -142,6 +144,9 @@ class WorkLoadController extends Controller
     public function destroy(WorkLoad $workLoad)
     {
         try {
+            Workload::where('id', $workLoad->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             WorkLoad::destroy($workLoad->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

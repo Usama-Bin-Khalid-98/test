@@ -1,4 +1,4 @@
-@section('pageTitle', 'Student Enrolment')
+@section('pageTitle', 'Mission Vision')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Students Enrolment
+                Mission Vision
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Students Enrolment </li>
+                <li class="active">Mission Vision </li>
             </ol>
         </section>
         <section class="content-header">
@@ -35,6 +35,7 @@
                 </div>
             </div>
         </section>
+
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
@@ -43,8 +44,9 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide the data on student enrolment  of the business school for the last three years in Table 3.1</h3>
-                                <div class="box-tools pull-right">
+                            <p class="box-title">1.7.   State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.</p>
+
+                            <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
@@ -56,42 +58,29 @@
                         </div>
 
                         <!-- /.box-header -->
-                        <form action="javascript:void(0)" id="form" method="POST">
-
                         <div class="box-body">
+                          <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
+                                    <label for="name">Mission</label>
+                                    <input type="text" name="mission" id="mission" placeholder="Mission" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">16 Year Programs</label>
-                                    <input type="text" name="bs_level" id="bs_level" class="form-control">
+                                    <label for="name">Vision</label>
+                                    <input type="text" name="vision" id="vision" placeholder="Vision" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">18 Year Programs</label>
-                                    <input type="text" name="ms_level" id="ms_level" class="form-control">
+                                    <label for="name">Attach Doc</label>
+                                    <input type="file" name="file" id="file" >
+                                    <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Doctoral Programs</label>
-                                    <input type="text" name="phd_level" id="phd_level" class="form-control">
-                                </div>
-                            </div>
-                        
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -99,61 +88,56 @@
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
+                        </form>
+
                         </div>
-                            </div>
-                    </form>
-                    </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">List</h3>
+                            <h3 class="box-title">Mission Vision List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
+                                    <th>Business School Name</th>
                                     <th>Campus</th>
-                                    <th>Year</th>
-                                    <th>16 Year</th>
-                                    <th>18 Year</th>
-                                    <th>Doctoral</th>
-                                    <th>Total Enrolment</th>
+                                    <th>Mission</th>
+                                    <th>Vision</th>
+                                    <th>Document</th>
                                     <th>Status</th>
+                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($enrolments as $enrolement)
+                                @foreach($missions as $contact)
                                 <tr>
-                                    <td>{{$enrolement->campus->business_school->name}}</td>
-                                    <td>{{$enrolement->campus->location}}</td>
-                                    <td>{{$enrolement->year}}</td>
-                                    <td>{{$enrolement->bs_level}}</td>
-                                    <td>{{$enrolement->ms_level}}</td>
-                                    <td>{{$enrolement->phd_level}}</td>
-                                    <td>{{$enrolement->total_students}}</td>
-                                    <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","year":{{$enrolement->year}},"bs_level":"{{$enrolement->bs_level}}","ms_level":"{{$enrolement->ms_level}}","phd_level":"{{$enrolement->phd_level}}","total_students":"{{$enrolement->total_students}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-
+                                    <td>{{$contact->campus->business_school->name}}</td>
+                                    <td>{{$contact->campus->location}}</td>
+                                    <td>{{$contact->mission}}</td>
+                                    <td>{{$contact->vision}}</td>
+                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","mission":"{{$contact->mission}}","vision":"{{$contact->vision}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
+                                    <th>Business School Name</th>
                                     <th>Campus</th>
-                                    <th>Year</th>
-                                    <th>16 Year</th>
-                                    <th>18 Year</th>
-                                    <th>Doctoral</th>
-                                    <th>Total Enrolment</th>
+                                    <th>Mission</th>
+                                    <th>Vision</th>
+                                    <th>Document</th>
                                     <th>Status</th>
+                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -164,8 +148,18 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
+
+
             </div>
+            <!-- /.row -->
+
+            <!-- /.row -->
+
+            <!-- /.content -->
+
+
         </section>
+
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -174,59 +168,49 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Student Enrolment. </h4>
+                    <h4 class="modal-title">Edit Strategic Plan. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
+                        
 
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
+                                    <label for="name">Mission</label>
+                                    <input type="text" name="mission" id="edit_mission" value="{{old('edit_mission')}}" class="form-control">
                                 </div>
-                                <input type="hidden" name="id" id="edit_id">
-                            </div>
+                                <input type="hidden" id="edit_id">
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Vision</label>
+                                    <input type="text" name="vision" id="edit_vision" value="{{old('edit_vision')}}" class="form-control">
+                                </div>
+                              </div>
 
-                        <div class="col-md-6">
+                              <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">16 year Program</label>
-                                    <input type="text" name="bs_level" id="edit_bs_level" value="{{old('bs_level')}}" class="form-control">
-
+                                <label for="name">Attach Doc</label>
+                                <input type="file" name="file" id="edit_file" >
+                                <input type="hidden" name="old_file" id="old_file" >
+                                <span class="text-blue" id="file-name"></span>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">18 year Program</label>
-                                    <input type="text" name="ms_level" id="edit_ms_level" value="{{old('ms_level')}}" class="form-control">
-
-                            </div>
-                        </div>
-                         <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">Doctoral Program</label>
-                                    <input type="text" name="phd_level" id="edit_phd_level" value="{{old('phd_level')}}" class="form-control">
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Total Students</label>
-                                    <input type="text" readonly name="total_students"
-                                    id="edit_total_students" value="{{old('total_students')}}" class="form-control">
-                            </div>
-                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
                                 <p><input type="radio" name="status" class="flat-red" value="active" > Active
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="type">{{ __('isCompleted') }} : </label>
+                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" > Yes
+                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
                             </div>
                         </div>
                     </div>
@@ -242,8 +226,9 @@
     </div>
     <!-- /.modal -->
 
-
-     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+   
+    <!-- /.modal -->
+   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -270,19 +255,16 @@
             }
         });
 
-        $('#form').submit(function (e) {
-            // let uni_id = $('#uni_id').val();
-            let year = $('#year').val();
-            let bs_level = $('#bs_level').val();
-            let ms_level = $('#ms_level').val();
-            let phd_level = $('#phd_level').val();
+         $('#form').submit(function (e) {
+            let mission = $('#mission').val();
+            let vision = $('#vision').val();
+            let file = $('#file').val();
 
-            !year?addClass('year'):removeClass('year');
-            !bs_level?addClass('bs_level'):removeClass('bs_level');
-            !ms_level?addClass('ms_level'):removeClass('ms_level');
-            !phd_level?addClass('phd_level'):removeClass('phd_level');
+            !mission?addClass('mission'):removeClass('mission');
+            !vision?addClass('vision'):removeClass('vision');
+            !file?addClass('file'):removeClass('file');
 
-            if(!year || !bs_level || !ms_level || !phd_level  )
+            if(!mission || !vision || !file)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -292,7 +274,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("student-enrolment")}}',
+                url:'{{url("strategic/mission-vision")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -320,32 +302,28 @@
         });
 
 
-        $('.edit').on('click', function () {
-            let data = JSON.parse(JSON.stringify($(this).data('row')));
-            // Initialize Select2
-            $('#edit_year').select2().val(data.year).trigger('change');
-            $('#edit_bs_level').val(data.bs_level);
-            $('#edit_ms_level').val(data.ms_level);
-            $('#edit_phd_level').val(data.phd_level);
-            $('#edit_total_students').val(data.total_students);
+         $('.edit').on('click', function () {
+            // let data = JSON.parse(JSON.stringify($(this).data('row')));
+             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#edit_mission').val(data.mission);
+            $('#edit_vision').val(data.vision);
+            $('#file-name').text(data.file);;
             $('#edit_id').val(data.id);
+            $('input[value='+data.isComplete+']').iCheck('check');
             $('input[value='+data.status+']').iCheck('check');
         });
 
-        $('#updateForm').submit(function (e) {
-            let year = $('#edit_year').val();
-            let bs_level = $('#edit_bs_level').val();
-            let ms_level = $('#edit_ms_level').val();
-            let phd_level = $('#edit_phd_level').val();
+$('#updateForm').submit(function (e) {
+            let mission = $('#edit_mission').val();
+            let vision = $('#edit_vision').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !year?addClass('edit_year'):removeClass('edit_year');
-            !bs_level?addClass('edit_bs_level'):removeClass('edit_bs_level');
-            !ms_level?addClass('edit_ms_level'):removeClass('edit_ms_level');
-            !phd_level?addClass('edit_phd_level'):removeClass('edit_phd_level');
+            let isCompleted = $('input[name=edit_isComplete]:checked').val();
+            !mission?addClass('edit_mission'):removeClass('edit_mission');
+            !vision?addClass('edit_vision'):removeClass('edit_vision');
 
-            if(!year || !bs_level || !ms_level || !phd_level)
+            if(!mission || !vision )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -355,7 +333,7 @@
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("student-enrolment")}}/'+id,
+                url:'{{url("strategic/mission-vision")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -383,13 +361,14 @@
             })
         });
 
-        $('.delete').on('click', function (e) {
+
+         $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("student-enrolment")}}/'+id,
+                        url:'{{url("strategic/mission-vision")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -418,10 +397,6 @@
                 } );
 
         })
-
-
-
-
 
 
     </script>

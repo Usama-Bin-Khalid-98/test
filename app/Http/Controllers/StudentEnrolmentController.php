@@ -24,7 +24,7 @@ class StudentEnrolmentController extends Controller
         $uniinfo = BusinessSchool::get();
         $programs = Program::where('status', 'active')->get();
 
-        $enrolments = StudentEnrolment::with('business_school','program')->get();
+        $enrolments = StudentEnrolment::with('campus','program')->get();
 
          return view('registration.student_enrolment.enrolment', compact('uniinfo','programs','enrolments'));
     }
@@ -60,7 +60,8 @@ class StudentEnrolmentController extends Controller
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
-                'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level
+                'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Student enrolment added successfully.']);
@@ -117,6 +118,7 @@ class StudentEnrolmentController extends Controller
                 'phd_level' => $request->phd_level,
                 'total_students' =>  $request->bs_level+ $request->ms_level+$request->phd_level,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Student Enrolement updated successfully.']);
 
@@ -135,6 +137,9 @@ class StudentEnrolmentController extends Controller
     public function destroy(StudentEnrolment $studentEnrolment)
     {
         try {
+            StudentEnrolment::where('id', $studentEnrolment->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             StudentEnrolment::destroy($studentEnrolment->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

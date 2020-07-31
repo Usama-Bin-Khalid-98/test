@@ -71,7 +71,8 @@ class FacultyStabilityController extends Controller
                 'resigned' => $request->resigned,
                 'retired' => $request->retired,
                 'terminated' => $request->terminated,
-                'new_induction' => $request->new_induction
+                'new_induction' => $request->new_induction,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty Stability added successfully.']);
@@ -130,7 +131,8 @@ class FacultyStabilityController extends Controller
                 'terminated' => $request->terminated,
                 'new_induction' => $request->new_induction,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Stability updated successfully.']);
 
@@ -149,6 +151,9 @@ class FacultyStabilityController extends Controller
     public function destroy(FacultyStability $facultyStability)
     {
         try {
+            FacultyStability::where('id', $facultyStability->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FacultyStability::destroy($facultyStability->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

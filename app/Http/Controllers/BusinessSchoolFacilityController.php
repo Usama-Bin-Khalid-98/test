@@ -65,7 +65,8 @@ class BusinessSchoolFacilityController extends Controller
                 BusinessSchoolFacility::create([
                     'campus_id' => Auth::user()->campus_id,
                     'facility_id' => $value['id'],
-                    'remark' => $value['remark']
+                    'remark' => $value['remark'],
+                    'created_by' => Auth::user()->id
                 ]);
 
                 }
@@ -123,7 +124,8 @@ class BusinessSchoolFacilityController extends Controller
 
             BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
                 'remark' => $request->remark,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Business School Facility updated successfully.']);
 
@@ -142,6 +144,9 @@ class BusinessSchoolFacilityController extends Controller
     public function destroy(BusinessSchoolFacility $businessSchoolFacility)
     {
          try {
+            BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             BusinessSchoolFacility::destroy($businessSchoolFacility->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

@@ -61,7 +61,8 @@ class AffiliationController extends Controller
                 'name' => $request->name,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
-                'statutory_bodies_id' => $request->statutory_bodies_id
+                'statutory_bodies_id' => $request->statutory_bodies_id,
+                'created_by' => Auth::user()->id
 
             ]);
 
@@ -118,7 +119,8 @@ class AffiliationController extends Controller
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Affiliations updated successfully.']);
 
@@ -137,6 +139,9 @@ class AffiliationController extends Controller
     public function destroy(Affiliation $affiliation)
     {
         try {
+            Affiliation::where('id', $affiliation->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             Affiliation::destroy($affiliation->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

@@ -55,7 +55,8 @@ class StrategicPlanController extends Controller
                 'campus_id' => Auth::user()->campus_id,
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority
+                'aproving_authority' => $request->aproving_authority,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Strategic Plan added successfully.']);
@@ -110,7 +111,8 @@ class StrategicPlanController extends Controller
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Strategic Plan updated successfully.']);
 
@@ -129,6 +131,9 @@ class StrategicPlanController extends Controller
     public function destroy(StrategicPlan $strategicPlan)
     {
         try {
+            StrategicPlan::where('id', $strategicPlan->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             StrategicPlan::destroy($strategicPlan->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
