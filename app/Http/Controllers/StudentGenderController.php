@@ -55,7 +55,8 @@ class StudentGenderController extends Controller
                 'campus_id' => $uni_id,
                 'program_id' => $request->program_id,
                 'male' => $request->male,
-                'female' => $request->female
+                'female' => $request->female,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Student Gender Inserted successfully.']);
@@ -110,6 +111,7 @@ class StudentGenderController extends Controller
                 'male' => $request->male,
                 'female' => $request->female,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Student Gender mix updated successfully.']);
 
@@ -128,6 +130,9 @@ class StudentGenderController extends Controller
     public function destroy(StudentGender $studentGender)
     {
        try {
+        StudentGender::where('id', $studentGender->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             studentGender::destroy($studentGender->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

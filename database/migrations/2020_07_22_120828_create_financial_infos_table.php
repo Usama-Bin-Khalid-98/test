@@ -30,6 +30,18 @@ class CreateFinancialInfosTable extends Migration
             $table->string('year_t_plus_one',250);
             $table->string('year_t_plus_two',250);
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users');
             $table->timestamps();
             $table->softDeletes();
         });

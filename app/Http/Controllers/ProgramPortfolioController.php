@@ -63,7 +63,8 @@ class ProgramPortfolioController extends Controller
                 'no_of_course' => $request->no_of_course,
                 'credit_hours' => $request->credit_hours,
                 'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req
+                'fyp_req' => $request->fyp_req,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Program Portfolio added successfully.']);
@@ -123,6 +124,7 @@ class ProgramPortfolioController extends Controller
                 'internship_req' => $request->internship_req,
                 'fyp_req' => $request->fyp_req,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Program Portfolio updated successfully.']);
 
@@ -141,6 +143,9 @@ class ProgramPortfolioController extends Controller
     public function destroy(ProgramPortfolio $programPortfolio)
     {
         try {
+            ProgramPortfolio::where('id', $programPortfolio->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             ProgramPortfolio::destroy($programPortfolio->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

@@ -71,7 +71,8 @@ class FacultyGenderController extends Controller
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'year' => $request->year,
                 'male' => $request->male,
-                'female' => $request->female
+                'female' => $request->female,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty Gender added successfully.']);
@@ -128,7 +129,8 @@ class FacultyGenderController extends Controller
                 'male' => $request->male,
                 'female' => $request->female,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Gender updated successfully.']);
 
@@ -147,6 +149,9 @@ class FacultyGenderController extends Controller
     public function destroy(FacultyGender $facultyGender)
     {
         try {
+            FacultyGender::where('id', $facultyGender->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FacultyGender::destroy($facultyGender->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

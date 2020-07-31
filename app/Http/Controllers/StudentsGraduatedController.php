@@ -57,7 +57,8 @@ class StudentsGraduatedController extends Controller
                 'program_id' => $request->program_id,
                 'grad_std_t' => $request->grad_std_t,
                 'grad_std_t_2' => $request->grad_std_tt,
-                'grad_std_t_3' => $request->grad_std_ttt
+                'grad_std_t_3' => $request->grad_std_ttt,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Student Graduated Inserted successfully.']);
@@ -113,6 +114,7 @@ class StudentsGraduatedController extends Controller
                 'grad_std_t_2' => $request->grad_std_t_2,
                 'grad_std_t_3' => $request->grad_std_t_3,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Student Graduated updated successfully.']);
 
@@ -131,6 +133,9 @@ class StudentsGraduatedController extends Controller
     public function destroy(StudentsGraduated $studentsGraduated)
     {
         try {
+            StudentsGraduated::where('id', $studentsGraduated->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             StudentsGraduated::destroy($studentsGraduated->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

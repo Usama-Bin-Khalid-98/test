@@ -63,7 +63,8 @@ class FinancialInfoController extends Controller
                 'year_one' => $request->year_one,
                 'year_t' => $request->year_t,
                 'year_t_plus_one' => $request->year_t_plus_one,
-                'year_t_plus_two' => $request->year_t_plus_two
+                'year_t_plus_two' => $request->year_t_plus_two,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Financial Info added successfully.']);
@@ -123,6 +124,7 @@ class FinancialInfoController extends Controller
                 'year_t_plus_one' => $request->year_t_plus_one,
                 'year_t_plus_two' => $request->year_t_plus_two,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Financial Info updated successfully.']);
 
@@ -141,6 +143,9 @@ class FinancialInfoController extends Controller
     public function destroy(FinancialInfo $financialInfo)
     {
         try {
+            FinancialInfo::where('id', $financialInfo->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FinancialInfo::destroy($financialInfo->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

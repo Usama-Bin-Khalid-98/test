@@ -63,7 +63,8 @@ class FacultyTeachingCourcesController extends Controller
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
                 'tc_program1' => $request->tc_program1,
-                'tc_program2' => $request->tc_program2
+                'tc_program2' => $request->tc_program2,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Visiting Faculty added successfully.']);
@@ -121,7 +122,8 @@ class FacultyTeachingCourcesController extends Controller
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Visiting Faculty updated successfully.']);
 
@@ -140,6 +142,9 @@ class FacultyTeachingCourcesController extends Controller
     public function destroy(FacultyTeachingCources $facultyTeaching)
     {
          try {
+              FacultyTeachingCources::where('id', $facultyTeaching->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FacultyTeachingCources::destroy($facultyTeaching->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

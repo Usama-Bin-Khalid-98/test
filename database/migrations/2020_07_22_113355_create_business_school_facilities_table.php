@@ -25,6 +25,18 @@ class CreateBusinessSchoolFacilitiesTable extends Migration
                 ->on('facilities');
             $table->string('remark',250)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users');
             $table->softDeletes();
             $table->timestamps();
         });

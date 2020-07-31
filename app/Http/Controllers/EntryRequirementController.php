@@ -59,7 +59,8 @@ class EntryRequirementController extends Controller
                 'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
-                'min_req' => $request->min_req
+                'min_req' => $request->min_req,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Entry Requirement added successfully.']);
@@ -114,7 +115,8 @@ class EntryRequirementController extends Controller
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
                 'min_req' => $request->min_req,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Entry Requirements updated successfully.']);
 
@@ -133,6 +135,9 @@ class EntryRequirementController extends Controller
     public function destroy(EntryRequirement $entryRequirement)
     {
         try {
+            EntryRequirement::where('id', $entryRequirement->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             EntryRequirement::destroy($entryRequirement->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

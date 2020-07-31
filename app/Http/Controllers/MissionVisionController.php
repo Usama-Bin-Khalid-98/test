@@ -64,7 +64,8 @@ class MissionVisionController extends Controller
                         'campus_id' => Auth::user()->campus_id,
                         'mission' => $request->mission,
                         'vision' => $request->vision,
-                        'file' => $path.'/'.$imageName 
+                        'file' => $path.'/'.$imageName, 
+                        'created_by' => Auth::user()->id 
                 ]);
 
                     return response()->json(['success' => 'Mission Vision added successfully.']);
@@ -128,7 +129,8 @@ class MissionVisionController extends Controller
                     'vision' => $request->vision,
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
-                    'status' => $request->status
+                    'status' => $request->status,
+                    'updated_by' => Auth::user()->id 
                     ]
                 );
 
@@ -138,7 +140,8 @@ class MissionVisionController extends Controller
                'mission' => $request->mission,
                'vision' => $request->vision,
                'isComplete' => $request->isComplete,
-               'status' => $request->status
+               'status' => $request->status,
+               'updated_by' => Auth::user()->id 
            ]);
             return response()->json(['success' => 'Mission Vision updated successfully.']);
 
@@ -154,9 +157,12 @@ class MissionVisionController extends Controller
      * @param  \App\Models\StrategicManagement\MissionVision  $missionVision
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MissionVision $missionVision)
+    public function destroy(Request $request, MissionVision $missionVision)
     {
          try {
+             MissionVision::where('id', $missionVision->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
              MissionVision::destroy($missionVision->id);
                 return response()->json(['success' => 'Record deleted successfully.']);
          }catch (Exception $e)

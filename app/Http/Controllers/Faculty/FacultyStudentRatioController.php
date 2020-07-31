@@ -58,7 +58,8 @@ class FacultyStudentRatioController extends Controller
                 'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
-                'total_enrollments' => $request->total_enrollments
+                'total_enrollments' => $request->total_enrollments,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty Student Ratio added successfully.']);
@@ -114,7 +115,8 @@ class FacultyStudentRatioController extends Controller
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Student Ratio updated successfully.']);
 
@@ -133,6 +135,9 @@ class FacultyStudentRatioController extends Controller
     public function destroy(FacultyStudentRatio $facultyStudentRatio)
     {
         try {
+            FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FacultyStudentRatio::destroy($facultyStudentRatio->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
