@@ -40,6 +40,7 @@ class UserSeeder extends Seeder
             'cnic' => '17101-1234324-1',
             'contact_no' => '+92-51-90800206',
             'email' => 'city@gmail.com',
+            'email_verified_at' => '2020-07-29 17:32:04',
             'password' => Hash::make('admin!@#$'),
             'business_school_id' => 1,
             'campus_id' => 1,
