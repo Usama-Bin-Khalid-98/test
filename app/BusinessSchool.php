@@ -5,10 +5,12 @@ namespace App;
 use App\Models\Common\Campus;
 use App\Models\Common\Slip;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BusinessSchool extends Model
 {
-    //
+    use SoftDeletes;
+    
     protected $guarded = [];
 
     public function user()
