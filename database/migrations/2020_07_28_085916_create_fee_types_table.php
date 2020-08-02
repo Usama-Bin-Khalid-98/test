@@ -16,7 +16,7 @@ class CreateFeeTypesTable extends Migration
         Schema::create('fee_types', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->integer('amount');
+            $table->integer('amount')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->softDeletes();
             $table->timestamps();
