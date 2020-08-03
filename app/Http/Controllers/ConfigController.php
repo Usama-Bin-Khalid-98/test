@@ -163,10 +163,11 @@ class ConfigController extends Controller
 
         $TableRows = $this->TableRows;
         $counter = $this->counter();
+        $departments = Department::all();
         //dd($counter);
         $TableName = ucwords(str_replace('_',' ', $table));
 //        dd();
-        return view('config', compact('TableRows', 'TableName', 'counter'));
+        return view('config', compact('TableRows', 'TableName', 'counter', 'departments'));
     }
 
     public function counter()
@@ -251,6 +252,7 @@ class ConfigController extends Controller
      */
     public function store(Request $request, $table)
     {
+        //dd($request);
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
 
         if($validation->fails())

@@ -197,11 +197,11 @@
 
                   <div class="user-block">
                     <div class="col-md-12">
-                                <div class="form-group pull-right" style="margin-top: 20px">
-                                    <label for="sector">&nbsp;&nbsp;</label>
-                                    <input  data-toggle="modal" data-target="#course-modal" value="Add New" class="btn btn-info">
-                                </div>
-                            </div>
+                        <div class="form-group pull-right" style="margin-top: 20px">
+                            <label for="sector">&nbsp;&nbsp;</label>
+                            <input  data-toggle="modal" data-target="#course-modal" value="Add New" class="btn btn-info">
+                        </div>
+                    </div>
                   </div>
 
                 <div class="box box-primary">
@@ -223,7 +223,7 @@
                                 <tr>
                                     <td>{{$row->name}}</td>
                                     <td><i class="badge {{$row->status == 'active'?'bg-green':'bg-red'}}">{{$row->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$row->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$row->id}}","name":"{{$row->name}}","status":"{{$row->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$row->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$row->id}}","name":"{{$row->name}}","status":"{{$row->status}}","department_id":"{{@$row->department_id}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -250,7 +250,18 @@
                 </div>
                 <form action="javascript:void(0)" id="form" method="POST">
                     <div class="modal-body">
-
+                        @if(request()->is('config/programs'))
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select id="department_id" name="department_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="name" id="name" placeholder="Enter {{$TableName}}"  class="form-control">
@@ -278,7 +289,19 @@
                 </div>
                 <form role="form" method="post" >
                     <div class="modal-body">
-
+                        @if(request()->is('config/programs'))
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="program">Apply for Department</label>
+                                    <select id="edit_department_id" name="department_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="col-md-6">
                                 <div class="form-group">
@@ -370,11 +393,11 @@
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
             }
-
+//request()->is('config/programs')
             $.ajax({
                 url:'{{request()->route()->parameters['table']}}',
                 type:'POST',
-                data:{name:name},
+                data:{name:name, @if(request()->is('config/programs'))department_id: $('#department_id').val()  @endif },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -400,7 +423,8 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_name').val(data.name);
+             $('#edit_department_id').select2().val(data.department_id).trigger('change');
+             $('#edit_name').val(data.name);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -421,7 +445,7 @@
             $.ajax({
                 url:'{{request()->route()->parameters['table']}}/'+id,
                 type:'PUT',
-                data: {name:name, status:status},
+                data: {name:name, status:status, @if(request()->is('config/programs'))department_id: $('#edit_department_id').val()  @endif},
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
