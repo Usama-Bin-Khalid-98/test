@@ -25,4 +25,9 @@ class Program extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }
