@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Department extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = [];
 
     public function user()
@@ -20,5 +20,10 @@ class Department extends Model
     public function slip()
     {
         return $this->hasOne(Slip::class);
+    }
+
+    public function program()
+    {
+        return $this->hasOne(Program::class);
     }
 }
