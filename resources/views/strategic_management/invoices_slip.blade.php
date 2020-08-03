@@ -53,16 +53,16 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label for="program">Apply for Department</label>
-                                        <select id="department_id" name="department_id" class="form-control select2" style="width: 100%;">
-                                            <option value="">Select Department</option>
-                                            @foreach($departments as $department)
-                                                <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="program">Apply for Department</label>
+                                    <select id="department_id" name="department_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Department</option>
+                                        @foreach($departments as $department)
+                                            <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
 
                         </div>
                         <div class="modal-footer">
