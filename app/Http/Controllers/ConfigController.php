@@ -21,6 +21,7 @@ use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
+use App\Models\social_responsibility\WelfareProgram;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\BusinessSchool;
 use App\PublicationType;
@@ -158,6 +159,11 @@ class ConfigController extends Controller
                 $this->TableRows =StatutoryBody::all();
                 break;
             }
+            case 'welfare_programs';
+            {
+                $this->TableRows =WelfareProgram::all();
+                break;
+            }
         }
 
 
@@ -239,6 +245,9 @@ class ConfigController extends Controller
 
         $StatutoryBody= StatutoryBody::all()->count();
         $counter['StatutoryBody'] = $StatutoryBody;
+
+        $WelfareProgram= WelfareProgram::all()->count();
+        $counter['WelfareProgram'] = $WelfareProgram;
 
 
         return $counter;
@@ -390,6 +399,12 @@ class ConfigController extends Controller
             case 'statutory_bodies':
             {
                 $this->TableRows =StatutoryBody::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'welfare_programs':
+            {
+                $this->TableRows =WelfareProgram::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -550,6 +565,12 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+            case 'welfare_programs':
+            {
+                $this->TableRows = WelfareProgram::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
         }
     }
 
@@ -693,6 +714,12 @@ class ConfigController extends Controller
             case 'statutory_bodies':
             {
                 $this->TableRows  = StatutoryBody::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'welfare_programs':
+            {
+                $this->TableRows  = WelfareProgram::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }

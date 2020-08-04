@@ -187,6 +187,22 @@
 
           </ul>
         </li>
+        <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}">
+          <a href="#">
+            <i class="fa fa-globe " style="color: green"></i><span>Social Responsibility</span>
+             <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li  class="{{ (request()->is('student-club')) ? 'active' : '' }}"><a href="{{url('student-club')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Student clubs/societies</a></li>
+            <li  class="{{ (request()->is('project-detail')) ? 'active' : '' }}"><a href="{{url('project-detail')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Project Details</a></li>
+            <li  class="{{ (request()->is('env-protection')) ? 'active' : '' }}"><a href="{{url('env-protection')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Env Protection Activities</a></li>
+            <li  class="{{ (request()->is('formal-relationship')) ? 'active' : '' }}"><a href="{{url('formal-relationship')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Formal Relationships</a></li>
+            <li  class="{{ (request()->is('complaint-resolution')) ? 'active' : '' }}"><a href="{{url('complaint-resolution')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Complaint Resolution</a></li>
+            <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Internal Community WP</a></li>
+          </ul>
+        </li>
             <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-gears text-black"></i>Desk Review</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-black"></i>Eligibility Screening</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-user text- black"></i>Admin</a></li>
