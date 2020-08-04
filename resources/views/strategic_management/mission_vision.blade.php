@@ -63,14 +63,14 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Mission</label>
-                                    <input type="text" name="mission" id="mission" placeholder="Mission" class="form-control">
+                                    <textarea name="mission" id="mission" class="form-control"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Vision</label>
-                                    <input type="text" name="vision" id="vision" placeholder="Vision" class="form-control">
+                                    <textarea name="vision" id="vision" class="form-control"></textarea>
                                 </div>
                             </div>
 
