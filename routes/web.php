@@ -88,6 +88,14 @@ use Illuminate\Support\Facades\Route;
     Route::resource('course-type','CourseTypeController');
     Route::resource('desk-review', 'DeskReviewController');
 
+    //Social-Responsibility
+    Route::resource('student-club','StudentClubController');
+    Route::resource('project-detail','ProjectDetailController');
+    Route::resource('env-protection','EnvProtectionController');
+    Route::resource('formal-relationship','FormalRelationshipController');
+    Route::resource('complaint-resolution','ComplaintResolutionController');
+    Route::resource('internal-community','InternalCommunityController');
+
 
    // Route::get('config', 'ConfigController@index')->name('config');
   Route::prefix('config')->group(function (){

@@ -42,5 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentMethodSeeder::class);
         $this->call(FypRequirementSeeder::class);
         $this->call(FeeTypeSeeder::class);
+        $this->call(WelfareProgramSeeder::class);
     }
 }

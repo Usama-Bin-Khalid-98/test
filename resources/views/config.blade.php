@@ -180,6 +180,12 @@
                         <span class="label label-success pull-right">{{$counter['StatutoryBody']}}</span>
                     </span>
                     </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/welfare_programs')}}" class="text-green"><b>Welfare Programs</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['WelfareProgram']}}</span>
+                    </span>
+                    </li>
                 </ul>
 
               <hr>
