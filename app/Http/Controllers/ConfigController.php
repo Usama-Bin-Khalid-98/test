@@ -71,7 +71,7 @@ class ConfigController extends Controller
             }
             case 'programs':
             {
-                $this->TableRows = Program::all();
+                $this->TableRows = Program::with('department')->get();
                 break;
             }
             case 'semesters':

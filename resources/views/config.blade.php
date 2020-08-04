@@ -219,6 +219,9 @@
                             <table id="datatable1" class="table table-bordered table-striped">
                                  <thead>
                                 <tr>
+                                    @if(request()->is('config/programs'))
+                                    <th>Department</th>
+                                    @endif
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -227,6 +230,9 @@
                                 <tbody>
                                @foreach($TableRows as $row)
                                 <tr>
+                                    @if(request()->is('config/programs'))
+                                        <td>{{$row->department->name}}</td>
+                                    @endif
                                     <td>{{$row->name}}</td>
                                     <td><i class="badge {{$row->status == 'active'?'bg-green':'bg-red'}}">{{$row->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$row->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$row->id}}","name":"{{$row->name}}","status":"{{$row->status}}","department_id":"{{@$row->department_id}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
@@ -237,6 +243,9 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    @if(request()->is('config/programs'))
+                                        <th>Department</th>
+                                    @endif
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
