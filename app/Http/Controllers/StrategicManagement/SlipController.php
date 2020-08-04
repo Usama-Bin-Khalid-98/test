@@ -149,7 +149,7 @@ class SlipController extends Controller
     public function update(Request $request, Slip $slip)
     {
         //
-        //dd($request);
+        //dd($request->all());
         $path = ''; $imageName = '';
         if(@$request->file('slip')) {
             try {
@@ -161,13 +161,17 @@ class SlipController extends Controller
                 $disk = Storage::disk($diskName);
                 $request->file('slip')->move($path, $filename);
 
-                Slip::where('id', $request->id)->update([
-                    'program_id' => $request->program_id,
-                    'slip' => $path.'/'.$filename,
-                    'comments' => $request->comments,
-                    'transaction_date' => $request->transaction_date,
-                    'status' =>  $request->status,
-                ]);
+//                $data = ['business_school_id' => Auth::user()->campus_id];
+//                @$request->invoice_no? $data['invoice_no'] = $request->invoice_no:'';
+//                @$request->department_id? $data['department_id'] = $request->department_id:'';
+                @$request->file('slip')? $data['slip'] = $path.'/'.$filename:'';
+                @$request->comments? $data['comments'] = $request->comments:'';
+                @$request->transaction_date? $data['transaction_date'] = $request->transaction_date:'';
+                @$request->payment_method? $data['payment_method_id'] = $request->payment_method:'';
+                @$request->cheque_no? $data['cheque_no'] = $request->cheque_no:'';
+                @$request->status? $data['status'] = $request->status:'';
+                //dd($data);
+                Slip::where('id', $request->id)->update($data);
                 return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
             }catch (Exception $e)
             {
@@ -176,11 +180,12 @@ class SlipController extends Controller
         }
 
         try {
-            //dd($request->all());
+            dd($request->all());
             Slip::where('id', $request->id)->update([
-                'program_id' => $request->program_id,
+//                'department_id' => $request->department_id,
                 'comments' => $request->comments,
                 'transaction_date' => $request->transaction_date,
+                'payment_method' => $request->payment_method,
                 'status' => $request->status,
             ]);
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
