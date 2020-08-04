@@ -214,8 +214,8 @@
                                     <td>{{@$invoice->department->name}}</td>
                                     <td><a href="{{$invoice->slip}}">Invoice</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
-                                    <td><i class="badge {{$invoice->status =='active'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':'Inactive'}}</i></td>
-                                    <td>@if($invoice->status!== 'paid')<span data-toggle="tooltip" title="Add Invoice Slip" data-id="{{$invoice->id}}"><i class="fa fa-money text-info invoice-add" data-toggle="modal"  data-target="#invoice_modal" ></i> </span>|@endif <i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}" ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}" data-row='{"id":"{{$invoice->id}}","program_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","date":"{{$invoice->transaction_date}}","status":"{{$invoice->status}}","comments":"{{$invoice->comments}}"}' data-toggle="modal" data-target="#edit-modal"></i> </td>
+                                    <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
+                                    <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" ><i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"  data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{$invoice->comments}}" ,"transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}'></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}"  data-toggle="modal" data-target="#edit-modal"></i> </td>
                                 </tr>
                                 @endforeach
 
@@ -278,7 +278,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
-                                <select name="status" id="status" class="form-control select2">
+                                <select name="status" class="form-control select2">
                                     <option value="">Select Status</option>
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
@@ -328,6 +328,17 @@
                                 <div class="box-body">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="name">Degree Program</label>
+                                            <select id="edit_department_id" name="department_id" class="form-control select2" style="width: 100%;">
+                                                <option value="">Select Program</option>
+                                                @foreach($departments as $department)
+                                                    <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="name">Invoice No</label>
                                             <select id="update_invoice_no" name="invoice_no" class="form-control select2" style="width: 100%;">
                                                 <option value="">Select Invoice No</option>
@@ -346,7 +357,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group" style="margin-bottom: 22px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
                                                 <option value="">Select Payment Method</option>
@@ -363,7 +374,18 @@
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
                                         </div>
                                     </div>
-
+                                    <div class="col-md-6">
+                                        <div class="form-group" style="margin-bottom: 18px;">
+                                            <label for="type">{{ __('Status') }} : </label>
+                                            <select name="status" id="status" class="form-control select2">
+{{--                                                <option value="">Select Status</option>--}}
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="paid">Paid</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="slip">Bank Deposit Slip</label>
@@ -400,6 +422,7 @@
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
+        </div>
     </div>
     <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
@@ -430,9 +453,23 @@
             }
         })
 
-        $("#invoice_modal").on('shown.bs.modal', function (e) {
-            console.log('this value', $(this));
-            console.log('modal showed', $(this).data('id'));
+        //let data = JSON.parse(JSON.stringify($(this).data('row')));
+        //$('#edit_program_id').select2().val(data.program_id).trigger('change');
+
+        $(".my-invoice").on('click', function () {
+           // console.log('this value', $(this));
+            //console.log('modal showed', $(this).data('id'));
+            $('#id').val($(this).data('id'));
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#edit_department_id').select2().val(data.department_id).trigger('change');
+            $('#transaction_date').val(data.transaction_date);
+            console.log('invoice id ', data.id);
+            $('#update_invoice_no').select2().val(data.id).trigger('change');
+
+            $('#payment_method').select2().val(data.payment_method_id).trigger('change');
+            $('#status').select2().val(data.status).trigger('change');
+            $('#cheque_no').val(data.cheque_no);
+            $('#comments').val(data.comments);
         })
         /*Add Scope*/
         $('#Invoice').on('submit', function (e) {
@@ -441,22 +478,24 @@
             let cheque_no = $('#cheque_no').val();
             let transaction_date = $('#transaction_date').val();
             let slip = $('#slip').val();
+            let id = $('#id').val();
             let payment_method = $('#payment_method').val();
 
             !invoice_no?addClass('invoice_no'):removeClass('invoice_no');
             !payment_method?addClass('payment_method'):removeClass('payment_method');
             !transaction_date?addClass('transaction_date'):removeClass('transaction_date');
             !slip?addClass('slip'):removeClass('slip');
-            if(!transaction_date || !department_id || !slip || !payment_method)
+            if(!transaction_date || !invoice_no || !slip || !payment_method)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
             }
                 // Yes button callback
                 let formData = new FormData(this);
+                formData.append('_method', 'PUT');
                 $.ajax({
                     url:'{{url("strategic/invoices")}}/'+id,
-                    type:'PUT',
+                    type:'POST',
                     data: formData,
                     cache:false,
                     contentType:false,
