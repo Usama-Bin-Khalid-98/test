@@ -21,6 +21,8 @@ use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
+use App\Models\Facility\StaffCategory;
+use App\Models\Facility\QecType;
 use App\Models\social_responsibility\WelfareProgram;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\BusinessSchool;
@@ -164,6 +166,16 @@ class ConfigController extends Controller
                 $this->TableRows =WelfareProgram::all();
                 break;
             }
+            case 'staff_categories';
+            {
+                $this->TableRows =StaffCategory::all();
+                break;
+            }
+            case 'qec_types';
+            {
+                $this->TableRows =QecType::all();
+                break;
+            }
         }
 
 
@@ -248,6 +260,12 @@ class ConfigController extends Controller
 
         $WelfareProgram= WelfareProgram::all()->count();
         $counter['WelfareProgram'] = $WelfareProgram;
+
+        $StaffCategory= StaffCategory::all()->count();
+        $counter['StaffCategory'] = $StaffCategory;
+
+        $QecType= QecType::all()->count();
+        $counter['QecType'] = $QecType;
 
 
         return $counter;
@@ -405,6 +423,18 @@ class ConfigController extends Controller
             case 'welfare_programs':
             {
                 $this->TableRows =WelfareProgram::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'staff_categories':
+            {
+                $this->TableRows =StaffCategory::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'qec_types':
+            {
+                $this->TableRows =QecType::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -571,6 +601,18 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+            case 'staff_categories':
+            {
+                $this->TableRows = StaffCategory::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
+            case 'qec_types':
+            {
+                $this->TableRows = QecType::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
         }
     }
 
@@ -720,6 +762,18 @@ class ConfigController extends Controller
             case 'welfare_programs':
             {
                 $this->TableRows  = WelfareProgram::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'staff_categories':
+            {
+                $this->TableRows  = StaffCategory::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'qec_types':
+            {
+                $this->TableRows  = QecType::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }

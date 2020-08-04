@@ -186,6 +186,18 @@
                         <span class="label label-success pull-right">{{$counter['WelfareProgram']}}</span>
                     </span>
                     </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/staff_categories')}}" class="text-green"><b>Staff Categories</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['StaffCategory']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/qec_types')}}" class="text-green"><b>Qec Types</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['QecType']}}</span>
+                    </span>
+                    </li>
                 </ul>
 
               <hr>

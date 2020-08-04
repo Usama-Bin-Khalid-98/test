@@ -84,6 +84,9 @@ use Illuminate\Support\Facades\Route;
 
     //Facilities-information
     Route::resource('financial-info','FinancialInfoController');
+    Route::resource('financial-risk','FinancialRiskController');
+    Route::resource('support-staff','SupportStaffController');
+    Route::resource('qec-info','QecInfoController');
     Route::resource('business-school-facility','BusinessSchoolFacilityController');
     Route::resource('course-type','CourseTypeController');
     Route::resource('desk-review', 'DeskReviewController');
