@@ -19,7 +19,7 @@ class DeskReviewController extends Controller
         //
         $campus_id = Auth::user()->campus_id;
         $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-        dd($accreditation);
+        /*dd($accreditation);*/
         //// get scope
         //$scope = Scope::where('')
         return view('desk_review.index');

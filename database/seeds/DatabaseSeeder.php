@@ -45,5 +45,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WelfareProgramSeeder::class);
         $this->call(StaffCategorySeeder::class);
         $this->call(QecTypeSeeder::class);
+        $this->call(NbeacCriteriaSeeder::class);
     }
 }

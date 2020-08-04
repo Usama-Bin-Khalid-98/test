@@ -90,6 +90,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('business-school-facility','BusinessSchoolFacilityController');
     Route::resource('course-type','CourseTypeController');
     Route::resource('desk-review', 'DeskReviewController');
+    Route::resource('nbeac-criteria', 'NbeacCriteriaController');
 
     //Social-Responsibility
     Route::resource('student-club','StudentClubController');
