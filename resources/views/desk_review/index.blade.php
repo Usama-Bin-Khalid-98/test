@@ -71,9 +71,9 @@
                                         <td>
                                             1. Programs started (Table-1.2 date of program commencement)
                                             <ol type="i">
-                                                <li>BBA started in</li>
-                                                <li>MBA(1.5) started in</li>
-                                                <li>MBA(2.5) started in</li>
+                                                @foreach($program_dates as $dates)
+                                                    <li>{{$dates['program']}} Started in  {{$dates['date']}} (Difference {{$dates['date_diff']}})</li>
+                                                @endforeach
                                             </ol>
 
                                         </td>
@@ -90,7 +90,9 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            2. Vision and Mission statements ( Question 1.7)
+                                            <p><strong>Mission : </strong> {{$mission_vision->mission}}</p>
+
+                                            <p><strong>Vision : </strong> {{$mission_vision->vision}}</p>
 
                                         </td>
                                         <td>

@@ -5,11 +5,12 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Common\Level;
 use App\Models\Common\Program;
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-use Auth;
 
 class ScopeController extends Controller
 {
@@ -21,7 +22,8 @@ class ScopeController extends Controller
     public function index()
     {
         //
-        $programs = Program::where('status', 'active')->get();
+        @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
+        $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
         $levels = Level::where('status', 'active')->get();
         $scopes = Scope::with('level', 'program')->get();
         return view('strategic_management.scope', compact('programs', 'levels', 'scopes'));
@@ -126,7 +128,7 @@ class ScopeController extends Controller
         //dd($scope);
         try {
             Scope::where('id', $scope->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              Scope::destroy($scope->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dashboard;
 use App\Mail\ActivationMail;
+use App\Models\Common\Slip;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -32,9 +33,10 @@ class DashboardController extends Controller
     {
         //
         // get Registrations data
-       $registrations = User::with('business_school')->where('status', 'pending')->get();
-       //dd($registrations);
-        return view('admin.index', compact('registrations'));
+        $registrations = User::with('business_school')->where('status', 'pending')->get();
+        $invoices = Slip::with('business_school', 'department')->get();
+//       dd($invoices);
+        return view('admin.index', compact('registrations','invoices'));
     }
 
     /**

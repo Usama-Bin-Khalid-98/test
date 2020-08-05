@@ -96,7 +96,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Student Intake</label>
-                                    <textarea name="student_intake" id="student_intake" class="form-control"></textarea>
+                                    <input name="student_intake" id="student_intake" class="form-control" >
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -153,7 +153,7 @@
                                     <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                 <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","semester_id":"{{$portfolio->semester_id}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-                                    
+
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -192,7 +192,7 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Program Name</label>

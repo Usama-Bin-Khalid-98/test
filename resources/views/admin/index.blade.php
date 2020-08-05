@@ -274,6 +274,84 @@
             <!-- /.box -->
 
         </section>
+
+          <!--Invoices list-->
+        <section class="col-lg-12 connectedSortable">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Business school Invoices. </h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-file-pdf-o"></i></button>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Business School Name</th>
+                            <th>Campus</th>
+                            <th>Contact Person Name</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Invoice Slip</th>
+{{--                            <th>Account Type</th>--}}
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        @foreach($invoices as $invoice)
+                        <tr>
+                            <td>{{$invoice->business_school->name}}</td>
+                            <td>{{$invoice->campus->location??'Main Campus'}}</td>
+                            <td>{{$invoice->business_school->user->name}}</td>
+                            <td>{{$invoice->business_school->user->contact_no}}</td>
+                            <td>{{$invoice->business_school->user->email}}</td>
+                            <td><a href="{{@$invoice->slip}}">Invoice Slip</a></td>
+{{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                            <td><i class="badge {{$invoice->status == 'inactive'?'bg-red':''}} status" data-id="{{$invoice->id}}" style="background: red" >{{$invoice->status != ''?ucwords($invoice->status):'inactive'}}</i></td>
+                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
+                        </tr>
+                        @endforeach
+
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Business School Name</th>
+                            <th>Campus</th>
+                            <th>Contact Person Name</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Invoice Slip</th>
+{{--                            <th>Account Type</th>--}}
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix no-border">
+                    <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+                </div>
+            </div>
+            <!-- /.box -->
+
+        </section>
         <!-- right col -->
       </div>
       <!-- /.row (main row) -->
