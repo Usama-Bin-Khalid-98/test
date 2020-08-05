@@ -53,9 +53,9 @@
             </div>
             <form>
             <div class="box-body pad">
-              
-                    <textarea id="editor1" name="editor1" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor1}}
+                     <label>Program Started</label>
+                    <textarea id="program_started" name="program_started" rows="10" cols="80">
+                        {{@$nbeac_criteria->program_started}}
                     </textarea>
 
 
@@ -63,61 +63,61 @@
               
             </div>
             <div class="box-body pad">
-              
-                    <textarea id="editor2" name="editor2" rows="10" cols="80">
-                                {{@$nbeac_criteria->editor2}}
+              <label>Mission Vision Statement</label>
+                    <textarea id="mission_vision_statement" name="mission_vision_statement" rows="10" cols="80">
+                                {{@$nbeac_criteria->mission_vision_statement}}
                     </textarea>
              
             </div>
             <div class="box-body pad">
-              
-                    <textarea id="editor3" name="editor3" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor3}}
+              <label>Strategic Plan</label>
+                    <textarea id="strategic_plan" name="strategic_plan" rows="10" cols="80">
+                        {{@$nbeac_criteria->strategic_plan}}
 
                     </textarea>
              
             </div>
             <div class="box-body pad">
+             <label>Student Intake</label>
+                    <textarea id="student_intake" name="student_intake" rows="10" cols="80">                
+                           {{@$nbeac_criteria->student_intake}}
+                    </textarea>
+              
+            </div>
+            <div class="box-body pad">
+              <label>Student Enrollment</label>
+                    <textarea id="student_enrollment" name="student_enrollment" rows="10" cols="80">
+                        {{@$nbeac_criteria->student_enrollment}}
+                    </textarea>
              
-                    <textarea id="editor4" name="editor4" rows="10" cols="80">                
-                           {{@$nbeac_criteria->editor4}}
+            </div>
+            <div class="box-body pad">
+              <label>Course Load</label>
+                    <textarea id="course_load" name="course_load" rows="10" cols="80">
+                        {{@$nbeac_criteria->course_load}}
                     </textarea>
               
             </div>
             <div class="box-body pad">
-              
-                    <textarea id="editor5" name="editor5" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor5}}
-                    </textarea>
-             
-            </div>
-            <div class="box-body pad">
-              
-                    <textarea id="editor6" name="editor6" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor6}}
-                    </textarea>
-              
-            </div>
-            <div class="box-body pad">
-              
-                    <textarea id="editor7" name="editor7" rows="10" cols="80">
-                                {{@$nbeac_criteria->editor7}}           
+              <label>Research Output</label>
+                    <textarea id="research_output" name="research_output" rows="10" cols="80">
+                                {{@$nbeac_criteria->research_output}}           
                     </textarea>
                     
              
             </div>
             <div class="box-body pad">
-             
-                    <textarea id="editor8" name="editor8" rows="10" cols="80">
-                                          {{@$nbeac_criteria->editor8}}
+             <label>Bandwidth</label>
+                    <textarea id="bandwidth" name="bandwidth" rows="10" cols="80">
+                                          {{@$nbeac_criteria->bandwidth}}
                     </textarea>
                     
               
             </div>
             <div class="box-body pad">
-            
-                    <textarea id="editor9" name="editor9" rows="10" cols="80">
-                                           {{@$nbeac_criteria->editor9}}
+            <label>Student to Comp Ratio</label>
+                    <textarea id="std_comp_ratio" name="std_comp_ratio" rows="10" cols="80">
+                                           {{@$nbeac_criteria->std_comp_ratio}}
                     </textarea>
                     
               
@@ -166,15 +166,15 @@
   $(function () {
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace('editor1');
-    CKEDITOR.replace('editor2');
-    CKEDITOR.replace('editor3');
-    CKEDITOR.replace('editor4');
-    CKEDITOR.replace('editor5');
-    CKEDITOR.replace('editor6');
-    CKEDITOR.replace('editor7');
-    CKEDITOR.replace('editor8');
-    CKEDITOR.replace('editor9');
+    CKEDITOR.replace('program_started');
+    CKEDITOR.replace('mission_vision_statement');
+    CKEDITOR.replace('strategic_plan');
+    CKEDITOR.replace('student_intake');
+    CKEDITOR.replace('student_enrollment');
+    CKEDITOR.replace('course_load');
+    CKEDITOR.replace('research_output');
+    CKEDITOR.replace('bandwidth');
+    CKEDITOR.replace('std_comp_ratio');
   })
 </script>
     <script type="text/javascript">
@@ -188,26 +188,26 @@
         });
 $('#update').on('click', function (e) {
             let id = $('#id').val();
-            let editor1 = CKEDITOR.instances.editor1.getData();
-            let editor2 = CKEDITOR.instances.editor2.getData();
-            let editor3 = CKEDITOR.instances.editor3.getData();
-            let editor4 = CKEDITOR.instances.editor4.getData();
-            let editor5 = CKEDITOR.instances.editor5.getData();
-            let editor6 = CKEDITOR.instances.editor6.getData();
-            let editor7 = CKEDITOR.instances.editor7.getData();
-            let editor8 = CKEDITOR.instances.editor8.getData();
-            let editor9 = CKEDITOR.instances.editor9.getData();
+            let program_started = CKEDITOR.instances.program_started.getData();
+            let mission_vision_statement = CKEDITOR.instances.mission_vision_statement.getData();
+            let strategic_plan = CKEDITOR.instances.strategic_plan.getData();
+            let student_intake = CKEDITOR.instances.student_intake.getData();
+            let student_enrollment = CKEDITOR.instances.student_enrollment.getData();
+            let course_load = CKEDITOR.instances.course_load.getData();
+            let research_output = CKEDITOR.instances.research_output.getData();
+            let bandwidth = CKEDITOR.instances.bandwidth.getData();
+            let std_comp_ratio = CKEDITOR.instances.std_comp_ratio.getData();
 
             
-             !editor1?addClass('editor1'):removeClass('editor1');
-             !editor2?addClass('editor2'):removeClass('editor2');
-             !editor3?addClass('editor3'):removeClass('editor3');
-             !editor4?addClass('editor4'):removeClass('editor4');
-             !editor5?addClass('editor5'):removeClass('editor5');
-             !editor6?addClass('editor6'):removeClass('editor6');
-             !editor7?addClass('editor7'):removeClass('editor7');
-             !editor8?addClass('editor8'):removeClass('editor8');
-             !editor9?addClass('editor9'):removeClass('editor9');
+             !program_started?addClass('program_started'):removeClass('program_started');
+             !mission_vision_statement?addClass('mission_vision_statement'):removeClass('mission_vision_statement');
+             !strategic_plan?addClass('strategic_plan'):removeClass('strategic_plan');
+             !student_intake?addClass('student_intake'):removeClass('student_intake');
+             !student_enrollment?addClass('student_enrollment'):removeClass('student_enrollment');
+             !course_load?addClass('course_load'):removeClass('course_load');
+             !research_output?addClass('research_output'):removeClass('research_output');
+             !bandwidth?addClass('bandwidth'):removeClass('bandwidth');
+             !std_comp_ratio?addClass('std_comp_ratio'):removeClass('std_comp_ratio');
 
             $.ajaxSetup({
                 headers: {
@@ -219,15 +219,15 @@ $('#update').on('click', function (e) {
                 url: "{{url('nbeac-criteria')}}/"+id,
                 data: {
                     id: id,
-                    editor1: editor1,
-                    editor2: editor2,
-                    editor3: editor3,
-                    editor4: editor4,
-                    editor5: editor5,
-                    editor6: editor6,
-                    editor7: editor7,
-                    editor8: editor8,
-                    editor9: editor9,
+                    program_started: program_started,
+                    mission_vision_statement: mission_vision_statement,
+                    strategic_plan: strategic_plan,
+                    student_intake: student_intake,
+                    student_enrollment: student_enrollment,
+                    course_load: course_load,
+                    research_output: research_output,
+                    bandwidth: bandwidth,
+                    std_comp_ratio: std_comp_ratio,
                 },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
