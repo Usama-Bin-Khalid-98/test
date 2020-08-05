@@ -180,12 +180,12 @@ class SlipController extends Controller
         }
 
         try {
-            dd($request->all());
+            //dd($request->all());
             Slip::where('id', $request->id)->update([
 //                'department_id' => $request->department_id,
                 'comments' => $request->comments,
                 'transaction_date' => $request->transaction_date,
-                'payment_method' => $request->payment_method,
+                'payment_method_id' => $request->payment_method,
                 'status' => $request->status,
             ]);
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
