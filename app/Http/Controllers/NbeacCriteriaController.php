@@ -93,15 +93,15 @@ class NbeacCriteriaController extends Controller
                           ->update(
                               [
                                   'campus_id' => Auth::user()->campus_id,
-                                  'program_started' => $request->editor1,
-                                  'mission_vision_statement' => $request->editor2,
-                                  'strategic_plan' => $request->editor3,
-                                  'student_intake' => $request->editor4,
-                                  'student_enrollment' => $request->editor5,
-                                  'course_load' => $request->editor6,
-                                  'research_output' => $request->editor7,
-                                  'bandwidth' => $request->editor8,
-                                  'std_comp_ratio' => $request->editor9,
+                                  'program_started' => $request->program_started,
+                                  'mission_vision_statement' => $request->mission_vision_statement,
+                                  'strategic_plan' => $request->strategic_plan,
+                                  'student_intake' => $request->student_intake,
+                                  'student_enrollment' => $request->student_enrollment,
+                                  'course_load' => $request->course_load,
+                                  'research_output' => $request->research_output,
+                                  'bandwidth' => $request->bandwidth,
+                                  'std_comp_ratio' => $request->std_comp_ratio,
                                   'updated_by' => Auth::user()->id
 
                                   ]
@@ -129,15 +129,15 @@ class NbeacCriteriaController extends Controller
 
     protected function rules() {
         return [
-            'editor1' => 'required',
-            'editor2' => 'required',
-            'editor3' => 'required',
-            'editor4' => 'required',
-            'editor5' => 'required',
-            'editor6' => 'required',
-            'editor7' => 'required',
-            'editor8' => 'required',
-            'editor9' => 'required'
+            'program_started' => 'required',
+            'mission_vision_statement' => 'required',
+            'strategic_plan' => 'required',
+            'student_intake' => 'required',
+            'student_enrollment' => 'required',
+            'course_load' => 'required',
+            'research_output' => 'required',
+            'bandwidth' => 'required',
+            'std_comp_ratio' => 'required'
         ];
     }
 
