@@ -1,4 +1,4 @@
-@section('pageTitle', 'Financial Info')
+@section('pageTitle', 'Financial Risk')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Financial Info
+                Financial Risk
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Financial Info</li>
+                <li class="active">Financial Risk</li>
             </ol>
         </section>
         <section class="content-header">
@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide complete financial information of the business school in Table.6.1 (Rupees in million)).</h3>
+                            <h3 class="box-title">Provide data on Financial Risks along with remedial measures in Table 6.2.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -58,55 +58,25 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                          <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Income Source</label>
-                                    <select name="income_source_id" id="income_source_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Income Source</option>
-                                        @foreach($income as $source)
-                                         <option value="{{$source->id}}">{{$source->particular}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-3</label>
-                                    <input type="text" name="year_three" id="year_three" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-2</label>
-                                    <input type="text" name="year_two" id="year_two" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-1</label>
-                                    <input type="text" name="year_one" id="year_one" class="form-control">
-                                </div>
-                              </div>
                             
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t</label>
-                                    <input type="text" name="year_t" id="year_t" class="form-control">
+                                    <label for="name">Risk identified</label>
+                                    <input type="text" name="risk_identified" id="risk_identified" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t+1</label>
-                                    <input type="text" name="year_t_plus_one" id="year_t_plus_one" class="form-control">
+                                    <label for="name">Stakeholders involved</label>
+                                    <input type="text" name="stakeholder_involved" id="stakeholder_involved" class="form-control">
                                 </div>
                               </div>
-                            <div class="col-md-3">
+                              <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t+2</label>
-                                    <input type="text" name="year_t_plus_two" id="year_t_plus_two" class="form-control">
+                                    <label for="name">Remedial measures</label>
+                                    <input type="text" name="remedial_measure" id="remedial_measure" class="form-control">
                                 </div>
                               </div>
-                            
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -122,7 +92,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Financial Information Table.</h3>
+                            <h3 class="box-title">Financial Risk Table.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -131,32 +101,24 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Income Source</th>
-                                    <th>Year t-3</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t</th>
-                                    <th>Year t+1</th>
-                                    <th>Year t+2</th>
+                                    <th>Risk identified</th>
+                                    <th>Stakeholders involved</th>
+                                    <th>Remedial measures</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach($infos as $summary)
+                                    @foreach($risks as $summary)
                                 <tr>
                                     <td>{{$summary->campus->business_school->name}}</td>
                                     <td>{{$summary->campus->location}}</td>
-                                    <td>{{$summary->income_source->particular}}</td>
-                                    <td>{{$summary->year_three}}</td>
-                                    <td>{{$summary->year_two}}</td>
-                                    <td>{{$summary->year_one}}</td>
-                                    <td>{{$summary->year_t}}</td>
-                                    <td>{{$summary->year_t_plus_one}}</td>
-                                    <td>{{$summary->year_t_plus_two}}</td>
+                                    <td>{{$summary->risk_identified}}</td>
+                                    <td>{{$summary->stakeholder_involved}}</td>
+                                    <td>{{$summary->remedial_measure}}</td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"income_source_id":"{{$summary->income_source_id}}","year_three":"{{$summary->year_three}}","year_two":"{{$summary->year_two}}","year_one":"{{$summary->year_one}}","year_t":"{{$summary->year_t}}","year_t_plus_one":"{{$summary->year_t_plus_one}}","year_t_plus_two":"{{$summary->year_t_plus_two}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"risk_identified":"{{$summary->risk_identified}}","stakeholder_involved":"{{$summary->stakeholder_involved}}","remedial_measure":"{{$summary->remedial_measure}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
                                
@@ -165,13 +127,9 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Income Source</th>
-                                    <th>Year t-3</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t</th>
-                                    <th>Year t+1</th>
-                                    <th>Year t+2</th>
+                                    <th>Risk identified</th>
+                                    <th>Stakeholders involved</th>
+                                    <th>Remedial measures</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -193,59 +151,32 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Financial Info. </h4>
+                    <h4 class="modal-title">Edit Financial Risk. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Income Source</label>
-                                    <select name="income_source_id" id="edit_income_source_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Income Source</option>
-                                        @foreach($income as $source)
-                                         <option value="{{$source->id}}">{{$source->particular}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-3</label>
-                                    <input type="text" name="year_three" id="edit_year_three" value="{{old('edit_year_three')}}" class="form-control">
+                                    <label for="name">Risk Identified</label>
+                                    <input type="text" name="risk_identified" id="edit_risk_identified" value="{{old('edit_risk_identified')}}" class="form-control">
                                 </div>
+                                <input type="hidden" id="edit_id">
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-2</label>
-                                    <input type="text" name="year_two" id="edit_year_two" value="{{old('edit_year_two')}}" class="form-control">
+                                    <label for="name">Stakeholder Involved</label>
+                                    <input type="text" name="stakeholder_involved" id="edit_stakeholder_involved" value="{{old('edit_stakeholder_involved')}}" class="form-control">
                                 </div>
                               </div>
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-1</label>
-                                    <input type="text" name="year_one" id="edit_year_one" value="{{old('edit_year_one')}}" class="form-control">
+                                    <label for="name">Remedial Measure</label>
+                                    <input type="text" name="remedial_measure" id="edit_remedial_measure" value="{{old('edit_remedial_measure')}}" class="form-control">
                                 </div>
                               </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year t</label>
-                                    <input type="text" name="year_t" id="edit_year_t" value="{{old('edit_year_t')}}" class="form-control">
-                                </div>
-                              </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year t+1</label>
-                                    <input type="text" name="year_t_plus_one" id="edit_year_t_plus_one" value="{{old('edit_year_t_plus_one')}}" class="form-control">
-                                </div>
-                              </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year t+2</label>
-                                    <input type="text" name="year_t_plus_two" id="edit_year_t_plus_two" value="{{old('edit_year_t_plus_two')}}" class="form-control">
-                                </div>
-                              </div>
+                            
+                            
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -298,23 +229,15 @@
         });
 
          $('#form').submit(function (e) {
-            let income_source_id = $('#income_source_id').val();
-            let year_three = $('#year_three').val();
-            let year_two = $('#year_two').val();
-            let year_one = $('#year_one').val();
-            let year_t = $('#year_t').val();
-            let year_t_plus_one = $('#year_t_plus_one').val();
-            let year_t_plus_two = $('#year_t_plus_two').val();
+            let risk_identified = $('#risk_identified').val();
+            let stakeholder_involved = $('#stakeholder_involved').val();
+            let remedial_measure = $('#remedial_measure').val();
 
-            !income_source_id?addClass('income_source_id'):removeClass('income_source_id');
-            !year_three?addClass('year_three'):removeClass('year_three');
-            !year_two?addClass('year_two'):removeClass('year_two');
-            !year_one?addClass('year_one'):removeClass('year_one');
-            !year_t?addClass('year_t'):removeClass('year_t');
-            !year_t_plus_one?addClass('year_t_plus_one'):removeClass('year_t_plus_one');
-            !year_t_plus_two?addClass('year_t_plus_two'):removeClass('year_t_plus_two');
+            !risk_identified?addClass('risk_identified'):removeClass('risk_identified');
+            !stakeholder_involved?addClass('stakeholder_involved'):removeClass('stakeholder_involved');
+            !remedial_measure?addClass('remedial_measure'):removeClass('remedial_measure');
 
-            if(!income_source_id || !year_three || !year_two || !year_one || !year_t || !year_t_plus_one || !year_t_plus_two)
+            if(!risk_identified || !stakeholder_involved || !remedial_measure )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -324,7 +247,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("financial-info")}}',
+                url:'{{url("financial-risk")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -355,37 +278,25 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_income_source_id').select2().val(data.income_source_id).trigger('change');
-            $('#edit_year_three').val(data.year_three);
-            $('#edit_year_two').val(data.year_two);
-            $('#edit_year_one').val(data.year_one);
-            $('#edit_year_t').val(data.year_t);
-            $('#edit_year_t_plus_one').val(data.year_t_plus_one);
-            $('#edit_year_t_plus_two').val(data.year_t_plus_two);
+            $('#edit_risk_identified').val(data.risk_identified);
+            $('#edit_stakeholder_involved').val(data.stakeholder_involved);
+            $('#edit_remedial_measure').val(data.remedial_measure);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let income_source_id = $('#edit_income_source_id').val();
-            let year_three = $('#edit_year_three').val();
-            let year_two = $('#edit_year_two').val();
-            let year_one = $('#edit_year_one').val();
-            let year_t = $('#edit_year_t').val();
-            let year_t_plus_one = $('#edit_year_t_plus_one').val();
-            let year_t_plus_two = $('#edit_year_t_plus_two').val();
+            let risk_identified = $('#edit_risk_identified').val();
+            let stakeholder_involved = $('#edit_stakeholder_involved').val();
+            let remedial_measure = $('#edit_remedial_measure').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !income_source_id?addClass('edit_income_source_id'):removeClass('edit_income_source_id');
-            !year_three?addClass('edit_year_three'):removeClass('edit_year_three');
-            !year_two?addClass('edit_year_two'):removeClass('edit_year_two');
-            !year_one?addClass('edit_year_one'):removeClass('edit_year_one');
-            !year_t?addClass('edit_year_t'):removeClass('edit_year_t');
-            !year_t_plus_one?addClass('edit_year_t_plus_one'):removeClass('edit_year_t_plus_one');
-            !year_t_plus_two?addClass('edit_year_t_plus_two'):removeClass('edit_year_t_plus_two');
+            !risk_identified?addClass('edit_risk_identified'):removeClass('edit_risk_identified');
+            !stakeholder_involved?addClass('edit_stakeholder_involved'):removeClass('edit_stakeholder_involved');
+            !remedial_measure?addClass('edit_remedial_measure'):removeClass('edit_remedial_measure');
 
-            if(!income_source_id || !year_three || !year_two || !year_one || !year_t || !year_t_plus_one || !year_t_plus_two )
+            if(!risk_identified || !stakeholder_involved || !remedial_measure )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -395,7 +306,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("financial-info")}}/'+id,
+                url:'{{url("financial-risk")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -430,7 +341,7 @@ $('#updateForm').submit(function (e) {
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("financial-info")}}/'+id,
+                        url:'{{url("financial-risk")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){

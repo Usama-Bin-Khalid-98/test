@@ -174,7 +174,7 @@
           </ul>
         </li>
 
-          <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}} ">
+          <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('financial-risk'))?'active':''}}{{(request()->is('qec-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}}{{(request()->is('support-staff'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i><span>Facilities Information</span>
              <span class="pull-right-container">
@@ -183,6 +183,9 @@
           </a>
           <ul class="treeview-menu">
             <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Financial Info</a></li>
+            <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Financial Risk</a></li>
+            <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Support Staff</a></li>
+            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Qec Info</a></li>
              <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Business School Facility</a></li>
 
           </ul>
@@ -204,6 +207,7 @@
           </ul>
         </li>
             <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-gears text-black"></i>Desk Review</a></li>
+            <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-gears text-black"></i>Nbeac Criteria</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-black"></i>Eligibility Screening</a></li>
             <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-user text- black"></i>Admin</a></li>
             <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-black"></i>NBEAC System Settings</a></li>

@@ -179,7 +179,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Update" class="btn btn-info">
                                 </div>
                             </div>
                         </form>

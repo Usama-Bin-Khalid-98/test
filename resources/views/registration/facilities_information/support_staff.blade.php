@@ -1,4 +1,4 @@
-@section('pageTitle', 'Financial Info')
+@section('pageTitle', 'Support Staff')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Financial Info
+                Support Staff
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Financial Info</li>
+                <li class="active">Support Staff</li>
             </ol>
         </section>
         <section class="content-header">
@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide complete financial information of the business school in Table.6.1 (Rupees in million)).</h3>
+                            <h3 class="box-title">Provide data of staff of various offices in Table 6.3.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -60,50 +60,25 @@
                          <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Income Source</label>
-                                    <select name="income_source_id" id="income_source_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Income Source</option>
-                                        @foreach($income as $source)
-                                         <option value="{{$source->id}}">{{$source->particular}}</option>
+                                    <label for="name">Staff Category</label>
+                                    <select name="staff_category_id" id="staff_category_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Staff Category</option>
+                                        @foreach($categories as $source)
+                                         <option value="{{$source->id}}">{{$source->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t-3</label>
-                                    <input type="text" name="year_three" id="year_three" class="form-control">
+                                    <label for="name">Total number of Staff members</label>
+                                    <input type="text" name="total_staff" id="total_staff" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t-2</label>
-                                    <input type="text" name="year_two" id="year_two" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-1</label>
-                                    <input type="text" name="year_one" id="year_one" class="form-control">
-                                </div>
-                              </div>
-                            
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t</label>
-                                    <input type="text" name="year_t" id="year_t" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t+1</label>
-                                    <input type="text" name="year_t_plus_one" id="year_t_plus_one" class="form-control">
-                                </div>
-                              </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t+2</label>
-                                    <input type="text" name="year_t_plus_two" id="year_t_plus_two" class="form-control">
+                                    <label for="name">Qualification of head/supervisor</label>
+                                    <input type="text" name="supervisor_qualification" id="supervisor_qualification" class="form-control">
                                 </div>
                               </div>
                             
@@ -122,7 +97,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Financial Information Table.</h3>
+                            <h3 class="box-title">Support Staff Table.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -131,32 +106,24 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Income Source</th>
-                                    <th>Year t-3</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t</th>
-                                    <th>Year t+1</th>
-                                    <th>Year t+2</th>
+                                    <th>Satff Category</th>
+                                    <th>Total number of Staff members</th>
+                                    <th>Qualification of head/supervisor</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach($infos as $summary)
+                                    @foreach($supports as $summary)
                                 <tr>
                                     <td>{{$summary->campus->business_school->name}}</td>
                                     <td>{{$summary->campus->location}}</td>
-                                    <td>{{$summary->income_source->particular}}</td>
-                                    <td>{{$summary->year_three}}</td>
-                                    <td>{{$summary->year_two}}</td>
-                                    <td>{{$summary->year_one}}</td>
-                                    <td>{{$summary->year_t}}</td>
-                                    <td>{{$summary->year_t_plus_one}}</td>
-                                    <td>{{$summary->year_t_plus_two}}</td>
+                                    <td>{{$summary->staff_category->name}}</td>
+                                    <td>{{$summary->total_staff}}</td>
+                                    <td>{{$summary->supervisor_qualification}}</td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"income_source_id":"{{$summary->income_source_id}}","year_three":"{{$summary->year_three}}","year_two":"{{$summary->year_two}}","year_one":"{{$summary->year_one}}","year_t":"{{$summary->year_t}}","year_t_plus_one":"{{$summary->year_t_plus_one}}","year_t_plus_two":"{{$summary->year_t_plus_two}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"staff_category_id":"{{$summary->staff_category_id}}","total_staff":"{{$summary->total_staff}}","supervisor_qualification":"{{$summary->supervisor_qualification}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
                                
@@ -165,13 +132,9 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Income Source</th>
-                                    <th>Year t-3</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t</th>
-                                    <th>Year t+1</th>
-                                    <th>Year t+2</th>
+                                    <th>Satff Category</th>
+                                    <th>Total number of Staff members</th>
+                                    <th>Qualification of head/supervisor</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -193,17 +156,17 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Financial Info. </h4>
+                    <h4 class="modal-title">Edit Support Staff. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Income Source</label>
-                                    <select name="income_source_id" id="edit_income_source_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Income Source</option>
-                                        @foreach($income as $source)
-                                         <option value="{{$source->id}}">{{$source->particular}}</option>
+                                    <label for="name">Staff Category</label>
+                                    <select name="staff_category_id" id="edit_staff_category_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Staff Category</option>
+                                        @foreach($categories as $source)
+                                         <option value="{{$source->id}}">{{$source->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -211,39 +174,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-3</label>
-                                    <input type="text" name="year_three" id="edit_year_three" value="{{old('edit_year_three')}}" class="form-control">
+                                    <label for="name">Total number of Staff members</label>
+                                    <input type="text" name="total_staff" id="edit_total_staff" value="{{old('edit_total_staff')}}" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-2</label>
-                                    <input type="text" name="year_two" id="edit_year_two" value="{{old('edit_year_two')}}" class="form-control">
-                                </div>
-                              </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year t-1</label>
-                                    <input type="text" name="year_one" id="edit_year_one" value="{{old('edit_year_one')}}" class="form-control">
-                                </div>
-                              </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year t</label>
-                                    <input type="text" name="year_t" id="edit_year_t" value="{{old('edit_year_t')}}" class="form-control">
-                                </div>
-                              </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year t+1</label>
-                                    <input type="text" name="year_t_plus_one" id="edit_year_t_plus_one" value="{{old('edit_year_t_plus_one')}}" class="form-control">
-                                </div>
-                              </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year t+2</label>
-                                    <input type="text" name="year_t_plus_two" id="edit_year_t_plus_two" value="{{old('edit_year_t_plus_two')}}" class="form-control">
+                                    <label for="name">Qualification of head/supervisor</label>
+                                    <input type="text" name="supervisor_qualification" id="edit_supervisor_qualification" value="{{old('edit_supervisor_qualification')}}" class="form-control">
                                 </div>
                               </div>
                         <div class="col-md-6">
@@ -298,23 +236,15 @@
         });
 
          $('#form').submit(function (e) {
-            let income_source_id = $('#income_source_id').val();
-            let year_three = $('#year_three').val();
-            let year_two = $('#year_two').val();
-            let year_one = $('#year_one').val();
-            let year_t = $('#year_t').val();
-            let year_t_plus_one = $('#year_t_plus_one').val();
-            let year_t_plus_two = $('#year_t_plus_two').val();
+            let staff_category_id = $('#staff_category_id').val();
+            let total_staff = $('#total_staff').val();
+            let supervisor_qualification = $('#supervisor_qualification').val();
 
-            !income_source_id?addClass('income_source_id'):removeClass('income_source_id');
-            !year_three?addClass('year_three'):removeClass('year_three');
-            !year_two?addClass('year_two'):removeClass('year_two');
-            !year_one?addClass('year_one'):removeClass('year_one');
-            !year_t?addClass('year_t'):removeClass('year_t');
-            !year_t_plus_one?addClass('year_t_plus_one'):removeClass('year_t_plus_one');
-            !year_t_plus_two?addClass('year_t_plus_two'):removeClass('year_t_plus_two');
+            !staff_category_id?addClass('staff_category_id'):removeClass('staff_category_id');
+            !total_staff?addClass('total_staff'):removeClass('total_staff');
+            !supervisor_qualification?addClass('supervisor_qualification'):removeClass('supervisor_qualification');
 
-            if(!income_source_id || !year_three || !year_two || !year_one || !year_t || !year_t_plus_one || !year_t_plus_two)
+            if(!staff_category_id || !total_staff || !supervisor_qualification )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -324,7 +254,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("financial-info")}}',
+                url:'{{url("support-staff")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -355,37 +285,25 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_income_source_id').select2().val(data.income_source_id).trigger('change');
-            $('#edit_year_three').val(data.year_three);
-            $('#edit_year_two').val(data.year_two);
-            $('#edit_year_one').val(data.year_one);
-            $('#edit_year_t').val(data.year_t);
-            $('#edit_year_t_plus_one').val(data.year_t_plus_one);
-            $('#edit_year_t_plus_two').val(data.year_t_plus_two);
+            $('#edit_staff_category_id').select2().val(data.staff_category_id).trigger('change');
+            $('#edit_total_staff').val(data.total_staff);
+            $('#edit_supervisor_qualification').val(data.supervisor_qualification);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let income_source_id = $('#edit_income_source_id').val();
-            let year_three = $('#edit_year_three').val();
-            let year_two = $('#edit_year_two').val();
-            let year_one = $('#edit_year_one').val();
-            let year_t = $('#edit_year_t').val();
-            let year_t_plus_one = $('#edit_year_t_plus_one').val();
-            let year_t_plus_two = $('#edit_year_t_plus_two').val();
+            let staff_category_id = $('#edit_staff_category_id').val();
+            let total_staff = $('#edit_total_staff').val();
+            let supervisor_qualification = $('#edit_supervisor_qualification').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !income_source_id?addClass('edit_income_source_id'):removeClass('edit_income_source_id');
-            !year_three?addClass('edit_year_three'):removeClass('edit_year_three');
-            !year_two?addClass('edit_year_two'):removeClass('edit_year_two');
-            !year_one?addClass('edit_year_one'):removeClass('edit_year_one');
-            !year_t?addClass('edit_year_t'):removeClass('edit_year_t');
-            !year_t_plus_one?addClass('edit_year_t_plus_one'):removeClass('edit_year_t_plus_one');
-            !year_t_plus_two?addClass('edit_year_t_plus_two'):removeClass('edit_year_t_plus_two');
+            !staff_category_id?addClass('edit_staff_category_id'):removeClass('edit_staff_category_id');
+            !total_staff?addClass('edit_total_staff'):removeClass('edit_total_staff');
+            !supervisor_qualification?addClass('edit_supervisor_qualification'):removeClass('edit_supervisor_qualification');
 
-            if(!income_source_id || !year_three || !year_two || !year_one || !year_t || !year_t_plus_one || !year_t_plus_two )
+            if(!staff_category_id || !total_staff || !supervisor_qualification  )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -395,7 +313,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("financial-info")}}/'+id,
+                url:'{{url("support-staff")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -430,7 +348,7 @@ $('#updateForm').submit(function (e) {
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("financial-info")}}/'+id,
+                        url:'{{url("support-staff")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
