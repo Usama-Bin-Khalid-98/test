@@ -93,15 +93,15 @@ class NbeacCriteriaController extends Controller
                           ->update(
                               [
                                   'campus_id' => Auth::user()->campus_id,
-                                  'editor1' => $request->editor1,
-                                  'editor2' => $request->editor2,
-                                  'editor3' => $request->editor3,
-                                  'editor4' => $request->editor4,
-                                  'editor5' => $request->editor5,
-                                  'editor6' => $request->editor6,
-                                  'editor7' => $request->editor7,
-                                  'editor8' => $request->editor8,
-                                  'editor9' => $request->editor9,
+                                  'program_started' => $request->editor1,
+                                  'mission_vision_statement' => $request->editor2,
+                                  'strategic_plan' => $request->editor3,
+                                  'student_intake' => $request->editor4,
+                                  'student_enrollment' => $request->editor5,
+                                  'course_load' => $request->editor6,
+                                  'research_output' => $request->editor7,
+                                  'bandwidth' => $request->editor8,
+                                  'std_comp_ratio' => $request->editor9,
                                   'updated_by' => Auth::user()->id
 
                                   ]

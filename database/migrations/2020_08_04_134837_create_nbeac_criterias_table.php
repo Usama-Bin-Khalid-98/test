@@ -19,15 +19,15 @@ class CreateNbeacCriteriasTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-            $table->string('editor1', 255)->nullable();
-            $table->string('editor2', 255)->nullable();
-            $table->string('editor3', 255)->nullable();
-            $table->string('editor4', 255)->nullable();
-            $table->string('editor5', 255)->nullable();
-            $table->string('editor6', 255)->nullable();
-            $table->string('editor7', 255)->nullable();
-            $table->string('editor8', 255)->nullable();
-            $table->string('editor9', 255)->nullable();
+            $table->text('program_started')->nullable();
+            $table->text('mission_vision_statement')->nullable();
+            $table->text('strategic_plan')->nullable();
+            $table->text('student_intake')->nullable();
+            $table->text('student_enrollment')->nullable();
+            $table->text('course_load')->nullable();
+            $table->text('research_output')->nullable();
+            $table->text('bandwidth')->nullable();
+            $table->text('std_comp_ratio')->nullable();
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');
             $table->integer('updated_by')->unsigned()->nullable();

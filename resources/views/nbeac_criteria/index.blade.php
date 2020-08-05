@@ -55,7 +55,7 @@
             <div class="box-body pad">
               
                     <textarea id="editor1" name="editor1" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor1}}
+                        {{@$nbeac_criteria->program_started}}
                     </textarea>
 
 
@@ -65,14 +65,14 @@
             <div class="box-body pad">
               
                     <textarea id="editor2" name="editor2" rows="10" cols="80">
-                                {{@$nbeac_criteria->editor2}}
+                                {{@$nbeac_criteria->mission_vision_statement}}
                     </textarea>
              
             </div>
             <div class="box-body pad">
               
                     <textarea id="editor3" name="editor3" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor3}}
+                        {{@$nbeac_criteria->strategic_plan}}
 
                     </textarea>
              
@@ -80,28 +80,28 @@
             <div class="box-body pad">
              
                     <textarea id="editor4" name="editor4" rows="10" cols="80">                
-                           {{@$nbeac_criteria->editor4}}
+                           {{@$nbeac_criteria->student_intake}}
                     </textarea>
               
             </div>
             <div class="box-body pad">
               
                     <textarea id="editor5" name="editor5" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor5}}
+                        {{@$nbeac_criteria->student_enrollment}}
                     </textarea>
              
             </div>
             <div class="box-body pad">
               
                     <textarea id="editor6" name="editor6" rows="10" cols="80">
-                        {{@$nbeac_criteria->editor6}}
+                        {{@$nbeac_criteria->course_load}}
                     </textarea>
               
             </div>
             <div class="box-body pad">
               
                     <textarea id="editor7" name="editor7" rows="10" cols="80">
-                                {{@$nbeac_criteria->editor7}}           
+                                {{@$nbeac_criteria->research_output}}           
                     </textarea>
                     
              
@@ -109,7 +109,7 @@
             <div class="box-body pad">
              
                     <textarea id="editor8" name="editor8" rows="10" cols="80">
-                                          {{@$nbeac_criteria->editor8}}
+                                          {{@$nbeac_criteria->bandwidth}}
                     </textarea>
                     
               
@@ -117,7 +117,7 @@
             <div class="box-body pad">
             
                     <textarea id="editor9" name="editor9" rows="10" cols="80">
-                                           {{@$nbeac_criteria->editor9}}
+                                           {{@$nbeac_criteria->std_comp_ratio}}
                     </textarea>
                     
               
