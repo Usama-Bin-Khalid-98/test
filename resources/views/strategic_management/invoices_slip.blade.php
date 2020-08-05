@@ -485,7 +485,7 @@
             !payment_method?addClass('payment_method'):removeClass('payment_method');
             !transaction_date?addClass('transaction_date'):removeClass('transaction_date');
             !slip?addClass('slip'):removeClass('slip');
-            if(!transaction_date || !invoice_no || !slip || !payment_method)
+            if(!transaction_date || !invoice_no || !payment_method)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -510,7 +510,7 @@
                             Notiflix.Notify.Success(response.success);
                         }
                         console.log('invoices', response);
-                       // setTimeout(() => location.reload(), 1000);
+                        location.reload();
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

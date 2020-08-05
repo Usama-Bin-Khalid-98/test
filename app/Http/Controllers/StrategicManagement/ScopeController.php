@@ -22,7 +22,7 @@ class ScopeController extends Controller
     public function index()
     {
         //
-        @$department_id = Slip::where('business_school_id', Auth::user()->campus_id)->get()->first()->department_id;
+        @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
         $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
         $levels = Level::where('status', 'active')->get();
         $scopes = Scope::with('level', 'program')->get();
