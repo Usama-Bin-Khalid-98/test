@@ -22,7 +22,7 @@ class DeskReviewController extends Controller
         //
         $campus_id = Auth::user()->campus_id;
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-
+//        $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
         //dd($accreditation);
         $program_dates = [];
         foreach ($accreditation as $accred)

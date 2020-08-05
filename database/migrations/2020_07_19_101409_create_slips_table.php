@@ -25,8 +25,8 @@ class CreateSlipsTable extends Migration
                 ->references('id')
                 ->on('departments');
             $table->string('slip')->nullable();
-            $table->string('payment_method_id')->unsigned()->nullable();
-            $table->foreign('payment_method')
+            $table->integer('payment_method_id')->unsigned()->nullable();
+            $table->foreign('payment_method_id')
                 ->references('id')
                 ->on('payment_methods');
             $table->string('cheque_no')->nullable();
