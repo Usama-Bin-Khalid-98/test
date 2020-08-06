@@ -91,6 +91,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('course-type','CourseTypeController');
     Route::resource('desk-review', 'DeskReviewController');
     Route::resource('nbeac-criteria', 'NbeacCriteriaController');
+    Route::resource('department-fee', 'DepartmentFeeController');
 
     //Social-Responsibility
     Route::resource('student-club','StudentClubController');
