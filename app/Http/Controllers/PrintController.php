@@ -34,14 +34,14 @@ class PrintController extends Controller
         ->leftJoin('programs','scopes.program_id','=','programs.id')
         ->leftJoin('levels','scopes.level_id','=','levels.id')
         ->select('scopes.*','levels.name as levelName', 'programs.name as programName')
-        ->where('scopes.school_id',$bussinessSchool[0]->id)
+        ->where('scopes.campus_id',$bussinessSchool[0]->id)
         ->get();
 
 
         $contactInformation = DB::table('contact_infos')
         ->leftJoin('designations','contact_infos.designation_id','=','designations.id')        
         ->select('contact_infos.*','designations.name as designationName')
-        ->where('contact_infos.business_school_id',$bussinessSchool[0]->id)
+        ->where('contact_infos.campus_id',$bussinessSchool[0]->id)
         ->get();
 
 
@@ -50,13 +50,13 @@ class PrintController extends Controller
 
          $affiliations = DB::select('SELECT affiliations.*,statutory_committees.name as statutoryName, statutory_bodies.name as statutoryBody, designations.name as designationName
             FROM affiliations, statutory_committees, statutory_bodies, business_schools, designations
-            WHERE affiliations.statutory_committees_id=statutory_committees.id AND affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.designation_id=designations.id AND business_schools.id=?', array($bussinessSchool[0]->id));
+            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.designation_id=designations.id AND business_schools.id=?', array($bussinessSchool[0]->id));
 
 
          $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools WHERE business_schools.id=?', array($bussinessSchool[0]->id));
 
 
-          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, business_schools WHERE financial_infos.income_source_id=income_sources.id AND business_schools.id=financial_infos.business_school_id AND business_schools.id=?', array($bussinessSchool[0]->id));
+          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, business_schools WHERE financial_infos.income_source_id=income_sources.id AND business_schools.id=financial_infos.campus_id AND business_schools.id=?', array($bussinessSchool[0]->id));
 
 
          $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools WHERE business_schools.id=?', array($bussinessSchool[0]->id));
@@ -64,8 +64,12 @@ class PrintController extends Controller
          $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
             FROM program_portfolios, programs, course_types, business_schools
             WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=?', array($bussinessSchool[0]->id));
+
+         $studentEnrolment = DB::select('SELECT student_enrolments.*
+            FROM student_enrolments , business_schools
+            WHERE business_schools.id=?', array($bussinessSchool[0]->id));
            
-        return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio'));
+        return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment'));
     }
 
     /**

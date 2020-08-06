@@ -11,6 +11,8 @@
                                     </th>
                                     
                                 </thead>
+                                
+                                
                                 <tbody>
                                     <tr>
                                         <td></td>
@@ -27,34 +29,36 @@
                                      
                                      
                                     </tr>
+                                    @foreach($studentEnrolment as $enr)
+                                    @if($enr->year==2018)
                                     <tr>
                                         <td>Year t-2</td>
+                                        <td>{{$enr->bs_level}}</td>
+                                        <td>{{$enr->ms_level}}</td>
+                                         <td>{{$enr->phd_level}}</td>
                                         <td></td>
-                                        <td></td>
-                                         <td></td>
-                                        <td></td>
-                                        
-                                        
                                     </tr>
+                                    @elseif($enr->year==2019)
                                     <tr>
                                         <td>Year t-1</td>
-                                        <td></td>
-                                        <td></td>
-                                         <td></td>
+                                        <td>{{$enr->phd_level}}</td>
+                                        <td>{{$enr->phd_level}}</td>
+                                         <td>{{$enr->phd_level}}</td>
                                         <td></td>
                                         
                                         
                                     </tr>
+                                    @elseif($enr->year==2020)
                                     <tr>
                                         <td>Year t</td>
+                                        <td>{{$enr->phd_level}}</td>
+                                        <td>{{$enr->phd_level}}</td>
+                                         <td>{{$enr->phd_level}}</td>
                                         <td></td>
-                                        <td></td>
-                                         <td></td>
-                                        <td></td>
-                                        
-                                        
                                     </tr>
-                                    <tr>
+                                    @endif
+                              @endforeach
+                              <tr>
                                         <td>Total</td>
                                         <td></td>
                                         <td></td>
@@ -63,11 +67,8 @@
                                         
                                         
                                     </tr>
-                                   
-                                   
-                                    
-                              
                                 </tbody>
+                               
                                 <tfoot></tfoot>
                               
                               

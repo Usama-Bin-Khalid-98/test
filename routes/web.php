@@ -56,6 +56,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('budgetary-info','BudgetaryInfoController');
     Route::resource('strategic-plan','StrategicPlanController');
     Route::resource('mission-vision','MissionVisionController');
+    Route::resource('print','PrintController');
 
 });
 
