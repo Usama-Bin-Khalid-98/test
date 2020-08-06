@@ -15,7 +15,7 @@ use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
 use App\Models\Common\Slip;
-use App\Models\StrategicManagement\Designation;
+use App\Models\Common\Designation;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;

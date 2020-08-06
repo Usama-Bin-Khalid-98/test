@@ -23,6 +23,7 @@ class ScopeController extends Controller
         $programs = Program::where('status', 'active')->get();
         $levels = Level::where('status', 'active')->get();
         $scopes = Scope::with('level', 'program')->get();
+        //dd($programs);
         return view('strategic_management.scope', compact('programs', 'levels', 'scopes'));
     }
 
@@ -70,8 +71,10 @@ class ScopeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Scope $scope)
-    {
-        //
+    {   //dd($scope);
+        $result = Scope::get();
+        dd($result);
+        return $result;
     }
 
     /**

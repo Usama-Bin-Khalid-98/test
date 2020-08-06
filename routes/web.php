@@ -53,6 +53,9 @@ Route::prefix('strategic')->group(function () {
     Route::resource('affiliations','StrategicManagement\AffiliationController');
     Route::resource('budgetary-info','BudgetaryInfoController');
     Route::resource('strategic-plan','StrategicPlanController');
+    Route::resource('print','PrintController');
+
+
 
 });
 
