@@ -109,6 +109,7 @@
             <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}"><a href="{{url('strategic/budgetary-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Budgetary Information</a></li>
             <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Mission Vision</a></li>
             <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Approval of Strategic Plan</a></li>
+            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print</a></li>
 
           </ul>
         </li>
@@ -144,7 +145,7 @@
 
           </ul>
         </li>
-        <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}">
+        <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-summary'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-orange"></i> <span>Faculty</span>
                   <span class="pull-right-container">
@@ -152,7 +153,7 @@
             </span>
               </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('faculty_summary')) ? 'active' : '' }}"><a href="{{route('faculty_summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary BSF</a></li>
+            <li class="{{ (request()->is('faculty-summary')) ? 'active' : '' }}"><a href="{{url('faculty-summary')}}"><i class="fa fa-circle-o text-orange"></i>Summary BSF</a></li>
             <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Work Load T</a></li>
             <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}"><i class="fa fa-circle-o text-orange"></i>Visiting Faculty</a></li>
              <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Student Ratio</a></li>

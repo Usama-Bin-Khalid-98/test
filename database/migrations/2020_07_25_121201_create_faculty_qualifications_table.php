@@ -18,6 +18,7 @@ class CreateFacultyQualificationsTable extends Migration
             $table->string('name', 255);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

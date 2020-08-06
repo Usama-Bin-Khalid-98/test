@@ -56,6 +56,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('budgetary-info','BudgetaryInfoController');
     Route::resource('strategic-plan','StrategicPlanController');
     Route::resource('mission-vision','MissionVisionController');
+    Route::resource('print','PrintController');
 
 });
 
@@ -71,14 +72,13 @@ use Illuminate\Support\Facades\Route;
     Route::resource('student-gender','StudentGenderController');
 
     // Faculty
-    Route::get('/faculty_summary','Faculty\FacultySummaryController@index')->name('faculty_summary');
-    Route::post('/faculty_summary','Faculty\FacultySummaryController@store');
     Route::get('/visiting_faculty','Faculty\VisitingFacultyController@index')->name('visiting_faculty');
     Route::resource('faculty-gender','Faculty\FacultyGenderController');
     Route::resource('faculty-stability','Faculty\FacultyStabilityController');
     Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
     Route::resource('work-load','Faculty\WorkloadController');
     Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
+    Route::resource('faculty-summary','Faculty\FacultySummaryController');
 
     //research-summary
     Route::resource('research-summary','ResearchSummaryController');

@@ -1,0 +1,6 @@
+@include('strategic_management.includes.6_1')
+@include('strategic_management.includes.6_2')
+@include('strategic_management.includes.6_3')
+@include('strategic_management.includes.6_4')
+@include('strategic_management.includes.6_5')
+@include('strategic_management.includes.6_6')
