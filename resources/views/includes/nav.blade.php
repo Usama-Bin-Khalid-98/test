@@ -109,6 +109,7 @@
             <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}"><a href="{{url('strategic/budgetary-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Budgetary Information</a></li>
             <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Mission Vision</a></li>
             <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Approval of Strategic Plan</a></li>
+            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print</a></li>
 
           </ul>
         </li>
