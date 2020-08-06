@@ -19,6 +19,7 @@ use App\Models\Common\PaymentMethod;
 use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
+use App\Models\Common\FacultyQualification;
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
 use App\Models\Facility\StaffCategory;
@@ -176,6 +177,11 @@ class ConfigController extends Controller
                 $this->TableRows =QecType::all();
                 break;
             }
+            case 'faculty_qualifications';
+            {
+                $this->TableRows =FacultyQualification::all();
+                break;
+            }
         }
 
 
@@ -266,6 +272,9 @@ class ConfigController extends Controller
 
         $QecType= QecType::all()->count();
         $counter['QecType'] = $QecType;
+
+        $FacultyQualification= FacultyQualification::all()->count();
+        $counter['FacultyQualification'] = $FacultyQualification;
 
 
         return $counter;
@@ -435,6 +444,12 @@ class ConfigController extends Controller
             case 'qec_types':
             {
                 $this->TableRows =QecType::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'faculty_qualifications':
+            {
+                $this->TableRows =FacultyQualification::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -613,6 +628,12 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+            case 'faculty_qualifications':
+            {
+                $this->TableRows = FacultyQualification::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
         }
     }
 
@@ -774,6 +795,12 @@ class ConfigController extends Controller
             case 'qec_types':
             {
                 $this->TableRows  = QecType::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'faculty_qualifications':
+            {
+                $this->TableRows  = FacultyQualification::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }
