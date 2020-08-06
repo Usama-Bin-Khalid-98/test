@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
+
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
@@ -29,8 +31,7 @@
                     <button class="btn gradient-bg-color"
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
                            style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
                 </div>
             </div>
         </section>
@@ -54,7 +55,7 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
-
+                        <form name="add" method="post">
                         <!-- /.box-header -->
                         <div class="box-body">
 
@@ -62,9 +63,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Faculty Qualification</label>
-                                    <select name="designation" class="form-control select2">
+                                    <select name="faculty_qualification_id" id="faculty_qualification_id" class="form-control select2">
                                         <option value="">Select Qualification</option>
-                                        @foreach($degrees as $degree)
+                                        @foreach($qualification as $degree)
                                         <option value="{{$degree->id}}">{{$degree->name}}</option>
                                         @endforeach
 
@@ -74,10 +75,10 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Courses/Programs</label>
-                                    <select name="designation" class="form-control">
-                                        <option value="">Select Program</option>
-                                        @foreach($programs as $program)
+                                    <label for="name">Discipline</label>
+                                    <select name="discipline_id" id="discipline_id" class="form-control">
+                                        <option value="">Select Discipline</option>
+                                        @foreach($discipline as $program)
                                             <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach
                                     </select>
@@ -88,7 +89,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                    <label for="name">Number of Faculty</label>
-                                    <input type="text" name="phd" value="" class="form-control">
+                                    <input type="text" name="number_faculty" id="number_faculty" value="" class="form-control">
                                 </div>
                             </div>
 
@@ -97,12 +98,13 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right">
                                     <label for="type">&nbsp;</label>
-                                    <input type="button" name="submit" value="Add" class="btn btn-info">
+                                    <input type="button" name="submit" value="Add" id="add" class="btn btn-info">
                                 </div>
                             </div>
 
                         </div>
                         <!-- /.box-body -->
+                        </form>
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
@@ -112,56 +114,56 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
+{{--                            <table id="example1" class="table table-bordered table-striped">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
 
-                                    <th>Qualification</th>
-                                    <th>Public Administration</th>
-                                    <th>Business Administration</th>
-                                    <th>Managment Sciences</th>
-                                    <th>Comerece</th>
-                                    <th>Others</th>
-                                    <th>Total Faculty</th>
-
-
-
-
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-
-                                    <td>PHD</td>
-                                    <td>12</td>
-                                    <td>14</td>
-                                    <td>21</td>
-                                    <td>13</td>
-                                    <td>16</td>
-                                    <td>76</td>
+{{--                                    <th>Qualification</th>--}}
+{{--                                    <th>Public Administration</th>--}}
+{{--                                    <th>Business Administration</th>--}}
+{{--                                    <th>Managment Sciences</th>--}}
+{{--                                    <th>Comerece</th>--}}
+{{--                                    <th>Others</th>--}}
+{{--                                    <th>Total Faculty</th>--}}
 
 
 
 
-                                    <td><div class="badge bg-green">Active</div></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>
-                                </tr>
 
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                       <th>Qualification</th>
-                                    <th>Public Administration</th>
-                                    <th>Business Administration</th>
-                                    <th>Managment Sciences</th>
-                                    <th>Comerece</th>
-                                    <th>Others</th>
-                                    <th>total faculty</th>
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                <tr>--}}
 
-                                </tr>
-                                </tfoot>
-                            </table>
+{{--                                    <td>PHD</td>--}}
+{{--                                    <td>12</td>--}}
+{{--                                    <td>14</td>--}}
+{{--                                    <td>21</td>--}}
+{{--                                    <td>13</td>--}}
+{{--                                    <td>16</td>--}}
+{{--                                    <td>76</td>--}}
+
+
+
+
+{{--                                    <td><div class="badge bg-green">Active</div></td>--}}
+{{--                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue"></i> </td>--}}
+{{--                                </tr>--}}
+
+{{--                                </tbody>--}}
+{{--                                <tfoot>--}}
+{{--                                <tr>--}}
+{{--                                       <th>Qualification</th>--}}
+{{--                                    <th>Public Administration</th>--}}
+{{--                                    <th>Business Administration</th>--}}
+{{--                                    <th>Managment Sciences</th>--}}
+{{--                                    <th>Comerece</th>--}}
+{{--                                    <th>Others</th>--}}
+{{--                                    <th>total faculty</th>--}}
+
+{{--                                </tr>--}}
+{{--                                </tfoot>--}}
+{{--                            </table>--}}
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -258,6 +260,8 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -287,59 +291,154 @@
             checkboxClass: 'icheckbox_flat-pink'
         })
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
+        $('#add').on('click', function (e) {
+            let faculty_qualification_id = $('#faculty_qualification_id').val();
+            let discipline_id = $('#discipline_id').val();
+            let number_faculty = $('#number_faculty').val();
 
-        function addUser() {
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
+            !number_faculty?addClass('number_faculty'):removeClass('number_faculty');
+            !discipline_id?addClass('discipline_id'):removeClass('discipline_id');
+            !faculty_qualification_id?addClass('faculty_qualification_id'):removeClass('faculty_qualification_id');
+
+            if(!number_faculty || !discipline_id || !faculty_qualification_id)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            // Yes button callback
+            e.preventDefault();
             $.ajax({
-                type: 'POST',
-                url: "{{'users'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    user: user,
-                    code: code
+                url:'{{url("strategic/faculty_summary")}}',
+                type:'POST',
+                data: {number_faculty:number_faculty,discipline_id:discipline_id, faculty_qualification_id:faculty_qualification_id},
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
                 },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
-                    //var data = JSON.parse(response);
-                    alert(response);
-                    //location.replace('users');
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                   // location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
                 }
-            });
-        }
+            })
+        });
 
 
-        function update(id, name, code, status) {
-            $('#id').val(id);
-            $('#user').val(name);
-            $('#code').val(code);
-            $('#status').val(status);
-            $('#add_user').hide();
-            $('#Update').show();
-        }
+        $('.edit').on('click', function () {
+            // let data = JSON.parse(JSON.stringify($(this).data('row')));
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#edit_plan_period').val(data.plan_period);
+            $('#edit_aproval_date').val(data.aproval_date);
+            $('#edit_aproving_authority').val(data.aproving_authority);
+            $('#edit_id').val(data.id);
+            $('input[value='+data.status+']').iCheck('check');
+        });
 
-        function updateUser() {
-            var id = $('#id').val();
-            var user = $('#user').val();
-            var code = $('#code').val();
-            var status = $('#status').val();
+        $('#updateForm').submit(function (e) {
+            let plan_period = $('#edit_plan_period').val();
+            let aproval_date = $('#edit_aproval_date').val();
+            let aproving_authority = $('#edit_aproving_authority').val();
+            let id = $('#edit_id').val();
+
+            let status = $('input[name=edit_status]:checked').val();
+            !plan_period?addClass('edit_plan_period'):removeClass('edit_plan_period');
+            !aproval_date?addClass('edit_aproval_date'):removeClass('edit_aproval_date');
+            !aproving_authority?addClass('edit_aproving_authority'):removeClass('edit_aproving_authority');
+
+            if(!plan_period || !aproval_date || !aproving_authority)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            e.preventDefault();
+            var formData = new FormData(this);
+            //var formData = $("#updateForm").serialize()
+            formData.append('_method', 'PUT');
             $.ajax({
-                type: 'POST',
-                url: "{{'updateusers'}}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    id: id,
-                    user: user,
-                    code: code,
-                    status: status
+                url:'{{url("strategic/strategic-plan")}}/'+id,
+                type:'POST',
+                // dataType:"JSON",
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
                 },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
-                    alert('Update successfully');
-                    location.replace('users');
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    //console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
                 }
-            });
-        }
+            })
+        });
+
+
+        $('.delete').on('click', function (e) {
+            let id =  $(this).data('id');
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
+                function(){
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("strategic/strategic-plan")}}/'+id,
+                        type:'DELETE',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+                            location.reload();
+                            // console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+
+        })
+
+
 
     </script>
 

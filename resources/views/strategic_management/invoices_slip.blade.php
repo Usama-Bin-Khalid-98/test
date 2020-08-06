@@ -215,7 +215,9 @@
                                     <td><a href="{{$invoice->slip}}">Invoice</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
-                                    <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" ><i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"  data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{$invoice->comments}}" ,"transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}'></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}"  data-toggle="modal" data-target="#edit-modal"></i> </td>
+                                    <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" >
+                                            <i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
+                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}"  data-toggle="modal" data-target="#edit-modal"></i> </td>
                                 </tr>
                                 @endforeach
 
@@ -386,7 +388,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="slip">Bank Deposit Slip</label>
                                             <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">
@@ -461,9 +463,9 @@
             //console.log('modal showed', $(this).data('id'));
             $('#id').val($(this).data('id'));
             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            console.log('invoice id ', data);
             $('#edit_department_id').select2().val(data.department_id).trigger('change');
             $('#transaction_date').val(data.transaction_date);
-            console.log('invoice id ', data.id);
             $('#update_invoice_no').select2().val(data.id).trigger('change');
 
             $('#payment_method').select2().val(data.payment_method_id).trigger('change');
