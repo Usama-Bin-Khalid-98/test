@@ -23,8 +23,8 @@ class StudentEnrolmentController extends Controller
     {
         $uniinfo = BusinessSchool::get();
         $programs = Program::where('status', 'active')->get();
-
-        $enrolments = StudentEnrolment::with('campus','program')->get();
+        $campus_id = Auth::user()->campus_id;
+        $enrolments = StudentEnrolment::with('campus','program')->where('campus_id', $campus_id)->get();
 
          return view('registration.student_enrolment.enrolment', compact('uniinfo','programs','enrolments'));
     }
@@ -138,7 +138,7 @@ class StudentEnrolmentController extends Controller
     {
         try {
             StudentEnrolment::where('id', $studentEnrolment->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             StudentEnrolment::destroy($studentEnrolment->id);
             return response()->json(['success' => 'Record deleted successfully.']);

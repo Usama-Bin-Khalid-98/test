@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(DepartmentSeeder::class);
        // $this->call(PermissionSeeder::class);
+        $this->call(FacultyQualificationSeeder::class);
         $this->call(CharterTypeSeeder::class);
         $this->call(InstituteTypeSeeder::class);
         $this->call(BusinessSchoolSeeder::class);

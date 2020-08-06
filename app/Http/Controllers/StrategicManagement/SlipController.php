@@ -5,6 +5,7 @@ namespace App\Http\Controllers\StrategicManagement;
 use App\BusinessSchool;
 use App\Http\Controllers\Controller;
 use App\Models\Common\Department;
+use App\Models\Common\FeeType;
 use App\Models\Common\PaymentMethod;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
@@ -99,7 +100,8 @@ class SlipController extends Controller
     public function generateInvoice(Request $request)
     {
         //dd($request->all());
-        //
+        //get fee type
+
         try {
             Slip::create([
                 'business_school_id' => Auth::user()->business_school_id,
@@ -114,8 +116,6 @@ class SlipController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
-
-
 
     /**
      * Display the specified resource.

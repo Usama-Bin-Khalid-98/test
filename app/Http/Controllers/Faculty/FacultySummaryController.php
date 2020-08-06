@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Faculty;
 use App\Http\Controllers\Controller;
 
 use App\Models\Common\Degree;
+use App\Models\Common\Discipline;
+use App\Models\Common\FacultyQualification;
 use App\Models\Common\Program;
 use Illuminate\Http\Request;
 
@@ -16,10 +18,10 @@ class FacultySummaryController extends Controller
      */
     public function index()
     {
-        $degrees = Degree::where('status', 'active')->get();
-        $programs = Program::where('status', 'active')->get();
+        $qualification = FacultyQualification::where('status', 'active')->get();
+        $discipline = Discipline::where('status', 'active')->get();
 
-        return view('registration.faculty.summary_faculty', compact('degrees','programs'));
+        return view('registration.faculty.summary_faculty', compact('qualification','discipline'));
         //
     }
 
@@ -41,6 +43,7 @@ class FacultySummaryController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         //
     }
 

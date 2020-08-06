@@ -13,9 +13,9 @@ class FacultyQualificationSeeder extends Seeder
     {
         //
         DB::table('faculty_qualifications')->insert([
-            ['qualification' => '18 years education (MS/MPhil/MBA/MPA/M.Com)'],
-            ['qualification' => '16 years education (Bachelors/Masters)'],
-            ['qualification' => 'Others (professional/industry experience)'],
+            ['name' => '18 years education (MS/MPhil/MBA/MPA/M.Com)'],
+            ['name' => '16 years education (Bachelors/Masters)'],
+            ['name' => 'Others (professional/industry experience)'],
         ]);
     }
 }

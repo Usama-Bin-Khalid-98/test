@@ -15,13 +15,18 @@ class CreateFacultySummary extends Migration
     {
         Schema::create('faculty_summary', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('business_school_id')->unsigned();
-            $table->foreign('business_school_id')
+            $table->integer('campus_id')->unsigned();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('business_schools');
-            $table->integer('program_id')->unsigned();
-            $table->foreign('program_id')->references('id')
-            ->on('programs');
+                ->on('campuses');
+            $table->integer('lookup_faculty_qualification_id')->unsigned();
+            $table->foreign('lookup_faculty_qualification_id')
+                ->references('id')
+            ->on('lookup_faculty_qualification');
+            $table->integer('discipline_id')->unsigned();
+            $table->foreign('discipline_id')
+                ->references('id')
+                ->on('disciplines');
             $table->integer('faculty_available');
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');

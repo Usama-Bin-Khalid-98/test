@@ -78,13 +78,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t-2</label>
+                                    <label for="name">Year t-1</label>
                                     <input type="text" name="grad_std_tt" id="grad_std_tt" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t-3</label>
+                                    <label for="name">Year t-2</label>
                                     <input type="text" name="grad_std_ttt" id="grad_std_ttt" class="form-control">
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
 
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Program</label>
@@ -309,7 +309,7 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-           
+
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_grad_std_t').val(data.grad_std_t);
             $('#edit_grad_std_t_2').val(data.grad_std_t_2);

@@ -7,6 +7,8 @@ use App\Models\StrategicManagement\ApplicationReceived;
 use App\Models\StrategicManagement\MissionVision;
 use App\Models\StrategicManagement\Scope;
 use App\Models\StrategicManagement\StrategicPlan;
+use App\Models\StrategicManagement\StudentEnrolment;
+use App\StudentsGraduated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +24,7 @@ class DeskReviewController extends Controller
         //
         $campus_id = Auth::user()->campus_id;
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-//        $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
+//      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
         //dd($accreditation);
         $program_dates = [];
         foreach ($accreditation as $accred)
@@ -34,10 +36,12 @@ class DeskReviewController extends Controller
 
         $mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
         $strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
-        $strategic_plan = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
+        $application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
+        $student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
+        $graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
 
-       // dd($strategic_plan);
-
+        //dd($graduated_students);
+        $strategic_date_diff = $this->dateDifference($strategic_plan->aproval_date, date('Y-m-d'), '%y Year %m Month');
         //dd($program_dates);
         //// get scope
         //$scope = Scope::where('')
@@ -45,6 +49,11 @@ class DeskReviewController extends Controller
             'program_dates',
             'mission_vision',
             'strategic_plan',
+            'strategic_date_diff',
+            'application_received',
+            'student_enrolment',
+            'graduated_students'
+
 
         ));
     }
