@@ -73,6 +73,7 @@ use Illuminate\Support\Facades\Route;
 
     // Faculty
     Route::get('/faculty_summary','Faculty\FacultySummaryController@index')->name('faculty_summary');
+    Route::post('/faculty_summary','Faculty\FacultySummaryController@store');
     Route::get('/visiting_faculty','Faculty\VisitingFacultyController@index')->name('visiting_faculty');
     Route::resource('faculty-gender','Faculty\FacultyGenderController');
     Route::resource('faculty-stability','Faculty\FacultyStabilityController');

@@ -60,8 +60,9 @@
                              <table class="table table-bordered ">
                                 <thead>
                                     <tr>
-                                        <th style="width: 50%">Data provided by University</th>
-                                        <th style="width: 50%">NBEAC Criteria</th>
+                                        <th style="width: 45%">Data provided by University</th>
+                                        <th style="width: 45%">NBEAC Criteria</th>
+                                        <th style="width: 10%">Is Eligible</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -85,14 +86,17 @@
                                                 <li>MBA 2.5 after 3.5 years of program started</li>
                                                 <li>MBA 3.5 after 5 years of program started.</li>
                                             </ol>
-
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_program" value="yes"> yes
+                                            <input type="radio" name="eligibility_program" value="no"> no
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p><strong>Mission : </strong> {{$mission_vision->mission}}</p>
+                                            <p><strong>Mission : </strong> {{@$mission_vision->mission}}</p>
 
-                                            <p><strong>Vision : </strong> {{$mission_vision->vision}}</p>
+                                            <p><strong>Vision : </strong> {{@$mission_vision->vision}}</p>
 
                                         </td>
                                         <td>
@@ -101,23 +105,83 @@
                                             The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.
 
                                         </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_mission" value="yes"> yes
+                                            <input type="radio" name="eligibility_mission" value="no"> no
+                                        </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                           3. Strategic Plan (Question 1.8)
+                                            <p>3. Strategic Plan (Question 1.8)</p>
+                                            <p>Approval Date {{@$strategic_plan->aproval_date}}  Difference( {{@$strategic_date_diff}} )</p>
                                         </td>
                                         <td>
                                             Strategic Plan should exist for 03-05 years
                                         </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_plan" value="yes"> yes
+                                            <input type="radio" name="eligibility_plan" value="no"> no
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td> 4. Student Intake(Table 2.3)</td>
+                                        <td>
+                                            <p>4. Student Intake(Table 2.3)</p>
+                                            <p>Student Intake {{@$application_received->student_intake}}</p>
+                                        </td>
                                         <td> Student Intake(Table 2.3) </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_student" value="yes"> yes
+                                            <input type="radio" name="eligibility_student" value="no"> no
+                                        </td>
                                     </tr>
 
                                     <tr>
-                                        <td> 5. Student enrollment </td>
+                                        <td>
+                                            <strong>1.	Student enrollment</strong>
+                                           <strong> a)	Total Annual Enrollment Table (3.1)</strong>
+                                            @foreach(@$student_enrolment as $enrollment)
+                                           <p> Year {{$enrollment->year}}	16 years programs {{$enrollment->bs_level}}</p>
+                                           <p> Year {{$enrollment->year}}	18 years programs {{$enrollment->ms_level}}</p>
+                                           <p> Year {{$enrollment->year}}   Doctoral programs {{$enrollment->ms_level}}</p>
+                                            @endforeach
+
+                                           <strong> a)	Graduated Students</strong>
+
+                                            @foreach($graduated_students as $graduated)
+                                                <p> Program {{$graduated->program->name}} </p>
+                                                <p> Year t {{$graduated->grad_std_t}} </p>
+                                                <p> Year t-1 {{$graduated->grad_std_t_2}} </p>
+                                                <p> Year t-2 {{$graduated->grad_std_t_3}} </p>
+
+                                            @endforeach
+
+                                           <strong> b)	Faculty Portfolio (Section 4)</strong>
+
+                                           <p> c)	Total Fulltime Faculty = (Table 4.1)</p>
+                                           <p> d)	Full professors (Table 4.3 a: designation)</p>
+                                           <p> e)	Associate professors (Table 4.3 a: designation)</p>
+                                           <p> f)	Assistant professors (Table 4.3 a: designation)</p>
+                                           <p> g)	Lecturers(Table 4.3 a: designation)</p>
+                                           <p> h)	Other (Table 4.3 a: designation)</p>
+                                           <p> i)	% of female permanent / regular faculty (table 4.6)</p>
+                                           <p> j)	% holding a doctoral degree (Table 4.1: No. of PhDs)</p>
+                                           <p> k)	Total number of permanent faculty (Table 4.3 a Faculty type)</p>
+                                           <p> l)	Total number of adjunct faculty (Table 4.3 a Faculty type)</p>
+                                           <p> m)	Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s))</p>
+                                           <p> n)	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s))</p>
+                                           <p> o)	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4)</p>
+                                           <p> BBA (program1) =</p>
+                                           <p> MBA (program2) =</p>
+                                           <p> p)	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction)</p>
+                                           <p> q)	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired)</p>
+                                           <p> r)	FT:PT (as per table 4.3 a 4.3 b)=</p>
+                                           <p> s)	No. of faculty with terminal degree from foreign institutions</p>
+                                           <p> t)	No. of faculty with terminal degree from domestic institutions</p>
+                                           <p> u)	No. of faculty with international work experience</p>
+                                           <p> v)	Teaching and research assistants  - on short-term contracts- (Others in Table 4.1)</p>
+
+                                        </td>
                                         <td>
                                             <strong>Class Size:</strong>
                                             <ol type="i">
@@ -134,6 +198,10 @@
                                             (Condition for Table 4.4.)</p>
 
                                         </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_enrollment" value="yes"> yes
+                                            <input type="radio" name="eligibility_enrollment" value="no"> no
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -145,6 +213,10 @@
                                             Assistant Professor= 3 per semester/6 per annum
                                             Associate Professor/ Professor=2-3 per semester/4-6 per annum
                                         </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_load" value="yes"> yes
+                                            <input type="radio" name="eligibility_load" value="no"> no
+                                        </td>
                                     </tr>
 
                                     <tr>
@@ -153,6 +225,10 @@
                                         </td>
                                         <td>
                                             Following is the recommended Course load
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_output" value="yes"> yes
+                                            <input type="radio" name="eligibility_output" value="no"> no
                                         </td>
                                     </tr>
 
@@ -164,6 +240,10 @@
                                             Bandwidth Internet service (desirable) = 1 MB access rate
                                             Student to Computer ratio: 1:20
                                         </td>
+                                        <td>
+                                            <input type="radio" name="eligibility_bandwidth" value="yes"> yes
+                                            <input type="radio" name="eligibility_bandwidth" value="no"> no
+                                        </td>
                                     </tr>
 
                                     <tr>
@@ -171,6 +251,10 @@
                                             9. Student to Computer ratio is 	 (table 6.2 Laboratories)
                                         </td>
                                         <td>Student to Computer ratio: 1:20</td>
+                                        <td>
+                                            <input type="radio" name="eligibility_ratio" value="yes"> yes
+                                            <input type="radio" name="eligibility_ratio" value="no"> no
+                                        </td>
                                     </tr>
                                  </ol>
                                 </tbody>
@@ -258,7 +342,7 @@
                             <div class="form-group">
                                 <label for="type">{{ __('isChecked') }} : </label>
                                 <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
+                                    <input type="radio" name="isChecked" class="flat-red" value="no"> noNo</p>
                             </div>
                         </div>
                         <div class="col-md-6">

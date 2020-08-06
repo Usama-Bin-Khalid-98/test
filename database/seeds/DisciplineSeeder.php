@@ -16,10 +16,11 @@ class DisciplineSeeder extends Seeder
 //            ['name' => 'Agriculture & Veterinary'],
 //            ['name' => 'Arts & Design'],
             ['name' => 'Business Administration'],
-            ['name' => 'Commerce'],
+            ['name' => 'Commerce/Economics'],
             ['name' => 'Management Sciences'],
             ['name' => 'Public Administration'],
-            ['name' => 'Economics'],
+            ['name' => 'Other']
+//            ['name' => 'Economics'],
 //            ['name' => 'General'],
 //            ['name' => 'Medical'],
 //            ['name' => 'Medicine and Healthcare'],
