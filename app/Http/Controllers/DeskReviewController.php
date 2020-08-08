@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\DeskReview;
+use App\Models\Faculty\FacultyGender;
+use App\Models\Faculty\FacultySummary;
+use App\Models\Faculty\FacultyTeachingCources;
+use App\Models\Faculty\VisitingFaculty;
 use App\Models\StrategicManagement\ApplicationReceived;
 use App\Models\StrategicManagement\MissionVision;
 use App\Models\StrategicManagement\Scope;
@@ -40,8 +44,22 @@ class DeskReviewController extends Controller
         $student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
         $graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
 
+        $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('number_faculty');
+        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
+
+        $getFullProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>8])->get()->count();
+        $AssociateProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>9])->get()->count();
+        $AssistantProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>10])->get()->count();
+        $lecturers = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>11])->get()->count();
+        $permanent_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
+        $adjunct_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>3])->get()->count();
+        $other = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>13])->get()->count();
+        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->first()->female;
+
+        //dd($female_faculty);
+
         //dd($graduated_students);
-        $strategic_date_diff = $this->dateDifference($strategic_plan->aproval_date, date('Y-m-d'), '%y Year %m Month');
+        $strategic_date_diff = $this->dateDifference(@$strategic_plan->aproval_date, date('Y-m-d'), '%y Year %m Month');
         //dd($program_dates);
         //// get scope
         //$scope = Scope::where('')
@@ -52,7 +70,17 @@ class DeskReviewController extends Controller
             'strategic_date_diff',
             'application_received',
             'student_enrolment',
-            'graduated_students'
+            'graduated_students',
+            'faculty_summary',
+            'getFullProfessors',
+            'AssistantProfessors',
+            'AssociateProfessors',
+            'lecturers',
+            'other',
+            'faculty_summary_doc',
+            'permanent_faculty',
+            'adjunct_faculty',
+            'female_faculty'
 
 
         ));
