@@ -78,7 +78,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Courses</label>
+                                    <label for="name">Number of courses taught in all programs</label>
                                     <input type="number" name="total_courses" id="total_courses" class="form-control">
                                 </div>
                             </div>

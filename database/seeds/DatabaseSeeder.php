@@ -48,5 +48,6 @@ class DatabaseSeeder extends Seeder
         $this->call(QecTypeSeeder::class);
         $this->call(NbeacCriteriaSeeder::class);
         $this->call(SlipSeeder::class);
+        $this->call(FacultyDegreeSeeder::class);
     }
 }

@@ -7,12 +7,17 @@ use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
 use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\Faculty\VisitingFaculty;
+use App\Models\Faculty\FacultyStability;
+use App\Models\Faculty\WorkLoad;
+use App\Models\Facility\BusinessSchoolFacility;
+use App\Models\Research\ResearchSummary;
 use App\Models\StrategicManagement\ApplicationReceived;
 use App\Models\StrategicManagement\MissionVision;
 use App\Models\StrategicManagement\Scope;
 use App\Models\StrategicManagement\StrategicPlan;
 use App\Models\StrategicManagement\StudentEnrolment;
 use App\StudentsGraduated;
+use App\FacultyDegree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,7 +59,19 @@ class DeskReviewController extends Controller
         $permanent_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
         $adjunct_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>3])->get()->count();
         $other = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>13])->get()->count();
-        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->first()->female;
+        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
+        $faculty_degree = FacultyDegree::get()->first();
+        $total_induction = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('new_induction');
+        $faculty_terminated = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('terminated');
+        $faculty_resigned = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('resigned');
+        $faculty_retired = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('retired');
+
+        $total_courses = WorkLoad::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('total_courses');
+
+        $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
+        $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
+
+        $summaries = ResearchSummary::get();
 
         //dd($female_faculty);
 
@@ -80,7 +97,16 @@ class DeskReviewController extends Controller
             'faculty_summary_doc',
             'permanent_faculty',
             'adjunct_faculty',
-            'female_faculty'
+            'female_faculty',
+            'faculty_degree',
+            'total_induction',
+            'faculty_terminated',
+            'faculty_resigned',
+            'faculty_retired',
+            'total_courses',
+            'bandwidth',
+            'comp_ratio',
+            'summaries',
 
 
         ));
