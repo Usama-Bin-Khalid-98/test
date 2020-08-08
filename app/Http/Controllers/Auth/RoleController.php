@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Role;
+use App\Http\Controllers\Controller;
+use Mockery\Exception;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -22,9 +25,12 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        //$roles = Role::with('');
+        $permissions = Permission::all();
+        $roles = Role::with('permissions')->get();
+        //dd($roles_permissions);
+
+        return view('auth.roles.index',compact('roles', 'permissions'));
     }
 
 
@@ -48,18 +54,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
-            'permission' => 'required',
+            //'permission' => 'required',
         ]);
-
-
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
-
-
-        return redirect()->route('roles.index')
-            ->with('success','Role created successfully');
+        $role = Role::create(['name' => $request->name]);
+//        dd($role->id);
+       $role->syncPermissions($request->ids);
+        return response()->json(['message' => 'Role added successfully'],200);
+//        return redirect()->route('roles.index')
+//            ->with('success','Role created successfully');
     }
     /**
      * Display the specified resource.
@@ -111,18 +116,17 @@ class RoleController extends Controller
             'name' => 'required',
             'permission' => 'required',
         ]);
-
-
+        try {
         $role = Role::find($id);
-        $role->name = $request->input('name');
+        $role->name = $request->name;
         $role->save();
+        $role->syncPermissions($request->permission);
+        } catch (Exception $e)
+        {
+          response()->json(['message' => $e->getMessage()]);
+        }
 
-
-        $role->syncPermissions($request->input('permission'));
-
-
-        return redirect()->route('roles.index')
-            ->with('success','Role updated successfully');
+        return response()->json(['message' => 'Role added successfully'],200);
     }
     /**
      * Remove the specified resource from storage.

@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use App\Auth\Permission;
+namespace App\Http\Controllers\Auth;
+use App\Http\Controllers\Controller;
+use App\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class PermissionController extends Controller
 {
@@ -15,6 +17,8 @@ class PermissionController extends Controller
     public function index()
     {
         //
+        $permissions = Permission::all();
+        return view('auth.users.permissions', compact('permissions'));
     }
 
     /**
@@ -36,6 +40,19 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         //
+        //dd($request->all());
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+            Permission::create($request->all());
+            return response()->json(['success' => 'Permission added successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -81,5 +98,24 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         //
+        try {
+            Permission::destroy($permission->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'name' => 'required',
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.',
+        ];
     }
 }

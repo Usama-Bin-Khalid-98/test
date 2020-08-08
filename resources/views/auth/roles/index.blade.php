@@ -14,21 +14,21 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Permissions
+                Roles
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Permissions </li>
+                <li class="active"> Roles </li>
             </ol>
         </section>
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
                     <input type="submit" class="btn gradient-bg-color"
-                    data-toggle="modal" data-target="#add-modal"
-                    style="color: white;"
-                    value="Add New">
+                           data-toggle="modal" data-target="#add-modal"
+                           style="color: white;"
+                           value="Add New">
                 </div>
             </div>
         </section>
@@ -36,42 +36,12 @@
         <section class="content">
             <div class="row">
                 <!-- left column -->
-                <div class="col-md-12" style="display:none;">
-                    <!-- general form elements -->
-                    <div class="box box-primary collapsed-box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Add Permissions</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-wrench"></i></button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <!-- form start -->
-                            <div class="box-body" style="display:none;">
-
-                            </div>
-                         </div>
-                    <!-- /.box -->
-                     </div>
                 <!-- /.row -->
                 <div class="col-md-12">
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Permissions Record</h3>
+                            <h3 class="box-title">Roles</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -95,38 +65,36 @@
                             <table id="datatable" class="table table-bordered table-stripped">
                                 <thead>
                                 <tr>
-                                    <th style="font-weight: bold;">S#</th>
                                     <th style="font-weight: bold;">Name</th>
-{{--                                    <th style="font-weight: bold;">Status</th>--}}
+                                    <th style="font-weight: bold;">Permissions</th>
                                     <th style="font-weight: bold;">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($permissions as $permission)
+                                @foreach($roles as $role)
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
-                                        <td>{{$permission->name}}</td>
-{{--                                        <td>@if($permission->status=='active')<span class="label gradient-bg-color">Active</span>@else--}}
-{{--                                                <span class="label label-danger">Inactive</span>@endif</td>--}}
+                                        <td>{{$role->name}}</td>
+                                        <td>@foreach($role->permissions as $permission) {{$permission->name}}, @endforeach</td>
+                                        {{--<td>@if($permission->status=='active')<span class="label gradient-bg-color">Active</span>@else--}}
+                                        {{--<span class="label label-danger">Inactive</span>@endif</td>--}}
                                         <td>
-                                            <i class="fa fa-fw fa-edit text-purple"
-                                            data-toggle="modal" data-target="#edit-model"
-                                            data-placement="left"
-                                            title="Edit"
-                                            onclick="update('{{$permission->id}}',
-                                                    '{{$permission->name}}')">
+                                            <i class="fa fa-fw fa-edit text-purple edit"
+                                               data-toggle="modal" data-target="#edit-model"
+                                               data-placement="left"
+                                               title="Edit"
+                                               data-row='{"id":"{{$role->id}}","name":"{{$role->name}}","permissions":{{$role->permissions}} }'
+                                               >
                                             </i>
-                                            |<a href='permission/{{ $permission->id }}'><i
-                                                        class="fa fa-fw fa-trash-o text-red" data-toggle="tooltip" data-placement="right" title="Delete"  ></i></a></td>
+                                            |<a href='permission/{{ $role->id }}'><i
+                                                    class="fa fa-fw fa-trash-o text-red" data-toggle="tooltip" data-placement="right" title="Delete"  ></i></a></td>
                                     </tr>
 
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>S#</th>
                                     <th>Name</th>
-{{--                                    <th>Status</th>--}}
+                                    <th style="font-weight: bold;">Permissions</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -139,7 +107,7 @@
 
 
                 <!-- Main content -->
-                </div>
+            </div>
 
 
             <!-- /.row -->
@@ -151,83 +119,80 @@
 
     </div>
 
-    <div class="modal fade" id="edit-modal">
+    <div class="modal fade" id="edit-model">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Default Modal</h4>
-            </div>
-            <div class="modal-body">
-              <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Default Modal</h4>
+                </div>
+                <div class="modal-body">
+                        @csrf
+                        <div class="col-lg-12">
+                            <div class="col-lg-12 form-group">
+                                <input type="text" class="form-control" id="edit_name" placeholder=" Role Name" name="edit_name">
+                            </div>
+                        </div>
+                    @foreach($permissions as $permission)
+                        <div class="col-lg-1">
+                            <input type="checkbox" id="{{@$permission->id}}" value="{{@$permission->id}}" class="flat-red" />
+                        </div>
+                        <div class="col-lg-5"><label>{{@$permission->name}}</label></div>
+                    @endforeach
 
-      <div class="modal fade" id="add-modal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Add Permission</h4>
-            </div>
-            <form role="form" action="" method="post">
-            <div class="modal-body">
-                @csrf
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder=" Permission Name" name="name">
-                    </div>
+
                 </div>
 
-                {{-- <div class="col-lg-1">
-                    <div class="form-group">
-
-                        <label> Status
-                         <input type="checkbox" name="status" class="flat-red" checked >
-                        </label>
-                        <select id="status" name="status" class="form-control">
-                            <option>Select Status</option>
-                            <option value="enabled">Enable</option>
-                            <option value="disabled">Disable</option>
-                        </select>
-                    </div>
-                </div> --}}
-                {{-- <div class="col-lg-2">
-                    <div class="form-group">
-
-                <input type="button" onclick="updatePermission()" class="btn btn-danger pull-right" value="Update"
-                       name="Update" id="Update" style="display: none;">
-                    </div>
-                </div> --}}
-                <!-- /.box-body -->
-                {{-- <div class="box-footer">
-
-            </div> --}}
-
+                <div class="modal-footer" style="margin-top: 50% !important;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update" style="">Update</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn gradient-bg-color" style="color: white;" value="Submit"
-                name="add_user" id="add">
-            </div>
-        </form>
-          </div>
-          <!-- /.modal-content -->
+            <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="add-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Role</h4>
+                </div>
+                <form role="form" action="" method="post">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="col-lg-12">
+                            <div class="col-lg-12 form-group">
+                                <input type="text" class="form-control" id="name" placeholder=" Role Name" name="name">
+                            </div>
+                        </div>
+
+                        @foreach($permissions as $permission)
+                            <div class="col-lg-1">
+                                <input type="checkbox" value="{{@$permission->id}}" class="flat-red" />
+                            </div>
+                            <div class="col-lg-5"><label>{{@$permission->name}}</label></div>
+                        @endforeach
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="button" class="btn gradient-bg-color" style="color: white;" value="Submit"
+                               name="add" id="add">
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("includes.footer")
     <!-- DataTables -->
@@ -249,7 +214,6 @@
         $(function () {
             $('#datatable').DataTable()
         })
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -258,6 +222,14 @@
         /*Add Scope*/
         $('#add').on('click', function (e) {
             let name = $('#name').val();
+            let ids = [];
+            let permissions = $('input[type="checkbox"]:checked');
+            permissions.map((index, val) => {
+             console.log('map values ', $(val).val());
+             ids[index]=$(val).val();
+            })
+            console.log('permission checked ', ids);
+            //return;
             !name?addClass('name'):removeClass('name');
 
             if(!name)
@@ -268,9 +240,9 @@
             // Yes button callback
             e.preventDefault();
             $.ajax({
-                url:'{{url("permissions")}}',
+                url:'{{url("roles")}}',
                 type:'POST',
-                data: {name:name},
+                data: {name:name, ids:ids},
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -294,51 +266,56 @@
         ///// edit record
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
+
+            console.log('e values',typeof data);
+            let checks ="";
+           for(const [key, val] of Object.entries(data.permissions)) {
+               $('input[id='+val.id+']').iCheck('check');
+               console.log(' object key', key, ' value', val);
+                // checks += '<div class="col-lg-1">\n' +
+                //    '<input type="checkbox" value="'+val.id+'" checked class="flat-red" />\n' +
+                //    '</div>\n' +
+                //    '<div class="col-lg-5"><label>'+val.name+'</label></div>';
+             }
+
+           console.log('checkboxes....', checks);
+
+           //$("#checkboxes").html(checks);
+
+            //console.log('edit data here', data);
+            //return;
+
+
             // Initialize Select2
-            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
-            $('#edit_name').val(data.name);
-            $('#edit_email').val(data.email);
-            $('#edit_contact_no').val(data.contact_no);
-            $('#edit_school_contact').val(data.school_contact);
-            $('#cv-name').text(data.cv);
-            $('#edit_id').val(data.id);
-            $('#old_cv').val(data.cv);
-            $('#edit_focal_person').val(data.focal_person);
-            // console.log('check', data.status);
-            // $('#update-form').attr('action', 'contact-info/'+data.id);
-            $('input[value='+data.status+']').iCheck('check');
+            //$('input[value='+data.status+']').iCheck('check');
         });
 
-        $('#updateForm').submit(function (e) {
+        $('#update').on('click', function (e) {
             let name = $('#edit_name').val();
-            let email = $('#edit_email').val();
-            let contact_no = $('#edit_contact_no').val();
-            let school_contact = $('#edit_school_contact').val();
-            let designation_id = $('#edit_designation_id').val();
-            let id = $('#edit_id').val();
-            let edit_focal_person = $('#edit_focal_person').val();
+            let permission = [];
+            let permissions = $('input[type="checkbox"]:checked');
+            permissions.map((index, val) => {
+                console.log('map values ', $(val).val());
+                permission[index]=$(val).val();
+            })
+            console.log('permission checked ', permission);
+            //return;
+            !name?addClass('name'):removeClass('name');
 
-            let status = $('input[name=edit_status]:checked').val();
-            !name?addClass('edit_name'):removeClass('edit_name');
-            !email?addClass('edit_email'):removeClass('edit_email');
-            !contact_no?addClass('edit_contact_no'):removeClass('edit_contact_no');
-            !school_contact?addClass('edit_school_contact'):removeClass('edit_school_contact');
-            !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
 
-            if(!name || !email || !contact_no || !school_contact || !designation_id)
+            if(!name)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
             }
             e.preventDefault();
             var formData = new FormData(this);
-            //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("strategic/contact-info")}}/'+id,
+                url:'{{url("strategic/roles")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
-                data: formData,
+                data: {name:name, permission:permission},
                 cache:false,
                 contentType:false,
                 processData:false,
