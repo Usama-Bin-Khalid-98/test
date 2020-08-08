@@ -36,13 +36,13 @@ use Illuminate\Support\Facades\Route;
     ///// Dashboard
     Route::patch('admin/{id}', 'DashboardController@schoolStatus');
     ////// Users permissions
-    Route::get('permission', 'Auth\UserController@permissions');
+//    Route::get('permission', 'Auth\UserController@permissions');
     // Users resource route.
     Route::resource('users', 'Auth\UserController');
     // Roles resource route.
-//    Route::resource('roles', 'Auth\RoleController');
+    Route::resource('roles', 'Auth\RoleController');
     // Permissions resource route.
-//    Route::resource('permissions', 'Auth\PermissionController');
+    Route::resource('permissions', 'Auth\PermissionController');
 
     //// Strategic Management
     Route::prefix('strategic')->group(function () {

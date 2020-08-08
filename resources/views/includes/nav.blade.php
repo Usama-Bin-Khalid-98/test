@@ -38,12 +38,12 @@
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
           <li class=" treeview
-          {{ (request()->is('user')) ? 'active' : '' }}
+          {{ (request()->is('users')) ? 'active' : '' }}
           {{ (request()->is('rolesPermission')) ? 'active' : '' }}
           {{ (request()->is('roles')) ? 'active' : '' }}
           {{ (request()->is('permission')) ? 'active' : '' }}
 
-          " style="display: none;">
+          ">
           <a href="#">
             <i class="fa fa-user text-blue" ></i> <span>Users</span>
             <span class="pull-right-container">
@@ -51,10 +51,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('user')) ? 'active' : '' }}"><a href="user"><i class="fa fa-circle-o text-blue"></i>Users</a></li>
-            <li  class="{{ (request()->is('roles')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>User Types</a></li>
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>
-            <li  class="{{ (request()->is('permission')) ? 'active' : '' }}"><a href="/permission"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>
+            <li class="{{ (request()->is('users')) ? 'active' : '' }}"><a href="{{url('users')}}"><i class="fa fa-circle-o text-blue"></i>Users</a></li>
+            <li  class="{{ (request()->is('roles')) ? 'active' : '' }}"><a href="{{url('roles')}}"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>
+{{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>--}}
+{{--            <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>--}}
 
           </ul>
             </li>

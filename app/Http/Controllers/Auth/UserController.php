@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use App\User;
 use App\Permission;
@@ -11,8 +12,10 @@ class UserController extends Controller
 {
     //
     public function index() {
-        $users = User::all();
-        return view('auth.users.index', compact('users'));
+        $users = User::with('business_school')->get();
+        $designations = Designation::all();
+        //dd($users);
+        return view('auth.users.index', compact('users', 'designations'));
     }
 
     public function create()
@@ -130,10 +133,5 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')
             ->with('success','User deleted successfully');
-    }
-
-    public function permissions() {
-        $permissions = Permission::all();
-        return view('auth.users.permissions', compact('permissions'));
     }
 }
