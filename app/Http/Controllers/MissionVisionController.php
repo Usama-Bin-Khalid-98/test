@@ -51,7 +51,7 @@ class MissionVisionController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName = $request->mission . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName = "file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/mission_vision';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -64,8 +64,8 @@ class MissionVisionController extends Controller
                         'campus_id' => Auth::user()->campus_id,
                         'mission' => $request->mission,
                         'vision' => $request->vision,
-                        'file' => $path.'/'.$imageName, 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Mission Vision added successfully.']);
@@ -130,7 +130,7 @@ class MissionVisionController extends Controller
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -141,7 +141,7 @@ class MissionVisionController extends Controller
                'vision' => $request->vision,
                'isComplete' => $request->isComplete,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Mission Vision updated successfully.']);
 
@@ -161,7 +161,7 @@ class MissionVisionController extends Controller
     {
          try {
              MissionVision::where('id', $missionVision->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              MissionVision::destroy($missionVision->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

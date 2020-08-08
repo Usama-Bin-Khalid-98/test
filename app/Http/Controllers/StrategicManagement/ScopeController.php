@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-
+use DB;
 class ScopeController extends Controller
 {
     /**
@@ -22,7 +22,10 @@ class ScopeController extends Controller
     public function index()
     {
         //
+       // DB::enableQueryLog();
         @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
+        //dd(DB::getQueryLog());
+        //dd($department_id);
         $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
         $levels = Level::where('status', 'active')->get();
         $scopes = Scope::with('level', 'program')->get();

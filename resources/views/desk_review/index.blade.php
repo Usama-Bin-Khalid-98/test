@@ -139,14 +139,15 @@
                                     <tr>
                                         <td>
                                             <strong>1.	Student enrollment</strong>
-                                           <strong> a)	Total Annual Enrollment Table (3.1)</strong>
+                                            <p>
+                                           <strong> a)	Total Annual Enrollment Table (3.1)</strong></p>
                                             @foreach(@$student_enrolment as $enrollment)
                                            <p> Year {{$enrollment->year}}	16 years programs {{$enrollment->bs_level}}</p>
                                            <p> Year {{$enrollment->year}}	18 years programs {{$enrollment->ms_level}}</p>
                                            <p> Year {{$enrollment->year}}   Doctoral programs {{$enrollment->ms_level}}</p>
                                             @endforeach
 
-                                           <strong> a)	Graduated Students</strong>
+                                           <p><strong> )	Graduated Students</strong></p>
 
                                             @foreach($graduated_students as $graduated)
                                                 <p> Program {{$graduated->program->name}} </p>
@@ -158,28 +159,28 @@
 
                                            <strong> b)	Faculty Portfolio (Section 4)</strong>
 
-                                           <p> c)	Total Fulltime Faculty = (Table 4.1)</p>
-                                           <p> d)	Full professors (Table 4.3 a: designation)</p>
-                                           <p> e)	Associate professors (Table 4.3 a: designation)</p>
-                                           <p> f)	Assistant professors (Table 4.3 a: designation)</p>
-                                           <p> g)	Lecturers(Table 4.3 a: designation)</p>
-                                           <p> h)	Other (Table 4.3 a: designation)</p>
-                                           <p> i)	% of female permanent / regular faculty (table 4.6)</p>
-                                           <p> j)	% holding a doctoral degree (Table 4.1: No. of PhDs)</p>
-                                           <p> k)	Total number of permanent faculty (Table 4.3 a Faculty type)</p>
-                                           <p> l)	Total number of adjunct faculty (Table 4.3 a Faculty type)</p>
-                                           <p> m)	Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s))</p>
-                                           <p> n)	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s))</p>
-                                           <p> o)	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4)</p>
+                                           <p> <strong>c)</strong>	Total Fulltime Faculty = {{@$faculty_summary}}</p>
+                                           <p> <strong>d)</strong>	Full professors {{@$getFullProfessors}}</p>
+                                           <p> <strong>e)</strong>	Associate professors {{@$AssociateProfessors}}</p>
+                                           <p> <strong>f)</strong>	Assistant professors {{@$AssistantProfessors}}</p>
+                                           <p> <strong>g)</strong>	Lecturers {{@$lecturers}}</p>
+                                           <p> <strong>h)</strong>	Other {{@$other}}</p>
+                                           <p> <strong>i)</strong>	% of female permanent / regular faculty {{@$female_faculty}}</p>
+                                           <p> <strong>j)</strong>	% holding a doctoral degree {{@$faculty_summary_doc}}</p>
+                                           <p> <strong>k)</strong>	Total number of permanent faculty {{@$permanent_faculty}}</p>
+                                           <p> <strong>l)</strong>	Total number of adjunct faculty {{@$adjunct_faculty}}</p>
+                                           <p> <strong>m)</strong>	Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s))</p>
+                                           <p> <strong>n)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s))</p>
+                                           <p> <strong>o)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4)</p>
                                            <p> BBA (program1) =</p>
                                            <p> MBA (program2) =</p>
-                                           <p> p)	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction)</p>
-                                           <p> q)	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired)</p>
-                                           <p> r)	FT:PT (as per table 4.3 a 4.3 b)=</p>
-                                           <p> s)	No. of faculty with terminal degree from foreign institutions</p>
-                                           <p> t)	No. of faculty with terminal degree from domestic institutions</p>
-                                           <p> u)	No. of faculty with international work experience</p>
-                                           <p> v)	Teaching and research assistants  - on short-term contracts- (Others in Table 4.1)</p>
+                                           <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction)</p>
+                                           <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired)</p>
+                                           <p> <strong>r)</strong>	FT:PT (as per table 4.3 a 4.3 b)=</p>
+                                           <p> <strong>s)</strong>	No. of faculty with terminal degree from foreign institutions</p>
+                                           <p> <strong>t)</strong>	No. of faculty with terminal degree from domestic institutions</p>
+                                           <p> <strong>u)</strong>	No. of faculty with international work experience</p>
+                                           <p> <strong>v)</strong>	Teaching and research assistants  - on short-term contracts- (Others in Table 4.1)</p>
 
                                         </td>
                                         <td>

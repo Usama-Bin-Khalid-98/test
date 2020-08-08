@@ -15,7 +15,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Visiting Faculty 
+                Visiting Faculty
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -89,13 +89,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program 1</label>
+                                    <label for="name">FTE for program </label>
                                     <input type="number" name="tc_program1" id="tc_program1" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program 2</label>
+                                    <label for="name">FTE for Program 2</label>
                                     <input type="number" name="tc_program2" id="tc_program2" class="form-control">
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
                                     <input type="number" name="tc_program2" id="edit_tc_program2" value="{{old('edit_tc_program2')}}" class="form-control">
                                 </div>
                               </div>
-                            
+
 
                         <div class="col-md-6">
                             <div class="form-group">

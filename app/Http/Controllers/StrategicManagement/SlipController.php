@@ -26,7 +26,7 @@ class SlipController extends Controller
     public function index()
     {
         //
-        @$school_id = Auth::user()->business_school_id;
+        @$school_id = Auth::user()->campus_id;
         @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
         //dd($invoices);
         @$departments = Department::where('status', 'active')->get();
@@ -69,7 +69,7 @@ class SlipController extends Controller
         $path = ''; $imageName = '';
         if(@$request->file('slip')) {
 
-            $school = BusinessSchool::where('id', Auth::user()->business_school_id)->first();
+            $school = BusinessSchool::where('id', Auth::user()->campus_id)->first();
             //dd($school->name);
             $filename = $school->name . "-slip-" . time() . '.' . $request->slip->getClientOriginalExtension();
             $path = 'uploads/schools/slips';
@@ -78,7 +78,7 @@ class SlipController extends Controller
             $request->file('slip')->move($path, $filename);
 
             Slip::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'business_school_id' => Auth::user()->campus_id,
                 'program_id' => $request->department_id,
                 'slip' => $path.'/'.$filename,
                 'status' => 'paid',
@@ -104,7 +104,7 @@ class SlipController extends Controller
 
         try {
             Slip::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'business_school_id' => Auth::user()->campus_id,
                 'invoice_no' => $request->invoice_no,
                 'department_id' => $request->department_id,
                 'status' => 'pending',
