@@ -17,6 +17,7 @@ class CreateDesignationsTable extends Migration
             $table->increments('id');
             $table->string('name',100);
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->softDeletes();
             $table->timestamps();
         });

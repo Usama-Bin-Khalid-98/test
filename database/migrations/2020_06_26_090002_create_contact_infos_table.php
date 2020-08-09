@@ -23,7 +23,7 @@ class CreateContactInfosTable extends Migration
             $table->foreign('designation_id')
                 ->references('id')
                 ->on('designations');
-            $table->string('cv', 255);
+            $table->string('cv', 255)->nullable();;
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('campus_id')->unsigned()->nullable();

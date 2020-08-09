@@ -17,6 +17,7 @@ class CreateDepartmentsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->enum('status', ['active', 'inactive']);
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->softDeletes();
             $table->timestamps();
         });

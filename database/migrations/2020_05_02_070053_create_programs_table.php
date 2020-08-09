@@ -21,6 +21,7 @@ class CreateProgramsTable extends Migration
                 ->references('id')
                 ->on('departments');
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->softDeletes();
             $table->timestamps();
         });
