@@ -49,5 +49,10 @@ class DatabaseSeeder extends Seeder
         $this->call(NbeacCriteriaSeeder::class);
         $this->call(SlipSeeder::class);
         $this->call(ContactInfoSeeder::class);
+         $this->call(DepartmentFeeSeeder::class);
+$this->call(DeskReviewSeeder::class);
+$this->call(EntryRequirementSeeder::class);
+$this->call(FacultyGenderSeeder::class);
+         
     }
 }

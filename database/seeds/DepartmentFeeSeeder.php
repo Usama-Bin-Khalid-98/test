@@ -11,6 +11,13 @@ class DepartmentFeeSeeder extends Seeder
      */
     public function run()
     {
-        //
+         DB::table('department_fees')->insert([
+            ['campus_id'=>'1'],
+            ['department_id'=>'1'],
+            ['fee_type_id'=>'1'],
+            ['status'=>'active'],
+            ['isComplete'=>'yes']
+
+         ]);
     }
 }
