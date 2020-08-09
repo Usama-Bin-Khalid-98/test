@@ -74,7 +74,7 @@
                                 @foreach($roles as $role)
                                     <tr>
                                         <td>{{$role->name}}</td>
-                                        <td>@foreach($role->permissions as $permission) {{$permission->name}}, @endforeach</td>
+                                        <td>@foreach($role->permissions as $permission) <span class="label label-success">{{$permission->name}}</span> @endforeach</td>
                                         {{--<td>@if($permission->status=='active')<span class="label gradient-bg-color">Active</span>@else--}}
                                         {{--<span class="label label-danger">Inactive</span>@endif</td>--}}
                                         <td>
