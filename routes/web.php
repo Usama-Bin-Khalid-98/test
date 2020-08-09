@@ -24,11 +24,11 @@ use Illuminate\Support\Facades\Route;
     Route::post('register', 'Auth\RegisterController@register');
     Route::post('survey', 'SurveyQuestionnaireController@store');
     Route::get('get-campuses', 'CampusController@getCampuses');
+    Route::get('get-cities', 'Auth\RegisterController@get_cities');
+    Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
 
     Auth::routes(['verify' => true]);
     // Only verified users may enter...
-    Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
-    Route::get('get-cities', 'Auth\RegisterController@get_cities');
     Route::get('mailsend', 'Auth\RegisterController@mailsend');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('admin', 'DashboardController@index');
@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Route;
     ////// Users permissions
 //    Route::get('permission', 'Auth\UserController@permissions');
     // Users resource route.
-    Route::resource('users', 'Auth\UserController');    
+    Route::resource('users', 'Auth\UserController');
     Route::put('users-roles', 'Auth\UserController@user_roles');
 
     // Roles resource route.
@@ -61,8 +61,6 @@ use Illuminate\Support\Facades\Route;
     Route::resource('print','PrintController');
 
 });
-
-
     // Curriculum
     Route::resource('program-portfolio','ProgramPortfolioController');
     Route::resource('entry-requirements','EntryRequirementController');
