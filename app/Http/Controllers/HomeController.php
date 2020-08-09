@@ -21,6 +21,11 @@ class HomeController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
 
+        $user = Auth::user();
+        //dd($user);
+        //$check = $user->hasRole(['editor', 'moderator']);
+
+
     }
 
     /**
