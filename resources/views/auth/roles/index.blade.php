@@ -127,11 +127,12 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Default Modal</h4>
                 </div>
+                <form action="" method="PUT">
                 <div class="modal-body">
-                        @csrf
                         <div class="col-lg-12">
                             <div class="col-lg-12 form-group">
                                 <input type="text" class="form-control" id="edit_name" placeholder=" Role Name" name="edit_name">
+                                <input type="hidden" id="id" />
                             </div>
                         </div>
                     @foreach($permissions as $permission)
@@ -146,9 +147,11 @@
 
                 <div class="modal-footer" style="margin-top: 50% !important;">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="update" style="">Update</button>
+                    <input type="button" class="btn btn-primary" id="update" value="Update">
                 </div>
+                </form>
             </div>
+
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
@@ -266,7 +269,8 @@
         ///// edit record
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
-
+            $('#edit_name').val(data.name);
+            $('#id').val(data.id);
             console.log('e values',typeof data);
             let checks ="";
            for(const [key, val] of Object.entries(data.permissions)) {
@@ -277,21 +281,11 @@
                 //    '</div>\n' +
                 //    '<div class="col-lg-5"><label>'+val.name+'</label></div>';
              }
-
-           console.log('checkboxes....', checks);
-
-           //$("#checkboxes").html(checks);
-
-            //console.log('edit data here', data);
-            //return;
-
-
-            // Initialize Select2
-            //$('input[value='+data.status+']').iCheck('check');
         });
 
         $('#update').on('click', function (e) {
             let name = $('#edit_name').val();
+            let id = $('#id').val();
             let permission = [];
             let permissions = $('input[type="checkbox"]:checked');
             permissions.map((index, val) => {
@@ -308,17 +302,14 @@
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
             }
-            e.preventDefault();
-            var formData = new FormData(this);
-            formData.append('_method', 'PUT');
+            // e.preventDefault();
+            // var formData = new FormData(this);
+            // formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("strategic/roles")}}/'+id,
-                type:'POST',
+                url:'{{url("roles")}}/'+id,
+                type:'PUT',
                 // dataType:"JSON",
                 data: {name:name, permission:permission},
-                cache:false,
-                contentType:false,
-                processData:false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -329,7 +320,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     //console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

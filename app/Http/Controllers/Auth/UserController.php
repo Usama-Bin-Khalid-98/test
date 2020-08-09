@@ -6,16 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use App\User;
-use App\Permission;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     //
     public function index() {
-        $users = User::with('business_school')->get();
+        $users = User::with('business_school', 'roles', 'permissions')->get();
+//        dd($users);
         $designations = Designation::all();
+        $permissions = Permission::all();
+        $roles = Role::all();
+//        $users_roles = User::with('roles')->get();
+//        $all_users_permissions = User::with('permissions')->get();
+
+        //dd($all_users_roles);
+
         //dd($users);
-        return view('auth.users.index', compact('users', 'designations'));
+        return view('auth.users.index', compact('users', 'designations', 'permissions', 'roles'));
     }
 
     public function create()
@@ -111,6 +120,34 @@ class UserController extends Controller
 
         $user = User::find($id);
         $user->update($input);
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+
+
+        $user->assignRole($request->input('roles'));
+
+
+        return redirect()->route('users.index')
+            ->with('success','User updated successfully');
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function user_roles(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'permissions'
+        ]);
+
+
+        $user = User::find($id);
+        //$user->update($request->role_id);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
 
 

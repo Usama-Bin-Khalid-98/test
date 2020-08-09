@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Route;
 //    Route::get('permission', 'Auth\UserController@permissions');
     // Users resource route.
     Route::resource('users', 'Auth\UserController');
+    Route::put('users-roles', 'Auth\UserController\user_roles');
     // Roles resource route.
     Route::resource('roles', 'Auth\RoleController');
     // Permissions resource route.
