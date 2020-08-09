@@ -117,16 +117,16 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
         try {
-        $role = Role::find($id);
-        $role->name = $request->name;
-        $role->save();
-        $role->syncPermissions($request->permission);
+            $role = Role::find($id);
+            $role->name = $request->name;
+            $role->save();
+            $role->syncPermissions($request->permission);
+            return response()->json(['success' => 'Role added successfully'],200);
         } catch (Exception $e)
         {
-          response()->json(['message' => $e->getMessage()]);
+          response()->json(['success' => $e->getMessage()]);
         }
 
-        return response()->json(['message' => 'Role added successfully'],200);
     }
     /**
      * Remove the specified resource from storage.

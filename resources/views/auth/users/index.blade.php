@@ -114,8 +114,14 @@
                                         <td>{{@$user->business_school->name}}</td>
 {{--                                        <td>{{$contact->school_contact}}</td>--}}
 {{--                                        <td><a href="{{url($contact->cv)}}"><i class="fa fa-file-word-o"></i></a> </td>--}}
-                                        <td><i class="badge {{$user->status == 'active'?'bg-green':'bg-red'}}">{{$user->status == 'active'?'Active':'Inactive'}}</i></td>
-                                        <td><i class="fa fa-trash text-info delete" data-id="{{$user->id}}"></i> | <i data-row='{"id":{{$user->id}},"name":"{{$user->name}}","email":"{{$user->email}}","contact_no":"{{$user->contact_no}}","business_school":"{{@$user->business_school->name}}","status":"{{$user->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                        <td>
+                                            <i class="badge {{$user->status == 'active'?'bg-green':'bg-red'}}">{{$user->status == 'active'?'Active':'Inactive'}}</i>
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-check-square permissions" data-toggle="modal" data-target="#permissions-modal" data-row='{"id":{{@$user->id}},"role_id":"{{@$user->roles}}","permissions":"{{@$user->permissions}}"}' /> |
+                                            <i class="fa fa-trash text-info delete" data-id="{{@$user->id}}"></i> |
+                                            <i data-row='{"id":{{$user->id}},"name":"{{$user->name}}","email":"{{$user->email}}","contact_no":"{{$user->contact_no}}","business_school":"{{@$user->business_school->name}}","status":"{{$user->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -153,7 +159,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Scope of accreditation. </h4>
+                    <h4 class="modal-title">Edit User. </h4>
                 </div>
                 <form role="form" id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -228,6 +234,49 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+    <div class="modal fade" id="permissions-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Change user role.</h4>
+                </div>
+                <form action="" method="PUT">
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12 form-group">
+                                <select name="role_id" class="form-control select2" id="role_id">
+                                    <option value="">Select Role</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->role_id}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @foreach($permissions as $permission)
+                            <div class="col-lg-1">
+                                <input type="checkbox" id="{{@$permission->id}}" value="{{@$permission->id}}" class="flat-red" />
+                            </div>
+                            <div class="col-lg-5"><label>{{@$permission->name}}</label></div>
+                        @endforeach
+
+
+                    </div>
+
+                    <div class="modal-footer" style="margin-top: 50% !important;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="button" class="btn btn-primary" id="update" value="Update">
+                    </div>
+                </form>
+            </div>
+
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -312,6 +361,23 @@
                 }
             })
         });
+
+        $('.permissions').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#role_id').select2().val(data.role_id).trigger('change');
+            $('#id').val(data.id);
+            console.log('e values',typeof data);
+            let checks ="";
+            for(const [key, val] of Object.entries(data.permissions)) {
+                $('input[id='+val.id+']').iCheck('check');
+                console.log(' object key', key, ' value', val);
+                // checks += '<div class="col-lg-1">\n' +
+                //    '<input type="checkbox" value="'+val.id+'" checked class="flat-red" />\n' +
+                //    '</div>\n' +
+                //    '<div class="col-lg-5"><label>'+val.name+'</label></div>';
+            }
+        });
+
         ///// edit record
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
@@ -357,6 +423,48 @@
             formData.append('_method', 'PUT');
             $.ajax({
                 url:'{{url("strategic/contact-info")}}/'+id,
+                type:'POST',
+                // dataType:"JSON",
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    //console.log('response', response);
+                    //location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        })
+        $('#updatePermission').submit(function (e) {
+            let name = $('#edit_name').val();
+
+            let status = $('input[name=edit_status]:checked').val();
+            !name?addClass('edit_name'):removeClass('edit_name');
+            if(!name)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            e.preventDefault();
+            var formData = new FormData(this);
+            //var formData = $("#updateForm").serialize()
+            formData.append('_method', 'PUT');
+            $.ajax({
+                url:'{{url("users-roles")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
