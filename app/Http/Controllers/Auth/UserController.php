@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\BusinessSchool;
+use App\CharterType;
 use App\Http\Controllers\Controller;
+use App\InstituteType;
+use App\Models\Common\Degree;
+use App\Models\Common\Department;
 use App\Models\Common\Designation;
+use App\Models\Common\Discipline;
+use App\Models\Common\Question;
+use App\Models\Common\Region;
+use App\Models\Common\ReviewerRole;
+use App\Models\Common\Sector;
 use Illuminate\Http\Request;
 use App\User;
+use PragmaRX\Countries\Package\Countries;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -18,13 +29,30 @@ class UserController extends Controller
         $designations = Designation::all();
         $permissions = Permission::all();
         $roles = Role::all();
-//        $users_roles = User::with('roles')->get();
-//        $all_users_permissions = User::with('permissions')->get();
-
-        //dd($all_users_roles);
-
+        /////
+        ///
+        $countries = Countries::all();
+        $institute_types=InstituteType::where('status', 'active')->get();
+        $chart_types=CharterType::where('status', 'active')->get();
+        $business_school=BusinessSchool::where('status', 'active')->get();
+        $designations=Designation::where('status', 'active')->get();
+        $departments = Department::where('status', 'active')->get();
+        $disciplines = Discipline::where('status', 'active')->get();
+        $regions = Region::where('status', 'active')->get();
+        $reviewerRoles = ReviewerRole::where('status', 'active')->get();
+        $sectors = Sector::where('status', 'active')->get();
+        $degrees = Degree::where('status', 'active')->get();
+        $peer_reviewer = User::where('user_type', 'peer_reviewer');
+        $questions = Question::where('status', 'active')->get();
         //dd($users);
-        return view('auth.users.index', compact('users', 'designations', 'permissions', 'roles'));
+
+        return view('auth.users.index', compact(
+                'institute_types', 'chart_types',
+                'business_school','designations','countries',
+                'departments', 'disciplines','regions', 'reviewerRoles',
+                'sectors', 'degrees','users', 'questions', 'permissions', 'roles', 'peer_reviewer')
+        );
+        //return view('auth.users.index', compact('users', 'designations', 'permissions', 'roles'));
     }
 
     public function create()

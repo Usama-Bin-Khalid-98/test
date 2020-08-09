@@ -37,6 +37,7 @@
 
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
+          @hasrole('NBEACAdmin')
           <li class=" treeview
           {{ (request()->is('users')) ? 'active' : '' }}
           {{ (request()->is('rolesPermission')) ? 'active' : '' }}
@@ -58,6 +59,9 @@
 
           </ul>
             </li>
+          @endhasrole
+
+          @hasrole('BusinessSchool')
           <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">
               <a href="{{url('strategic/invoices')}}">
                   <i class="fa fa-circle-o" style="color: #D81B60"></i>Invoices
@@ -66,6 +70,7 @@
                         </span>
               </a>
           </li>
+          @endhasrole
 {{--          <li class="treeview {{(request()->is('strategic/invoices'))?'active':''}}{{(request()->is('strategic/generate-invoices'))?'active':''}} ">--}}
 {{--              <a href="#">--}}
 {{--                  <i class="fa fa-money " style="color: #D81B60"></i> <span>Invoices</span>--}}
@@ -85,6 +90,8 @@
 
 
 {{--              </ul>--}}
+
+          @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}}{{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
@@ -113,8 +120,8 @@
 
           </ul>
         </li>
-
-
+        @endhasrole
+        @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i> <span>Curriculum</span>
@@ -131,6 +138,8 @@
 
           </ul>
         </li>
+          @endhasrole
+          @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}{{(request()->is('students-graduated'))?'active':''}}{{(request()->is('student-gender'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user text-blue"></i> <span>Students</span>
@@ -145,6 +154,8 @@
 
           </ul>
         </li>
+          @endhasrole
+          @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-summary'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-orange"></i> <span>Faculty</span>
@@ -161,7 +172,8 @@
             <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{url('faculty-gender')}}"><i class="fa fa-circle-o text-orange"></i>Faculty Gender Mix</a></li>
           </ul>
         </li>
-
+          @endhasrole
+          @hasrole('BusinessSchool')
            <li class=" treeview {{(request()->is('research-summary'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Research Development</span>
@@ -174,7 +186,8 @@
 
           </ul>
         </li>
-
+          @endhasrole
+          @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('financial-risk'))?'active':''}}{{(request()->is('qec-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}}{{(request()->is('support-staff'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i><span>Facilities Information</span>
@@ -191,6 +204,8 @@
 
           </ul>
         </li>
+          @endhasrole
+          @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}">
           <a href="#">
             <i class="fa fa-globe " style="color: green"></i><span>Social Responsibility</span>
@@ -207,13 +222,28 @@
             <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Internal Community WP</a></li>
           </ul>
         </li>
-        <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-black"></i>Department Fee</a></li>
-        <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-black"></i>Faculty Degree</a></li>
-            <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-black"></i>Desk Review</a></li>
-            <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-circle-o text-black"></i>Nbeac Criteria</a></li>
-            <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-black"></i>Eligibility Screening</a></li>
-            <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-user text- black"></i>Admin</a></li>
-            <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-black"></i>NBEAC System Settings</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+            <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-black"></i>Department Fee</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+            <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-black"></i>Faculty Degree</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-black"></i>Desk Review</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-circle-o text-black"></i>Nbeac Criteria</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-black"></i>Eligibility Screening</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-user text- black"></i>Admin</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-black"></i>NBEAC System Settings</a></li>
+          @endhasrole
 
           </ul>
         </li>
