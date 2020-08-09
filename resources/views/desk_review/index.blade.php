@@ -428,32 +428,15 @@
          $('#form').submit(function (e) {
              // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
              console.log('submit button clicked');
-            let facility_id = $('input:radio:checked').map(function(index, val) {
-                        return {"id":$(val).data('id'), "isChecked":$(val).val()};
+            let isEligible = $('input:radio:checked').map(function(index, val) {
+                        return { "eligibility_program":$(val).val(),"eligibility_mission":$(val).val()};
                       }).get();
 
-            // let data = [];
-            // for( i =0; i < facility_id.length; i++)
-            // {
-            //    data[i].id = facility_id[i].id;
-            // }
-            //console.log('data facilities', data);
-           // return;
-             //console.log(data);
-             //return ;
-            // !facility_id?addClass('facility_id'):removeClass('facility_id');
-            //  if(!facility_id )
-            //  {
-            //      Notiflix.Notify.Warning("Fill all the required Fields.");
-            //      return false;
-            //  }
-
-            // let data = JSON.parse(JSON.stringify(facility_id));
-            // Yes button callback
+            
             $.ajax({
-                url:'{{url("business-school-facility")}}',
+                url:'{{url("desk-review")}}',
                 type:'POST',
-                data: {"data":JSON.parse(JSON.stringify(facility_id))},
+                data: {"data":JSON.parse(JSON.stringify(isEligible))},
                 // cache:false,
                 // contentType:false,
                 // processData:false,

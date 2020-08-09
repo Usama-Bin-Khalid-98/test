@@ -1,4 +1,4 @@
-@section('pageTitle', 'Contact Info')
+@section('pageTitle', 'Users')
 
 
 @if(Auth::user())
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
+                            <form action="javascript:void(0)" id="form" method="POST">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Name</label>
@@ -313,19 +313,12 @@
             let name = $('#name').val();
             let email = $('#email').val();
             let contact_no = $('#contact_no').val();
-            let school_contact = $('#school_contact').val();
-            let designation_id = $('#designation_id').val();
-            let focal_person = $('#focal_person').val();
-            let cv = $('#cv').val();
 
             !name?addClass('name'):removeClass('name');
             !email?addClass('email'):removeClass('email');
             !contact_no?addClass('contact_no'):removeClass('contact_no');
-            !school_contact?addClass('school_contact'):removeClass('school_contact');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !cv?addClass('cv'):removeClass('cv');
 
-            if(!name || !email || !contact_no|| !school_contact || !designation_id || !cv)
+            if(!name || !email || !contact_no )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -335,7 +328,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("strategic/contact-info")}}',
+                url:'{{url("users")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
