@@ -45,7 +45,7 @@ class BusinessSchoolController extends Controller
         $request->merge(['status' => 'disabled']);
         $addSchool = BusinessSchool::create($request->all());
         return response()->json(['success' => 'Your business school name sent for registration.'], 200);
-       
+
     }
 
     /**

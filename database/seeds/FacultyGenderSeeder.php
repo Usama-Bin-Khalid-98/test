@@ -11,18 +11,6 @@ class FacultyGenderSeeder extends Seeder
      */
     public function run()
     {
-    	DB::table('faculty_genders')->insert([
-    		'campus_id'=>'1',
-    	'lookup_faculty_type_id'=>'1',
-
-  'year'=>'2000',
-'male'=>'10',
-'female'=>'20',
-'status'=>'active',
-'isCompleted'=>'yes',
-'created_by'=>'1'
-
-]);
         //
     }
 }
