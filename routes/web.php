@@ -44,6 +44,9 @@ use Illuminate\Support\Facades\Route;
         Route::resource('roles', 'Auth\RoleController');
         // Permissions resource route.
         Route::resource('permissions', 'Auth\PermissionController');
+        Route::resource('desk-review', 'DeskReviewController');
+        Route::resource('nbeac-criteria', 'NbeacCriteriaController');
+        Route::resource('department-fee', 'DepartmentFeeController');
 
     });
 //    Route::put('users-roles', 'Auth\UserController\user_roles');
@@ -62,6 +65,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('strategic-plan','StrategicPlanController');
         Route::resource('mission-vision','MissionVisionController');
         Route::resource('print','PrintController');
+        Route::resource('faculty-degree', 'FacultyDegreeController');
 
         });
         // Curriculum
@@ -93,10 +97,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('qec-info','QecInfoController');
         Route::resource('business-school-facility','BusinessSchoolFacilityController');
         Route::resource('course-type','CourseTypeController');
-        Route::resource('desk-review', 'DeskReviewController');
-        Route::resource('nbeac-criteria', 'NbeacCriteriaController');
-        Route::resource('department-fee', 'DepartmentFeeController');
-        Route::resource('faculty-degree', 'FacultyDegreeController');
+
 
         //Social-Responsibility
         Route::resource('student-club','StudentClubController');

@@ -16,6 +16,7 @@ use App\Models\StrategicManagement\MissionVision;
 use App\Models\StrategicManagement\Scope;
 use App\Models\StrategicManagement\StrategicPlan;
 use App\Models\StrategicManagement\StudentEnrolment;
+use App\NbeacCriteria;
 use App\StudentsGraduated;
 use App\FacultyDegree;
 use Illuminate\Http\Request;
@@ -36,6 +37,8 @@ class DeskReviewController extends Controller
     public function index()
     {
         //
+        $nbeac_criteria = NbeacCriteria::all()->first();
+        //dd($nbeac_criteria);
         $campus_id = Auth::user()->campus_id;
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
 //      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
@@ -112,7 +115,7 @@ class DeskReviewController extends Controller
             'bandwidth',
             'comp_ratio',
             'summaries',
-
+            'nbeac_criteria'
 
         ));
     }
