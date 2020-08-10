@@ -21,6 +21,7 @@ use App\Models\StrategicManagement\StrategicPlan;
 <<<<<<< HEAD
 =======
 use App\Models\StrategicManagement\StudentEnrolment;
+use App\NbeacCriteria;
 use App\StudentsGraduated;
 use App\FacultyDegree;
 >>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
@@ -37,6 +38,8 @@ class DeskReviewController extends Controller
     public function index()
     {
         //
+        $nbeac_criteria = NbeacCriteria::all()->first();
+        //dd($nbeac_criteria);
         $campus_id = Auth::user()->campus_id;
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
 <<<<<<< HEAD
@@ -126,8 +129,12 @@ class DeskReviewController extends Controller
             'bandwidth',
             'comp_ratio',
             'summaries',
+<<<<<<< HEAD
 
 >>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+=======
+            'nbeac_criteria'
+>>>>>>> c4af9e790e4ce5d37249be4f354f62853a32856e
 
         ));
     }

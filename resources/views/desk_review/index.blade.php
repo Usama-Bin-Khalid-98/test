@@ -71,7 +71,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     <tr>
 
                                         <td>
@@ -81,9 +80,10 @@
                                                     <li>{{$dates['program']}} Started in  {{$dates['date']}} (Difference {{$dates['date_diff']}})</li>
                                                 @endforeach
                                             </ol>
-
                                         </td>
+
                                         <td>
+<<<<<<< HEAD
                                             <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>
                                             <ol type="i">
                                                 <li>BBA after 5.5 years of program started</li>
@@ -94,6 +94,16 @@
 <<<<<<< HEAD
 
 =======
+=======
+                                            {{$nbeac_criteria->program_started}}
+{{--                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>--}}
+{{--                                            <ol type="i">--}}
+{{--                                                <li>BBA after 5.5 years of program started</li>--}}
+{{--                                                <li>MBA 1.5 after 2.5 years of program started</li>--}}
+{{--                                                <li>MBA 2.5 after 3.5 years of program started</li>--}}
+{{--                                                <li>MBA 3.5 after 5 years of program started.</li>--}}
+{{--                                            </ol>--}}
+>>>>>>> c4af9e790e4ce5d37249be4f354f62853a32856e
                                         </td>
                                         <td>
                                             <input type="radio" name="eligibility_program" value="yes"> yes
@@ -101,6 +111,8 @@
 >>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                     </tr>
+
+
                                     <tr>
                                         <td>
 <<<<<<< HEAD
@@ -115,9 +127,10 @@
 
                                         </td>
                                         <td>
-                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.
-                                            There should be documentary evidence that vision and mission are approved by any statutory body.
-                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.
+                                            {{$nbeac_criteria->mission_vision_statement}}
+{{--                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.--}}
+{{--                                            There should be documentary evidence that vision and mission are approved by any statutory body.--}}
+{{--                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.--}}
 
                                         </td>
 <<<<<<< HEAD
@@ -295,9 +308,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                                                    
+
                                                 </div>
-                                                
+
                                             </div>
 >>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
