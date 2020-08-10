@@ -10,8 +10,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
+
+
 class FacultyGenderController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,12 +33,12 @@ class FacultyGenderController extends Controller
      */
     public function index()
     {
-        $businesses = BusinessSchool::where('status', 'active')->get();
+
         $faculty_type = LookupFacultyType::get();
 
-        $genders = FacultyGender::with('business_school','lookup_faculty_type')->get();
+        $genders = FacultyGender::with('campus','lookup_faculty_type')->get();
 
-         return view('registration.faculty.faculty_gender', compact('businesses','faculty_type','genders'));
+         return view('registration.faculty.faculty_gender', compact('faculty_type','genders'));
     }
 
     /**
@@ -53,11 +67,12 @@ class FacultyGenderController extends Controller
         try {
 
             FacultyGender::create([
-                'business_school_id' => $request->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'year' => $request->year,
                 'male' => $request->male,
-                'female' => $request->female
+                'female' => $request->female,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty Gender added successfully.']);
@@ -109,13 +124,13 @@ class FacultyGenderController extends Controller
         try {
 
             FacultyGender::where('id', $facultyGender->id)->update([
-                'business_school_id' => $request->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'year' => $request->year,
                 'male' => $request->male,
                 'female' => $request->female,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Gender updated successfully.']);
 
@@ -134,6 +149,9 @@ class FacultyGenderController extends Controller
     public function destroy(FacultyGender $facultyGender)
     {
         try {
+            FacultyGender::where('id', $facultyGender->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FacultyGender::destroy($facultyGender->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
@@ -144,7 +162,6 @@ class FacultyGenderController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'lookup_faculty_type_id' => 'required',
             'year' => 'required',
             'male' => 'required',

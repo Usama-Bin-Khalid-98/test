@@ -19,10 +19,7 @@ use App\Models\Common\PaymentMethod;
 use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
-<<<<<<< HEAD
-=======
 use App\Models\Common\FacultyQualification;
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
 use App\Models\Facility\StaffCategory;
@@ -180,14 +177,11 @@ class ConfigController extends Controller
                 $this->TableRows =QecType::all();
                 break;
             }
-<<<<<<< HEAD
-=======
             case 'faculty_qualifications';
             {
                 $this->TableRows =FacultyQualification::all();
                 break;
             }
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         }
 
 
@@ -279,12 +273,9 @@ class ConfigController extends Controller
         $QecType= QecType::all()->count();
         $counter['QecType'] = $QecType;
 
-<<<<<<< HEAD
-=======
         $FacultyQualification= FacultyQualification::all()->count();
         $counter['FacultyQualification'] = $FacultyQualification;
 
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
 
         return $counter;
     }
@@ -456,15 +447,12 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
-<<<<<<< HEAD
-=======
             case 'faculty_qualifications':
             {
                 $this->TableRows =FacultyQualification::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         }
 
 
@@ -640,15 +628,12 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
-<<<<<<< HEAD
-=======
             case 'faculty_qualifications':
             {
                 $this->TableRows = FacultyQualification::find($id)->update($request->all());
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         }
     }
 
@@ -813,15 +798,12 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }
-<<<<<<< HEAD
-=======
             case 'faculty_qualifications':
             {
                 $this->TableRows  = FacultyQualification::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         }
         $request->destroy();
     }

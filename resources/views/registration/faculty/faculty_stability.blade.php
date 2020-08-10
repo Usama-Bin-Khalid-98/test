@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year.</h3>
+                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year in Table 4.5</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -62,17 +62,6 @@
                         <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="name">Total Faculty</label>
                                     <input type="number" name="total_faculty" id="total_faculty" class="form-control">
                                 </div>
@@ -80,32 +69,13 @@
                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="year"  class="form-control select2">
-                                        <option value="">Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
-
-                            </div>
+                                </div>
                             </div>
                           
                             <div class="col-md-3">
@@ -159,6 +129,7 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Total Faculty</th>
                                     <th>Year</th>
                                     <th>Retired</th>
@@ -173,7 +144,8 @@
                                 <tbody>
                              @foreach($stabilities as $req)
                                 <tr>
-                                    <td>{{$req->business_school->name}}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
                                     <td>{{$req->total_faculty}}</td>
                                     <td>{{$req->year}}</td>
                                     <td>{{$req->resigned}}</td>
@@ -182,7 +154,7 @@
                                     <td>{{$req->new_induction}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","total_faculty":"{{$req->total_faculty}}","year":"{{$req->year}}","resigned":"{{$req->resigned}}","retired":"{{$req->retired}}","terminated":"{{$req->terminated}}","new_induction":"{{$req->new_induction}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","total_faculty":"{{$req->total_faculty}}","year":"{{$req->year}}","resigned":"{{$req->resigned}}","retired":"{{$req->retired}}","terminated":"{{$req->terminated}}","new_induction":"{{$req->new_induction}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -193,6 +165,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Total Faculty</th>
                                     <th>Year</th>
                                     <th>Retired</th>
@@ -226,56 +199,27 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Total Faculty</label>
                                     <input type="number" name="total_faculty" id="edit_total_faculty" value="{{old('edit_total_faculty')}}" class="form-control">
                                 </div>
+                                <input type="hidden" id="edit_id">
                             </div>
                             
                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="edit_year"  class="form-control select2">
-                                        <option value="">Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
+                                </div>
+                            </div>
 
-                            </div>
-                            </div>
 
                         <div class="col-md-6">
                                 <div class="form-group">
@@ -363,7 +307,6 @@
         });
 
          $('#form').submit(function (e) {
-            let business_school_id = $('#business_school_id').val();
             let total_faculty = $('#total_faculty').val();
             let year = $('#year').val();
             let resigned = $('#resigned').val();
@@ -371,7 +314,7 @@
             let terminated = $('#terminated').val();
             let new_induction = $('#new_induction').val();
 
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
+            
             !total_faculty?addClass('total_faculty'):removeClass('total_faculty');
             !year?addClass('year'):removeClass('year');
             !resigned?addClass('resigned'):removeClass('resigned');
@@ -379,7 +322,7 @@
             !terminated?addClass('terminated'):removeClass('terminated');
             !new_induction?addClass('new_induction'):removeClass('new_induction');
 
-            if(!business_school_id || !total_faculty || !year || !resigned || !retired || !terminated || !new_induction)
+            if(!total_faculty || !year || !resigned || !retired || !terminated || !new_induction)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -420,7 +363,6 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_total_faculty').val(data.total_faculty);
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_resigned').val(data.resigned);
@@ -433,7 +375,6 @@
         });
 
 $('#updateForm').submit(function (e) {
-            let business_school_id = $('#edit_business_school_id').val();
             let total_faculty = $('#edit_total_faculty').val();
             let year = $('#edit_year').val();
             let resigned = $('#edit_resigned').val();
@@ -444,7 +385,6 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
-            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !total_faculty?addClass('edit_total_faculty'):removeClass('edit_total_faculty');
             !year?addClass('edit_year'):removeClass('edit_year');
             !resigned?addClass('edit_resigned'):removeClass('edit_resigned');
@@ -452,7 +392,7 @@ $('#updateForm').submit(function (e) {
             !terminated?addClass('edit_terminated'):removeClass('edit_terminated');
             !new_induction?addClass('edit_new_induction'):removeClass('edit_new_induction');
 
-            if(!business_school_id || !total_faculty || !year || !resigned || !retired || !terminated || !new_induction )
+            if(!total_faculty || !year || !resigned || !retired || !terminated || !new_induction )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

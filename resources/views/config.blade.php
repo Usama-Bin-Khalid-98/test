@@ -115,15 +115,12 @@
                     </span>
                     </li>
                     <li class="list-group-item">
-<<<<<<< HEAD
-=======
                         <a href="{{url('config/faculty_qualifications')}}" class="text-green"><b>Faculty Qualifications</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['FacultyQualification']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                         <a href="{{url('config/facility_types')}}" class="text-green"><b>Facility Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['FacilityType']}}</span>
