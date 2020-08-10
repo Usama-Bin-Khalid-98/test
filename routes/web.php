@@ -187,8 +187,6 @@ Route::resource('research-summary','ResearchSummaryController');
         Route::resource('strategic-plan','StrategicPlanController');
         Route::resource('mission-vision','MissionVisionController');
         Route::resource('print','PrintController');
-        Route::resource('faculty-degree', 'FacultyDegreeController');
-
         });
         // Curriculum
         Route::resource('program-portfolio','ProgramPortfolioController');
@@ -208,7 +206,7 @@ Route::resource('research-summary','ResearchSummaryController');
         Route::resource('work-load','Faculty\WorkloadController');
         Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
         Route::resource('faculty-summary','Faculty\FacultySummaryController');
-
+        Route::resource('faculty-degree', 'FacultyDegreeController');
         //research-summary
         Route::resource('research-summary','ResearchSummaryController');
 

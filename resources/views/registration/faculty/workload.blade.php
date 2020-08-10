@@ -164,7 +164,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Information of faculty workload over the last two semesters</h3>
+                            <h3 class="box-title">Faculty workload(t)</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -239,7 +239,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Faculty Student Ratio. </h4>
+                    <h4 class="modal-title">Edit Faculty workload(t). </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">

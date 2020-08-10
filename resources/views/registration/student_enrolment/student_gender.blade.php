@@ -1,4 +1,4 @@
-@section('pageTitle', 'Entry Requirements')
+@section('pageTitle', 'Student Gender Mix')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Entry Requirements
+                Students Gender mix
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Entry Requirements </li>
+                <li class="active"> Students Gender mix </li>
             </ol>
         </section>
         <section class="content-header">
@@ -35,16 +35,15 @@
                 </div>
             </div>
         </section>
-
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="box box-primary">
+                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on entry requirements for each program under review in Table 2.2 </h3>
+                            <h3 class="box-title">State the current gender wise break down of students in each program under review in Table 3.3</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -58,35 +57,31 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                        	 <form action="javascript:void(0)" id="form" method="POST">
+                             <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Program Name</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
-                                         <option value="{{$program->id}}">{{$program->name}}</option>
+                                         <option value="{{$program->program->id}}">{{$program->program->name}}</option>
                                         @endforeach
                                         </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Male(%)</label>
+                                    <input type="text" name="male" id="male" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Eligibility Criteria</label>
-                                   <select name="eligibility_criteria_id" id="eligibility_criteria_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Eligibility Criteria</option>
-                                        @foreach($criterias as $criteria)
-                                         <option value="{{$criteria->id}}">{{$criteria->name}}</option>
-                                        @endforeach
-                                        </select>
+                                    <label for="name">Female(%)</label>
+                                    <input type="text" name="female" id="female" class="form-control">
                                 </div>
                             </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Minimum requirements/Relative Weightage</label>
-                                    <input type="text" name="min_req" id="min_req" class="form-control">
-                                </div>
-                              </div>
 
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -102,38 +97,44 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Entry Requirements for each program under review.</h3>
+                            <h3 class="box-title">Student Gender mix</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Program Name</th>
-                                    <th>Eligibility Criteria</th>
-                                    <th>Minimum requirements/Relative Weightage</th>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
+                                    <th>Program</th>
+                                    <th>Male(%)</th>
+                                    <th>Female(%)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                @foreach($entryRequirements as $req)
+                               @foreach($genders as $enrolement)
                                 <tr>
-                                    <td>{{$req->program->name}}</td>
-                                    <td>{{$req->eligibility_criteria->name}}</td>
-                                    <td>{{$req->min_req}}</td>
-                                    <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}", "program_id":"{{$req->program_id}}", "eligibility_criteria_id":"{{$req->eligibility_criteria_id}}", "min_req":"{{$req->min_req}}", "status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                    <td>{{$enrolement->campus->business_school->name}}</td>
+                                    <td>{{$enrolement->campus->location}}</td>
+                                    <td>{{$enrolement->program->name}}</td>
+                                    <td>{{$enrolement->male}}</td>
+                                    <td>{{$enrolement->female}}</td>
+                                    <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","program_id":"{{$enrolement->program_id}}","male":"{{$enrolement->male}}","female":"{{$enrolement->female}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Program Name</th>
-                                    <th>Eligibility Criteria</th>
-                                    <th>Minimum requirements/Relative Weightage</th>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
+                                    <th>Program</th>
+                                    <th>Male(%)</th>
+                                    <th>Female(%)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -155,43 +156,40 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Entry Requirement. </h4>
+                    <h4 class="modal-title">Edit Student Gender mix. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
+
+                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Program</label>
                                 <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
                                     <option value="">Select Program</option>
                                     @foreach($programs as $program)
-                                        <option value="{{$program->id}}">{{$program->name}}</option>
+                                        <option value="{{$program->program->id}}">{{$program->program->name}}</option>
                                     @endforeach
                                 </select>
-                               <input type="hidden" id="edit_id">
+
                             </div>
+                            <input type="hidden" name="id" id="edit_id">
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Eligibility Croteria</label>
-                                <select name="eligibility_criteria_id" id="edit_eligibility_criteria_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select Eligibility Croteria</option>
-                                    @foreach($criterias as $course)
-                                        <option value="{{$course->id}}">{{$course->name}}</option>
-                                    @endforeach
-                                </select>
-
+                                <label for="name">Male</label>
+                                    <input type="text" name="male"
+                                    id="edit_male" value="{{old('edit_male')}}" class="form-control">
                             </div>
                         </div>
-
                         <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Minimum requirements/Relative Weightage</label>
-                                    <input type="text" name="min_req" id="edit_min_req" value="{{old('edit_min_req')}}" class="form-control">
-                                </div>
-                              </div>
-
+                            <div class="form-group">
+                                <label for="name">Female</label>
+                                    <input type="text" name="female"
+                                    id="edit_female" value="{{old('female')}}" class="form-control">
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -214,8 +212,7 @@
     <!-- /.modal -->
 
 
-    <!-- /.modal -->
-   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -242,16 +239,17 @@
             }
         });
 
-         $('#form').submit(function (e) {
+        $('#form').submit(function (e) {
+            // let uni_id = $('#uni_id').val();
             let program_id = $('#program_id').val();
-            let eligibility_criteria_id = $('#eligibility_criteria_id').val();
-            let min_req = $('#min_req').val();
+            let male = $('#male').val();
+            let female = $('#female').val();
 
             !program_id?addClass('program_id'):removeClass('program_id');
-            !eligibility_criteria_id?addClass('eligibility_criteria_id'):removeClass('eligibility_criteria_id');
-            !min_req?addClass('min_req'):removeClass('min_req');
+            !male?addClass('male'):removeClass('male');
+            !female?addClass('female'):removeClass('female');
 
-            if(!program_id || !eligibility_criteria_id || !min_req)
+            if(!program_id || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -261,7 +259,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("entry-requirements")}}',
+                url:'{{url("student-gender")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -289,28 +287,29 @@
         });
 
 
-         $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
+        $('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+           
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_eligibility_criteria_id').select2().val(data.eligibility_criteria_id).trigger('change');
-            $('#edit_min_req').val(data.min_req);
+            $('#edit_male').val(data.male);
+            $('#edit_female').val(data.female);;
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
+        $('#updateForm').submit(function (e) {
             let program_id = $('#edit_program_id').val();
-            let eligibility_criteria_id = $('#edit_eligibility_criteria_id').val();
-            let min_req = $('#edit_min_req').val();
+            let male = $('#edit_male').val();
+            let female = $('#edit_female').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
-            !eligibility_criteria_id?addClass('edit_eligibility_criteria_id'):removeClass('edit_eligibility_criteria_id');
-            !min_req?addClass('edit_min_req'):removeClass('edit_min_req');
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !male?addClass('male'):removeClass('male');
+            !female?addClass('female'):removeClass('female');
 
-            if(!program_id || !eligibility_criteria_id || !min_req )
+            if(!program_id || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -320,7 +319,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("entry-requirements")}}/'+id,
+                url:'{{url("student-gender")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -348,14 +347,13 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-
-         $('.delete').on('click', function (e) {
+        $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("entry-requirements")}}/'+id,
+                        url:'{{url("student-gender")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -384,7 +382,6 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
-
 
 
 
