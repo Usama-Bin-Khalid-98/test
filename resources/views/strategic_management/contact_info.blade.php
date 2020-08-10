@@ -147,7 +147,7 @@
                     <!-- .box -->
                     <div class="box " >
                         <div class="box-header">
-                            <h3 class="box-title">Contact Information</h3>
+                            <h3 class="box-title">CAO</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -213,7 +213,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Contact Information. </h4>
+                    <h4 class="modal-title">Edit Scope of accreditation. </h4>
                 </div>
                 <form role="form" id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">

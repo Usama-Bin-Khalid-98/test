@@ -104,7 +104,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Summary of the Business School Faculty</h3>
+                            <h3 class="box-title">Information of faculty  over the last two semesters</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

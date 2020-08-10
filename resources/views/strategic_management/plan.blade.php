@@ -46,7 +46,6 @@
                         <div class="box-header">
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
                             <h3 class="box-title">State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.<br>Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.7.</h3>
 =======
                             <h3 class="box-title">Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.7.</h3>
@@ -56,9 +55,6 @@
 
                             <p>Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D.  Fill in the required information on approval of the strategic plan in the Table 1.7.</p>
 >>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
-=======
-                            <h3 class="box-title">Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
->>>>>>> 44460d7a9a041428fcd468901fc7a801d801a65e
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
