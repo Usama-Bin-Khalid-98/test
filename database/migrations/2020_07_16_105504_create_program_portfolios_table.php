@@ -19,6 +19,10 @@ class CreateProgramPortfoliosTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('pre_req_id')->unsigned()->nullable();
+            $table->foreign('pre_req_id')
+                ->references('id')
+                ->on('programs');
             $table->integer('program_id')->unsigned();
             $table->foreign('program_id')
                 ->references('id')
@@ -45,7 +49,6 @@ class CreateProgramPortfoliosTable extends Migration
                 ->on('users');
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('course_type_id')
                 ->references('id')
                 ->on('course_types')

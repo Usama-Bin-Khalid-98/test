@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year.</h3>
+                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year in Table 4.5</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
