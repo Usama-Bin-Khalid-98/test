@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\BusinessSchool;
 use App\Dashboard;
 use App\Mail\ActivationMail;
+use App\Models\Common\Slip;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Exception;
+use Mockery\Exception;
 
 class DashboardController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +34,9 @@ class DashboardController extends Controller
         //
         // get Registrations data
         $registrations = User::with('business_school')->where('status', 'pending')->get();
-       // dd($registrations);
-
-        return view('admin.index', compact('registrations'));
+        $invoices = Slip::with('business_school', 'department')->get();
+//       dd($invoices);
+        return view('admin.index', compact('registrations','invoices'));
     }
 
     /**

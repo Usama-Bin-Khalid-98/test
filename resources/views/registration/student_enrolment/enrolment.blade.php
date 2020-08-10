@@ -62,33 +62,15 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="year"  class="form-control select2">
+                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
+                                </div>
+                            </div>
 
-                            </div>
-                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">16 Year Programs</label>
@@ -109,66 +91,7 @@
                                     <input type="text" name="phd_level" id="phd_level" class="form-control">
                                 </div>
                             </div>
-                        </div>
-
-                            <div class="box box-primary">
-                        <div class="box-body">
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="name">Total Students</label>--}}
-{{--                                    <input type="text" name="total_students" id="total_students" class="form-control">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-                            <h3 class="box-title">State the number of students who have graduated over the past three years for each program under review in Table 3.2</h3>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($programs as $program)
-                                         <option value="{{$program->id}}">{{$program->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t</label>
-                                    <input type="text" name="grad_std_t" id="grad_std_t"  class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-2</label>
-                                    <input type="text" name="grad_std_tt" id="grad_std_tt" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year t-3</label>
-                                    <input type="text" name="grad_std_ttt" id="grad_std_ttt" class="form-control">
-                                </div>
-                            </div>
-
-                        </div>
-                            </div>
-                            <div class="box box-primary">
-                            <div class="box-body">
-                                <h3 class="box-title">State the current gender wise break down of students in each program under review in Table 3.3</h3>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Male(%)</label>
-                                    <input type="text" name="male" id="male" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Female(%)</label>
-                                    <input type="text" name="female" id="female" class="form-control">
-                                </div>
-                            </div>
-
+                        
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -179,6 +102,7 @@
                         </div>
                             </div>
                     </form>
+                    </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
@@ -192,18 +116,13 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>University</th>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>16 Year</th>
                                     <th>18 Year</th>
                                     <th>Doctoral</th>
                                     <th>Total Enrolment</th>
-                                    <th>Program</th>
-                                    <th>Year t</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-3</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -211,20 +130,15 @@
                                 <tbody>
                                 @foreach($enrolments as $enrolement)
                                 <tr>
-                                    <td>{{$enrolement->business_school->name?? ""}}</td>
+                                    <td>{{$enrolement->campus->business_school->name}}</td>
+                                    <td>{{$enrolement->campus->location}}</td>
                                     <td>{{$enrolement->year}}</td>
                                     <td>{{$enrolement->bs_level}}</td>
                                     <td>{{$enrolement->ms_level}}</td>
                                     <td>{{$enrolement->phd_level}}</td>
                                     <td>{{$enrolement->total_students}}</td>
-                                    <td>{{$enrolement->program->name?? ""}}</td>
-                                    <td>{{$enrolement->grad_std_t}}</td>
-                                    <td>{{$enrolement->grad_std_t_2}}</td>
-                                    <td>{{$enrolement->grad_std_t_3}}</td>
-                                    <td>{{$enrolement->male}}</td>
-                                    <td>{{$enrolement->female}}</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":{{$enrolement->id}},"uni_id":{{$enrolement->business_school_id}},"year":{{$enrolement->year}},"bs_level":{{$enrolement->bs_level}},"ms_level":{{$enrolement->ms_level}},"phd_level":{{$enrolement->phd_level}},"total_students":{{$enrolement->total_students}},"program_id":{{$enrolement->program_id}},"grad_std_t":{{$enrolement->grad_std_t}},"grad_std_t_2":{{$enrolement->grad_std_t_2}},"grad_std_t_3":{{$enrolement->grad_std_t_3}},"male":{{$enrolement->male}},"female":{{$enrolement->female}},"status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","year":{{$enrolement->year}},"bs_level":"{{$enrolement->bs_level}}","ms_level":"{{$enrolement->ms_level}}","phd_level":"{{$enrolement->phd_level}}","total_students":"{{$enrolement->total_students}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
@@ -232,18 +146,13 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>University</th>
+                                    <th>Business School</th>
+                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>16 Year</th>
                                     <th>18 Year</th>
                                     <th>Doctoral</th>
                                     <th>Total Enrolment</th>
-                                    <th>Program</th>
-                                    <th>Year t</th>
-                                    <th>Year t-2</th>
-                                    <th>Year t-3</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -271,35 +180,17 @@
                     <div class="modal-body">
 
                         <div class="col-md-6">
-                            <div class="form-group">
+                                <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="edit_year"  class="form-control select2">
-                                        <option value="">Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
-
+                                </div>
+                                <input type="hidden" name="id" id="edit_id">
                             </div>
-                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -326,59 +217,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Total Students</label>
-                                    <input type="text" name="total_students"
+                                    <input type="text" readonly name="total_students"
                                     id="edit_total_students" value="{{old('total_students')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Program</label>
-                                <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select Program</option>
-                                    @foreach($programs as $program)
-                                        <option value="{{$program->id}}">{{$program->name}}</option>
-                                    @endforeach
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Year t</label>
-                                    <input type="text" name="grad_std_t"
-                                    id="edit_grad_std_t" value="{{old('edit_grad_std_t')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Year t-2</label>
-                                    <input type="text" name="grad_std_t_2"
-                                    id="edit_grad_std_t_2" value="{{old('edit_grad_std_t_2')}}" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Year t-3</label>
-                                    <input type="text" name="grad_std_t_3"
-                                    id="edit_grad_std_t_3" value="{{old('edit_grad_std_t_3')}}" class="form-control">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Male</label>
-                                    <input type="text" name="male"
-                                    id="edit_male" value="{{old('edit_male')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Female</label>
-                                    <input type="text" name="female"
-                                    id="edit_female" value="{{old('female')}}" class="form-control">
                             </div>
                         </div>
 
@@ -436,27 +276,13 @@
             let bs_level = $('#bs_level').val();
             let ms_level = $('#ms_level').val();
             let phd_level = $('#phd_level').val();
-            let total_students = $('#total_students').val();
-            let program_id = $('#program_id').val();
-            let grad_std_t = $('#grad_std_t').val();
-            let grad_std_tt = $('#grad_std_tt').val();
-            let grad_std_ttt = $('#grad_std_ttt').val();
-            let male = $('#male').val();
-            let female = $('#female').val();
 
             !year?addClass('year'):removeClass('year');
             !bs_level?addClass('bs_level'):removeClass('bs_level');
             !ms_level?addClass('ms_level'):removeClass('ms_level');
             !phd_level?addClass('phd_level'):removeClass('phd_level');
-            !total_students?addClass('total_students'):removeClass('total_students');
-            !program_id?addClass('program_id'):removeClass('program_id');
-            !grad_std_t?addClass('grad_std_t'):removeClass('grad_std_t');
-            !grad_std_tt?addClass('grad_std_tt'):removeClass('grad_std_tt');
-            !grad_std_ttt?addClass('grad_std_ttt'):removeClass('grad_std_ttt');
-            !male?addClass('male'):removeClass('male');
-            !female?addClass('female'):removeClass('female');
 
-            if(!year || !bs_level || !ms_level || !phd_level || !program_id || !grad_std_t || !grad_std_tt || !grad_std_ttt || !male || !female)
+            if(!year || !bs_level || !ms_level || !phd_level  )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -502,12 +328,6 @@
             $('#edit_ms_level').val(data.ms_level);
             $('#edit_phd_level').val(data.phd_level);
             $('#edit_total_students').val(data.total_students);
-            $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_grad_std_t').val(data.grad_std_t);
-            $('#edit_grad_std_t_2').val(data.grad_std_t_2);
-            $('#edit_grad_std_t_3').val(data.grad_std_t_3);
-            $('#edit_male').val(data.male);
-            $('#edit_female').val(data.female);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -517,13 +337,6 @@
             let bs_level = $('#edit_bs_level').val();
             let ms_level = $('#edit_ms_level').val();
             let phd_level = $('#edit_phd_level').val();
-            let total_students = $('#edit_total_students').val();
-            let program_id = $('#edit_program_id').val();
-            let grad_std_t = $('#edit_grad_std_t').val();
-            let grad_std_t_2 = $('#edit_grad_std_t_2').val();
-            let grad_std_t_3 = $('#edit_grad_std_t_3').val();
-            let male = $('#edit_male').val();
-            let female = $('#edit_female').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
@@ -531,15 +344,8 @@
             !bs_level?addClass('edit_bs_level'):removeClass('edit_bs_level');
             !ms_level?addClass('edit_ms_level'):removeClass('edit_ms_level');
             !phd_level?addClass('edit_phd_level'):removeClass('edit_phd_level');
-            !total_students?addClass('edit_total_students'):removeClass('edit_total_students');
-            !program_id?addClass('program_id'):removeClass('program_id');
-            !grad_std_t?addClass('grad_std_t'):removeClass('grad_std_t');
-            !grad_std_t_2?addClass('grad_std_t_2'):removeClass('grad_std_t_2');
-            !grad_std_t_3?addClass('grad_std_t_3'):removeClass('grad_std_t_3');
-            !male?addClass('male'):removeClass('male');
-            !female?addClass('female'):removeClass('female');
 
-            if(!year || !bs_level || !ms_level || !phd_level || !total_students || !program_id || !grad_std_t || !grad_std_t_2 || !grad_std_t_3 || !male|| !female)
+            if(!year || !bs_level || !ms_level || !phd_level)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

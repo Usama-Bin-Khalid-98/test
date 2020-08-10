@@ -15,20 +15,10 @@ class CreateProgramPortfoliosTable extends Migration
     {
         Schema::create('program_portfolios', function (Blueprint $table) {
             $table->increments('id');
-<<<<<<< HEAD
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-<<<<<<< HEAD
-            $table->integer('pre_req_id')->unsigned()->nullable();
-            $table->foreign('pre_req_id')
-                ->references('id')
-                ->on('programs');
-=======
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
-=======
->>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
             $table->integer('program_id')->unsigned();
             $table->foreign('program_id')
                 ->references('id')
@@ -41,6 +31,18 @@ class CreateProgramPortfoliosTable extends Migration
             $table->string('fyp_req',100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users');
             $table->timestamps();
             $table->softDeletes();
 

@@ -78,21 +78,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-<<<<<<< HEAD
-                                    <label for="name">Year t-2</label>
-=======
                                     <label for="name">Year t-1</label>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     <input type="text" name="grad_std_tt" id="grad_std_tt" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-<<<<<<< HEAD
-                                    <label for="name">Year t-3</label>
-=======
                                     <label for="name">Year t-2</label>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     <input type="text" name="grad_std_ttt" id="grad_std_ttt" class="form-control">
                                 </div>
                             </div>
@@ -178,11 +170,7 @@
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
 
-<<<<<<< HEAD
-                        
-=======
 
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Program</label>
@@ -321,11 +309,7 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-<<<<<<< HEAD
-           
-=======
 
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_grad_std_t').val(data.grad_std_t);
             $('#edit_grad_std_t_2').val(data.grad_std_t_2);

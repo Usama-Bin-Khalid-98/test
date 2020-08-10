@@ -15,18 +15,25 @@ class CreateSlipsTable extends Migration
     {
         Schema::create('slips', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('invoice_no', 50);
             $table->integer('business_school_id')->unsigned()->nullable();
             $table->foreign('business_school_id')
                 ->references('id')
                 ->on('business_schools');
-            $table->integer('program_id')->unsigned()->nullable();
-            $table->foreign('program_id')
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
                 ->references('id')
-                ->on('programs');
+                ->on('departments');
             $table->string('slip')->nullable();
+            $table->integer('payment_method_id')->unsigned()->nullable();
+            $table->foreign('payment_method_id')
+                ->references('id')
+                ->on('payment_methods');
+            $table->string('cheque_no')->nullable();
             $table->date('transaction_date')->nullable();
             $table->enum('status', ['active', 'inactive','pending', 'paid','approved'])->nullable();
-            $table->string('comments', 255);
+            $table->string('comments', 255)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

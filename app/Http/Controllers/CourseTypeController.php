@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\CourseType;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
 
 class CourseTypeController extends Controller
 {
@@ -14,8 +18,9 @@ class CourseTypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('config');
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +40,24 @@ class CourseTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            CourseType::create([
+                'name' => $request->name
+            ]);
+
+            return response()->json(['success' => 'Course Type added successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -69,7 +91,24 @@ class CourseTypeController extends Controller
      */
     public function update(Request $request, CourseType $courseType)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            CourseType::where('id', $courseType->id)->update([
+                'name' => $request->name,
+                'status' => $request->status
+            ]);
+            return response()->json(['success' => 'Course Type updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -80,6 +119,26 @@ class CourseTypeController extends Controller
      */
     public function destroy(CourseType $courseType)
     {
-        //
+        try {
+            CourseType::destroy($courseType->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'name' => 'required'
+        ];
+    }
+
+
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

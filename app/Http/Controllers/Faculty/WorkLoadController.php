@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class WorkLoadController extends Controller
 {
@@ -20,12 +21,11 @@ class WorkLoadController extends Controller
      */
     public function index()
     {
-         $businesses = BusinessSchool::where('status', 'active')->get();
          $designations = Designation::all();
 
-         $workloads = WorkLoad::with('business_school','designation')->get();
+         $workloads = WorkLoad::with('campus','designation')->get();
 
-         return view('registration.faculty.workload', compact('businesses','designations','workloads'));
+         return view('registration.faculty.workload', compact('designations','workloads'));
     }
 
     /**
@@ -54,15 +54,16 @@ class WorkLoadController extends Controller
         try {
 
             WorkLoad::create([
-                'business_school_id' => $request->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'faculty_name' => $request->faculty_name,
                 'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
                 'phd' => $request->phd,
                 'masters' => $request->masters,
-                'bachelors' => $request->bachelors,
+                'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
-                'year' => $request->year
+                'year' => $request->year,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty WorkLoad added successfully.']);
@@ -114,17 +115,17 @@ class WorkLoadController extends Controller
         try {
 
             WorkLoad::where('id', $workLoad->id)->update([
-                'business_school_id' => $request->business_school_id,
                 'faculty_name' => $request->faculty_name,
                 'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
                 'phd' => $request->phd,
                 'masters' => $request->masters,
-                'bachelors' => $request->bachelors,
+                'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'year' => $request->year,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Workload updated successfully.']);
 
@@ -143,6 +144,9 @@ class WorkLoadController extends Controller
     public function destroy(WorkLoad $workLoad)
     {
         try {
+            Workload::where('id', $workLoad->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             WorkLoad::destroy($workLoad->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
@@ -153,13 +157,12 @@ class WorkLoadController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'faculty_name' => 'required',
             'designation_id' => 'required',
             'total_courses' => 'required',
             'phd' => 'required',
             'masters' => 'required',
-            'bachelors' => 'required',
+            'bachleors' => 'required',
             'admin_responsibilities' => 'required',
             'year' => 'required'
         ];
