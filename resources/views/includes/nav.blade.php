@@ -267,11 +267,11 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           </ul>
         </li>
           @endhasrole
-          @hasrole('NBEACAdmin')
-            <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-black"></i>Department Fee</a></li>
-          @endhasrole
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-black"></i>Faculty Degree</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
+            <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-black"></i>Department Fee</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-black"></i>Desk Review</a></li>
