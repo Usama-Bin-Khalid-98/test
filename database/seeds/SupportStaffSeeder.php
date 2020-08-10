@@ -11,6 +11,6 @@ class SupportStaffSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('support_staff')->insert(['campus_id'=>'1','staff_category_id'=>'1','total_staff'=>'21','supervisor_qualification'=>'phd','status'=>'active','isComplete'=>'yes','created_by'=>'1',]);
     }
 }

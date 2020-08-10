@@ -18,6 +18,7 @@ class CreateStatutoryBodiesTable extends Migration
             $table->string('name', 100);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->softDeletes();
+            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->timestamps();
         });
     }

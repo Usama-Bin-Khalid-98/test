@@ -1,9 +1,13 @@
+<<<<<<< HEAD
+
+=======
 @php
 use \Illuminate\Support\Facades\Auth;
 $invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ]);
 $basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes' ]);
 $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' => Auth::user()->campus_id, 'status'=>'active','isComplete'=>'yes' ]);
 @endphp
+>>>>>>> c4af9e790e4ce5d37249be4f354f62853a32856e
 
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -113,6 +117,8 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
                     <i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information
+                    @if ($data ?? ''=='1')
+
                     <span class="pull-right-container">
                         <span class="text text-{{$basic_info==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$basic_info==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -128,8 +134,24 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
                             <i class="fa {{$scope==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span>
+                    
+                    <span class="pull-right-container">
+                    <span class="label label-success pull-right">In</span>
+                    </span>
+                  
                 </a>
             </li>
+<<<<<<< HEAD
+            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{url('strategic/scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation
+             
+                    
+                    <span class="pull-right-container">
+                    <span class="label label-success pull-right">In</span>
+                    </span>
+                    
+            </a></li>
+=======
+>>>>>>> c4af9e790e4ce5d37249be4f354f62853a32856e
             <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('strategic/contact-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
             <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('/strategic/statutory-committees')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
             <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
@@ -154,6 +176,8 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
 
             <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
             <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
+
+          
 
 
           </ul>
