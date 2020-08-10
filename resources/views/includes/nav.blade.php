@@ -316,6 +316,9 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
            @hasrole('NBEACAdmin')
             <li  class="{{ (request()->is('print')) ? 'active' : '' }}"><a href="{{url('print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print SAR</a></li>
           @endhasrole
+          @hasrole('BusinessSchool')
+            <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-black"></i>Faculty Degree</a></li>
+          @endhasrole
           @hasrole('NBEACAdmin')
             <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-yellow"></i>Department Fee</a></li>
           @endhasrole

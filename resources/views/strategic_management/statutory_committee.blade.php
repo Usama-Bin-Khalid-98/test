@@ -235,7 +235,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Business School Statutory Committee</h4>
+                    <h4 class="modal-title">Update Statutory Committee</h4>
                 </div>
                 <form method="post" id="update" enctype="multipart/form-data">
 

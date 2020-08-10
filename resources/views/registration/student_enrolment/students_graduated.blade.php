@@ -103,7 +103,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Graduated Students</h3>
+                            <h3 class="box-title">List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -165,7 +165,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Graduated Students. </h4>
+                    <h4 class="modal-title">Edit Student Enrolment. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
