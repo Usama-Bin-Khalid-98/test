@@ -11,6 +11,6 @@ class VisitingFacultySeeder extends Seeder
      */
     public function run()
     {
-        //
+        
     }
 }
