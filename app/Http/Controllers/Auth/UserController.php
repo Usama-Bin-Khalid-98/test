@@ -2,17 +2,57 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\BusinessSchool;
+use App\CharterType;
 use App\Http\Controllers\Controller;
+use App\InstituteType;
+use App\Models\Common\Degree;
+use App\Models\Common\Department;
+use App\Models\Common\Designation;
+use App\Models\Common\Discipline;
+use App\Models\Common\Question;
+use App\Models\Common\Region;
+use App\Models\Common\ReviewerRole;
+use App\Models\Common\Sector;
 use Illuminate\Http\Request;
 use App\User;
-use App\Permission;
+use PragmaRX\Countries\Package\Countries;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     //
     public function index() {
-        $users = User::all();
-        return view('auth.users.index', compact('users'));
+        $users = User::with('business_school', 'roles', 'permissions')->get();
+//        dd($users);
+        $designations = Designation::all();
+        $permissions = Permission::all();
+        $roles = Role::all();
+        /////
+        ///
+        $countries = Countries::all();
+        $institute_types=InstituteType::where('status', 'active')->get();
+        $chart_types=CharterType::where('status', 'active')->get();
+        $business_school=BusinessSchool::where('status', 'active')->get();
+        $designations=Designation::where('status', 'active')->get();
+        $departments = Department::where('status', 'active')->get();
+        $disciplines = Discipline::where('status', 'active')->get();
+        $regions = Region::where('status', 'active')->get();
+        $reviewerRoles = ReviewerRole::where('status', 'active')->get();
+        $sectors = Sector::where('status', 'active')->get();
+        $degrees = Degree::where('status', 'active')->get();
+        $peer_reviewer = User::where('user_type', 'peer_reviewer');
+        $questions = Question::where('status', 'active')->get();
+        //dd($users);
+
+        return view('auth.users.index', compact(
+                'institute_types', 'chart_types',
+                'business_school','designations','countries',
+                'departments', 'disciplines','regions', 'reviewerRoles',
+                'sectors', 'degrees','users', 'questions', 'permissions', 'roles', 'peer_reviewer')
+        );
+        //return view('auth.users.index', compact('users', 'designations', 'permissions', 'roles'));
     }
 
     public function create()
@@ -120,6 +160,34 @@ class UserController extends Controller
 
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function user_roles(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'permissions'
+        ]);
+
+
+        $user = User::find($id);
+        //$user->update($request->role_id);
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+
+
+        $user->assignRole($request->input('roles'));
+
+
+        return redirect()->route('users.index')
+            ->with('success','User updated successfully');
+    }
+
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -130,10 +198,5 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')
             ->with('success','User deleted successfully');
-    }
-
-    public function permissions() {
-        $permissions = Permission::all();
-        return view('auth.users.permissions', compact('permissions'));
     }
 }

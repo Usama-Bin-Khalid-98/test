@@ -6,25 +6,19 @@ use App\BusinessSchool;
 use App\CharterType;
 use App\Http\Controllers\Controller;
 use App\InstituteType;
-use App\Mail\RegisterationMail;
 use App\Models\Common\Degree;
 use App\Models\Common\Department;
 use App\Models\Common\Discipline;
-use App\Models\Common\Program;
 use App\Models\Common\Question;
 use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
-use App\Models\Common\Slip;
 use App\Models\Common\Designation;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
@@ -165,7 +159,7 @@ class RegisterController extends Controller
 //                    ]);
 //
 //                }
-                return User::create([
+                $user =  User::create([
                     'name' => $data['name'],
                     'designation_id' => $data['designation_id'],
                     'cnic' => $data['cnic'],
@@ -183,13 +177,16 @@ class RegisterController extends Controller
                     'status' => 'pending',
                 ]);
 
+                $user->assignRole('BusinessSchool');
+                return $user;
+
             } catch (Exception $e) {
                 return $e->getMessage();
             }
         }
         if($data['account_type']== 'peer_review') {
             try {
-                return User::create([
+                $user = User::create([
                     'name' => $data['name'],
                     'designation_id' => $data['designation_id'],
                     'cnic' => $data['cnic'],
@@ -221,6 +218,9 @@ class RegisterController extends Controller
                     'status' => 'pending',
                 ]);
 
+                $user->assignRole('PeerReviewer');
+                return $user;
+
             } catch (Exception $e) {
                 return $e->getMessage();
             }
@@ -235,7 +235,6 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $countries = Countries::all();
-
         $institute_types=InstituteType::where('status', 'active')->get();
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
@@ -260,28 +259,29 @@ class RegisterController extends Controller
 
     public function get_cities(Request $request)
     {
-
+       // echo "working here";
+       // exit;
+       // dd($request->all());
         $cities = Countries::where('name.common', $request->country)->first()
             ->hydrate('cities')
             ->cities
             ->sortBy('name');
-
         return $cities;
     }
 
-    public function mailsend()
-    {
-
-        try {
-            $messge = 'here is the message';
-            Mail::to('awaisrazzaa@gmail.com')->send(new RegisterationMail($messge));
-
-            // Mail::to('walayat.iplex@gmail.com')->send(new RegistrationMail());
-            return 'done';
-        }catch (Exception $e)
-        {
-            var_dump($e->getMessage());
-        }
-
-    }
+//    public function mailsend()
+//    {
+//
+//        try {
+//            $messge = 'here is the message';
+//            Mail::to('awaisrazzaa@gmail.com')->send(new RegisterationMail($messge));
+//
+//            // Mail::to('walayat.iplex@gmail.com')->send(new RegistrationMail());
+//            return 'done';
+//        }catch (Exception $e)
+//        {
+//            var_dump($e->getMessage());
+//        }
+//
+//    }
 }

@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.7.   State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.</h3>
+                            <h3 class="box-title">1.7. State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -60,14 +60,14 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Mission</label>
                                     <textarea name="mission" id="mission" class="form-control"></textarea>
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Vision</label>
                                     <textarea name="vision" id="vision" class="form-control"></textarea>
@@ -174,17 +174,17 @@
                     <div class="modal-body">
 
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Mission</label>
-                                    <input type="text" name="mission" id="edit_mission" value="{{old('edit_mission')}}" class="form-control">
+                                    <textarea rows="10" name="mission" id="edit_mission" class="form-control">{{old('edit_mission')}}</textarea>
                                 </div>
                                 <input type="hidden" id="edit_id">
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Vision</label>
-                                    <input type="text" name="vision" id="edit_vision" value="{{old('edit_vision')}}" class="form-control">
+                                    <textarea rows="10" name="vision" id="edit_vision"  class="form-control">{{old('edit_vision')}}</textarea>
                                 </div>
                               </div>
 
@@ -305,8 +305,8 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_mission').val(data.mission);
-            $('#edit_vision').val(data.vision);
+            $('#edit_mission').text(data.mission);
+            $('#edit_vision').text(data.vision);
             $('#file-name').text(data.file);;
             $('#edit_id').val(data.id);
             $('input[value='+data.isComplete+']').iCheck('check');

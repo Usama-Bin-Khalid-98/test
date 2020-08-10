@@ -66,7 +66,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     <tr>
 
                                         <td>
@@ -76,22 +75,25 @@
                                                     <li>{{$dates['program']}} Started in  {{$dates['date']}} (Difference {{$dates['date_diff']}})</li>
                                                 @endforeach
                                             </ol>
-
                                         </td>
+
                                         <td>
-                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>
-                                            <ol type="i">
-                                                <li>BBA after 5.5 years of program started</li>
-                                                <li>MBA 1.5 after 2.5 years of program started</li>
-                                                <li>MBA 2.5 after 3.5 years of program started</li>
-                                                <li>MBA 3.5 after 5 years of program started.</li>
-                                            </ol>
+                                            {{$nbeac_criteria->program_started}}
+{{--                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>--}}
+{{--                                            <ol type="i">--}}
+{{--                                                <li>BBA after 5.5 years of program started</li>--}}
+{{--                                                <li>MBA 1.5 after 2.5 years of program started</li>--}}
+{{--                                                <li>MBA 2.5 after 3.5 years of program started</li>--}}
+{{--                                                <li>MBA 3.5 after 5 years of program started.</li>--}}
+{{--                                            </ol>--}}
                                         </td>
                                         <td>
                                             <input type="radio" name="eligibility_program" value="yes"> yes
                                             <input type="radio" name="eligibility_program" value="no"> no
                                         </td>
                                     </tr>
+
+
                                     <tr>
                                         <td>
                                             <p><strong>Mission : </strong> {{@$mission_vision->mission}}</p>
@@ -100,9 +102,10 @@
 
                                         </td>
                                         <td>
-                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.
-                                            There should be documentary evidence that vision and mission are approved by any statutory body.
-                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.
+                                            {{$nbeac_criteria->mission_vision_statement}}
+{{--                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.--}}
+{{--                                            There should be documentary evidence that vision and mission are approved by any statutory body.--}}
+{{--                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.--}}
 
                                         </td>
                                         <td>
@@ -174,12 +177,12 @@
                                            <p> <strong>o)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4)</p>
                                            <p> BBA (program1) =</p>
                                            <p> MBA (program2) =</p>
-                                           <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction)</p>
-                                           <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired)</p>
+                                           <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction) = {{@$total_induction}}</p>
+                                           <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = {{@$faculty_resigned + @$faculty_terminated + @$faculty_retired}}</p>
                                            <p> <strong>r)</strong>	FT:PT (as per table 4.3 a 4.3 b)=</p>
-                                           <p> <strong>s)</strong>	No. of faculty with terminal degree from foreign institutions</p>
-                                           <p> <strong>t)</strong>	No. of faculty with terminal degree from domestic institutions</p>
-                                           <p> <strong>u)</strong>	No. of faculty with international work experience</p>
+                                           <p> <strong>s)</strong>	No. of faculty with terminal degree from foreign institutions = {{@$faculty_degree->faculty_foreign}}</p>
+                                           <p> <strong>t)</strong>	No. of faculty with terminal degree from domestic institutions = {{@$faculty_degree->faculty_domestic}}</p>
+                                           <p> <strong>u)</strong>	No. of faculty with international work experience = {{@$faculty_degree->faculty_international}}</p>
                                            <p> <strong>v)</strong>	Teaching and research assistants  - on short-term contracts- (Others in Table 4.1)</p>
 
                                         </td>
@@ -206,7 +209,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught)
+                                            6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) = {{@$total_courses}}
                                         </td>
                                         <td>
                                             <strong>Following is the recommended Course load</strong>
@@ -222,7 +225,37 @@
 
                                     <tr>
                                         <td>
-                                            7. Research Output last three years (Table 5.1 summary of research output)
+                                            7. Research Output last three years (Table 5.1 summary of research output)<br><br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <table  class="table table-bordered table-stripped">
+                                <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Total Items</th>
+                                    <th>Contributing Core Faculty</th>
+                                    <th>Jointly Produced Other</th>
+                                    <th>Jointly Produced Same</th>
+                                    <th>Jointly Produced Multiple</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                             @foreach($summaries as $summary)
+                                <tr>
+                                    <td>{{$summary->year}}</td>
+                                    <td>{{$summary->total_items}}</td>
+                                    <td>{{$summary->contributing_core_faculty}}</td>
+                                    <td>{{$summary->jointly_produced_other}}</td>
+                                    <td>{{$summary->jointly_produced_same}}</td>
+                                    <td>{{$summary->jointly_produced_multiple}}</td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                                                </div>
+
+                                            </div>
                                         </td>
                                         <td>
                                             Following is the recommended Course load
@@ -235,7 +268,7 @@
 
                                     <tr>
                                         <td>
-                                            8. Bandwidth =  GB (table 6.2 Laboratories)
+                                            8. Bandwidth =  GB (table 6.2 Laboratories)= {{@$bandwidth->remark}}
                                         </td>
                                         <td>
                                             Bandwidth Internet service (desirable) = 1 MB access rate
@@ -249,7 +282,7 @@
 
                                     <tr>
                                         <td>
-                                            9. Student to Computer ratio is 	 (table 6.2 Laboratories)
+                                            9. Student to Computer ratio is 	 (table 6.2 Laboratories)= {{@$comp_ratio->remark}}
                                         </td>
                                         <td>Student to Computer ratio: 1:20</td>
                                         <td>

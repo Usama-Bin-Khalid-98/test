@@ -52,95 +52,79 @@
               <!-- /. tools -->
             </div>
             <form>
-            <div class="box-body pad">
-                     <label>Program Started</label>
-                    <textarea id="program_started" name="program_started" rows="10" cols="80">
-                        {{@$nbeac_criteria->program_started}}
-                    </textarea>
+                <div class="box-body pad">
+                         <label>1) Program Started</label>
+                        <textarea id="program_started" name="program_started" rows="10" cols="80">
+                            {{@$nbeac_criteria->program_started}}
+                        </textarea>
+                        <input type="hidden" id="id" value="{{@$nbeac_criteria->id}}">
 
+                </div>
+                <div class="box-body pad">
+                  <label>2) Mission Vision Statement</label>
+                        <textarea id="mission_vision_statement" name="mission_vision_statement" rows="10" cols="80">
+                                    {{@$nbeac_criteria->mission_vision_statement}}
+                        </textarea>
 
-                    <input type="hidden" id="id" value="{{@$nbeac_criteria->id}}">
-              
-            </div>
-            <div class="box-body pad">
-              <label>Mission Vision Statement</label>
-                    <textarea id="mission_vision_statement" name="mission_vision_statement" rows="10" cols="80">
-                                {{@$nbeac_criteria->mission_vision_statement}}
-                    </textarea>
-             
-            </div>
-            <div class="box-body pad">
-              <label>Strategic Plan</label>
-                    <textarea id="strategic_plan" name="strategic_plan" rows="10" cols="80">
-                        {{@$nbeac_criteria->strategic_plan}}
+                </div>
+                <div class="box-body pad">
+                  <label>3) Strategic Plan</label>
+                        <textarea id="strategic_plan" name="strategic_plan" rows="10" cols="80">
+                            {{@$nbeac_criteria->strategic_plan}}
 
-                    </textarea>
-             
+                        </textarea>
+
+                </div>
+                <div class="box-body pad">
+                 <label>4) Student Intake</label>
+                        <textarea id="student_intake" name="student_intake" rows="10" cols="80">
+                               {{@$nbeac_criteria->student_intake}}
+                        </textarea>
+
+                </div>
+                <div class="box-body pad">
+                  <label>5) Student Enrollment</label>
+                        <textarea id="student_enrollment" name="student_enrollment" rows="10" cols="80">
+                            {{@$nbeac_criteria->student_enrollment}}
+                        </textarea>
+                </div>
+                <div class="box-body pad">
+                  <label>6) Course Load</label>
+                        <textarea id="course_load" name="course_load" rows="10" cols="80">
+                            {{@$nbeac_criteria->course_load}}
+                        </textarea>
+                </div>
+                <div class="box-body pad">
+                  <label>7) Research Output</label>
+                        <textarea id="research_output" name="research_output" rows="10" cols="80">{{@$nbeac_criteria->research_output}}</textarea>
+                </div>
+                <div class="box-body pad">
+                 <label>8) Bandwidth</label>
+                        <textarea id="bandwidth" name="bandwidth" rows="10" cols="80"> {{@$nbeac_criteria->bandwidth}}</textarea>
+                </div>
+                <div class="box-body pad">
+                <label>9) Student to Comp Ratio</label>
+                <textarea id="std_comp_ratio" name="std_comp_ratio" rows="10" cols="80">{{@$nbeac_criteria->std_comp_ratio}}</textarea>
+                  <div class="col-md-12">
+                    <div class="form-group pull-right" style="margin-top: 40px">
+                        <label for="sector">&nbsp;&nbsp;</label>
+                        <input type="button" name="update" id="update" value="Update" class="btn btn-info">
+                    </div>
+                </div>
             </div>
-            <div class="box-body pad">
-             <label>Student Intake</label>
-                    <textarea id="student_intake" name="student_intake" rows="10" cols="80">                
-                           {{@$nbeac_criteria->student_intake}}
-                    </textarea>
-              
-            </div>
-            <div class="box-body pad">
-              <label>Student Enrollment</label>
-                    <textarea id="student_enrollment" name="student_enrollment" rows="10" cols="80">
-                        {{@$nbeac_criteria->student_enrollment}}
-                    </textarea>
-             
-            </div>
-            <div class="box-body pad">
-              <label>Course Load</label>
-                    <textarea id="course_load" name="course_load" rows="10" cols="80">
-                        {{@$nbeac_criteria->course_load}}
-                    </textarea>
-              
-            </div>
-            <div class="box-body pad">
-              <label>Research Output</label>
-                    <textarea id="research_output" name="research_output" rows="10" cols="80">
-                                {{@$nbeac_criteria->research_output}}           
-                    </textarea>
-                    
-             
-            </div>
-            <div class="box-body pad">
-             <label>Bandwidth</label>
-                    <textarea id="bandwidth" name="bandwidth" rows="10" cols="80">
-                                          {{@$nbeac_criteria->bandwidth}}
-                    </textarea>
-                    
-              
-            </div>
-            <div class="box-body pad">
-            <label>Student to Comp Ratio</label>
-                    <textarea id="std_comp_ratio" name="std_comp_ratio" rows="10" cols="80">
-                                           {{@$nbeac_criteria->std_comp_ratio}}
-                    </textarea>
-                    
-              
-              <div class="col-md-12">
-                                    <div class="form-group pull-right" style="margin-top: 40px">
-                                        <label for="sector">&nbsp;&nbsp;</label>
-                                        <input type="button" name="update" id="update" value="Update" class="btn btn-info">
-                                    </div>
-                                </div>
-            </div>
+            </form>
           </div>
           <!-- /.box -->
 
-          
+
         </div>
-    </form>
         <!-- /.col-->
       </div>
       <!-- ./row -->
     </section>
     </div>
 
-    
+
     <!-- /.modal -->
 
 
@@ -198,7 +182,7 @@ $('#update').on('click', function (e) {
             let bandwidth = CKEDITOR.instances.bandwidth.getData();
             let std_comp_ratio = CKEDITOR.instances.std_comp_ratio.getData();
 
-            
+
              !program_started?addClass('program_started'):removeClass('program_started');
              !mission_vision_statement?addClass('mission_vision_statement'):removeClass('mission_vision_statement');
              !strategic_plan?addClass('strategic_plan'):removeClass('strategic_plan');
