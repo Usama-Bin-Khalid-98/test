@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.7.</h3>
+                            <h3 class="box-title">Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
