@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\ProgramPortfolio;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use App\Models\Common\CourseType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ProgramPortfolioController extends Controller
 {
@@ -21,12 +22,12 @@ class ProgramPortfolioController extends Controller
     public function index()
     {
         
-        $programs = Program::where('status', 'active')->get();
+        $scopes = Scope::with('program')->get();
         $courses = CourseType::where('status', 'active')->get();
 
-        $portfolios  = ProgramPortfolio::with('program','course_type')->get();
+        $portfolios  = ProgramPortfolio::with('campus','program','course_type')->get();
 
-         return view('registration.curriculum.portfolio', compact('programs','courses','portfolios'));
+         return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
     }
 
     /**
@@ -55,13 +56,15 @@ class ProgramPortfolioController extends Controller
         try {
 
             ProgramPortfolio::create([
+                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
                 'no_of_course' => $request->no_of_course,
                 'credit_hours' => $request->credit_hours,
                 'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req
+                'fyp_req' => $request->fyp_req,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Program Portfolio added successfully.']);
@@ -121,6 +124,7 @@ class ProgramPortfolioController extends Controller
                 'internship_req' => $request->internship_req,
                 'fyp_req' => $request->fyp_req,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Program Portfolio updated successfully.']);
 
@@ -139,6 +143,9 @@ class ProgramPortfolioController extends Controller
     public function destroy(ProgramPortfolio $programPortfolio)
     {
         try {
+            ProgramPortfolio::where('id', $programPortfolio->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             ProgramPortfolio::destroy($programPortfolio->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

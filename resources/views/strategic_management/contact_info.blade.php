@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
+
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
@@ -43,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide contact information in table 1.3, Furthermore, attach CVs of the dean, head of the business school, and focal person</h3>
+                            <h3 class="box-title">Provide contact information in the Table 1.3. Furthermore, attach CVs of the dean, head of the business school, and focal person as Appendix-1A.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -53,75 +54,55 @@
                         </div>
                          <div class="box-body">
                              <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
-<<<<<<< HEAD
                                  <div class="col-md-3">
                                      <div class="form-group">
                                          <label for="name">Designation</label>
                                          <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                              <option value="">Select Designation</option>
-<<<<<<< HEAD
-                                             <option value="">Dean of school</option>
-                                             <option value="">Head of school </option>
-                                             <option value="">NBEAC focal person </option>
-=======
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                              @foreach($designations as $designation)
                                                  <option value="{{$designation->id}}">{{$designation->name}}</option>
                                              @endforeach
                                          </select>
                                      </div>
                                  </div>
-=======
->>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Contact Person Name here</label>
-                                    <input type="text" name="name" id="name" value="{{old('name')??Auth::user()->name}}" class="form-control">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" id="email" value="{{old('contact_no')??Auth::user()->email}}" class="form-control">
+                                    <input type="email" name="email" id="email" value="{{old('contact_no')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Tel (off)</label>
-                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')??Auth::user()->contact_no}}" class="form-control">
+                                    <input type="text" name="contact_no" id="contact_no" value="{{old('contact_no')}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Tel (cell) </label>
-                                    <input type="text" name="school_contact" id="school_contact" value="{{old('school_contact')??Auth::user()->contact_no}}" class="form-control">
+                                    <input type="text" name="school_contact" id="school_contact" value="{{old('school_contact')}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
                                 </div>
                             </div>
 
-                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">NBEAC focal person (if different) </label>
-                                    <input type="text" name="focal_person" id="focal_person" value="{{old('focal_person')}}" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Designation</option>
-                                        @foreach($designations as $designation)
-                                         <option value="{{$designation->id}}">{{$designation->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
+{{--                             <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">NBEAC focal person (if different) </label>--}}
+{{--                                    <input type="text" name="focal_person" id="focal_person" value="{{old('focal_person')}}" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Attach CV</label>
                                     <input type="file" name="cv" id="cv" >
+                                    <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
 
@@ -234,7 +215,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Contact No</label>
-                                <input type="text" name="contact_no" id="edit_contact_no" value="{{old('contact_no')}}" class="form-control">
+                                <input type="text" name="contact_no" id="edit_contact_no" value="{{old('contact_no')}}" class="form-control" data-inputmask="'mask': '+92-55-99999999'" maxlength="15">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -297,6 +278,10 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
+    <script>
+        $(":input").inputmask();
+    </script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',

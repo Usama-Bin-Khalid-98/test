@@ -3,16 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\ApplicationReceived;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use App\Models\Common\Semester;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ApplicationReceivedController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,12 +33,12 @@ class ApplicationReceivedController extends Controller
     public function index()
     {
 
-        $programs = Program::where('status', 'active')->get();
+        $scopes = Scope::with('program')->get();
         $semesters = Semester::where('status', 'active')->get();
 
-        $apps  = ApplicationReceived::with('program','semester')->get();
+        $apps  = ApplicationReceived::with('campus','program','semester')->get();
 
-        return view('registration.curriculum.app_received', compact('programs','semesters','apps'));
+        return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
     }
 
     /**
@@ -55,12 +67,14 @@ class ApplicationReceivedController extends Controller
         try {
 
             ApplicationReceived::create([
+                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'semester_id' => $request->semester_id,
                 'app_received' => $request->app_received,
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
-                'semester_comm_date' => $request->semester_comm_date
+                'semester_comm_date' => $request->semester_comm_date,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Application Received added successfully.']);
@@ -118,7 +132,8 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Application Received updated successfully.']);
 
@@ -137,6 +152,9 @@ class ApplicationReceivedController extends Controller
     public function destroy(ApplicationReceived $applicationReceived)
     {
         try {
+            ApplicationReceived::where('id', $applicationReceived->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             ApplicationReceived::destroy($applicationReceived->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

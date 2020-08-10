@@ -8,9 +8,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class BudgetaryInfoController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +30,7 @@ class BudgetaryInfoController extends Controller
      */
     public function index()
     {
-        $budgets  = BudgetaryInfo::get();
+        $budgets  = BudgetaryInfo::with('campus')->get();
 
          return view('strategic_management.budgetary_info', compact('budgets'));
     }
@@ -49,11 +61,13 @@ class BudgetaryInfoController extends Controller
         try {
 
             BudgetaryInfo::create([
+                'campus_id' => Auth::user()->campus_id,
                 'year' => $request->year,
                 'uni_budget' => $request->uni_budget,
                 'uni_proposed_budget' => $request->uni_proposed_budget,
                 'budget_receive' => $request->budget_receive,
-                'budget_type' => $request->budget_type
+                'budget_type' => $request->budget_type,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Budgetary Information added successfully.']);
@@ -110,7 +124,8 @@ class BudgetaryInfoController extends Controller
                 'uni_proposed_budget' => $request->uni_proposed_budget,
                 'budget_receive' => $request->budget_receive,
                 'budget_type' => $request->budget_type,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Budgetary Information updated successfully.']);
 
@@ -129,6 +144,9 @@ class BudgetaryInfoController extends Controller
     public function destroy(BudgetaryInfo $budgetaryInfo)
     {
         try {
+            BudgetaryInfo::where('id', $budgetaryInfo->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             BudgetaryInfo::destroy($budgetaryInfo->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

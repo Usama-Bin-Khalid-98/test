@@ -15,7 +15,7 @@ class CreateFacilitiesTable extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('facility_type_id')->unsigned();
+            $table->integer('facility_type_id')->unsigned()->nullable();
             $table->foreign('facility_type_id')
                 ->references('id')
                 ->on('facility_types');

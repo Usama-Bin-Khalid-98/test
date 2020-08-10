@@ -71,45 +71,16 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                    <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2">
+                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
                                 </div>
                             </div>
+
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -172,8 +143,9 @@
                             <table id="datatable" class="table table-bordered table-stripped">
                                 <thead>
                                 <tr>
-                                    <th>Publication Type</th>
                                     <th>Business School</th>
+                                    <th>Campus</th>
+                                    <th>Publication Type</th>
                                     <th>Year</th>
                                     <th>Total Items</th>
                                     <th>Contributing Core Faculty</th>
@@ -187,8 +159,9 @@
                                 <tbody>
                                @foreach($summaries as $summary)
                                 <tr>
-                                    <td>{{$summary->publication_type->name??""}}</td>
-                                    <td>{{$summary->business_school->name}}</td>
+                                    <td>{{$summary->campus->business_school->name}}</td>
+                                    <td>{{$summary->campus->location}}</td>
+                                    <td>{{$summary->publication_type->name}}</td>
                                     <td>{{$summary->year}}</td>
                                     <td>{{$summary->total_items}}</td>
                                     <td>{{$summary->contributing_core_faculty}}</td>
@@ -196,14 +169,15 @@
                                     <td>{{$summary->jointly_produced_same}}</td>
                                     <td>{{$summary->jointly_produced_multiple}}</td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"publication_type_id":{{$summary->publication_type_id}},"business_school_id":{{$summary->business_school_id}},"year":{{$summary->year}},"total_items":"{{$summary->total_items}}","contributing_core_faculty":"{{$summary->contributing_core_faculty}}","jointly_produced_other":"{{$summary->jointly_produced_other}}","jointly_produced_same":"{{$summary->jointly_produced_same}}","jointly_produced_multiple":{{$summary->jointly_produced_multiple}}, "status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"publication_type_id":{{$summary->publication_type_id}},"year":{{$summary->year}},"total_items":"{{$summary->total_items}}","contributing_core_faculty":"{{$summary->contributing_core_faculty}}","jointly_produced_other":"{{$summary->jointly_produced_other}}","jointly_produced_same":"{{$summary->jointly_produced_same}}","jointly_produced_multiple":{{$summary->jointly_produced_multiple}}, "status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Publication Type</th>
                                     <th>Business School</th>
+                                    <th>Campus</th>
+                                    <th>Publication Type</th>
                                     <th>Year</th>
                                     <th>Total Items</th>
                                     <th>Contributing Core Faculty</th>
@@ -249,47 +223,17 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Business School</label>
-                                <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select Business School</option>
-                                    @foreach($businesses as $business)
-                                        <option value="{{$business->id}}">{{$business->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
+                                <div class="form-group">
                                     <label for="name">Year</label>
-                                    <select name="year" id="edit_year"  class="form-control select2">
-                                        <option value="">Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
+                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
-
+                                </div>
                             </div>
-                        </div>
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -376,7 +320,6 @@
 
         $('#form').submit(function (e) {
             let publication_type_id = $('#publication_type_id').val();
-            let business_school_id = $('#business_school_id').val();
             let year = $('#year').val();
             let total_items = $('#total_items').val();
             let contributing_core_faculty = $('#contributing_core_faculty').val();
@@ -385,7 +328,6 @@
             let jointly_produced_multiple = $('#jointly_produced_multiple').val();
 
             !publication_type_id?addClass('publication_type_id'):removeClass('publication_type_id');
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
             !year?addClass('year'):removeClass('year');
             !total_items?addClass('total_items'):removeClass('total_items');
             !contributing_core_faculty?addClass('contributing_core_faculty'):removeClass('contributing_core_faculty');
@@ -393,7 +335,7 @@
             !jointly_produced_same?addClass('jointly_produced_same'):removeClass('jointly_produced_same');
             !jointly_produced_multiple?addClass('jointly_produced_multiple'):removeClass('jointly_produced_multiple');
 
-            if(!publication_type_id || !business_school_id || !year || !total_items || !contributing_core_faculty || !jointly_produced_other|| !jointly_produced_same || !jointly_produced_multiple)
+            if(!publication_type_id || !year || !total_items || !contributing_core_faculty || !jointly_produced_other|| !jointly_produced_same || !jointly_produced_multiple)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -434,7 +376,6 @@
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
              $('#edit_publication_type_id').select2().val(data.publication_type_id).trigger('change');
-             $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_total_items').val(data.total_items);
             $('#edit_contributing_core_faculty').val(data.contributing_core_faculty);
@@ -450,7 +391,6 @@
 
     $('#updateForm').submit(function (e) {
             let publication_type_id = $('#edit_publication_type_id').val();
-            let business_school_id = $('#edit_business_school_id').val();
             let year = $('#edit_year').val();
             let total_items = $('#edit_total_items').val();
             let contributing_core_faculty = $('#edit_contributing_core_faculty').val();
@@ -461,7 +401,6 @@
 
             let status = $('input[name=edit_status]:checked').val();
             !publication_type_id?addClass('edit_publication_type_id'):removeClass('edit_publication_type_id');
-            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
             !year?addClass('edit_year'):removeClass('edit_year');
             !total_items?addClass('edit_total_items'):removeClass('edit_total_items');
             !contributing_core_faculty?addClass('edit_contributing_core_faculty'):removeClass('edit_contributing_core_faculty');
@@ -469,7 +408,7 @@
             !jointly_produced_same?addClass('edit_jointly_produced_same'):removeClass('edit_jointly_produced_same');
             !jointly_produced_multiple?addClass('edit_jointly_produced_multiple'):removeClass('edit_jointly_produced_multiple');
 
-            if(!publication_type_id || !business_school_id || !year || !total_items || !contributing_core_faculty || !jointly_produced_other || !jointly_produced_same || !jointly_produced_multiple)
+            if(!publication_type_id  || !year || !total_items || !contributing_core_faculty || !jointly_produced_other || !jointly_produced_same || !jointly_produced_multiple)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

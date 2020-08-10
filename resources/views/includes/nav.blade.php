@@ -155,15 +155,8 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">
-                <a href="{{url('strategic/invoices')}}">
-                    <i class="fa fa-circle-o" style="color: #D81B60"></i> Invoices
-                    <span class="pull-right-container">
-                    <span class="label label-danger pull-right">In</span>
-                    </span>
-                </a>
-            </li>
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
                     <i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information
@@ -194,6 +187,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('/strategic/statutory-committees')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
             <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
             <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}"><a href="{{url('strategic/budgetary-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Budgetary Information</a></li>
+            <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Mission Vision</a></li>
             <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Approval of Strategic Plan</a></li>
           </ul>
         </li>

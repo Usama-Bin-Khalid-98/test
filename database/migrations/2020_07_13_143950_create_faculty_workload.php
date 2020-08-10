@@ -13,36 +13,37 @@ class CreateFacultyWorkload extends Migration
      */
     public function up()
     {
-        Schema::create('work_load', function (Blueprint $table) {
+        Schema::create('work_loads', function (Blueprint $table) {
             $table->increments('id');
-
-             $table->integer('business_school_id')->unsigned();
-             $table->foreign('business_school_id')
-             ->references('id')
-             ->on('business_schools');
-
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
+                ->references('id')
+                ->on('campuses');
             $table->string('faculty_name',50)->nullable();
-
-          //  $table->integer('faculty_designation_id')->unsigned();
-             // $table->foreign('faculty_designation_id')
-             // ->references('id')
-             // ->on('lookup_faculty_desination');
-
-             $table->integer('designation_id')->unsigned();
+            $table->integer('designation_id')->unsigned();
             $table->foreign('designation_id')
                 ->references('id')
                 ->on('designations');
-
-
              $table->integer('total_courses')->nullable();
              $table->integer('phd')->nullable();
              $table->integer('masters')->nullable();
              $table->integer('bachleors')->nullable();
              $table->string('admin_responsibilities',100)->nullable();
              $table->string('year',100)->nullable();
-             //$table->varchar('policy',50)->nullable();
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -55,6 +56,6 @@ class CreateFacultyWorkload extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('work_load');
+        Schema::dropIfExists('work_loads');
     }
 }
