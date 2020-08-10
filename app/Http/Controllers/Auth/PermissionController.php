@@ -9,6 +9,10 @@ use Mockery\Exception;
 
 class PermissionController extends Controller
 {
+
+    function __construct() {
+        $this->middleware(['role_or_permission:NBEACAdmin']);
+    }
     /**
      * Display a listing of the resource.
      *

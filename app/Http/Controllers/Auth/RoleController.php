@@ -10,13 +10,14 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-//    function __construct()
-//    {
+    function __construct()
+    {
 //        $this->middleware('permission:role-list');
 //        $this->middleware('permission:role-create', ['only' => ['create','store']]);
 //        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
 //        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-//    }
+        $this->middleware(['role_or_permission:NBEACAdmin']);
+    }
 
     /**
      * Display a listing of the resource.

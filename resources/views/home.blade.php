@@ -28,6 +28,7 @@
       </ol>
     </section><!-- Main content -->
     <section class="content">
+        @hasrole('NBEACAdmin')
       <!-- Small boxes (Stat box)  //////////   Admin Dashboard //////-->
       <div class="row" style="display: none;">
         <div class="col-lg-3 col-xs-6">
@@ -315,6 +316,7 @@
         </section>
         <!-- right col -->
       </div>
+        @endhasrole
       <!-- /.row (main row) -->
         <!-- Main row -->
         @hasrole('NBEACAdmin')

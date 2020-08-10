@@ -1,3 +1,10 @@
+@php
+use \Illuminate\Support\Facades\Auth;
+$invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ]);
+$basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes' ]);
+$scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' => Auth::user()->campus_id, 'status'=>'active','isComplete'=>'yes' ]);
+@endphp
+
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -64,10 +71,12 @@
           @hasrole('BusinessSchool')
           <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">
               <a href="{{url('strategic/invoices')}}">
-                  <i class="fa fa-circle-o" style="color: #D81B60"></i>Invoices
+                  <i class="fa fa-file-text-o" style="color: #D81B60"></i>Invoices
                   <span class="pull-right-container">
-                        <span class="label label-danger pull-right">In</span>
+                        <span class="text text-{{$invoices==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$invoices==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
+                  </span>
               </a>
           </li>
           @endhasrole
@@ -92,7 +101,7 @@
 {{--              </ul>--}}
 
           @hasrole('BusinessSchool')
-          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}}{{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
+          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
              <span class="pull-right-container">
@@ -105,11 +114,22 @@
                 <a href="{{url('strategic/basicinfo')}}">
                     <i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information
                     <span class="pull-right-container">
-                    <span class="label label-success pull-right">C</span>
+                        <span class="text text-{{$basic_info==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$basic_info==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
                     </span>
                 </a>
             </li>
-            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}"><a href="{{url('strategic/scope')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation</a></li>
+            <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}">
+                <a href="{{url('strategic/scope')}}">
+                    <i class="fa fa-circle-o" style="color: #D81B60"></i>Scope Of Accreditation
+                    <span class="pull-right-container">
+                        <span class="text text-{{$scope==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$scope==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span>
+                </a>
+            </li>
             <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('strategic/contact-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Contact Information</a></li>
             <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('/strategic/statutory-committees')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>BS Statutory committees</a></li>
             <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Affiliations of AC</a></li>
