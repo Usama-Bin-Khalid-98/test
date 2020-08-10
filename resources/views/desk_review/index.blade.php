@@ -60,9 +60,14 @@
                              <table class="table table-bordered ">
                                 <thead>
                                     <tr>
+<<<<<<< HEAD
+                                        <th style="width: 50%">Data provided by University</th>
+                                        <th style="width: 50%">NBEAC Criteria</th>
+=======
                                         <th style="width: 45%">Data provided by University</th>
                                         <th style="width: 45%">NBEAC Criteria</th>
                                         <th style="width: 10%">Is Eligible</th>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -78,6 +83,18 @@
                                         </td>
 
                                         <td>
+<<<<<<< HEAD
+                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>
+                                            <ol type="i">
+                                                <li>BBA after 5.5 years of program started</li>
+                                                <li>MBA 1.5 after 2.5 years of program started</li>
+                                                <li>MBA 2.5 after 3.5 years of program started</li>
+                                                <li>MBA 3.5 after 5 years of program started.</li>
+                                            </ol>
+<<<<<<< HEAD
+
+=======
+=======
                                             {{$nbeac_criteria->program_started}}
 {{--                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>--}}
 {{--                                            <ol type="i">--}}
@@ -86,19 +103,27 @@
 {{--                                                <li>MBA 2.5 after 3.5 years of program started</li>--}}
 {{--                                                <li>MBA 3.5 after 5 years of program started.</li>--}}
 {{--                                            </ol>--}}
+>>>>>>> c4af9e790e4ce5d37249be4f354f62853a32856e
                                         </td>
                                         <td>
                                             <input type="radio" name="eligibility_program" value="yes"> yes
                                             <input type="radio" name="eligibility_program" value="no"> no
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                     </tr>
 
 
                                     <tr>
                                         <td>
+<<<<<<< HEAD
+                                            <p><strong>Mission : </strong> {{$mission_vision->mission}}</p>
+
+                                            <p><strong>Vision : </strong> {{$mission_vision->vision}}</p>
+=======
                                             <p><strong>Mission : </strong> {{@$mission_vision->mission}}</p>
 
                                             <p><strong>Vision : </strong> {{@$mission_vision->vision}}</p>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
 
                                         </td>
                                         <td>
@@ -108,20 +133,37 @@
 {{--                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.--}}
 
                                         </td>
+<<<<<<< HEAD
+=======
                                         <td>
                                             <input type="radio" name="eligibility_mission" value="yes"> yes
                                             <input type="radio" name="eligibility_mission" value="no"> no
                                         </td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
 
                                     <tr>
                                         <td>
+<<<<<<< HEAD
+                                           3. Strategic Plan (Question 1.8)
+=======
                                             <p>3. Strategic Plan (Question 1.8)</p>
                                             <p>Approval Date {{@$strategic_plan->aproval_date}}  Difference( {{@$strategic_date_diff}} )</p>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                         <td>
                                             Strategic Plan should exist for 03-05 years
                                         </td>
+<<<<<<< HEAD
+                                    </tr>
+                                    <tr>
+                                        <td> 4. Student Intake(Table 2.3)</td>
+                                        <td> Student Intake(Table 2.3) </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td> 5. Student enrollment </td>
+=======
                                         <td>
                                             <input type="radio" name="eligibility_plan" value="yes"> yes
                                             <input type="radio" name="eligibility_plan" value="no"> no
@@ -186,6 +228,7 @@
                                            <p> <strong>v)</strong>	Teaching and research assistants  - on short-term contracts- (Others in Table 4.1)</p>
 
                                         </td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         <td>
                                             <strong>Class Size:</strong>
                                             <ol type="i">
@@ -202,6 +245,12 @@
                                             (Condition for Table 4.4.)</p>
 
                                         </td>
+<<<<<<< HEAD
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught)
+=======
                                         <td>
                                             <input type="radio" name="eligibility_enrollment" value="yes"> yes
                                             <input type="radio" name="eligibility_enrollment" value="no"> no
@@ -210,6 +259,7 @@
                                     <tr>
                                         <td>
                                             6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) = {{@$total_courses}}
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                         <td>
                                             <strong>Following is the recommended Course load</strong>
@@ -217,14 +267,20 @@
                                             Assistant Professor= 3 per semester/6 per annum
                                             Associate Professor/ Professor=2-3 per semester/4-6 per annum
                                         </td>
+<<<<<<< HEAD
+=======
                                         <td>
                                             <input type="radio" name="eligibility_load" value="yes"> yes
                                             <input type="radio" name="eligibility_load" value="no"> no
                                         </td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
 
                                     <tr>
                                         <td>
+<<<<<<< HEAD
+                                            7. Research Output last three years (Table 5.1 summary of research output)
+=======
                                             7. Research Output last three years (Table 5.1 summary of research output)<br><br>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -256,32 +312,48 @@
                                                 </div>
 
                                             </div>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                         <td>
                                             Following is the recommended Course load
                                         </td>
+<<<<<<< HEAD
+=======
                                         <td>
                                             <input type="radio" name="eligibility_output" value="yes"> yes
                                             <input type="radio" name="eligibility_output" value="no"> no
                                         </td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
 
                                     <tr>
                                         <td>
+<<<<<<< HEAD
+                                            8. Bandwidth =  GB (table 6.2 Laboratories)
+=======
                                             8. Bandwidth =  GB (table 6.2 Laboratories)= {{@$bandwidth->remark}}
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                         <td>
                                             Bandwidth Internet service (desirable) = 1 MB access rate
                                             Student to Computer ratio: 1:20
                                         </td>
+<<<<<<< HEAD
+=======
                                         <td>
                                             <input type="radio" name="eligibility_bandwidth" value="yes"> yes
                                             <input type="radio" name="eligibility_bandwidth" value="no"> no
                                         </td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
 
                                     <tr>
                                         <td>
+<<<<<<< HEAD
+                                            9. Student to Computer ratio is 	 (table 6.2 Laboratories)
+                                        </td>
+                                        <td>Student to Computer ratio: 1:20</td>
+=======
                                             9. Student to Computer ratio is 	 (table 6.2 Laboratories)= {{@$comp_ratio->remark}}
                                         </td>
                                         <td>Student to Computer ratio: 1:20</td>
@@ -289,6 +361,7 @@
                                             <input type="radio" name="eligibility_ratio" value="yes"> yes
                                             <input type="radio" name="eligibility_ratio" value="no"> no
                                         </td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
                                  </ol>
                                 </tbody>
@@ -376,7 +449,11 @@
                             <div class="form-group">
                                 <label for="type">{{ __('isChecked') }} : </label>
                                 <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
+<<<<<<< HEAD
+                                    <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
+=======
                                     <input type="radio" name="isChecked" class="flat-red" value="no"> noNo</p>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                             </div>
                         </div>
                         <div class="col-md-6">

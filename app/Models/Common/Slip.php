@@ -12,11 +12,11 @@ class Slip extends Model
 
     public function business_school()
     {
-        return $this->belongsTo(BusinessSchool::class)->with('user');
+        return $this->belongsTo(BusinessSchool::class);
     }
 
-    public function department()
+    public function program()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Program::class);
     }
 }

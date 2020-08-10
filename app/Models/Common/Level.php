@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Level extends Model
 {
     use SoftDeletes;
-    
+    //
     protected $guarded = [];
 
     public function scope() {

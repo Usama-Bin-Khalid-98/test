@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StrategicPlan;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 class StrategicPlanController extends Controller
 {
@@ -21,7 +19,7 @@ class StrategicPlanController extends Controller
     public function index()
     {
 
-        $plans  = StrategicPlan::with('campus')->get();;
+        $plans  = StrategicPlan::get();
 
          return view('strategic_management.plan', compact('plans'));
     }
@@ -52,11 +50,9 @@ class StrategicPlanController extends Controller
         try {
 
             StrategicPlan::create([
-                'campus_id' => Auth::user()->campus_id,
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority,
-                'created_by' => Auth::user()->id
+                'aproving_authority' => $request->aproving_authority
             ]);
 
             return response()->json(['success' => 'Strategic Plan added successfully.']);
@@ -111,8 +107,7 @@ class StrategicPlanController extends Controller
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority,
-                'status' => $request->status,
-                'updated_by' => Auth::user()->id
+                'status' => $request->status
             ]);
             return response()->json(['success' => 'Strategic Plan updated successfully.']);
 
@@ -131,9 +126,6 @@ class StrategicPlanController extends Controller
     public function destroy(StrategicPlan $strategicPlan)
     {
         try {
-            StrategicPlan::where('id', $strategicPlan->id)->update([
-               'deleted_by' => Auth::user()->id 
-           ]);
             StrategicPlan::destroy($strategicPlan->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

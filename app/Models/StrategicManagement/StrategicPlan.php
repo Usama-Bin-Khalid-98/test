@@ -3,7 +3,7 @@
 namespace App\Models\StrategicManagement;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Common\Campus;
+use App\Models\StrategicManagement\StrategicPlan;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StrategicPlan extends Model
@@ -12,7 +12,5 @@ class StrategicPlan extends Model
     
     protected $guarded = [];
 
- public function campus() {
-       return $this->belongsTo(Campus::class);
-   }
+ 
 }

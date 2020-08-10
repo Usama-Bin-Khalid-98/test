@@ -13,9 +13,10 @@ class CreateLookupFacultyType extends Migration
      */
     public function up()
     {
-        Schema::create('lookup_faculty_types', function (Blueprint $table) {
+        Schema::create('lookup_faculty_type', function (Blueprint $table) {
             $table->increments('id');
             $table->string('faculty_type');
+
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateLookupFacultyType extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lookup_faculty_types');
+        Schema::dropIfExists('lookup_faculty_type');
     }
 }

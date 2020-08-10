@@ -15,10 +15,6 @@ class CreateStatutoryCommitteesTable extends Migration
     {
         Schema::create('statutory_committees', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('campus_id')->unsigned()->nullable();
-            $table->foreign('campus_id')
-                ->references('id')
-                ->on('campuses');
             $table->integer('statutory_body_id')->unsigned();
             $table->foreign('statutory_body_id')
                 ->references('id')
@@ -35,18 +31,6 @@ class CreateStatutoryCommitteesTable extends Migration
             $table->string('file', 255)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->foreign('created_by')
-                ->references('id')
-                ->on('users');
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('updated_by')
-                ->references('id')
-                ->on('users');
-            $table->integer('deleted_by')->unsigned()->nullable();
-            $table->foreign('deleted_by')
-                ->references('id')
-                ->on('users');
             $table->softDeletes();
             $table->timestamps();
         });

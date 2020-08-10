@@ -44,7 +44,21 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+                            <h3 class="box-title">State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.<br>Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.7.</h3>
+=======
+                            <h3 class="box-title">Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.7.</h3>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+=======
+                            <p class="box-title">State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.</p>
+
+                            <p>Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D.  Fill in the required information on approval of the strategic plan in the Table 1.7.</p>
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
+=======
                             <h3 class="box-title">Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
+>>>>>>> 44460d7a9a041428fcd468901fc7a801d801a65e
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -99,11 +113,9 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
                                     <th>Period of the strategic plan</th>
                                     <th>Date of Approval</th>
                                     <th>Approving Authority</th>
@@ -114,8 +126,6 @@
                                 <tbody>
                                @foreach($plans as $plan)
                                 <tr>
-                                    <td>{{$plan->campus->business_school->name}}</td>
-                                    <td>{{$plan->campus->location}}</td>
                                     <td>{{$plan->plan_period}}</td>
                                     <td>{{$plan->aproval_date}}</td>
                                     <td>{{$plan->aproving_authority}}</td>
@@ -128,8 +138,6 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
                                     <th>Period of the strategic plan</th>
                                     <th>Date of Approval</th>
                                     <th>Approving Authority</th>
@@ -168,7 +176,7 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-
+                        
 
                         <div class="col-md-6">
                                 <div class="form-group">
@@ -212,7 +220,7 @@
     </div>
     <!-- /.modal -->
 
-
+   
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

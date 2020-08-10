@@ -3,18 +3,18 @@
 namespace App\Models\Faculty;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Common\Campus;
+use App\BusinessSchool;
 use App\Models\Common\Designation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WorkLoad extends Model
 {
-//    use SoftDeletes;
-
+    use SoftDeletes;
+    
     protected $guarded = [];
 
-    public function campus() {
-        return $this->belongsTo(Campus::class);
+    public function business_school() {
+        return $this->belongsTo(BusinessSchool::class);
     }
 
     public function designation() {

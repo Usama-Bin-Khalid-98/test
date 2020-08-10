@@ -220,6 +220,7 @@ class BusinessSchoolSeeder extends Seeder
                 ['id'=>'200','name' => 'Zia-ud-Din University, Karachi', 'status' => 'active'],
                 ['id'=>'201','name' => 'Shaheed Benazir Bhutto Dewan University, Karachi', 'status' => 'active'],
                 ['id'=>'202','name' => 'Emaan Institute of Management & Sciences, Karachi', 'status' => 'active'],
+                ['id'=>'203','name' => 'Abasyn University, Peshawar ', 'status' => 'active'],
                 ['id'=>'204','name' => 'CECOS University of Information Technology and Emerging Sciences, Peshawar', 'status' => 'active'],
                 ['id'=>'205','name' => 'City University of Science and Information Technology, Peshawar', 'status' => 'active'],
                 ['id'=>'206','name' => 'Gandhara University, Peshawar', 'status' => 'active'],

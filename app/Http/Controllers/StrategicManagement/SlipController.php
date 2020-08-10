@@ -4,9 +4,15 @@ namespace App\Http\Controllers\StrategicManagement;
 
 use App\BusinessSchool;
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use App\Models\Common\Department;
+<<<<<<< HEAD
+=======
 use App\Models\Common\FeeType;
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
 use App\Models\Common\PaymentMethod;
+=======
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
 use Illuminate\Http\Request;
@@ -26,7 +32,12 @@ class SlipController extends Controller
     public function index()
     {
         //
+<<<<<<< HEAD
+<<<<<<< HEAD
+        @$school_id = Auth::user()->business_school_id;
+=======
         @$school_id = Auth::user()->campus_id;
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
         //dd($invoices);
         @$departments = Department::where('status', 'active')->get();
@@ -42,6 +53,12 @@ class SlipController extends Controller
         }
         //dd($invoice_no);
         return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods'));
+=======
+        $school_id = Auth::user()->business_school_id;
+         $invoices = Slip::with('program')->where('business_school_id', $school_id)->get();
+        $programs = Program::where('status', 'active')->get();
+        return view('strategic_management.invoices_slip', compact('invoices','programs'));
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
     }
 
     /**
@@ -78,8 +95,16 @@ class SlipController extends Controller
             $request->file('slip')->move($path, $filename);
 
             Slip::create([
+<<<<<<< HEAD
+                'business_school_id' => Auth::user()->business_school_id,
+<<<<<<< HEAD
+=======
                 'business_school_id' => Auth::user()->campus_id,
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                 'program_id' => $request->department_id,
+=======
+                'program_id' => $request->program_id,
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
                 'slip' => $path.'/'.$filename,
                 'status' => 'paid',
             ]);
@@ -92,6 +117,7 @@ class SlipController extends Controller
     }
 
     /**
+<<<<<<< HEAD
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -100,11 +126,18 @@ class SlipController extends Controller
     public function generateInvoice(Request $request)
     {
         //dd($request->all());
+<<<<<<< HEAD
+        //
+        try {
+            Slip::create([
+                'business_school_id' => Auth::user()->business_school_id,
+=======
         //get fee type
 
         try {
             Slip::create([
                 'business_school_id' => Auth::user()->campus_id,
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                 'invoice_no' => $request->invoice_no,
                 'department_id' => $request->department_id,
                 'status' => 'pending',
@@ -117,7 +150,14 @@ class SlipController extends Controller
         }
     }
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
     /**
+=======
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
      * Display the specified resource.
      *
      * @param  \App\Models\Common\Slip  $slip
@@ -149,7 +189,7 @@ class SlipController extends Controller
     public function update(Request $request, Slip $slip)
     {
         //
-        //dd($request->all());
+        //dd($request);
         $path = ''; $imageName = '';
         if(@$request->file('slip')) {
             try {
@@ -161,17 +201,13 @@ class SlipController extends Controller
                 $disk = Storage::disk($diskName);
                 $request->file('slip')->move($path, $filename);
 
-//                $data = ['business_school_id' => Auth::user()->campus_id];
-//                @$request->invoice_no? $data['invoice_no'] = $request->invoice_no:'';
-//                @$request->department_id? $data['department_id'] = $request->department_id:'';
-                @$request->file('slip')? $data['slip'] = $path.'/'.$filename:'';
-                @$request->comments? $data['comments'] = $request->comments:'';
-                @$request->transaction_date? $data['transaction_date'] = $request->transaction_date:'';
-                @$request->payment_method? $data['payment_method_id'] = $request->payment_method:'';
-                @$request->cheque_no? $data['cheque_no'] = $request->cheque_no:'';
-                @$request->status? $data['status'] = $request->status:'';
-                //dd($data);
-                Slip::where('id', $request->id)->update($data);
+                Slip::where('id', $request->id)->update([
+                    'program_id' => $request->program_id,
+                    'slip' => $path.'/'.$filename,
+                    'comments' => $request->comments,
+                    'transaction_date' => $request->transaction_date,
+                    'status' =>  $request->status,
+                ]);
                 return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
             }catch (Exception $e)
             {
@@ -182,10 +218,9 @@ class SlipController extends Controller
         try {
             //dd($request->all());
             Slip::where('id', $request->id)->update([
-//                'department_id' => $request->department_id,
+                'program_id' => $request->program_id,
                 'comments' => $request->comments,
                 'transaction_date' => $request->transaction_date,
-                'payment_method_id' => $request->payment_method,
                 'status' => $request->status,
             ]);
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);

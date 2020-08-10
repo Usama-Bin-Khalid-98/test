@@ -5,10 +5,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Common\Level;
 use App\Models\Common\Program;
-use App\Models\Common\Slip;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use DB;
@@ -22,11 +20,19 @@ class ScopeController extends Controller
     public function index()
     {
         //
+<<<<<<< HEAD
+<<<<<<< HEAD
+        @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
+=======
        // DB::enableQueryLog();
         @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
         //dd(DB::getQueryLog());
         //dd($department_id);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
+=======
+        $programs = Program::where('status', 'active')->get();
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
         $levels = Level::where('status', 'active')->get();
         $scopes = Scope::with('level', 'program')->get();
         //dd($programs);
@@ -62,9 +68,18 @@ class ScopeController extends Controller
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
+<<<<<<< HEAD
                 $campus_id = auth()->user()->campus_id;
                 $created_id = auth()->user()->id;
+<<<<<<< HEAD
+                $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id] );
+=======
                 $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id, 'isComplete' =>'yes'] );
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+=======
+                $school_id = auth()->user()->business_school_id;
+                $request->merge(['school_id' => $school_id] );
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
                 $create = Scope::create($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }
@@ -114,8 +129,6 @@ class ScopeController extends Controller
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
-                $updated_id = auth()->user()->id;
-                $request->merge(['updated_by'=>$updated_id] );
                 $scope->update($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }
@@ -136,9 +149,6 @@ class ScopeController extends Controller
     {
         //dd($scope);
         try {
-            Scope::where('id', $scope->id)->update([
-               'deleted_by' => Auth::user()->id
-           ]);
              Scope::destroy($scope->id);
                 return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

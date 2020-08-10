@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\EntryRequirement;
-use App\Models\StrategicManagement\Scope;
+use App\Models\Common\Program;
 use App\Models\Common\EligibilityCriteria;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 class EntryRequirementController extends Controller
 {
@@ -21,12 +20,12 @@ class EntryRequirementController extends Controller
      */
     public function index()
     {
-        $scopes = Scope::with('program')->get();
+        $programs = Program::where('status', 'active')->get();
         $criterias = EligibilityCriteria::where('status', 'active')->get();
 
-        $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->get();
+        $entryRequirements  = EntryRequirement::with('program','eligibility_criteria')->get();
 
-         return view('registration.curriculum.entry_req', compact('scopes','criterias','entryRequirements'));
+         return view('registration.curriculum.entry_req', compact('programs','criterias','entryRequirements'));
         
     }
 
@@ -56,11 +55,9 @@ class EntryRequirementController extends Controller
         try {
 
             EntryRequirement::create([
-                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
-                'min_req' => $request->min_req,
-                'created_by' => Auth::user()->id
+                'min_req' => $request->min_req
             ]);
 
             return response()->json(['success' => 'Entry Requirement added successfully.']);
@@ -115,8 +112,7 @@ class EntryRequirementController extends Controller
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
                 'min_req' => $request->min_req,
-                'status' => $request->status,
-                'updated_by' => Auth::user()->id
+                'status' => $request->status
             ]);
             return response()->json(['success' => 'Entry Requirements updated successfully.']);
 
@@ -135,9 +131,6 @@ class EntryRequirementController extends Controller
     public function destroy(EntryRequirement $entryRequirement)
     {
         try {
-            EntryRequirement::where('id', $entryRequirement->id)->update([
-               'deleted_by' => Auth::user()->id 
-           ]);
             EntryRequirement::destroy($entryRequirement->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

@@ -11,12 +11,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+<<<<<<< HEAD
         $this->call(DepartmentSeeder::class);
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
+       // $this->call(PermissionSeeder::class);
+=======
         $this->call(FacultyQualificationSeeder::class);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         $this->call(CharterTypeSeeder::class);
-        $this->call(InstituteTypeSeeder::class);
         $this->call(BusinessSchoolSeeder::class);
-        $this->call(CampusSeeder::class);
+        $this->call(InstituteTypeSeeder::class);
         $this->call(ProgramSeeder::class);
         $this->call(LevelSeeder::class);
         $this->call(DesignationSeeder::class);
@@ -24,7 +30,14 @@ class DatabaseSeeder extends Seeder
         $this->call(StatutoryBodySeeder::class);
         $this->call(SemesterSeeder::class);
         $this->call(UserSeeder::class);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         $this->call(RolePermissionSeeder::class);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+=======
+        $this->call(DepartmentSeeder::class);
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
         $this->call(DisciplineSeeder::class);
         $this->call(ReviewerRoleSeeder::class);
         $this->call(RegionSeeder::class);
@@ -36,10 +49,11 @@ class DatabaseSeeder extends Seeder
         $this->call(SemesterSeeder::class);
         $this->call(StatutoryBodySeeder::class);
         $this->call(FacultyTypeSeeder::class);
-        $this->call(QuestionSeeder::class);
+        $this->call(SurveyQuestionSeeder::class);
         $this->call(IncomeSourceSeeder::class);
         $this->call(FacilityTypeSeeder::class);
         $this->call(FacilitySeeder::class);
+<<<<<<< HEAD
         $this->call(PaymentMethodSeeder::class);
         $this->call(FypRequirementSeeder::class);
         $this->call(FeeTypeSeeder::class);
@@ -47,7 +61,12 @@ class DatabaseSeeder extends Seeder
         $this->call(StaffCategorySeeder::class);
         $this->call(QecTypeSeeder::class);
         $this->call(NbeacCriteriaSeeder::class);
+<<<<<<< HEAD
+=======
         $this->call(SlipSeeder::class);
         $this->call(FacultyDegreeSeeder::class);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+=======
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
     }
 }

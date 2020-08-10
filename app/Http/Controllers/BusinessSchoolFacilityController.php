@@ -4,15 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility\BusinessSchoolFacility;
 use Illuminate\Http\Request;
-use App\BusinessSchool;
-use App\Models\Facility\FacilityType;
-use App\Models\Facility\Facility;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Mockery\Exception;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Controller;
-use DB;
 
 class BusinessSchoolFacilityController extends Controller
 {
@@ -23,12 +14,7 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function index()
     {
-        $facility_types = Facility::with('facility_type')->get();
-
-        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->get();
-
-
-        return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));
+        //
     }
 
     /**
@@ -49,38 +35,7 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
-
-        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
-        if($validation->fails())
-        {
-            return response()->json($validation->messages()->all(), 422);
-        }
-        try {
-
-            foreach ($request->all() as $key => $facility){
-                //dd();ount]['id']);
-                foreach ($facility as $value){
-                    //dd($value['id']);
-                BusinessSchoolFacility::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'facility_id' => $value['id'],
-                    'remark' => $value['remark'],
-                    'created_by' => Auth::user()->id
-                ]);
-
-                }
-
-
-            }
-
-            return response()->json(['success' => 'Business School Facility added successfully.'], 200);
-
-
-        }catch (Exception $e)
-        {
-            return response()->json($e->getMessage(), 422);
-        }
+        //
     }
 
     /**
@@ -114,25 +69,7 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function update(Request $request, BusinessSchoolFacility $businessSchoolFacility)
     {
-        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
-        if($validation->fails())
-        {
-            return response()->json($validation->messages()->all(), 422);
-        }
-
-        try {
-
-            BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
-                'remark' => $request->remark,
-                'status' => $request->status,
-                'updated_by' => Auth::user()->id
-            ]);
-            return response()->json(['success' => 'Business School Facility updated successfully.']);
-
-        }catch (Exception $e)
-        {
-            return response()->json($e->getMessage(), 422);
-        }
+        //
     }
 
     /**
@@ -143,31 +80,6 @@ class BusinessSchoolFacilityController extends Controller
      */
     public function destroy(BusinessSchoolFacility $businessSchoolFacility)
     {
-         try {
-            BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
-               'deleted_by' => Auth::user()->id 
-           ]);
-            BusinessSchoolFacility::destroy($businessSchoolFacility->id);
-            return response()->json(['success' => 'Record deleted successfully.']);
-        }catch (Exception $e)
-        {
-            return response()->json(['error' => 'Failed to delete record.']);
-        }
+        //
     }
-
-    protected function rules() {
-        return [
-//                'id' => 'required'
-        ];
-    }
-
-    protected function messages() {
-        return [
-            'required' => 'The :attribute can not be blank.'
-        ];
-    }
-
-
-
-
 }

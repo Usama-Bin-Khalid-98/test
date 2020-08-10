@@ -3,7 +3,7 @@
 namespace App\Models\Facility;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Common\Campus;
+use App\BusinessSchool;
 use App\Models\Facility\IncomeSource;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,8 +18,8 @@ class FinancialInfo extends Model
         return $this->belongsTo(IncomeSource::class);
     }
 
-    public function campus()
+    public function business_school()
     {
-        return $this->belongsTo(Campus::class);
+        return $this->belongsTo(BusinessSchool::class);
     }
 }

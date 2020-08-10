@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 
 class FacultyTeachingCourcesController extends Controller
@@ -23,13 +22,13 @@ class FacultyTeachingCourcesController extends Controller
      */
     public function index()
     {
-
+         $businesses = BusinessSchool::where('status', 'active')->get();
          $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
 
-         $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->get();
+         $visitings = FacultyTeachingCources::with('business_school','lookup_faculty_type','designation')->get();
 
-         return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings'));
+         return view('registration.faculty.faculty_teaching_cources', compact('businesses','designations','faculty_types','visitings'));
     }
 
     /**
@@ -58,13 +57,12 @@ class FacultyTeachingCourcesController extends Controller
         try {
 
             FacultyTeachingCources::create([
-                'campus_id' => Auth::user()->campus_id,
+                'business_school_id' => $request->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
                 'tc_program1' => $request->tc_program1,
-                'tc_program2' => $request->tc_program2,
-                'created_by' => Auth::user()->id
+                'tc_program2' => $request->tc_program2
             ]);
 
             return response()->json(['success' => 'Visiting Faculty added successfully.']);
@@ -116,14 +114,14 @@ class FacultyTeachingCourcesController extends Controller
         try {
 
             FacultyTeachingCources::where('id', $facultyTeaching->id)->update([
+                'business_school_id' => $request->business_school_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted,
-                'updated_by' => Auth::user()->id
+                'isCompleted' => $request->isCompleted
             ]);
             return response()->json(['success' => 'Visiting Faculty updated successfully.']);
 
@@ -142,9 +140,6 @@ class FacultyTeachingCourcesController extends Controller
     public function destroy(FacultyTeachingCources $facultyTeaching)
     {
          try {
-              FacultyTeachingCources::where('id', $facultyTeaching->id)->update([
-               'deleted_by' => Auth::user()->id 
-           ]);
             FacultyTeachingCources::destroy($facultyTeaching->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
@@ -155,6 +150,7 @@ class FacultyTeachingCourcesController extends Controller
 
     protected function rules() {
         return [
+            'business_school_id' => 'required',
             'lookup_faculty_type_id' => 'required',
             'designation_id' => 'required',
             'max_cources_allowed' => 'required',

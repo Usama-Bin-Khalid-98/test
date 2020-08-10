@@ -34,7 +34,6 @@
 
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('dist/js/demo.js')}}"></script>
-<script src="{{URL::asset('bower_components/ckeditor/ckeditor.js')}}"></script>
 
 
  <script>

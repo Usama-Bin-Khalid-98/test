@@ -15,28 +15,15 @@ class CreateBusinessSchoolFacilitiesTable extends Migration
     {
         Schema::create('business_school_facilities', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('campus_id')->unsigned()->nullable();
-            $table->foreign('campus_id')
+            $table->integer('business_school_id')->unsigned();
+            $table->foreign('business_school_id')
                 ->references('id')
-                ->on('campuses');
+                ->on('business_schools');
             $table->integer('facility_id')->unsigned();
             $table->foreign('facility_id')
                 ->references('id')
                 ->on('facilities');
-            $table->string('remark',250)->nullable();
-            $table->enum('status', ['active','inactive'])->default('active');
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->foreign('created_by')
-                ->references('id')
-                ->on('users');
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('updated_by')
-                ->references('id')
-                ->on('users');
-            $table->integer('deleted_by')->unsigned()->nullable();
-            $table->foreign('deleted_by')
-                ->references('id')
-                ->on('users');
+            $table->enum('status', ['active', 'inactive'])->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
