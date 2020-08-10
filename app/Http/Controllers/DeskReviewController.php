@@ -21,6 +21,11 @@ use App\StudentsGraduated;
 use App\FacultyDegree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+use DB;
 
 class DeskReviewController extends Controller
 {
@@ -141,7 +146,36 @@ class DeskReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            foreach ($request->all() as $key => $isEligible){
+                //dd();ount]['id']);
+                foreach ($isEligible as $value){
+                    //dd($value['id']);
+                DeskReview::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'isEligible' => $value['eligibility_program'],
+                    'created_by' => Auth::user()->id
+                ]);
+
+                }
+
+
+            }
+
+            return response()->json(['success' => 'Desk Review added successfully.'], 200);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -187,5 +221,17 @@ class DeskReviewController extends Controller
     public function destroy(DeskReview $deskReview)
     {
         //
+    }
+
+    protected function rules() {
+        return [
+//                'id' => 'required'
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }
