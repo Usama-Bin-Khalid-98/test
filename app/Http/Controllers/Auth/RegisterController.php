@@ -259,9 +259,9 @@ class RegisterController extends Controller
 
     public function get_cities(Request $request)
     {
-        echo "working here";
-        exit;
-        dd($request->all());
+       // echo "working here";
+       // exit;
+       // dd($request->all());
         $cities = Countries::where('name.common', $request->country)->first()
             ->hydrate('cities')
             ->cities

@@ -64,7 +64,7 @@ class ScopeController extends Controller
             }else {
                 $campus_id = auth()->user()->campus_id;
                 $created_id = auth()->user()->id;
-                $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id] );
+                $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id, 'isComplete' =>'yes'] );
                 $create = Scope::create($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }
