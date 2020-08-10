@@ -19,10 +19,10 @@ class CreateResearchSummariesTable extends Migration
             $table->foreign('publication_type_id')
                 ->references('id')
                 ->on('publication_types');
-            $table->integer('business_school_id')->unsigned();
-            $table->foreign('business_school_id')
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('business_schools');
+                ->on('campuses');
             $table->string('year', 10);
             $table->string('total_items', 10);
             $table->string('contributing_core_faculty', 10);
@@ -31,6 +31,18 @@ class CreateResearchSummariesTable extends Migration
             $table->string('jointly_produced_multiple', 10);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users');
             $table->softDeletes();
             $table->timestamps();
         });

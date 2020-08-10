@@ -10,123 +10,61 @@
                                     
                                 </thead>
                                 <tbody>
+                                    
                                     <tr>
                                         <td></td>
-                                        <td>Core course</td>
+                                        <td><b>Core Courses</b></td>
                                         <td></td>
                                         <td></td>
                                         
                                     </tr>
+                                    
+                                    @foreach($programsCourses[1] as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{$data->programName}}</td>
+                                        <td>{{$data->credit_hours}}</td>
+                                        <td>{{$data->preReq }}</td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
+                                   
+
 
                                     <tr>
                                         <td></td>
-                                        <td>Support course</td>
+                                        <td><b>Support Courses</b></td>
                                         <td></td>
                                         <td></td>
                                         
                                     </tr>
+                                    @foreach($programsCourses[2] as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{$data->programName}}</td>
+                                        <td>{{$data->credit_hours}}</td>
+                                        <td>{{$data->preReq}}</td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
 
 
                                      <tr>
                                         <td></td>
-                                        <td>Electives</td>
+                                        <td><b>Elective Courses</b></td>
                                         <td></td>
                                         <td></td>
                                         
                                     </tr>
+                                      @foreach($programsCourses[3] as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{$data->programName}}</td>
+                                        <td>{{$data->credit_hours}}</td>
+                                        <td>{{$data->preReq}}</td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
                                         
                                     
                               

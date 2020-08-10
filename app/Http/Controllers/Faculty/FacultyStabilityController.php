@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Models\StrategicManagement\Designation;
+use Auth;
 
 class FacultyStabilityController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +32,11 @@ class FacultyStabilityController extends Controller
      */
     public function index()
     {
-        $businesses = BusinessSchool::where('status', 'active')->get();
 
-        $stabilities = FacultyStability::with('business_school')->get();
 
-         return view('registration.faculty.faculty_stability', compact('businesses','stabilities'));
+        $stabilities = FacultyStability::with('campus')->get();
+
+         return view('registration.faculty.faculty_stability', compact('stabilities'));
     }
 
     /**
@@ -53,13 +65,14 @@ class FacultyStabilityController extends Controller
         try {
 
             FacultyStability::create([
-                'business_school_id' => $request->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'total_faculty' => $request->total_faculty,
                 'year' => $request->year,
                 'resigned' => $request->resigned,
                 'retired' => $request->retired,
                 'terminated' => $request->terminated,
-                'new_induction' => $request->new_induction
+                'new_induction' => $request->new_induction,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty Stability added successfully.']);
@@ -111,7 +124,6 @@ class FacultyStabilityController extends Controller
         try {
 
             FacultyStability::where('id', $facultyStability->id)->update([
-               'business_school_id' => $request->business_school_id,
                 'total_faculty' => $request->total_faculty,
                 'year' => $request->year,
                 'resigned' => $request->resigned,
@@ -119,7 +131,8 @@ class FacultyStabilityController extends Controller
                 'terminated' => $request->terminated,
                 'new_induction' => $request->new_induction,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Stability updated successfully.']);
 
@@ -138,6 +151,9 @@ class FacultyStabilityController extends Controller
     public function destroy(FacultyStability $facultyStability)
     {
         try {
+            FacultyStability::where('id', $facultyStability->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FacultyStability::destroy($facultyStability->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
@@ -148,7 +164,6 @@ class FacultyStabilityController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'total_faculty' => 'required',
             'year' => 'required',
             'resigned' => 'required',

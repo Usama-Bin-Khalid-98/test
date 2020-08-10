@@ -29,6 +29,7 @@
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
                 <li class="active"> Print </li>
             </ol>
+            
         </section>
         <section class="content-header">
             <div class="col-md-12 new-button">
@@ -55,13 +56,24 @@
                             <h3 class="box-title">Print</h3>
                         </div>
                         <!-- /.box-header -->
+                    <h1 style="text-align: center;">1. Strategic Management</h1>
                     @include('strategic_management.includes.1')
+                    <h1 style="text-align: center;">2. Curriculum</h1>
                     @include('strategic_management.includes.2')
+                    <h1 style="text-align: center;">3. Students</h1>
                     @include('strategic_management.includes.3')
+                    <h1 style="text-align: center;">4. Faculty</h1>
                     @include('strategic_management.includes.4')
+                    <h1 style="text-align: center;">5. Research and Development</h1>
                     @include('strategic_management.includes.5')
+                    <h1 style="text-align: center;">6. Social Responsibility</h1>
                     @include('strategic_management.includes.6')
+                    <h1 style="text-align: center;">7. Resources</h1>
                     @include('strategic_management.includes.7')
+                    <h1 style="text-align: center;">8. External Linkages and Student Placement</h1>
+                    @include('strategic_management.includes.8')
+                    <h1 style="text-align: center;">9. Admission and Examination Policy</h1>
+                    @include('strategic_management.includes.9')
 
 
                         <!-- /.box-body -->

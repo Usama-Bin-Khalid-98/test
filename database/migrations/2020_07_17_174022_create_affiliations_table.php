@@ -15,21 +15,33 @@ class CreateAffiliationsTable extends Migration
     {
         Schema::create('affiliations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('statutory_committees_id')->unsigned();
-            $table->foreign('statutory_committees_id')
+            $table->string('name', 100);
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
                 ->references('id')
-                ->on('statutory_committees');
-//                ->onDelete('cascade');
+                ->on('campuses');
             $table->string('affiliation', 255);
             $table->integer('designation_id')->unsigned();
             $table->foreign('designation_id')
                 ->references('id')
                 ->on('designations');
-            $table->integer('statutory_bodies_id')->unsigned();
+            $table->integer('statutory_bodies_id')->unsigned()->nullable();
             $table->foreign('statutory_bodies_id')
                 ->references('id')
                 ->on('statutory_bodies');
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users');
             $table->timestamps();
             $table->softDeletes();
         });

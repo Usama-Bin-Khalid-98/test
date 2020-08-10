@@ -4,6 +4,8 @@ namespace App\Http\Controllers\StrategicManagement;
 
 use App\BusinessSchool;
 use App\Http\Controllers\Controller;
+use App\Models\Common\Department;
+use App\Models\Common\PaymentMethod;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
 use Illuminate\Http\Request;
@@ -23,10 +25,22 @@ class SlipController extends Controller
     public function index()
     {
         //
-        $school_id = Auth::user()->business_school_id;
-         $invoices = Slip::with('program')->where('business_school_id', $school_id)->get();
-        $programs = Program::where('status', 'active')->get();
-        return view('strategic_management.invoices_slip', compact('invoices','programs'));
+        @$school_id = Auth::user()->business_school_id;
+        @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
+        //dd($invoices);
+        @$departments = Department::where('status', 'active')->get();
+        $payment_methods = PaymentMethod::where('status', 'active')->get();
+        //// generate invoice ///////////
+        $latest = Slip::latest()->first();
+        $invoice_no ='';
+        if (! $latest) {
+            $invoice_no =  '0001';
+        }else {
+            $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
+            $invoice_no = sprintf('%04d', $string + 1);
+        }
+        //dd($invoice_no);
+        return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods'));
     }
 
     /**
@@ -64,7 +78,7 @@ class SlipController extends Controller
 
             Slip::create([
                 'business_school_id' => Auth::user()->business_school_id,
-                'program_id' => $request->program_id,
+                'program_id' => $request->department_id,
                 'slip' => $path.'/'.$filename,
                 'status' => 'paid',
             ]);
@@ -75,6 +89,33 @@ class SlipController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function generateInvoice(Request $request)
+    {
+        //dd($request->all());
+        //
+        try {
+            Slip::create([
+                'business_school_id' => Auth::user()->business_school_id,
+                'invoice_no' => $request->invoice_no,
+                'department_id' => $request->department_id,
+                'status' => 'pending',
+            ]);
+            return response()->json(['success' => 'Invoice Slip added successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -108,7 +149,7 @@ class SlipController extends Controller
     public function update(Request $request, Slip $slip)
     {
         //
-        //dd($request);
+        //dd($request->all());
         $path = ''; $imageName = '';
         if(@$request->file('slip')) {
             try {
@@ -120,13 +161,17 @@ class SlipController extends Controller
                 $disk = Storage::disk($diskName);
                 $request->file('slip')->move($path, $filename);
 
-                Slip::where('id', $request->id)->update([
-                    'program_id' => $request->program_id,
-                    'slip' => $path.'/'.$filename,
-                    'comments' => $request->comments,
-                    'transaction_date' => $request->transaction_date,
-                    'status' =>  $request->status,
-                ]);
+//                $data = ['business_school_id' => Auth::user()->campus_id];
+//                @$request->invoice_no? $data['invoice_no'] = $request->invoice_no:'';
+//                @$request->department_id? $data['department_id'] = $request->department_id:'';
+                @$request->file('slip')? $data['slip'] = $path.'/'.$filename:'';
+                @$request->comments? $data['comments'] = $request->comments:'';
+                @$request->transaction_date? $data['transaction_date'] = $request->transaction_date:'';
+                @$request->payment_method? $data['payment_method_id'] = $request->payment_method:'';
+                @$request->cheque_no? $data['cheque_no'] = $request->cheque_no:'';
+                @$request->status? $data['status'] = $request->status:'';
+                //dd($data);
+                Slip::where('id', $request->id)->update($data);
                 return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
             }catch (Exception $e)
             {
@@ -137,9 +182,10 @@ class SlipController extends Controller
         try {
             //dd($request->all());
             Slip::where('id', $request->id)->update([
-                'program_id' => $request->program_id,
+//                'department_id' => $request->department_id,
                 'comments' => $request->comments,
                 'transaction_date' => $request->transaction_date,
+                'payment_method_id' => $request->payment_method,
                 'status' => $request->status,
             ]);
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);

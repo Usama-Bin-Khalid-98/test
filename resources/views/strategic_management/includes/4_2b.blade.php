@@ -16,6 +16,18 @@ Table 4.2b. Faculty workload (t-1)
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>PhD</td>
+                                        <td>Masters</td>
+                                        <td>Bachelors</td>
+                                        <td></td>
+                                     
+                                     
+                                    </tr>
+                                    <tr>
                                         <td>1</td>
                                         <td>Dr. Firstname Lastname
 </td>

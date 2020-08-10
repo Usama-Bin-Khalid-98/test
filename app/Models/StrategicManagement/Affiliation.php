@@ -4,7 +4,7 @@ namespace App\Models\StrategicManagement;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\StrategicManagement\Affiliation;
-use App\Models\StrategicManagement\StatutoryCommittee;
+use App\Models\Common\Campus;
 use App\Models\Common\Designation;
 use App\Models\StrategicManagement\StatutoryBody;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,8 +16,8 @@ class Affiliation extends Model
     protected $guarded = [];
 
 
-    public function statutory_committees() {
-        return $this->belongsTo(StatutoryCommittee::class);
+    public function campus() {
+        return $this->belongsTo(Campus::class);
     }
     public function designation() {
         return $this->belongsTo(Designation::class);

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
+use Auth;
 
 class StatutoryCommitteeController extends Controller
 {
@@ -61,6 +62,7 @@ class StatutoryCommitteeController extends Controller
                 $request->file('file')->move($path, $fileName);
 
                 StatutoryCommittee::create([
+                    'campus_id' => Auth::user()->campus_id,
                     'statutory_body_id' => $request->statutory_body_id,
                     'name' => $request->name,
                     'designation_id' => $request->designation_id,
@@ -69,6 +71,7 @@ class StatutoryCommitteeController extends Controller
                     'date_third_meeting' => $request->date_third_meeting,
                     'date_fourth_meeting' => $request->date_fourth_meeting,
                     'file' => $path.'/'.$fileName,
+                    'created_by' => Auth::user()->id
                 ]);
 
                 return response()->json(['success' => 'Statutory committee added successfully.']);
@@ -138,7 +141,8 @@ class StatutoryCommitteeController extends Controller
                 'date_third_meeting' => $request->date_third_meeting,
                 'date_fourth_meeting' => $request->date_fourth_meeting,
                 'file' => $path.'/'.$fileName,
-                'status' => $request->status
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Statutory committee updated successfully.']);
@@ -159,6 +163,9 @@ class StatutoryCommitteeController extends Controller
     {
         //
         try {
+            StatutoryCommittee::where('id', $statutoryCommittee->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             StatutoryCommittee::destroy($statutoryCommittee->id);
             return response()->json(['success'=> 'Record deleted successfully']);
         }catch (Exception $e) {

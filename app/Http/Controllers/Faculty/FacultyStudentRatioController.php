@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Models\Faculty\FacultyStudentRatio;
 use App\BusinessSchool;
-use App\Models\Common\Program;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class FacultyStudentRatioController extends Controller
 {
@@ -20,12 +21,12 @@ class FacultyStudentRatioController extends Controller
      */
     public function index()
     {
-        $businesses = BusinessSchool::where('status', 'active')->get();
-        $programs = Program::where('status', 'active')->get();
+        
+        $programs = Scope::with('program')->get();
 
-        $ratios = FacultyStudentRatio::with('business_school','program')->get();
+        $ratios = FacultyStudentRatio::with('campus','program')->get();
 
-         return view('registration.faculty.faculty_student_ratio', compact('businesses','programs','ratios'));
+         return view('registration.faculty.faculty_student_ratio', compact('programs','ratios'));
     }
 
     /**
@@ -54,10 +55,11 @@ class FacultyStudentRatioController extends Controller
         try {
 
             FacultyStudentRatio::create([
-                'business_school_id' => $request->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
-                'total_enrollments' => $request->total_enrollments
+                'total_enrollments' => $request->total_enrollments,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Faculty Student Ratio added successfully.']);
@@ -109,12 +111,12 @@ class FacultyStudentRatioController extends Controller
         try {
 
             FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
-               'business_school_id' => $request->business_school_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted
+                'isCompleted' => $request->isCompleted,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Student Ratio updated successfully.']);
 
@@ -133,6 +135,9 @@ class FacultyStudentRatioController extends Controller
     public function destroy(FacultyStudentRatio $facultyStudentRatio)
     {
         try {
+            FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FacultyStudentRatio::destroy($facultyStudentRatio->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
@@ -143,7 +148,6 @@ class FacultyStudentRatioController extends Controller
 
     protected function rules() {
         return [
-            'business_school_id' => 'required',
             'program_id' => 'required',
             'year' => 'required',
             'total_enrollments' => 'required'

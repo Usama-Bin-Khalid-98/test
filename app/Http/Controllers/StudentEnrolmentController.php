@@ -24,7 +24,7 @@ class StudentEnrolmentController extends Controller
         $uniinfo = BusinessSchool::get();
         $programs = Program::where('status', 'active')->get();
 
-        $enrolments = StudentEnrolment::with('business_school','program')->get();
+        $enrolments = StudentEnrolment::with('campus','program')->get();
 
          return view('registration.student_enrolment.enrolment', compact('uniinfo','programs','enrolments'));
     }
@@ -53,20 +53,15 @@ class StudentEnrolmentController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            $uni_id = Auth::user()->business_school_id;
+            $uni_id = Auth::user()->campus_id;
             StudentEnrolment::create([
-                'business_school_id' => $uni_id,
+                'campus_id' => $uni_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
                 'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level,
-                'program_id' => $request->program_id,
-                'grad_std_t' => $request->grad_std_t,
-                'grad_std_t_2' => $request->grad_std_tt,
-                'grad_std_t_3' => $request->grad_std_ttt,
-                'male' => $request->male,
-                'female' => $request->female,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Student enrolment added successfully.']);
@@ -116,22 +111,14 @@ class StudentEnrolmentController extends Controller
         }
 
         try {
-
-            $uni_id = Auth::user()->business_school_id;
             StudentEnrolment::where('id', $studentEnrolment->id)->update([
-                'business_school_id' => $uni_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
                 'total_students' =>  $request->bs_level+ $request->ms_level+$request->phd_level,
-                'program_id' => $request->program_id,
-                'grad_std_t' => $request->grad_std_t,
-                'grad_std_t_2' => $request->grad_std_t_2,
-                'grad_std_t_3' => $request->grad_std_t_3,
-                'male' => $request->male,
-                'female' => $request->female,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Student Enrolement updated successfully.']);
 
@@ -150,6 +137,9 @@ class StudentEnrolmentController extends Controller
     public function destroy(StudentEnrolment $studentEnrolment)
     {
         try {
+            StudentEnrolment::where('id', $studentEnrolment->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             StudentEnrolment::destroy($studentEnrolment->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
@@ -163,13 +153,7 @@ class StudentEnrolmentController extends Controller
             'year' => 'required',
             'bs_level' => 'required',
             'ms_level' => 'required',
-            'phd_level' => 'required',
-            'program_id' => 'required',
-            'grad_std_t' => 'required',
-            'grad_std_tt' => 'required',
-            'grad_std_ttt' => 'required',
-            'male' => 'required',
-            'female' => 'required'
+            'phd_level' => 'required'
         ];
     }
 

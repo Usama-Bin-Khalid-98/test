@@ -5,8 +5,10 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Common\Level;
 use App\Models\Common\Program;
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
@@ -20,7 +22,8 @@ class ScopeController extends Controller
     public function index()
     {
         //
-        $programs = Program::where('status', 'active')->get();
+        @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
+        $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
         $levels = Level::where('status', 'active')->get();
         $scopes = Scope::with('level', 'program')->get();
         //dd($programs);
@@ -53,8 +56,9 @@ class ScopeController extends Controller
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
-                $school_id = auth()->user()->business_school_id;
-                $request->merge(['school_id' => $school_id] );
+                $campus_id = auth()->user()->campus_id;
+                $created_id = auth()->user()->id;
+                $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id] );
                 $create = Scope::create($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }
@@ -104,6 +108,8 @@ class ScopeController extends Controller
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
+                $updated_id = auth()->user()->id;
+                $request->merge(['updated_by'=>$updated_id] );
                 $scope->update($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }
@@ -124,6 +130,9 @@ class ScopeController extends Controller
     {
         //dd($scope);
         try {
+            Scope::where('id', $scope->id)->update([
+               'deleted_by' => Auth::user()->id
+           ]);
              Scope::destroy($scope->id);
                 return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)

@@ -18,7 +18,7 @@ class FinancialInfoController extends Controller
         $income = IncomeSource::all();
 
 
-        $infos = FinancialInfo::with('business_school','income_source')->get();
+        $infos = FinancialInfo::with('campus','income_source')->get();
         ///dd($contacts);
         return view('registration.facilities_information.financial_info', compact('income','infos'));
     }
@@ -49,14 +49,15 @@ class FinancialInfoController extends Controller
         try {
 
             FinancialInfo::create([
-                'business_school_id' => Auth::user()->business_school_id,
+                'campus_id' => Auth::user()->campus_id,
                 'income_source_id' => $request->income_source_id,
                 'year_three' => $request->year_three,
                 'year_two' => $request->year_two,
                 'year_one' => $request->year_one,
                 'year_t' => $request->year_t,
                 'year_t_plus_one' => $request->year_t_plus_one,
-                'year_t_plus_two' => $request->year_t_plus_two
+                'year_t_plus_two' => $request->year_t_plus_two,
+                'created_by' => Auth::user()->id
             ]);
 
             return response()->json(['success' => 'Financial Info added successfully.']);
@@ -116,6 +117,7 @@ class FinancialInfoController extends Controller
                 'year_t_plus_one' => $request->year_t_plus_one,
                 'year_t_plus_two' => $request->year_t_plus_two,
                 'status' => $request->status,
+                'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Financial Info updated successfully.']);
 
@@ -134,6 +136,9 @@ class FinancialInfoController extends Controller
     public function destroy(FinancialInfo $financialInfo)
     {
         try {
+            FinancialInfo::where('id', $financialInfo->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
             FinancialInfo::destroy($financialInfo->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
