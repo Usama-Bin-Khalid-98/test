@@ -59,58 +59,11 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </span>
           </a>
           <ul class="treeview-menu">
-
-            <li class="{{ (request()->is('user')) ? 'active' : '' }}"><a href="user"><i class="fa fa-circle-o text-blue"></i>Users</a></li>
-
-            <li  class="{{ (request()->is('roles')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>User Types</a></li>
-
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>
-
-            <li  class="{{ (request()->is('permission')) ? 'active' : '' }}"><a href="/permission"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>
-
-          </ul>
-            </li>
-
-          <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">
-              <a href="{{url('strategic/invoices')}}">
-                  <i class="fa fa-circle-o" style="color: #D81B60"></i>Invoices
-                  <span class="pull-right-container">
-                        <span class="label label-danger pull-right">In</span>
-                        </span>
-              </a>
-          </li>
-          <li class="{{ (request()->is('strategic/registrationPrint')) ? 'active' : '' }} ">
-              <a href="{{url('strategic/registrationPrint')}}">
-                  <i class="fa fa-circle-o" style="color: #D81B60"></i>Registration Application Print
-                 <!--  <span class="pull-right-container">
-                        <span class="label label-danger pull-right">In</span>
-                        </span> -->
-              </a>
-          </li>
-{{--          <li class="treeview {{(request()->is('strategic/invoices'))?'active':''}}{{(request()->is('strategic/generate-invoices'))?'active':''}} ">--}}
-{{--              <a href="#">--}}
-{{--                  <i class="fa fa-money " style="color: #D81B60"></i> <span>Invoices</span>--}}
-{{--                  <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>--}}
-{{--              </a>--}}
-
-{{--              --}}
-{{--              <ul class="treeview-menu">--}}
-{{--                  <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">--}}
-{{--                      <a href="{{url('strategic/generate-invoices')}}">--}}
-{{--                          <i class="fa fa-circle-o" style="color: #D81B60"></i> Generate Invoices--}}
-{{--                          <span class="pull-right-container">--}}
-{{--                        <span class="label label-danger pull-right">In</span>--}}
-{{--                        </span>--}}
-{{--                      </a>--}}
-{{--                  </li>--}}
-
-
-{{--              </ul>--}}
-          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}}{{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
             <li class="{{ (request()->is('users')) ? 'active' : '' }}"><a href="{{url('users')}}"><i class="fa fa-circle-o text-blue"></i>Users</a></li>
             <li  class="{{ (request()->is('roles')) ? 'active' : '' }}"><a href="{{url('roles')}}"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>
 {{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>--}}
 {{--            <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>--}}
+
           </ul>
             </li>
           @endhasrole
@@ -148,7 +101,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
 {{--              </ul>--}}
 
           @hasrole('BusinessSchool')
-          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}}{{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
+          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
              <span class="pull-right-container">
@@ -160,11 +113,6 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
                     <i class="fa fa-circle-o" style="color: #D81B60"></i>Basic Information
-
-                    <span class="pull-right-container">
-
-                    <span class="label label-success pull-right">C</span>
-
                     <span class="pull-right-container">
                         <span class="text text-{{$basic_info==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$basic_info==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -179,7 +127,6 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
                         <span class="text text-{{$scope==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$scope==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    <span class="label label-danger pull-right">4</span>
                     </span>
                 </a>
             </li>
@@ -202,17 +149,16 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           </a>
           <ul class="treeview-menu">
             <li class="{{ (request()->is('program-portfolio')) ? 'active' : '' }}"><a href="{{url('program-portfolio')}}"><i class="fa fa-circle-o text-orange"></i>Programs Portfolio</a></li>
+
             <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>Entry Requirements</a></li>
             <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}"><i class="fa fa-circle-o text-orange"></i>Applications Received</a></li>
+
+
           </ul>
         </li>
-
-
           @endhasrole
           @hasrole('BusinessSchool')
-
         <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}{{(request()->is('students-graduated'))?'active':''}}{{(request()->is('student-gender'))?'active':''}}">
-
               <a href="#">
                   <i class="fa fa-user text-blue"></i> <span>Students</span>
                   <span class="pull-right-container">
@@ -223,6 +169,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}"><i class="fa fa-circle-o text-blue"></i>Students Enrollment</a></li>
             <li  class="{{ (request()->is('students-graduated')) ? 'active' : '' }}"><a href="{{url('students-graduated')}}"><i class="fa fa-circle-o text-blue"></i>Students Graduated</a></li>
             <li  class="{{ (request()->is('student-gender')) ? 'active' : '' }}"><a href="{{url('student-gender')}}"><i class="fa fa-circle-o text-blue"></i>Students Gender mix</a></li>
+
           </ul>
         </li>
           @endhasrole
@@ -259,7 +206,6 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
         </li>
           @endhasrole
           @hasrole('BusinessSchool')
-
           <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('financial-risk'))?'active':''}}{{(request()->is('qec-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}}{{(request()->is('support-staff'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users text-orange" ></i><span>Facilities Information</span>
@@ -268,7 +214,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>Financial Info</a></li>
+            <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}"><i class="fa fa-circle-o text-orange"></i>Financial Info</a></li>
             <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}"><i class="fa fa-circle-o text-orange"></i>Financial Risk</a></li>
             <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}"><i class="fa fa-circle-o text-orange"></i>Support Staff</a></li>
             <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}"><i class="fa fa-circle-o text-orange"></i>Qec Info</a></li>
@@ -294,12 +240,6 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}"><i class="fa fa-circle-o text-blue"></i>Internal Community WP</a></li>
           </ul>
         </li>
-
-            <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-gears text-black"></i>Desk Review</a></li>
-            <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-gears text-black"></i>Nbeac Criteria</a></li>
-            <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-black"></i>Eligibility Screening</a></li>
-            <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-user text- black"></i>Admin</a></li>
-            <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-black"></i>NBEAC System Settings</a></li>
           @endhasrole
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-green"></i>Faculty Degree</a></li>
@@ -315,9 +255,6 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           @endhasrole
            @hasrole('NBEACAdmin')
             <li  class="{{ (request()->is('print')) ? 'active' : '' }}"><a href="{{url('print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print SAR</a></li>
-          @endhasrole
-          @hasrole('BusinessSchool')
-            <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-black"></i>Faculty Degree</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
             <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-yellow"></i>Department Fee</a></li>
@@ -335,8 +272,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yelow"></i>NBEAC System Settings</a></li>
           @endhasrole
-            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-gears text-black"></i>Business School Info</a></li>
-            <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="/admin"><i class="fa fa-gears text-black"></i>Admin</a></li>
+
           </ul>
         </li>
       </ul>

@@ -1,4 +1,4 @@
-@section('pageTitle', 'Strategic Plan')
+@section('pageTitle', 'Student Gender Mix')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Approval of Strategic Plan
+                Students Gender mix
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Approval of Strategic Plan </li>
+                <li class="active"> Students Gender mix </li>
             </ol>
         </section>
         <section class="content-header">
@@ -35,17 +35,15 @@
                 </div>
             </div>
         </section>
-
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="box box-primary">
+                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
-
+                            <h3 class="box-title">State the current gender wise break down of students in each program under review in Table 3.3</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -59,35 +57,39 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                          <form action="javascript:void(0)" id="form" method="POST">
+                             <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Period of the strategic plan</label>
-                                    <input type="text" name="plan_period" id="plan_period" class="form-control">
+                                    <label for="name">Program Name</label>
+                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Program</option>
+                                        @foreach($programs as $program)
+                                         <option value="{{$program->program->id}}">{{$program->program->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Date of approval</label>
-                                    <input type="date" name="aproval_date" id="aproval_date" class="form-control">
+                                    <label for="name">Male(%)</label>
+                                    <input type="text" name="male" id="male" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Approving Authority</label>
-                                    <input type="text" name="aproving_authority" id="aproving_authority" class="form-control">
+                                    <label for="name">Female(%)</label>
+                                    <input type="text" name="female" id="female" class="form-control">
                                 </div>
                             </div>
 
-                             <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
-                        </form>
-
+                           </form>
                         </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
@@ -95,32 +97,32 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Approval of Strategic Plan List</h3>
+                            <h3 class="box-title">Student Gender mix</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Period of the strategic plan</th>
-                                    <th>Date of Approval</th>
-                                    <th>Approving Authority</th>
+                                    <th>Program</th>
+                                    <th>Male(%)</th>
+                                    <th>Female(%)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                               @foreach($plans as $plan)
+                               @foreach($genders as $enrolement)
                                 <tr>
-                                    <td>{{$plan->campus->business_school->name}}</td>
-                                    <td>{{$plan->campus->location}}</td>
-                                    <td>{{$plan->plan_period}}</td>
-                                    <td>{{$plan->aproval_date}}</td>
-                                    <td>{{$plan->aproving_authority}}</td>
-                                    <td><i class="badge {{$plan->status == 'active'?'bg-green':'bg-red'}}">{{$plan->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "plan_period":"{{$plan->plan_period}}", "aproval_date":"{{$plan->aproval_date}}", "aproving_authority":"{{$plan->aproving_authority}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                    <td>{{$enrolement->campus->business_school->name}}</td>
+                                    <td>{{$enrolement->campus->location}}</td>
+                                    <td>{{$enrolement->program->name}}</td>
+                                    <td>{{$enrolement->male}}</td>
+                                    <td>{{$enrolement->female}}</td>
+                                    <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","program_id":"{{$enrolement->program_id}}","male":"{{$enrolement->male}}","female":"{{$enrolement->female}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
@@ -128,11 +130,11 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Period of the strategic plan</th>
-                                    <th>Date of Approval</th>
-                                    <th>Approving Authority</th>
+                                    <th>Program</th>
+                                    <th>Male(%)</th>
+                                    <th>Female(%)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -144,18 +146,8 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
-
-
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.content -->
-
-
         </section>
-
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -164,33 +156,40 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Strategic Plan. </h4>
+                    <h4 class="modal-title">Edit Student Gender mix. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
 
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Program</label>
+                                <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Program</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->program->id}}">{{$program->program->name}}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                            <input type="hidden" name="id" id="edit_id">
+                        </div>
 
                         <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Period of Strategic Plan</label>
-                                    <input type="text" name="plan_period" id="edit_plan_period" value="{{old('edit_plan_period')}}" class="form-control">
-                                </div>
-                                <input type="hidden" id="edit_id">
-                              </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Date of approval</label>
-                                    <input type="date" name="aproval_date" id="edit_aproval_date" value="{{old('edit_aproval_date')}}" class="form-control">
-                                </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Aproving Authority</label>
-                                    <input type="text" name="aproving_authority" id="edit_aproving_authority" value="{{old('edit_aproving_authority')}}" class="form-control">
-                                </div>
-                              </div>
-
+                            <div class="form-group">
+                                <label for="name">Male</label>
+                                    <input type="text" name="male"
+                                    id="edit_male" value="{{old('edit_male')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Female</label>
+                                    <input type="text" name="female"
+                                    id="edit_female" value="{{old('female')}}" class="form-control">
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -213,8 +212,7 @@
     <!-- /.modal -->
 
 
-    <!-- /.modal -->
-   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -241,16 +239,17 @@
             }
         });
 
-         $('#form').submit(function (e) {
-            let plan_period = $('#plan_period').val();
-            let aproval_date = $('#aproval_date').val();
-            let aproving_authority = $('#aproving_authority').val();
+        $('#form').submit(function (e) {
+            // let uni_id = $('#uni_id').val();
+            let program_id = $('#program_id').val();
+            let male = $('#male').val();
+            let female = $('#female').val();
 
-            !plan_period?addClass('plan_period'):removeClass('plan_period');
-            !aproval_date?addClass('aproval_date'):removeClass('aproval_date');
-            !aproving_authority?addClass('aproving_authority'):removeClass('aproving_authority');
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !male?addClass('male'):removeClass('male');
+            !female?addClass('female'):removeClass('female');
 
-            if(!plan_period || !aproval_date || !aproving_authority)
+            if(!program_id || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -260,7 +259,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("strategic/strategic-plan")}}',
+                url:'{{url("student-gender")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -288,28 +287,29 @@
         });
 
 
-         $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_plan_period').val(data.plan_period);
-            $('#edit_aproval_date').val(data.aproval_date);
-            $('#edit_aproving_authority').val(data.aproving_authority);
+        $('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+           
+            $('#edit_program_id').select2().val(data.program_id).trigger('change');
+            $('#edit_male').val(data.male);
+            $('#edit_female').val(data.female);;
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
-            let plan_period = $('#edit_plan_period').val();
-            let aproval_date = $('#edit_aproval_date').val();
-            let aproving_authority = $('#edit_aproving_authority').val();
+        $('#updateForm').submit(function (e) {
+            let program_id = $('#edit_program_id').val();
+            let male = $('#edit_male').val();
+            let female = $('#edit_female').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !plan_period?addClass('edit_plan_period'):removeClass('edit_plan_period');
-            !aproval_date?addClass('edit_aproval_date'):removeClass('edit_aproval_date');
-            !aproving_authority?addClass('edit_aproving_authority'):removeClass('edit_aproving_authority');
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !male?addClass('male'):removeClass('male');
+            !female?addClass('female'):removeClass('female');
 
-            if(!plan_period || !aproval_date || !aproving_authority)
+            if(!program_id || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -319,7 +319,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("strategic/strategic-plan")}}/'+id,
+                url:'{{url("student-gender")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -347,14 +347,13 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-
-         $('.delete').on('click', function (e) {
+        $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("strategic/strategic-plan")}}/'+id,
+                        url:'{{url("student-gender")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -383,6 +382,10 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
+
+
+
+
 
 
     </script>

@@ -90,7 +90,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('work-load','Faculty\WorkloadController');
         Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
         Route::resource('faculty-summary','Faculty\FacultySummaryController');
-
+        Route::resource('faculty-degree', 'FacultyDegreeController');
         //research-summary
         Route::resource('research-summary','ResearchSummaryController');
 
