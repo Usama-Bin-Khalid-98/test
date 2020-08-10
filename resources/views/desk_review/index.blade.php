@@ -66,7 +66,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     <tr>
 
                                         <td>
@@ -76,22 +75,25 @@
                                                     <li>{{$dates['program']}} Started in  {{$dates['date']}} (Difference {{$dates['date_diff']}})</li>
                                                 @endforeach
                                             </ol>
-
                                         </td>
+
                                         <td>
-                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>
-                                            <ol type="i">
-                                                <li>BBA after 5.5 years of program started</li>
-                                                <li>MBA 1.5 after 2.5 years of program started</li>
-                                                <li>MBA 2.5 after 3.5 years of program started</li>
-                                                <li>MBA 3.5 after 5 years of program started.</li>
-                                            </ol>
+                                            {{$nbeac_criteria->program_started}}
+{{--                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>--}}
+{{--                                            <ol type="i">--}}
+{{--                                                <li>BBA after 5.5 years of program started</li>--}}
+{{--                                                <li>MBA 1.5 after 2.5 years of program started</li>--}}
+{{--                                                <li>MBA 2.5 after 3.5 years of program started</li>--}}
+{{--                                                <li>MBA 3.5 after 5 years of program started.</li>--}}
+{{--                                            </ol>--}}
                                         </td>
                                         <td>
                                             <input type="radio" name="eligibility_program" value="yes"> yes
                                             <input type="radio" name="eligibility_program" value="no"> no
                                         </td>
                                     </tr>
+
+
                                     <tr>
                                         <td>
                                             <p><strong>Mission : </strong> {{@$mission_vision->mission}}</p>
@@ -100,9 +102,10 @@
 
                                         </td>
                                         <td>
-                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.
-                                            There should be documentary evidence that vision and mission are approved by any statutory body.
-                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.
+                                            {{$nbeac_criteria->mission_vision_statement}}
+{{--                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.--}}
+{{--                                            There should be documentary evidence that vision and mission are approved by any statutory body.--}}
+{{--                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.--}}
 
                                         </td>
                                         <td>
@@ -249,9 +252,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                                                    
+
                                                 </div>
-                                                
+
                                             </div>
                                         </td>
                                         <td>
