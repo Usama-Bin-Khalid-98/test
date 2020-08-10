@@ -12,10 +12,9 @@ class InstituteTypeSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('institute_types')->insert([
-                ['name' => 'University'],
-                ['name' => 'Degree Awarding Institute']
-            ]
+        DB::table('institute_types')->insert(
+            ['name' => 'University'],
+            ['name' => 'Degree Awarding Institute']
         );
     }
 }

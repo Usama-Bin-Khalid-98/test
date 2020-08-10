@@ -2,7 +2,7 @@
 
 namespace App\Models\Research;
 
-use App\Models\Common\Campus;
+use App\BusinessSchool;
 use App\PublicationType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,8 +18,8 @@ class ResearchSummary extends Model
         return $this->belongsTo(PublicationType::class);
     }
 
-    public function campus()
+    public function business_school()
     {
-        return $this->belongsTo(Campus::class);
+        return $this->belongsTo(BusinessSchool::class);
     }
 }

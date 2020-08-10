@@ -18,375 +18,293 @@ class CampusSeeder extends Seeder
            [ 'business_school_id' => '7' , 'location' => 'Wah'],
            [ 'business_school_id' => '7' , 'location' => 'vehari'],
            [ 'business_school_id' => '7' , 'location' => 'sahiwal'],
-           [ 'business_school_id' => '7' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '9' , 'location' => 'karachi'],
-           [ 'business_school_id' => '9' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '16' , 'location' => 'Faisalabad'],
+           [ 'business_school_id' => '16' , 'location' => 'Faisalabad
+'],
            [ 'business_school_id' => '16' , 'location' => 'Lahore'],
            [ 'business_school_id' => '16' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '16' , 'location' => 'Multan'],
+           [ 'business_school_id' => '16' , 'location' => 'Multan
+'],
            [ 'business_school_id' => '16' , 'location' => 'Karachi'],
            [ 'business_school_id' => '16' , 'location' => 'Hyderabad'],
            [ 'business_school_id' => '16' , 'location' => 'Quetta'],
-           [ 'business_school_id' => '16' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '13' , 'location' => 'Rawalpindi'],
-           [ 'business_school_id' => '13' , 'location' => 'Lahore'],
            [ 'business_school_id' => '6' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '6' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '6' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '27' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '27' , 'location' => 'Rawalpindi'],
-           [ 'business_school_id' => '27' , 'location' => 'DG Khan'],
-           [ 'business_school_id' => '27' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '27' , 'location' => 'Gujranwala'],
-           [ 'business_school_id' => '27' , 'location' => 'Multan'],
-           [ 'business_school_id' => '27' , 'location' => 'Sahiwal'],
-           [ 'business_school_id' => '27' , 'location' => 'Badin'],
-           [ 'business_school_id' => '27' , 'location' => 'Ghotki'],
-           [ 'business_school_id' => '27' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '27' , 'location' => 'Pashin'],
-           [ 'business_school_id' => '27' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '27' , 'location' => 'Muzaffargarh'],
-           [ 'business_school_id' => '27' , 'location' => 'Hyderabad'],
-           [ 'business_school_id' => '27' , 'location' => 'Jhelum'],
-           [ 'business_school_id' => '27' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '216' , 'location' => 'Hunza'],
-           [ 'business_school_id' => '216' , 'location' => 'Diamer (Chilas)'],
-           [ 'business_school_id' => '216' , 'location' => 'Ghizer'],
-           [ 'business_school_id' => '216' , 'location' => 'AJK'],
+           [ 'business_school_id' => '6' , 'location' => 'Lahore
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Islamabad
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Rawalpindi
+'],
+           [ 'business_school_id' => '27' , 'location' => 'DG Khan
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Faisalabad
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Gujranwala
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Multan
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Sahiwal
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Badin
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Ghotki
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Karachi
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Pashin
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Peshawar
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Muzaffargarh
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Hyderabad
+'],
+           [ 'business_school_id' => '27' , 'location' => 'Jhelum
+'],
+           [ 'business_school_id' => '216' , 'location' => 'Hunza
+'],
+           [ 'business_school_id' => '216' , 'location' => 'Diamer (Chilas)
+'],
+           [ 'business_school_id' => '216' , 'location' => 'Ghizer
+'],
            [ 'business_school_id' => '217' , 'location' => 'karachi'],
-           [ 'business_school_id' => '217' , 'location' => 'Sakrand'],
-           [ 'business_school_id' => '10' , 'location' => '​KICSIT Kahauta'],
-           [ 'business_school_id' => '10' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '10' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '51' , 'location' => 'Kalashah Kako'],
-           [ 'business_school_id' => '51' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '51' , 'location' => 'Rachna College,  Gujranwala'],
-           [ 'business_school_id' => '51' , 'location' => 'Narrowal'],
-           [ 'business_school_id' => '51' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '56' , 'location' => 'Gujranwala'],
-           [ 'business_school_id' => '56' , 'location' => 'Jehlum'],
-           [ 'business_school_id' => '56' , 'location' => 'Lahore'],
+           [ 'business_school_id' => '10' , 'location' => '​KICSIT Kahauta
+'],
+           [ 'business_school_id' => '10' , 'location' => 'Karachi
+'],
+           [ 'business_school_id' => '51' , 'location' => 'Kalashah Kako
+'],
+           [ 'business_school_id' => '51' , 'location' => 'Faisalabad
+'],
+           [ 'business_school_id' => '51' , 'location' => 'Rachna College,  Gujranwala
+'],
+           [ 'business_school_id' => '51' , 'location' => 'Narrowal
+'],
+           [ 'business_school_id' => '56' , 'location' => 'Gujranwala
+'],
+           [ 'business_school_id' => '56' , 'location' => 'Jehlum 
+'],
            [ 'business_school_id' => '44' , 'location' => 'Jhang'],
-           [ 'business_school_id' => '44' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '50' , 'location' => 'Okara'],
-           [ 'business_school_id' => '50' , 'location' => 'DG Khan'],
-           [ 'business_school_id' => '50' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '50' , 'location' => 'Joharabad'],
-           [ 'business_school_id' => '50' , 'location' => 'Multan'],
-           [ 'business_school_id' => '50' , 'location' => 'Vehari'],
-           [ 'business_school_id' => '50' , 'location' => 'Attock'],
-           [ 'business_school_id' => '50' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '57' , 'location' => 'Patoki'],
-           [ 'business_school_id' => '57' , 'location' => 'Jhang'],
-           [ 'business_school_id' => '57' , 'location' => 'Lahore'],
+           [ 'business_school_id' => '50' , 'location' => 'Okara
+'],
+           [ 'business_school_id' => '50' , 'location' => 'DG Khan
+'],
+           [ 'business_school_id' => '50' , 'location' => 'Faisalabad
+'],
+           [ 'business_school_id' => '50' , 'location' => 'Joharabad
+'],
+           [ 'business_school_id' => '50' , 'location' => 'Multan
+'],
+           [ 'business_school_id' => '50' , 'location' => 'Vehari
+'],
+              [ 'business_school_id' => '50' , 'location' => 'Attock
+'],
+           [ 'business_school_id' => '57' , 'location' => 'Patoki
+'],
+           [ 'business_school_id' => '57' , 'location' => 'Jhang
+'],
            [ 'business_school_id' => '31' , 'location' => 'Layyah'],
-           [ 'business_school_id' => '31' , 'location' => 'Multan'],
-           [ 'business_school_id' => '39' , 'location' => 'Rahim Yar Khan'],
-           [ 'business_school_id' => '39' , 'location' => 'Bahawalnagar'],
-           [ 'business_school_id' => '39' , 'location' => 'Bahawalpur'],
+           [ 'business_school_id' => '39' , 'location' => 'Rahim Yar Khan
+'],
+           [ 'business_school_id' => '39' , 'location' => 'Bahawalnagar
+'],
            [ 'business_school_id' => '52' , 'location' => 'Chakwal'],
-           [ 'business_school_id' => '52' , 'location' => 'Toba Tek Singh'],
-           [ 'business_school_id' => '52' , 'location' => 'Depalpur'],
-           [ 'business_school_id' => '52' , 'location' => 'Burewala'],
-           [ 'business_school_id' => '52' , 'location' => 'Taxila'],
-           [ 'business_school_id' => '53' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '53' , 'location' => 'Sialkot '],
-           [ 'business_school_id' => '53' , 'location' => 'Narrowal  '],
-           [ 'business_school_id' => '53' , 'location' => 'Rawalpindi'],
-           [ 'business_school_id' => '53' , 'location' => 'Gujrat'],
-           [ 'business_school_id' => '33' , 'location' => 'Layyah'],
-           [ 'business_school_id' => '33' , 'location' => 'Sahiwal'],
-           [ 'business_school_id' => '33' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '55' , 'location' => 'Bhakkar'],
-           [ 'business_school_id' => '55' , 'location' => 'Mianwali'],
-           [ 'business_school_id' => '55' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '55' , 'location' => 'Mandi Bahauddin'],
-           [ 'business_school_id' => '55' , 'location' => 'Gujranwala'],
-           [ 'business_school_id' => '55' , 'location' => 'Faisalabad (Women)'],
-           [ 'business_school_id' => '55' , 'location' => 'Lyallpur'],
-           [ 'business_school_id' => '55' , 'location' => 'Sargodha'],
-           [ 'business_school_id' => '86' , 'location' => 'Mirpur Khas'],
-           [ 'business_school_id' => '86' , 'location' => 'Badin'],
-           [ 'business_school_id' => '86' , 'location' => 'Dadu'],
-           [ 'business_school_id' => '86' , 'location' => 'Jamshoro'],
-           [ 'business_school_id' => '74' , 'location' => 'Khairpur'],
-           [ 'business_school_id' => '74' , 'location' => 'Jamshoro'],
-           [ 'business_school_id' => '78' , 'location' => 'Shikarpur'],
-           [ 'business_school_id' => '78' , 'location' => 'KhairpurShaheed'],
-           [ 'business_school_id' => '77' , 'location' => 'Larkana'],
-           [ 'business_school_id' => '77' , 'location' => 'Nawabshah'],
-           [ 'business_school_id' => '83' , 'location' => 'Naushahro Feroze'],
-           [ 'business_school_id' => '83' , 'location' => 'Shaheed Benazirabad'],
-           [ 'business_school_id' => '81' , 'location' => '​Kandkot'],
-           [ 'business_school_id' => '81' , 'location' => '​Sukkur'],
-           [ 'business_school_id' => '103' , 'location' => 'Abbottabad'],
-           [ 'business_school_id' => '103' , 'location' => 'Mardan '],
-           [ 'business_school_id' => '103' , 'location' => 'Bannu'],
-           [ 'business_school_id' => '103' , 'location' => 'Jalozai'],
-           [ 'business_school_id' => '103' , 'location' => 'Kohat'],
-           [ 'business_school_id' => '103' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '104' , 'location' => 'Wari'],
-           [ 'business_school_id' => '104' , 'location' => 'Sheringal-Dir'],
-           [ 'business_school_id' => '108' , 'location' => '​Shangla'],
-           [ 'business_school_id' => '108' , 'location' => '​Swat'],
-           [ 'business_school_id' => '100' , 'location' => '​Hangu'],
-           [ 'business_school_id' => '100' , 'location' => '​Kohat'],
-           [ 'business_school_id' => '95' , 'location' => '​Tank'],
-           [ 'business_school_id' => '95' , 'location' => '​Dera Ismail Khan'],
-           [ 'business_school_id' => '123' , 'location' => '​Gawadar'],
-           [ 'business_school_id' => '123' , 'location' => '​Turbat'],
-           [ 'business_school_id' => '17' , 'location' => '​Quetta'],
-           [ 'business_school_id' => '17' , 'location' => '​Islamabad'],
-           [ 'business_school_id' => '121' , 'location' => '​Pishin'],
-           [ 'business_school_id' => '121' , 'location' => 'Noshki'],
-           [ 'business_school_id' => '121' , 'location' => 'Khuzdar'],
-           [ 'business_school_id' => '121' , 'location' => 'Quetta'],
-           [ 'business_school_id' => '161' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '161' , 'location' => 'Sargodha'],
-           [ 'business_school_id' => '161' , 'location' => 'Gujrat'],
-           [ 'business_school_id' => '161' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '210' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '210' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '210' , 'location' => 'Kohat'],
-           [ 'business_school_id' => '210' , 'location' => 'Lahore '],
-           [ 'business_school_id' => '186' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '186' , 'location' => 'Larkana'],
-           [ 'business_school_id' => '186' , 'location' => 'Dubai'],
-           [ 'business_school_id' => '186' , 'location' => 'Hyderabad'],
-           [ 'business_school_id' => '186' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '212' , 'location' => 'Ras-Al-Khaimah, UAE (Campus)'],
-           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Information Technology, F-8 Markaz, Islamabad.'],
-           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Information Technology, F-8 Markaz, Islamabad.'],
-           [ 'business_school_id' => '212' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '15' , 'location' => 'National Textile Institute (NTI), Main Park Road, Lane # 7, Chak Shehzad, Islamabad  '],
-           [ 'business_school_id' => '15' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '212' , 'location' => 'Islamabad Federal College (IFC), Plaza # 154, St. No # 30, I&T Center, G-9/1, Islamabad.'],
-           [ 'business_school_id' => '212' , 'location' => 'Abbott Group of Colleges,'],
-           [ 'business_school_id' => '212' , 'location' => ' Islamabad Expressway, Near TM CNG Station, Khanapul, Islamabad.'],
-           [ 'business_school_id' => '212' , 'location' => 'College of Business & Technologies, Comsats University Road, Mandian, Abbottabad.'],
-           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Sciences & I.T Opposite New China Market, Near Noor Surgical Hospital, D-Stop, Abbottabad Road, Haripur.'],
-           [ 'business_school_id' => '212' , 'location' => 'Abbott Group of Colleges,'],
-           [ 'business_school_id' => '212' , 'location' => 'Adjacent Zarai Taraqiati Bank, P.O Jhangi, Mansehra Road, Abbottabad. '],
-           [ 'business_school_id' => '212' , 'location' => 'Abbott Group of Colleges,'],
-           [ 'business_school_id' => '212' , 'location' => 'Opposite WAPDA Grid Station, Near Dhangri Chowk, Shahra-E-Resham, Mansehra.'],
-           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Sciences & I.T, Near Sultan Plaza, Supply Area, Mansehra Road, Abbottabad.'],
-           [ 'business_school_id' => '212' , 'location' => 'ANSI Institute of Education, Science &Technology (AIMS), Nowshera Road, Mardan.    '],
-           [ 'business_school_id' => '212' , 'location' => 'Institute of Education & Management Sciences, University Road, D.I. Khan'],
-           [ 'business_school_id' => '212' , 'location' => 'Bannu Institute of Education, Science &Technology (BEST), Kacharey Road, Bannu.'],
-           [ 'business_school_id' => '212' , 'location' => 'Al Noor College of Engineering & Technology, Rawalpindi Road, Near Bypass Bridge, Opposite U.E.T Campus, Kohat.'],
-           [ 'business_school_id' => '212' , 'location' => 'Swabi Engineering College of Technology (SECT), Ahmadabad, Shah Mansoor, Swabi.'],
-           [ 'business_school_id' => '212' , 'location' => 'College of Business & I.T, Khaar Road, Opposite Saddam Petrol Pump, College Colony, Batkhela.'],
-           [ 'business_school_id' => '212' , 'location' => 'Chakdara Polytechnic Institute, G.T Road, Amir Abad, Chakdara Distt: Dir (L)'],
-           [ 'business_school_id' => '212' , 'location' => 'Dir College of Science & Technology, Saddo, Timergara, Dir Lower.'],
-           [ 'business_school_id' => '212' , 'location' => 'Saidu Polytechnic Institute,'],
-           [ 'business_school_id' => '212' , 'location' => 'Park Avenue, College Colony, Saidu Sharif, Swat.'],
-           [ 'business_school_id' => '212' , 'location' => 'Indus Polytechnic Institute,'],
-           [ 'business_school_id' => '212' , 'location' => 'G.T Road, Odigram, Swat.'],
-           [ 'business_school_id' => '212' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '180' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '180' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '180' , 'location' => 'Hyderabad'],
+           [ 'business_school_id' => '52' , 'location' => 'Toba Tek Singh
+'],
+           [ 'business_school_id' => '52' , 'location' => 'Depalpur
+'],
+           [ 'business_school_id' => '52' , 'location' => 'Burewala
+'],
+           [ 'business_school_id' => '53' , 'location' => 'Lahore
+'],
+           [ 'business_school_id' => '53' , 'location' => 'Sialkot 
+'],
+           [ 'business_school_id' => '53' , 'location' => 'Narrowal  
+'],
+           [ 'business_school_id' => '53' , 'location' => 'Rawalpindi
+'],
+           [ 'business_school_id' => '33' , 'location' => 'Layyah
+'],
+           [ 'business_school_id' => '33' , 'location' => 'Sahiwal
+'],
+           [ 'business_school_id' => '55' , 'location' => 'Bhakkar
+'],
+           [ 'business_school_id' => '55' , 'location' => 'Mianwali
+'],
+           [ 'business_school_id' => '55' , 'location' => 'Lahore
+'],
+           [ 'business_school_id' => '55' , 'location' => 'Mandi Bahauddin
+'],
+           [ 'business_school_id' => '55' , 'location' => 'Gujranwala
+'],
+           [ 'business_school_id' => '55' , 'location' => 'Faisalabad (Women)
+'],
+           [ 'business_school_id' => '55' , 'location' => 'Lyallpur
+'],
+           [ 'business_school_id' => '86' , 'location' => 'Mirpur Khas
+'],
+           [ 'business_school_id' => '86' , 'location' => 'Badin
+'],
+           [ 'business_school_id' => '86' , 'location' => 'Dadu
+'],
+           [ 'business_school_id' => '74' , 'location' => 'Khairpur
+'],
+           [ 'business_school_id' => '78' , 'location' => 'Shikarpur
+'],
+           [ 'business_school_id' => '77' , 'location' => 'Larkana
+'],
+           [ 'business_school_id' => '83' , 'location' => 'Naushahro Feroze
+'],
+           [ 'business_school_id' => '81' , 'location' => '​Kandkot
+
+'],
+           [ 'business_school_id' => '103' , 'location' => 'Abbottabad
+'],
+           [ 'business_school_id' => '103' , 'location' => 'Mardan 
+'],
+           [ 'business_school_id' => '103' , 'location' => 'Bannu
+'],
+           [ 'business_school_id' => '103' , 'location' => 'Jalozai
+'],
+           [ 'business_school_id' => '103' , 'location' => 'Kohat
+'],
+           [ 'business_school_id' => '104' , 'location' => 'Wari
+'],
+           [ 'business_school_id' => '108' , 'location' => '​Shangla
+'],
+           [ 'business_school_id' => '100' , 'location' => '​Hangu
+'],
+           [ 'business_school_id' => '95' , 'location' => '​Tank
+'],
+           [ 'business_school_id' => '123' , 'location' => '​Gawadar
+'],
+           [ 'business_school_id' => '17' , 'location' => '​Quetta
+'],
+           [ 'business_school_id' => '121' , 'location' => '​Pishin
+'],
+           [ 'business_school_id' => '121' , 'location' => 'Noshki
+'],
+           [ 'business_school_id' => '121' , 'location' => 'Khuzdar
+'],
+           [ 'business_school_id' => '161' , 'location' => 'Islamabad 
+'],
+           [ 'business_school_id' => '161' , 'location' => 'Sargodha
+'],
+           [ 'business_school_id' => '161' , 'location' => 'Gujrat 
+'],
+           [ 'business_school_id' => '210' , 'location' => 'Islamabad 
+'],
+           [ 'business_school_id' => '210' , 'location' => 'Peshawar 
+'],
+           [ 'business_school_id' => '210' , 'location' => 'Lahore 
+'],
+           [ 'business_school_id' => '186' , 'location' => 'Islamabad
+'],
+           [ 'business_school_id' => '186' , 'location' => 'Larkana
+'],
+           [ 'business_school_id' => '186' , 'location' => 'Dubai
+'],
+           [ 'business_school_id' => '186' , 'location' => 'Hyderabad
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Ras-Al-Khaimah, UAE (Campus)
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Information Technology, F-8 Markaz, Islamabad.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Information Technology, F-8 Markaz, Islamabad.
+'],
+           [ 'business_school_id' => '15' , 'location' => 'National Textile Institute (NTI), Main Park Road, Lane # 7, Chak Shehzad, Islamabad  
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Islamabad Federal College (IFC), Plaza # 154, St. No # 30, I&T Center, G-9/1, Islamabad.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Abbott Group of Colleges,
+'],
+           [ 'business_school_id' => '212' , 'location' => ' Islamabad Expressway, Near TM CNG Station, Khanapul, Islamabad.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'College of Business & Technologies, Comsats University Road, Mandian, Abbottabad.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Sciences & I.T Opposite New China Market, Near Noor Surgical Hospital, D-Stop, Abbottabad Road, Haripur.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Abbott Group of Colleges,
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Adjacent Zarai Taraqiati Bank, P.O Jhangi, Mansehra Road, Abbottabad. 
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Abbott Group of Colleges,
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Opposite WAPDA Grid Station, Near Dhangri Chowk, Shahra-E-Resham, Mansehra.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Comwave Institute of Sciences & I.T, Near Sultan Plaza, Supply Area, Mansehra Road, Abbottabad.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'ANSI Institute of Education, Science &Technology (AIMS), Nowshera Road, Mardan.    
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Institute of Education & Management Sciences, University Road, D.I. Khan
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Bannu Institute of Education, Science &Technology (BEST), Kacharey Road, Bannu.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Al Noor College of Engineering & Technology, Rawalpindi Road, Near Bypass Bridge, Opposite U.E.T Campus, Kohat.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Swabi Engineering College of Technology (SECT), Ahmadabad, Shah Mansoor, Swabi.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'College of Business & I.T, Khaar Road, Opposite Saddam Petrol Pump, College Colony, Batkhela.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Chakdara Polytechnic Institute, G.T Road, Amir Abad, Chakdara Distt: Dir (L)
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Dir College of Science & Technology, Saddo, Timergara, Dir Lower.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Saidu Polytechnic Institute,
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Park Avenue, College Colony, Saidu Sharif, Swat.
+'],
+           [ 'business_school_id' => '212' , 'location' => 'Indus Polytechnic Institute,
+'],
+           [ 'business_school_id' => '212' , 'location' => 'G.T Road, Odigram, Swat.
+'],
+           [ 'business_school_id' => '180' , 'location' => 'Islamabad
+'],
+           [ 'business_school_id' => '180' , 'location' => 'Karachi
+'],
            [ 'business_school_id' => '179' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '179' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '135' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '135' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '135' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '135' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '135' , 'location' => 'Chiniot'],
+           [ 'business_school_id' => '135' , 'location' => 'Lahore
+'],
+           [ 'business_school_id' => '135' , 'location' => 'Karachi
+'],
+           [ 'business_school_id' => '135' , 'location' => 'Peshawar
+'],
+           [ 'business_school_id' => '135' , 'location' => 'Chiniot
+'],
+           [ 'business_school_id' => '203' , 'location' => 'Islamabad'],
            [ 'business_school_id' => '173' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '173' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '154' , 'location' => 'Multan'],
-           [ 'business_school_id' => '154' , 'location' => 'Bahawalpur'],
-           [ 'business_school_id' => '154' , 'location' => 'Rahim Yar Khan'],
-           [ 'business_school_id' => '154' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '211' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '211' , 'location' => 'Dera Ismail Khan'],
-           [ 'business_school_id' => '162' , 'location' => 'Sialkot'],
-           [ 'business_school_id' => '162' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '136' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '136' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '136' , 'location' => 'Malakand'],
-           [ 'business_school_id' => '136' , 'location' => 'Islamabad'],
+           [ 'business_school_id' => '154' , 'location' => 'Multan
+'],
+           [ 'business_school_id' => '154' , 'location' => 'Bahawalpur
+'],
+           [ 'business_school_id' => '154' , 'location' => 'Rahim Yar Khan
+'],
+           [ 'business_school_id' => '211' , 'location' => 'Peshawar 
+'],
+           [ 'business_school_id' => '162' , 'location' => 'Sialkot
+'],
+           [ 'business_school_id' => '136' , 'location' => 'Lahore
+'],
+           [ 'business_school_id' => '136' , 'location' => 'Faisalabad
+'],
+           [ 'business_school_id' => '136' , 'location' => 'Malakand 
+'],
            [ 'business_school_id' => '214' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '214' , 'location' => 'Quetta'],
-           [ 'business_school_id' => '172' , 'location' => 'Mauritius'],
-           [ 'business_school_id' => '172' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '145' , 'location' => 'Sheikhupura'],
-           [ 'business_school_id' => '145' , 'location' => 'Lahore'],
+           [ 'business_school_id' => '172' , 'location' => 'Mauritius
+'],
+           [ 'business_school_id' => '145' , 'location' => 'Sheikhupura
+'],
            [ 'business_school_id' => '131' , 'location' => 'london'],
-           [ 'business_school_id' => '131' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '132' , 'location' => '​Sialkot'],
-           [ 'business_school_id' => '132' , 'location' => '​Islamabad'],
-           [ 'business_school_id' => '179' , 'location' => 'Sawat'],
-           [ 'business_school_id' => '179' , 'location' => 'Karachi'],
-           ///// Campuses
-           [ 'business_school_id' => '1' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '2' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '2' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '3' , 'location' => 'Kohat'],
-           [ 'business_school_id' => '3' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '4' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '5' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '8' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '11' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '12' , 'location' => 'Gilgit Baltistan'],
-           [ 'business_school_id' => '14' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '17' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '18' , 'location' => 'Multan'],
-           [ 'business_school_id' => '19' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '20' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '21' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '22' , 'location' => 'Abbottabad'],
-           [ 'business_school_id' => '23' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '24' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '25' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '26' , 'location' => 'FR Kohat'],
-           [ 'business_school_id' => '28' , 'location' => 'Rawalpindi'],
-           [ 'business_school_id' => '29' , 'location' => 'Skardu'],
-           [ 'business_school_id' => '30' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '32' , 'location' => 'Rawalpindi'],
-           [ 'business_school_id' => '34' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '35' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '36' , 'location' => 'Dera Ghazi Khan'],
-           [ 'business_school_id' => '37' , 'location' => 'Sialkot'],
-           [ 'business_school_id' => '38' , 'location' => 'Bahawalpur'],
-           [ 'business_school_id' => '40' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '41' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '42' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '43' , 'location' => 'Rahim Yar Khan'],
-           [ 'business_school_id' => '45' , 'location' => 'Multan'],
-           [ 'business_school_id' => '46' , 'location' => 'Multan'],
-           [ 'business_school_id' => '47' , 'location' => 'Rawalpindi'],
-           [ 'business_school_id' => '48' , 'location' => 'Rawalpindi'],
-           [ 'business_school_id' => '49' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '54' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '58' , 'location' => 'Multan'],
-           [ 'business_school_id' => '59' , 'location' => 'Multan'],
-           [ 'business_school_id' => '61' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '62' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '63' , 'location' => 'Okara'],
-           [ 'business_school_id' => '64' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '65' , 'location' => 'Sahiwal'],
-           [ 'business_school_id' => '66' , 'location' => 'Bahawalpur'],
-           [ 'business_school_id' => '67' , 'location' => 'Narowa'],
-           [ 'business_school_id' => '68' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '69' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '70' , 'location' => 'Khairpur'],
-           [ 'business_school_id' => '71' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '72' , 'location' => 'Sindh'],
-           [ 'business_school_id' => '73' , 'location' => 'Jamshoro'],
-           [ 'business_school_id' => '75' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '76' , 'location' => 'Nawabshah'],
-           [ 'business_school_id' => '79' , 'location' => 'Larkana'],
-           [ 'business_school_id' => '80' , 'location' => 'Tandojam'],
-           [ 'business_school_id' => '82' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '84' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '85' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '87' , 'location' => 'Khairpur Mirs'],
-           [ 'business_school_id' => '88' , 'location' => 'Bhitshah'],
-           [ 'business_school_id' => '89' , 'location' => 'Hyderabad'],
-           [ 'business_school_id' => '90' , 'location' => 'Shikarpur'],
-           [ 'business_school_id' => '91' , 'location' => 'Mardan'],
-           [ 'business_school_id' => '92' , 'location' => 'Abbottabad'],
-           [ 'business_school_id' => '93' , 'location' => 'Charsadda'],
-           [ 'business_school_id' => '94' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '96' , 'location' => 'Mansehra'],
-           [ 'business_school_id' => '97' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '98' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '99' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '101' , 'location' => 'Karak'],
-           [ 'business_school_id' => '102' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '105' , 'location' => 'Malakand'],
-           [ 'business_school_id' => '106' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '107' , 'location' => 'Bannu'],
-           [ 'business_school_id' => '109' , 'location' => 'Haripur'],
-           [ 'business_school_id' => '110' , 'location' => 'Swabi'],
-           [ 'business_school_id' => '111' , 'location' => 'Swabi'],
-           [ 'business_school_id' => '112' , 'location' => 'Nowshera'],
-           [ 'business_school_id' => '113' , 'location' => 'Mardan'],
-           [ 'business_school_id' => '114' , 'location' => 'Mardan'],
-           [ 'business_school_id' => '115' , 'location' => 'Lakki Marwat'],
-           [ 'business_school_id' => '116' , 'location' => 'Buner'],
-           [ 'business_school_id' => '117' , 'location' => 'Chitral'],
-           [ 'business_school_id' => '118' , 'location' => 'Khuzdar'],
-           [ 'business_school_id' => '119' , 'location' => 'Quetta'],
-           [ 'business_school_id' => '120' , 'location' => 'Balochistan'],
-           [ 'business_school_id' => '122' , 'location' => 'Quetta'],
-           [ 'business_school_id' => '124' , 'location' => 'Loralai'],
-           [ 'business_school_id' => '125' , 'location' => 'Quetta'],
-           [ 'business_school_id' => '126' , 'location' => 'AJ&K'],
-           [ 'business_school_id' => '127' , 'location' => 'Muzaffarabad'],
-           [ 'business_school_id' => '128' , 'location' => 'Rawalakot'],
-           [ 'business_school_id' => '129' , 'location' => 'Bagh-AJ&K'],
-           [ 'business_school_id' => '130' , 'location' => 'Kotli'],
-           [ 'business_school_id' => '133' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '134' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '137' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '138' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '139' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '140' , 'location' => 'Islamabad'],
-           [ 'business_school_id' => '141' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '142' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '143' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '144' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '146' , 'location' => 'Taxila'],
-           [ 'business_school_id' => '147' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '148' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '149' , 'location' => 'Multan'],
-           [ 'business_school_id' => '150' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '151' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '152' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '153' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '155' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '156' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '157' , 'location' => 'Gujranwala'],
-           [ 'business_school_id' => '158' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '159' , 'location' => 'Faisalabad'],
-           [ 'business_school_id' => '160' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '163' , 'location' => 'Lahore'],
-           [ 'business_school_id' => '164' , 'location' => 'Wah'],
-           [ 'business_school_id' => '165' , 'location' => 'Sialkot'],
-           [ 'business_school_id' => '166' , 'location' => 'Mianwali'],
-           [ 'business_school_id' => '167' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '168' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '169' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '170' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '171' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '174' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '175' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '176' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '177' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '178' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '181' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '182' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '183' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '184' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '185' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '187' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '188' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '189' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '190' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '191' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '192' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '193' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '194' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '195' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '196' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '197' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '198' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '199' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '200' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '201' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '202' , 'location' => 'Karachi'],
-           [ 'business_school_id' => '204' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '205' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '206' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '207' , 'location' => 'Swabi Topi'],
-           [ 'business_school_id' => '208' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '209' , 'location' => 'Nowshera'],
-           [ 'business_school_id' => '213' , 'location' => 'Peshawar'],
-           [ 'business_school_id' => '215' , 'location' => 'AJ&K'],
+           [ 'business_school_id' => '132' , 'location' => '​Sialkot
+'],
+           [ 'business_school_id' => '179' , 'location' => 'Sawat']
+          
+           
+          
+          
+
          ]);
 
     }

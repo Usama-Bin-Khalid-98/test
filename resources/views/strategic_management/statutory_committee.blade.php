@@ -115,11 +115,10 @@
                                 <div class="form-group">
                                     <label for="name">Attach File</label>
                                     <input type="file" name="file" value="" id="file" >
-                                    <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-3">
                                 <div class="form-group pull-right" style="margin-top: 20px;">
                                     <label for="name"></label>
                                     <input type="submit" name="add" value="Add" class="btn btn-info">

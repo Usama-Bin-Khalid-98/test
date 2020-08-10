@@ -1,6 +1,0 @@
-@include('strategic_management.includes.8_1')
-@include('strategic_management.includes.8_2')
-@include('strategic_management.includes.8_3')
-@include('strategic_management.includes.8_4')
-@include('strategic_management.includes.8_4b')
-@include('strategic_management.includes.8_5')

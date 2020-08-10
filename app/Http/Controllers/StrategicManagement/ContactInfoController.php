@@ -70,8 +70,7 @@ class ContactInfoController extends Controller
                         'designation_id' => $request->designation_id,
                         'focal_person' => $request->focal_person,
                         'cv' => $path.'/'.$imageName,
-                        'campus_id' => auth()->user()->campus_id,
-                        'created_by' => auth()->user()->id,
+                        'business_school_id' => auth()->user()->business_school_id
                 ]);
 
                     return response()->json(['success' => 'Contact Information added successfully.']);
@@ -144,7 +143,7 @@ class ContactInfoController extends Controller
                     'designation_id' => $request->designation_id,
                     'focal_person' => $request->focal_person,
                     'cv' => $path.'/'.$imageName,
-                    'updated_by' => auth()->user()->id
+                    'business_school_id' => auth()->user()->business_school_id
                     ]
                 );
 
@@ -158,7 +157,6 @@ class ContactInfoController extends Controller
                'designation_id' => $request->designation_id,
                'focal_person' => $request->focal_person,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Contact Information updated successfully.']);
 
@@ -177,9 +175,6 @@ class ContactInfoController extends Controller
     public function destroy(ContactInfo $contactInfo)
     {
          try {
-            ContactInfo::where('id', $contactInfo->id)->update([
-               'deleted_by' => Auth::user()->id 
-           ]);
              ContactInfo::destroy($contactInfo->id);
                 return response()->json(['success' => 'Record deleted successfully.']);
          }catch (Exception $e)

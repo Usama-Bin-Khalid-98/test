@@ -14,7 +14,7 @@
                                          
                                          
                                     ?>
-                                    @foreach($contactInformation as $data)@if($data->designationId==2)
+                                    @foreach($contactInformation as $data)@if($data->designationName=='Dean')
                                         <?php
                                             $deanName = $data->name;
                                             $deanJobTitle = $data->designationName;
@@ -24,7 +24,7 @@
                                         ?>
                                     @endif
 
-                                    @if($data->designationId==1)
+                                    @if($data->designationName=='Head')
                                         <?php
                                             $headName = $data->name;
                                             $headJobTitle = $data->designationName;
@@ -36,7 +36,7 @@
 
 
 
-                                    @if($data->designationId==3)
+                                    @if($data->designationName=='Focal')
                                         <?php
                                             $focalName = $data->name;
                                             $focalJobTitle = $data->designationName;

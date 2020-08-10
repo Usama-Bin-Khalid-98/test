@@ -15,10 +15,6 @@ class CreateBudgetaryInfosTable extends Migration
     {
         Schema::create('budgetary_infos', function (Blueprint $table) {
             $table->id();
-            $table->integer('campus_id')->unsigned()->nullable();
-            $table->foreign('campus_id')
-                ->references('id')
-                ->on('campuses');
             $table->string('year',100);
             $table->string('uni_budget',100);
             $table->string('uni_proposed_budget',100);
@@ -26,18 +22,6 @@ class CreateBudgetaryInfosTable extends Migration
             $table->string('budget_type',100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->foreign('created_by')
-                ->references('id')
-                ->on('users');
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('updated_by')
-                ->references('id')
-                ->on('users');
-            $table->integer('deleted_by')->unsigned()->nullable();
-            $table->foreign('deleted_by')
-                ->references('id')
-                ->on('users');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -13,10 +13,9 @@
                               </thead>
 
                               <tbody>
-                                <?php //echo "<pre>";
+                                <?php echo "<pre>";
                                   //print_r(count($programsPortfolio));
-                                //echo "</pre>";
-                                
+                                echo "</pre>";
                                 //print_r($programsPortfolio[1]->id);
                                 for ($i=0; $i < count($programsPortfolio); $i++) { 
                                  

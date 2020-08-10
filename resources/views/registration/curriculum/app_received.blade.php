@@ -64,8 +64,8 @@
                                     <label for="name">Program Name</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
-                                        @foreach($scopes as $scope)
-                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
+                                        @foreach($programs as $program)
+                                         <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -96,7 +96,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Student Intake</label>
-                                    <input name="student_intake" id="student_intake" class="form-control" >
+                                    <textarea name="student_intake" id="student_intake" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -127,8 +127,6 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                  <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Semesters</th>
                                     <th>Application Received</th>
@@ -143,8 +141,6 @@
 
                                 @foreach($apps as $portfolio)
                                 <tr>
-                                    <td>{{$portfolio->campus->business_school->name}}</td>
-                                    <td>{{$portfolio->campus->location}}</td>
                                     <td>{{$portfolio->program->name}}</td>
                                     <td>{{$portfolio->semester->name}}</td>
                                     <td>{{$portfolio->app_received}}</td>
@@ -153,14 +149,12 @@
                                     <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                 <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","semester_id":"{{$portfolio->semester_id}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-
+                                    
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                  <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Program</th>
                                     <th>Semesters</th>
                                     <th>Application Received</th>
@@ -192,18 +186,17 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-
                         <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                   <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($scopes as $scope)
-                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
+                                <label for="name">Program</label>
+                                <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Program</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->id}}">{{$program->name}}</option>
+                                    @endforeach
+                                </select>
+                               <input type="hidden" id="edit_id">
+                            </div>
                         </div>
 
                         <div class="col-md-6">

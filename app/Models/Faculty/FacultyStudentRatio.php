@@ -3,19 +3,18 @@
 namespace App\Models\Faculty;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Common\Campus;
+use App\BusinessSchool;
 use App\Models\Common\Program;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FacultyStudentRatio extends Model
 {
     use SoftDeletes;
-    protected $table = 'faculty_student_ratio';
-
+    
     protected $guarded = [];
 
-    public function campus() {
-        return $this->belongsTo(Campus::class);
+    public function business_school() {
+        return $this->belongsTo(BusinessSchool::class);
     }
 
     public function program() {

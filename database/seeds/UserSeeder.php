@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
             ['name' => 'admin',
             'cnic' => '17101-1234324-1',
             'contact_no' => '+92-51-90800206',
-            'email' => 'nbeac@hec.pk',
+            'email' => 'nbeac@hec.gov.pk',
             'password' => Hash::make('admin!@#$'),
             'user_type' => 'admin',
             'status' => 'active',
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             ['name' => 'Sania Tufail',
             'cnic' => '17101-1234324-1',
             'contact_no' => '+92-51-90800206',
-            'email' => 'stufail@hec.pk',
+            'email' => 'stufail@hec.gov.pk',
             'password' => Hash::make('admin!@#$'),
             'user_type' => 'admin',
             'status' => 'active',
@@ -40,14 +40,16 @@ class UserSeeder extends Seeder
             'cnic' => '17101-1234324-1',
             'contact_no' => '+92-51-90800206',
             'email' => 'city@gmail.com',
-            'email_verified_at' => '2020-07-29 17:32:04',
             'password' => Hash::make('admin!@#$'),
             'business_school_id' => 1,
+<<<<<<< HEAD
 <<<<<<< HEAD
             'campus_id' => 1,
 =======
             'campus_id' => 209,
 >>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+=======
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
             'country' => 'pakistan',
             'city' => 'peshawar',
             'user_type' => 'business_school',

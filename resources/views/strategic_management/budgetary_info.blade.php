@@ -62,9 +62,27 @@
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="2000">2000</option>
+                                        <option value="2001">2001</option>
+                                        <option value="2002">2002</option>
+                                        <option value="2003">2003</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                        <option value="2006">2006</option>
+                                        <option value="2007">2007</option>
+                                        <option value="2008">2008</option>
+                                        <option value="2009">2009</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
                                     </select>
                                 </div>
                             </div>
@@ -139,11 +157,9 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>University Budget</th>
                                     <th>University proposed Budget</th>
@@ -156,8 +172,6 @@
                                 <tbody>
                                 @foreach($budgets as $budget)
                                 <tr>
-                                    <td>{{$budget->campus->business_school->name}}</td>
-                                    <td>{{$budget->campus->location}}</td>
                                     <td>{{$budget->year}}</td>
                                     <td>{{$budget->uni_budget}}</td>
                                     <td>{{$budget->uni_proposed_budget}}</td>
@@ -171,8 +185,6 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>University Budget</th>
                                     <th>University proposed Budget</th>
@@ -287,7 +299,7 @@
     </div>
     <!-- /.modal -->
 
-
+    
     <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

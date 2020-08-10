@@ -58,17 +58,15 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                            <form action="javascript:void(0)" id="form" method="POST">
-
-                               <div class="col-md-3">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Name of Member</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="{{old('name')}}">
-{{--                                    <select name="statutory_committees_id" id="statutory_committees_id" class="form-control select2" style="width: 100%;">--}}
-{{--                                        <option selected disabled >Select Member</option>--}}
-{{--                                        @foreach($statutory_committee as $committee)--}}
-{{--                                        <option value="{{$committee->id}}">{{$committee->name}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                        </select>--}}
+                                    <select name="statutory_committees_id" id="statutory_committees_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled >Select Member</option>
+                                        @foreach($statutory_committee as $committee)
+                                        <option value="{{$committee->id}}">{{$committee->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                             </div>
 
@@ -83,26 +81,26 @@
                                     </select>
                                 </div>
                             </div>
-                           <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="name">Affiliation</label>
-                                <input type="text" name="affiliation" id="affiliation" class="form-control">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Affiliation</label>
+                                    <input type="text" name="affiliation" id="affiliation" class="form-control">
+                                </div>
                             </div>
-                           </div>
-                           <div class="col-md-3">
-                               <div class="form-group">
-                                   <label for="name">Name of Statutory Body (if)</label>
-                                   <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
-                                       <option selected disabled >Select Body Name</option>
-                                       @foreach($bodies as $designation)
-                                           <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                       @endforeach
-                                   </select>
-                               </div>
-                           </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Name of Statutory Body</label>
+                                    <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled >Select Body Name</option>
+                                        @foreach($bodies as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
-
-                               <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
@@ -139,15 +137,13 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
-                                    <th>Statutory Body Name</th>
+                                    <th>Name of Statutory Body</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -155,28 +151,23 @@
                                 <tbody>
                                @foreach($affiliations as $affiliation)
                                 <tr>
-
-                                    <td>{{$affiliation->campus->business_school->name}}</td>
-                                    <td>{{$affiliation->campus->location}}</td>
-                                    <td>{{$affiliation->name}}</td>
+                                    <td>{{$affiliation->statutory_committees->name}}</td>
                                     <td>{{$affiliation->designation->name}}</td>
                                     <td>{{$affiliation->affiliation}}</td>
-                                    <td>{{@$affiliation->statutory_bodies->name}}</td>
+                                    <td>{{$affiliation->statutory_bodies->name}}</td>
                                     <td><i class="badge {{$affiliation->status == 'active'?'bg-green':'bg-red'}}">{{$affiliation->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","name":"{{$affiliation->name}}","designation_id":"{{$affiliation->designation_id}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","statutory_committees_id":"{{$affiliation->statutory_committees_id}}","designation_id":"{{$affiliation->designation_id}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
-
+                               
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Name of Member</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
-                                    <th>Statutory Body Name</th>
+                                    <th>Name of Statutory Body</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -206,25 +197,18 @@
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Name of Statutory Body</label>
-                                <select name="statutory_bodies_id" id="edit_statutory_bodies_id" class="form-control select2" style="width: 100%;">
-                                    <option selected disabled >Select Body Name</option>
-                                    @foreach($bodies as $designation)
-                                        <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Name of Member</label>
-                                    <input type="text" name="name" id="edit_name" class="form-control" value="{{old('name')}}">
+                                    <select name="statutory_committees_id" id="edit_statutory_committees_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled >Select Member</option>
+                                        @foreach($statutory_committee as $committee)
+                                        <option value="{{$committee->id}}">{{$committee->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
-
+                        
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
@@ -243,6 +227,18 @@
                                     <input type="text" name="affiliation" id="edit_affiliation" value="{{old('edit_affiliation')}}"  class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name of Statutory Body</label>
+                                    <select name="statutory_bodies_id" id="edit_statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled >Select Body Name</option>
+                                        @foreach($bodies as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -264,7 +260,7 @@
     </div>
     <!-- /.modal -->
 
-
+   
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -294,17 +290,17 @@
         });
 
          $('#form').submit(function (e) {
+            let statutory_committees_id = $('#statutory_committees_id').val();
             let designation_id = $('#designation_id').val();
             let affiliation = $('#affiliation').val();
-            let name = $('#name').val();
             let statutory_bodies_id = $('#statutory_bodies_id').val();
 
-            !name?addClass('name'):removeClass('name');
+            !statutory_committees_id?addClass('statutory_committees_id'):removeClass('statutory_committees_id');
             !designation_id?addClass('designation_id'):removeClass('designation_id');
             !affiliation?addClass('affiliation'):removeClass('affiliation');
-            // !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
+            !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
 
-            if(!designation_id || !affiliation || !name)
+            if(!statutory_committees_id || !designation_id || !affiliation || !statutory_bodies_id)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -345,7 +341,7 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_name').val(data.name);
+            $('#edit_statutory_committees_id').select2().val(data.statutory_committees_id).trigger('change');
             $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_affiliation').val(data.affiliation);
             $('#edit_statutory_bodies_id').select2().val(data.statutory_bodies_id).trigger('change');
@@ -354,19 +350,19 @@
         });
 
 $('#updateForm').submit(function (e) {
-            let name = $('#edit_name').val();
+            let statutory_committees_id = $('#edit_statutory_committees_id').val();
             let designation_id = $('#edit_designation_id').val();
             let affiliation = $('#edit_affiliation').val();
             let statutory_bodies_id = $('#edit_statutory_bodies_id').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !name?addClass('edit_name'):removeClass('edit_name');
+            !statutory_committees_id?addClass('edit_statutory_committees_id'):removeClass('edit_statutory_committees_id');
             !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
             !affiliation?addClass('edit_affiliation'):removeClass('edit_affiliation');
             !statutory_bodies_id?addClass('edit_statutory_bodies_id'):removeClass('edit_statutory_bodies_id');
 
-            if(!name || !designation_id || !affiliation || !statutory_bodies_id)
+            if(!statutory_committees_id || !designation_id || !affiliation || !statutory_bodies_id)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -442,7 +438,7 @@ $('#updateForm').submit(function (e) {
         })
 
 
-
+        
 
     </script>
 

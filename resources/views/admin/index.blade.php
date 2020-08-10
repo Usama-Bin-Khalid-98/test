@@ -221,11 +221,10 @@
                         <thead>
                         <tr>
                             <th>Business School Name</th>
-                            <th>Campus</th>
                             <th>Contact Person Name</th>
                             <th>Contact</th>
                             <th>Email</th>
-{{--                            <th>Invoice Slip</th>--}}
+                            <th>Invoice Slip</th>
                             <th>Account Type</th>
                             <th>Status</th>
 {{--                            <th>Action</th>--}}
@@ -237,12 +236,11 @@
                         @foreach($registrations as $user)
                         <tr>
                             <td>{{$user->business_school->name}}</td>
-                            <td>{{$user->campus->location??'Main Campus'}}</td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->contact_no}}</td>
                             <td>{{$user->email}}</td>
-{{--                            <td><a href="{{@$user->business_school->slip[0]->slip}}">{{$user->user_type==='peer_review'?'no slip':'Invoice Slip'}}</a></td>--}}
-                            <td>{{$user->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>
+                            <td><a href="{{$user->business_school->slip[0]->slip}}">Invoice Slip</a></td>
+                            <td>{{$user->user_type}}</td>
                             <td><i class="badge {{$user->status=='disabled'?'bg-red':''}} status" data-id="{{$user->id}}" style="background: red" >Disabled</i></td>
 {{--                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>--}}
                         </tr>
@@ -252,11 +250,10 @@
                         <tfoot>
                         <tr>
                             <th>Business School Name</th>
-                            <th>Campus</th>
                             <th>Contact Person Name</th>
                             <th>Contact</th>
                             <th>Email</th>
-{{--                            <th>Invoice Slip</th>--}}
+                            <th>Invoice Slip</th>
                             <th>Account Type</th>
                             <th>Status</th>
 {{--                            <th>Action</th>--}}
@@ -274,6 +271,7 @@
             <!-- /.box -->
 
         </section>
+<<<<<<< HEAD
 
           <!--Invoices list-->
         <section class="col-lg-12 connectedSortable">
@@ -360,6 +358,8 @@
             <!-- /.box -->
 
         </section>
+=======
+>>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
         <!-- right col -->
       </div>
       <!-- /.row (main row) -->

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+ 
     Route::get('/', function () {
         return view('auth.login');
     });
@@ -26,6 +27,20 @@ use Illuminate\Support\Facades\Route;
     Route::get('get-campuses', 'CampusController@getCampuses');
  
     Auth::routes(['verify' => true]);
+ 
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+Route::get('/login', function() {
+    return view('auth.login');
+});
+// Registration Routes...
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register');
+
+Auth::routes(['verify' => true]);
+ 
     // Only verified users may enter...
     Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
  
@@ -48,29 +63,45 @@ use Illuminate\Support\Facades\Route;
     // Permissions resource route.
     Route::resource('permissions', 'Auth\PermissionController');
 
-    //// Strategic Management
-    Route::prefix('strategic')->group(function () {
+
+//// Strategic Management
+Route::prefix('strategic')->group(function () {
     Route::resource('basicinfo','StrategicManagement\BasicInfoController');
     Route::resource('invoices','StrategicManagement\SlipController');
-    Route::post('generateInvoice','StrategicManagement\SlipController@generateInvoice');
     Route::resource('scope','StrategicManagement\ScopeController');
     Route::resource('contact-info','StrategicManagement\ContactInfoController');
     Route::resource('statutory-committees','StrategicManagement\StatutoryCommitteeController');
     Route::resource('affiliations','StrategicManagement\AffiliationController');
     Route::resource('budgetary-info','BudgetaryInfoController');
     Route::resource('strategic-plan','StrategicPlanController');
-
     Route::resource('print','PrintController');
-    Route::resource('registrationPrint','RegistrationPrintController');
 
-
-
-    Route::resource('mission-vision','MissionVisionController');
 
 
 });
 
 
+// Curriculum
+Route::resource('program-portfolio','ProgramPortfolioController');
+Route::resource('entry-requirements','EntryRequirementController');
+Route::resource('application-received','ApplicationReceivedController');
+
+// Students
+Route::resource('student-enrolment','StudentEnrolmentController');
+
+// Faculty
+Route::get('/faculty_summary','Faculty\FacultySummaryController@index')->name('faculty_summary');
+Route::get('/visiting_faculty','Faculty\VisitingFacultyController@index')->name('visiting_faculty');
+Route::resource('faculty-gender','Faculty\FacultyGenderController');
+Route::resource('faculty-stability','Faculty\FacultyStabilityController');
+Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
+Route::resource('work-load','Faculty\WorkloadController');
+Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
+
+
+//research-summary
+Route::resource('research-summary','ResearchSummaryController');
+ 
     // Curriculum
     Route::resource('program-portfolio','ProgramPortfolioController');
     Route::resource('entry-requirements','EntryRequirementController');
@@ -215,3 +246,6 @@ use Illuminate\Support\Facades\Route;
 
     });
  
+ 
+//Facilities-information
+Route::resource('financial-info','FinancialInfoController');

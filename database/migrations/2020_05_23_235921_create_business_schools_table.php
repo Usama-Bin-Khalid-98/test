@@ -28,10 +28,9 @@ class CreateBusinessSchoolsTable extends Migration
             $table->enum('sector', ['public', 'private'])->nullable();
             $table->enum('profit_status',['For Profit', 'None Profit'])->nullable();
             $table->enum('status',['active','inactive']);
-            $table->enum('isCompleted',['yes','no'])->default('no');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->enum('hierarchical_context',['Affiliated', 'Constituent Part'] )->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

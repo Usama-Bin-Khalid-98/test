@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\StrategicManagement;
 
+use App\Models\StrategicManagement\StatutoryCommittee;
 use App\Models\Common\Designation;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\Models\StrategicManagement\Affiliation;
@@ -10,7 +11,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 class AffiliationController extends Controller
 {
@@ -21,14 +21,14 @@ class AffiliationController extends Controller
      */
     public function index()
     {
-
         
+        $statutory_committee = StatutoryCommittee::all();
         $designations = Designation::all();
         $bodies = StatutoryBody::all();
 
-        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->get();
+        $affiliations = Affiliation::with('statutory_committees','designation','statutory_bodies')->get();
         //dd($affiliations);
-        return view('strategic_management.affiliations', compact('designations','bodies','affiliations'));
+        return view('strategic_management.affiliations', compact('statutory_committee','designations','bodies','affiliations'));
     }
 
     /**
@@ -57,13 +57,10 @@ class AffiliationController extends Controller
         try {
 
             Affiliation::create([
-                'campus_id' => Auth::user()->campus_id,
-                'name' => $request->name,
+                'statutory_committees_id' => $request->statutory_committees_id,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
-                'statutory_bodies_id' => $request->statutory_bodies_id,
-                'created_by' => Auth::user()->id
-
+                'statutory_bodies_id' => $request->statutory_bodies_id
             ]);
 
             return response()->json(['success' => ' Affiliations added successfully.']);
@@ -115,12 +112,11 @@ class AffiliationController extends Controller
         try {
 
             Affiliation::where('id', $affiliation->id)->update([
-                'name' => $request->name,
+                'statutory_committees_id' => $request->statutory_committees_id,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id,
-                'status' => $request->status,
-                'updated_by' => Auth::user()->id
+                'status' => $request->status
             ]);
             return response()->json(['success' => 'Affiliations updated successfully.']);
 
@@ -139,9 +135,6 @@ class AffiliationController extends Controller
     public function destroy(Affiliation $affiliation)
     {
         try {
-            Affiliation::where('id', $affiliation->id)->update([
-               'deleted_by' => Auth::user()->id 
-           ]);
             Affiliation::destroy($affiliation->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
@@ -153,10 +146,10 @@ class AffiliationController extends Controller
     protected function rules() {
         return [
 
-            'name' => 'required',
+            'statutory_committees_id' => 'required',
             'designation_id' => 'required',
             'affiliation' => 'required',
-//            'statutory_bodies_id' => 'required'
+            'statutory_bodies_id' => 'required'
         ];
     }
 

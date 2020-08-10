@@ -64,8 +64,8 @@
                                     <label for="name">Program Name</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
-                                        @foreach($scopes as $scope)
-                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
+                                        @foreach($programs as $program)
+                                         <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -109,8 +109,6 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Program Name</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>
@@ -122,8 +120,6 @@
 
                                 @foreach($entryRequirements as $req)
                                 <tr>
-                                    <td>{{$req->campus->business_school->name}}</td>
-                                    <td>{{$req->campus->location}}</td>
                                     <td>{{$req->program->name}}</td>
                                     <td>{{$req->eligibility_criteria->name}}</td>
                                     <td>{{$req->min_req}}</td>
@@ -135,8 +131,6 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Program Name</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>
@@ -167,15 +161,15 @@
                     <div class="modal-body">
                         <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">Program Name</label>
-                                   <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($scopes as $scope)
-                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
+                                <label for="name">Program</label>
+                                <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Program</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{$program->id}}">{{$program->name}}</option>
+                                    @endforeach
+                                </select>
+                               <input type="hidden" id="edit_id">
+                            </div>
                         </div>
 
                         <div class="col-md-6">

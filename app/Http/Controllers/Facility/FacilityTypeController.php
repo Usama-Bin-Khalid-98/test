@@ -4,21 +4,9 @@ namespace App\Http\Controllers\Facility;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Facility\FacilityType;
 
 class FacilityTypeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(['auth','verified']);
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -93,10 +81,5 @@ class FacilityTypeController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function getFacilities(FacilityType $facilityType)
-    {
-        return $facilityType->facility()->select('id', 'name')->get();
     }
 }

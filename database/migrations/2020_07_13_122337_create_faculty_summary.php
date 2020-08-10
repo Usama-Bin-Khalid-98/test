@@ -16,7 +16,6 @@ class CreateFacultySummary extends Migration
         Schema::create('faculty_summary', function (Blueprint $table) {
             $table->increments('id');
 
-
             $table->unsignedBigInteger('business_school_id');
             
 
@@ -25,12 +24,6 @@ class CreateFacultySummary extends Migration
 
             $table->integer('program_id')->unsigned();
             
-
-
-            //$table->integer('business_school_id')->unsigned();
-            //$table->foreign('business_school_id')->references('id')->on('business_schools');
-            //$table->integer('program_id')->unsigned();
-            //$table->foreign('program_id')->references('id')->on('programs');
 
             $table->integer('faculty_available');
             $table->enum('status',['active','inactive'])->default('active');

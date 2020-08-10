@@ -18,7 +18,6 @@ class CreateCharterTypesTable extends Migration
             $table->string('name',100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

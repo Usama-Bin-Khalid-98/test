@@ -1,4 +1,4 @@
-@section('pageTitle', 'Scope Accreditation')
+@section('pageTitle', 'Users')
 
 
 @if(Auth::user())
