@@ -1,10 +1,10 @@
-@section('pageTitle', 'Faculty Student Ratio')
+@section('pageTitle', 'Visiting Faculty ')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-   <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
@@ -15,12 +15,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Faculty Student Ratio
+                Visiting Faculty
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Faculty Student Ratio</li>
+                <li class="active">Visiting Faculty</li>
             </ol>
         </section>
         <section class="content-header">
@@ -40,9 +40,10 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on the total enrolments of business school students in Table 4.4</h3>
+                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year in Table 4.3</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -57,64 +58,45 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
-                            <form action="javascript:void(0)" id="form" method="POST">
+                           <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
+                                    <label for="name">Faculty Type</label>
+                                   <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Faculty Type</option>
+                                        @foreach($faculty_types as $faculty)
+                                         <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
                                         @endforeach
                                         </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program</label>
-                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($programs as $program)
-                                         <option value="{{$program->id}}">{{$program->name}}</option>
+                                    <label for="name">Designation</label>
+                                   <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                         <option value="{{$designation->id}}">{{$designation->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
                             </div>
-                           <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year"  class="form-control select2">
-                                        <option value="">Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
-
-                            </div>
-                            </div>
-                          
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Enrollments</label>
-                                    <input type="number" name="total_enrollments" id="total_enrollments" class="form-control">
+                                    <label for="name">MAX Cources Allowed</label>
+                                    <input type="number" name="max_cources_allowed" id="max_cources_allowed" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">FTE for program </label>
+                                    <input type="number" name="tc_program1" id="tc_program1" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">FTE for Program 2</label>
+                                    <input type="number" name="tc_program2" id="tc_program2" class="form-control">
                                 </div>
                             </div>
 
@@ -125,11 +107,15 @@
                                 </div>
                             </div>
                         </form>
+
+                        </div>
+                        <!-- /.box-body -->
+                        <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty Student Ratio</h3>
+                            <h3 class="box-title">Visiting Faculty Equivalent (VFE) in program(s)</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -137,34 +123,44 @@
                                 <thead>
                                 <tr>
                                     <th>Business School</th>
-                                    <th>Program name</th>
-                                    <th>Year</th>
-                                    <th>Total Enrollments</th>
+                                    <th>Campus</th>
+                                    <th>Faculty Type</th>
+                                    <th>Designation</th>
+                                    <th>Max Cources Allowed</th>
+                                    <th>Program 1</th>
+                                    <th>Program 2</th>
                                     <th>Status</th>
                                     <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($ratios as $req)
+                                @foreach($visitings as $req)
                                 <tr>
-                                    <td>{{$req->business_school->name}}</td>
-                                    <td>{{$req->programs->name??""}}</td>
-                                    <td>{{$req->year}}</td>
-                                    <td>{{$req->total_enrollments}}</td>
+                                    <td>{{$req->campus->business_school->name}}</td>
+                                    <td>{{$req->campus->location}}</td>
+                                    <td>{{$req->lookup_faculty_type->faculty_type}}</td>
+                                    <td>{{$req->designation->name}}</td>
+                                    <td>{{$req->max_cources_allowed}}</td>
+                                    <td>{{$req->tc_program1}}</td>
+                                    <td>{{$req->tc_program2}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","business_school_id":"{{$req->business_school_id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","tc_program1":"{{$req->tc_program1}}","tc_program2":"{{$req->tc_program2}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>Business School</th>
-                                    <th>Program name</th>
-                                    <th>Year</th>
-                                    <th>Total Enrollments</th>
+                                    <th>Campus</th>
+                                    <th>Faculty Type</th>
+                                    <th>Designation</th>
+                                    <th>Max Cources Allowed</th>
+                                    <th>Program 1</th>
+                                    <th>Program 2</th>
                                     <th>Status</th>
                                     <th>isComplete</th>
                                     <th>Action</th>
@@ -179,28 +175,27 @@
                 <!-- Main content -->
             </div>
         </section>
+
     </div>
 
-    
-    <!-- /.modal -->
-
-     <div class="modal fade" id="edit-modal">
+   <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Faculty Student Ratio. </h4>
+                    <h4 class="modal-title">Edit visiting Faculty. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        <div class="col-md-6">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Business School</label>
-                                   <select name="business_school_id" id="edit_business_school_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Business School</option>
-                                        @foreach($businesses as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
+                                    <label for="name">Faculty Type</label>
+                                   <select name="lookup_faculty_type_id" id="edit_lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Faculty Type</option>
+                                        @foreach($faculty_types as $faculty)
+                                         <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
                                         @endforeach
                                         </select>
                                 </div>
@@ -209,51 +204,33 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Program</label>
-                                   <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($programs as $program)
-                                         <option value="{{$program->id}}">{{$program->name}}</option>
+                                    <label for="name">Designation</label>
+                                   <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Designation</option>
+                                        @foreach($designations as $business)
+                                         <option value="{{$business->id}}">{{$business->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
                             </div>
-                            
-                           <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year"  class="form-control select2">
-                                        <option value="">Select Year</option>
-                                        <option value="2000">2000</option>
-                                        <option value="2001">2001</option>
-                                        <option value="2002">2002</option>
-                                        <option value="2003">2003</option>
-                                        <option value="2004">2004</option>
-                                        <option value="2005">2005</option>
-                                        <option value="2006">2006</option>
-                                        <option value="2007">2007</option>
-                                        <option value="2008">2008</option>
-                                        <option value="2009">2009</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
-                                        <option value="2016">2016</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                    </select>
 
-                            </div>
-                            </div>
-
-                        <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Total Enrollments</label>
-                                    <input type="number" name="total_enrollments" id="edit_total_enrollments" value="{{old('edit_total_enrollments')}}" class="form-control">
+                                    <label for="name">Max Cources allowed</label>
+                                    <input type="number" name="max_cources_allowed" id="edit_max_cources_allowed" value="{{old('edit_max_cources_allowed')}}" class="form-control">
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Program1</label>
+                                    <input type="number" name="tc_program1" id="edit_tc_program1" value="{{old('edit_tc_program1')}}" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">program2</label>
+                                    <input type="number" name="tc_program2" id="edit_tc_program2" value="{{old('edit_tc_program2')}}" class="form-control">
                                 </div>
                               </div>
 
@@ -285,7 +262,9 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+
+    <!-- /.modal -->
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -313,17 +292,19 @@
         });
 
          $('#form').submit(function (e) {
-            let business_school_id = $('#business_school_id').val();
-            let program_id = $('#program_id').val();
-            let year = $('#year').val();
-            let total_enrollments = $('#total_enrollments').val();
+            let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
+            let designation_id = $('#designation_id').val();
+            let max_cources_allowed = $('#max_cources_allowed').val();
+            let tc_program1 = $('#tc_program1').val();
+            let tc_program2 = $('#tc_program2').val();
 
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
-            !program_id?addClass('program_id'):removeClass('program_id');
-            !year?addClass('year'):removeClass('year');
-            !total_enrollments?addClass('total_enrollments'):removeClass('total_enrollments');
+            !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
+            !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
+            !tc_program1?addClass('tc_program1'):removeClass('tc_program1');
+            !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
 
-            if(!business_school_id || !program_id || !year || !total_enrollments)
+            if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -333,7 +314,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("faculty-student-ratio")}}',
+                url:'{{url("faculty-teaching")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -364,30 +345,33 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
-            $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_year').select2().val(data.year).trigger('change');
-            $('#edit_total_enrollments').val(data.total_enrollments);
+            $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
+            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_max_cources_allowed').val(data.max_cources_allowed);
+            $('#edit_tc_program1').val(data.tc_program1);
+            $('#edit_tc_program2').val(data.tc_program2);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
             $('input[value='+data.isCompleted+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let business_school_id = $('#edit_business_school_id').val();
-            let program_id = $('#edit_program_id').val();
-            let year = $('#edit_year').val();
-            let total_enrollments = $('#edit_total_enrollments').val();
+            let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
+            let designation_id = $('#edit_designation_id').val();
+            let max_cources_allowed = $('#edit_max_cources_allowed').val();
+            let tc_program1 = $('#edit_tc_program1').val();
+            let tc_program2 = $('#edit_tc_program2').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            let isCompleted = $('input[name=edit_isCompleted]:checked').val();
-            !business_school_id?addClass('edit_business_school_id'):removeClass('edit_business_school_id');
-            !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
-            !year?addClass('edit_year'):removeClass('edit_year');
-            !total_enrollments?addClass('edit_total_enrollments'):removeClass('edit_total_enrollments');
+            let isCompleted= $('input[name=edit_isCompleted]:checked').val();
+            !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
+            !designation_id?addClass('edit_designation_id'):removeClass('edit_lookup_faculty_designation_id');
+            !max_cources_allowed?addClass('edit_max_cources_allowed'):removeClass('edit_max_cources_allowed');
+            !tc_program1?addClass('edit_tc_program1'):removeClass('edit_tc_program1');
+            !tc_program2?addClass('edit_tc_program2'):removeClass('edit_tc_program2');
 
-            if(!business_school_id || !program_id || !year || !total_enrollments )
+            if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2 )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -397,7 +381,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("faculty-student-ratio")}}/'+id,
+                url:'{{url("faculty-teaching")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -432,7 +416,7 @@ $('#updateForm').submit(function (e) {
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("faculty-student-ratio")}}/'+id,
+                        url:'{{url("faculty-teaching")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){

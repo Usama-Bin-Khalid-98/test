@@ -123,7 +123,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year.</h3>
+                            <h3 class="box-title">Visiting Faculty Equivalent (VFE) in program(s)</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

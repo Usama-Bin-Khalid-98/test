@@ -169,8 +169,12 @@ Route::resource('research-summary','ResearchSummaryController');
         Route::resource('desk-review', 'DeskReviewController');
         Route::resource('nbeac-criteria', 'NbeacCriteriaController');
         Route::resource('department-fee', 'DepartmentFeeController');
+        Route::resource('print','PrintController');        
+        Route::resource('registrationPrint','RegistrationPrintController');
+
 
     });
+
 //    Route::put('users-roles', 'Auth\UserController\user_roles');
 
     Route::group(['middleware' => ['role:BusinessSchool']], function () {
@@ -186,8 +190,10 @@ Route::resource('research-summary','ResearchSummaryController');
         Route::resource('budgetary-info','BudgetaryInfoController');
         Route::resource('strategic-plan','StrategicPlanController');
         Route::resource('mission-vision','MissionVisionController');
-        Route::resource('print','PrintController');
         });
+    
+        Route::resource('print','PrintController');        
+        Route::resource('registrationPrint','RegistrationPrintController');
         // Curriculum
         Route::resource('program-portfolio','ProgramPortfolioController');
         Route::resource('entry-requirements','EntryRequirementController');
