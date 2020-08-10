@@ -23,8 +23,8 @@ class CreateDeskReviewsTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->integer('nbeac_criteria_id')->unsigned()->nullable();
-            $table->foreign('nbeac_criteria_id')
+            $table->integer('nbeac_criterias_id')->unsigned()->nullable();
+            $table->foreign('nbeac_criterias_id')
                 ->references('id')
                 ->on('nbeac_criterias');
             $table->enum('isEligible',['yes','no'])->default('no');
