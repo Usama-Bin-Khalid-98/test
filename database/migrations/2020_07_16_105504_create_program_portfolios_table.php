@@ -15,20 +15,14 @@ class CreateProgramPortfoliosTable extends Migration
     {
         Schema::create('program_portfolios', function (Blueprint $table) {
             $table->increments('id');
-<<<<<<< HEAD
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-<<<<<<< HEAD
             $table->integer('pre_req_id')->unsigned()->nullable();
             $table->foreign('pre_req_id')
                 ->references('id')
                 ->on('programs');
-=======
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
-=======
->>>>>>> parent of 02f0a6b... Merge branch 'master' of https://gitlab.com/walayatkhan/nbeac into ubaid
             $table->integer('program_id')->unsigned();
             $table->foreign('program_id')
                 ->references('id')
@@ -43,7 +37,6 @@ class CreateProgramPortfoliosTable extends Migration
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('course_type_id')
                 ->references('id')
                 ->on('course_types')
