@@ -5,6 +5,10 @@ namespace App\Http\Controllers\StrategicManagement;
 use App\BusinessSchool;
 use App\Http\Controllers\Controller;
 use App\Models\Common\Department;
+<<<<<<< HEAD
+=======
+use App\Models\Common\FeeType;
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
 use App\Models\Common\PaymentMethod;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
@@ -25,7 +29,11 @@ class SlipController extends Controller
     public function index()
     {
         //
+<<<<<<< HEAD
         @$school_id = Auth::user()->business_school_id;
+=======
+        @$school_id = Auth::user()->campus_id;
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
         //dd($invoices);
         @$departments = Department::where('status', 'active')->get();
@@ -68,7 +76,7 @@ class SlipController extends Controller
         $path = ''; $imageName = '';
         if(@$request->file('slip')) {
 
-            $school = BusinessSchool::where('id', Auth::user()->business_school_id)->first();
+            $school = BusinessSchool::where('id', Auth::user()->campus_id)->first();
             //dd($school->name);
             $filename = $school->name . "-slip-" . time() . '.' . $request->slip->getClientOriginalExtension();
             $path = 'uploads/schools/slips';
@@ -77,7 +85,11 @@ class SlipController extends Controller
             $request->file('slip')->move($path, $filename);
 
             Slip::create([
+<<<<<<< HEAD
                 'business_school_id' => Auth::user()->business_school_id,
+=======
+                'business_school_id' => Auth::user()->campus_id,
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                 'program_id' => $request->department_id,
                 'slip' => $path.'/'.$filename,
                 'status' => 'paid',
@@ -99,10 +111,18 @@ class SlipController extends Controller
     public function generateInvoice(Request $request)
     {
         //dd($request->all());
+<<<<<<< HEAD
         //
         try {
             Slip::create([
                 'business_school_id' => Auth::user()->business_school_id,
+=======
+        //get fee type
+
+        try {
+            Slip::create([
+                'business_school_id' => Auth::user()->campus_id,
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                 'invoice_no' => $request->invoice_no,
                 'department_id' => $request->department_id,
                 'status' => 'pending',
@@ -115,8 +135,11 @@ class SlipController extends Controller
         }
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
     /**
      * Display the specified resource.
      *

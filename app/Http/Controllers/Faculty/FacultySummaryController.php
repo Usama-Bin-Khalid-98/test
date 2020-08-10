@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Faculty;
-use App\Http\Controllers\Controller;
-
-use App\Models\Common\Degree;
+use App\Models\Faculty\FacultySummary;
+use App\Models\Common\Discipline;
+use App\Models\Common\FacultyQualification;
 use App\Models\Common\Program;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class FacultySummaryController extends Controller
 {
@@ -16,10 +21,12 @@ class FacultySummaryController extends Controller
      */
     public function index()
     {
-        $degrees = Degree::where('status', 'active')->get();
-        $programs = Program::where('status', 'active')->get();
+        $qualification = FacultyQualification::where('status', 'active')->get();
+        $discipline = Discipline::where('status', 'active')->get();
 
-        return view('registration.faculty.summary_faculty', compact('degrees','programs'));
+        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->get();
+
+        return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries'));
         //
     }
 
@@ -41,7 +48,28 @@ class FacultySummaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+            FacultySummary::create([
+                'campus_id' => Auth::user()->campus_id,
+                'faculty_qualification_id' => $request->faculty_qualification_id,
+                'discipline_id' => $request->discipline_id,
+                'number_faculty' => $request->number_faculty,
+                'created_by' => Auth::user()->id
+            ]);
+
+            return response()->json(['success' => 'Faculty Summary added successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -75,7 +103,27 @@ class FacultySummaryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            FacultySummary::where('id', $id)->update([
+                'faculty_qualification_id' => $request->faculty_qualification_id,
+                'discipline_id' => $request->discipline_id,
+                'number_faculty' => $request->number_faculty,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => 'Faculty Summary updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -86,6 +134,29 @@ class FacultySummaryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            FacultySummary::where('id', $id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
+            FacultySummary::destroy($id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'faculty_qualification_id' => 'required',
+            'discipline_id' => 'required',
+            'number_faculty' => 'required'
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

@@ -59,9 +59,12 @@
                                          <label for="name">Designation</label>
                                          <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                              <option value="">Select Designation</option>
+<<<<<<< HEAD
                                              <option value="">Dean of school</option>
                                              <option value="">Head of school </option>
                                              <option value="">NBEAC focal person </option>
+=======
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                              @foreach($designations as $designation)
                                                  <option value="{{$designation->id}}">{{$designation->name}}</option>
                                              @endforeach

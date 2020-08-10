@@ -314,11 +314,19 @@
 
                         @foreach($invoices as $invoice)
                         <tr>
+<<<<<<< HEAD
                             <td>{{$invoice->business_school->name}}</td>
                             <td>{{$invoice->campus->location??'Main Campus'}}</td>
                             <td>{{$invoice->business_school->user->name}}</td>
                             <td>{{$invoice->business_school->user->contact_no}}</td>
                             <td>{{$invoice->business_school->user->email}}</td>
+=======
+                            <td>{{@$invoice->business_school->name}}</td>
+                            <td>{{@$invoice->campus->location??'Main Campus'}}</td>
+                            <td>{{@$invoice->business_school->user->name}}</td>
+                            <td>{{@$invoice->business_school->user->contact_no}}</td>
+                            <td>{{@$invoice->business_school->user->email}}</td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                             <td><a href="{{@$invoice->slip}}">Invoice Slip</a></td>
 {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                             <td><i class="badge {{$invoice->status == 'inactive'?'bg-red':''}} status" data-id="{{$invoice->id}}" style="background: red" >{{$invoice->status != ''?ucwords($invoice->status):'inactive'}}</i></td>

@@ -12,7 +12,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(DepartmentSeeder::class);
+<<<<<<< HEAD
        // $this->call(PermissionSeeder::class);
+=======
+        $this->call(FacultyQualificationSeeder::class);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         $this->call(CharterTypeSeeder::class);
         $this->call(InstituteTypeSeeder::class);
         $this->call(BusinessSchoolSeeder::class);
@@ -24,6 +28,10 @@ class DatabaseSeeder extends Seeder
         $this->call(StatutoryBodySeeder::class);
         $this->call(SemesterSeeder::class);
         $this->call(UserSeeder::class);
+<<<<<<< HEAD
+=======
+        $this->call(RolePermissionSeeder::class);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         $this->call(DisciplineSeeder::class);
         $this->call(ReviewerRoleSeeder::class);
         $this->call(RegionSeeder::class);
@@ -46,5 +54,10 @@ class DatabaseSeeder extends Seeder
         $this->call(StaffCategorySeeder::class);
         $this->call(QecTypeSeeder::class);
         $this->call(NbeacCriteriaSeeder::class);
+<<<<<<< HEAD
+=======
+        $this->call(SlipSeeder::class);
+        $this->call(FacultyDegreeSeeder::class);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
     }
 }

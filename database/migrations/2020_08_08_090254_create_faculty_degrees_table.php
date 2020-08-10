@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgramPortfoliosTable extends Migration
+class CreateFacultyDegreesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,30 +13,16 @@ class CreateProgramPortfoliosTable extends Migration
      */
     public function up()
     {
-        Schema::create('program_portfolios', function (Blueprint $table) {
+        Schema::create('faculty_degrees', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-<<<<<<< HEAD
-            $table->integer('pre_req_id')->unsigned()->nullable();
-            $table->foreign('pre_req_id')
-                ->references('id')
-                ->on('programs');
-=======
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
-            $table->integer('program_id')->unsigned();
-            $table->foreign('program_id')
-                ->references('id')
-                ->on('programs');
-            $table->string('total_semesters',100);
-            $table->unsignedBigInteger('course_type_id');
-            $table->string('no_of_course',100);
-            $table->string('credit_hours',100);
-            $table->string('internship_req',100);
-            $table->string('fyp_req',100);
-            $table->enum('status', ['active','inactive'])->default('active');
+            $table->integer('faculty_foreign');
+            $table->integer('faculty_domestic');
+            $table->integer('faculty_international');
+            $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
@@ -50,13 +36,8 @@ class CreateProgramPortfoliosTable extends Migration
             $table->foreign('deleted_by')
                 ->references('id')
                 ->on('users');
-            $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('course_type_id')
-                ->references('id')
-                ->on('course_types')
-                ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -67,6 +48,6 @@ class CreateProgramPortfoliosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('program_portfolios');
+        Schema::dropIfExists('faculty_degrees');
     }
 }

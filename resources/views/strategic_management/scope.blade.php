@@ -61,7 +61,7 @@
                                 <div class="form-group">
                                     <label for="name">Degree Program</label>
                                     <select id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Program</option>
+                                        <option disabled selected >Select Program</option>
                                         @foreach($programs as $program)
                                         <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
                                         @endforeach

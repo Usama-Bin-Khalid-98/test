@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFacultyTeachingCources extends Migration
+class CreateDepartmentFeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,25 +13,22 @@ class CreateFacultyTeachingCources extends Migration
      */
     public function up()
     {
-        Schema::create('faculty_teaching_cources', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('campus_id')->unsigned()->nullable();
+        Schema::create('department_fees', function (Blueprint $table) {
+            $table->id();
+            $table->integer('campus_id')->unsigned();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-            $table->integer('lookup_faculty_type_id')->unsigned();
-            $table->foreign('lookup_faculty_type_id')
+            $table->integer('department_id')->unsigned();
+            $table->foreign('department_id')
                 ->references('id')
-                ->on('lookup_faculty_types');
-            $table->integer('designation_id')->unsigned();
-            $table->foreign('designation_id')
+                ->on('departments');
+            $table->BigInteger('fee_type_id')->unsigned();
+            $table->foreign('fee_type_id')
                 ->references('id')
-                ->on('designations');
-            $table->integer('max_cources_allowed');
-            $table->integer('tc_program1');
-            $table->integer('tc_program2');
-            $table->enum('status',['active','inactive'])->default('active');
-            $table->enum('isCompleted',['yes','no'])->default('no');
+                ->on('fee_types');
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
@@ -44,8 +41,8 @@ class CreateFacultyTeachingCources extends Migration
             $table->foreign('deleted_by')
                 ->references('id')
                 ->on('users');
+            $table->softDeletes();
             $table->timestamps();
-            $table->Softdeletes();
         });
     }
 
@@ -56,6 +53,6 @@ class CreateFacultyTeachingCources extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty_teaching_cources');
+        Schema::dropIfExists('department_fees');
     }
 }

@@ -12,5 +12,8 @@ class SlipSeeder extends Seeder
     public function run()
     {
         //
+        DB::table('slips')->insert([
+        ['invoice_no' => '0001', 'business_school_id' => 209, 'department_id' => 1, 'status' => 'pending']
+    ]);
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-
+use DB;
 class ScopeController extends Controller
 {
     /**
@@ -22,7 +22,14 @@ class ScopeController extends Controller
     public function index()
     {
         //
+<<<<<<< HEAD
         @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
+=======
+       // DB::enableQueryLog();
+        @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
+        //dd(DB::getQueryLog());
+        //dd($department_id);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
         $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
         $levels = Level::where('status', 'active')->get();
         $scopes = Scope::with('level', 'program')->get();
@@ -52,13 +59,20 @@ class ScopeController extends Controller
         try {
             //$update = BasicInfo::find($basicInfo->id);
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
+            if (Scope::where(['campus_id' => auth()->user()->campus_id, 'program_id' => $request->program_id, 'level_id' => $request->level_id] )->exists()) {
+                return response()->json(['error' => 'Record already Exists.'], 422);
+            }
             if($validation->fails())
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
                 $campus_id = auth()->user()->campus_id;
                 $created_id = auth()->user()->id;
+<<<<<<< HEAD
                 $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id] );
+=======
+                $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id, 'isComplete' =>'yes'] );
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                 $create = Scope::create($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }

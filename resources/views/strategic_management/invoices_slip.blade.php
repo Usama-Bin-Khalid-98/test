@@ -215,7 +215,13 @@
                                     <td><a href="{{$invoice->slip}}">Invoice</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
+<<<<<<< HEAD
                                     <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" ><i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"  data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->id}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{$invoice->comments}}" ,"transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}'></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}"  data-toggle="modal" data-target="#edit-modal"></i> </td>
+=======
+                                    <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" >
+                                            <i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
+                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}"  data-toggle="modal" data-target="#edit-modal"></i> </td>
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                 </tr>
                                 @endforeach
 
@@ -328,6 +334,7 @@
                                 <div class="box-body">
                                     <div class="col-md-6">
                                         <div class="form-group">
+<<<<<<< HEAD
                                             <label for="name">Degree Program</label>
                                             <select id="edit_department_id" name="department_id" class="form-control select2" style="width: 100%;">
                                                 <option value="">Select Program</option>
@@ -335,17 +342,37 @@
                                                     <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
                                                 @endforeach
                                             </select>
+=======
+                                            <label for="name">Degree Department</label>
+                                            <input type="text" readonly id="edit_department_id" name="department_id" readonly class="form-control">
+
+                                            {{--                                            <select id="edit_department_id" name="department_id" readonly class="form-control select2" style="width: 100%;">--}}
+{{--                                                <option value="">Select Department</option>--}}
+{{--                                                @foreach($departments as $department)--}}
+{{--                                                    <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="name">Invoice No</label>
+<<<<<<< HEAD
                                             <select id="update_invoice_no" name="invoice_no" class="form-control select2" style="width: 100%;">
                                                 <option value="">Select Invoice No</option>
                                                 @foreach($invoices as $invoice)
                                                     <option value="{{$invoice->id}}">{{$invoice->invoice_no }}</option>
                                                 @endforeach
                                             </select>
+=======
+                                            <input type="text" readonly id="update_invoice_no" readonly name="invoice_no" class="form-control">
+{{--                                                <option value="">Select Invoice No</option>--}}
+{{--                                                @foreach($invoices as $invoice)--}}
+{{--                                                    <option value="{{$invoice->id}}">{{$invoice->invoice_no }}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </input>--}}
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </div>
                                     </div>
 
@@ -386,7 +413,11 @@
                                             </select>
                                         </div>
                                     </div>
+<<<<<<< HEAD
                                     <div class="col-md-6">
+=======
+                                    <div class="col-md-12">
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         <div class="form-group">
                                             <label for="slip">Bank Deposit Slip</label>
                                             <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">
@@ -461,10 +492,17 @@
             //console.log('modal showed', $(this).data('id'));
             $('#id').val($(this).data('id'));
             let data = JSON.parse(JSON.stringify($(this).data('row')));
+<<<<<<< HEAD
             $('#edit_department_id').select2().val(data.department_id).trigger('change');
             $('#transaction_date').val(data.transaction_date);
             console.log('invoice id ', data.id);
             $('#update_invoice_no').select2().val(data.id).trigger('change');
+=======
+            console.log('invoice id ', data);
+            $('#edit_department_id').val(data.department_id);
+            $('#transaction_date').val(data.transaction_date);
+            $('#update_invoice_no').val(data.invoice_no);
+>>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
 
             $('#payment_method').select2().val(data.payment_method_id).trigger('change');
             $('#status').select2().val(data.status).trigger('change');

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\Slip;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class HomeController extends Controller
 {
@@ -15,6 +20,12 @@ class HomeController extends Controller
     {
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
+
+        $user = Auth::user();
+        //dd($user);
+        //$check = $user->hasRole(['editor', 'moderator']);
+
+
     }
 
     /**
@@ -24,6 +35,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //$userHas = Auth::user()->getPermissionsViaRoles();
+        //$check = $userHas->has('name');
+        //dd($check);
+        $registrations = User::with('business_school')->where('status', 'pending')->get();
+        $invoices = Slip::with('business_school', 'department')->get();
+        return view('home' , compact( 'registrations', 'invoices'));
     }
 }
