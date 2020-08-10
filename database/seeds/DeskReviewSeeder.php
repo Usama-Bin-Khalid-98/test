@@ -11,9 +11,6 @@ class DeskReviewSeeder extends Seeder
      */
     public function run()
     {
-    	 DB::table('desk_reviews')->insert([
-    	 	['status'=>'active']
-    	 ]);
         //
     }
 }

@@ -48,33 +48,6 @@ class DatabaseSeeder extends Seeder
         $this->call(QecTypeSeeder::class);
         $this->call(NbeacCriteriaSeeder::class);
         $this->call(SlipSeeder::class);
-<<<<<<< HEAD
-        $this->call(ContactInfoSeeder::class);
-         $this->call(DepartmentFeeSeeder::class);
-         $this->call(DeskReviewSeeder::class);
-        $this->call(EntryRequirementSeeder::class);
-        $this->call(FacultyGenderSeeder::class);
-
-         $this->call(FinancialInfoSeeder::class);
-         //$this->call(FinancialRiskSeeder::class);
-         // $this->call(FormalRelationshipSeeder::class);
-         $this->call(InternalCommunitySeeder::class);
-         $this->call(MissionVisionSeeder::class);
-        // $this->call(QecInfoSeeder::class);
-         $this->call(ResearchSummarySeeder::class);
-         $this->call(ScopeSeeder::class);
-         //$this->call(StatutoryCommitteeSeeder::class);
-         $this->call(StrategicPlanSeeder::class);
-         $this->call(StudentClubSeeder::class);
-         $this->call(StudentEnrolmentSeeder::class);
-         $this->call(StudentGenderSeeder::class);
-         $this->call(StudentsGraduatedSeeder::class);
-         $this->call(SupportStaffSeeder::class);
-         $this->call(SurveyQuestionnaireSeeder::class);
-         $this->call(WorkLoadSeeder::class);
-
-=======
         $this->call(FacultyDegreeSeeder::class);
->>>>>>> c4af9e790e4ce5d37249be4f354f62853a32856e
     }
 }
