@@ -61,10 +61,10 @@ class DatabaseSeeder extends Seeder
         $this->call(FormalRelationshipSeeder::class);
         $this->call(InternalCommunitySeeder::class);
         $this->call(MissionVisionSeeder::class);
-//        $this->call(QecInfoSeeder::class);
+        $this->call(QecInfoSeeder::class);
         $this->call(ResearchSummarySeeder::class);
         $this->call(ScopeSeeder::class);
-        //$this->call(StatutoryCommitteeSeeder::class);
+        $this->call(StatutoryCommitteeSeeder::class);
         $this->call(StrategicPlanSeeder::class);
         $this->call(StudentClubSeeder::class);
         $this->call(StudentEnrolmentSeeder::class);
