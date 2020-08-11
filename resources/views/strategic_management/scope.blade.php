@@ -59,7 +59,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Degree Program</label>
+                                    <label for="name">Degree program</label>
                                     <select id="program_id" class="form-control select2" style="width: 100%;">
                                         <option disabled selected >Select Program</option>
                                         @foreach($programs as $program)
@@ -83,7 +83,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Date of Program commencement</label>
+                                    <label for="name">Date of program commencement</label>
                                     <input type="date" id="date_program" value="{{old('date_program')}}" class="form-control">
                                 </div>
                             </div>

@@ -56,7 +56,7 @@
                              <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
                                  <div class="col-md-3">
                                      <div class="form-group">
-                                         <label for="name">Designation</label>
+                                         <label for="name">Job title</label>
                                          <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                              <option value="">Select Designation</option>
                                              @foreach($designations as $designation)

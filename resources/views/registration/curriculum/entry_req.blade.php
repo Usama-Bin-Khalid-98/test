@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on entry requirements for each program under review in Table 2.2 </h3>
+                            <h3 class="box-title">2.1.  Provide the portfolio of the program(s) under review in Table 2.1.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -61,7 +61,7 @@
                         	 <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program Name</label>
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($scopes as $scope)
@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Eligibility Criteria</label>
+                                    <label for="name">Eligibility criteria</label>
                                    <select name="eligibility_criteria_id" id="eligibility_criteria_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Eligibility Criteria</option>
                                         @foreach($criterias as $criteria)
@@ -83,7 +83,7 @@
                             </div>
                               <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Minimum requirements/Relative Weightage</label>
+                                    <label for="name">Minimum requirements/relative weightage</label>
                                     <input type="text" name="min_req" id="min_req" class="form-control">
                                 </div>
                               </div>
@@ -102,7 +102,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Entry Requirements for each program under review.</h3>
+                            <h3 class="box-title">Table 2.2. Entry requirements</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
