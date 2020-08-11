@@ -47,12 +47,14 @@ use Illuminate\Support\Facades\Route;
         Route::resource('desk-review', 'DeskReviewController');
         Route::resource('nbeac-criteria', 'NbeacCriteriaController');
         Route::resource('department-fee', 'DepartmentFeeController');
-        Route::resource('print','PrintController');        
-        Route::resource('registrationPrint','RegistrationPrintController');
 
 
     });
+    Route::group(['middleware' => ['role:NBEACAdmin|BusinessSchool']], function () {
+        Route::resource('print','PrintController');
+        Route::resource('registrationPrint','RegistrationPrintController');
 
+    });
 //    Route::put('users-roles', 'Auth\UserController\user_roles');
 
     Route::group(['middleware' => ['role:BusinessSchool']], function () {
@@ -69,9 +71,9 @@ use Illuminate\Support\Facades\Route;
         Route::resource('strategic-plan','StrategicPlanController');
         Route::resource('mission-vision','MissionVisionController');
         });
-    
-        Route::resource('print','PrintController');        
-        Route::resource('registrationPrint','RegistrationPrintController');
+
+//        Route::resource('print','PrintController');
+//        Route::resource('registrationPrint','RegistrationPrintController');
         // Curriculum
         Route::resource('program-portfolio','ProgramPortfolioController');
         Route::resource('entry-requirements','EntryRequirementController');
