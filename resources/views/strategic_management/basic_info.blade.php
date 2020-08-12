@@ -293,13 +293,11 @@
                         Notiflix.Notify.Failure(val);
 
                     })
-
                 }
             });
         });
 
     </script>
-
 
 @else
     {{"Login to Access this page"}}
