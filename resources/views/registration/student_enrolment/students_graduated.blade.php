@@ -43,7 +43,7 @@
 
                      <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">State the number of students who have graduated over the past three years for each program under review in Table 3.2</h3>
+                            <h3 class="box-title">3.3.State the number of students who have graduated over the past three years for each program under review in Table 3.2</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -60,7 +60,7 @@
                              <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program Name</label>
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
@@ -103,7 +103,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Graduated Students</h3>
+                            <h3 class="box-title">Table 3.2.Graduated students</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

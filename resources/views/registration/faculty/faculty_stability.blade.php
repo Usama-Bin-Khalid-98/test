@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year in Table 4.5</h3>
+                            <h3 class="box-title">  Provide data on faculty stability in Table 4.5.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -62,7 +62,7 @@
                         <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Faculty</label>
+                                    <label for="name">Total faculty</label>
                                     <input type="number" name="total_faculty" id="total_faculty" class="form-control">
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty Statbility</h3>
+                            <h3 class="box-title">Table 4.5.Faculty Statbility</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

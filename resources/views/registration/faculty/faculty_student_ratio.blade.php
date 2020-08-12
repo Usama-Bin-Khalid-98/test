@@ -42,7 +42,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on the total enrolments of business school students in Table 4.4</h3>
+                            <h3 class="box-title">   Fill in data to calculate student to teacher ratio for last year of each program under review in Table 4.4.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -60,7 +60,7 @@
                             <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program</label>
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
@@ -83,7 +83,7 @@
                           
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Enrollments</label>
+                                    <label for="name">Total enrollments(B) </label>
                                     <input type="number" name="total_enrollments" id="total_enrollments" class="form-control">
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty Student Ratio</h3>
+                            <h3 class="box-title">Table 4.4. Student to teacher ratio</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
