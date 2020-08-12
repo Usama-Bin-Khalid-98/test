@@ -32,11 +32,12 @@ class ApplicationReceivedController extends Controller
      */
     public function index()
     {
-
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $scopes = Scope::with('program')->get();
         $semesters = Semester::where('status', 'active')->get();
 
-        $apps  = ApplicationReceived::with('campus','program','semester')->get();
+        $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
         return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
     }

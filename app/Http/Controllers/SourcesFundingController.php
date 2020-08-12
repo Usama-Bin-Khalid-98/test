@@ -13,18 +13,19 @@ use Auth;
 
 class SourcesFundingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $amount = SourcesFunding::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('amount');
         $percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('percent_share');
         $fundings = FundingSources::get();
-        $sources  = SourcesFunding::with('campus','funding_sources')->get();
+        $sources  = SourcesFunding::with('campus','funding_sources')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
          return view('strategic_management.sources_funding', compact('fundings','sources','amount','percent_share'));
     }

@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\StrategicManagement;
+namespace App\Http\Controllers;
 
-use App\Models\Common\Designation;
-use App\Models\StrategicManagement\StatutoryBody;
-use App\Models\StrategicManagement\Affiliation;
+use App\StudentIntake;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
-class AffiliationController extends Controller
+class StudentIntakeController extends Controller
 {
     public function __construct()
     {
@@ -21,14 +19,12 @@ class AffiliationController extends Controller
     }
     public function index()
     {
+        
         $campus_id = Auth::user()->campus_id;
         $user_id = Auth::user()->id;
-        $designations = Designation::all();
-        $bodies = StatutoryBody::all();
+        $intakes = StudentIntake::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
-        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
-        //dd($affiliations);
-        return view('strategic_management.affiliations', compact('designations','bodies','affiliations'));
+         return view('registration.student_enrolment.intakes', compact('intakes'));
     }
 
     /**
@@ -55,18 +51,18 @@ class AffiliationController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            Affiliation::create([
-                'campus_id' => Auth::user()->campus_id,
-                'name' => $request->name,
-                'designation_id' => $request->designation_id,
-                'affiliation' => $request->affiliation,
-                'statutory_bodies_id' => $request->statutory_bodies_id,
+            $uni_id = Auth::user()->campus_id;
+            StudentIntake::create([
+                'campus_id' => $uni_id,
+                'year' => $request->year,
+                'bs_level' => $request->bs_level,
+                'ms_level' => $request->ms_level,
+                'phd_level' => $request->phd_level,
+                'total_intake' => $request->bs_level+ $request->ms_level+$request->phd_level,
                 'created_by' => Auth::user()->id
-
             ]);
 
-            return response()->json(['success' => ' Affiliations added successfully.']);
+            return response()->json(['success' => 'Student Intakes added successfully.']);
 
 
         }catch (Exception $e)
@@ -78,10 +74,10 @@ class AffiliationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\Affiliation  $affiliation
+     * @param  \App\StudentIntake  $studentIntake
      * @return \Illuminate\Http\Response
      */
-    public function show(Affiliation $affiliation)
+    public function show(StudentIntake $studentIntake)
     {
         //
     }
@@ -89,10 +85,10 @@ class AffiliationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\Affiliation  $affiliation
+     * @param  \App\StudentIntake  $studentIntake
      * @return \Illuminate\Http\Response
      */
-    public function edit(Affiliation $affiliation)
+    public function edit(StudentIntake $studentIntake)
     {
         //
     }
@@ -101,10 +97,10 @@ class AffiliationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\Affiliation  $affiliation
+     * @param  \App\StudentIntake  $studentIntake
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Affiliation $affiliation)
+    public function update(Request $request, StudentIntake $studentIntake)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -113,16 +109,16 @@ class AffiliationController extends Controller
         }
 
         try {
-
-            Affiliation::where('id', $affiliation->id)->update([
-                'name' => $request->name,
-                'designation_id' => $request->designation_id,
-                'affiliation' => $request->affiliation,
-                'statutory_bodies_id' => $request->statutory_bodies_id,
+            StudentIntake::where('id', $studentIntake->id)->update([
+                'year' => $request->year,
+                'bs_level' => $request->bs_level,
+                'ms_level' => $request->ms_level,
+                'phd_level' => $request->phd_level,
+                'total_intake' =>  $request->bs_level+ $request->ms_level+$request->phd_level,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
-            return response()->json(['success' => 'Affiliations updated successfully.']);
+            return response()->json(['success' => 'Student Intakes updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -133,16 +129,16 @@ class AffiliationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\Affiliation  $affiliation
+     * @param  \App\StudentIntake  $studentIntake
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Affiliation $affiliation)
+    public function destroy(StudentIntake $studentIntake)
     {
         try {
-            Affiliation::where('id', $affiliation->id)->update([
-               'deleted_by' => Auth::user()->id 
+            StudentIntake::where('id', $studentIntake->id)->update([
+               'deleted_by' => Auth::user()->id
            ]);
-            Affiliation::destroy($affiliation->id);
+            StudentIntake::destroy($studentIntake->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -152,11 +148,10 @@ class AffiliationController extends Controller
 
     protected function rules() {
         return [
-
-            'name' => 'required',
-            'designation_id' => 'required',
-            'affiliation' => 'required',
-//            'statutory_bodies_id' => 'required'
+            'year' => 'required',
+            'bs_level' => 'required',
+            'ms_level' => 'required',
+            'phd_level' => 'required'
         ];
     }
 

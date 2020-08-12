@@ -14,17 +14,19 @@ use Illuminate\Support\Facades\Storage;
 
 class StudentEnrolmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        
         $uniinfo = BusinessSchool::get();
         $programs = Program::where('status', 'active')->get();
         $campus_id = Auth::user()->campus_id;
-        $enrolments = StudentEnrolment::with('campus','program')->where('campus_id', $campus_id)->get();
+        $user_id = Auth::user()->id;
+        $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
          return view('registration.student_enrolment.enrolment', compact('uniinfo','programs','enrolments'));
     }
