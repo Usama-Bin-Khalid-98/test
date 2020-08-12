@@ -73,6 +73,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SupportStaffSeeder::class);
         $this->call(SurveyQuestionnaireSeeder::class);
         $this->call(WorkLoadSeeder::class);
+        $this->call(FundingSourcesSeeder::class);
         /// /////////
     }
 }

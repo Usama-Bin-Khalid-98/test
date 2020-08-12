@@ -26,6 +26,7 @@ use App\Models\Facility\StaffCategory;
 use App\Models\Facility\QecType;
 use App\Models\social_responsibility\WelfareProgram;
 use App\Models\StrategicManagement\StatutoryBody;
+use App\Models\StrategicManagement\FundingSources;
 use App\BusinessSchool;
 use App\PublicationType;
 use Illuminate\Http\Request;
@@ -182,6 +183,11 @@ class ConfigController extends Controller
                 $this->TableRows =FacultyQualification::all();
                 break;
             }
+            case 'funding_sources';
+            {
+                $this->TableRows =FundingSources::all();
+                break;
+            }
         }
 
 
@@ -275,6 +281,9 @@ class ConfigController extends Controller
 
         $FacultyQualification= FacultyQualification::all()->count();
         $counter['FacultyQualification'] = $FacultyQualification;
+
+        $FundingSources= FundingSources::all()->count();
+        $counter['FundingSources'] = $FundingSources;
 
 
         return $counter;
@@ -450,6 +459,12 @@ class ConfigController extends Controller
             case 'faculty_qualifications':
             {
                 $this->TableRows =FacultyQualification::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'funding_sources':
+            {
+                $this->TableRows =FundingSources::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -634,6 +649,12 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+            case 'funding_sources':
+            {
+                $this->TableRows = FundingSources::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
         }
     }
 
@@ -801,6 +822,12 @@ class ConfigController extends Controller
             case 'faculty_qualifications':
             {
                 $this->TableRows  = FacultyQualification::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'funding_sources':
+            {
+                $this->TableRows  = FundingSources::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }
