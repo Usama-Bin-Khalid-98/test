@@ -29,6 +29,7 @@ use App\Models\StrategicManagement\StatutoryBody;
 use App\Models\StrategicManagement\FundingSources;
 use App\BusinessSchool;
 use App\PublicationType;
+use App\ActivityEngagement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -188,6 +189,11 @@ class ConfigController extends Controller
                 $this->TableRows =FundingSources::all();
                 break;
             }
+            case 'activity_engagements';
+            {
+                $this->TableRows =ActivityEngagement::all();
+                break;
+            }
         }
 
 
@@ -284,6 +290,9 @@ class ConfigController extends Controller
 
         $FundingSources= FundingSources::all()->count();
         $counter['FundingSources'] = $FundingSources;
+
+        $ActivityEngagement= ActivityEngagement::all()->count();
+        $counter['ActivityEngagement'] = $ActivityEngagement;
 
 
         return $counter;
@@ -465,6 +474,12 @@ class ConfigController extends Controller
             case 'funding_sources':
             {
                 $this->TableRows =FundingSources::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'activity_engagements':
+            {
+                $this->TableRows =ActivityEngagement::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -655,6 +670,12 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+            case 'activity_engagements':
+            {
+                $this->TableRows = ActivityEngagement::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
         }
     }
 
@@ -828,6 +849,12 @@ class ConfigController extends Controller
             case 'funding_sources':
             {
                 $this->TableRows  = FundingSources::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'activity_engagements':
+            {
+                $this->TableRows  = ActivityEngagement::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }

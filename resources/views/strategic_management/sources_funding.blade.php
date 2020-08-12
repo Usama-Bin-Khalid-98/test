@@ -126,7 +126,7 @@
                                 </tr>
                                 @endforeach
                                 </tbody>
-                                <tr>
+                                <tr style="background-color: grey; color: white;">
                                     <td style="font-weight: bold;">Total</td>
                                     <td style="font-weight: bold;">{{@$amount}}</td>
                                     <td style="font-weight: bold;">{{@$percent_share}}</td>

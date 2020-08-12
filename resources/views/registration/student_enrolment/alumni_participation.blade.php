@@ -1,4 +1,4 @@
-@section('pageTitle', 'Student Intakes')
+@section('pageTitle', 'Alumni Participation')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Students Intakes
+                Alumni Participation
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Students Intakes </li>
+                <li class="active"> Alumni Participation </li>
             </ol>
         </section>
         <section class="content-header">
@@ -35,6 +35,7 @@
                 </div>
             </div>
         </section>
+
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
@@ -43,8 +44,9 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on student intake  of the business school for the last three years</h3>
-                                <div class="box-tools pull-right">
+                            <h3 class="box-title">3.13. Provide information on alumni participation in various activities in the Table 3.10.</h3>
+
+                            <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
@@ -56,42 +58,32 @@
                         </div>
 
                         <!-- /.box-header -->
-                        <form action="javascript:void(0)" id="form" method="POST">
-
                         <div class="box-body">
-                            <div class="col-md-3">
+                          <form action="javascript:void(0)" id="form" method="POST">
+                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                    <label for="name">Activity Engagements</label>
+                                    <select name="activity_engagements_id" id="activity_engagements_id" class="form-control select2" style="width: 100%;">
+                                        <option selected  disabled >Select Activity Engagements</option>
+                                        @foreach($engagements as $fund)
+                                            <option value="{{$fund->id}}">{{$fund->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">16 Year Programs</label>
-                                    <input type="text" name="bs_level" id="bs_level" class="form-control">
+                                    <label for="name">Number of Alumni Participated</label>
+                                    <input type="number" name="alumni_participated" id="alumni_participated" class="form-control">
                                 </div>
                             </div>
-
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">18 Year Programs</label>
-                                    <input type="text" name="ms_level" id="ms_level" class="form-control">
+                                    <label for="name">Major Input</label>
+                                    <input type="text" name="major_input" id="major_input" class="form-control">
                                 </div>
                             </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Doctoral Programs</label>
-                                    <input type="text" name="phd_level" id="phd_level" class="form-control">
-                                </div>
-                            </div>
-                        
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -99,63 +91,46 @@
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
+                        </form>
+
                         </div>
-                            </div>
-                    </form>
-                    </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Student Intakes</h3>
+                            <h3 class="box-title">Alumni Participation</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Year</th>
-                                    <th>16 Year</th>
-                                    <th>18 Year</th>
-                                    <th>Doctoral</th>
-                                    <th>Total Intakes</th>
+                                    <th>Activity Engagement</th>
+                                    <th>Number of Alumni Participated</th>
+                                    <th>Major Input</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($intakes as $enrolement)
+                               @foreach($participations as $plan)
                                 <tr>
-                                    <td>{{$enrolement->year}}</td>
-                                    <td>{{$enrolement->bs_level}}</td>
-                                    <td>{{$enrolement->ms_level}}</td>
-                                    <td>{{$enrolement->phd_level}}</td>
-                                    <td>{{$enrolement->total_intake}}</td>
-                                    <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","year":{{$enrolement->year}},"bs_level":"{{$enrolement->bs_level}}","ms_level":"{{$enrolement->ms_level}}","phd_level":"{{$enrolement->phd_level}}","total_intake":"{{$enrolement->total_intake}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td>{{$plan->activity_engagements->name}}</td>
+                                    <td>{{$plan->alumni_participated}}</td>
+                                    <td>{{$plan->major_input}}</td>
+                                    <td><i class="badge {{$plan->status == 'active'?'bg-green':'bg-red'}}">{{$plan->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "activity_engagements_id":"{{$plan->activity_engagements_id}}", "alumni_participated":"{{$plan->alumni_participated}}", "major_input":"{{$plan->major_input}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
-                                <tr style="background-color: grey;color: white;">
-                                    <td style="font-weight: bold;">Total</td>
-                                    <td style="font-weight: bold;">{{@$bs}}</td>
-                                    <td style="font-weight: bold;">{{@$ms}}</td>
-                                    <td style="font-weight: bold;">{{@$phd}}</td>
-                                    <td style="font-weight: bold;">{{@$t_intake}}</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Year</th>
-                                    <th>16 Year</th>
-                                    <th>18 Year</th>
-                                    <th>Doctoral</th>
-                                    <th>Total Intakes</th>
+                                    <th>Activity Engagement</th>
+                                    <th>Number of Alumni Participated</th>
+                                    <th>Major Input</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -167,8 +142,18 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
+
+
             </div>
+            <!-- /.row -->
+
+            <!-- /.row -->
+
+            <!-- /.content -->
+
+
         </section>
+
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -177,53 +162,36 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Student Intakes. </h4>
+                    <h4 class="modal-title">Edit Alumni Participation. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-
-                        <div class="col-md-6">
+                              <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                    <label for="name">Activity Engagement</label>
+                                    <select name="activity_engagements_id" id="edit_activity_engagements_id" class="form-control select2" style="width: 100%;">
+                                        <option selected  disabled >Select Activity Engagement</option>
+                                        @foreach($engagements as $fund)
+                                            <option value="{{$fund->id}}">{{$fund->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <input type="hidden" name="id" id="edit_id">
+                                <input type="hidden" id="edit_id">
                             </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Number of Alumni Participated</label>
+                                    <input type="number" name="alumni_participated" id="edit_alumni_participated" value="{{old('edit_alumni_participated')}}" class="form-control">
+                                </div>
+                              </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">16 year Program</label>
-                                    <input type="text" name="bs_level" id="edit_bs_level" value="{{old('bs_level')}}" class="form-control">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Major Input</label>
+                                    <input type="text" name="major_input" id="edit_major_input" value="{{old('edit_percent_share')}}" class="form-control">
+                                </div>
+                              </div>
 
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">18 year Program</label>
-                                    <input type="text" name="ms_level" id="edit_ms_level" value="{{old('ms_level')}}" class="form-control">
-
-                            </div>
-                        </div>
-                         <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">Doctoral Program</label>
-                                    <input type="text" name="phd_level" id="edit_phd_level" value="{{old('phd_level')}}" class="form-control">
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Total Intakes</label>
-                                    <input type="text" readonly name="total_intake"
-                                    id="edit_total_intake" value="{{old('total_intake')}}" class="form-control">
-                            </div>
-                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -246,7 +214,8 @@
     <!-- /.modal -->
 
 
-     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+    <!-- /.modal -->
+   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -273,19 +242,16 @@
             }
         });
 
-        $('#form').submit(function (e) {
-            // let uni_id = $('#uni_id').val();
-            let year = $('#year').val();
-            let bs_level = $('#bs_level').val();
-            let ms_level = $('#ms_level').val();
-            let phd_level = $('#phd_level').val();
+         $('#form').submit(function (e) {
+            let activity_engagements_id = $('#activity_engagements_id').val();
+            let alumni_participated = $('#alumni_participated').val();
+            let major_input = $('#major_input').val();
 
-            !year?addClass('year'):removeClass('year');
-            !bs_level?addClass('bs_level'):removeClass('bs_level');
-            !ms_level?addClass('ms_level'):removeClass('ms_level');
-            !phd_level?addClass('phd_level'):removeClass('phd_level');
+            !activity_engagements_id?addClass('activity_engagements_id'):removeClass('activity_engagements_id');
+            !alumni_participated?addClass('alumni_participated'):removeClass('alumni_participated');
+            !major_input?addClass('major_input'):removeClass('major_input');
 
-            if(!year || !bs_level || !ms_level || !phd_level  )
+            if(!activity_engagements_id || !alumni_participated || !major_input)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -295,7 +261,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("student-intake")}}',
+                url:'{{url("alumni-participation")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -323,32 +289,28 @@
         });
 
 
-        $('.edit').on('click', function () {
-            let data = JSON.parse(JSON.stringify($(this).data('row')));
-            // Initialize Select2
-            $('#edit_year').select2().val(data.year).trigger('change');
-            $('#edit_bs_level').val(data.bs_level);
-            $('#edit_ms_level').val(data.ms_level);
-            $('#edit_phd_level').val(data.phd_level);
-            $('#edit_total_intake').val(data.total_intake);
+         $('.edit').on('click', function () {
+            // let data = JSON.parse(JSON.stringify($(this).data('row')));
+             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#edit_activity_engagements_id').select2().val(data.activity_engagements_id).trigger('change');
+            $('#edit_alumni_participated').val(data.alumni_participated);
+            $('#edit_major_input').val(data.major_input);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-        $('#updateForm').submit(function (e) {
-            let year = $('#edit_year').val();
-            let bs_level = $('#edit_bs_level').val();
-            let ms_level = $('#edit_ms_level').val();
-            let phd_level = $('#edit_phd_level').val();
+$('#updateForm').submit(function (e) {
+            let activity_engagements_id = $('#edit_activity_engagements_id').val();
+            let alumni_participated = $('#edit_alumni_participated').val();
+            let major_input = $('#edit_major_input').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !year?addClass('edit_year'):removeClass('edit_year');
-            !bs_level?addClass('edit_bs_level'):removeClass('edit_bs_level');
-            !ms_level?addClass('edit_ms_level'):removeClass('edit_ms_level');
-            !phd_level?addClass('edit_phd_level'):removeClass('edit_phd_level');
+            !activity_engagements_id?addClass('edit_activity_engagements_id'):removeClass('edit_activity_engagements_id');
+            !alumni_participated?addClass('edit_alumni_participated'):removeClass('edit_alumni_participated');
+            !major_input?addClass('edit_major_input'):removeClass('edit_major_input');
 
-            if(!year || !bs_level || !ms_level || !phd_level)
+            if(!activity_engagements_id || !alumni_participated || !major_input)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -358,7 +320,7 @@
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("student-intake")}}/'+id,
+                url:'{{url("alumni-participation")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -386,13 +348,14 @@
             })
         });
 
-        $('.delete').on('click', function (e) {
+
+         $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("student-intake")}}/'+id,
+                        url:'{{url("alumni-participation")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -421,10 +384,6 @@
                 } );
 
         })
-
-
-
-
 
 
     </script>

@@ -210,6 +210,12 @@
                         <span class="label label-success pull-right">{{$counter['QecType']}}</span>
                     </span>
                     </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/activity_engagements')}}" class="text-green"><b>Activity Engagements</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['ActivityEngagement']}}</span>
+                    </span>
+                    </li>
                 </ul>
 
               <hr>

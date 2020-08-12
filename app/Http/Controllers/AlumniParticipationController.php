@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\StudentIntake;
+use App\AlumniParticipation;
+use App\ActivityEngagement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
-class StudentIntakeController extends Controller
+class AlumniParticipationController extends Controller
 {
     public function __construct()
     {
@@ -21,13 +22,10 @@ class StudentIntakeController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $user_id = Auth::user()->id;
-        $bs = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('bs_level');
-        $ms = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('ms_level');
-        $phd = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('phd_level');
-        $t_intake = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('total_intake');
-        $intakes = StudentIntake::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $engagements = ActivityEngagement::get();
+        $participations  = AlumniParticipation::with('campus','activity_engagements')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
-         return view('registration.student_enrolment.intakes', compact('intakes','bs','ms','phd','t_intake'));
+         return view('registration.student_enrolment.alumni_participation', compact('engagements','participations'));
     }
 
     /**
@@ -54,18 +52,16 @@ class StudentIntakeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            $uni_id = Auth::user()->campus_id;
-            StudentIntake::create([
-                'campus_id' => $uni_id,
-                'year' => $request->year,
-                'bs_level' => $request->bs_level,
-                'ms_level' => $request->ms_level,
-                'phd_level' => $request->phd_level,
-                'total_intake' => $request->bs_level+ $request->ms_level+$request->phd_level,
+
+            AlumniParticipation::create([
+                'campus_id' => Auth::user()->campus_id,
+                'activity_engagements_id' => $request->activity_engagements_id,
+                'alumni_participated' => $request->alumni_participated,
+                'major_input' => $request->major_input,
                 'created_by' => Auth::user()->id
             ]);
 
-            return response()->json(['success' => 'Student Intakes added successfully.']);
+            return response()->json(['success' => 'Alumni Participation added successfully.']);
 
 
         }catch (Exception $e)
@@ -77,10 +73,10 @@ class StudentIntakeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\StudentIntake  $studentIntake
+     * @param  \App\AlumniParticipation  $alumniParticipation
      * @return \Illuminate\Http\Response
      */
-    public function show(StudentIntake $studentIntake)
+    public function show(AlumniParticipation $alumniParticipation)
     {
         //
     }
@@ -88,10 +84,10 @@ class StudentIntakeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\StudentIntake  $studentIntake
+     * @param  \App\AlumniParticipation  $alumniParticipation
      * @return \Illuminate\Http\Response
      */
-    public function edit(StudentIntake $studentIntake)
+    public function edit(AlumniParticipation $alumniParticipation)
     {
         //
     }
@@ -100,10 +96,10 @@ class StudentIntakeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\StudentIntake  $studentIntake
+     * @param  \App\AlumniParticipation  $alumniParticipation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StudentIntake $studentIntake)
+    public function update(Request $request, AlumniParticipation $alumniParticipation)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -112,16 +108,15 @@ class StudentIntakeController extends Controller
         }
 
         try {
-            StudentIntake::where('id', $studentIntake->id)->update([
-                'year' => $request->year,
-                'bs_level' => $request->bs_level,
-                'ms_level' => $request->ms_level,
-                'phd_level' => $request->phd_level,
-                'total_intake' =>  $request->bs_level+ $request->ms_level+$request->phd_level,
+
+            AlumniParticipation::where('id', $alumniParticipation->id)->update([
+                'activity_engagements_id' => $request->activity_engagements_id,
+                'alumni_participated' => $request->alumni_participated,
+                'major_input' => $request->major_input,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
-            return response()->json(['success' => 'Student Intakes updated successfully.']);
+            return response()->json(['success' => 'Alumni Participation updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -132,16 +127,16 @@ class StudentIntakeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\StudentIntake  $studentIntake
+     * @param  \App\AlumniParticipation  $alumniParticipation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StudentIntake $studentIntake)
+    public function destroy(AlumniParticipation $alumniParticipation)
     {
         try {
-            StudentIntake::where('id', $studentIntake->id)->update([
-               'deleted_by' => Auth::user()->id
+        AlumniParticipation::where('id', $alumniParticipation->id)->update([
+               'deleted_by' => Auth::user()->id 
            ]);
-            StudentIntake::destroy($studentIntake->id);
+        AlumniParticipation::destroy($alumniParticipation->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -151,10 +146,9 @@ class StudentIntakeController extends Controller
 
     protected function rules() {
         return [
-            'year' => 'required',
-            'bs_level' => 'required',
-            'ms_level' => 'required',
-            'phd_level' => 'required'
+            'activity_engagements_id' => 'required',
+            'alumni_participated' => 'required',
+            'major_input' => 'required'
         ];
     }
 
