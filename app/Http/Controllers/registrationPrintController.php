@@ -80,10 +80,28 @@ class RegistrationPrintController extends Controller
 
          $studentsGenders = DB::select('SELECT student_genders.*, programs.name as programName from student_genders, programs, campuses WHERE student_genders.campus_id=campuses.id AND student_genders.program_id=programs.id AND student_genders.campus_id=?', array($userCampus[0]->campus_id));
 
-         
-           
-        return view('strategic_management.registration_application', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders'));
+
+         $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
+         //if($facultySummary[0]){
+             /*for($i=0;$i<count($facultySummary[0]);$i++) {
+               
+                $facultySummary[1][$i] = $this->getfacultySummary($i,$facultySummary[0],$userCampus[0]);
+
+             }*/
+         //}
+         // dd($facultySummary[1]);
+        return view('strategic_management.registration_application', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary'));
     }
+
+     public static function getfacultySummary($i, $facultySummary, $userCampus){
+        //dd($facultySummary[$i]->id);
+        
+            $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=? AND users.department_id=?', array($facultySummary[$i]->id,'209','5'));
+            return $facultySummary12;
+    }
+        
+
+         
 
     /**
      * Show the form for creating a new resource.
@@ -150,4 +168,7 @@ class RegistrationPrintController extends Controller
     {
         //
     }
+
+
+   
 }

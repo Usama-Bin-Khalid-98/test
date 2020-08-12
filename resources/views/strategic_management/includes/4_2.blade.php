@@ -6,7 +6,7 @@ Table 4.2a. Faculty workload (t)
 </caption>
                                 <thead>
                                     <th rowspan="2">No </th>
-                                    <th>Name</th>
+                                    <th >Name</th>
                                     <th>Designation</th>
                                     <th>Number of courses taught in all programs</th>
                                     <th style="text-align: center;" colspan="3">Number of students supervised</th>
@@ -15,6 +15,18 @@ Table 4.2a. Faculty workload (t)
                                     
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>PhD</td>
+                                        <td>Masters</td>
+                                        <td>Bachelors</td>
+                                        <td></td>
+                                     
+                                     
+                                    </tr>
                                     <tr>
                                         <td>1</td>
                                         <td>Dr. Firstname Lastname
