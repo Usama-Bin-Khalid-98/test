@@ -71,6 +71,8 @@ use Illuminate\Support\Facades\Route;
         Route::resource('strategic-plan','StrategicPlanController');
         Route::resource('mission-vision','MissionVisionController');
         Route::resource('sources-funding','SourcesFundingController');
+        Route::resource('audit-report','AuditReportController');
+        Route::resource('parent-institution','ParentInstitutionController');
         });
 
 //        Route::resource('print','PrintController');

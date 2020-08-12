@@ -1,0 +1,186 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\StrategicManagement\ParentInstitution;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+use Auth;
+
+class ParentInstitutionController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $parents = ParentInstitution::with('campus')->get();
+        
+        return view('strategic_management.parent_institution', compact('parents'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+//            dd($fileName);
+                $path = ''; $imageName = '';
+                if($request->file('file')) {
+                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $path = 'uploads/parent_institution';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $request->file('file')->move($path, $imageName);
+
+                    //dd($request->all());
+                    // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
+
+                    ParentInstitution::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'file' => $path.'/'.$imageName, 
+                        'created_by' => Auth::user()->id 
+                ]);
+
+                    return response()->json(['success' => 'Document added successfully.']);
+                }
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\StrategicManagement\ParentInstitution  $parentInstitution
+     * @return \Illuminate\Http\Response
+     */
+    public function show(ParentInstitution $parentInstitution)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\StrategicManagement\ParentInstitution  $parentInstitution
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(ParentInstitution $parentInstitution)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\StrategicManagement\ParentInstitution  $parentInstitution
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, ParentInstitution $parentInstitution)
+    {
+         $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+            $path = ''; $imageName = '';
+            if($request->file('file')) {
+                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $path = 'uploads/parent_institution';
+                $diskName = env('DISK');
+                Storage::disk($diskName);
+                $request->file('file')->move($path, $imageName);
+                // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
+                ParentInstitution::where('id', $parentInstitution->id)->update(
+                    [
+                    'file' => $path.'/'.$imageName,
+                    'isComplete' => $request->isComplete,
+                    'status' => $request->status,
+                    'updated_by' => Auth::user()->id 
+                    ]
+                );
+
+                return response()->json(['success' => 'Document updated successfully.']);
+            }
+           ParentInstitution::where('id', $parentInstitution->id)->update([
+               'isComplete' => $request->isComplete,
+               'status' => $request->status,
+               'updated_by' => Auth::user()->id 
+           ]);
+            return response()->json(['success' => 'Document updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\StrategicManagement\ParentInstitution  $parentInstitution
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(ParentInstitution $parentInstitution)
+    {
+        try {
+             ParentInstitution::where('id', $parentInstitution->id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
+             ParentInstitution::destroy($parentInstitution->id);
+                return response()->json(['success' => 'Record deleted successfully.']);
+         }catch (Exception $e)
+             {
+                return response()->json(['error' => 'Failed to delete record.']);
+             }
+    }
+
+    protected function rules() {
+        return [
+            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+        ];
+    }
+
+    protected function update_rules() {
+        return [
+            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.',
+            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+        ];
+    }
+}
