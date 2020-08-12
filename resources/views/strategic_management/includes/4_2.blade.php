@@ -27,51 +27,21 @@ Table 4.2a. Faculty workload (t)
                                      
                                      
                                     </tr>
+                                    @foreach($facultyWorkLoad as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname
-</td>
-                                        <td>Asst. Professor
-</td>
-                                        <td>3
-</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>0</td>
-                                        <td>Sports committee convener</td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->designationName}}</td>
+                                        <td>{{$data->total_courses}}</td>
+                                        <td>{{$data->phd}}</td>
+                                        <td>{{$data->masters}}</td>
+                                        <td>{{$data->bachleors}}</td>
+                                        <td>{{$data->admin_responsibilities}}</td>
                                      
                                      
                                     </tr>
-                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname
-</td>
-                                        <td>Asst. Professor
-</td>
-                                        <td>3
-</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>0</td>
-                                        <td>Sports committee convener</td>
+                                    @endforeach
                                      
-                                     
-                                    </tr>
-                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname
-</td>
-                                        <td>Asst. Professor
-</td>
-                                        <td>3
-</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>0</td>
-                                        <td>Sports committee convener</td>
-                                     
-                                     
-                                    </tr>
                                    
                                    
                                     
