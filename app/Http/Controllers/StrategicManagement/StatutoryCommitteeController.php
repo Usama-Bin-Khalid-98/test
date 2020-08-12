@@ -14,17 +14,18 @@ use Auth;
 
 class StatutoryCommitteeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
-        //
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $bodies = StatutoryBody::all();
         $designations = Designation::all();
-        $statutory_committees = StatutoryCommittee::with('designation', 'statutory_body')->get();
+        $statutory_committees = StatutoryCommittee::with('designation', 'statutory_body')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
         return view('strategic_management.statutory_committee', compact('bodies', 'designations', 'statutory_committees'));
     }
 

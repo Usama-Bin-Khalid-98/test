@@ -30,7 +30,9 @@ class BudgetaryInfoController extends Controller
      */
     public function index()
     {
-        $budgets  = BudgetaryInfo::with('campus')->get();
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
+        $budgets  = BudgetaryInfo::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
          return view('strategic_management.budgetary_info', compact('budgets'));
     }

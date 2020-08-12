@@ -13,15 +13,17 @@ use Auth;
 
 class InternalCommunityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $wps =  WelfareProgram::all();
-        $communities = InternalCommunity::with('campus','welfare_program')->get();
+        $communities = InternalCommunity::with('campus','welfare_program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
         
         return view('social_responsibility.internal_community', compact('wps','communities'));
     }

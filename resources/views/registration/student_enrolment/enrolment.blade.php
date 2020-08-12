@@ -116,8 +116,6 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>16 Year</th>
                                     <th>18 Year</th>
@@ -130,8 +128,6 @@
                                 <tbody>
                                 @foreach($enrolments as $enrolement)
                                 <tr>
-                                    <td>{{$enrolement->campus->business_school->name}}</td>
-                                    <td>{{$enrolement->campus->location}}</td>
                                     <td>{{$enrolement->year}}</td>
                                     <td>{{$enrolement->bs_level}}</td>
                                     <td>{{$enrolement->ms_level}}</td>
@@ -142,12 +138,19 @@
 
                                 </tr>
                                 @endforeach
+                                <tr style="background-color: grey;color: white;">
+                                    <td style="font-weight: bold;">Total</td>
+                                    <td style="font-weight: bold;">{{@$bs}}</td>
+                                    <td style="font-weight: bold;">{{@$ms}}</td>
+                                    <td style="font-weight: bold;">{{@$phd}}</td>
+                                    <td style="font-weight: bold;">{{@$t_students}}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Year</th>
                                     <th>16 Year</th>
                                     <th>18 Year</th>

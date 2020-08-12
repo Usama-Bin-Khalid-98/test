@@ -12,16 +12,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ContactInfoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
-        //
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $designations = Designation::all();
-        $contacts = ContactInfo::with('designation')->get();
+        $contacts = ContactInfo::with('designation')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
         ///dd($contacts);
         return view('strategic_management.contact_info', compact('designations', 'contacts'));
     }
