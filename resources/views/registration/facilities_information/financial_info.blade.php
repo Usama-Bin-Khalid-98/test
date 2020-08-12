@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide complete financial information of the business school in Table.6.1 (Rupees in million)).</h3>
+                            <h3 class="box-title">6.1   Provide complete financial information of the business school in Table.6.1 (Rupees in million). </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -60,7 +60,7 @@
                          <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Income Source</label>
+                                    <label for="name">Particulars</label>
                                     <select name="income_source_id" id="income_source_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Income Source</option>
                                         @foreach($income as $source)
@@ -122,7 +122,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Financial Information Table.</h3>
+                            <h3 class="box-title">Table 6.1. Financial information of the business school</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

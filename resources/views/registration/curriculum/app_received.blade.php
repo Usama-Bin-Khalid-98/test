@@ -61,7 +61,7 @@
                         	 <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program Name</label>
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($scopes as $scope)
@@ -83,13 +83,13 @@
                             </div>
                                <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Applications Received</label>
+                                    <label for="name">Applications received</label>
                                     <input type="text" name="app_received" id="app_received" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Admission Offered</label>
+                                    <label for="name">Admission offered</label>
                                     <input type="text" name="admission_offered" id="admission_offered" class="form-control">
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Semester Commencement Date</label>
+                                    <label for="name">Semester commencement date</label>
                                     <input type="date" name="semester_comm_date" id="semester_comm_date" class="form-control">
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Application Received List.</h3>
+                            <h3 class="box-title">Table 2.3. Applications received.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

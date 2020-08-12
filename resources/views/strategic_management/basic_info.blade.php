@@ -68,7 +68,7 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Business School Name</label>
+                                        <label for="name">Name of business school and campus(if relevant)</label>
                                         <input type="text" id="name" disabled value="{{@$basic_info->name}}" class="form-control">
                                     </div>
                                 </div>
@@ -100,19 +100,19 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Year of establishment(parent inst)</label>
+                                        <label for="name">Year of  establishment (university/parent institution)</label>
                                         <input type="date" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Web Url</label>
+                                        <label for="name">Web URL</label>
                                         <input type="text" id="web_url" value="{{@$basic_info->web_url}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Date Charter Granted</label>
+                                        <label for="name">Date of charter granted</label>
                                         <input type="date" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" class="form-control">
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="type">{{ __('Profit/Non-profit Status') }} : </label>
-                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'None Profit' ? 'checked' : '' }}> None Profit</p>
+                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'Not for Profit' ? 'checked' : '' }}> None Profit</p>
                                         <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ @$basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
 
                                     </div>

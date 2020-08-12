@@ -43,9 +43,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title" style="width: 92%;">Provide a summary of research output of business school in last three academic years.
-                                Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly
-                                mentioning type of each item as impact factor or HEC category. Table 5.1</h3>
+                            <h3 class="box-title" style="width: 92%;">Provide a summary of 5.1  Provide a summary of research output8 of business school in last three academic years in Table.5.1. Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly mentioning type of each item as impact factor or HEC category, as Appendix-5A.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -59,7 +57,7 @@
                             <form action="javascript:void(0)" id="form" method="POST">
                              <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Publication Type</label>
+                                    <label for="name">Publication type</label>
                                     <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Publication Type</option>
                                         @foreach($publications as $publication)
@@ -84,20 +82,20 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total Items</label>
+                                    <label for="name">Total number of items</label>
                                     <input type="text" name="total_items" id="total_items" value="" placeholder="Total Items" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Contributing Core Faculty</label>
+                                    <label for="name">Number of contributing core faculty members</label>
                                     <input type="text" name="contributing_core_faculty" id="contributing_core_faculty" value="" placeholder="Contributing Core Faculty" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Jointly Produced Other</label>
+                                    <label for="name">Number of items jointly produced in collaboration with other institutionsr</label>
                                     <input type="text" name="jointly_produced_other"
                                     id="jointly_produced_other" value="" placeholder="Jointly Produced Other" class="form-control">
                                 </div>
@@ -105,7 +103,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Jointly Produced Same</label>
+                                    <label for="name">Number of items jointly produced by faculty of same university</label>
                                     <input type="text" name="jointly_produced_same"
                                     id="jointly_produced_same" value="" placeholder="Jointly Produced Same " class="form-control">
                                 </div>
@@ -113,7 +111,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Jointly Produced Multiple</label>
+                                    <label for="name">Number of items jointly produced by more than 3 authors</label>
                                     <input type="text" name="jointly_produced_multiple"
                                     id="jointly_produced_multiple" value="" placeholder="Jointly Produced Multiple" class="form-control">
                                 </div>
@@ -135,7 +133,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Research Summary List</h3>
+                            <h3 class="box-title">Table 5.1. Summary of research output</h3>
 
                         </div>
                         <!-- /.box-header -->

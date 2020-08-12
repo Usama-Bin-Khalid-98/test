@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide the data on student enrolment  of the business school for the last three years in Table 3.1</h3>
+                            <h3 class="box-title">3.1.  Provide the data on student enrolment3 of the business school for the last three years in Table 3.1. </h3>
                                 <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -73,21 +73,21 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">16 Year Programs</label>
+                                    <label for="name">16 Year programs(A)</label>
                                     <input type="text" name="bs_level" id="bs_level" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">18 Year Programs</label>
+                                    <label for="name">18 Year programs(B)</label>
                                     <input type="text" name="ms_level" id="ms_level" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Doctoral Programs</label>
+                                    <label for="name">Doctoral Programs(C)</label>
                                     <input type="text" name="phd_level" id="phd_level" class="form-control">
                                 </div>
                             </div>

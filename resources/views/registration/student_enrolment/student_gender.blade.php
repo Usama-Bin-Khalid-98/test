@@ -60,7 +60,7 @@
                              <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program Name</label>
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
@@ -97,7 +97,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Student Gender mix</h3>
+                            <h3 class="box-title"> Table 3.3.Student Gender mix</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

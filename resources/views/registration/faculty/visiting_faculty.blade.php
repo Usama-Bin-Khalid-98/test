@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year 4.3a.</h3>
+                            <h3 class="box-title">4.3   Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table 4.3a and Visiting Faculty Equivalent (VFE) of last year in table 4.3.b for the program under review..</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Designation</label>
+                                    <label for="name">Designation(B)</label>
                                     <select name="designation" class="form-control">
                                         <option value="">Select Designation</option>
                                         <option value="">Professor</option>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Faculty Type</label>
+                                    <label for="name">Faculty Type(C)</label>
                                     <select name="designation" class="form-control">
                                         <option value="">Select type</option>
                                         <option value="">Permanent</option>
@@ -92,19 +92,19 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Courses Allowed</label>
+                                    <label for="name">Maximum teaching courses allowed (E)</label>
                                     <input type="text" name="program" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program 1</label>
+                                    <label for="name">Teaching courses in program 1 (F)</label>
                                     <input type="text" name="phd" value="" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program 2</label>
+                                    <label for="name">Teaching courses in program 2  (G)</label>
                                     <input type="text" name="master" value="" class="form-control">
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Visiting Faculty Equivalent (VFE) in program(s)</h3>
+                            <h3 class="box-title">Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s) </h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

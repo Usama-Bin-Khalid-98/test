@@ -16,7 +16,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Approval of Strategic Plan
+Table 1.7. Approval of strategic plan
                 <small></small>
             </h1>
             <ol class="breadcrumb">

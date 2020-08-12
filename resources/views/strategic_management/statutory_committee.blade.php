@@ -40,7 +40,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information of statutory bodies 1.4. Also attach documentary information about the composition, name of members, role and functions of each statutory body.</h3>
+                            <h3 class="box-title">  Provide information about the various statutory bodies in the Table 1.4. Also attach documentary information about the composition, name of members, role and functions of each statutory body as Appendix-1B. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -56,7 +56,7 @@
                              <form action="javascript:void(0)" method="post" id="add" enctype="multipart/form-data">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Body Name</label>
+                                    <label for="name">Body name</label>
                                     <select name="statutory_body_id" id="statutory_body_id" class="form-control select2" style="width: 100%;">
                                         <option value="">Select Body Name</option>
                                         @foreach($bodies as $body)
@@ -86,28 +86,28 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Date of First Meeting</label>
+                                    <label for="name">Date of Meeting 1</label>
                                     <input type="date" name="date_first_meeting" id="date_first_meeting" value="" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Date of Second Meeting</label>
+                                    <label for="name">Date of  Meeting 2</label>
                                     <input type="date" name="date_second_meeting" id="date_second_meeting" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Date of Third Meeting</label>
+                                    <label for="name">Date of Meeting 3</label>
                                     <input type="date" name="date_third_meeting" id="date_third_meeting" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Date of Fourth Meeting</label>
+                                    <label for="name">Date of  Meeting 4</label>
                                     <input type="date" name="date_fourth_meeting" id="date_fourth_meeting" value="" class="form-control">
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Business school’s statutory committees.</h3>
+                            <h3 class="box-title"> Business school’s statutory committees</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
