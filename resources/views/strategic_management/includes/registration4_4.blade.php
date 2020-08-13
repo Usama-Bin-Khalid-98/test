@@ -11,24 +11,18 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($studentTeachersRatio as $data)
                                     <tr>
-                                        <td>Program 1</td>
-                                        <td>480</td>
-                                        <td>26.5</td>
-                                        <td>2.15</td>
-                                        <td>18.11</td>
+                                        <td>{{$data->programName}}</td>
+                                        <td>{{$data->total_enrollments}}</td>
+                                        <td>{{number_format((float)$FTE, 3, '.', '')}}</td>
+                                        <td>{{number_format((float)$VFE, 3, '.', '')}}</td>
+                                        <td>{{number_format((float)$data->total_enrollments/$FTE+$VFE, 3, '.', '')}}</td>
                                        
                                        
                                     </tr>
-                                    <tr>
-                                        <td>Program 2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                    </tr>
+                                    @endforeach
+                                    
                                     
                               
                                 </tbody>

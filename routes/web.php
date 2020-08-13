@@ -71,6 +71,9 @@ use Illuminate\Support\Facades\Route;
         Route::resource('budgetary-info','BudgetaryInfoController');
         Route::resource('strategic-plan','StrategicPlanController');
         Route::resource('mission-vision','MissionVisionController');
+        Route::resource('sources-funding','SourcesFundingController');
+        Route::resource('audit-report','AuditReportController');
+        Route::resource('parent-institution','ParentInstitutionController');
         });
 
 //        Route::resource('print','PrintController');
@@ -82,8 +85,12 @@ use Illuminate\Support\Facades\Route;
 
         // Students
         Route::resource('student-enrolment','StudentEnrolmentController');
+        Route::resource('student-intake','StudentIntakeController');
         Route::resource('students-graduated','StudentsGraduatedController');
         Route::resource('student-gender','StudentGenderController');
+        Route::resource('class-size','ClassSizeController');
+        Route::resource('alumni-membership','AlumniMembershipController');
+        Route::resource('alumni-participation','AlumniParticipationController');
 
         // Faculty
         Route::get('/visiting_faculty','Faculty\VisitingFacultyController@index')->name('visiting_faculty');

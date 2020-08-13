@@ -37,25 +37,71 @@ Table 5.1. Summary of research output
                                     
                                 </thead>
                                 <tbody>
+                                    <?php
+                                    //print_r($researchOutput);
+                                    $countResearch=0;
+                                    $countBooks=0;
+                                    $countOthers=0;
+                                    for ($i=0; $i <count($researchOutput) ; $i++) { 
+                                        if($researchOutput[$i]->publicationType=="Academic research articles"){
+                                            $countResearch++;
+                                        }else   if($researchOutput[$i]->publicationType=="Books"){
+                                            $countBooks++;
+                                        }else   if($researchOutput[$i]->publicationType=="Other Publications"){
+                                            $countOthers++;
+                                        }
+                                    }
+
+                                    for ($i=0; $i <1; $i++) { 
+                                        if($researchOutput[$i]->publicationType=="Academic research articles"){
+                                    ?>
                                     <tr>
-                                        <td class="" rowspan="8" style="text-align: center;">Academic research articles</td>
-                                        <td>Impact factor journals</td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td>                                
+                                        <td class="" rowspan="<?php echo $countResearch; ?>" style="text-align: center;"><?php 
+                                        print_r($researchOutput[$i]->publicationType)
+                                        ?></td>
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->publicationName)
+                                        ?></td> 
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->total_items)
+                                        ?></td>
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->contributing_core_faculty)
+                                        ?></td> 
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->jointly_produced_other)
+                                        ?></td>
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->jointly_produced_multiple)
+                                        ?></td>                                
 
                                     </tr>
-                                    <tr>
-                                        <td >HEC category W</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
+                                    <?php }}
+
+                                    for ($i=0; $i <$countResearch; $i++) { 
+                                        if($researchOutput[$i]->publicationType=="Academic research articles"){
+                                     ?>
+                                     <tr>
+                                         <td><?php 
+                                        print_r($researchOutput[$i]->publicationName)
+                                        ?></td> 
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->total_items)
+                                        ?></td>
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->contributing_core_faculty)
+                                        ?></td> 
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->jointly_produced_other)
+                                        ?></td>
+                                        <td><?php 
+                                        print_r($researchOutput[$i]->jointly_produced_multiple)
+                                        ?></td>
                                                                         
 
                                     </tr>
-                                    <tr>
+                                    <?php }} ?>
+                                    <!--<tr>
                                         <td >HEC category X</td>
                                         <td></td> 
                                         <td></td>
@@ -108,7 +154,7 @@ Table 5.1. Summary of research output
                                         <td></td>
                                                                         
 
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td class="" rowspan="3" style="text-align: center;">Books</td>
                                         <td>Books or research monographs</td> 
@@ -137,7 +183,7 @@ Table 5.1. Summary of research output
 
                                     </tr>
                                     <tr>
-                                        <td class="" rowspan="6" style="text-align: center;">Books</td>
+                                        <td class="" rowspan="6" style="text-align: center;">Other Publications</td>
                                         <td>Other Publications</td> 
                                         <td></td>
                                         <td></td> 

@@ -14,11 +14,12 @@ use Auth;
 
 class DepartmentFeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $departments = Department::all();

@@ -13,17 +13,19 @@ use Auth;
 
 class SupportStaffController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $categories = StaffCategory::all();
 
 
-        $supports = SupportStaff::with('campus','staff_category')->get();
+        $supports = SupportStaff::with('campus','staff_category')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
         ///dd($contacts);
         return view('registration.facilities_information.support_staff', compact('categories','supports'));
     }
