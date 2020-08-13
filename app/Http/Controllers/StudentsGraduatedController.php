@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\Storage;
 
 class StudentsGraduatedController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $programs = Scope::with('program')->get();
 
-        $students = StudentsGraduated::with('campus','program')->get();
+        $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
         return view('registration.student_enrolment.students_graduated', compact('programs','students'));
     }

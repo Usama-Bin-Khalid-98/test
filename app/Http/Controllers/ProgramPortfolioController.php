@@ -14,18 +14,20 @@ use Auth;
 
 class ProgramPortfolioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         
         $scopes = Scope::with('program')->get();
         $courses = CourseType::where('status', 'active')->get();
 
-        $portfolios  = ProgramPortfolio::with('campus','program','course_type')->get();
+        $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
          return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
     }

@@ -13,15 +13,17 @@ use Auth;
 
 class StrategicPlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
 
-        $plans  = StrategicPlan::with('campus')->get();;
+        $plans  = StrategicPlan::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();;
 
          return view('strategic_management.plan', compact('plans'));
     }

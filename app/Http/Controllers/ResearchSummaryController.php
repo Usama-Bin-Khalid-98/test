@@ -14,16 +14,17 @@ use Auth;
 
 class ResearchSummaryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
-
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $publications = PublicationType::where('status', 'active')->get();
-        $summaries = ResearchSummary::with('publication_type', 'campus')->get();
+        $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
         ///dd($contacts);
         return view('registration.research_summary.index', compact('publications', 'summaries'));
     }
