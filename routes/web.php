@@ -45,6 +45,7 @@ use Illuminate\Support\Facades\Route;
         // Permissions resource route.
         Route::resource('permissions', 'Auth\PermissionController');
         Route::resource('desk-review', 'DeskReviewController');
+        Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
         Route::resource('nbeac-criteria', 'NbeacCriteriaController');
         Route::resource('department-fee', 'DepartmentFeeController');
 
@@ -88,6 +89,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('students-graduated','StudentsGraduatedController');
         Route::resource('student-gender','StudentGenderController');
         Route::resource('class-size','ClassSizeController');
+        Route::resource('alumni-membership','AlumniMembershipController');
         Route::resource('alumni-participation','AlumniParticipationController');
 
         // Faculty
