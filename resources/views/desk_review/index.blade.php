@@ -60,19 +60,13 @@
                              <table class="table table-bordered ">
                                 <thead>
                                     <tr>
-<<<<<<< HEAD
-                                        <th style="width: 50%">Data provided by University</th>
-                                        <th style="width: 50%">NBEAC Criteria</th>
-=======
                                         <th style="width: 45%">Data provided by University</th>
                                         <th style="width: 45%">NBEAC Criteria</th>
                                         <th style="width: 10%">Is Eligible</th>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-
                                         <td>
                                             1. Programs started (Table-1.2 date of program commencement)
                                             <ol type="i">
@@ -83,98 +77,60 @@
                                         </td>
 
                                         <td>
-<<<<<<< HEAD
-                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>
-                                            <ol type="i">
-                                                <li>BBA after 5.5 years of program started</li>
-                                                <li>MBA 1.5 after 2.5 years of program started</li>
-                                                <li>MBA 2.5 after 3.5 years of program started</li>
-                                                <li>MBA 3.5 after 5 years of program started.</li>
-                                            </ol>
-<<<<<<< HEAD
+{{--                                    <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>--}}
+                                        {!! $nbeac_criteria->program_started !!}
 
-=======
-=======
-                                            {{$nbeac_criteria->program_started}}
-{{--                                            <strong>At least 3 batches of the degree should have passed to consider the program for accreditation.</strong>--}}
-{{--                                            <ol type="i">--}}
-{{--                                                <li>BBA after 5.5 years of program started</li>--}}
-{{--                                                <li>MBA 1.5 after 2.5 years of program started</li>--}}
-{{--                                                <li>MBA 2.5 after 3.5 years of program started</li>--}}
-{{--                                                <li>MBA 3.5 after 5 years of program started.</li>--}}
-{{--                                            </ol>--}}
->>>>>>> c4af9e790e4ce5d37249be4f354f62853a32856e
                                         </td>
                                         <td>
                                             <input type="radio" name="eligibility_program" value="yes"> yes
                                             <input type="radio" name="eligibility_program" value="no"> no
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                     </tr>
 
 
                                     <tr>
                                         <td>
-<<<<<<< HEAD
-                                            <p><strong>Mission : </strong> {{$mission_vision->mission}}</p>
+                                            2. Vision and Mission statements ( Question 1.7)
+                                            <p><strong>Mission : </strong> {!! @$mission_vision->mission !!}</p>
 
-                                            <p><strong>Vision : </strong> {{$mission_vision->vision}}</p>
-=======
-                                            <p><strong>Mission : </strong> {{@$mission_vision->mission}}</p>
-
-                                            <p><strong>Vision : </strong> {{@$mission_vision->vision}}</p>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+                                            <p><strong>Vision : </strong> {!! @$mission_vision->vision !!}</p>
 
                                         </td>
                                         <td>
-                                            {{$nbeac_criteria->mission_vision_statement}}
+                                            {!! $nbeac_criteria->mission_vision_statement !!}
 {{--                                            Vision and mission should exist, realistic and shared among the all stake holders. Mission statement of business school is clear, current and aligned with its vision statement.--}}
 {{--                                            There should be documentary evidence that vision and mission are approved by any statutory body.--}}
 {{--                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.--}}
 
                                         </td>
-<<<<<<< HEAD
-=======
+
                                         <td>
                                             <input type="radio" name="eligibility_mission" value="yes"> yes
                                             <input type="radio" name="eligibility_mission" value="no"> no
                                         </td>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
 
                                     <tr>
                                         <td>
-<<<<<<< HEAD
-                                           3. Strategic Plan (Question 1.8)
-=======
                                             <p>3. Strategic Plan (Question 1.8)</p>
                                             <p>Approval Date {{@$strategic_plan->aproval_date}}  Difference( {{@$strategic_date_diff}} )</p>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                         <td>
-                                            Strategic Plan should exist for 03-05 years
+                                            {!! @$nbeac_criteria->strategic_plan !!}
                                         </td>
-<<<<<<< HEAD
-                                    </tr>
-                                    <tr>
-                                        <td> 4. Student Intake(Table 2.3)</td>
-                                        <td> Student Intake(Table 2.3) </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td> 5. Student enrollment </td>
-=======
                                         <td>
                                             <input type="radio" name="eligibility_plan" value="yes"> yes
                                             <input type="radio" name="eligibility_plan" value="no"> no
                                         </td>
+
                                     </tr>
+
                                     <tr>
                                         <td>
                                             <p>4. Student Intake(Table 2.3)</p>
                                             <p>Student Intake {{@$application_received->student_intake}}</p>
                                         </td>
-                                        <td> Student Intake(Table 2.3) </td>
+                                        <td> {!! @$nbeac_criteria->student_intake !!} </td>
                                         <td>
                                             <input type="radio" name="eligibility_student" value="yes"> yes
                                             <input type="radio" name="eligibility_student" value="no"> no
@@ -183,7 +139,7 @@
 
                                     <tr>
                                         <td>
-                                            <strong>1.	Student enrollment</strong>
+                                            <strong> 5.	Student enrollment</strong>
                                             <p>
                                            <strong> a)	Total Annual Enrollment Table (3.1)</strong></p>
                                             @foreach(@$student_enrolment as $enrollment)
@@ -228,29 +184,10 @@
                                            <p> <strong>v)</strong>	Teaching and research assistants  - on short-term contracts- (Others in Table 4.1)</p>
 
                                         </td>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         <td>
-                                            <strong>Class Size:</strong>
-                                            <ol type="i">
-                                                <li>Undergraduate/ semester: 20-55 students</li>
-                                                <li>Graduates/semester: 15-45 students</li>
-                                            </ol>
-                                            <p>There should be minimum of 15 full time faculty members related to Management Sciences/ Business Administration field. (condition for Table 4.1)
-                                                Preferably, there should be 03 faculty members at Prof/Associate Prof level, however, minimum 02 Associate Professors and 03 at Assistant Professors are required to become eligible for accreditation process. (Condition for Table 4.3a)</p>
-
-                                            <p>Faculty Diversity(In breeding)	Less Than 25%</p>
-                                            <p>International Exposure of the faculty	20%</p>
-                                            <p>FT:PT= 70:30 (Condition for table 4.4.)</p>
-                                            <p>Student to Teacher Ratio=25:1 (undergraduate) 20:1 (graduate)
-                                            (Condition for Table 4.4.)</p>
+                                            {!! @$nbeac_criteria->student_enrollment !!}
 
                                         </td>
-<<<<<<< HEAD
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught)
-=======
                                         <td>
                                             <input type="radio" name="eligibility_enrollment" value="yes"> yes
                                             <input type="radio" name="eligibility_enrollment" value="no"> no
@@ -259,109 +196,83 @@
                                     <tr>
                                         <td>
                                             6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) = {{@$total_courses}}
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                         </td>
                                         <td>
-                                            <strong>Following is the recommended Course load</strong>
-                                            Lecturer= 3-4 per semester/ 6-8 per annum
-                                            Assistant Professor= 3 per semester/6 per annum
-                                            Associate Professor/ Professor=2-3 per semester/4-6 per annum
+                                            {!! @$nbeac_criteria->course_load !!}
                                         </td>
-<<<<<<< HEAD
-=======
                                         <td>
                                             <input type="radio" name="eligibility_load" value="yes"> yes
                                             <input type="radio" name="eligibility_load" value="no"> no
                                         </td>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
 
                                     <tr>
-                                        <td>
-<<<<<<< HEAD
-                                            7. Research Output last three years (Table 5.1 summary of research output)
-=======
-                                            7. Research Output last three years (Table 5.1 summary of research output)<br><br>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table  class="table table-bordered table-stripped">
-                                <thead>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>Total Items</th>
-                                    <th>Contributing Core Faculty</th>
-                                    <th>Jointly Produced Other</th>
-                                    <th>Jointly Produced Same</th>
-                                    <th>Jointly Produced Multiple</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                             @foreach($summaries as $summary)
-                                <tr>
-                                    <td>{{$summary->year}}</td>
-                                    <td>{{$summary->total_items}}</td>
-                                    <td>{{$summary->contributing_core_faculty}}</td>
-                                    <td>{{$summary->jointly_produced_other}}</td>
-                                    <td>{{$summary->jointly_produced_same}}</td>
-                                    <td>{{$summary->jointly_produced_multiple}}</td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    <td>
+                                        7. Research Output last three years (Table 5.1 summary of research output)<br><br>
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                        <table  class="table table-bordered table-stripped">
+                                        <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Total Items</th>
+                                            <th>Contributing Core Faculty</th>
+                                            <th>Jointly Produced Other</th>
+                                            <th>Jointly Produced Same</th>
+                                            <th>Jointly Produced Multiple</th>
+                                        </tr>
+                                        </thead>
+                                            <tbody>
+                                            @foreach($summaries as $summary)
+                                            <tr>
+                                                <td>{{$summary->year}}</td>
+                                                <td>{{$summary->total_items}}</td>
+                                                <td>{{$summary->contributing_core_faculty}}</td>
+                                                <td>{{$summary->jointly_produced_other}}</td>
+                                                <td>{{$summary->jointly_produced_same}}</td>
+                                                <td>{{$summary->jointly_produced_multiple}}</td>
+                                            </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
 
-                                                </div>
+                                        </div>
 
-                                            </div>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
-                                        </td>
-                                        <td>
-                                            Following is the recommended Course load
-                                        </td>
-<<<<<<< HEAD
-=======
-                                        <td>
-                                            <input type="radio" name="eligibility_output" value="yes"> yes
-                                            <input type="radio" name="eligibility_output" value="no"> no
-                                        </td>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
-                                    </tr>
+                                        </div>
+                                    </td>
+                                <td>
+                                   {!! @$nbeac_criteria->research_output !!}
+                                </td>
+                                <td>
+                                    <input type="radio" name="eligibility_output" value="yes"> yes
+                                    <input type="radio" name="eligibility_output" value="no"> no
+                                </td>
+                            </tr>
 
                                     <tr>
                                         <td>
-<<<<<<< HEAD
-                                            8. Bandwidth =  GB (table 6.2 Laboratories)
-=======
-                                            8. Bandwidth =  GB (table 6.2 Laboratories)= {{@$bandwidth->remark}}
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
+                                        8. Bandwidth =  GB (table 6.2 Laboratories)= {{@$bandwidth->remark}}
                                         </td>
                                         <td>
-                                            Bandwidth Internet service (desirable) = 1 MB access rate
-                                            Student to Computer ratio: 1:20
+                                            {!! @$nbeac_criteria->bandwidth !!}
                                         </td>
-<<<<<<< HEAD
-=======
+
                                         <td>
                                             <input type="radio" name="eligibility_bandwidth" value="yes"> yes
                                             <input type="radio" name="eligibility_bandwidth" value="no"> no
                                         </td>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
 
                                     <tr>
                                         <td>
-<<<<<<< HEAD
                                             9. Student to Computer ratio is 	 (table 6.2 Laboratories)
                                         </td>
-                                        <td>Student to Computer ratio: 1:20</td>
-=======
-                                            9. Student to Computer ratio is 	 (table 6.2 Laboratories)= {{@$comp_ratio->remark}}
-                                        </td>
-                                        <td>Student to Computer ratio: 1:20</td>
+
+                                        <td>{!! $nbeac_criteria->std_comp_ratio !!}</td>
                                         <td>
                                             <input type="radio" name="eligibility_ratio" value="yes"> yes
                                             <input type="radio" name="eligibility_ratio" value="no"> no
                                         </td>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                                     </tr>
                                  </ol>
                                 </tbody>
@@ -370,7 +281,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Update" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
                         </form>
@@ -449,11 +360,7 @@
                             <div class="form-group">
                                 <label for="type">{{ __('isChecked') }} : </label>
                                 <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
-<<<<<<< HEAD
                                     <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
-=======
-                                    <input type="radio" name="isChecked" class="flat-red" value="no"> noNo</p>
->>>>>>> fb5ba0be3d2c2c24a2617060c6f106a0c26b7269
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -505,18 +412,48 @@
             }
         });
 
-         $('#form').submit(function (e) {
+         $('#add').on('click', function (e) {
              // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
-             console.log('submit button clicked');
-            let isEligible = $('input:radio:checked').map(function(index, val) {
-                        return { "eligibility_program":$(val).val(),"eligibility_mission":$(val).val()};
-                      }).get();
+             //console.log('submit button clicked', $('input:radio:checked'));
+             //return;
+             var values = [];
+              // $('input:radio:checked').map(function(index, val) {
+              //   console.log('submit button clicked values', val['name']);
+              //  // let indexName = val['name'];
+              //   val['name'] ==='eligibility_program'? values['eligibility_program']=$(val).val():'';
+              //   val['name'] ==='eligibility_mission'? values['eligibility_mission']=$(val).val():'';
+              //   val['name'] ==='eligibility_plan'? values['eligibility_plan']=$(val).val():'';
+              //   val['name'] ==='eligibility_student'? values['eligibility_student']=$(val).val():'';
+              //   val['name'] ==='eligibility_enrollment'? values['eligibility_enrollment']=$(val).val():'';
+              //   val['name'] ==='eligibility_load'? values['eligibility_load']=$(val).val():'';
+              //   val['name'] ==='eligibility_output'? values['eligibility_output']=$(val).val():'';
+              //   val['name'] ==='eligibility_bandwidth'? values['eligibility_bandwidth']=$(val).val():'';
+              //   val['name'] ==='eligibility_ratio'? values['eligibility_ratio']=$(val).val():'';
+              //          // return { indexName :$(val).val() };
+              //         });
 
-            
+             let eligibility_program = $('input[name="eligibility_program"]').val();
+             let eligibility_mission = $('input[name="eligibility_mission"]').val();
+             let eligibility_plan = $('input[name="eligibility_plan"]').val();
+             let eligibility_student = $('input[name="eligibility_student"]').val();
+             let eligibility_enrollment = $('input[name="eligibility_enrollment"]').val();
+             let eligibility_load = $('input[name="eligibility_load"]').val();
+             let eligibility_output = $('input[name="eligibility_output"]').val();
+             let eligibility_bandwidth = $('input[name="eligibility_bandwidth"]').val();
+             let eligibility_ratio = $('input[name="eligibility_ratio"]').val();
+            console.log('eligibility_program values.........', eligibility_program);
+            // let check = $('input[type="radio"]:checked');
+            // console.log('check here',  check);
+            //  if(!check)
+            //  {
+            //      Notiflix.Notify.Warning("Fill all the required Fields.");
+            //      return;
+            //  }
+            //return;
             $.ajax({
                 url:'{{url("desk-review")}}',
                 type:'POST',
-                data: {"data":JSON.parse(JSON.stringify(isEligible))},
+                data: {eligibility_program:eligibility_program,eligibility_mission:eligibility_mission,eligibility_plan:eligibility_plan,eligibility_student:eligibility_student,eligibility_enrollment:eligibility_enrollment,eligibility_load:eligibility_load,eligibility_output:eligibility_output,eligibility_bandwidth:eligibility_bandwidth,eligibility_ratio:eligibility_ratio},
                 // cache:false,
                 // contentType:false,
                 // processData:false,
