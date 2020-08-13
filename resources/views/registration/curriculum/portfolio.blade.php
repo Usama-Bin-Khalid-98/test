@@ -68,6 +68,9 @@
                                          <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
                                         @endforeach
                                         </select>
+                                    
+
+
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -108,8 +111,18 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+
                                     <label for="name">Final year project/ viva/ thesis/ comprehensive</label>
-                                    <textarea name="fyp_req" id="fyp_req" class="form-control"></textarea>
+                                    <select name="fyp_req" id="fyp_req" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Program</option>
+                                      
+                                         <option value="final year project ">final year project </option>
+                                          <option value="viva">viva</option>
+                                           <option value="thesis">thesis</option>
+                                            <option value="comprehensive">comprehensive</option>
+                                      
+                                        </select>
+                                    <!-- <textarea name="fyp_req" id="fyp_req" class="form-control"></textarea> -->
                                 </div>
                             </div>
 
