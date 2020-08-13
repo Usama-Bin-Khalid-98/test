@@ -87,6 +87,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('student-intake','StudentIntakeController');
         Route::resource('students-graduated','StudentsGraduatedController');
         Route::resource('student-gender','StudentGenderController');
+        Route::resource('class-size','ClassSizeController');
         Route::resource('alumni-participation','AlumniParticipationController');
 
         // Faculty
