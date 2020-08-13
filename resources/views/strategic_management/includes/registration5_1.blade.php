@@ -39,10 +39,8 @@ Table 5.1. Summary of research output
                                 <tbody>
                                     <?php
                                     //print_r($researchOutput);
-                                    $countResearch=0;
-                                    $countBooks=0;
-                                    $countOthers=0;
-                                    for ($i=0; $i <count($researchOutput) ; $i++) { 
+                                    $countResearch=$countBooks=$countOthers=0;
+                                    for ($i=0; $i<count($researchOutput) ; $i++) { 
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                             $countResearch++;
                                         }else   if($researchOutput[$i]->publicationType=="Books"){
@@ -56,9 +54,7 @@ Table 5.1. Summary of research output
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                     ?>
                                     <tr>
-                                        <td class="" rowspan="<?php echo $countResearch; ?>" style="text-align: center;"><?php 
-                                        print_r($researchOutput[$i]->publicationType)
-                                        ?></td>
+                                        <td class="" rowspan="<?php echo $countResearch; ?>" style="text-align: center;">Academic research articles</td>
                                         <td><?php 
                                         print_r($researchOutput[$i]->publicationName)
                                         ?></td> 
@@ -78,7 +74,7 @@ Table 5.1. Summary of research output
                                     </tr>
                                     <?php }}
 
-                                    for ($i=0; $i <$countResearch; $i++) { 
+                                    for ($i=1; $i <$countResearch+2; $i++) { 
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                      ?>
                                      <tr>
@@ -100,144 +96,90 @@ Table 5.1. Summary of research output
                                                                         
 
                                     </tr>
-                                    <?php }} ?>
-                                    <!--<tr>
-                                        <td >HEC category X</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
+                                    <?php }}
+                                   /* echo "<pre>";
+                                    print_r($researchOutput);
+                                    echo "</pre>";
+                                    die;*/
+                                    for ($i=0; $i <$countResearch+1; $i++) { 
+                                        if($researchOutput[$i]->publicationType=="Books"   ){
 
-                                    </tr>
-                                    <tr>
-                                        <td >HEC category Y</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >ABS or ABDC listing</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >Other listings</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >National conference papers</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >International conference papers</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr> -->
-                                    <tr>
-                                        <td class="" rowspan="3" style="text-align: center;">Books</td>
-                                        <td>Books or research monographs</td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td>                                
-
-                                    </tr>
-                                     <tr>
-                                        <td >Text books</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >Book chapters</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td class="" rowspan="6" style="text-align: center;">Other Publications</td>
-                                        <td>Other Publications</td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td>                                
-
-                                    </tr>
-                                     <tr>
-                                        <td >Case studies</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >Consultancy project reports</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >Practice oriented research articles</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >MS/MPhil thesis </td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                      <tr>
-                                        <td >Doctoral thesis </td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-
+                                     ?>
                                     
+                                     <tr>
+                                        <td class="" rowspan="<?php echo $countBooks; ?>" style="text-align: center;">Books</td>
+                                        <td><?php print_r($researchOutput[$i]->publicationName);
+                                        $booksLoop=$researchOutput[$i]->publicationName;  ?></td> 
+                                        <td><?php print_r($researchOutput[$i]->total_items);  ?></td>
+                                        <td><?php print_r($researchOutput[$i]->contributing_core_faculty);  ?></td> 
+                                        <td><?php print_r($researchOutput[$i]->jointly_produced_other);  ?></td>
+                                        <td><?php print_r($researchOutput[$i]->jointly_produced_multiple);  ?></td>  
+                                    </tr>
+                                    <?php  }} 
+                                     for ($i=1; $i <count($researchOutput); $i++) { 
+                                        if($researchOutput[$i]->publicationType=="Books" ){
+                                            if($researchOutput[$i]->publicationName==$booksLoop){continue; }
+                                    ?>
+                                     <tr>
+                                        <td ><?php print_r($researchOutput[$i]->publicationName);  ?></td>
+                                        <td><?php print_r($researchOutput[$i]->total_items);  ?></td> 
+                                        <td><?php print_r($researchOutput[$i]->contributing_core_faculty);  ?></td>
+                                        <td><?php print_r($researchOutput[$i]->jointly_produced_other);  ?></td> 
+                                        <td><?php print_r($researchOutput[$i]->jointly_produced_multiple);  ?>  </td>
+                                    </tr>
+                                     <?php }}
+
+                                     for ($i=0; $i <$countResearch+$countBooks+1 ; $i++) { 
+                                        if($researchOutput[$i]->publicationType=="Other Publications"){
+                                         
+                                      ?>
+                                        
+                                    <tr>
+                                        <td class="" rowspan="<?php print_r($countOthers);?>" style="text-align: center;">Other Publications</td>
+                                        <td><?php
+                                        print_r($researchOutput[$i]->publicationName);
+                                        $othersLoop=$researchOutput[$i]->publicationName;
+                                        ?></td> 
+                                        <td><?php
+                                        print_r($researchOutput[$i]->total_items);
+                                        ?></td>
+                                        <td><?php
+                                        print_r($researchOutput[$i]->contributing_core_faculty);
+                                        ?></td> 
+                                        <td><?php
+                                        print_r($researchOutput[$i]->jointly_produced_other);
+                                        ?></td>
+                                        <td><?php
+                                        print_r($researchOutput[$i]->jointly_produced_multiple);
+                                        ?></td>                                
+
+                                    </tr>
+                                    <?php }}
+                                    for ($i=0; $i <$countResearch+$countBooks+$countOthers ; $i++) { 
+                                        if($researchOutput[$i]->publicationType=="Other Publications"){
+                                            if($researchOutput[$i]->publicationName==$othersLoop){continue; }
+                                     ?>
+                                     <tr>
+                                        <td ><?php
+                                        print_r($researchOutput[$i]->publicationName);
+                                        ?></td>
+                                        <td><?php
+                                        print_r($researchOutput[$i]->total_items);
+                                        ?></td> 
+                                        <td><?php
+                                        print_r($researchOutput[$i]->contributing_core_faculty);
+                                        ?></td>
+                                        <td><?php
+                                        print_r($researchOutput[$i]->jointly_produced_other);
+                                        ?></td> 
+                                        <td><?php
+                                        print_r($researchOutput[$i]->jointly_produced_multiple);
+                                        ?></td>
+                                                                        
+
+                                    </tr>
+                                  
+                                    <?php }} ?>
                                   
                                    
                                    
