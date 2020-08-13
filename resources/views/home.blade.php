@@ -365,7 +365,7 @@
                 <!-- TO DO List -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Business school registration Requests. </h3>
+                        <h3 class="box-title">Business school Membership Requests. </h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                             </button>
@@ -397,7 +397,7 @@
 
                             <tbody>
 
-                            @foreach($registrations as $user)
+                            @foreach($memberShips as $user)
                                 <tr>
                                     <td>{{$user->business_school->name}}</td>
                                     <td>{{$user->campus->location??'Main Campus'}}</td>
@@ -499,6 +499,86 @@
                                 <th>Email</th>
                                 <th>Invoice Slip</th>
                                 {{--                            <th>Account Type</th>--}}
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix no-border">
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+                    </div>
+                </div>
+                <!-- /.box -->
+
+            </section>
+            <!-- right col -->
+
+            <!--Registrations list-->
+            <section class="col-lg-12 connectedSortable">
+                <!-- TO DO List -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Business school Department Registrations. </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-file-pdf-o"></i></button>
+                            </div>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Business School Name</th>
+                                <th>Campus</th>
+                                <th>Contact Person Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+{{--                                <th>Invoice Slip</th>--}}
+                                <th>Desk Review</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @foreach($registrations as $regist)
+                                <tr>
+                                    <td>{{@$regist->business_school->name}}</td>
+                                    <td>{{@$regist->campus->location??'Main Campus'}}</td>
+                                    <td>{{@$regist->business_school->user->name}}</td>
+                                    <td>{{@$regist->business_school->user->contact_no}}</td>
+                                    <td>{{@$regist->business_school->user->email}}</td>
+                                    <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Review</a></td>
+                                    {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                                    <td><i class="badge {{$regist->request == 'pending'?'bg-red':''}}" >{{$regist->request != ''?ucwords($regist->request):'created'}}</i></td>
+                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
+                                </tr>
+
+                            @endforeach
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Business School Name</th>
+                                <th>Campus</th>
+                                <th>Contact Person Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+{{--                                <th>Invoice Slip</th>--}}
+                                <th>Desk Review</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
