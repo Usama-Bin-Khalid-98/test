@@ -45,6 +45,7 @@ use Illuminate\Support\Facades\Route;
         // Permissions resource route.
         Route::resource('permissions', 'Auth\PermissionController');
         Route::resource('desk-review', 'DeskReviewController');
+        Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
         Route::resource('nbeac-criteria', 'NbeacCriteriaController');
         Route::resource('department-fee', 'DepartmentFeeController');
 
