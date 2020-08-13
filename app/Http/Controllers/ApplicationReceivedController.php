@@ -75,6 +75,7 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
+                'degree_req'=>$request->degree_req,
                 'created_by' => Auth::user()->id
             ]);
 
@@ -133,6 +134,7 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
+                'degree_req'=>$request->degree_req,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -168,9 +170,9 @@ class ApplicationReceivedController extends Controller
         return [
             'program_id' => 'required',
             'semester_id' => 'required',
-            'app_received' => 'required',
-            'admission_offered' => 'required',
-            'student_intake' => 'required',
+            'app_received' => 'required|numeric',
+            'admission_offered' => 'required|numeric',
+            'student_intake' => 'required|numeric',
             'semester_comm_date' => 'required'
         ];
     }
