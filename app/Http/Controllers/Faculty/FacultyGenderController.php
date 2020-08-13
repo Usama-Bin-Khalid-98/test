@@ -33,10 +33,12 @@ class FacultyGenderController extends Controller
      */
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
 
         $faculty_type = LookupFacultyType::get();
 
-        $genders = FacultyGender::with('campus','lookup_faculty_type')->get();
+        $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
          return view('registration.faculty.faculty_gender', compact('faculty_type','genders'));
     }

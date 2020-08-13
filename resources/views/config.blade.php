@@ -145,6 +145,12 @@
                     </span>
                     </li>
                     <li class="list-group-item">
+                        <a href="{{url('config/funding_sources')}}" class="text-green"><b>Funding Sources</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['FundingSources']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
                         <a href="{{url('config/levels')}}" class="text-green"><b>Levels</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Level']}}</span>
@@ -202,6 +208,12 @@
                         <a href="{{url('config/qec_types')}}" class="text-green"><b>Qec Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['QecType']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/activity_engagements')}}" class="text-green"><b>Activity Engagements</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['ActivityEngagement']}}</span>
                     </span>
                     </li>
                 </ul>

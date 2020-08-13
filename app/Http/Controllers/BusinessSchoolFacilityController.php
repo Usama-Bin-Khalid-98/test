@@ -16,16 +16,19 @@ use DB;
 
 class BusinessSchoolFacilityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $facility_types = Facility::with('facility_type')->get();
 
-        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->get();
+        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
 
         return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));

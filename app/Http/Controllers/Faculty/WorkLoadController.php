@@ -14,16 +14,18 @@ use Auth;
 
 class WorkLoadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
          $designations = Designation::all();
 
-         $workloads = WorkLoad::with('campus','designation')->get();
+         $workloads = WorkLoad::with('campus','designation')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
          return view('registration.faculty.workload', compact('designations','workloads'));
     }

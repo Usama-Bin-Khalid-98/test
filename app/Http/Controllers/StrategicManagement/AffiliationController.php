@@ -14,19 +14,19 @@ use Auth;
 
 class AffiliationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
-
-        
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $designations = Designation::all();
         $bodies = StatutoryBody::all();
 
-        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->get();
+        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
         //dd($affiliations);
         return view('strategic_management.affiliations', compact('designations','bodies','affiliations'));
     }

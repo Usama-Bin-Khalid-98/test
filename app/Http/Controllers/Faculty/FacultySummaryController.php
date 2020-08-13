@@ -14,17 +14,19 @@ use Auth;
 
 class FacultySummaryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $campus_id = Auth::user()->campus_id;
+        $user_id = Auth::user()->id;
         $qualification = FacultyQualification::where('status', 'active')->get();
         $discipline = Discipline::where('status', 'active')->get();
 
-        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->get();
+        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
 
         return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries'));
         //
