@@ -33,52 +33,37 @@ F=∑(D/C)
 </td>
                                         <td>No. of faculty teaching program 2 G=∑(E/C)</td>
                                     </tr>
+                                     @php
+                                    $totalFTE1=$totalFTE2=0;
+                                    @endphp
+                                    @foreach($facultyTeachingCourses as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname</td>
-                                        <td>Asst. Professor</td>
-                                        <td>Permanent</td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->desName}}</td>
                                         
-                                        <td>4</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>0.5</td>
+                                        <td>{{$data->   max_cources_allowed}}</td>
+                                        <td>{{$data->tc_program1}}</td>
+                                        <td>{{$data->tc_program2}}</td>
+                                        <td>{{number_format((float)$data->tc_program1/$data->max_cources_allowed, 3, '.', '')}}</td>
+                                        <td>{{number_format((float)$data->tc_program2/$data->max_cources_allowed, 3, '.', '')}}</td>
                                      
-                                     
+                                        @php
+                                        $totalFTE1+=$data->tc_program1/$data->max_cources_allowed;
+                                        $totalFTE2+=$data->tc_program2/$data->max_cources_allowed;
+                                        @endphp
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname</td>
-                                        <td>Asst. Professor</td>
-                                        <td>Permanent</td>
-                                       
-                                        <td>4</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>0.5</td>
-                                     
-                                     
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname</td>
-                                        <td>Asst. Professor</td>
-                                        <td>Permanent</td>
-                                      
-                                        <td>4</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>0.5</td>
-                                     
-                                     
-                                    </tr>
+                                    @endforeach
                                     <tr>
                                         <td colspan="7">Total VFE</td>
-                                        <td>=(∑F+∑G)/3</td>
-                                        
+                                        <td>={{number_format((float)($totalFTE1+$totalFTE2)/3, 3, '.', '')}}</td>
+                                        @php
+                                        $VFE=($totalFTE1+$totalFTE2)/3;
+                                        View::share('VFE', ($totalFTE1+$totalFTE2)/3);
+                                        @endphp
                                     </tr>
                                    
-                                   
+
                                    
                                     
                               

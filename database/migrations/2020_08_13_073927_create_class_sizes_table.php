@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFacultyTeachingCources extends Migration
+class CreateClassSizesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,20 @@ class CreateFacultyTeachingCources extends Migration
      */
     public function up()
     {
-        Schema::create('faculty_teaching_cources', function (Blueprint $table) {
+        Schema::create('class_sizes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-            $table->integer('lookup_faculty_type_id')->unsigned();
-            $table->foreign('lookup_faculty_type_id')
+            $table->BigInteger('semesters_id')->unsigned()->nullable();
+            $table->foreign('semesters_id')
                 ->references('id')
-                ->on('lookup_faculty_types');
-            $table->integer('designation_id')->unsigned();
-            $table->foreign('designation_id')
-                ->references('id')
-                ->on('designations');
-            $table->integer('max_cources_allowed');
-            $table->integer('tc_program1');
-            $table->integer('tc_program2');
+                ->on('semesters');
+            $table->string('program_a',255);
+            $table->string('program_b',255);
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->enum('status',['active','inactive'])->default('active');
-            $table->enum('isCompleted',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
@@ -45,8 +39,8 @@ class CreateFacultyTeachingCources extends Migration
             $table->foreign('deleted_by')
                 ->references('id')
                 ->on('users');
+            $table->softDeletes();
             $table->timestamps();
-            $table->Softdeletes();
         });
     }
 
@@ -57,6 +51,6 @@ class CreateFacultyTeachingCources extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty_teaching_cources');
+        Schema::dropIfExists('class_sizes');
     }
 }
