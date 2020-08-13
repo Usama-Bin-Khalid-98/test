@@ -25,7 +25,7 @@
                                      <td>{{$data->admission_offered}}</td>
                                       <td>{{$data->student_intake}}</td>
                                       <td>{{$data->semester_comm_date}}</td>
-                                      <td>{{$data->degree_awarding_criteria}}</td>
+                                      {{-- <!-- <td>{{$data->degree_awarding_criteria}}</td> --> --}}
                                        
                                       
                                     </tr>
