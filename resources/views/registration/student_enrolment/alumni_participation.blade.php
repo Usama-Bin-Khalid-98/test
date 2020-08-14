@@ -100,7 +100,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Alumni Participation</h3>
+                            <h3 class="box-title">Table 3.10 Alumni Participation</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

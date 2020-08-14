@@ -21,9 +21,9 @@ class StrategicPlanController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
 
-        $plans  = StrategicPlan::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();;
+        $plans  = StrategicPlan::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();;
 
          return view('strategic_management.plan', compact('plans'));
     }
@@ -55,6 +55,7 @@ class StrategicPlanController extends Controller
 
             StrategicPlan::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority,

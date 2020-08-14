@@ -19,6 +19,10 @@ class CreateStrategicPlansTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('plan_period',100);
             $table->string('aproval_date',100);
             $table->string('aproving_authority',100);

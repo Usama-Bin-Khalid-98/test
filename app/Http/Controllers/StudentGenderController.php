@@ -21,9 +21,9 @@ class StudentGenderController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $programs = Scope::with('program')->get();
-        $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('registration.student_enrolment.student_gender', compact('programs','genders'));
     }
@@ -53,8 +53,10 @@ class StudentGenderController extends Controller
         }
         try {
             $uni_id = Auth::user()->campus_id;
+            $dept_id = Auth::user()->department_id;
             StudentGender::create([
                 'campus_id' => $uni_id,
+                'department_id' => $dept_id,
                 'program_id' => $request->program_id,
                 'male' => $request->male,
                 'female' => $request->female,

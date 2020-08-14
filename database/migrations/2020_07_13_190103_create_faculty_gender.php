@@ -19,6 +19,10 @@ class CreateFacultyGender extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->integer('lookup_faculty_type_id')->unsigned()->nullable();
             $table->foreign('lookup_faculty_type_id')
                 ->references('id')

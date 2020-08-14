@@ -19,6 +19,10 @@ class CreateFinancialInfosTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->integer('income_source_id')->unsigned();
             $table->foreign('income_source_id')
                 ->references('id')

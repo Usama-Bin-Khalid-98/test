@@ -20,8 +20,8 @@ class ParentInstitutionController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $parents = ParentInstitution::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $parents = ParentInstitution::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         
         return view('strategic_management.parent_institution', compact('parents'));
     }
@@ -64,6 +64,7 @@ class ParentInstitutionController extends Controller
 
                     ParentInstitution::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'file' => $path.'/'.$imageName, 
                         'created_by' => Auth::user()->id 
                 ]);

@@ -30,6 +30,10 @@ class CreateContactInfosTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('focal_person', 100)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
