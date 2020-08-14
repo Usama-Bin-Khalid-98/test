@@ -285,7 +285,7 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    window.reload();
+                    location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception){

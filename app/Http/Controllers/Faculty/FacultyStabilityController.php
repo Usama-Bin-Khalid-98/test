@@ -32,10 +32,10 @@ class FacultyStabilityController extends Controller
      */
     public function index()
     {
-       $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $campus_id = Auth::user()->campus_id;
+        $department_id = Auth::user()->department_id;
 
-        $stabilities = FacultyStability::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $stabilities = FacultyStability::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.faculty.faculty_stability', compact('stabilities'));
     }
@@ -67,6 +67,7 @@ class FacultyStabilityController extends Controller
 
             FacultyStability::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'total_faculty' => $request->total_faculty,
                 'year' => $request->year,
                 'resigned' => $request->resigned,

@@ -23,16 +23,11 @@ class BudgetaryInfoController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $budgets  = BudgetaryInfo::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $budgets  = BudgetaryInfo::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('strategic_management.budgetary_info', compact('budgets'));
     }
@@ -64,6 +59,7 @@ class BudgetaryInfoController extends Controller
 
             BudgetaryInfo::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'year' => $request->year,
                 'uni_budget' => $request->uni_budget,
                 'uni_proposed_budget' => $request->uni_proposed_budget,

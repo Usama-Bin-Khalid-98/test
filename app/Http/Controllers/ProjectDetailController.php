@@ -20,8 +20,8 @@ class ProjectDetailController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $details = ProjectDetail::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $details = ProjectDetail::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('social_responsibility.project_details',compact('details'));
     }
@@ -64,6 +64,7 @@ class ProjectDetailController extends Controller
 
                     ProjectDetail::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'date' => $request->date,
                         'activity_title' => $request->activity_title,
                         'file' => $path.'/'.$imageName, 

@@ -22,9 +22,9 @@ class ResearchSummaryController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $publications = PublicationType::where('status', 'active')->get();
-        $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         ///dd($contacts);
         return view('registration.research_summary.index', compact('publications', 'summaries'));
     }
@@ -57,6 +57,7 @@ class ResearchSummaryController extends Controller
             ResearchSummary::create([
                 'publication_type_id' => $request->publication_type_id,
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'year' => $request->year,
                 'total_items' => $request->total_items,
                 'contributing_core_faculty' => $request->contributing_core_faculty,

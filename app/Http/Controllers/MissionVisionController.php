@@ -20,8 +20,8 @@ class MissionVisionController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $missions = MissionVision::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $missions = MissionVision::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('strategic_management.mission_vision',compact('missions'));
     }
@@ -64,6 +64,7 @@ class MissionVisionController extends Controller
 
                     MissionVision::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'mission' => $request->mission,
                         'vision' => $request->vision,
                         'file' => $path.'/'.$imageName,

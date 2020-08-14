@@ -22,10 +22,10 @@ class StatutoryCommitteeController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $bodies = StatutoryBody::all();
         $designations = Designation::all();
-        $statutory_committees = StatutoryCommittee::with('designation', 'statutory_body')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $statutory_committees = StatutoryCommittee::with('designation', 'statutory_body')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         return view('strategic_management.statutory_committee', compact('bodies', 'designations', 'statutory_committees'));
     }
 
@@ -64,6 +64,7 @@ class StatutoryCommitteeController extends Controller
 
                 StatutoryCommittee::create([
                     'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
                     'statutory_body_id' => $request->statutory_body_id,
                     'name' => $request->name,
                     'designation_id' => $request->designation_id,

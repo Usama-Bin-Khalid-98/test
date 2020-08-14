@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">Provide the latest audit report of the business school as Appendix -1C.</p>
+                            <p class="box-title">1.9. Provide the latest audit report of the business school as Appendix -1C.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>

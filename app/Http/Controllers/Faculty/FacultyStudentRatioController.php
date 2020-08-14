@@ -22,10 +22,10 @@ class FacultyStudentRatioController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $programs = Scope::with('program')->get();
 
-        $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.faculty.faculty_student_ratio', compact('programs','ratios'));
     }
@@ -57,6 +57,7 @@ class FacultyStudentRatioController extends Controller
 
             FacultyStudentRatio::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,

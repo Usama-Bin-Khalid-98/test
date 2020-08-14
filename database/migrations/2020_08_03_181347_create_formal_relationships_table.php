@@ -19,6 +19,10 @@ class CreateFormalRelationshipsTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('org_name',255);
             $table->string('mou_title',255);
             $table->string('signing_mou_date', 255);
