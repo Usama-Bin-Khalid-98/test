@@ -96,7 +96,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Extra-curricular and co-curricular activities</h3>
+                            <h3 class="box-title">Table 3.8 Extra-curricular and co-curricular activities</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
