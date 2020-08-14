@@ -19,6 +19,10 @@ class CreateSupportStaffTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->BigInteger('staff_category_id')->unsigned();
             $table->foreign('staff_category_id')
                 ->references('id')

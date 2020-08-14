@@ -20,12 +20,12 @@ class StudentIntakeController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $bs = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('bs_level');
         $ms = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('ms_level');
         $phd = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('phd_level');
         $t_intake = StudentIntake::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('total_intake');
-        $intakes = StudentIntake::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $intakes = StudentIntake::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.student_enrolment.intakes', compact('intakes','bs','ms','phd','t_intake'));
     }
@@ -55,8 +55,10 @@ class StudentIntakeController extends Controller
         }
         try {
             $uni_id = Auth::user()->campus_id;
+            $dept_id = Auth::user()->department_id;
             StudentIntake::create([
                 'campus_id' => $uni_id,
+                'department_id' => $dept_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,

@@ -21,9 +21,9 @@ class ClassSizeController extends Controller
     public function index()
     {
          $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $semesters = Semester::get();
-        $sizes  = ClassSize::with('campus','semesters')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $sizes  = ClassSize::with('campus','semesters')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.student_enrolment.class_size', compact('semesters','sizes'));
     }
@@ -55,6 +55,7 @@ class ClassSizeController extends Controller
 
             ClassSize::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'semesters_id' => $request->semesters_id,
                 'program_a' => $request->program_a,
                 'program_b' => $request->program_b,

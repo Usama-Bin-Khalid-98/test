@@ -21,9 +21,9 @@ class AlumniParticipationController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $engagements = ActivityEngagement::get();
-        $participations  = AlumniParticipation::with('campus','activity_engagements')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $participations  = AlumniParticipation::with('campus','activity_engagements')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.student_enrolment.alumni_participation', compact('engagements','participations'));
     }
@@ -55,6 +55,7 @@ class AlumniParticipationController extends Controller
 
             AlumniParticipation::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'activity_engagements_id' => $request->activity_engagements_id,
                 'alumni_participated' => $request->alumni_participated,
                 'major_input' => $request->major_input,

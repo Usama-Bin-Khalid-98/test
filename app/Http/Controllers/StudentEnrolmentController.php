@@ -22,13 +22,13 @@ class StudentEnrolmentController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $programs = Program::where('status', 'active')->get();
         $bs = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('bs_level');
         $ms = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('ms_level');
         $phd = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('phd_level');
         $t_students = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('total_students');
-        $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.student_enrolment.enrolment', compact('programs','enrolments','bs','ms','phd','t_students'));
     }
@@ -58,8 +58,10 @@ class StudentEnrolmentController extends Controller
         }
         try {
             $uni_id = Auth::user()->campus_id;
+            $dept_id = Auth::user()->department_id;
             StudentEnrolment::create([
                 'campus_id' => $uni_id,
+                'department_id' => $dept_id,
                 'year' => $request->year,
                 'bs_level' => $request->bs_level,
                 'ms_level' => $request->ms_level,

@@ -42,7 +42,6 @@ class DeskReviewController extends Controller
         //dd($nbeac_criteria);
         $campus_id = Auth::user()->campus_id;
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-//      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
         //dd($accreditation);
         $program_dates = [];
         foreach ($accreditation as $accred)
@@ -52,13 +51,14 @@ class DeskReviewController extends Controller
         @$program_dates[$accred->id]['date'] = $accred->date_program;
         }
 
-        $mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
-        $strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
-        $application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
-        $student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
-        $graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
+       @$mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
+        @$strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
+       // dd($strategic_plan);
 
-        $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('number_faculty');
+        @$application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
+        @$student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
+       @$graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
+
         $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
 
         $getFullProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>8])->get()->count();
@@ -86,7 +86,6 @@ class DeskReviewController extends Controller
 
         //dd($graduated_students);
         $strategic_date_diff = $this->dateDifference(@$strategic_plan->aproval_date, date('Y-m-d'), '%y Year %m Month');
-        //dd($program_dates);
         //// get scope
         //$scope = Scope::where('')
         return view('desk_review.index', compact(
@@ -97,7 +96,7 @@ class DeskReviewController extends Controller
             'application_received',
             'student_enrolment',
             'graduated_students',
-            'faculty_summary',
+            'faculty_summary_doc',
             'getFullProfessors',
             'AssistantProfessors',
             'AssociateProfessors',
@@ -332,9 +331,25 @@ class DeskReviewController extends Controller
         //
     }
 
+    //"eligibility_plan" => "yes"
+    //  "eligibility_student" => "yes"
+    //  "eligibility_enrollment" => "yes"
+    //  "eligibility_load" => "yes"
+    //  "eligibility_output" => "yes"
+    //  "eligibility_bandwidth" => "yes"
+    //  "eligibility_ratio" => "yes"
+    //]
     protected function rules() {
         return [
-//                'id' => 'required'
+                'eligibility_program' => 'required',
+                'eligibility_mission' => 'required',
+                'eligibility_plan' => 'required',
+                'eligibility_student' => 'required',
+                'eligibility_enrollment' => 'required',
+                'eligibility_load' => 'required',
+                'eligibility_output' => 'required',
+                'eligibility_bandwidth' => 'required',
+                'eligibility_ratio' => 'required',
         ];
     }
 

@@ -21,11 +21,11 @@ class SourcesFundingController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $amount = SourcesFunding::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('amount');
         $percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('percent_share');
         $fundings = FundingSources::get();
-        $sources  = SourcesFunding::with('campus','funding_sources')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $sources  = SourcesFunding::with('campus','funding_sources')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('strategic_management.sources_funding', compact('fundings','sources','amount','percent_share'));
     }

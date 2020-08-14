@@ -22,10 +22,10 @@ class WorkLoadController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
          $designations = Designation::all();
 
-         $workloads = WorkLoad::with('campus','designation')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+         $workloads = WorkLoad::with('campus','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.faculty.workload', compact('designations','workloads'));
     }
@@ -57,6 +57,7 @@ class WorkLoadController extends Controller
 
             WorkLoad::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'faculty_name' => $request->faculty_name,
                 'designation_id' => $request->designation_id,
                 'total_courses' => $request->total_courses,
