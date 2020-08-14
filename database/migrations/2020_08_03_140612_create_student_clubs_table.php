@@ -19,6 +19,10 @@ class CreateStudentClubsTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('name',255);
             $table->string('total_members',255);
             $table->string('no_of_members', 255);

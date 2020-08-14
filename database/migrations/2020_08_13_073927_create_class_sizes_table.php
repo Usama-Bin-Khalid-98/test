@@ -19,6 +19,10 @@ class CreateClassSizesTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->BigInteger('semesters_id')->unsigned()->nullable();
             $table->foreign('semesters_id')
                 ->references('id')

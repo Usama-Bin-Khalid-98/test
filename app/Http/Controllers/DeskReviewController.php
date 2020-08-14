@@ -37,7 +37,7 @@ class DeskReviewController extends Controller
     public function index()
     {
         //
-//        $nbeac_criteria = NbeacCriteria::all()->first();
+        $nbeac_criteria = NbeacCriteria::all()->first();
         //dd($nbeac_criteria);
         $campus_id = Auth::user()->campus_id;
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
@@ -50,13 +50,13 @@ class DeskReviewController extends Controller
         @$program_dates[$accred->id]['date'] = $accred->date_program;
         }
 
-//        @$mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
+       @$mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
         @$strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
        // dd($strategic_plan);
 
         @$application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
         @$student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
-//        @$graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
+       @$graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
 
         $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
 
@@ -95,7 +95,7 @@ class DeskReviewController extends Controller
             'application_received',
             'student_enrolment',
             'graduated_students',
-            'faculty_summary',
+            'faculty_summary_doc',
             'getFullProfessors',
             'AssistantProfessors',
             'AssociateProfessors',

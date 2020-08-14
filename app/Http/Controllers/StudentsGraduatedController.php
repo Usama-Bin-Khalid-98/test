@@ -21,10 +21,10 @@ class StudentsGraduatedController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $programs = Scope::with('program')->get();
 
-        $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('registration.student_enrolment.students_graduated', compact('programs','students'));
     }
@@ -54,8 +54,10 @@ class StudentsGraduatedController extends Controller
         }
         try {
             $uni_id = Auth::user()->campus_id;
+            $dept_id = Auth::user()->department_id;
             StudentsGraduated::create([
                 'campus_id' => $uni_id,
+                'department_id' => $dept_id,
                 'program_id' => $request->program_id,
                 'grad_std_t' => $request->grad_std_t,
                 'grad_std_t_2' => $request->grad_std_tt,

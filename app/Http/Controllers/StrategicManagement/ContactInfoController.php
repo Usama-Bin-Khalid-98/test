@@ -20,9 +20,9 @@ class ContactInfoController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $designations = Designation::all();
-        $contacts = ContactInfo::with('designation')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $contacts = ContactInfo::with('designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         ///dd($contacts);
         return view('strategic_management.contact_info', compact('designations', 'contacts'));
     }
@@ -72,6 +72,7 @@ class ContactInfoController extends Controller
                         'focal_person' => $request->focal_person,
                         'cv' => $path.'/'.$imageName,
                         'campus_id' => auth()->user()->campus_id,
+                        'department_id' => auth()->user()->department_id,
                         'created_by' => auth()->user()->id,
                 ]);
 

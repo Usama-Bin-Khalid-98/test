@@ -23,9 +23,9 @@ class FinancialInfoController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;  
+        $department_id = Auth::user()->department_id;  
         $income = IncomeSource::all();
-        $infos = FinancialInfo::with('campus','income_source')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $infos = FinancialInfo::with('campus','income_source')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         ///dd($contacts);
         return view('registration.facilities_information.financial_info', compact('income','infos'));
     }
@@ -57,6 +57,7 @@ class FinancialInfoController extends Controller
 
             FinancialInfo::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'income_source_id' => $request->income_source_id,
                 'year_three' => $request->year_three,
                 'year_two' => $request->year_two,

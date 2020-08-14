@@ -24,6 +24,10 @@ class CreateSurveyQuestionnairesTable extends Migration
             $table->foreign('business_school_id')
                 ->references('id')
                 ->on('business_schools');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->enum('isChecked',['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->timestamps();

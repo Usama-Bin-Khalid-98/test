@@ -14,30 +14,22 @@ use Auth;
 
 class ApplicationReceivedController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    
     public function __construct()
     {
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $scopes = Scope::with('program')->get();
         $semesters = Semester::where('status', 'active')->get();
 
-        $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
     }
@@ -69,6 +61,7 @@ class ApplicationReceivedController extends Controller
 
             ApplicationReceived::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'semester_id' => $request->semester_id,
                 'app_received' => $request->app_received,
