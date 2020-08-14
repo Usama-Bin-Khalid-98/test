@@ -38,8 +38,10 @@ class HomeController extends Controller
         //$userHas = Auth::user()->getPermissionsViaRoles();
         //$check = $userHas->has('name');
         //dd($check);
-        $registrations = User::with('business_school')->where('status', 'pending')->get();
+        $memberShips = User::with('business_school')->where('status', 'pending')->get();
         $invoices = Slip::with('business_school', 'department')->get();
-        return view('home' , compact( 'registrations', 'invoices'));
+        $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
+        //dd($registrations);
+        return view('home' , compact( 'registrations', 'invoices', 'memberShips'));
     }
 }

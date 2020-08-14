@@ -59,6 +59,7 @@ class CreateUsersTable extends Migration
             $table->string('password',255);
             $table->string('user_type', 50);
             $table->enum('status', ['active', 'inactive', 'pending', 'approved']);
+            $table->enum('request', ['created', 'pending', 'sent', 'approved'])->default('created');
             $table->rememberToken();
             $table->timestamps();
         });
