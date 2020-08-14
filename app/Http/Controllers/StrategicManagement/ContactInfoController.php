@@ -6,6 +6,7 @@ use App\Models\StrategicManagement\ContactInfo;
 use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
@@ -180,7 +181,7 @@ class ContactInfoController extends Controller
     {
          try {
             ContactInfo::where('id', $contactInfo->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              ContactInfo::destroy($contactInfo->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

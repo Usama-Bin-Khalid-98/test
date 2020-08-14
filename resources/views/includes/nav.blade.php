@@ -270,6 +270,9 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
            @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('print')) ? 'active' : '' }}"><a href="{{url('print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print SAR</a></li>
           @endhasrole
+          @hasrole('BusinessSchool')
+            <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('registration-apply')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply</a></li>
+          @endhasrole
           @hasrole('NBEACAdmin')
           <li class=" treeview {{request()->is('registrations')?'active':''}}">
               <a href="#">

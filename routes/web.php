@@ -123,6 +123,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('formal-relationship','FormalRelationshipController');
         Route::resource('complaint-resolution','ComplaintResolutionController');
         Route::resource('internal-community','InternalCommunityController');
+        Route::patch('registration-apply/{id}','HomeController@apply');
 
     });
 
