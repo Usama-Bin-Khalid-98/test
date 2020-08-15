@@ -19,11 +19,15 @@ class CreateScopesTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');    
             $table->integer('program_id')->unsigned()->nullable();
             $table->foreign('program_id')
                 ->references('id')
                 ->on('programs')
-                ->onDelete('cascade');;
+                ->onDelete('cascade');
             $table->integer('level_id')->unsigned()->nullable();
             $table->foreign('level_id')
                 ->references('id')

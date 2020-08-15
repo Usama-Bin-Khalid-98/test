@@ -21,8 +21,8 @@ class ComplaintResolutionController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $resolutions = ComplaintResolution::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $resolutions = ComplaintResolution::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('social_responsibility.complaint_resolution',compact('resolutions'));
     }
@@ -65,6 +65,7 @@ class ComplaintResolutionController extends Controller
 
                     ComplaintResolution::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'date' => $request->date,
                         'complaint_desc' => $request->complaint_desc,
                         'arbitrating_authority' => $request->arbitrating_authority,

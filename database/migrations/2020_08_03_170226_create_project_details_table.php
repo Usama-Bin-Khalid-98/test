@@ -19,6 +19,10 @@ class CreateProjectDetailsTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->text('date');
             $table->text('activity_title');
             $table->string('file', 255);

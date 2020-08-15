@@ -89,6 +89,9 @@ use Illuminate\Support\Facades\Route;
         Route::resource('students-graduated','StudentsGraduatedController');
         Route::resource('student-gender','StudentGenderController');
         Route::resource('class-size','ClassSizeController');
+        Route::resource('personal-grooming','PersonalGroomingController');
+        Route::resource('counselling-activity','CounsellingActivityController');
+        Route::resource('extra-activity','ExtraActivitiesController');
         Route::resource('alumni-membership','AlumniMembershipController');
         Route::resource('alumni-participation','AlumniParticipationController');
 
@@ -120,6 +123,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('formal-relationship','FormalRelationshipController');
         Route::resource('complaint-resolution','ComplaintResolutionController');
         Route::resource('internal-community','InternalCommunityController');
+        Route::patch('registration-apply/{id}','HomeController@apply');
 
     });
 

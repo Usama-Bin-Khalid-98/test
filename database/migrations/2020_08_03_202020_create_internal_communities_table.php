@@ -19,6 +19,10 @@ class CreateInternalCommunitiesTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->BigInteger('welfare_program_id')->unsigned();
             $table->foreign('welfare_program_id')
                 ->references('id')

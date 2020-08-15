@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             'cnic' => '17101-1234324-1',
             'contact_no' => '+92-51-90800206',
             'email' => 'nbeac@hec.pk',
+            'email_verified_at' => '2020-07-29 17:32:04',
             'password' => Hash::make('admin!@#$'),
             'user_type' => 'admin',
             'status' => 'active',
@@ -25,12 +26,12 @@ class UserSeeder extends Seeder
             'cnic' => '17101-1234324-1',
             'contact_no' => '+92-51-90800206',
             'email' => 'stufail@hec.pk',
+
+            'email_verified_at' => '2020-07-29 17:32:04',
             'password' => Hash::make('admin!@#$'),
             'user_type' => 'admin',
             'status' => 'active',
             ],
-
-
         ]);
 
     DB::table('users')->insert([
@@ -40,10 +41,11 @@ class UserSeeder extends Seeder
             'cnic' => '17101-1234324-1',
             'contact_no' => '+92-51-90800206',
             'email' => 'city@gmail.com',
-            'email_verified_at' => '2020-07-29 17:32:04',
+            'email_verified_at' => '2020-08-13 23:13:12',
             'password' => Hash::make('admin!@#$'),
             'business_school_id' => 1,
             'campus_id' => 209,
+            'department_id' => 1,
             'country' => 'pakistan',
             'city' => 'peshawar',
             'user_type' => 'business_school',

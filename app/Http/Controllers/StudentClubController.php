@@ -20,8 +20,8 @@ class StudentClubController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $clubs = StudentClub::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $clubs = StudentClub::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('social_responsibility.student_club',compact('clubs'));
     }
@@ -53,6 +53,7 @@ class StudentClubController extends Controller
 
             StudentClub::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'name' => $request->name,
                 'total_members' => $request->total_members,
                 'no_of_members' => $request->no_of_members,

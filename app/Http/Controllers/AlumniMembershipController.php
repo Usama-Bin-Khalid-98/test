@@ -20,8 +20,8 @@ class AlumniMembershipController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $memberships = AlumniMembership::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $memberships = AlumniMembership::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         
         return view('registration.student_enrolment.alumni_membership', compact('memberships'));
     }
@@ -64,6 +64,7 @@ class AlumniMembershipController extends Controller
 
                     AlumniMembership::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'total_graduates' => $request->total_graduates,
                         'reg_members' => $request->reg_members,
                         'membership_percentage' => $request->membership_percentage,

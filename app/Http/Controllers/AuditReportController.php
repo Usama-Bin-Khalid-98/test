@@ -21,9 +21,9 @@ class AuditReportController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         
-        $reports = AuditReport::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $reports = AuditReport::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         
         return view('strategic_management.audit_report', compact('reports'));
     }
@@ -66,6 +66,7 @@ class AuditReportController extends Controller
 
                     AuditReport::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'file' => $path.'/'.$imageName, 
                         'created_by' => Auth::user()->id 
                 ]);

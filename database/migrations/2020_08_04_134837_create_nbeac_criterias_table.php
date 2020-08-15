@@ -19,6 +19,10 @@ class CreateNbeacCriteriasTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->text('program_started')->nullable();
             $table->text('mission_vision_statement')->nullable();
             $table->text('strategic_plan')->nullable();

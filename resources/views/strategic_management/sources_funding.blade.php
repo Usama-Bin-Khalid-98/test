@@ -100,7 +100,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Sources of Funding</h3>
+                            <h3 class="box-title">Table 1.7 Sources of Funding</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

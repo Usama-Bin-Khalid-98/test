@@ -21,11 +21,11 @@ class SupportStaffController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $categories = StaffCategory::all();
 
 
-        $supports = SupportStaff::with('campus','staff_category')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $supports = SupportStaff::with('campus','staff_category')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         ///dd($contacts);
         return view('registration.facilities_information.support_staff', compact('categories','supports'));
     }
@@ -57,6 +57,7 @@ class SupportStaffController extends Controller
 
             SupportStaff::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'staff_category_id' => $request->staff_category_id,
                 'total_staff' => $request->total_staff,
                 'supervisor_qualification' => $request->supervisor_qualification,

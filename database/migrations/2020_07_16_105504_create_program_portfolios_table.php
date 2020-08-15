@@ -19,6 +19,10 @@ class CreateProgramPortfoliosTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->integer('program_id')->unsigned();
             $table->foreign('program_id')
                 ->references('id')

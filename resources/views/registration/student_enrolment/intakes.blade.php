@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on student intake  of the business school for the last three years</h3>
+                            <h3 class="box-title">3.2 Provide data on student intake  of the business school for the last three years in Table 3.2</h3>
                                 <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -109,7 +109,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Student Intakes</h3>
+                            <h3 class="box-title">Table 3.2 Student Intakes</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

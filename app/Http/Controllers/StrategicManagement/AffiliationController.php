@@ -22,11 +22,11 @@ class AffiliationController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $designations = Designation::all();
         $bodies = StatutoryBody::all();
 
-        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         //dd($affiliations);
         return view('strategic_management.affiliations', compact('designations','bodies','affiliations'));
     }
@@ -58,6 +58,7 @@ class AffiliationController extends Controller
 
             Affiliation::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'name' => $request->name,
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
