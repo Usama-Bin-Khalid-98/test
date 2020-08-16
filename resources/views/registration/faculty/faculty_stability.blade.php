@@ -62,12 +62,6 @@
                         <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Total faculty</label>
-                                    <input type="number" name="total_faculty" id="total_faculty" class="form-control">
-                                </div>
-                            </div>
-                           <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
@@ -75,6 +69,12 @@
                                         <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
                                         <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Total faculty</label>
+                                    <input type="number" name="total_faculty" id="total_faculty" class="form-control">
                                 </div>
                             </div>
                           
@@ -130,8 +130,8 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Total Faculty</th>
                                     <th>Year</th>
+                                    <th>Total Faculty</th>
                                     <th>Retired</th>
                                     <th>Resigned</th>
                                     <th>Terminated</th>
@@ -146,8 +146,8 @@
                                 <tr>
                                     <td>{{$req->campus->business_school->name}}</td>
                                     <td>{{$req->campus->location}}</td>
-                                    <td>{{$req->total_faculty}}</td>
                                     <td>{{$req->year}}</td>
+                                    <td>{{$req->total_faculty}}</td>
                                     <td>{{$req->resigned}}</td>
                                     <td>{{$req->retired}}</td>
                                     <td>{{$req->terminated}}</td>
@@ -166,8 +166,8 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Total Faculty</th>
                                     <th>Year</th>
+                                    <th>Total Faculty</th>
                                     <th>Retired</th>
                                     <th>Resigned</th>
                                     <th>Terminated</th>

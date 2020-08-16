@@ -73,13 +73,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Male(%)</label>
-                                    <input type="text" name="male" id="male" class="form-control">
+                                    <input type="number" max="100" name="male" id="male" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Female(%)</label>
-                                    <input type="text" name="female" id="female" class="form-control">
+                                    <input type="number" max="100" name="female" id="female" class="form-control">
                                 </div>
                             </div>
 
