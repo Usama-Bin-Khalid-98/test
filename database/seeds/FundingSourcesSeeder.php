@@ -18,7 +18,7 @@ class FundingSourcesSeeder extends Seeder
                 ['name' => 'Consultancy', 'status' => 'active'],
                 ['name' => 'Research projects', 'status' => 'active'],
                 ['name' => 'Executive education', 'status' => 'active'],
-                ['name' => 'Any other (specify)', 'status' => 'active']
+                ['name' => 'Any other (specify)', 'status' => 'active'],
             ]
         );
     }

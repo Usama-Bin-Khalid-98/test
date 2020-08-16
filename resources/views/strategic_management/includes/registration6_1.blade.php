@@ -57,6 +57,7 @@ Table 6.1. Financial information of the business school
                                     ?>
                                     
                                     <?php   for ($i=0; $i <1; $i++) { 
+                                        if($financialInfos)
                                         if($financialInfos[$i]->particularType=="income"){
                                      ?>
                                     <tr>
@@ -115,25 +116,25 @@ Table 6.1. Financial information of the business school
                                        for ($i=$countIncome; $i <$countIncome+1; $i++) {  ?>
                                     <tr>
                                         <td class="" rowspan="<?php echo $countExpense; ?>" style="text-align: center;">Expenses</td>
-                                        <td><?php print_r($financialInfos[$i]->particularName); ?> </td> 
-                                        <td><?php print_r($financialInfos[$i]->year_three); 
-                                            $expenset_3=$financialInfos[$i]->year_three;
+                                        <td><?php if($financialInfos) print_r($financialInfos[$i]->particularName); ?> </td> 
+                                        <td><?php if($financialInfos){ print_r($financialInfos[$i]->year_three); 
+                                            $expenset_3=$financialInfos[$i]->year_three;}
                                         ?></td>
-                                        <td><?php print_r($financialInfos[$i]->year_two); 
-                                            $expenset_2=$financialInfos[$i]->year_two;
+                                        <td><?php if($financialInfos){ print_r($financialInfos[$i]->year_two); 
+                                            $expenset_2=$financialInfos[$i]->year_two;}
                                         ?></td> 
-                                        <td><?php print_r($financialInfos[$i]->year_one); 
-                                        $expenset_1=$financialInfos[$i]->year_one;
+                                        <td><?php if($financialInfos){ print_r($financialInfos[$i]->year_one); 
+                                        $expenset_1=$financialInfos[$i]->year_one;}
                                         ?></td>
-                                        <td><?php print_r($financialInfos[$i]->year_t);
-                                        $expenset=$financialInfos[$i]->year_t;
+                                        <td><?php if($financialInfos){ print_r($financialInfos[$i]->year_t);
+                                        $expenset=$financialInfos[$i]->year_t;}
                                          ?></td> 
-                                        <td><?php print_r($financialInfos[$i]->year_t_plus_one);
-                                        $expensetPlus1=$financialInfos[$i]->year_t_plus_one;
+                                        <td><?php if($financialInfos){ print_r($financialInfos[$i]->year_t_plus_one);
+                                        $expensetPlus1=$financialInfos[$i]->year_t_plus_one;}
                                          ?></td>
                                          
-                                        <td><?php print_r($financialInfos[$i]->year_t_plus_two);
-                                        $expensetPlus2=$financialInfos[$i]->year_t_plus_two;
+                                        <td><?php if($financialInfos){ print_r($financialInfos[$i]->year_t_plus_two);
+                                        $expensetPlus2=$financialInfos[$i]->year_t_plus_two;}
                                          ?></td>                   
 
                                     </tr>

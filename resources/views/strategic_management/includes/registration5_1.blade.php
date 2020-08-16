@@ -50,7 +50,7 @@ Table 5.1. Summary of research output
                                         }
                                     }
 
-                                    for ($i=0; $i <1; $i++) { 
+                                    for ($i=0; $i <1; $i++) { if($researchOutput)
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                     ?>
                                     <tr>
@@ -75,6 +75,7 @@ Table 5.1. Summary of research output
                                     <?php }}
 
                                     for ($i=1; $i <$countResearch+2; $i++) { 
+                                        if($researchOutput)
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                      ?>
                                      <tr>
@@ -102,6 +103,7 @@ Table 5.1. Summary of research output
                                     echo "</pre>";
                                     die;*/
                                     for ($i=0; $i <$countResearch+1; $i++) { 
+                                        if($researchOutput)
                                         if($researchOutput[$i]->publicationType=="Books"   ){
 
                                      ?>
@@ -130,6 +132,7 @@ Table 5.1. Summary of research output
                                      <?php }}
 
                                      for ($i=0; $i <$countResearch+$countBooks+1 ; $i++) { 
+                                        if($researchOutput)
                                         if($researchOutput[$i]->publicationType=="Other Publications"){
                                          
                                       ?>

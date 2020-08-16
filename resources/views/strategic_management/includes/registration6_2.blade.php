@@ -29,6 +29,9 @@ Table 6.2. Business schools’ resources
                                 <thead>
                                     
                                 </thead>
+                                <?php
+                                if($BIResources){
+                                ?>
                                 <tbody>
                                     <?php
                                     $countbusiness = $countFaculty = $countLecture = $countLibrary = $countLaboratry = $countAuditorium = $countHostels = $countTransportation = $countOthers = 0;
@@ -54,7 +57,7 @@ Table 6.2. Business schools’ resources
                                         }
                                     }
 
-                                    for ($i=0; $i <1; $i++) { 
+                                    for ($i=0; $i <1; $i++) { if($BIResources)
                                         if($BIResources[$i]->facilityType=="Business School"){
                                     ?>
                                     <tr>
@@ -67,6 +70,7 @@ Table 6.2. Business schools’ resources
                                     <?php }} 
 
                                     for ($i=1; $i <$countbusiness+2; $i++) { 
+                                        if($BIResources)
                                         if($BIResources[$i]->facilityType=="Business School"){
                                     ?>
                                     <tr>
@@ -77,6 +81,7 @@ Table 6.2. Business schools’ resources
                                     <?php }} 
 
                                     for ($i=0; $i <$countbusiness+1; $i++) { 
+                                        if($BIResources)
                                         if($BIResources[$i]->facilityType=="Faculty Offices"   ){
                                     ?>
                                     
@@ -102,6 +107,7 @@ Table 6.2. Business schools’ resources
                                     <?php }} 
 
                                     for ($i=0; $i <$countbusiness+$countFaculty+1; $i++) { 
+                                        if($BIResources)
                                         if($BIResources[$i]->facilityType=="Lecture Halls"   ){
                                     ?>
                                     
@@ -155,6 +161,7 @@ Table 6.2. Business schools’ resources
 
                                     
                                     for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+1; $i++) { 
+                                        if($BIResources)
                                         if($BIResources[$i]->facilityType=="Laboratories"   ){
                                     ?>
                                     
@@ -184,6 +191,7 @@ Table 6.2. Business schools’ resources
 
 
                                     for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+1; $i++) { 
+                                        if($BIResources)
                                         if($BIResources[$i]->facilityType=="Multipurpose hall/auditorium"   ){
                                     ?>
                                     
@@ -212,6 +220,7 @@ Table 6.2. Business schools’ resources
 
 
                                      for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+1; $i++) { 
+                                        if($BIResources)
                                         if($BIResources[$i]->facilityType=="Hostels/accommodation"   ){
                                     ?>
                                     
@@ -238,7 +247,8 @@ Table 6.2. Business schools’ resources
 
 
 
-                                     for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+$countHostels+1; $i++) { 
+                                     for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+$countHostels+1; $i++) {
+                                     if($BIResources) 
                                         if($BIResources[$i]->facilityType=="Transportation"   ){
                                     ?>
                                     
@@ -265,7 +275,8 @@ Table 6.2. Business schools’ resources
 
 
 
-                                     for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+$countHostels+$countTransportation+1; $i++) { 
+                                     for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+$countHostels+$countTransportation+1; $i++) {
+                                     if($BIResources) 
                                         if($BIResources[$i]->facilityType=="Other Facilities"   ){
                                     ?>
                                     
@@ -306,16 +317,106 @@ Table 6.2. Business schools’ resources
 
                                     
                                 </tbody>
-                                <tfoot></tfoot>
-                              
-                              
+                                <?php }else{ ?>
+                                 <tbody>
+                                    <tr>
+                                        <td class="" rowspan="5" style="text-align: center;">Business school</td>
+                                        <td>Total area (sq.ft)</td> 
+                                        <td></td>
+                                                                       
 
-                            </table>
-                        </div>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Covered area (sq.ft)</td> 
+                                        <td></td>
+                                         
+                                                                        
 
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Open area (sq.ft)</td> 
+                                        <td></td>
+                                         
+                                                                        
 
+                                    </tr>
+                                    <tr>
+                                         
+                                        <td>Total student enrollment</td> 
+                                        <td></td>
+                                         
+                                                                        
 
-<!-- 
+                                    </tr>
+                                     <tr>
+                                        
+                                        <td>Open area per student</td> 
+                                        <td></td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="" rowspan="8" style="text-align: center;">Faculty offices</td>
+                                        <td>Total number of offices</td> 
+                                        <td></td>
+                                                                       
+
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Total faculty members</td> 
+                                        <td></td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Average number of faculty members per office</td> 
+                                        <td></td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    <tr>
+                                         
+                                        <td>Facilities available at faculty offices</td> 
+                                        <td></td>
+                                         
+                                                                        
+
+                                    </tr>
+                                     <tr>
+                                        
+                                        <td>a)  Workstations/laptops</td> 
+                                        <td>Yes/No</td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>b)  Printer/photocopier</td> 
+                                        <td>Yes/No</td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    <tr>
+                                         
+                                        <td>c)  Air conditioning</td> 
+                                        <td>Yes/No</td>
+                                         
+                                                                        
+
+                                    </tr>
+                                     <tr>
+                                        
+                                        <td>d)  Safe cabinets</td> 
+                                        <td>Yes/No</td>
+                                    </tr>
+
                                      <tr>
                                         <td class="" rowspan="8" style="text-align: center;">Lecture halls</td>
                                         <td>Total number of lecture halls</td> 
@@ -378,8 +479,7 @@ Table 6.2. Business schools’ resources
                                          
                                                                         
 
-                                    </tr> -->
-<!-- 
+                                    </tr>
                                     <tr>
                                         <td class="" rowspan="14" style="text-align: center;">Library</td>
                                         <td>Number of libraries</td> 
@@ -450,10 +550,10 @@ Table 6.2. Business schools’ resources
                                     <tr>                                         
                                         <td>Students to computers ratio in library</td> 
                                         <td>  </td>
-                                    </tr> -->
+                                    </tr>
 
-
-<!--                                       <tr>
+                                    
+                                     <tr>
                                         <td class="" rowspan="6" style="text-align: center;">Laboratories</td>
                                         <td>Number of laboratories</td> 
                                         <td></td>
@@ -489,4 +589,122 @@ Table 6.2. Business schools’ resources
                                         <td>List of available softwares</td> 
                                         <td> </td>
                                     </tr>
- -->
+
+
+
+                                     <tr>
+                                        <td class="" rowspan="2" style="text-align: center;">Multipurpose hall/auditorium</td>
+                                        <td>Number of multipurpose halls</td> 
+                                        <td></td>
+                                                                       
+
+                                    </tr>
+                                    <tr>                                        
+                                        <td>Seating capacity</td> 
+                                        <td></td>
+                                    </tr>
+
+
+                                     <tr>
+                                        <td class="" rowspan="6" style="text-align: center;">Hostels/accommodation</td>
+                                        <td>Number of faculty hostels</td> 
+                                        <td></td>
+                                                                       
+
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Total capacity of faculty hostel(s)</td> 
+                                        <td></td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Number of female student hostels</td> 
+                                        <td></td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    <tr>                                         
+                                        <td>Total capacity of female student hostel(s) </td> 
+                                        <td> 
+                                        </td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td>Number of male student hostels</td> 
+                                        <td> </td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td>Total capacity of male student hostel(s)</td> 
+                                        <td> </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td class="" rowspan="2" style="text-align: center;">Transportation</td>
+                                        <td>Number of vans for faculty transportation</td> 
+                                        <td></td>
+                                                                       
+
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Number of vans for students transportation</td> 
+                                        <td></td>
+                                    </tr>
+
+
+
+                                     <tr>
+                                        <td class="" rowspan="6" style="text-align: center;">Other facilities</td>
+                                        <td>Female students common room</td> 
+                                        <td>Yes/No</td>
+                                                                       
+
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Male students common room</td> 
+                                        <td>Yes/No</td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>Prayer room</td> 
+                                        <td>Yes/No</td>
+                                         
+                                                                        
+
+                                    </tr>
+                                    <tr>                                         
+                                        <td>Canteen/cafeteria</td> 
+                                        <td>Yes/No 
+                                        </td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td>Gymnasium</td> 
+                                        <td> Yes/No</td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td>Playground</td> 
+                                        <td> Yes/No</td>
+                                    </tr>
+
+                                    
+                                    
+                                </tbody>
+                                <?php } ?>
+                                <tfoot></tfoot>
+                              
+                              
+
+                            </table>
+                        </div>
+
+
+
