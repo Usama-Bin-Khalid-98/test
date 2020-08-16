@@ -62,8 +62,14 @@ Table 1.7. Approval of strategic plan
                           <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Period of the strategic plan</label>
-                                    <input type="text" name="plan_period" id="plan_period" class="form-control">
+                                    <label for="name">Period of the strategic plan (From)</label>
+                                    <input type="date" name="plan_period" id="plan_period" class="form-control">
+                                </div>
+                            </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Period of the strategic plan (To)</label>
+                                    <input type="date" name="plan_period_to" id="plan_period_to" class="form-control">
                                 </div>
                             </div>
 
@@ -173,7 +179,7 @@ Table 1.7. Approval of strategic plan
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Period of Strategic Plan</label>
-                                    <input type="text" name="plan_period" id="edit_plan_period" value="{{old('edit_plan_period')}}" class="form-control">
+                                    <input type="date" name="plan_period" id="edit_plan_period" value="{{old('edit_plan_period')}}" class="form-control">
                                 </div>
                                 <input type="hidden" id="edit_id">
                               </div>
@@ -243,14 +249,16 @@ Table 1.7. Approval of strategic plan
 
          $('#form').submit(function (e) {
             let plan_period = $('#plan_period').val();
+            let plan_period_to = $('#plan_period_to').val();
             let aproval_date = $('#aproval_date').val();
             let aproving_authority = $('#aproving_authority').val();
 
             !plan_period?addClass('plan_period'):removeClass('plan_period');
+            !plan_period_to?addClass('plan_period_to'):removeClass('plan_period_to');
             !aproval_date?addClass('aproval_date'):removeClass('aproval_date');
             !aproving_authority?addClass('aproving_authority'):removeClass('aproving_authority');
 
-            if(!plan_period || !aproval_date || !aproving_authority)
+            if(!plan_period || !aproval_date || !aproving_authority || !plan_period_to)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -276,7 +284,7 @@ Table 1.7. Approval of strategic plan
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                   // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

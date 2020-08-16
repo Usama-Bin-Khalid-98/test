@@ -68,7 +68,7 @@
                                          <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
                                         @endforeach
                                         </select>
-                                    
+
 
 
                                 </div>
@@ -93,7 +93,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Number of courses of program under review</label>
+                                    <label for="name">No of courses of program under review</label>
                                     <input type="text" name="no_of_course" id="no_of_course" class="form-control">
                                 </div>
                             </div>
@@ -115,12 +115,12 @@
                                     <label for="name">Final year project/ viva/ thesis/ comprehensive</label>
                                     <select name="fyp_req" id="fyp_req" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
-                                      
+
                                          <option value="final year project ">final year project </option>
                                           <option value="viva">viva</option>
                                            <option value="thesis">thesis</option>
                                             <option value="comprehensive">comprehensive</option>
-                                      
+
                                         </select>
                                     <!-- <textarea name="fyp_req" id="fyp_req" class="form-control"></textarea> -->
                                 </div>
@@ -174,7 +174,7 @@
                                     <td>{{$portfolio->fyp_req}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
-                                    
+
                                 </tr>
                                 @endforeach
                                 </tbody>

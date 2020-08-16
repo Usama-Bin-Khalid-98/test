@@ -1,6 +1,4 @@
 @section('pageTitle', 'Application Received')
-
-
 @if(Auth::user())
 
     @include("../includes.head")

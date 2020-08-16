@@ -53,10 +53,14 @@ class StrategicPlanController extends Controller
         }
         try {
 
+            //dd($request->all());
+
+        @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
+            //dd($period);
             StrategicPlan::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
-                'plan_period' => $request->plan_period,
+                'plan_period' => $period,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority,
                 'created_by' => Auth::user()->id
@@ -69,6 +73,15 @@ class StrategicPlanController extends Controller
         {
             return response()->json($e->getMessage(), 422);
         }
+    }
+
+    function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' )
+    {
+        $datetime1 = date_create($date_1);
+        $datetime2 = date_create($date_2);
+        $interval = date_diff($datetime1, $datetime2);
+        return $interval->format($differenceFormat);
+
     }
 
     /**
@@ -135,7 +148,7 @@ class StrategicPlanController extends Controller
     {
         try {
             StrategicPlan::where('id', $strategicPlan->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             StrategicPlan::destroy($strategicPlan->id);
             return response()->json(['success' => 'Record deleted successfully.']);
