@@ -111,7 +111,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program Name</th>
+                                    <th>Program(s) under review</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>
                                     <th>Status</th>
@@ -137,7 +137,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program Name</th>
+                                    <th>Program(s) under review</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>
                                     <th>Status</th>

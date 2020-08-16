@@ -59,31 +59,38 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
+                                <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Program under review</label>
+                                    <label for="name">Program</label>
+                                   <select name="program" id="program" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select</option>
+                                         <option value="Program 1">Program 1</option>
+                                         <option value="Program 2">Program 2</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
+                                        <option selected disabled>Select Program(s) under review</option>
                                         @foreach($scopes as $scope)
                                          <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
                                         @endforeach
                                         </select>
-                                    
-
-
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Number of semesters</label>
                                     <input type="text" name="total_semesters" id="total_semesters" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Course category</label>
                                    <select name="course_type_id" id="course_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Course</option>
+                                        <option selected disabled>Select Course category</option>
                                         @foreach($courses as $course)
                                          <option value="{{$course->id}}">{{$course->name}}</option>
                                         @endforeach
@@ -91,38 +98,38 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Number of courses of program under review</label>
+                                    <label for="name">Number of courses of the program under review</label>
                                     <input type="text" name="no_of_course" id="no_of_course" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Credit hours</label>
                                     <input type="text" name="credit_hours" id="credit_hours" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Internship requirements</label>
                                     <textarea name="internship_req" id="internship_req" class="form-control"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
 
                                     <label for="name">Final year project/ viva/ thesis/ comprehensive</label>
                                     <select name="fyp_req" id="fyp_req" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
+                                        <option selected disabled>Select</option>
                                       
-                                         <option value="final year project ">final year project </option>
-                                          <option value="viva">viva</option>
-                                           <option value="thesis">thesis</option>
-                                            <option value="comprehensive">comprehensive</option>
+                                         <option value="final year project ">Final year project </option>
+                                          <option value="viva">Viva</option>
+                                           <option value="thesis">Thesis</option>
+                                            <option value="comprehensive">Comprehensive</option>
                                       
                                         </select>
-                                    <!-- <textarea name="fyp_req" id="fyp_req" class="form-control"></textarea> -->
+                                    
                                 </div>
                             </div>
 
@@ -147,9 +154,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Total Semesters</th>
                                     <th>Course Type</th>
                                     <th>No of Courses</th>
@@ -163,9 +169,8 @@
                                 <tbody>
                                  @foreach($portfolios as $portfolio)
                                 <tr>
-                                    <td>{{$portfolio->campus->business_school->name}}</td>
-                                    <td>{{$portfolio->campus->location}}</td>
-                                    <td>{{$portfolio->program->name}}</td>
+                                    <td>{{$portfolio->program}}</td>
+                                    <td>{{@$portfolio->program->name}}</td>
                                     <td>{{$portfolio->total_semesters}}</td>
                                     <td>{{$portfolio->course_type->name}}</td>
                                     <td>{{$portfolio->no_of_course}}</td>
@@ -173,16 +178,15 @@
                                     <td>{{$portfolio->internship_req}}</td>
                                     <td>{{$portfolio->fyp_req}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program":"{{$portfolio->program}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                     
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Total Semesters</th>
                                     <th>Course Type</th>
                                     <th>No of Courses</th>
@@ -214,6 +218,16 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
+                         <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Program</label>
+                                   <select name="program" id="edit_program" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select</option>
+                                         <option value="program1">Program 1</option>
+                                         <option value="program2">Program 2</option>
+                                        </select>
+                                </div>
+                            </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Program under review</label>
@@ -324,6 +338,7 @@
         });
 
              $('#form').submit(function (e) {
+            let program = $('#program').val();
             let program_id = $('#program_id').val();
             let total_semesters = $('#total_semesters').val();
             let course_type_id = $('#course_type_id').val();
@@ -332,6 +347,7 @@
             let internship_req = $('#internship_req').val();
             let fyp_req = $('#fyp_req').val();
 
+            !program?addClass('program'):removeClass('program');
             !program_id?addClass('program_id'):removeClass('program_id');
             !total_semesters?addClass('total_semesters'):removeClass('total_semesters');
             !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
@@ -340,7 +356,7 @@
             !internship_req?addClass('internship_req'):removeClass('internship_req');
             !fyp_req?addClass('fyp_req'):removeClass('fyp_req');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            if(!program || !program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -380,6 +396,7 @@
 $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
 
+            $('#edit_program').select2().val(data.program).trigger('change');
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_total_semesters').val(data.total_semesters);
             $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
@@ -392,6 +409,7 @@ $('.edit').on('click', function () {
         });
 
 $('#updateForm').submit(function (e) {
+            let program = $('#edit_program').val();
             let program_id = $('#edit_program_id').val();
             let total_semesters = $('#edit_total_semesters').val();
             let course_type_id = $('#edit_course_type_id').val();
@@ -402,6 +420,7 @@ $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
+            !program?addClass('edit_program'):removeClass('edit_program');
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
             !total_semesters?addClass('edit_total_semesters'):removeClass('edit_total_semesters');
             !course_type_id?addClass('edit_course_type_id'):removeClass('edit_course_type_id');
@@ -410,7 +429,7 @@ $('#updateForm').submit(function (e) {
             !internship_req?addClass('edit_internship_req'):removeClass('edit_internship_req');
             !fyp_req?addClass('edit_fyp_req'):removeClass('edit_fyp_req');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            if(!program || !program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

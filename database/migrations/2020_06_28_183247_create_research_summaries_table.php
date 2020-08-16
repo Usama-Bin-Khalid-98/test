@@ -27,7 +27,6 @@ class CreateResearchSummariesTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->string('year', 10);
             $table->string('total_items', 10);
             $table->string('contributing_core_faculty', 10);
             $table->string('jointly_produced_other', 10);

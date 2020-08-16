@@ -69,17 +69,7 @@
                                         </select>
                                 </div>
                             </div>
-                           <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
+                           
 
                           
                             <div class="col-md-3">
@@ -110,7 +100,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Gender mix of the business school faculty.</h3>
+                            <h3 class="box-title">Table 4.6 Faculty Gender Mix.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -120,7 +110,6 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Faculty Type</th>
-                                    <th>Year</th>
                                     <th>Male</th>
                                     <th>Female</th>
                                     <th>Status</th>
@@ -134,12 +123,11 @@
                                     <td>{{$req->campus->business_school->name}}</td>
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->lookup_faculty_type->faculty_type}}</td>
-                                    <td>{{$req->year}}</td>
                                     <td>{{$req->male}}</td>
                                     <td>{{$req->female}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","year":"{{$req->year}}","male":"{{$req->male}}","female":"{{$req->female}}", "status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","male":"{{$req->male}}","female":"{{$req->female}}", "status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -149,7 +137,6 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Faculty Type</th>
-                                    <th>Year</th>
                                     <th>Male</th>
                                     <th>Female</th>
                                     <th>Status</th>
@@ -191,17 +178,7 @@
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
-                           <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
+                           
 
 
                         <div class="col-md-6">
@@ -278,16 +255,14 @@
 
          $('#form').submit(function (e) {
             let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
-            let year = $('#year').val();
             let male = $('#male').val();
             let female = $('#female').val();
 
             !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
-            !year?addClass('year'):removeClass('year');
             !male?addClass('male'):removeClass('male');
             !female?addClass('female'):removeClass('female');
 
-            if(!lookup_faculty_type_id || !year || !male || !female)
+            if(!lookup_faculty_type_id || !male || !female)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -329,7 +304,6 @@
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
-            $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_male').val(data.male);
             $('#edit_female').val(data.female);
             $('#edit_id').val(data.id);
@@ -339,7 +313,6 @@
 
 $('#updateForm').submit(function (e) {
             let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
-            let year = $('#edit_year').val();
             let male = $('#edit_male').val();
             let female = $('#edit_female').val();
             let id = $('#edit_id').val();
@@ -347,11 +320,10 @@ $('#updateForm').submit(function (e) {
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
             !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
-            !year?addClass('edit_year'):removeClass('edit_year');
             !male?addClass('edit_male'):removeClass('edit_male');
             !female?addClass('edit_female'):removeClass('edit_female');
 
-            if(!lookup_faculty_type_id || !year || !male || !female )
+            if(!lookup_faculty_type_id  || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
