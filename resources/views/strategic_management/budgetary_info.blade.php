@@ -93,7 +93,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Budget Type</label>
+                                    <label for="name">Budget type</label>
                                     <select name="budget_type" id="budget_type" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Budget type</option>
                                         <option value="Implicit">Implicit</option>

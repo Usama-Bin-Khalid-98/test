@@ -41,90 +41,7 @@ class DeskReviewController extends Controller
         $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
 
         return view('desk_review.index', compact(
-            'registrations'
-        ));
-
-//        //
-//        $nbeac_criteria = NbeacCriteria::all()->first();
-//        //dd($nbeac_criteria);
-//        $campus_id = Auth::user()->campus_id;
-//        $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-//        //dd($accreditation);
-//        $program_dates = [];
-//        foreach ($accreditation as $accred)
-//        {
-//        @$program_dates[$accred->id]['date_diff'] = $this->dateDifference($accred->date_program, date('Y-m-d'), '%y Year %m Month');
-//        @$program_dates[$accred->id]['program'] = $accred->program->name;
-//        @$program_dates[$accred->id]['date'] = $accred->date_program;
-//        }
-//
-//       @$mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
-//        @$strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
-//       // dd($strategic_plan);
-//
-//        @$application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
-//        @$student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
-//       @$graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
-//
-//        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
-//
-//        $getFullProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>8])->get()->count();
-//        $AssociateProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>9])->get()->count();
-//        $AssistantProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>10])->get()->count();
-//        $lecturers = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>11])->get()->count();
-//        $permanent_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
-//        $adjunct_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>3])->get()->count();
-//        $other = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>13])->get()->count();
-//        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
-//        $faculty_degree = FacultyDegree::get()->first();
-//        $total_induction = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('new_induction');
-//        $faculty_terminated = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('terminated');
-//        $faculty_resigned = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('resigned');
-//        $faculty_retired = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('retired');
-//
-//        $total_courses = WorkLoad::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('total_courses');
-//
-//        $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
-//        $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
-//
-//        $summaries = ResearchSummary::get();
-//
-//        //dd($female_faculty);
-//
-//        //dd($graduated_students);
-//        $strategic_date_diff = $this->dateDifference(@$strategic_plan->aproval_date, date('Y-m-d'), '%y Year %m Month');
-//        //// get scope
-//        //$scope = Scope::where('')
-//        return view('desk_review.index', compact(
-//            'program_dates',
-//            'mission_vision',
-//            'strategic_plan',
-//            'strategic_date_diff',
-//            'application_received',
-//            'student_enrolment',
-//            'graduated_students',
-//            'faculty_summary_doc',
-//            'getFullProfessors',
-//            'AssistantProfessors',
-//            'AssociateProfessors',
-//            'lecturers',
-//            'other',
-//            'faculty_summary_doc',
-//            'permanent_faculty',
-//            'adjunct_faculty',
-//            'female_faculty',
-//            'faculty_degree',
-//            'total_induction',
-//            'faculty_terminated',
-//            'faculty_resigned',
-//            'faculty_retired',
-//            'total_courses',
-//            'bandwidth',
-//            'comp_ratio',
-//            'summaries',
-//            'nbeac_criteria'
-//
-//        ));
+            'registrations'));
     }
 
     /**
@@ -343,25 +260,9 @@ class DeskReviewController extends Controller
         //
     }
 
-    //"eligibility_plan" => "yes"
-    //  "eligibility_student" => "yes"
-    //  "eligibility_enrollment" => "yes"
-    //  "eligibility_load" => "yes"
-    //  "eligibility_output" => "yes"
-    //  "eligibility_bandwidth" => "yes"
-    //  "eligibility_ratio" => "yes"
-    //]
     protected function rules() {
         return [
-                'eligibility_program' => 'required',
-                'eligibility_mission' => 'required',
-                'eligibility_plan' => 'required',
-                'eligibility_student' => 'required',
-                'eligibility_enrollment' => 'required',
-                'eligibility_load' => 'required',
-                'eligibility_output' => 'required',
-                'eligibility_bandwidth' => 'required',
-                'eligibility_ratio' => 'required',
+//                'id' => 'required'
         ];
     }
 
