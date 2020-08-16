@@ -58,7 +58,6 @@ class ResearchSummaryController extends Controller
                 'publication_type_id' => $request->publication_type_id,
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
-                'year' => $request->year,
                 'total_items' => $request->total_items,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
                 'jointly_produced_other' => $request->jointly_produced_other,
@@ -117,7 +116,6 @@ class ResearchSummaryController extends Controller
 
             ResearchSummary::where('id', $researchSummary->id)->update([
                 'publication_type_id' => $request->publication_type_id,
-                'year' => $request->year,
                 'total_items' => $request->total_items,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
                 'jointly_produced_other' => $request->jointly_produced_other,
@@ -158,7 +156,6 @@ class ResearchSummaryController extends Controller
     protected function rules() {
         return [
             'publication_type_id' => 'required',
-            'year' => 'required',
             'total_items' => 'required',
             'contributing_core_faculty' => 'required',
             'jointly_produced_other' => 'required',

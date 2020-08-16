@@ -56,6 +56,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('registrationPrint','RegistrationPrintController');
 
     });
+
 //    Route::put('users-roles', 'Auth\UserController\user_roles');
 
     Route::group(['middleware' => ['role:BusinessSchool']], function () {
@@ -78,6 +79,8 @@ use Illuminate\Support\Facades\Route;
 
 //        Route::resource('print','PrintController');
 //        Route::resource('registrationPrint','RegistrationPrintController');
+
+    
         // Curriculum
         Route::resource('program-portfolio','ProgramPortfolioController');
         Route::resource('entry-requirements','EntryRequirementController');
@@ -104,6 +107,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
         Route::resource('faculty-summary','Faculty\FacultySummaryController');
         Route::resource('faculty-degree', 'FacultyDegreeController');
+
         //research-summary
         Route::resource('research-summary','ResearchSummaryController');
 

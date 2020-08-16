@@ -104,7 +104,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.1. Summary of business schools’ faculty</h3>
+                            <h3 class="box-title">Table 4.1. Summary of the business schools’ faculty</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
