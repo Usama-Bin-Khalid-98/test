@@ -121,7 +121,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.5.Faculty Statbility</h3>
+                            <h3 class="box-title">Table 4.5.Faculty Stability</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

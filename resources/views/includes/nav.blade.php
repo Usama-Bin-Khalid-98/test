@@ -103,7 +103,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
           <a href="#">
-            <i class="fa fa-users " style="color: #D81B60"></i> <span>Strategic Management</span>
+            <i class="fa fa-users " style="color: #D81B60"></i> <span>1: Strategic Management</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -148,7 +148,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
         @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}" >
           <a href="#">
-            <i class="fa fa-file text-orange"></i> <span>Curriculum</span>
+            <i class="fa fa-file text-orange"></i> <span>2: Curriculum</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -166,7 +166,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}{{(request()->is('students-graduated'))?'active':''}}{{(request()->is('student-gender'))?'active':''}}{{(request()->is('student-intake'))?'active':''}}{{(request()->is('alumni-participation'))?'active':''}}{{(request()->is('class-size'))?'active':''}}{{(request()->is('alumni-membership'))?'active':''}}{{(request()->is('personal-grooming'))?'active':''}}{{(request()->is('counselling-activity'))?'active':''}}{{(request()->is('extra-activity'))?'active':''}}">
               <a href="#">
-                  <i class="fa fa-user text-blue"></i> <span>Students</span>
+                  <i class="fa fa-user text-blue"></i> <span>3: Students</span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -192,7 +192,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-summary'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}">
               <a href="#">
-                  <i class="fa fa-user-plus text-green"></i> <span>Faculty</span>
+                  <i class="fa fa-user-plus text-green"></i> <span>4: Faculty</span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -201,7 +201,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li class="{{ (request()->is('faculty-summary')) ? 'active' : '' }}"><a href="{{url('faculty-summary')}}"><i class="fa fa-circle-o text-green"></i>Summary BSF</a></li>
             <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}"><i class="fa fa-circle-o text-green"></i>Faculty Work Load T</a></li>
             <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}"><i class="fa fa-circle-o text-green"></i>Visiting Faculty</a></li>
-             <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}"><i class="fa fa-circle-o text-green"></i>Faculty Student Ratio</a></li>
+             <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}"><i class="fa fa-circle-o text-green"></i>Student to Teacher Ratio</a></li>
              <li  class="{{ (request()->is('faculty-stability')) ? 'active' : '' }}"><a href="{{url('faculty-stability')}}"><i class="fa fa-circle-o text-green"></i>Faculty Stability</a></li>
             <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{url('faculty-gender')}}"><i class="fa fa-circle-o text-green"></i>Faculty Gender Mix</a></li>
           </ul>
@@ -210,7 +210,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           @hasrole('BusinessSchool')
            <li class=" treeview {{(request()->is('research-summary'))?'active':''}} ">
           <a href="#">
-            <i class="fa fa-users " style="color: #D81B60"></i> <span>Research Development</span>
+            <i class="fa fa-users " style="color: #D81B60"></i> <span>5: Research Development</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -224,7 +224,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('financial-risk'))?'active':''}}{{(request()->is('qec-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}}{{(request()->is('support-staff'))?'active':''}} ">
           <a href="#">
-            <i class="fa fa-users text-orange" ></i><span>Facilities Information</span>
+            <i class="fa fa-users text-orange" ></i> <span>6: Facilities Information</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Semesters</label>
+                                    <label for="name">Semester</label>
                                    <select name="semester_id" id="semester_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Semester</option>
                                         @foreach($semesters as $criteria)
@@ -136,8 +136,8 @@
                                  <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
-                                    <th>Semesters</th>
+                                    <th>Program(s) under review</th>
+                                    <th>Semester</th>
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
@@ -170,12 +170,12 @@
                                  <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
-                                    <th>Semesters</th>
+                                    <th>Program(s) under review</th>
+                                    <th>Semester</th>
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
-                                    <th>Degree req</th>
+                                    <th>Degree requirments</th>
                                     <th>Semester Commencement Date</th>
                                     <th>Status</th>
                                     <th>Action</th>

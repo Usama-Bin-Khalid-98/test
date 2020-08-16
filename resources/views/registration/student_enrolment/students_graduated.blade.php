@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
+                                        <option selected disabled>Select Program(s) under review</option>
                                         @foreach($programs as $program)
                                          <option value="{{$program->program->id}}">{{$program->program->name}}</option>
                                         @endforeach
@@ -112,10 +112,10 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Year t</th>
+                                    <th>Year t-1</th>
                                     <th>Year t-2</th>
-                                    <th>Year t-3</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -140,10 +140,10 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Year t</th>
+                                    <th>Year t-1</th>
                                     <th>Year t-2</th>
-                                    <th>Year t-3</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

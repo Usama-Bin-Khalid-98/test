@@ -61,9 +61,9 @@
                             <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program under review</label>
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
+                                        <option selected disabled>Select Program(s) under review</option>
                                         @foreach($scopes as $scope)
                                          <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
                                         @endforeach
@@ -83,7 +83,7 @@
                                 <div class="form-group">
                                     <label for="name">Course category</label>
                                    <select name="course_type_id" id="course_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Course</option>
+                                        <option selected disabled>Select Course category</option>
                                         @foreach($courses as $course)
                                          <option value="{{$course->id}}">{{$course->name}}</option>
                                         @endforeach
@@ -93,7 +93,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Number of courses of program under review</label>
+                                    <label for="name">Number of courses of the program under review</label>
                                     <input type="text" name="no_of_course" id="no_of_course" class="form-control">
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
 
                                     <label for="name">Final year project/ viva/ thesis/ comprehensive</label>
                                     <select name="fyp_req" id="fyp_req" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
+                                        <option selected disabled>Select</option>
                                       
                                          <option value="final year project ">final year project </option>
                                           <option value="viva">viva</option>
@@ -149,7 +149,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Total Semesters</th>
                                     <th>Course Type</th>
                                     <th>No of Courses</th>
@@ -182,7 +182,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Total Semesters</th>
                                     <th>Course Type</th>
                                     <th>No of Courses</th>

@@ -27,7 +27,6 @@ class CreateFacultyGender extends Migration
             $table->foreign('lookup_faculty_type_id')
                 ->references('id')
                 ->on('lookup_faculty_types');
-            $table->integer('year');
             $table->integer('male');
             $table->integer('female');
             $table->enum('status',['active','inactive'])->default('active');
