@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',100);
-            $table->integer('designation_id')->unsigned()->nullable();
+          
             // personal info
             $table->string('cnic', 80);
             $table->string('contact_no', 25);
@@ -28,6 +28,11 @@ class CreateUsersTable extends Migration
             $table->foreign('business_school_id')
                 ->references('id')
                 ->on('business_schools');
+
+              
+                $table->string('cao_name', 100)->nullable();
+                 $table->integer('designation_id')->unsigned()->nullable();
+                 
             /// campus id
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
@@ -43,6 +48,7 @@ class CreateUsersTable extends Migration
             $table->integer('degree_id')->nullable();
             $table->string('specialization', 255)->nullable();
             $table->date('year_completion')->nullable();
+
             $table->string('from_institute', 255)->nullable();
             $table->string('employed_at', 255)->nullable();
             $table->string('length_service', 255)->nullable();

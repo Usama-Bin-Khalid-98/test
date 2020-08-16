@@ -128,15 +128,11 @@ class DeskReviewController extends Controller
      */
     public function deskreview($id=null)
     {
-        //dd($id);
         $nbeac_criteria = NbeacCriteria::all()->first();
-        //dd($nbeac_criteria);
-
-        //dd($campus_id);
-        //$campus_id = Auth::user()->campus_id;
         @$business_school_user = User::where(['id' => $id])->get()->first();
         $campus_id = $business_school_user->campus_id;
-//        $department_id = $business_school_user->department_id;
+        $department_id = $business_school_user->department_id;
+
 //        if(!$id)
 //        {
 //            $campus_id = Auth::user()->campus_id;

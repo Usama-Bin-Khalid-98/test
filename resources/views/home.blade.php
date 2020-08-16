@@ -27,8 +27,10 @@
         <li class="active">Dashboard</li>
       </ol>
     </section><!-- Main content -->
+
+
+    @hasrole('NBEACAdmin')
     <section class="content">
-        @hasrole('NBEACAdmin')
       <!-- Small boxes (Stat box)  //////////   Admin Dashboard //////-->
       <div class="row" style="display: none;">
         <div class="col-lg-3 col-xs-6">
@@ -316,10 +318,12 @@
         </section>
         <!-- right col -->
       </div>
-        @endhasrole
       <!-- /.row (main row) -->
+
+
+
         <!-- Main row -->
-        @hasrole('NBEACAdmin')
+
         <div class="row" >
             <!-- Left col -->
             <section class="col-lg-7  connectedSortable" style="display: none;">
@@ -597,10 +601,84 @@
             </section>
             <!-- right col -->
         </div>
-        @endhasrole
         <!-- /.row (main row) -->
     </section>
+      @endhasrole
 
+      @hasrole('BusinessSchool')
+      <!--Invoices list-->
+      <section class="col-lg-12 connectedSortable">
+          <!-- TO DO List -->
+          <div class="box box-primary">
+              <div class="box-header">
+                  <h3 class="box-title">Business school Invoices. </h3>
+                  <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                      </button>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-file-pdf-o"></i></button>
+                      </div>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                  </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+
+
+                  <table id="example1" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+{{--                          <th>Invoice Slip</th>--}}
+{{--                          <th>Account Type</th>--}}
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+
+                      @foreach($registrations as $registration)
+                          <tr>
+                              <td>{{@$registration->business_school->name}}</td>
+                              <td>{{@$registration->campus->location??'Main Campus'}}</td>
+                              <td>{{@$registration->department->name}}</td>
+{{--                              <td><a href="{{@$registration->slip}}">Invoice Slip</a></td>--}}
+                              {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                              <td><i class="badge  status" data-id="{{$registration->id}}"  style="background: {{$registration->request == 'created'?'red':$registration->request ==='pending'?'green':''}}" >{{$registration->request != ''?ucwords($registration->request):'inactive'}}</i></td>
+                              <td><button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{$registration->id}}" data-row="{{$registration->department->id}}"> Apply Now </button></td>
+                          </tr>
+                      @endforeach
+
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+{{--                          <th>Invoice Slip</th>--}}
+                          {{-- <th>Account Type</th>--}}
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </tfoot>
+                  </table>
+
+                  <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer clearfix no-border">
+                  <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+              </div>
+          </div>
+          <!-- /.box -->
+
+      </section>
+      <!-- right col -->
+        @endhasrole
 
     <!-- /.content -->
   </div>
@@ -616,17 +694,17 @@
 
  @endif
 <!-- Morris.js charts -->
-<script src="bower_components/raphael/raphael.min.js"></script>
-<script src="bower_components/morris.js/morris.min.js"></script>
+{{--<script src="bower_components/raphael/raphael.min.js"></script>--}}
+{{--<script src="bower_components/morris.js/morris.min.js"></script>--}}
 <!-- Sparkline -->
-<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+{{--<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>--}}
 <!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+{{--<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>--}}
+{{--<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>--}}
 <!-- jQuery Knob Chart -->
-<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+{{--<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>--}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+{{--<script src="dist/js/pages/dashboard.js"></script>--}}
 @hasrole('NBEACAdmin')
 <script>
     $('.status').on('click', function (e) {
@@ -656,6 +734,60 @@
                         }
 
                         location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+            },
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );
+    });
+
+
+</script>
+
+@endhasrole
+
+@hasrole('BusinessSchool')
+<script>
+    $('.apply').on('click', function (e) {
+        var id = $(this).data('id');
+        var department_id = $(this).data('row');
+        //
+        // console.log('depaertid ', department_id);
+        // return;
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to Apply?', 'Yes', 'No',
+            function(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("registration-apply")}}/'+id,
+                    type:'patch',
+                    data: { id:id, department_id:department_id},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        //location.reload();
 
                         console.log('response here', response);
                     },
