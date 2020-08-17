@@ -429,7 +429,6 @@ $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['c
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yelow"></i>NBEAC System Settings</a></li>
           @endhasrole
-
           </ul>
         </li>
       </ul>
