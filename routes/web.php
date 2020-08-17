@@ -129,6 +129,11 @@ use Illuminate\Support\Facades\Route;
         Route::resource('internal-community','InternalCommunityController');
         Route::patch('registration-apply/{id}','HomeController@apply');
 
+        //Admission & Examination Policy
+        Route::resource('credit-transfer','CreditTransferController');
+        Route::resource('student-transfer','StudentTransferController');
+        Route::resource('documentary-evidence','DocumentaryEvidenceController');
+
     });
 
     Route::group(['middleware' => ['role:NBEACAdmin']], function () {

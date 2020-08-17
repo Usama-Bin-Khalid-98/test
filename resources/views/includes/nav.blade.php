@@ -259,6 +259,21 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           </ul>
         </li>
           @endhasrole
+           @hasrole('BusinessSchool')
+        <li class=" treeview {{(request()->is('credit-transfer'))?'active':''}}{{(request()->is('student-transfer'))?'active':''}}{{(request()->is('documentary-evidence'))?'active':''}}">
+          <a href="#">
+            <i class="fa fa-globe text-black " ></i><span>9: Admission Examination</span>
+             <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li  class="{{ (request()->is('credit-transfer')) ? 'active' : '' }}"><a href="{{url('credit-transfer')}}"><i class="fa fa-circle-o text-black"></i>9.4 Credit Transfer</a></li>
+            <li  class="{{ (request()->is('student-transfer')) ? 'active' : '' }}"><a href="{{url('student-transfer')}}"><i class="fa fa-circle-o text-black"></i>9.5 Student Transfer</a></li>
+            <li  class="{{ (request()->is('documentary-evidence')) ? 'active' : '' }}"><a href="{{url('documentary-evidence')}}"><i class="fa fa-circle-o text-black"></i>9.6 Documentary Evidence</a></li>
+          </ul>
+        </li>
+          @endhasrole
           <!-- ///////////////////////////////////////////////////////////////////////////// -->
 
           @hasrole('BusinessSchool')
