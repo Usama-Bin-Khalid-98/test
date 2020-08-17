@@ -284,7 +284,7 @@ Table 1.7. Approval of strategic plan
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                   // location.reload();
+                   location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

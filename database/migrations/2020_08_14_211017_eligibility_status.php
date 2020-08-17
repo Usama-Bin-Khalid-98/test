@@ -19,6 +19,7 @@ class EligibilityStatus extends Migration
            $table->integer('campus_id');
            $table->integer('department_id');
            $table->enum('isEligible', ['yes', 'no'])->default('no');
+           $table->text('comments');
            $table->enum('status', ['active', 'inactive'])->default('active');
            $table->softDeletes();
            $table->timestamps();
