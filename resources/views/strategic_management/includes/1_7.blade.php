@@ -10,36 +10,36 @@
                                     (B)
                                     </th>
                                     <th>Percent share</th>
-                                 
+
                                 </thead>
                                 <tbody>
                                     <?php
                                         $amount = $percentShare = 0;
                                     ?>
                                     @foreach($sourceOfFunding as $data)
-                                    
+
                                     <tr>
                                         <td>{{$data->incomeSource}}</td>
-                                        
-                                        <td>{{$data->amount}}</td>
-                                        <td>{{$data->percent_share}}</td>
+
+                                        <td>{{@$data->amount}}</td>
+                                        <td>{{@$data->percent_share}}</td>
                                     </tr>
                                     <?php
-                                        $amount += $data->amount;
-                                        $percentShare += $data->percent_share;
+                                        @$amount += $data->amount;
+                                        @$percentShare += $data->percent_share;
                                     ?>
                                     @endforeach
                                       <tr>
-                                         
+
                                         <td>Total</td>
                                         <td>{{$amount}}</td>
                                         <td>{{$percentShare}}</td>
                                     </tr>
-                              
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>
