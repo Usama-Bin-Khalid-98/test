@@ -59,13 +59,13 @@
                         <div class="box-body">
 
                            <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Faculty Name</label>
                                     <input type="text" name="faculty_name" id="faculty_name" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
@@ -76,38 +76,38 @@
                                         </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Number of courses taught in all programs</label>
                                     <input type="number" name="total_courses" id="total_courses" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Phd</label>
                                     <input type="number" name="phd" id="phd" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Masters</label>
                                     <input type="number" name="masters" id="masters" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Bachelors</label>
                                     <input type="number" name="bachleors" id="bachleors" class="form-control">
                                 </div>
                             </div>
 
-                             <div class="col-md-3">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Admin Resposibilities</label>
                                     <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
                                 </div>
                             </div>
-                           <div class="col-md-3">
+                           <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
@@ -153,7 +153,6 @@
                                     <th>Administrative Responsibility</th>
                                     <th>Year</th>
                                     <th>Status</th>
-                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -171,8 +170,7 @@
                                     <td>{{$req->admin_responsibilities}}</td>
                                     <td>{{$req->year}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -191,7 +189,6 @@
                                     <th>Administrative Responsibility</th>
                                     <th>Year</th>
                                     <th>Status</th>
-                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -293,13 +290,6 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isCompleted') }} : </label>
-                                <p><input type="radio" name="isCompleted" class="flat-red" value="yes" >Yes
-                                    <input type="radio" name="isCompleted" class="flat-red" value="no">No</p>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -412,7 +402,6 @@
             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
-            $('input[value='+data.isCompleted+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
@@ -427,7 +416,6 @@ $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            let isCompleted = $('input[name=edit_isCompleted]:checked').val();
             !faculty_name?addClass('edit_faculty_name'):removeClass('edit_faculty_name');
             !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
             !total_courses?addClass('edit_total_courses'):removeClass('edit_total_courses');

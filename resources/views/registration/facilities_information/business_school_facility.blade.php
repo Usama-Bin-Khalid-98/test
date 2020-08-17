@@ -138,7 +138,7 @@
                                 <tr>
 
                                     <th>Business School Facilities</th>
-                                    <th>isChecked</th>
+                                    <th>Remarks</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

@@ -65,6 +65,7 @@ class FacultyTeachingCourcesController extends Controller
                 'max_cources_allowed' => $request->max_cources_allowed,
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -123,7 +124,6 @@ class FacultyTeachingCourcesController extends Controller
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted,
                 'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Visiting Faculty updated successfully.']);

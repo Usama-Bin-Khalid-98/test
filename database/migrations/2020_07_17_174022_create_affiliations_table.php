@@ -33,6 +33,7 @@ class CreateAffiliationsTable extends Migration
             $table->foreign('statutory_bodies_id')
                 ->references('id')
                 ->on('statutory_bodies');
+            $table->enum('isComplete', ['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
