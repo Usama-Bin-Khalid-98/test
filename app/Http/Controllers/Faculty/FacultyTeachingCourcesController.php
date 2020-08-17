@@ -65,7 +65,7 @@ class FacultyTeachingCourcesController extends Controller
                 'max_cources_allowed' => $request->max_cources_allowed,
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
-                'isComplete' => 'yes',
+                'isCompleted' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
