@@ -112,7 +112,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           <ul class="treeview-menu">
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
-                    <i class="fa fa-circle-o" style="color: #D81B60"></i>1.1 Basic Information
+                    <i class="fa fa-circle-o" style="color: #D81B60"></i>1.1 Basic information of </br> <span style="margin-left: 20px;">business school</span>
                     <span class="pull-right-container">
                         <span class="text text-{{$basic_info==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$basic_info==='C'?'fa-check-square':'fa-minus-square'}}" ></i>

@@ -68,14 +68,31 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Name of business school and campus(if relevant)</label>
+                                        <label for="name">Name of the university/parent institution</label>
                                         <input type="text" id="name" disabled value="{{@$basic_info->name}}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Year of  establishment (university/parent institution)</label>
+                                        <input type="date" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="contactPerson">Contact Person Name</label>
-                                        <input type="text" id="contact_person" disabled value="{{@$user_info->name}}" class="form-control">
+                                        <label for="designation">Chief administrative officer</label>
+                                        <select id="designation_id" name="designation_id" class="form-control select2" style="width: 100%;">
+                                            <option value="">Select Designation</option>
+                                            @foreach(@$designations as $designation)
+                                                <option value="{{@$designation->id}}" {{@$designation->id==@$user_info->designation_id?'selected':''}} >{{@$designation->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="contactPerson">Name of Chief Administrative Officer</label>
+                                        <input type="text" id="contact_person" value="{{@$user_info->name}}" class="form-control">
                                         <input type="hidden" id="id" value="{{@$basic_info->id}}">
                                     </div>
                                 </div>
@@ -86,24 +103,21 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
 
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Name of the business school and campus (if relevant)</label>
+                                        <input type="text" disabled id="campus_id" value="{{@$campuses[0]->location}}" class="form-control">
+                                    </div>
+                                </div>
                                 <div class="col-md-3">
-                                    <div class="form-group" style="margin-bottom: 17px">
-                                        <label for="designation">Chief administrative officer</label>
-                                        <select id="designation_id" name="designation_id" class="form-control select2" style="width: 100%;">
-                                            <option value="">Select Designation</option>
-                                            @foreach(@$designations as $designation)
-                                                <option value="{{@$designation->id}}" {{@$designation->id==@$user_info->designation_id?'selected':''}} >{{@$designation->name}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="form-group">
+                                        <label for="name">Year of establishment of the business school</label>
+                                        <input type="date" id="campus_year_estb" value="{{@$basic_info->campus_year_estb}}" class="form-control">
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="name">Year of  establishment (university/parent institution)</label>
-                                        <input type="date" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
-                                    </div>
-                                </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Website URL</label>
@@ -224,6 +238,7 @@
             let contact_person = $('#contact_person').val();
             // let contact_no = $('#contact_no').val();
             let year_estb = $('#year_estb').val();
+            let campus_year_estb = $('#campus_year_estb').val();
             let web_url = $('#web_url').val();
             let date_charter_granted = $('#date_charter_granted').val();
             let charter_number = $('#charter_number').val();
@@ -240,6 +255,7 @@
              !contact_person?addClass('contact_person'):removeClass('contact_person');
              // !contact_no?addClass('contact_no'):removeClass('contact_no');
              !year_estb?addClass('year_estb'):removeClass('year_estb');
+             !campus_year_estb?addClass('campus_year_estb'):removeClass('campus_year_estb');
              !web_url?addClass('web_url'):removeClass('web_url');
              !date_charter_granted?addClass('date_charter_granted'):removeClass('date_charter_granted');
              !charter_number?addClass('charter_number'):removeClass('charter_number');
@@ -264,6 +280,7 @@
                     contact_person: contact_person,
                     // contact_no: contact_no,
                     year_estb: year_estb,
+                    campus_year_estb: campus_year_estb,
                     web_url: web_url,
                     date_charter_granted: date_charter_granted,
                     charter_number: charter_number,

@@ -39,6 +39,8 @@ class DeskReviewController extends Controller
     public function index()
     {
         $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
+        $desk_reviews = EligibilityStatus::with('business_school')->get();
+        dd($desk_reviews);
 
         return view('desk_review.index', compact(
             'registrations'));
@@ -168,7 +170,7 @@ class DeskReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+//        dd($request);
          $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -187,7 +189,7 @@ class DeskReviewController extends Controller
                     ]);
                 }
             }
-            $isEligible = 'pending';
+            $isEligible = 'no';
             if($request->eligibility_program == 'yes' &&
                 $request->eligibility_mission == 'yes' &&
                 $request->eligibility_plan == 'yes' &&
@@ -204,8 +206,9 @@ class DeskReviewController extends Controller
             EligibilityStatus::create(['campus_id' => $getUserData->campus_id,
                 'department_id' => $getUserData->department_id,
                 'isEligible' => $isEligible,
+                'comments' => $request->comments,
                 'status' => 'active'
-                    ]
+                ]
             );
 
             return response()->json(['success' => 'Desk Review added successfully.'], 200);

@@ -59,16 +59,16 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-                                <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Program</label>
-                                   <select name="program" id="program" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select</option>
-                                         <option value="Program 1">Program 1</option>
-                                         <option value="Program 2">Program 2</option>
-                                        </select>
-                                </div>
-                            </div>
+{{--                                <div class="col-md-4">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Program</label>--}}
+{{--                                   <select name="program" id="program" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select</option>--}}
+{{--                                         <option value="Program 1">Program 1</option>--}}
+{{--                                         <option value="Program 2">Program 2</option>--}}
+{{--                                        </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Program(s) under review</label>
@@ -152,7 +152,7 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Program</th>
+{{--                                    <th>Program</th>--}}
                                     <th>Program(s) under review</th>
                                     <th>Total Semesters</th>
                                     <th>Course Type</th>
@@ -167,7 +167,7 @@
                                 <tbody>
                                  @foreach($portfolios as $portfolio)
                                 <tr>
-                                    <td>{{$portfolio->program}}</td>
+{{--                                    <td>{{$portfolio->program}}</td>--}}
                                     <td>{{@$portfolio->program->name}}</td>
                                     <td>{{$portfolio->total_semesters}}</td>
                                     <td>{{$portfolio->course_type->name}}</td>
@@ -182,7 +182,7 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Program</th>
+{{--                                    <th>Program</th>--}}
                                     <th>Program(s) under review</th>
                                     <th>Total Semesters</th>
                                     <th>Course Type</th>
@@ -215,16 +215,16 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                         <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Program</label>
-                                   <select name="program" id="edit_program" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select</option>
-                                         <option value="program1">Program 1</option>
-                                         <option value="program2">Program 2</option>
-                                        </select>
-                                </div>
-                            </div>
+{{--                         <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Program</label>--}}
+{{--                                   <select name="program" id="edit_program" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select</option>--}}
+{{--                                         <option value="program1">Program 1</option>--}}
+{{--                                         <option value="program2">Program 2</option>--}}
+{{--                                        </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Program under review</label>
@@ -335,7 +335,7 @@
         });
 
              $('#form').submit(function (e) {
-            let program = $('#program').val();
+            // let program = $('#program').val();
             let program_id = $('#program_id').val();
             let total_semesters = $('#total_semesters').val();
             let course_type_id = $('#course_type_id').val();
@@ -344,7 +344,7 @@
             let internship_req = $('#internship_req').val();
             let fyp_req = $('#fyp_req').val();
 
-            !program?addClass('program'):removeClass('program');
+            // !program?addClass('program'):removeClass('program');
             !program_id?addClass('program_id'):removeClass('program_id');
             !total_semesters?addClass('total_semesters'):removeClass('total_semesters');
             !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
@@ -353,7 +353,7 @@
             !internship_req?addClass('internship_req'):removeClass('internship_req');
             !fyp_req?addClass('fyp_req'):removeClass('fyp_req');
 
-            if(!program || !program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
