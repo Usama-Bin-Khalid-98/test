@@ -74,7 +74,7 @@ class FacultyStabilityController extends Controller
                 'retired' => $request->retired,
                 'terminated' => $request->terminated,
                 'new_induction' => $request->new_induction,
-                'isComplete' => 'yes',
+                'isCompleted' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

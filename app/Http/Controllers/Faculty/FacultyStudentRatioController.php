@@ -61,7 +61,7 @@ class FacultyStudentRatioController extends Controller
                 'program_id' => $request->program_id,
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
-                'isComplete' => 'yes',
+                'isCompleted' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
