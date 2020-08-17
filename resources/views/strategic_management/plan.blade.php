@@ -60,10 +60,19 @@ Table 1.7. Approval of strategic plan
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
+                            
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Period of the strategic plan</label>
-                                    <input type="text" name="plan_period" id="plan_period" class="form-control">
+                                    <select name="plan_period" id="plan_period" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="2000">2000</option>
+                                        <option value="2001">2001</option>
+                                        <option value="2002">2002</option>
+                                        <option value="2003">2003</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -168,15 +177,21 @@ Table 1.7. Approval of strategic plan
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-
-
-                        <div class="col-md-6">
+                              <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Period of Strategic Plan</label>
-                                    <input type="text" name="plan_period" id="edit_plan_period" value="{{old('edit_plan_period')}}" class="form-control">
+                                    <label for="name">Period of the strategic plan</label>
+                                    <select name="plan_period" id="edit_plan_period" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="2000">2000</option>
+                                        <option value="2001">2001</option>
+                                        <option value="2002">2002</option>
+                                        <option value="2003">2003</option>
+                                        <option value="2004">2004</option>
+                                        <option value="2005">2005</option>
+                                    </select>
                                 </div>
                                 <input type="hidden" id="edit_id">
-                              </div>
+                            </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Date of approval</label>
@@ -291,7 +306,7 @@ Table 1.7. Approval of strategic plan
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_plan_period').val(data.plan_period);
+            $('#edit_plan_period').select2().val(data.plan_period).trigger('change');
             $('#edit_aproval_date').val(data.aproval_date);
             $('#edit_aproving_authority').val(data.aproving_authority);
             $('#edit_id').val(data.id);

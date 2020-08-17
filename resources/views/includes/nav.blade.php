@@ -3,6 +3,28 @@ use \Illuminate\Support\Facades\Auth;
 $invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ]);
 $basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes' ]);
 $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' => Auth::user()->campus_id, 'status'=>'active','isComplete'=>'yes' ]);
+$contact = checkIsCompleted('App\Models\StrategicManagement\ContactInfo', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$committee = checkIsCompleted('App\Models\StrategicManagement\StatutoryCommittee', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$affiliation = checkIsCompleted('App\Models\StrategicManagement\Affiliation', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$budget = checkIsCompleted('App\Models\StrategicManagement\BudgetaryInfo', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$mission = checkIsCompleted('App\Models\StrategicManagement\MissionVision', ['campus_id' => Auth::user()->campus_id, 'status'=>'active','isComplete'=>'yes']);
+$plan = checkIsCompleted('App\Models\StrategicManagement\StrategicPlan', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$parent = checkIsCompleted('App\Models\StrategicManagement\ParentInstitution', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$portfolio = checkIsCompleted('App\Models\StrategicManagement\ProgramPortfolio', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$entry = checkIsCompleted('App\Models\StrategicManagement\EntryRequirement', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$application = checkIsCompleted('App\Models\StrategicManagement\ApplicationReceived', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$enrolment = checkIsCompleted('App\Models\StrategicManagement\StudentEnrolment', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$graduated = checkIsCompleted('App\StudentsGraduated', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$gender = checkIsCompleted('App\StudentGender', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$bsf = checkIsCompleted('App\Models\Faculty\FacultySummary', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$workload = checkIsCompleted('App\Models\Faculty\WorkLoad', ['campus_id' => Auth::user()->campus_id, 'status'=>'active','isCompleted'=>'yes']);
+$visiting = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id, 'status'=>'active' , 'isCompleted'=>'yes']);
+$ratio = checkIsCompleted('App\Models\Faculty\FacultyStudentRatio', ['campus_id' => Auth::user()->campus_id, 'status'=>'active' , 'isCompleted'=>'yes']);
+$stability = checkIsCompleted('App\Models\Faculty\FacultyStability', ['campus_id' => Auth::user()->campus_id, 'status'=>'active', 'isCompleted'=>'yes']);
+$facultygender = checkIsCompleted('App\Models\Faculty\FacultyGender', ['campus_id' => Auth::user()->campus_id, 'status'=>'active','isCompleted'=>'yes']);
+$research = checkIsCompleted('App\Models\Research\ResearchSummary', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$financialinfo = checkIsCompleted('App\Models\Facility\FinancialInfo', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
+$bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['campus_id' => Auth::user()->campus_id, 'status'=>'active']);
 @endphp
 
 <aside class="main-sidebar">
@@ -28,10 +50,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
               </span>
         </div>
       </form>
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
         <li class=" treeview">
           <a href="#">
                <li class="{{ (request()->is('home')) ? 'active' : '' }}"><a href="/home"><i class="fa fa-dashboard text-green"></i>Dashboard</a></li>
@@ -112,7 +131,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
           <ul class="treeview-menu">
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
-                    <i class="fa fa-circle-o" style="color: #D81B60"></i>1.1 Basic Information
+                   1.1 Basic Information
                     <span class="pull-right-container">
                         <span class="text text-{{$basic_info==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$basic_info==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -122,7 +141,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </li>
             <li  class="{{ (request()->is('strategic/scope')) ? 'active' : '' }}">
                 <a href="{{url('strategic/scope')}}">
-                    <i class="fa fa-circle-o" style="color: #D81B60"></i>1.2 Scope Of Accreditation
+                    1.2 Scope Of Accreditation
                     <span class="pull-right-container">
                         <span class="text text-{{$scope==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$scope==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -130,18 +149,46 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
                     </span>
                 </a>
             </li>
-            <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('strategic/contact-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>1.3 Contact Information</a></li>
-            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('/strategic/statutory-committees')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>1.4 BS Statutory committees</a></li>
-            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>1.5 Affiliations of AC</a></li>
-            <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}"><a href="{{url('strategic/budgetary-info')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>1.6 Budgetary Information</a></li>
-            <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>1.7 Mission Vision</a></li>
-            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>1.8 Approval of Strategic Plan</a></li>
-             <li  class="{{ (request()->is('strategic/parent-institution')) ? 'active' : '' }}"><a href="{{url('strategic/parent-institution')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>1.9 Organograms</a></li>
+            <li  class="{{ (request()->is('strategic/contact-info')) ? 'active' : '' }}"><a href="{{url('strategic/contact-info')}}">1.3 Contact Information<span class="pull-right-container">
+                        <span class="text text-{{$contact==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$contact==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('strategic/statutory-committees')) ? 'active' : '' }}"><a href="{{url('/strategic/statutory-committees')}}">1.4 Statutory committees<span class="pull-right-container">
+                        <span class="text text-{{$committee==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$committee==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}">1.5 Affiliations of AC<span class="pull-right-container">
+                        <span class="text text-{{$affiliation==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$affiliation==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}"><a href="{{url('strategic/budgetary-info')}}">1.6 Budgetary Information<span class="pull-right-container">
+                        <span class="text text-{{$budget==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$budget==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision<span class="pull-right-container">
+                        <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">1.8 Approv of Strategic Plan<span class="pull-right-container">
+                        <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$plan==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+             <li  class="{{ (request()->is('strategic/parent-institution')) ? 'active' : '' }}"><a href="{{url('strategic/parent-institution')}}">1.9 Organograms<span class="pull-right-container">
+                        <span class="text text-{{$parent==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$parent==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
 
-            <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>
-            <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li>
+            <!-- <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>
+            <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li> -->
           </ul>
         </li>
         @endhasrole
@@ -154,10 +201,22 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('program-portfolio')) ? 'active' : '' }}"><a href="{{url('program-portfolio')}}"><i class="fa fa-circle-o text-orange"></i>2.1 Programs Portfolio</a></li>
+            <li class="{{ (request()->is('program-portfolio')) ? 'active' : '' }}"><a href="{{url('program-portfolio')}}">2.1 Programs Portfolio<span class="pull-right-container">
+                        <span class="text text-{{$portfolio==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$portfolio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
-            <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}"><i class="fa fa-circle-o text-orange"></i>2.2 Entry Requirements</a></li>
-            <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}"><i class="fa fa-circle-o text-orange"></i>2.3 Applications Received</a></li>
+            <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}">2.2 Entry Requirements<span class="pull-right-container">
+                        <span class="text text-{{$entry==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$entry==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}">2.3 Applications Received<span class="pull-right-container">
+                        <span class="text text-{{$application==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
 
           </ul>
@@ -172,19 +231,31 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </span>
               </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}"><i class="fa fa-circle-o text-blue"></i>3.1 Students Enrollment</a></li>
-            <li  class="{{ (request()->is('students-graduated')) ? 'active' : '' }}"><a href="{{url('students-graduated')}}"><i class="fa fa-circle-o text-blue"></i>3.2 Students Graduated</a></li>
-            <li  class="{{ (request()->is('student-gender')) ? 'active' : '' }}"><a href="{{url('student-gender')}}"><i class="fa fa-circle-o text-blue"></i>3.3 Students Gender mix</a></li>
+            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}">3.1 Students Enrollment<span class="pull-right-container">
+                        <span class="text text-{{$enrolment==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$enrolment==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('students-graduated')) ? 'active' : '' }}"><a href="{{url('students-graduated')}}">3.2 Students Graduated<span class="pull-right-container">
+                        <span class="text text-{{$graduated==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$graduated==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('student-gender')) ? 'active' : '' }}"><a href="{{url('student-gender')}}">3.3 Students Gender mix<span class="pull-right-container">
+                        <span class="text text-{{$gender==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$gender==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
             
-            <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}"><i class="fa fa-circle-o text-blue"></i>Students Intakes</a></li>
+           <!--  <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}"><i class="fa fa-circle-o text-blue"></i>Students Intakes</a></li>
             <li  class="{{ (request()->is('class-size')) ? 'active' : '' }}"><a href="{{url('class-size')}}"><i class="fa fa-circle-o text-blue"></i>Class Size</a></li>
             <li  class="{{ (request()->is('personal-grooming')) ? 'active' : '' }}"><a href="{{url('personal-grooming')}}"><i class="fa fa-circle-o text-blue"></i>Personal Grooming</a></li>
             <li  class="{{ (request()->is('counselling-activity')) ? 'active' : '' }}"><a href="{{url('counselling-activity')}}"><i class="fa fa-circle-o text-blue"></i>Counselling Activities</a></li>
             <li  class="{{ (request()->is('extra-activity')) ? 'active' : '' }}"><a href="{{url('extra-activity')}}"><i class="fa fa-circle-o text-blue"></i>Extra Activities</a></li>
             <li  class="{{ (request()->is('alumni-membership')) ? 'active' : '' }}"><a href="{{url('alumni-membership')}}"><i class="fa fa-circle-o text-blue"></i>Alumni Membership</a></li>
-            <li  class="{{ (request()->is('alumni-participation')) ? 'active' : '' }}"><a href="{{url('alumni-participation')}}"><i class="fa fa-circle-o text-blue"></i>Alumni Participation</a></li>
+            <li  class="{{ (request()->is('alumni-participation')) ? 'active' : '' }}"><a href="{{url('alumni-participation')}}"><i class="fa fa-circle-o text-blue"></i>Alumni Participation</a></li> -->
 
           </ul>
         </li>
@@ -198,12 +269,36 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </span>
               </a>
           <ul class="treeview-menu">
-            <li class="{{ (request()->is('faculty-summary')) ? 'active' : '' }}"><a href="{{url('faculty-summary')}}"><i class="fa fa-circle-o text-green"></i>4.1 Summary BSF</a></li>
-            <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}"><i class="fa fa-circle-o text-green"></i>4.2 Faculty Work Load T</a></li>
-            <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}"><i class="fa fa-circle-o text-green"></i>4.3 Visiting Faculty</a></li>
-             <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}"><i class="fa fa-circle-o text-green"></i>4.4 Student to Teacher Ratio</a></li>
-             <li  class="{{ (request()->is('faculty-stability')) ? 'active' : '' }}"><a href="{{url('faculty-stability')}}"><i class="fa fa-circle-o text-green"></i>4.5 Faculty Stability</a></li>
-            <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{url('faculty-gender')}}"><i class="fa fa-circle-o text-green"></i>4.6 Faculty Gender Mix</a></li>
+            <li class="{{ (request()->is('faculty-summary')) ? 'active' : '' }}"><a href="{{url('faculty-summary')}}">4.1 Summary BSF<span class="pull-right-container">
+                        <span class="text text-{{$bsf==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$bsf==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}">4.2 Faculty Work Load T<span class="pull-right-container">
+                        <span class="text text-{{$workload==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$workload==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}">4.3 Visiting Faculty<span class="pull-right-container">
+                        <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+             <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}">4.4 Student Teacher Ratio<span class="pull-right-container">
+                        <span class="text text-{{$ratio==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$ratio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+             <li  class="{{ (request()->is('faculty-stability')) ? 'active' : '' }}"><a href="{{url('faculty-stability')}}">4.5 Faculty Stability<span class="pull-right-container">
+                        <span class="text text-{{$stability==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$stability==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{url('faculty-gender')}}">4.6 Faculty Gender Mix<span class="pull-right-container">
+                        <span class="text text-{{$facultygender==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$facultygender==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
           </ul>
         </li>
           @endhasrole
@@ -216,7 +311,11 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}"><i class="fa fa-circle-o" style="color: #D81B60"></i>5.1 Research Summary</a></li>
+            <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}">5.1 Research Summary<span class="pull-right-container">
+                        <span class="text text-{{$research==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
           </ul>
         </li>
@@ -230,18 +329,26 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}"><i class="fa fa-circle-o text-orange"></i>6.1 Financial Info</a></li>
-             <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}"><i class="fa fa-circle-o text-orange"></i>6.2 Business School Facility</a></li>
-            <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}"><i class="fa fa-circle-o text-orange"></i>Financial Risk</a></li>
+            <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}">6.1 Financial Info<span class="pull-right-container">
+                        <span class="text text-{{$financialinfo==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$financialinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+             <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}">6.2 BS Facility<span class="pull-right-container">
+                        <span class="text text-{{$bsfacility==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$bsfacility==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <!-- <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}"><i class="fa fa-circle-o text-orange"></i>Financial Risk</a></li>
             <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}"><i class="fa fa-circle-o text-orange"></i>Support Staff</a></li>
-            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}"><i class="fa fa-circle-o text-orange"></i>Qec Info</a></li>
+            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}"><i class="fa fa-circle-o text-orange"></i>Qec Info</a></li> -->
 
           </ul>
         </li>
           @endhasrole
 
           <!-- Below is the module included in SAR -->
-          @hasrole('BusinessSchool')
+         <!--  @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}">
           <a href="#">
             <i class="fa fa-globe text-blue " ></i><span>Social Responsibility</span>
@@ -258,8 +365,8 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}"><i class="fa fa-circle-o text-blue"></i>Internal Community WP</a></li>
           </ul>
         </li>
-          @endhasrole
-           @hasrole('BusinessSchool')
+          @endhasrole -->
+           <!-- @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('credit-transfer'))?'active':''}}{{(request()->is('student-transfer'))?'active':''}}{{(request()->is('documentary-evidence'))?'active':''}}">
           <a href="#">
             <i class="fa fa-globe text-black " ></i><span>9: Admission Examination</span>
@@ -273,7 +380,7 @@ $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' =
             <li  class="{{ (request()->is('documentary-evidence')) ? 'active' : '' }}"><a href="{{url('documentary-evidence')}}"><i class="fa fa-circle-o text-black"></i>9.6 Documentary Evidence</a></li>
           </ul>
         </li>
-          @endhasrole
+          @endhasrole -->
           <!-- ///////////////////////////////////////////////////////////////////////////// -->
 
           @hasrole('BusinessSchool')
