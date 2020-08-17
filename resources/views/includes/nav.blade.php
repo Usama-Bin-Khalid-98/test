@@ -131,7 +131,7 @@ $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['c
           <ul class="treeview-menu">
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
-                   1.1 Basic Information
+                    <i class="fa fa-circle-o" style="color: #D81B60"></i>1.1 Basic information of </br> <span style="margin-left: 20px;">business school</span>
                     <span class="pull-right-container">
                         <span class="text text-{{$basic_info==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$basic_info==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -248,7 +248,7 @@ $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['c
                     </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
-            
+
            <!--  <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}"><i class="fa fa-circle-o text-blue"></i>Students Intakes</a></li>
             <li  class="{{ (request()->is('class-size')) ? 'active' : '' }}"><a href="{{url('class-size')}}"><i class="fa fa-circle-o text-blue"></i>Class Size</a></li>
             <li  class="{{ (request()->is('personal-grooming')) ? 'active' : '' }}"><a href="{{url('personal-grooming')}}"><i class="fa fa-circle-o text-blue"></i>Personal Grooming</a></li>
@@ -417,7 +417,7 @@ $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['c
             <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-yellow"></i>Department Fee</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Desk Review</a></li>
+          <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Desk Reviews</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-circle-o text-green"></i>Nbeac Criteria</a></li>

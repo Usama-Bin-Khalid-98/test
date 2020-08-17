@@ -23,7 +23,7 @@ class ProgramPortfolioController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        
+
         $scopes = Scope::with('program')->get();
         $courses = CourseType::where('status', 'active')->get();
 
@@ -60,7 +60,7 @@ class ProgramPortfolioController extends Controller
             ProgramPortfolio::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
-                'program' => $request->program,
+                'program' => 'program1',
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
@@ -150,7 +150,7 @@ class ProgramPortfolioController extends Controller
     {
         try {
             ProgramPortfolio::where('id', $programPortfolio->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             ProgramPortfolio::destroy($programPortfolio->id);
             return response()->json(['success' => 'Record deleted successfully.']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\EligibilityStatus;
 use App\Models\DeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
@@ -37,88 +38,12 @@ class DeskReviewController extends Controller
      */
     public function index()
     {
-        //
-        $nbeac_criteria = NbeacCriteria::all()->first();
-        //dd($nbeac_criteria);
-        $campus_id = Auth::user()->campus_id;
-        $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-//      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-        //dd($accreditation);
-        $program_dates = [];
-        foreach ($accreditation as $accred)
-        {
-        @$program_dates[$accred->id]['date_diff'] = $this->dateDifference($accred->date_program, date('Y-m-d'), '%y Year %m Month');
-        @$program_dates[$accred->id]['program'] = $accred->program->name;
-        @$program_dates[$accred->id]['date'] = $accred->date_program;
-        }
+        $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
+        $desk_reviews = EligibilityStatus::with('business_school')->get();
+        dd($desk_reviews);
 
-        $mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
-        $strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
-        $application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
-        $student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
-        $graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
-
-        $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('number_faculty');
-        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
-
-        $getFullProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>8])->get()->count();
-        $AssociateProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>9])->get()->count();
-        $AssistantProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>10])->get()->count();
-        $lecturers = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>11])->get()->count();
-        $permanent_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
-        $adjunct_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>3])->get()->count();
-        $other = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>13])->get()->count();
-        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
-        $faculty_degree = FacultyDegree::get()->first();
-        $total_induction = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('new_induction');
-        $faculty_terminated = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('terminated');
-        $faculty_resigned = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('resigned');
-        $faculty_retired = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('retired');
-
-        $total_courses = WorkLoad::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('total_courses');
-
-        $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
-        $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
-
-        $summaries = ResearchSummary::get();
-
-        //dd($female_faculty);
-
-        //dd($graduated_students);
-        $strategic_date_diff = $this->dateDifference(@$strategic_plan->aproval_date, date('Y-m-d'), '%y Year %m Month');
-        //dd($program_dates);
-        //// get scope
-        //$scope = Scope::where('')
         return view('desk_review.index', compact(
-            'program_dates',
-            'mission_vision',
-            'strategic_plan',
-            'strategic_date_diff',
-            'application_received',
-            'student_enrolment',
-            'graduated_students',
-            'faculty_summary',
-            'getFullProfessors',
-            'AssistantProfessors',
-            'AssociateProfessors',
-            'lecturers',
-            'other',
-            'faculty_summary_doc',
-            'permanent_faculty',
-            'adjunct_faculty',
-            'female_faculty',
-            'faculty_degree',
-            'total_induction',
-            'faculty_terminated',
-            'faculty_resigned',
-            'faculty_retired',
-            'total_courses',
-            'bandwidth',
-            'comp_ratio',
-            'summaries',
-            'nbeac_criteria'
-
-        ));
+            'registrations'));
     }
 
     /**
@@ -152,8 +77,8 @@ class DeskReviewController extends Controller
         }
 
         $mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
-        $strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
-        $application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
+        @$strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
+        @$application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
         $student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
         $graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
 
@@ -188,7 +113,7 @@ class DeskReviewController extends Controller
         //dd($program_dates);
         //// get scope
         //$scope = Scope::where('')
-        return view('desk_review.index', compact(
+        return view('desk_review.desk_review', compact(
             'program_dates',
             'mission_vision',
             'strategic_plan',
@@ -245,38 +170,48 @@ class DeskReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+//        dd($request);
          $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
+            $getUserData = User::where(['id' => $request->id])->get()->first();
             foreach ($request->all() as $key=>$isEligible){
-                //dd();ount]['id']);
-                //foreach ($isEligible as $value){
-                    //dd($key);
-                if($key !=='comments') {
+                if($key !=='comments' && $key !=='id') {
                     DeskReview::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
+                        'campus_id' =>$getUserData->campus_id,
+                        'department_id' => $getUserData->department_id,
                         'nbeac_criteria' => $key,
                         'isEligible' => $isEligible,
                         'created_by' => Auth::user()->id
                     ]);
-                }else
-                {
-
                 }
-                //}
-
-
             }
+            $isEligible = 'no';
+            if($request->eligibility_program == 'yes' &&
+                $request->eligibility_mission == 'yes' &&
+                $request->eligibility_plan == 'yes' &&
+                $request->eligibility_student == 'yes' &&
+                $request->eligibility_enrollment == 'yes' &&
+                $request->eligibility_load == 'yes' &&
+                $request->eligibility_output == 'yes' &&
+                $request->eligibility_bandwidth == 'yes' &&
+                $request->eligibility_ratio == 'yes'
+            )
+            {
+                $isEligible = 'yes';
+            }
+            EligibilityStatus::create(['campus_id' => $getUserData->campus_id,
+                'department_id' => $getUserData->department_id,
+                'isEligible' => $isEligible,
+                'comments' => $request->comments,
+                'status' => 'active'
+                ]
+            );
 
             return response()->json(['success' => 'Desk Review added successfully.'], 200);
-
-
         }catch (Exception $e)
         {
             return response()->json($e->getMessage(), 422);

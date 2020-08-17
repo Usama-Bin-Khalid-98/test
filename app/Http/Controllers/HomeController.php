@@ -43,8 +43,9 @@ class HomeController extends Controller
         $memberShips = User::with('business_school')->where('status', 'pending')->get();
         $invoices = Slip::with('business_school', 'department')->get();
         $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
+        $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school'])->get();
         //dd($registrations);
-        return view('home' , compact( 'registrations', 'invoices', 'memberShips'));
+        return view('home' , compact( 'registrations', 'invoices', 'memberShips','registration_apply'));
     }
 
     /**
