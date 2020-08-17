@@ -64,6 +64,7 @@ class EntryRequirementController extends Controller
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
                 'min_req' => $request->min_req,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

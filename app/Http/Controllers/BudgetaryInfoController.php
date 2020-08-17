@@ -65,6 +65,7 @@ class BudgetaryInfoController extends Controller
                 'uni_proposed_budget' => $request->uni_proposed_budget,
                 'budget_receive' => $request->budget_receive,
                 'budget_type' => $request->budget_type,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

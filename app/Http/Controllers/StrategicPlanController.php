@@ -59,6 +59,7 @@ class StrategicPlanController extends Controller
                 'plan_period' => $request->plan_period,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

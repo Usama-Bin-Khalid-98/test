@@ -74,6 +74,7 @@ class FacultyGenderController extends Controller
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'male' => $request->male,
                 'female' => $request->female,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -130,7 +131,6 @@ class FacultyGenderController extends Controller
                 'male' => $request->male,
                 'female' => $request->female,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted,
                 'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Gender updated successfully.']);

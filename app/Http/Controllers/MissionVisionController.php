@@ -68,6 +68,7 @@ class MissionVisionController extends Controller
                         'mission' => $request->mission,
                         'vision' => $request->vision,
                         'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
                         'created_by' => Auth::user()->id
                 ]);
 
@@ -131,7 +132,6 @@ class MissionVisionController extends Controller
                     'mission' => $request->mission,
                     'vision' => $request->vision,
                     'file' => $path.'/'.$imageName,
-                    'isComplete' => $request->isComplete,
                     'status' => $request->status,
                     'updated_by' => Auth::user()->id
                     ]
@@ -142,7 +142,6 @@ class MissionVisionController extends Controller
            MissionVision::where('id', $missionVision->id)->update([
                'mission' => $request->mission,
                'vision' => $request->vision,
-               'isComplete' => $request->isComplete,
                'status' => $request->status,
                'updated_by' => Auth::user()->id
            ]);

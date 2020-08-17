@@ -61,6 +61,7 @@ class FacultyStudentRatioController extends Controller
                 'program_id' => $request->program_id,
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -117,7 +118,6 @@ class FacultyStudentRatioController extends Controller
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted,
                 'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Student Ratio updated successfully.']);
