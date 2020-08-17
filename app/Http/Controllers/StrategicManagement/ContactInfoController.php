@@ -72,6 +72,7 @@ class ContactInfoController extends Controller
                         'designation_id' => $request->designation_id,
                         'focal_person' => $request->focal_person,
                         'cv' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
                         'campus_id' => auth()->user()->campus_id,
                         'department_id' => auth()->user()->department_id,
                         'created_by' => auth()->user()->id,

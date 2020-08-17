@@ -60,6 +60,7 @@ class StudentGenderController extends Controller
                 'program_id' => $request->program_id,
                 'male' => $request->male,
                 'female' => $request->female,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

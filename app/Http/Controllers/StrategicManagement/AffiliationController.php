@@ -63,6 +63,7 @@ class AffiliationController extends Controller
                 'designation_id' => $request->designation_id,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
 
             ]);

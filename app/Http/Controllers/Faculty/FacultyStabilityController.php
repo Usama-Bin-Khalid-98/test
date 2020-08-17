@@ -74,6 +74,7 @@ class FacultyStabilityController extends Controller
                 'retired' => $request->retired,
                 'terminated' => $request->terminated,
                 'new_induction' => $request->new_induction,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -133,7 +134,6 @@ class FacultyStabilityController extends Controller
                 'terminated' => $request->terminated,
                 'new_induction' => $request->new_induction,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted,
                 'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Stability updated successfully.']);

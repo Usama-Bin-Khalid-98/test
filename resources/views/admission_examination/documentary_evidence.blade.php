@@ -1,10 +1,11 @@
-@section('pageTitle', 'Student to teacher Ratio')
+@section('pageTitle', 'Documentary Evidence')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-   <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
+     <!-- Select2 -->
+    <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
@@ -15,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Student to teacher Ratio
+                Documentary Evidence
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Student to teacher Ratio</li>
+                <li class="active">Documentary Evidence</li>
             </ol>
         </section>
         <section class="content-header">
@@ -40,9 +41,11 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">   Fill in data to calculate student to teacher ratio for last year of each program under review in Table 4.4.</h3>
+                            <p class="box-title">9.6    Provide documentary evidence to support that the examination rules have been implemented continuously over the last three years in Appendix-9E.</p>
+
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -56,35 +59,13 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-
-                            <form action="javascript:void(0)" id="form" method="POST">
+                          <form action="javascript:void(0)" id="form" method="POST">
+                           
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program(s) under review</label>
-                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($programs as $program)
-                                         <option value="{{$program->program->id}}">{{$program->program->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                           <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                          
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Total enrollments(B) </label>
-                                    <input type="number" name="total_enrollments" id="total_enrollments" class="form-control">
+                                    <label for="name">Attach Doc</label>
+                                    <input type="file" name="file" id="file" >
+                                    <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
 
@@ -95,48 +76,49 @@
                                 </div>
                             </div>
                         </form>
+
+                        </div>
+                        <!-- /.box-body -->
+                        <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.4. Student to teacher ratio</h3>
+                            <h3 class="box-title">Documentary Evidence</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
+                                    <th>Business School Name</th>
                                     <th>Campus</th>
-                                    <th>Program(s) under review</th>
-                                    <th>Year</th>
-                                    <th>Total Enrollments</th>
+                                    <th>Document</th>
                                     <th>Status</th>
+                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($ratios as $req)
+                                @foreach($reports as $contact)
                                 <tr>
-                                    <td>{{$req->campus->business_school->name}}</td>
-                                    <td>{{$req->campus->location}}</td>
-                                    <td>{{$req->program->name}}</td>
-                                    <td>{{$req->year}}</td>
-                                    <td>{{$req->total_enrollments}}</td>
-                                    <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
-
+                                    <td>{{$contact->campus->business_school->name}}</td>
+                                    <td>{{$contact->campus->location}}</td>
+                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
+                                 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
+                                    <th>Business School Name</th>
                                     <th>Campus</th>
-                                    <th>Program(s) under review</th>
-                                    <th>Year</th>
-                                    <th>Total Enrollments</th>
+                                    <th>Document</th>
                                     <th>Status</th>
+                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -147,56 +129,40 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
+
+
             </div>
+            <!-- /.row -->
+
+            <!-- /.row -->
+
+            <!-- /.content -->
+
+
         </section>
+
     </div>
 
-    
-    <!-- /.modal -->
-
-     <div class="modal fade" id="edit-modal">
+    <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Faculty Student Ratio. </h4>
+                    <h4 class="modal-title">Edit Documentary Evidence. </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body">
+                    <div class="modal-body"> 
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Program</label>
-                                   <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($programs as $program)
-                                         <option value="{{$program->program->id}}">{{$program->program->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
+                              <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Attach Doc</label>
+                                <input type="file" name="file" id="edit_file" >
+                                <input type="hidden" name="old_file" id="old_file" >
+                                <span class="text-blue" id="file-name"></span>
                             </div>
-                            
-                           <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Total Enrollments</label>
-                                    <input type="number" name="total_enrollments" id="edit_total_enrollments" value="{{old('edit_total_enrollments')}}" class="form-control">
-                                </div>
-                              </div>
+                            <input type="hidden" id="edit_id">
+                        </div>
 
 
                         <div class="col-md-6">
@@ -207,7 +173,13 @@
                             </div>
                         </div>
 
-                       
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="type">{{ __('isCompleted') }} : </label>
+                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" > Yes
+                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -220,7 +192,10 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+
+   
+    <!-- /.modal -->
+   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -248,16 +223,11 @@
         });
 
          $('#form').submit(function (e) {
-            let program_id = $('#program_id').val();
-            let year = $('#year').val();
-            let total_enrollments = $('#total_enrollments').val();
+            let file = $('#file').val();
 
-            
-            !program_id?addClass('program_id'):removeClass('program_id');
-            !year?addClass('year'):removeClass('year');
-            !total_enrollments?addClass('total_enrollments'):removeClass('total_enrollments');
+            !file?addClass('file'):removeClass('file');
 
-            if(!program_id || !year || !total_enrollments)
+            if(!file)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -267,7 +237,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("faculty-student-ratio")}}',
+                url:'{{url("documentary-evidence")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -298,37 +268,25 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_year').select2().val(data.year).trigger('change');
-            $('#edit_total_enrollments').val(data.total_enrollments);
+            $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
+            $('input[value='+data.isComplete+']').iCheck('check');
             $('input[value='+data.status+']').iCheck('check');
-            $('input[value='+data.isCompleted+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let program_id = $('#edit_program_id').val();
-            let year = $('#edit_year').val();
-            let total_enrollments = $('#edit_total_enrollments').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            let isCompleted = $('input[name=edit_isCompleted]:checked').val();
-            !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
-            !year?addClass('edit_year'):removeClass('edit_year');
-            !total_enrollments?addClass('edit_total_enrollments'):removeClass('edit_total_enrollments');
+            let isCompleted = $('input[name=edit_isComplete]:checked').val();
 
-            if(!program_id || !year || !total_enrollments )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
+            
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("faculty-student-ratio")}}/'+id,
+                url:'{{url("documentary-evidence")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -363,7 +321,7 @@ $('#updateForm').submit(function (e) {
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("faculty-student-ratio")}}/'+id,
+                        url:'{{url("documentary-evidence")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -392,6 +350,7 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
+
 
     </script>
 

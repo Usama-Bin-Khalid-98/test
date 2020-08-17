@@ -68,6 +68,7 @@ class ProgramPortfolioController extends Controller
                 'credit_hours' => $request->credit_hours,
                 'internship_req' => $request->internship_req,
                 'fyp_req' => $request->fyp_req,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

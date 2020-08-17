@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFinancialInfosTable extends Migration
+class CreateStudentTransfersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateFinancialInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('financial_infos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('campus_id')->unsigned()->nullable();
+        Schema::create('student_transfers', function (Blueprint $table) {
+            $table->id();
+            $table->integer('campus_id')->unsigned();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
@@ -23,18 +23,9 @@ class CreateFinancialInfosTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->integer('income_source_id')->unsigned();
-            $table->foreign('income_source_id')
-                ->references('id')
-                ->on('income_sources');
-            $table->string('year_three',250);
-            $table->string('year_two',250);
-            $table->string('year_one',250);
-            $table->string('year_t',250);
-            $table->string('year_t_plus_one',250);
-            $table->string('year_t_plus_two',250);
-            $table->enum('isComplete', ['yes','no'])->default('no');
-            $table->enum('status', ['active','inactive'])->default('active');
+            $table->string('file',255);
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
@@ -47,8 +38,8 @@ class CreateFinancialInfosTable extends Migration
             $table->foreign('deleted_by')
                 ->references('id')
                 ->on('users');
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -59,6 +50,6 @@ class CreateFinancialInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('financial_infos');
+        Schema::dropIfExists('student_transfers');
     }
 }

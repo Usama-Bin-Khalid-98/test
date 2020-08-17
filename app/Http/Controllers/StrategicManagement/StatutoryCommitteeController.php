@@ -73,6 +73,7 @@ class StatutoryCommitteeController extends Controller
                     'date_third_meeting' => $request->date_third_meeting,
                     'date_fourth_meeting' => $request->date_fourth_meeting,
                     'file' => $path.'/'.$fileName,
+                    'isComplete' => 'yes',
                     'created_by' => Auth::user()->id
                 ]);
 

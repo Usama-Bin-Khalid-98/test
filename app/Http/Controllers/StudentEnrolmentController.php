@@ -67,6 +67,7 @@ class StudentEnrolmentController extends Controller
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
                 'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

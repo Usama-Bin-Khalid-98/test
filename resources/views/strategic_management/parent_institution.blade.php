@@ -95,7 +95,6 @@
                                     <th>Campus</th>
                                     <th>Document</th>
                                     <th>Status</th>
-                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -106,7 +105,6 @@
                                     <td>{{$contact->campus->location}}</td>
                                     <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
@@ -118,7 +116,6 @@
                                     <th>Campus</th>
                                     <th>Document</th>
                                     <th>Status</th>
-                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -170,14 +167,6 @@
                                 <label for="type">{{ __('Status') }} : </label>
                                 <p><input type="radio" name="status" class="flat-red" value="active" > Active
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isCompleted') }} : </label>
-                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
                             </div>
                         </div>
                     </div>
