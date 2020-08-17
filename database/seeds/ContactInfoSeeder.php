@@ -23,6 +23,30 @@ class ContactInfoSeeder extends Seeder
                 'status'=>'active',
                 'isComplete'=>'yes',
                 'focal_person'=>'trevor'
+            ],
+            [
+                'name'=>'Muhammad Usman',
+                'email'=>'usman@uni.edu.pk',
+                'contact_no'=>'03185276733',
+                'school_contact'=>'0922352345',
+                'designation_id'=>'1',
+                'cv'=>'',
+                'campus_id'=>'209',
+                'status'=>'active',
+                'isComplete'=>'yes',
+                'focal_person'=>'trevor'
+            ],
+            [
+                'name'=>'Muhammad Omer',
+                'email'=>'omer@uni.edu.pk',
+                'contact_no'=>'03185276733',
+                'school_contact'=>'0922352345',
+                'designation_id'=>'2',
+                'cv'=>'',
+                'campus_id'=>'209',
+                'status'=>'active',
+                'isComplete'=>'yes',
+                'focal_person'=>''
             ]
 
 

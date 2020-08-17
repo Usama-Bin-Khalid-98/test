@@ -39,7 +39,7 @@ F=∑(D/C)
                                     @foreach($facultyTeachingCourses as $data)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->name}}</td>
                                         <td>{{$data->desName}}</td>
                                         
                                         <td>{{$data->   max_cources_allowed}}</td>

@@ -25,6 +25,7 @@ class CreateStudentsGraduatedsTable extends Migration
                 ->on('programs')
                 ->onDelete('cascade');;
             $table->string('grad_std_t', 100);
+            $table->string('grad_std_t_1', 100)->nullable();
             $table->string('grad_std_t_2', 100);
             $table->string('grad_std_t_3', 100);
             $table->enum('status', ['active','inactive'])->default('active');

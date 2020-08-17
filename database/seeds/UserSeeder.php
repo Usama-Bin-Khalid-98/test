@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'email' => 'city@gmail.com',
             'email_verified_at' => '2020-07-29 17:32:04',
             'password' => Hash::make('admin!@#$'),
-            'business_school_id' => 1,
+            'business_school_id' => 1,            
             'campus_id' => 209,
             'country' => 'pakistan',
             'city' => 'peshawar',

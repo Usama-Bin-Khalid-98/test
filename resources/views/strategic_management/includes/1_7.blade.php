@@ -15,6 +15,7 @@
                                 <tbody>
                                     <?php
                                         $amount = $percentShare = 0;
+                                         
                                     ?>
                                     @foreach($sourceOfFunding as $data)
                                     

@@ -26,7 +26,7 @@ Table 4.2a. Faculty workload (t)
                                         <td></td>
                                      
                                      
-                                    </tr>
+                                    </tr><?php  ?>
                                     @foreach($facultyWorkLoad as $data)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
