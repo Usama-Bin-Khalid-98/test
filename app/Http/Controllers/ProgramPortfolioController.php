@@ -60,7 +60,6 @@ class ProgramPortfolioController extends Controller
             ProgramPortfolio::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
-                'program' => 'program1',
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
@@ -71,7 +70,6 @@ class ProgramPortfolioController extends Controller
                 'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
-
             return response()->json(['success' => 'Program Portfolio added successfully.']);
 
 
@@ -121,7 +119,6 @@ class ProgramPortfolioController extends Controller
         try {
 
             ProgramPortfolio::where('id', $programPortfolio->id)->update([
-                'program' => $request->program,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
@@ -162,7 +159,6 @@ class ProgramPortfolioController extends Controller
 
     protected function rules() {
         return [
-            'program' => 'required',
             'program_id' => 'required',
             'total_semesters' => 'required',
             'course_type_id' => 'required',
