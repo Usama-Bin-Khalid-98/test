@@ -10,9 +10,9 @@ Table 4.2a. Faculty workload (t)
                                     <th>Designation</th>
                                     <th>Number of courses taught in all programs</th>
                                     <th style="text-align: center;" colspan="3">Number of students supervised</th>
-                                    
+
                                     <th>Administrative responsibility</th>
-                                    
+
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -24,32 +24,34 @@ Table 4.2a. Faculty workload (t)
                                         <td>Masters</td>
                                         <td>Bachelors</td>
                                         <td></td>
-                                     
-                                     
+
+
                                     </tr>
-                                    @foreach($facultyWorkLoad as $data)
-                                    <tr>
-                                        <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->faculty_name}}</td>
-                                        <td>{{$data->designationName}}</td>
-                                        <td>{{$data->total_courses}}</td>
-                                        <td>{{$data->phd}}</td>
-                                        <td>{{$data->masters}}</td>
-                                        <td>{{$data->bachleors}}</td>
-                                        <td>{{$data->admin_responsibilities}}</td>
-                                     
-                                     
-                                    </tr>
-                                    @endforeach
-                                     
-                                   
-                                   
-                                    
-                              
+{{--                                    @if($facultyWorkLoad)--}}
+{{--                                    @foreach(@$facultyWorkLoad as $data)--}}
+{{--                                    <tr>--}}
+{{--                                        <td>{{$loop->index+1}}</td>--}}
+{{--                                        <td>{{$data->faculty_name}}</td>--}}
+{{--                                        <td>{{$data->designationName}}</td>--}}
+{{--                                        <td>{{$data->total_courses}}</td>--}}
+{{--                                        <td>{{$data->phd}}</td>--}}
+{{--                                        <td>{{$data->masters}}</td>--}}
+{{--                                        <td>{{$data->bachleors}}</td>--}}
+{{--                                        <td>{{$data->admin_responsibilities}}</td>--}}
+
+
+{{--                                    </tr>--}}
+{{--                                    @endforeach--}}
+{{--                                    @endif--}}
+
+
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

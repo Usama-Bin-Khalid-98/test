@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom: 16px;">
                                     <label for="name">Course category</label>
                                    <select name="course_type_id" id="course_type_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Course category</option>

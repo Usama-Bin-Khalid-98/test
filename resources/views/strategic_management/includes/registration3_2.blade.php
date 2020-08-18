@@ -7,24 +7,24 @@
                                     <th>Year t-2</th>
                                     <th>Year t-1</th>
                                     <th>Year t</th>
-                                     
+
                                 </thead>
                                 <tbody>
-                                    @foreach($graduatedStudents as $data)
+                                    @foreach(@$graduatedStudents as $data)
                                     <tr>
-                                        <td>{{$data->programName}}</td>
-                                        <td>{{$data->grad_std_t_2}}</td>
-                                        <td>{{$data->grad_std_t_1}}</td>
-                                        <td>{{$data->grad_std_t}}</td>
-                                        
+                                        <td>{{@$data->programName}}</td>
+                                        <td>{{@$data->grad_std_t_2}}</td>
+                                        <td>{{@$data->grad_std_t_1}}</td>
+                                        <td>{{@$data->grad_std_t}}</td>
+
                                     </tr>
                                     @endforeach
-                                    
-                              
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

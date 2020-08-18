@@ -139,7 +139,7 @@ class BasicInfoController extends Controller
                           );
                 //dd('coning else', $update);
                 $updateUser = User::find(Auth::id())
-                          ->update(['designation_id'=> $request->designation_id]);
+                          ->update(['designation_id'=> $request->designation_id, 'cao_name' => $request->contact_person]);
 
                 return response()->json(['success' => 'Updated successfully.']);
             }

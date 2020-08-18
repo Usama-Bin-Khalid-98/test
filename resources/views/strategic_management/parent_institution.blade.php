@@ -60,10 +60,10 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                           
+
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc</label>
+                                    <label for="name">Attach Doc (Appendix-1F)</label>
                                     <input type="file" name="file" id="file" >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
@@ -108,7 +108,7 @@
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                                 
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -149,11 +149,11 @@
                     <h4 class="modal-title">Edit Parent Institutions. </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body"> 
+                    <div class="modal-body">
 
                               <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc</label>
+                                <label for="name">Attach Doc  (Appendix-1F)</label>
                                 <input type="file" name="file" id="edit_file" >
                                 <input type="hidden" name="old_file" id="old_file" >
                                 <span class="text-blue" id="file-name"></span>
@@ -182,7 +182,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -269,7 +269,7 @@ $('#updateForm').submit(function (e) {
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isComplete]:checked').val();
 
-            
+
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()

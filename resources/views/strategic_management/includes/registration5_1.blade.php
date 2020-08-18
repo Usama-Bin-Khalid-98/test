@@ -29,12 +29,12 @@ Table 5.1. Summary of research output
                                 <thead>
                                     <th class="" style="text-align: center;">Publication<br> category</th>
                                     <th>Publication type</th>
-                                    <th>Total number of items</th>                                    
+                                    <th>Total number of items</th>
                                     <th >Number of contributing core faculty members</th>
                                     <th>Number of items jointly produced in collaboration with other institutions</th>
                                     <th>Number of items jointly produced by more than 3 authors</th>
-                                     
-                                    
+
+
                                 </thead>
                                 <tbody>
                                     <?php
@@ -42,7 +42,7 @@ Table 5.1. Summary of research output
                                     $countResearch=0;
                                     $countBooks=0;
                                     $countOthers=0;
-                                    for ($i=0; $i <count($researchOutput) ; $i++) { 
+                                    for ($i=0; $i <count($researchOutput) ; $i++) {
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                             $countResearch++;
                                         }else   if($researchOutput[$i]->publicationType=="Books"){
@@ -52,201 +52,201 @@ Table 5.1. Summary of research output
                                         }
                                     }
 
-                                    for ($i=0; $i <1; $i++) { 
-                                        if($researchOutput[$i]->publicationType=="Academic research articles"){
+                                    for ($i=0; $i <1; $i++) {
+                                        if(@$researchOutput[$i]->publicationType=="Academic research articles"){
                                     ?>
                                     <tr>
-                                        <td class="" rowspan="<?php echo $countResearch; ?>" style="text-align: center;"><?php 
+                                        <td class="" rowspan="<?php echo $countResearch; ?>" style="text-align: center;"><?php
                                         print_r($researchOutput[$i]->publicationType)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->publicationName)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->total_items)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->contributing_core_faculty)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_other)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_multiple)
-                                        ?></td>                                
+                                        ?></td>
 
                                     </tr>
                                     <?php }}
 
-                                    for ($i=0; $i <$countResearch; $i++) { 
+                                    for ($i=0; $i <$countResearch; $i++) {
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                      ?>
                                      <tr>
-                                         <td><?php 
+                                         <td><?php
                                         print_r($researchOutput[$i]->publicationName)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->total_items)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->contributing_core_faculty)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_other)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_multiple)
                                         ?></td>
-                                                                        
+
 
                                     </tr>
                                     <?php }} ?>
                                     <!--<tr>
                                         <td >HEC category X</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                     <tr>
                                         <td >HEC category Y</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                      <tr>
                                         <td >ABS or ABDC listing</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                     <tr>
                                         <td >Other listings</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                     <tr>
                                         <td >National conference papers</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                      <tr>
                                         <td >International conference papers</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr> -->
                                     <tr>
                                         <td class="" rowspan="3" style="text-align: center;">Books</td>
-                                        <td>Books or research monographs</td> 
+                                        <td>Books or research monographs</td>
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td>                                
+                                        <td></td>
+                                        <td></td>
 
                                     </tr>
                                      <tr>
                                         <td >Text books</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                      <tr>
                                         <td >Book chapters</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                     <tr>
                                         <td class="" rowspan="6" style="text-align: center;">Other Publications</td>
-                                        <td>Other Publications</td> 
+                                        <td>Other Publications</td>
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td>                                
+                                        <td></td>
+                                        <td></td>
 
                                     </tr>
                                      <tr>
                                         <td >Case studies</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                      <tr>
                                         <td >Consultancy project reports</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                     <tr>
                                         <td >Practice oriented research articles</td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                      <tr>
                                         <td >MS/MPhil thesis </td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
                                       <tr>
                                         <td >Doctoral thesis </td>
-                                        <td></td> 
                                         <td></td>
-                                        <td></td> 
                                         <td></td>
-                                                                        
+                                        <td></td>
+                                        <td></td>
+
 
                                     </tr>
 
-                                    
-                                  
-                                   
-                                   
-                                    
-                              
+
+
+
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>
