@@ -43,8 +43,7 @@ class DeskReviewController extends Controller
         //$department_id = $registrations[0]->department_id;
         //dd($desk_reviews);
 
-        return view('desk_review.index', compact(
-            'registrations'));
+        return view('desk_review.index', compact('registrations'));
     }
 
     /**
