@@ -100,7 +100,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Attach CV</label>
+                                    <label for="name">Attach CV (Appendix-1A)</label>
                                     <input type="file" name="cv" id="cv" >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
@@ -244,7 +244,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="name">Attach CV</label>
+                                <label for="name">Attach CV (Appendix-1A.)</label>
                                 <input type="file" name="cv" id="edit_cv" >
                                 <input type="hidden" name="old_cv" id="old_cv" >
                                 <span class="text-blue" id="cv-name"></span>

@@ -40,10 +40,14 @@ class HomeController extends Controller
         //$userHas = Auth::user()->getPermissionsViaRoles();
         //$check = $userHas->has('name');
         //dd($check);
+        $user_id = Auth::id();
+        $campus_id = Auth::user()->campus_id;
+        $department_id = Auth::user()->department_id;
         $memberShips = User::with('business_school')->where('status', 'pending')->get();
-        $invoices = Slip::with('business_school', 'department')->get();
+        $invoices = Slip::with('business_school', 'department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
+        //dd($invoices);
         $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
-        $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school'])->get();
+        $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
         //dd($registrations);
         return view('home' , compact( 'registrations', 'invoices', 'memberShips','registration_apply'));
     }
