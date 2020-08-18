@@ -41,7 +41,6 @@ F=∑(D/C)
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{$data->name}}</td>
                                         <td>{{$data->desName}}</td>
-
                                         <td>{{$data->   max_cources_allowed}}</td>
                                         <td>{{$data->tc_program1}}</td>
                                         <td>{{$data->tc_program2}}</td>

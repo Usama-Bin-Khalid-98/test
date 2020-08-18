@@ -309,29 +309,36 @@
                                 <thead>
                                 <tr>
 
-                                    <th>Business School Facilities</th>
-                                    <th>isChecked</th>
+                                    <th>Business School</th>
+                                    <th>Department</th>
+                                    <th>Comments</th>
+                                    <th>isEligible</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                {{--                                   @foreach($facilitiess as $summary)--}}
-                                {{--                                <tr>--}}
-                                {{--                                    <td>{{$summary->facility->name}}</td>--}}
-                                {{--                                    <td><i class="badge {{$summary->isChecked == 'yes'?'bg-green':'bg-red'}}">{{$summary->isChecked == 'yes'?'Yes':'No'}}</i></td>--}}
-                                {{--                                    <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>--}}
-                                {{--                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"facility_id":"{{$summary->facility->name}}","isChecked":"{{$summary->isChecked}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>--}}
-                                {{--                                </tr>--}}
-                                {{--                                @endforeach--}}
+                                @if(@$desk_reviews)
+                                   @foreach(@$desk_reviews as $review)
+                                <tr>
+                                    <td>{{$review->campus->business_school->name}}</td>
+                                    <td>{{$review->department->name}}</td>
+                                    <td>{{$review->comments}}</td>
+                                    <td><i class="badge {{$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
+                                    <td><i class="badge {{$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> | <i data-row='{"id":{{$review->id}},"facility_id":"{{$review->department->name}}","isChecked":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                                </tr>
+                                @endforeach
+                                @endif
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
 
-                                    <th>Business School Facilities</th>
-                                    <th>isChecked</th>
+                                    <th>Business School</th>
+                                    <th>Department</th>
+                                    <th>Comments</th>
+                                    <th>isEligible</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

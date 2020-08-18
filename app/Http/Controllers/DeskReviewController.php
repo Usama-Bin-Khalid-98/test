@@ -39,8 +39,9 @@ class DeskReviewController extends Controller
     public function index()
     {
         $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
-        $desk_reviews = EligibilityStatus::with('business_school')->get();
-        dd($desk_reviews);
+        //$campus_id = $registrations[0]->campus_id;
+        //$department_id = $registrations[0]->department_id;
+        //dd($desk_reviews);
 
         return view('desk_review.index', compact(
             'registrations'));
@@ -113,6 +114,9 @@ class DeskReviewController extends Controller
         //dd($program_dates);
         //// get scope
         //$scope = Scope::where('')
+
+        @$desk_reviews = EligibilityStatus::with('department', 'campus')->where(['campus_id'=> $campus_id])->get();
+        //dd($desk_reviews);
         return view('desk_review.desk_review', compact(
             'program_dates',
             'mission_vision',
@@ -140,7 +144,8 @@ class DeskReviewController extends Controller
             'bandwidth',
             'comp_ratio',
             'summaries',
-            'nbeac_criteria'
+            'nbeac_criteria',
+            'desk_reviews'
 
         ));
     }
