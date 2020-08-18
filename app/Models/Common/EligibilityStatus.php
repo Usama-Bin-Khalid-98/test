@@ -10,8 +10,13 @@ class EligibilityStatus extends Model
     //
     protected $guarded = [];
 
-    public function business_school()
+    public function campus()
     {
-        return $this->belongsTo(BusinessSchool::class);
+        return $this->belongsTo(Campus::class)->with('business_school');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }
