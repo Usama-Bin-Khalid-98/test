@@ -103,7 +103,7 @@
 
                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Admin Resposibilities</label>
+                                    <label for="name">Administrative responsibility</label>
                                     <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
                                 </div>
                             </div>
@@ -268,7 +268,7 @@
                                     <input type="text" name="admin_responsibilities" id="edit_admin_responsibilities" value="{{old('edit_admin_responsibilities')}}" class="form-control">
                                 </div>
                               </div>
-                            
+
                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year</label>
@@ -303,7 +303,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

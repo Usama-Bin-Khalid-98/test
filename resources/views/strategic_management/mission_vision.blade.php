@@ -76,7 +76,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc</label>
+                                    <label for="name">Attach Doc (Appendix-1C)</label>
                                     <input type="file" name="file" id="file" >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
@@ -187,7 +187,7 @@
 
                               <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc</label>
+                                <label for="name">Attach Doc (Appendix-1C)</label>
                                 <input type="file" name="file" id="edit_file" >
                                 <input type="hidden" name="old_file" id="old_file" >
                                 <span class="text-blue" id="file-name"></span>
@@ -203,7 +203,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

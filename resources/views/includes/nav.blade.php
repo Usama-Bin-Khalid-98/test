@@ -121,14 +121,14 @@ $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['c
 
           @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
-          <a href="#">
+          <a href="#" >
             <i class="fa fa-users " style="color: #D81B60"></i> <span>1: Strategic Management</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-
-          <ul class="treeview-menu">
+{{--              @if(!$invoices)--}}
+                <ul class="treeview-menu">
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
                     <i class="fa fa-circle-o" style="color: #D81B60"></i>1.1 Basic information of </br> <span style="margin-left: 20px;">business school</span>
@@ -190,7 +190,8 @@ $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['c
             <!-- <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>
             <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li> -->
           </ul>
-        </li>
+{{--              @endif--}}
+          </li>
         @endhasrole
         @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}" >
