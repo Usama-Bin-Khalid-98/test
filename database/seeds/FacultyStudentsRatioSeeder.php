@@ -31,12 +31,9 @@ class FacultyStudentsRatioSeeder extends Seeder
             'total_enrollments' => '60',
             'status' => 'active',
             ]
-            
-
-
         ]);
 
-   
+
     }
 
 }

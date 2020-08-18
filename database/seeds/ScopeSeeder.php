@@ -16,6 +16,6 @@ class ScopeSeeder extends Seeder
             ['campus_id'=>'1','program_id'=>'1','level_id'=>'1','date_program'=>'2000-2-21','status'=>'active','isComplete'=>'yes','created_by'=>'1'],
             ['campus_id'=>'209','program_id'=>'1','level_id'=>'1','date_program'=>'2000-2-21','status'=>'active','isComplete'=>'yes','created_by'=>'1'],
             ['campus_id'=>'209','program_id'=>'3','level_id'=>'1','date_program'=>'2000-2-21','status'=>'active','isComplete'=>'yes','created_by'=>'1'],
-        );
+        ]);
     }
 }
