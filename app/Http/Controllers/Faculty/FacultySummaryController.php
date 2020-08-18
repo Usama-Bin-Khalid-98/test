@@ -22,11 +22,11 @@ class FacultySummaryController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $qualification = FacultyQualification::where('status', 'active')->get();
         $discipline = Discipline::where('status', 'active')->get();
 
-        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries'));
         //
@@ -59,6 +59,7 @@ class FacultySummaryController extends Controller
 
             FacultySummary::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'faculty_qualification_id' => $request->faculty_qualification_id,
                 'discipline_id' => $request->discipline_id,
                 'number_faculty' => $request->number_faculty,

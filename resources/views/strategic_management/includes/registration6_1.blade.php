@@ -40,6 +40,10 @@ Table 6.1. Financial information of the business school
                                 </thead>
                                 <tbody>
                                     <?php
+                                    /*echo "<pre>";
+                                    print_r($financialInfos);
+                                    echo "</pre>";
+                                    die;*/
                                     $countIncome = $countExpense = 0;
                                     $revenuet_3=$revenuet_2=$revenuet_1=$revenuet=$revenuetPlus1=$revenuetPlus2=0;
 

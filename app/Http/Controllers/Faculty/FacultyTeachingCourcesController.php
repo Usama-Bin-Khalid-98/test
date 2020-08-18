@@ -23,11 +23,11 @@ class FacultyTeachingCourcesController extends Controller
     }
     public function index()
     {
-
+        $campus_id = Auth::user()->campus_id;
+        $department_id = Auth::user()->department_id;
          $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
-
-         $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->get();
+         $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings'));
     }
@@ -59,6 +59,7 @@ class FacultyTeachingCourcesController extends Controller
 
             FacultyTeachingCources::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,

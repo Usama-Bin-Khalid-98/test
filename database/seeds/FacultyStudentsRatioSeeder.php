@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class FacultyStudentsRatioSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             'year' => '2019',
             'total_enrollments' => '60',
             'status' => 'active',
-            ],
+            ]
             
 
 

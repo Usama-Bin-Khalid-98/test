@@ -19,6 +19,10 @@ class CreateStudentEnrolmentsTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('year', 100);
             $table->string('bs_level', 100);
             $table->string('ms_level', 100);

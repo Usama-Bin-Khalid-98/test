@@ -50,11 +50,11 @@ class RegistrationPrintController extends Controller
 
 
          $affiliations = DB::select('SELECT affiliations.*,statutory_committees.name as statutoryName, statutory_bodies.name as statutoryBody, designations.name as designationName
-            FROM affiliations, statutory_committees, statutory_bodies, business_schools, designations
-            WHERE affiliations.statutory_bodies_id=statutory_committees.id AND affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.designation_id=designations.id AND business_schools.id=?', array($bussinessSchool[0]->id));
+            FROM affiliations, statutory_committees, statutory_bodies, campuses, designations
+            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.designation_id=designations.id AND campuses.id=?', array(auth()->user()->campus_id));
 
 
-         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools WHERE business_schools.id=?', array($bussinessSchool[0]->id));
+         $budgetoryInfo = DB::select('SELECT budgetary_infos.* from budgetary_infos, campuses WHERE campuses.id=?', array(auth()->user()->campus_id));
 
 
         
@@ -97,7 +97,7 @@ class RegistrationPrintController extends Controller
 
            $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName, publication_types.type as publicationType FROM research_summaries, publication_types, campuses, users WHERE research_summaries.campus_id=campuses.id AND research_summaries.publication_type_id=publication_types.id AND users.id=? AND users.department_id=? AND research_summaries.campus_id=?', array(auth()->user()->id, $userCampus[0]->department_id, $userCampus[0]->campus_id ));
 
-           $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? AND users.department_id=?', array( $userCampus[0]->campus_id, auth()->user()->id, $userCampus[0]->department_id));
+           $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? ', array( $userCampus[0]->campus_id, auth()->user()->id));
 
            $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id', array(auth()->user()->id, $userCampus[0]->campus_id));
          
@@ -105,9 +105,9 @@ class RegistrationPrintController extends Controller
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){
-        //dd($facultySummary[$i]->id);
+        //dd($userCampus);
         
-            $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=? AND users.department_id=?', array($facultySummary[$i]->id,'209','5'));
+            $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=? AND users.id=?', array($facultySummary[$i]->id,$userCampus,auth()->user()->id));
             return $facultySummary12;
     }
         

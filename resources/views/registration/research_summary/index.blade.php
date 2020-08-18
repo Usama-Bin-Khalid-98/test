@@ -67,17 +67,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
 
 
                             <div class="col-md-3">
@@ -144,12 +134,11 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Publication Type</th>
-                                    <th>Year</th>
-                                    <th>Total Items</th>
-                                    <th>Contributing Core Faculty</th>
-                                    <th>Jointly Produced Other</th>
-                                    <th>Jointly Produced Same</th>
-                                    <th>Jointly Produced Multiple</th>
+                                    <th>Total number of items</th>
+                                    <th>Number of contributing core faculty members</th>
+                                    <th>Number of items jointly produced in collaboration with other institutionsr</th>
+                                    <th>Number of items jointly produced by faculty of same university</th>
+                                    <th>Number of items jointly produced by more than 3 authors</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -167,7 +156,7 @@
                                     <td>{{$summary->jointly_produced_same}}</td>
                                     <td>{{$summary->jointly_produced_multiple}}</td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"publication_type_id":{{$summary->publication_type_id}},"year":{{$summary->year}},"total_items":"{{$summary->total_items}}","contributing_core_faculty":"{{$summary->contributing_core_faculty}}","jointly_produced_other":"{{$summary->jointly_produced_other}}","jointly_produced_same":"{{$summary->jointly_produced_same}}","jointly_produced_multiple":{{$summary->jointly_produced_multiple}}, "status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"publication_type_id":{{$summary->publication_type_id}},"total_items":"{{$summary->total_items}}","contributing_core_faculty":"{{$summary->contributing_core_faculty}}","jointly_produced_other":"{{$summary->jointly_produced_other}}","jointly_produced_same":"{{$summary->jointly_produced_same}}","jointly_produced_multiple":{{$summary->jointly_produced_multiple}}, "status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -176,12 +165,11 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Publication Type</th>
-                                    <th>Year</th>
-                                    <th>Total Items</th>
-                                    <th>Contributing Core Faculty</th>
-                                    <th>Jointly Produced Other</th>
-                                    <th>Jointly Produced Same</th>
-                                    <th>Jointly Produced Multiple</th>
+                                    <th>Total number of items</th>
+                                    <th>Number of contributing core faculty members</th>
+                                    <th>Number of items jointly produced in collaboration with other institutionsr</th>
+                                    <th>Number of items jointly produced by faculty of same university</th>
+                                    <th>Number of items jointly produced by more than 3 authors</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -220,17 +208,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
+                        
 
 
                         <div class="col-md-6">
@@ -318,7 +296,6 @@
 
         $('#form').submit(function (e) {
             let publication_type_id = $('#publication_type_id').val();
-            let year = $('#year').val();
             let total_items = $('#total_items').val();
             let contributing_core_faculty = $('#contributing_core_faculty').val();
             let jointly_produced_other = $('#jointly_produced_other').val();
@@ -326,14 +303,13 @@
             let jointly_produced_multiple = $('#jointly_produced_multiple').val();
 
             !publication_type_id?addClass('publication_type_id'):removeClass('publication_type_id');
-            !year?addClass('year'):removeClass('year');
             !total_items?addClass('total_items'):removeClass('total_items');
             !contributing_core_faculty?addClass('contributing_core_faculty'):removeClass('contributing_core_faculty');
             !jointly_produced_other?addClass('jointly_produced_other'):removeClass('jointly_produced_other');
             !jointly_produced_same?addClass('jointly_produced_same'):removeClass('jointly_produced_same');
             !jointly_produced_multiple?addClass('jointly_produced_multiple'):removeClass('jointly_produced_multiple');
 
-            if(!publication_type_id || !year || !total_items || !contributing_core_faculty || !jointly_produced_other|| !jointly_produced_same || !jointly_produced_multiple)
+            if(!publication_type_id  || !total_items || !contributing_core_faculty || !jointly_produced_other|| !jointly_produced_same || !jointly_produced_multiple)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -374,7 +350,6 @@
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
              $('#edit_publication_type_id').select2().val(data.publication_type_id).trigger('change');
-            $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_total_items').val(data.total_items);
             $('#edit_contributing_core_faculty').val(data.contributing_core_faculty);
             $('#edit_jointly_produced_other').val(data.jointly_produced_other);
@@ -389,7 +364,6 @@
 
     $('#updateForm').submit(function (e) {
             let publication_type_id = $('#edit_publication_type_id').val();
-            let year = $('#edit_year').val();
             let total_items = $('#edit_total_items').val();
             let contributing_core_faculty = $('#edit_contributing_core_faculty').val();
             let jointly_produced_other = $('#edit_jointly_produced_other').val();
@@ -399,14 +373,13 @@
 
             let status = $('input[name=edit_status]:checked').val();
             !publication_type_id?addClass('edit_publication_type_id'):removeClass('edit_publication_type_id');
-            !year?addClass('edit_year'):removeClass('edit_year');
             !total_items?addClass('edit_total_items'):removeClass('edit_total_items');
             !contributing_core_faculty?addClass('edit_contributing_core_faculty'):removeClass('edit_contributing_core_faculty');
             !jointly_produced_other?addClass('edit_jointly_produced_other'):removeClass('edit_jointly_produced_other');
             !jointly_produced_same?addClass('edit_jointly_produced_same'):removeClass('edit_jointly_produced_same');
             !jointly_produced_multiple?addClass('edit_jointly_produced_multiple'):removeClass('edit_jointly_produced_multiple');
 
-            if(!publication_type_id  || !year || !total_items || !contributing_core_faculty || !jointly_produced_other || !jointly_produced_same || !jointly_produced_multiple)
+            if(!publication_type_id  || !total_items || !contributing_core_faculty || !jointly_produced_other || !jointly_produced_same || !jointly_produced_multiple)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

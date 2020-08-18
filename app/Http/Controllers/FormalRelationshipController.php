@@ -22,8 +22,8 @@ class FormalRelationshipController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $relationships = FormalRelationship::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $relationships = FormalRelationship::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         ///dd($contacts);
         return view('social_responsibility.formal_relationship', compact('relationships'));
     }
@@ -55,6 +55,7 @@ class FormalRelationshipController extends Controller
 
             FormalRelationship::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'org_name' => $request->org_name,
                 'mou_title' => $request->mou_title,
                 'signing_mou_date' => $request->signing_mou_date,

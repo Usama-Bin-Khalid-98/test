@@ -19,6 +19,10 @@ class CreateAlumniParticipationsTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->BigInteger('activity_engagements_id')->unsigned()->nullable();
             $table->foreign('activity_engagements_id')
                 ->references('id')

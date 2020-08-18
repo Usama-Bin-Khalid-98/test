@@ -6,8 +6,10 @@ use App\Models\Common\Slip;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use DB;
 
 class HomeController extends Controller
 {
@@ -43,5 +45,32 @@ class HomeController extends Controller
         $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
         //dd($registrations);
         return view('home' , compact( 'registrations', 'invoices', 'memberShips'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function apply(Request $user,  $id)
+    {
+        //dd($user);
+        if($id)
+        {
+            DB::enableQueryLog();
+            try {
+            $user_id = Auth::id();
+            $registration_apply = User::where(['id' => $user_id, 'department_id' => $user->department_id])->update(['request' =>'pending']);
+           // dd(DB::getQueryLog());
+            return response()->json(['success' => 'Successfully applied for department Registration']);
+
+            }catch (Exception $e)
+            {
+                return response()->json(['message' => $e->getMessage()]);
+            }
+
+        }
     }
 }

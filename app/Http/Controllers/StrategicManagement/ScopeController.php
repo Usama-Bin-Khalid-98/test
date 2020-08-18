@@ -22,13 +22,13 @@ class ScopeController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
         //dd(DB::getQueryLog());
         //dd($department_id);
         $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
         $levels = Level::where('status', 'active')->get();
-        $scopes = Scope::with('level', 'program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $scopes = Scope::with('level', 'program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         //dd($programs);
         return view('strategic_management.scope', compact('programs', 'levels', 'scopes'));
     }
@@ -63,8 +63,9 @@ class ScopeController extends Controller
                 return response()->json($validation->messages()->all(), 422);
             }else {
                 $campus_id = auth()->user()->campus_id;
+                $department_id = auth()->user()->department_id;
                 $created_id = auth()->user()->id;
-                $request->merge(['campus_id' => $campus_id,'created_by'=>$created_id, 'isComplete' =>'yes'] );
+                $request->merge(['campus_id' => $campus_id,'department_id' => $department_id,'created_by'=>$created_id, 'isComplete' =>'yes'] );
                 $create = Scope::create($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
             }

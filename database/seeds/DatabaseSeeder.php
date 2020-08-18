@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
         $this->call(NbeacCriteriaSeeder::class);
         $this->call(SlipSeeder::class);
         $this->call(FacultyDegreeSeeder::class);
-        //////////
+        
         $this->call(ContactInfoSeeder::class);
         $this->call(DepartmentFeeSeeder::class);
         $this->call(DeskReviewSeeder::class);
@@ -75,6 +75,8 @@ class DatabaseSeeder extends Seeder
         $this->call(WorkLoadSeeder::class);
         $this->call(FundingSourcesSeeder::class);
         $this->call(ActivityEngagementSeeder::class);
-        /// /////////
+        $this->call(FacultyStudentsRatioSeeder::class);
+        $this->call(FacultyStabilitySeeder::class);
+        $this->call(BusinessSchoolFacilitySeeder::class);
     }
 }

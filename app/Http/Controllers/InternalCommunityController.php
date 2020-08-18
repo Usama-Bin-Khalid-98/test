@@ -21,9 +21,9 @@ class InternalCommunityController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id= Auth::user()->department_id;
         $wps =  WelfareProgram::all();
-        $communities = InternalCommunity::with('campus','welfare_program')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $communities = InternalCommunity::with('campus','welfare_program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         
         return view('social_responsibility.internal_community', compact('wps','communities'));
     }
@@ -66,6 +66,7 @@ class InternalCommunityController extends Controller
 
                     InternalCommunity::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'welfare_program_id' => $request->welfare_program_id,
                         'no_of_individual_covered' => $request->no_of_individual_covered,
                         'file' => $path.'/'.$imageName, 

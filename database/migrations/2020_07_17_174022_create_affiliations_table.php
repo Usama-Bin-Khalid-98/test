@@ -20,6 +20,10 @@ class CreateAffiliationsTable extends Migration
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('affiliation', 255);
             $table->integer('designation_id')->unsigned();
             $table->foreign('designation_id')

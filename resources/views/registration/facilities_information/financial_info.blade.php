@@ -16,7 +16,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Financial Info
+                Financial Information of the Business School
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label for="name">Particulars</label>
                                     <select name="income_source_id" id="income_source_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Income Source</option>
+                                        <option selected disabled>Select Particulars</option>
                                         @foreach($income as $source)
                                          <option value="{{$source->id}}">{{$source->particular}}</option>
                                         @endforeach

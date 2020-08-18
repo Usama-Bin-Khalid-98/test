@@ -1,2 +1,2 @@
-@include('strategic_management.includes.registration5_1')
+@include('strategic_management.includes.registration5_1b')
  

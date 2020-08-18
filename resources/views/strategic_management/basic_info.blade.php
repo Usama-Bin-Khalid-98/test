@@ -1,4 +1,4 @@
-@section('pageTitle', 'Users')
+@section('pageTitle', 'Basic Info')
 
 
 @if(Auth::user())
@@ -18,7 +18,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               Strategic Basic Info
+               Strategic Basic Information of Business School
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Web URL</label>
+                                        <label for="name">Website URL</label>
                                         <input type="text" id="web_url" value="{{@$basic_info->web_url}}" class="form-control">
                                     </div>
                                 </div>
@@ -150,16 +150,16 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="type">{{ __('Profit/Non-profit Status') }} : </label>
-                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'Not for Profit' ? 'checked' : '' }}> None Profit</p>
+                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'Not for Profit' ? 'checked' : '' }}> Not for Profit</p>
                                         <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ @$basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="type">{{ __('Hierarchical Context') }} : </label>
+                                        <label for="type">{{ __('Hierarchical context') }} : </label>
                                         <p><input type="radio" name="hierarchical_context" class="flat-red" value="Affiliated" {{ @$basic_info->hierarchical_context == 'Affiliated' ? 'checked' : '' }}> Affiliated</p>
-                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Constituent Part" {{ @$basic_info->hierarchical_context  == 'Constituent Part' ? 'checked' : '' }}> Constituent Part</p>
+                                        <p><input type="radio" name="hierarchical_context" class="flat-red" value="Constituent Part" {{ @$basic_info->hierarchical_context  == 'Constituent Part' ? 'checked' : '' }}> Constituent part</p>
 
                                     </div>
                                 </div>
@@ -285,6 +285,7 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+                    location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception){

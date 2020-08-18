@@ -61,7 +61,7 @@
                            <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Faculty Type</label>
+                                    <label for="name">Faculty type(C)</label>
                                    <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Faculty Type</option>
                                         @foreach($faculty_types as $faculty)
@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Designation</label>
+                                    <label for="name">Designation(B)</label>
                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Designation</option>
                                         @foreach($designations as $designation)
@@ -83,19 +83,19 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">MAX Cources Allowed</label>
+                                    <label for="name">Maximum teaching Cources Allowed(E)</label>
                                     <input type="number" name="max_cources_allowed" id="max_cources_allowed" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">FTE for program </label>
+                                    <label for="name">Teaching cources in program 1(F) </label>
                                     <input type="number" name="tc_program1" id="tc_program1" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">FTE for Program 2</label>
+                                    <label for="name">Teaching cources in program 2(G)</label>
                                     <input type="number" name="tc_program2" id="tc_program2" class="form-control">
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Visiting Faculty Equivalent (VFE) in program(s)</h3>
+                            <h3 class="box-title">4.3(a) FTE for the permanent, regular and adjunct faculty in program(s)</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -126,9 +126,9 @@
                                     <th>Campus</th>
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
-                                    <th>Max Cources Allowed</th>
-                                    <th>Program 1</th>
-                                    <th>Program 2</th>
+                                    <th>Maximum teaching Cources Allowed</th>
+                                    <th>Teaching cources in program 1</th>
+                                    <th>Teaching cources in program 2</th>
                                     <th>Status</th>
                                     <th>isComplete</th>
                                     <th>Action</th>
@@ -158,9 +158,9 @@
                                     <th>Campus</th>
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
-                                    <th>Max Cources Allowed</th>
-                                    <th>Program 1</th>
-                                    <th>Program 2</th>
+                                    <th>Maximum teaching Cources Allowed</th>
+                                    <th>Teaching cources in program 1</th>
+                                    <th>Teaching cources in program 2</th>
                                     <th>Status</th>
                                     <th>isComplete</th>
                                     <th>Action</th>

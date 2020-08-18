@@ -21,8 +21,8 @@ class EnvProtectionController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
-        $envs = EnvProtection::with('campus')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $department_id = Auth::user()->department_id;
+        $envs = EnvProtection::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('social_responsibility.env_protection',compact('envs'));
     }
@@ -65,6 +65,7 @@ class EnvProtectionController extends Controller
 
                     EnvProtection::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'date' => $request->date,
                         'activity_desc' => $request->activity_desc,
                         'file' => $path.'/'.$imageName, 

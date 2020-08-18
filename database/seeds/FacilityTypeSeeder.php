@@ -13,7 +13,7 @@ class FacilityTypeSeeder extends Seeder
     {
         DB::table('facility_types')->insert([
             ['id'=>'1','name' => 'Business School','status' => 'active'],
-            ['id'=>'2','name' => 'Faculty Offices','status' => 'active'],
+            ['id'=>'2','name' => 'Faculty offices','status' => 'active'],
             ['id'=>'3','name' => 'Lecture Halls','status' => 'active'],
             ['id'=>'4','name' => 'Library','status' => 'active'],
             ['id'=>'5','name' => 'Laboratories','status' => 'active'],

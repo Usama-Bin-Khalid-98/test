@@ -81,7 +81,7 @@ Table 6.2. Business schools’ resources
                                     <?php }} 
 
                                     for ($i=0; $i <$countbusiness+1; $i++) { 
-                                        if($BIResources)
+                                        //if($BIResources)
                                         if($BIResources[$i]->facilityType=="Faculty Offices"   ){
                                     ?>
                                     
@@ -107,7 +107,7 @@ Table 6.2. Business schools’ resources
                                     <?php }} 
 
                                     for ($i=0; $i <$countbusiness+$countFaculty+1; $i++) { 
-                                        if($BIResources)
+                                        if(isset($BIResources[$i]->facilityType))
                                         if($BIResources[$i]->facilityType=="Lecture Halls"   ){
                                     ?>
                                     
@@ -191,7 +191,7 @@ Table 6.2. Business schools’ resources
 
 
                                     for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+1; $i++) { 
-                                        if($BIResources)
+                                        if(isset($BIResources[$i]->facilityType))
                                         if($BIResources[$i]->facilityType=="Multipurpose hall/auditorium"   ){
                                     ?>
                                     
@@ -206,6 +206,7 @@ Table 6.2. Business schools’ resources
                                     <?php }}
 
                                      for ($i=0; $i <count($BIResources); $i++) { 
+                                        if(isset($BIResources[$i]->facilityType))
                                         if($BIResources[$i]->facilityType=="Multipurpose hall/auditorium" ){
                                             if($BIResources[$i]->facilityName==$audiLoop){continue; }
                                      ?>
@@ -220,7 +221,7 @@ Table 6.2. Business schools’ resources
 
 
                                      for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+1; $i++) { 
-                                        if($BIResources){
+                                        if(isset($BIResources[$i]->facilityType)){
                                         if($BIResources[$i]->facilityType=="Hostels/accommodation"   ){
                                     ?>
                                     
@@ -249,7 +250,7 @@ Table 6.2. Business schools’ resources
 
 
                                      for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+$countHostels+1; $i++) {
-                                     if($BIResources) 
+                                     if(isset($BIResources[$i]->facilityType)) 
                                         if($BIResources[$i]->facilityType=="Transportation"   ){
                                     ?>
                                     
@@ -277,7 +278,7 @@ Table 6.2. Business schools’ resources
 
 
                                      for ($i=0; $i <$countbusiness+$countFaculty+$countLecture+$countLibrary+$countLaboratry+$countAuditorium+$countHostels+$countTransportation+1; $i++) {
-                                     if($BIResources) 
+                                     if(isset($BIResources[$i]->facilityType)) 
                                         if($BIResources[$i]->facilityType=="Other Facilities"   ){
                                     ?>
                                     

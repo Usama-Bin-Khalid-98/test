@@ -1,4 +1,4 @@
-@section('pageTitle', 'Faculty Student Ratio')
+@section('pageTitle', 'Student to teacher Ratio')
 
 
 @if(Auth::user())
@@ -15,12 +15,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Faculty Student Ratio
+                Student to teacher Ratio
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Faculty Student Ratio</li>
+                <li class="active">Student to teacher Ratio</li>
             </ol>
         </section>
         <section class="content-header">
@@ -108,7 +108,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program name</th>
+                                    <th>Program(s) under review</th>
                                     <th>Year</th>
                                     <th>Total Enrollments</th>
                                     <th>Status</th>
@@ -135,7 +135,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program name</th>
+                                    <th>Program(s) under review</th>
                                     <th>Year</th>
                                     <th>Total Enrollments</th>
                                     <th>Status</th>

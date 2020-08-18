@@ -56,6 +56,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('registrationPrint','RegistrationPrintController');
 
     });
+
 //    Route::put('users-roles', 'Auth\UserController\user_roles');
 
     Route::group(['middleware' => ['role:BusinessSchool']], function () {
@@ -78,6 +79,8 @@ use Illuminate\Support\Facades\Route;
 
 //        Route::resource('print','PrintController');
 //        Route::resource('registrationPrint','RegistrationPrintController');
+
+    
         // Curriculum
         Route::resource('program-portfolio','ProgramPortfolioController');
         Route::resource('entry-requirements','EntryRequirementController');
@@ -89,6 +92,9 @@ use Illuminate\Support\Facades\Route;
         Route::resource('students-graduated','StudentsGraduatedController');
         Route::resource('student-gender','StudentGenderController');
         Route::resource('class-size','ClassSizeController');
+        Route::resource('personal-grooming','PersonalGroomingController');
+        Route::resource('counselling-activity','CounsellingActivityController');
+        Route::resource('extra-activity','ExtraActivitiesController');
         Route::resource('alumni-membership','AlumniMembershipController');
         Route::resource('alumni-participation','AlumniParticipationController');
 
@@ -101,6 +107,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
         Route::resource('faculty-summary','Faculty\FacultySummaryController');
         Route::resource('faculty-degree', 'FacultyDegreeController');
+
         //research-summary
         Route::resource('research-summary','ResearchSummaryController');
 
@@ -120,6 +127,12 @@ use Illuminate\Support\Facades\Route;
         Route::resource('formal-relationship','FormalRelationshipController');
         Route::resource('complaint-resolution','ComplaintResolutionController');
         Route::resource('internal-community','InternalCommunityController');
+        Route::patch('registration-apply/{id}','HomeController@apply');
+
+        //Admission & Examination Policy
+        Route::resource('credit-transfer','CreditTransferController');
+        Route::resource('student-transfer','StudentTransferController');
+        Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
     });
 

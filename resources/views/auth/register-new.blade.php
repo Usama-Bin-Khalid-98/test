@@ -86,7 +86,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">Designation</label>
-                                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                                    <select name="" id="" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Designation</option>
                                                         @foreach($designations as $designation)
                                                             <option value="{{$designation->id}}" {{old('designation_id')==$designation->id?'selected':''}}>{{$designation->name}}</option>
@@ -221,6 +221,30 @@
                                                         </span>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="name">Cheif Admin Officer</label>
+                                                    <input type="text" name="cao_name" id="cao_name" value="{{old('cao_name')}}" class="form-control">
+                                                    @error('name')
+                                                        <span class="text-red" role="alert"> {{ $message }} </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="name">Designation</label>
+                                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                                        <option value="">Select Designation</option>
+                                                        @foreach($designations as $designation)
+                                                            <option value="{{$designation->id}}" {{old('designation_id')==$designation->id?'selected':''}}>{{$designation->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('designation_id')
+                                                    <span class="text-red" role="alert"> {{ $message }} </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                             </div>
 
 

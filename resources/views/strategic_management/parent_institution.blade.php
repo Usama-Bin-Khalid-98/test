@@ -1,4 +1,4 @@
-@section('pageTitle', 'Parent Institution')
+@section('pageTitle', 'Organograms ')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Parent Institution
+                Organograms of the business school and the parent institution
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Parent Institution</li>
+                <li class="active">organograms</li>
             </ol>
         </section>
         <section class="content-header">
@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">Provide organograms of the business school and the parent institution as Appendix-1F.</p>
+                            <p class="box-title">1.12. Provide organograms of the business school and the parent institution as Appendix-1F.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>

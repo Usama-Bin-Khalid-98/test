@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
+                                        <option selected disabled>Select Program(s) under review</option>
                                         @foreach($programs as $program)
                                          <option value="{{$program->program->id}}">{{$program->program->name}}</option>
                                         @endforeach
@@ -73,13 +73,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Male(%)</label>
-                                    <input type="text" name="male" id="male" class="form-control">
+                                    <input type="number" max="100" name="male" id="male" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Female(%)</label>
-                                    <input type="text" name="female" id="female" class="form-control">
+                                    <input type="number" max="100" name="female" id="female" class="form-control">
                                 </div>
                             </div>
 
@@ -106,7 +106,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Male(%)</th>
                                     <th>Female(%)</th>
                                     <th>Status</th>
@@ -132,7 +132,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Program</th>
+                                    <th>Program(s) under review</th>
                                     <th>Male(%)</th>
                                     <th>Female(%)</th>
                                     <th>Status</th>
@@ -220,14 +220,23 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
-        })
+    $("#datatable").DataTable({
+      dom : "lBfrtip",
+    })
+  })
     </script>
     <script type="text/javascript">
 

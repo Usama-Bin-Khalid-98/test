@@ -22,12 +22,12 @@ class ProgramPortfolioController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         
         $scopes = Scope::with('program')->get();
         $courses = CourseType::where('status', 'active')->get();
 
-        $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
     }
@@ -59,6 +59,8 @@ class ProgramPortfolioController extends Controller
 
             ProgramPortfolio::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'program' => $request->program,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
@@ -118,6 +120,7 @@ class ProgramPortfolioController extends Controller
         try {
 
             ProgramPortfolio::where('id', $programPortfolio->id)->update([
+                'program' => $request->program,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
@@ -158,6 +161,7 @@ class ProgramPortfolioController extends Controller
 
     protected function rules() {
         return [
+            'program' => 'required',
             'program_id' => 'required',
             'total_semesters' => 'required',
             'course_type_id' => 'required',

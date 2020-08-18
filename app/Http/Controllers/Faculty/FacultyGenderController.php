@@ -34,11 +34,11 @@ class FacultyGenderController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $dept_id = Auth::user()->department_id;
 
         $faculty_type = LookupFacultyType::get();
 
-        $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'department_id'=> $dept_id])->get();
 
          return view('registration.faculty.faculty_gender', compact('faculty_type','genders'));
     }
@@ -70,8 +70,8 @@ class FacultyGenderController extends Controller
 
             FacultyGender::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                'year' => $request->year,
                 'male' => $request->male,
                 'female' => $request->female,
                 'created_by' => Auth::user()->id
@@ -127,7 +127,6 @@ class FacultyGenderController extends Controller
 
             FacultyGender::where('id', $facultyGender->id)->update([
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                'year' => $request->year,
                 'male' => $request->male,
                 'female' => $request->female,
                 'status' => $request->status,
@@ -165,7 +164,6 @@ class FacultyGenderController extends Controller
     protected function rules() {
         return [
             'lookup_faculty_type_id' => 'required',
-            'year' => 'required',
             'male' => 'required',
             'female' => 'required'
         ];

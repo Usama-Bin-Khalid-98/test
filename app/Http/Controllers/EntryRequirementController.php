@@ -23,11 +23,11 @@ class EntryRequirementController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
         $scopes = Scope::with('program')->get();
         $criterias = EligibilityCriteria::where('status', 'active')->get();
 
-        $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.curriculum.entry_req', compact('scopes','criterias','entryRequirements'));
         
@@ -60,6 +60,7 @@ class EntryRequirementController extends Controller
 
             EntryRequirement::create([
                 'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'eligibility_criteria_id' => $request->eligibility_criteria_id,
                 'min_req' => $request->min_req,

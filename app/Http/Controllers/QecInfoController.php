@@ -21,9 +21,9 @@ class QecInfoController extends Controller
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $user_id = Auth::user()->id;
+        $department_id = Auth::user()->department_id;
          $wps =  QecType::all();
-        $qecs = QecInfo::with('campus','qec_type')->where(['campus_id'=> $campus_id,'created_by'=> $user_id])->get();
+        $qecs = QecInfo::with('campus','qec_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         
         return view('registration.facilities_information.qec_info', compact('wps','qecs'));
     }
@@ -66,6 +66,7 @@ class QecInfoController extends Controller
 
                     QecInfo::create([
                         'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
                         'qec_type_id' => $request->qec_type_id,
                         'level' => $request->level,
                         'file' => $path.'/'.$imageName, 
