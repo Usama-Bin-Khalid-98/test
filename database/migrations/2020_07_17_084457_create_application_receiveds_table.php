@@ -32,7 +32,8 @@ class CreateApplicationReceivedsTable extends Migration
             $table->string('admission_offered',100);    
             $table->string('student_intake',100);
             $table->string('degree_req',100)->nullable();    
-            $table->string('semester_comm_date',100);    
+            $table->string('semester_comm_date',100);
+            $table->string('degree_awarding_criteria',100);       
             $table->enum('isComplete', ['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->integer('created_by')->unsigned()->nullable();

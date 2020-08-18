@@ -27,6 +27,8 @@ class CreateFinancialInfosTable extends Migration
             $table->foreign('income_source_id')
                 ->references('id')
                 ->on('income_sources');
+            $table->string('amount',250);
+            $table->string('percent_share',250);
             $table->string('year_three',250);
             $table->string('year_two',250);
             $table->string('year_one',250);

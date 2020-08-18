@@ -9,9 +9,10 @@
                                     <th>Name of statutory body</th>
                                 </thead>
                                 <tbody>
+
                                     @foreach($affiliations as $data)
                                     <tr>
-                                        <td>{{$data->statutoryName}}</td>
+                                        <td>{{$data->name}}</td>
                                         <td>{{$data->designationName}}</td>
                                         <td>{{$data->affiliation}}</td>
                                         <td>{{$data->statutoryBody}}</td>

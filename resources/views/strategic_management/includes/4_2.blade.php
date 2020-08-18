@@ -24,8 +24,21 @@ Table 4.2a. Faculty workload (t)
                                         <td>Masters</td>
                                         <td>Bachelors</td>
                                         <td></td>
-
-
+                                     
+                                     
+                                    </tr><?php  ?>
+                                    @foreach($facultyWorkLoad as $data)
+                                    <tr>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->designationName}}</td>
+                                        <td>{{$data->total_courses}}</td>
+                                        <td>{{$data->phd}}</td>
+                                        <td>{{$data->masters}}</td>
+                                        <td>{{$data->bachleors}}</td>
+                                        <td>{{$data->admin_responsibilities}}</td>
+                                     
+                                     
                                     </tr>
 {{--                                    @if($facultyWorkLoad)--}}
 {{--                                    @foreach(@$facultyWorkLoad as $data)--}}
