@@ -23,7 +23,7 @@ class ProgramPortfolioController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        
+
         $scopes = Scope::with('program')->get();
         $courses = CourseType::where('status', 'active')->get();
 
@@ -60,7 +60,6 @@ class ProgramPortfolioController extends Controller
             ProgramPortfolio::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
-                'program' => $request->program,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
@@ -68,9 +67,9 @@ class ProgramPortfolioController extends Controller
                 'credit_hours' => $request->credit_hours,
                 'internship_req' => $request->internship_req,
                 'fyp_req' => $request->fyp_req,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
-
             return response()->json(['success' => 'Program Portfolio added successfully.']);
 
 
@@ -120,7 +119,6 @@ class ProgramPortfolioController extends Controller
         try {
 
             ProgramPortfolio::where('id', $programPortfolio->id)->update([
-                'program' => $request->program,
                 'program_id' => $request->program_id,
                 'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
@@ -149,7 +147,7 @@ class ProgramPortfolioController extends Controller
     {
         try {
             ProgramPortfolio::where('id', $programPortfolio->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             ProgramPortfolio::destroy($programPortfolio->id);
             return response()->json(['success' => 'Record deleted successfully.']);
@@ -161,7 +159,6 @@ class ProgramPortfolioController extends Controller
 
     protected function rules() {
         return [
-            'program' => 'required',
             'program_id' => 'required',
             'total_semesters' => 'required',
             'course_type_id' => 'required',

@@ -137,7 +137,6 @@
                                     <th>Terminated</th>
                                     <th>New Induction</th>
                                     <th>Status</th>
-                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -153,7 +152,6 @@
                                     <td>{{$req->terminated}}</td>
                                     <td>{{$req->new_induction}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","total_faculty":"{{$req->total_faculty}}","year":"{{$req->year}}","resigned":"{{$req->resigned}}","retired":"{{$req->retired}}","terminated":"{{$req->terminated}}","new_induction":"{{$req->new_induction}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
@@ -173,7 +171,6 @@
                                     <th>Terminated</th>
                                     <th>New Induction</th>
                                     <th>Status</th>
-                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -258,13 +255,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isCompleted') }} : </label>
-                                <p><input type="radio" name="isCompleted" class="flat-red" value="yes" >Yes
-                                    <input type="radio" name="isCompleted" class="flat-red" value="no">No</p>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

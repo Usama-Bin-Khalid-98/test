@@ -60,10 +60,10 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                           
+
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc</label>
+                                    <label for="name">Attach Doc (Appendix-1F)</label>
                                     <input type="file" name="file" id="file" >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
@@ -95,7 +95,6 @@
                                     <th>Campus</th>
                                     <th>Document</th>
                                     <th>Status</th>
-                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -106,11 +105,10 @@
                                     <td>{{$contact->campus->location}}</td>
                                     <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                                 
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -118,7 +116,6 @@
                                     <th>Campus</th>
                                     <th>Document</th>
                                     <th>Status</th>
-                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -152,11 +149,11 @@
                     <h4 class="modal-title">Edit Parent Institutions. </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body"> 
+                    <div class="modal-body">
 
                               <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc</label>
+                                <label for="name">Attach Doc  (Appendix-1F)</label>
                                 <input type="file" name="file" id="edit_file" >
                                 <input type="hidden" name="old_file" id="old_file" >
                                 <span class="text-blue" id="file-name"></span>
@@ -172,14 +169,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isCompleted') }} : </label>
-                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -193,7 +182,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -280,7 +269,7 @@ $('#updateForm').submit(function (e) {
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isComplete]:checked').val();
 
-            
+
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()

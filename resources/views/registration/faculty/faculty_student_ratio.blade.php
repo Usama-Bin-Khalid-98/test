@@ -80,7 +80,7 @@
                                     </select>
                                 </div>
                             </div>
-                          
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Total enrollments(B) </label>
@@ -112,7 +112,6 @@
                                     <th>Year</th>
                                     <th>Total Enrollments</th>
                                     <th>Status</th>
-                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -125,7 +124,6 @@
                                     <td>{{$req->year}}</td>
                                     <td>{{$req->total_enrollments}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$req->isCompleted == 'yes'?'bg-green':'bg-red'}}">{{$req->isCompleted == 'yes'?'Yes':'No'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
@@ -139,7 +137,6 @@
                                     <th>Year</th>
                                     <th>Total Enrollments</th>
                                     <th>Status</th>
-                                    <th>isComplete</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -154,7 +151,7 @@
         </section>
     </div>
 
-    
+
     <!-- /.modal -->
 
      <div class="modal fade" id="edit-modal">
@@ -170,7 +167,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Program</label>
+                                    <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($programs as $program)
@@ -180,7 +177,7 @@
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
-                            
+
                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year</label>
@@ -210,13 +207,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isCompleted') }} : </label>
-                                <p><input type="radio" name="isCompleted" class="flat-red" value="yes" >Yes
-                                    <input type="radio" name="isCompleted" class="flat-red" value="no">No</p>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -261,7 +252,7 @@
             let year = $('#year').val();
             let total_enrollments = $('#total_enrollments').val();
 
-            
+
             !program_id?addClass('program_id'):removeClass('program_id');
             !year?addClass('year'):removeClass('year');
             !total_enrollments?addClass('total_enrollments'):removeClass('total_enrollments');

@@ -66,6 +66,7 @@ class WorkLoadController extends Controller
                 'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'year' => $request->year,
+                'isCompleted' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -127,7 +128,6 @@ class WorkLoadController extends Controller
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'year' => $request->year,
                 'status' => $request->status,
-                'isCompleted' => $request->isCompleted,
                 'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Faculty Workload updated successfully.']);

@@ -69,6 +69,7 @@ class ApplicationReceivedController extends Controller
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
                 'degree_req'=>$request->degree_req,
+                'isComplete'=>'yes',
                 'created_by' => Auth::user()->id
             ]);
 

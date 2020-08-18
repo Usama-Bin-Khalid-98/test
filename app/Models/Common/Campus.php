@@ -19,4 +19,9 @@ class Campus extends Model
     {
         return $this->belongsTo(BusinessSchool::class);
     }
+    public function department()
+    {
+        return $this->hasOne(EligibilityStatus::class);
+    }
+
 }

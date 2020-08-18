@@ -308,10 +308,7 @@
                         </li>
                     </ul>
                 </div>
-                <!-- /.box-body -->
-                <div class="box-footer clearfix no-border">
-                    <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
-                </div>
+
             </div>
             <!-- /.box -->
 
@@ -434,9 +431,7 @@
                         <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer clearfix no-border">
-                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
-                    </div>
+
                 </div>
                 <!-- /.box -->
 
@@ -512,9 +507,7 @@
                         <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer clearfix no-border">
-                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
-                    </div>
+
                 </div>
                 <!-- /.box -->
 
@@ -591,10 +584,7 @@
 
                         <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                     </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer clearfix no-border">
-                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
-                    </div>
+
                 </div>
                 <!-- /.box -->
 
@@ -641,15 +631,15 @@
 
                       <tbody>
 
-                      @foreach($registrations as $registration)
+                      @foreach($registration_apply as $registration)
                           <tr>
                               <td>{{@$registration->business_school->name}}</td>
                               <td>{{@$registration->campus->location??'Main Campus'}}</td>
                               <td>{{@$registration->department->name}}</td>
 {{--                              <td><a href="{{@$registration->slip}}">Invoice Slip</a></td>--}}
                               {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                              <td><i class="badge  status" data-id="{{$registration->id}}"  style="background: {{$registration->request == 'created'?'red':$registration->request ==='pending'?'green':''}}" >{{$registration->request != ''?ucwords($registration->request):'inactive'}}</i></td>
-                              <td><button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{$registration->id}}" data-row="{{$registration->department->id}}"> Apply Now </button></td>
+                              <td><i class="badge  status" data-id="{{@$registration->id}}"  style="background: {{$registration->request == 'created'?'red':''}}{{$registration->request == 'pending'?'brown':''}}{{$registration->request == 'approved'?'green':''}}" >{{@$registration->request != ''?ucwords($registration->request):'created'}}</i></td>
+                              <td>@if($registration->request =='created') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$registration->id}}" data-row="{{@$registration->department->id}}"> Apply Now </button> @endif</td>
                           </tr>
                       @endforeach
 
@@ -670,9 +660,7 @@
                   <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
               </div>
               <!-- /.box-body -->
-              <div class="box-footer clearfix no-border">
-                  <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
-              </div>
+
           </div>
           <!-- /.box -->
 
@@ -787,7 +775,7 @@
                             Notiflix.Notify.Success(response.success);
                         }
 
-                        //location.reload();
+                        location.reload();
 
                         console.log('response here', response);
                     },
