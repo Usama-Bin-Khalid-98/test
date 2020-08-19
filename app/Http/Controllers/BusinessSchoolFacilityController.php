@@ -70,6 +70,7 @@ class BusinessSchoolFacilityController extends Controller
                     'department_id' => Auth::user()->department_id,
                     'facility_id' => $value['id'],
                     'remark' => $value['remark'],
+                    'isComplete' => 'yes',
                     'created_by' => Auth::user()->id
                 ]);
 

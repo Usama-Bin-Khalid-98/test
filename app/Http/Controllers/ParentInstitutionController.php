@@ -66,6 +66,7 @@ class ParentInstitutionController extends Controller
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'file' => $path.'/'.$imageName, 
+                        'isComplete' => 'yes', 
                         'created_by' => Auth::user()->id 
                 ]);
 
@@ -127,7 +128,6 @@ class ParentInstitutionController extends Controller
                 ParentInstitution::where('id', $parentInstitution->id)->update(
                     [
                     'file' => $path.'/'.$imageName,
-                    'isComplete' => $request->isComplete,
                     'status' => $request->status,
                     'updated_by' => Auth::user()->id 
                     ]
@@ -136,7 +136,6 @@ class ParentInstitutionController extends Controller
                 return response()->json(['success' => 'Document updated successfully.']);
             }
            ParentInstitution::where('id', $parentInstitution->id)->update([
-               'isComplete' => $request->isComplete,
                'status' => $request->status,
                'updated_by' => Auth::user()->id 
            ]);

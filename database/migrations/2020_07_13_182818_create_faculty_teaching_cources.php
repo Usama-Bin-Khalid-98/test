@@ -15,7 +15,7 @@ class CreateFacultyTeachingCources extends Migration
     {
         Schema::create('faculty_teaching_cources', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')

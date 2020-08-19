@@ -59,23 +59,23 @@
                         <div class="box-body">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">No. of faculty with terminal degree from foreign institutions</label>
+                                        <label for="name">Number of faculty with terminal degree from foreign institutions</label>
                                         <input type="number" id="faculty_foreign" name="faculty_foreign" value="{{@$faculty_degree->faculty_foreign}}" class="form-control">
                                     </div>
                                     <input type="hidden" id="id" value="{{@$faculty_degree->id}}">
                                 </div>
 
-                               
+
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">No. of faculty with terminal degree from domestic institutions</label>
+                                        <label for="name">Number of faculty with terminal degree from domestic institutions</label>
                                         <input type="number" id="faculty_domestic" name="faculty_domestic" value="{{@$faculty_degree->faculty_domestic}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">No. of faculty with international work experience</label>
+                                        <label for="name">Number of faculty with international work experience</label>
                                         <input type="number" id="faculty_international" name="faculty_international" value="{{@$faculty_degree->faculty_international}}" class="form-control">
                                     </div>
                                 </div>
@@ -121,8 +121,6 @@
             let faculty_foreign = $('#faculty_foreign').val();
             let faculty_domestic = $('#faculty_domestic').val();
             let faculty_international = $('#faculty_international').val();
-
-           
              !faculty_foreign?addClass('faculty_foreign'):removeClass('faculty_foreign');
              !faculty_domestic?addClass('faculty_domestic'):removeClass('faculty_domestic');
              !faculty_international?addClass('faculty_international'):removeClass('faculty_international');

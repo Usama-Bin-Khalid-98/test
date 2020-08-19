@@ -63,6 +63,7 @@ class ResearchSummaryController extends Controller
                 'jointly_produced_other' => $request->jointly_produced_other,
                 'jointly_produced_same' => $request->jointly_produced_same,
                 'jointly_produced_multiple' => $request->jointly_produced_multiple,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

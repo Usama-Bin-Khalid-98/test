@@ -63,6 +63,7 @@ class FacultySummaryController extends Controller
                 'faculty_qualification_id' => $request->faculty_qualification_id,
                 'discipline_id' => $request->discipline_id,
                 'number_faculty' => $request->number_faculty,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

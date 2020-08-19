@@ -62,6 +62,7 @@ class StudentsGraduatedController extends Controller
                 'grad_std_t' => $request->grad_std_t,
                 'grad_std_t_2' => $request->grad_std_tt,
                 'grad_std_t_3' => $request->grad_std_ttt,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

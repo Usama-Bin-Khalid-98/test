@@ -138,7 +138,7 @@
                                 <tr>
 
                                     <th>Business School Facilities</th>
-                                    <th>isChecked</th>
+                                    <th>Remarks</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -269,7 +269,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

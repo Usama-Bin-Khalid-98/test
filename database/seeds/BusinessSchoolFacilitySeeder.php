@@ -11,8 +11,7 @@ class BusinessSchoolFacilitySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('business_schools')->insert([
-
+        DB::table('business_school_facilities')->insert([
                 [ 'campus_id' => '209', 'facility_id' => '1','remark' => '50'],
                 [ 'campus_id' => '209', 'facility_id' => '2','remark' => '43'],
                 [ 'campus_id' => '209', 'facility_id' => '3','remark' => '51'],
@@ -29,9 +28,7 @@ class BusinessSchoolFacilitySeeder extends Seeder
                 [ 'campus_id' => '209', 'facility_id' => '30','remark' => '1'],
                 [ 'campus_id' => '209', 'facility_id' => '31','remark' => 'Yes'],
                 [ 'campus_id' => '209', 'facility_id' => '32','remark' => 'Yes'],
-                [ 'campus_id' => '209', 'facility_id' => '36','remark' => 'Yes'],
-                
-
+                [ 'campus_id' => '209', 'facility_id' => '36','remark' => 'Yes']
             ]
         );
     }

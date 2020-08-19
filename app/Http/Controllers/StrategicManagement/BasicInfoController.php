@@ -5,6 +5,7 @@ namespace App\Http\Controllers\StrategicManagement;
 use App\BusinessSchool;
 use App\CharterType;
 use App\InstituteType;
+use App\Models\Common\Campus;
 use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,12 +32,22 @@ class BasicInfoController extends Controller
         try {
             // Basic Info
             $school_id = Auth::user()->business_school_id;
+            //dd($school_id);
             $basic_info = BusinessSchool::where('id', $school_id)->get()->first();
             $institute_type = InstituteType::where('status', 'active')->get();
             $chart_types=CharterType::where('status', 'active')->get();
             $designations = Designation::where('status', 'active')->get();
+
+            $campuses = Campus::get()->where('business_school_id', $school_id);
+//            dd($campuses);
+            if ($campuses->count() == 1)
+            {
+                $campuses = [];
+            }
+            //$campuses->first();
+            //dd($campuses);
             $user_info = Auth::user();
-        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types','user_info','designations'));
+        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types','user_info','designations', 'campuses'));
         }catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -114,7 +125,7 @@ class BasicInfoController extends Controller
                                   'year_estb' => $request->year_estb,
                                   'address' => $request->address,
                                   'web_url' => $request->web_url,
-                                  'year_estb' => $request->year_estb,
+                                  'campus_year_estb' => $request->campus_year_estb,
                                   'date_charter_granted' => $request->date_charter_granted,
                                   'charter_number' => $request->charter_number,
                                   'charter_type_id' => $request->charter_type_id,
@@ -128,7 +139,7 @@ class BasicInfoController extends Controller
                           );
                 //dd('coning else', $update);
                 $updateUser = User::find(Auth::id())
-                          ->update(['designation_id'=> $request->designation_id]);
+                          ->update(['designation_id'=> $request->designation_id, 'cao_name' => $request->contact_person]);
 
                 return response()->json(['success' => 'Updated successfully.']);
             }

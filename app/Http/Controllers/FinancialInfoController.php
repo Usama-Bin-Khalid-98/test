@@ -65,6 +65,7 @@ class FinancialInfoController extends Controller
                 'year_t' => $request->year_t,
                 'year_t_plus_one' => $request->year_t_plus_one,
                 'year_t_plus_two' => $request->year_t_plus_two,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

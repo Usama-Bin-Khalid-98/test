@@ -29,18 +29,20 @@ Table 5.1. Summary of research output
                                 <thead>
                                     <th class="" style="text-align: center;">Publication<br> category</th>
                                     <th>Publication type</th>
-                                    <th>Total number of items</th>                                    
+                                    <th>Total number of items</th>
                                     <th >Number of contributing core faculty members</th>
                                     <th>Number of items jointly produced in collaboration with other institutions</th>
                                     <th>Number of items jointly produced by more than 3 authors</th>
-                                     
-                                    
+
+
                                 </thead>
                                 <tbody>
                                     <?php
                                     //print_r($researchOutput);
-                                    $countResearch=$countBooks=$countOthers=0;
-                                    for ($i=0; $i<count($researchOutput) ; $i++) { 
+                                    $countResearch=0;
+                                    $countBooks=0;
+                                    $countOthers=0;
+                                    for ($i=0; $i <count($researchOutput) ; $i++) {
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                             $countResearch++;
                                         }else   if($researchOutput[$i]->publicationType=="Books"){
@@ -57,19 +59,19 @@ Table 5.1. Summary of research output
                                         <td class="" rowspan="<?php echo $countResearch; ?>" style="text-align: center;">Academic research articles</td>
                                         <td><?php 
                                         print_r($researchOutput[$i]->publicationName)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->total_items)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->contributing_core_faculty)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_other)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_multiple)
-                                        ?></td>                                
+                                        ?></td>
 
                                     </tr>
                                     <?php }}
@@ -79,22 +81,22 @@ Table 5.1. Summary of research output
                                         if($researchOutput[$i]->publicationType=="Academic research articles"){
                                      ?>
                                      <tr>
-                                         <td><?php 
+                                         <td><?php
                                         print_r($researchOutput[$i]->publicationName)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->total_items)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->contributing_core_faculty)
-                                        ?></td> 
-                                        <td><?php 
+                                        ?></td>
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_other)
                                         ?></td>
-                                        <td><?php 
+                                        <td><?php
                                         print_r($researchOutput[$i]->jointly_produced_multiple)
                                         ?></td>
-                                                                        
+
 
                                     </tr>
                                     <?php }}
@@ -190,8 +192,8 @@ Table 5.1. Summary of research output
                               
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>
