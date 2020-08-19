@@ -161,7 +161,7 @@
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
 
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Program</label>
@@ -258,6 +258,14 @@
             !male?addClass('male'):removeClass('male');
             !female?addClass('female'):removeClass('female');
 
+            let totalPercent = parseInt(male) + parseInt(female)
+            console.log('percent', totalPercent);
+            //return;
+            if(totalPercent > 100 )
+            {
+                Notiflix.Notify.Failure("percentage ratio should be less then or equal to 100%.");
+                return;
+            }
             if(!program_id || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
@@ -299,7 +307,7 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-           
+
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_male').val(data.male);
             $('#edit_female').val(data.female);;

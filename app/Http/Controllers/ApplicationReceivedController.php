@@ -14,14 +14,14 @@ use Auth;
 
 class ApplicationReceivedController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
 
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
@@ -52,6 +52,7 @@ class ApplicationReceivedController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -68,7 +69,7 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
-                'degree_req'=>$request->degree_req,
+                'degree_awarding_criteria'=>$request->degree_req,
                 'isComplete'=>'yes',
                 'created_by' => Auth::user()->id
             ]);
@@ -150,7 +151,7 @@ class ApplicationReceivedController extends Controller
     {
         try {
             ApplicationReceived::where('id', $applicationReceived->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             ApplicationReceived::destroy($applicationReceived->id);
             return response()->json(['success' => 'Record deleted successfully.']);
