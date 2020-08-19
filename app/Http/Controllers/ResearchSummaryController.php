@@ -101,6 +101,18 @@ class ResearchSummaryController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Research\ResearchSummary  $researchSummary
+     * @return \Illuminate\Http\Response
+     */
+    public function get_publication_category($researchSummary)
+    {
+        //dd($researchSummary);
+        return PublicationType::where(['publication_category_id' => $researchSummary])->get();
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

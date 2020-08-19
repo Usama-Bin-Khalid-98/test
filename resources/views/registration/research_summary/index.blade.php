@@ -72,9 +72,9 @@
                                     <label for="name">Publication type</label>
                                     <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Publication Type</option>
-                                        @foreach($publications as $publication)
-                                         <option value="{{$publication->id}}">{{$publication->name}}</option>
-                                        @endforeach
+{{--                                        @foreach($publications as $publication)--}}
+{{--                                         <option value="{{$publication->id}}">{{$publication->name}}</option>--}}
+{{--                                        @endforeach--}}
                                         </select>
                                 </div>
                             </div>
@@ -305,6 +305,48 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('#publication_category_id').on('change', function () {
+            let publication_category_id = $(this).val();
+            //console.log('id here', publication_category_id);
+            //return;
+            $.ajax({
+                url:'{{url("get_publication_category")}}/'+publication_category_id,
+                type:'GET',
+                data: {publication_category_id:publication_category_id},
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log('response here', response);
+                   // return;
+                    if(response.success){
+                        var data =[];
+                        //$('#city').val(null);
+                        $("#publication_type_id").empty();
+                        Object.keys(response).forEach(function (index) {
+                            data.push({id:response[index].id, text:response[index].name});
+                        })
+                        $('#publication_type_id').select2({
+                            data
+                        });
+                        Notiflix.Notify.Success(response.success);
+                    }
+
+                    console.log('response', response);
+                   // location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+
+        })
 
         $('#form').submit(function (e) {
             let publication_type_id = $('#publication_type_id').val();

@@ -142,7 +142,7 @@ class ConfigController extends Controller
             }
             case 'publication_types';
             {
-                $this->TableRows =PublicationType::all();
+                $this->TableRows =PublicationType::with('publication_category')->get();
                 break;
             }
             case 'publication_categories';
@@ -436,6 +436,7 @@ class ConfigController extends Controller
 
             case 'publication_categories';
             {
+                dd($request->all());
                 $this->TableRows = PublicationCategory::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
