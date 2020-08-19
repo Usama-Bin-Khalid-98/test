@@ -80,7 +80,7 @@ use Illuminate\Support\Facades\Route;
 //        Route::resource('print','PrintController');
 //        Route::resource('registrationPrint','RegistrationPrintController');
 
-    
+
         // Curriculum
         Route::resource('program-portfolio','ProgramPortfolioController');
         Route::resource('entry-requirements','EntryRequirementController');
@@ -109,6 +109,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('faculty-degree', 'FacultyDegreeController');
 
         //research-summary
+        Route::get('get_publication_category/{id}','ResearchSummaryController@get_publication_category');
         Route::resource('research-summary','ResearchSummaryController');
 
         //Facilities-information

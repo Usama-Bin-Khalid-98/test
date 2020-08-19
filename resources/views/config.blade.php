@@ -258,6 +258,9 @@
                                     @if(request()->is('config/programs'))
                                     <th>Department</th>
                                     @endif
+                                    @if(request()->is('config/publication_types'))
+                                    <th>Publication Category</th>
+                                    @endif
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -269,9 +272,13 @@
                                     @if(request()->is('config/programs'))
                                         <td>{{$row->department->name}}</td>
                                     @endif
+
+                                    @if(request()->is('config/publication_types'))
+                                    <td>{{$row->publication_category->name}}</td>
+                                    @endif
                                     <td>{{$row->name}}</td>
                                     <td><i class="badge {{$row->status == 'active'?'bg-green':'bg-red'}}">{{$row->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$row->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$row->id}}","name":"{{$row->name}}","status":"{{$row->status}}","department_id":"{{@$row->department_id}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$row->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$row->id}}","name":"{{$row->name}}","status":"{{$row->status}}","department_id":"{{@$row->department_id}}","publication_category_id":"{{@$row->publication_category_id}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -365,6 +372,20 @@
                                     </select>
                                 </div>
                             </div>
+                        @endif
+
+                        @if(request()->is('config/publication_types'))
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="program">Publication Category</label>
+                                <select id="edit_publication_category_id" name="publication_category_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select Category</option>
+                                    @foreach($publication_categories as $category)
+                                        <option value="{{$category->id}}" {{$category->id==old('publication_category_id')?'selected':''}}>{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         @endif
 
                         <div class="col-md-6">
@@ -461,7 +482,7 @@
             $.ajax({
                 url:'{{request()->route()->parameters['table']}}',
                 type:'POST',
-                data:{name:name, @if(request()->is('config/programs'))department_id: $('#department_id').val()  @endif },
+                data:{name:name, @if(request()->is('config/programs'))department_id: $('#department_id').val()  @endif @if(request()->is('config/publication_types')) publication_category_id: $('#publication_category_id').val()  @endif },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -488,6 +509,7 @@
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
              $('#edit_department_id').select2().val(data.department_id).trigger('change');
+             $('#edit_publication_category_id').select2().val(data.publication_category_id).trigger('change');
              $('#edit_name').val(data.name);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
@@ -509,7 +531,7 @@
             $.ajax({
                 url:'{{request()->route()->parameters['table']}}/'+id,
                 type:'PUT',
-                data: {name:name, status:status, @if(request()->is('config/programs'))department_id: $('#edit_department_id').val()  @endif},
+                data: {name:name, status:status, @if(request()->is('config/programs'))department_id: $('#edit_department_id').val()  @endif @if(request()->is('config/publication_types'))publication_category_id: $('#edit_publication_category_id').val()  @endif},
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
