@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 3.2. Graduated students</caption>
+                                <caption style="text-align: center;color: red">Table 3.2. Graduated students</caption>
                                 <thead>
                                     <th>Program(s) under review</th>
                                     <th>Year t-2</th>

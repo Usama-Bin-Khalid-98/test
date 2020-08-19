@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 2.11. List of academic dishonesty and plagiarism cases</caption>
+                                <caption style="text-align: center;color: red">Table 2.11. List of academic dishonesty and plagiarism cases</caption>
                                 <thead>
                                     <th>Date of incident</th>
                                     <th>Initial of students</th>

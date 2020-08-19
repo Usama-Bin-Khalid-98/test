@@ -7,6 +7,7 @@ use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Carbon\Carbon;
 
 class PrintController extends Controller
 {
@@ -67,11 +68,27 @@ class PrintController extends Controller
             WHERE business_schools.id=?', array($bussinessSchool[0]->id));
 
 
-         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, users WHERE work_loads.campus_id=campuses.id AND work_loads.designation_id=designations.id AND users.id=? AND work_loads.campus_id=?', array(auth()->user()->id,auth()->user()->campus_id));
+         /*$facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, users WHERE work_loads.campus_id=campuses.id AND work_loads.designation_id=designations.id AND users.id=? AND work_loads.campus_id=?', array(auth()->user()->id,auth()->user()->campus_id));*/
+
+         $now = Carbon::now();
+        
+        $currMonth = $now->month;
+        $currSemester = "";
+        $prevSemester = "";
+        if($currMonth>8 && $currMonth<2){
+            $currSemester = "Fall t";
+            $prevSemester = "Spring t";
+        }else if($currMonth>2 && $currMonth<9){
+            $currSemester = "Spring t";
+            $prevSemester = "Fall t-1";
+        }
+         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,users, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id AND users.department_id=? AND semesters.name=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id, $currSemester));
+
+         $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($userCampus[0]->campus_id, $prevSemester));
 
          $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses, users WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id AND users.id=? AND faculty_genders.campus_id=? AND users.department_id=?', array(auth()->user()->id, $userCampus[0]->campus_id, $userCampus[0]->department_id));
            
-        return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyGenders'));
+        return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){

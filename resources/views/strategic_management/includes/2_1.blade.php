@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                          <table class="table table-bordered table-striped">
-                            <caption style="text-align: center;">Table 2.1. Programs portfolio</caption>
+                            <caption style="text-align: center;color: red">Table 2.1. Programs portfolio</caption>
                               <thead>
                                 <tr>
                                   <th>Program(s) under review </th>

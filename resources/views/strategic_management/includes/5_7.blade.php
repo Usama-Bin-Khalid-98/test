@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 5.7. Role of R&D in curriculum
 </caption>
                                 <thead>

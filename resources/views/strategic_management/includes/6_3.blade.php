@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 6.3. List of environmental protection activities
 </caption>
                                 <thead>

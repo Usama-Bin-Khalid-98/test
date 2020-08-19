@@ -27,7 +27,7 @@
 Table 5.5. Summary of research output
 </caption>
                                 <thead>
-                                    <th class="" style="text-align: center;">Publication<br> category</th>
+                                    <th class="" style="text-align: center;color: red">Publication<br> category</th>
                                     <th>Publication type</th>
                                     <th>Total number of items</th>                                    
                                     <th >Number of contributing core faculty members</th>

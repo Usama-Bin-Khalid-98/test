@@ -54,6 +54,156 @@
                         <div class="box-header">
                             <h3 class="box-title">Print</h3>
                         </div>
+                    <br><br><br><br>
+                    <p class="left_25">Name of University: ________________________________________________________</p>
+                    <p class="left_25">Name of Business School: ___________________________________________________</p>
+                    <p class="left_25">Program(s) for Review:  ______________________________________________________</p>
+                    <p class="left_25">Submission dates:  __________________________________________________________</p>
+                    <br /><br />
+                    <span class="center"><h1>Self</h1></spans>
+                    <div class="center"><h1>Assessment</h1></div>
+                    <span class="center"><h1>Report</h1></spans>
+                        <div class="center"><h1>(SAR)</h1></div>
+                    <h5 style="text-align: center;">NBEAC</h5><br><hr>
+                    <p>The SAR is to be completed by the business school seeking accreditation from the  
+National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan
+</p>
+                    <br>
+                    <div class="row">
+                        <div class="col  col-md-3 col-lg-3"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
+                        <div class="col  col-md-3 col-lg-3"></div>
+                    
+                    
+                    </div>
+
+
+
+                    <div >
+                        <div class="center">
+                            <h2><b>Contents</b></h2>
+                        </div><br>
+                        <div class="left left_20" >
+                        <ul style="list-style-type: none">
+                            <li>Preface---------------------------------------------------------------------------------------------------------------------------2</li>
+                            <li>Preparation Instructions----------------------------------------------------------------------------------------------------3</li>
+                            <li>Undertaking--------------------------------------------------------------------------------------------------------------------4</li>
+                            <li>1. Strategic Management----------------------------------------------------------------------------------------------------5</li>
+                            <li>2: Curriculum-------------------------------------------------------------------------------------------------------------------5</li>
+                            <li>3. Students---------------------------------------------------------------------------------------------------------------------11</li>
+                            <li>4. Faculty-----------------------------------------------------------------------------------------------------------------------14</li>
+                            <li>5. Research and Development--------------------------------------------------------------------------------------------18</li>
+                            <li>6. Social Responsibility-----------------------------------------------------------------------------------------------------21</li>
+                            <li>7. Resources-------------------------------------------------------------------------------------------------------------------23</li>
+                            <li>8. External Linkages---------------------------------------------------------------------------------------------------------27</li>
+                            <li>9. Admission and Examination Policy----------------------------------------------------------------------------------29</li>
+                        </ul>
+                        </div>
+                    </div><br><br><br><br><br>
+                    <div class="row">
+                        <div class="col  col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"></div>
+                        <div class="col  col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
+                    
+                    
+                    </div>
+
+
+                    <br><br><br>
+
+                    <h1>Perface</h1><br>
+                    <div class="row">
+                        <div class="col  col-md-1 col-lg-1"></div>
+                        
+                        <div class="col col-sm-12 col-md-10 col-lg-10">
+                            <p class="justify">This document guides accreditation applicants in the provision of information based on which NBEAC may make an accreditation decision. Information is sought for nine standards listed below together with their weights in the total accreditation score in parentheses.  The more complete the data provided, the more accurate the assessment.</p>
+                            <ol>
+                                <li class="left">1. Strategic Management (15%)</li>
+                                <li class="left">2. Curriculum (15%)</li>
+                                <li class="left">3. Students (15%)</li>
+                                <li class="left">4. Faculty (20%)</li>
+                                <li class="left">5. Research and Development (10%)</li>
+                                <li class="left">6. Social Responsibility (5%)</li>
+                                <li class="left">7. Resources (10%)</li>
+                                <li class="left">8. Students Placement and External Linkages (5%)</li>
+                                <li class="left">9. Admission & Examination Policy (5%)</li>
+                            </ol>
+                            <p class="justify">Senior Program Manager - Accreditation</p>
+                            <p class="justify">National Business Education Accreditation Council
+                            Islamabad
+                            </p>
+                        </div>
+                        <div class="col  col-md-1 col-lg-1"></div>
+                    
+                    
+                    </div><br><br><br><br><br><br>
+
+
+                    <div>
+                        <div class="center">
+                            <h1>Preparation Instructions</h1>
+                        </div><br><br>
+                        <div class="row">
+                        <div class="col  col-md-1 col-lg-1"></div>
+                        
+                        <div class="col col-sm-12 col-md-10 col-lg-10">
+                            <p class="left">1.  To ensure that the SAR is prepared in accordance with the relevant guidelines, please consult  Section IV of the NBEAC Accreditation Process Manual<a style="color: blue" href="https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf"> https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</a> before starting.</p>
+                            <p class="left">2.  Please do not change the original text and structure of the SAR. However, where some illustrative data is shown in colored font, you are expected to replace it with actual data.</p>
+                            <p class="left">3.  Information may be asked for in the form of a table, an appendix, or descriptive text paragraphs. Please provide the information in exactly the form in which it is requested.  Where information is not available, please indicate this by writing “Not Available” in the relevant space.</p>
+                            <p class="left">4.  Please submit the completed copy of the SAR to the NBEAC Secretariat for desk review. Once you receive the initial comments from the desk review, please revise accordingly.   </p>
+                            <p class="left">5.  Please submit six copies of the SAR to the NBEAC Office after receiving a final positive review. </p>
+                            <p class="left">6.  In case of a re-visit, an updated SAR should be sent to the NBEAC office along with the Progress Report (PR) at least four weeks before the start of peer review visit.</p>
+                            <p class="left">7.  In case of re-accreditations, an updated SAR should be sent to the NBEAC office along with the Continuous Improvement Report (CIR) at least four weeks before the start of peer review visit.</p>
+                            <p class="left">9.  Please address all correspondence to the following address:</p>
+                             <p class="left">8.  The NBEAC Secretariat is available to respond to questions pertaining to the SAR.</p>
+                            <p class="left">National Business Education Accreditation Council</p>
+                            <p class="left">201, 2nd Floor, HRD Division, Higher Education Commission</p>
+                           <p class="left"> H-8 Islamabad, Pakistan</p>
+                            <p class="left">Phone: +92 51 9080 0206, Fax: +92 51 9080 0208
+                            </p>
+                        </div>
+                        <div class="col  col-md-1 col-lg-1"></div>
+                    
+                    
+                    </div>
+                    </div><br><br><br><br><br>
+
+
+
+                    <div>
+                        <div class="center">
+                            <h1>Undertaking</h1>
+                        </div><br><br>
+                        <div class="row">
+                        <div class="col  col-md-1 col-lg-1"></div>
+                        
+                        <div class="col col-sm-12 col-md-10 col-lg-10"><p class="left">I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below. </p>
+                            <p class="left">1.  I confirm the accuracy of the information provided in the Self-Assessment Report (SAR). </p>
+                            <p class="left">2.  I confirm that my institution will pay the NBEAC an accreditation fee as defined in the NBEAC Fee Schedule <a style="color: blue" href="https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2"> https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2</a> together with this application form. </p>
+                            <p class="left">3.  I confirm that my institutions will provide all relevant documents and data requested by the NBEAC Peer Review Team before, during or after the accreditation assessment visit.</p>
+                            <p class="left">4.  I confirm that my institution will not hold the NBEAC, its directors, employees and consultants, liable for any direct or indirect, foreseeable or unforeseeable damages resulting from the accreditation process or the final decision of the NBEAC about accreditation.</p>
+                            <p class="left">5.  I confirm that my institution will provide the following arrangements for the PRT team: room and board at a local hotel or guest house and all local transport. </p>
+                            <p class="left">6.  In confirm that, in case we need to interrupt the accreditation process, we will submit a cancellation request in writing to the NBEAC Secretariat at least 4 weeks before the PRT visit.</p>
+                            <br><br>
+                            <p>
+                            Signature: _______________________________________ Stamp of the organization: ________________________</p>
+                            <p>Name of the signatory: _____________________________ Date __________________________________________</p>
+                            <p>Position of the signatory __________________________________________________________________________</p>
+                            <p>Name of University/Institute: ______________________________________________________________________</p>
+                            <p>Department/Business School under review: ___________________________________________________________</p>
+                            <p>Postal address: __________________________________________________________________________________</p>
+                            <p>City and country: ________________________________________________________________________________</p>
+                            <p>Telephone: ______________________________________ Fax: __________________________________________</p>
+
+                            
+                        </div>
+                        <div class="col  col-md-1 col-lg-1"></div>
+                    
+                    
+                    </div>
+                    </div><br><br><br><br><br>
                         <!-- /.box-header -->
                     @include('strategic_management.includes.1')
                     @include('strategic_management.includes.2')
