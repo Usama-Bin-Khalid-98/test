@@ -28,6 +28,7 @@ class PrintController extends Controller
             ->get();
 
         $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
+        $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
 
 
         $scopeOfAcredation = DB::table('scopes')
@@ -38,11 +39,7 @@ class PrintController extends Controller
         ->get();
 
 
-        $contactInformation = DB::table('contact_infos')
-        ->leftJoin('designations','contact_infos.designation_id','=','designations.id')        
-        ->select('contact_infos.*','designations.name as designationName')
-        ->where('contact_infos.campus_id',$bussinessSchool[0]->id)
-        ->get();
+        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND campuses.id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
 
 
         $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=?', array($bussinessSchool[0]->id));
@@ -68,8 +65,20 @@ class PrintController extends Controller
          $studentEnrolment = DB::select('SELECT student_enrolments.*
             FROM student_enrolments , business_schools
             WHERE business_schools.id=?', array($bussinessSchool[0]->id));
+
+
+         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, users WHERE work_loads.campus_id=campuses.id AND work_loads.designation_id=designations.id AND users.id=? AND work_loads.campus_id=?', array(auth()->user()->id,auth()->user()->campus_id));
+
+         $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses, users WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id AND users.id=? AND faculty_genders.campus_id=? AND users.department_id=?', array(auth()->user()->id, $userCampus[0]->campus_id, $userCampus[0]->department_id));
            
-        return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment'));
+        return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyGenders'));
+    }
+
+     public static function getfacultySummary($i, $facultySummary, $userCampus){
+        //dd($facultySummary[$i]->id);
+        
+            $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=?', array($facultySummary[$i]->id,auth()->user()->campus_id));
+            return $facultySummary12;
     }
 
     /**

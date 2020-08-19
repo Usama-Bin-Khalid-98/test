@@ -163,6 +163,12 @@
                     </span>
                     </li>
                     <li class="list-group-item">
+                        <a href="{{url('config/publication_categories')}}" class="text-green"><b>Publication Categories</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['PublicationCategory']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
                         <a href="{{url('config/publication_types')}}" class="text-green"><b>Publication Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['PublicationType']}}</span>
@@ -302,6 +308,19 @@
                                         <option value="">Select Department</option>
                                         @foreach($departments as $department)
                                             <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+
+                            @if(request()->is('config/publication_types'))
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select name="publication_category_id" id="publication_category_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Publication Category</option>
+                                        @foreach($publication_categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

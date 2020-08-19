@@ -57,6 +57,18 @@
                             <form action="javascript:void(0)" id="form" method="POST">
                              <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="name">Publication Category</label>
+                                    <select name="publication_category_id" id="publication_category_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Publication Category</option>
+                                        @foreach($publication_categories as $category)
+                                         <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
+
+                                <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="name">Publication type</label>
                                     <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Publication Type</option>
@@ -67,7 +79,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
                             <div class="col-md-3">
@@ -208,7 +220,7 @@
                             </div>
                         </div>
 
-                        
+
 
 
                         <div class="col-md-6">

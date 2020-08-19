@@ -28,11 +28,12 @@ class CreateApplicationReceivedsTable extends Migration
                 ->references('id')
                 ->on('programs');
             $table->unsignedBigInteger('semester_id');
-            $table->string('app_received',100);    
-            $table->string('admission_offered',100);    
+            $table->string('app_received',100);
+            $table->string('admission_offered',100);
             $table->string('student_intake',100);
-            $table->string('degree_req',100)->nullable();    
-            $table->string('semester_comm_date',100);    
+//            $table->string('degree_req',100)->nullable();
+            $table->string('semester_comm_date',100);
+            $table->string('degree_awarding_criteria',100);
             $table->enum('isComplete', ['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->integer('created_by')->unsigned()->nullable();
@@ -46,7 +47,7 @@ class CreateApplicationReceivedsTable extends Migration
             $table->integer('deleted_by')->unsigned()->nullable();
             $table->foreign('deleted_by')
                 ->references('id')
-                ->on('users'); 
+                ->on('users');
             $table->timestamps();
             $table->softDeletes();
 

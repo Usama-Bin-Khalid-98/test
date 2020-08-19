@@ -6,7 +6,7 @@
 @include('strategic_management.includes.4_4')
 @include('strategic_management.includes.4_4b')
 @include('strategic_management.includes.4_5')
-@include('strategic_management.includes.4_6')
+{{--@include('strategic_management.includes.4_6')--}}
 @include('strategic_management.includes.4_7')
 @include('strategic_management.includes.4_8')
 @include('strategic_management.includes.4_9')

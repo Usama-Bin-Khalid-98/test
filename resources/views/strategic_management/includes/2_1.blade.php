@@ -25,8 +25,8 @@
                                       <td style="text-align: center;" ><?php echo $programsPortfolio[$i]->programName;?></td>
                                       <td ><?php echo $programsPortfolio[$i]->total_semesters;?></td>
                                       <td> <?php echo $programsPortfolio[$i]->courseType;?></td>
-                                      <td><?php echo $programsPortfolio[$i]-> no_of_course;?></td>
-                                      <td><?php echo $programsPortfolio[$i]-> credit_hours;?></td>
+                                      <td><?php echo $programsPortfolio[$i]->no_of_course;?></td>
+                                      <td><?php echo $programsPortfolio[$i]->credit_hours;?></td>
                                       
                                     </tr>
                                    

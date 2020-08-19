@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\PublicationCategory;
 use App\Models\Research\ResearchSummary;
 use App\PublicationType;
 use App\BusinessSchool;
@@ -24,9 +25,10 @@ class ResearchSummaryController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $publications = PublicationType::where('status', 'active')->get();
+        $publication_categories = PublicationCategory::all();
         $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         ///dd($contacts);
-        return view('registration.research_summary.index', compact('publications', 'summaries'));
+        return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories'));
     }
 
     /**
@@ -143,7 +145,7 @@ class ResearchSummaryController extends Controller
     {
         try {
             ResearchSummary::where('id', $researchSummary->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             ResearchSummary::destroy($researchSummary->id);
             return response()->json(['success' => 'Record deleted successfully.']);

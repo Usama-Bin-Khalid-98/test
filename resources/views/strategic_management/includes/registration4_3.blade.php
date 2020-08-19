@@ -51,8 +51,8 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
 
                                     <tr>
                                         <td colspan="7">Total FTE</td>
-                                        <td>{{$totalFTE1}}</td>
-                                        <td>{{$totalFTE2}}</td>
+                                        <td>{{number_format((float)$totalFTE1, 3, '.', '')}}</td>
+                                        <td>{{number_format((float)$totalFTE2, 3, '.', '')}}</td>
                                     </tr>
 
                                    @php
