@@ -13,8 +13,8 @@ class AffiliationSeeder extends Seeder
     {
         //
         DB::table('affiliations')->insert([
-        	['id'=>'1','campus_id'=>'209','name'=>'Ali','designation_id'=>'10','statutory_bodies_id'=>'1','status'=>'active','created_by'=>'1'],
-        	['id'=>'2','campus_id'=>'209','name'=>'Maham','designation_id'=>'3','statutory_bodies_id'=>'5','status'=>'active','created_by'=>'1'],
+        	['name'=>'Ali','campus_id'=>209,'department_id'=>1,'affiliation'=>'HEC','designation_id'=>10,'statutory_bodies_id'=>'1','status'=>'active','created_by'=>1],
+        	['name'=>'Maham','campus_id'=>209,'department_id'=>1,'affiliation'=>'HEC','designation_id'=>3,'statutory_bodies_id'=>'5','status'=>'active','created_by'=>1],
         ]);
     }
 }
