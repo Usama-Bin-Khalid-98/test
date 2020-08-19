@@ -78,5 +78,8 @@ class DatabaseSeeder extends Seeder
         $this->call(FacultyStudentsRatioSeeder::class);
         $this->call(FacultyStabilitySeeder::class);
         $this->call(BusinessSchoolFacilitySeeder::class);
+        $this->call(AffiliationSeeder::class);
+        $this->call(BudgetaryInfoSeeder::class);
+        $this->call(ProgramPortfolioSeeder::class);
     }
 }

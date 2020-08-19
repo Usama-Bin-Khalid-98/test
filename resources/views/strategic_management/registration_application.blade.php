@@ -53,8 +53,37 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Print Registration</h3>
-                        </div>
+                            <h3 class="box-title"></h3>
+                        </div><br>
+                        <br><br><br><br><br>
+                    <p style="margin-left: 25%">Name of University: ________________________________________________________</p>
+                    <p style="margin-left: 25%">Name of Business School: ___________________________________________________</p>
+                    <p style="margin-left: 25%">Program(s) for Review:  ______________________________________________________</p>
+                    <p style="margin-left: 25%">Submission dates:  __________________________________________________________</p>
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    <span style="text-align: center;"><h1>Registration</h1></spans>
+                    <div style="text-align: center;"><h1>Application</h1></div>
+                    <h5 style="text-align: center;">NBEAC</h5><br><hr>
+                    <p>The registration application is to be completed by the business school seeking for accreditation under </p><p>National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan</p>
+                    <br>
+                    <div class="row">
+                        <div class="col  col-md-3 col-lg-3"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
+                        <div class="col  col-md-3 col-lg-3"></div>
+                    
+                    
+                    </div>
+                    <div ><h3
+                        ><b>Contents</b></h3>
+                    </div><br>
+
+                     
+
+                    
+
+
+
                         <!-- /.box-header -->
                     <h1 style="text-align: center;">1. Strategic Management</h1>
                     @include('strategic_management.includes.registration1')
