@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide contact information in the Table 1.3. Furthermore, attach CVs of the dean, head of the business school, and focal person as Appendix-1A.</h3>
+                            <h3 class="box-title">1.3 Provide contact information in the Table 1.3. Furthermore, attach CVs of the dean, head of the business school, and focal person as Appendix-1A.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -128,7 +128,7 @@
                     <!-- .box -->
                     <div class="box " >
                         <div class="box-header">
-                            <h3 class="box-title">Contact Information</h3>
+                            <h3 class="box-title">Table 1.3 Contact Information</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

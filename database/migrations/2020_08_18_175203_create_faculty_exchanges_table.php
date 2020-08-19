@@ -23,10 +23,12 @@ class CreateFacultyExchangesTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
+            $table->string('year',100);
             $table->string('destination_country',255);
             $table->string('faculty_name',255);
             $table->string('source_country',255);
             $table->string('name_faculty',255);
+            $table->string('file',255);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

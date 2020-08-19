@@ -30,6 +30,7 @@ class CreateLinkagesTable extends Migration
             $table->text('signing_date');
             $table->text('last_activity_date');
             $table->string('last_activity_title',255);
+            $table->string('file',255);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

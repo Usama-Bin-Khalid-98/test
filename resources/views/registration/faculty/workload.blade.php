@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information of faculty workload over the last two semesters. Attach faculty workload policy in table 4.2</h3>
+                            <h3 class="box-title">4.2 Provide information of faculty workload over the last two semesters. Attach faculty workload policy in table 4.2</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -135,7 +135,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty workload(t)</h3>
+                            <h3 class="box-title">Table 4.2 Faculty workload(t)</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

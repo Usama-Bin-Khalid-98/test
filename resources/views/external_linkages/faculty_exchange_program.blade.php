@@ -137,10 +137,8 @@
                                 <tbody>
                                     <tr>
                                         <td></td>
-                                        <td style="background-color: grey; color: white;">Faculty outflow</td>
-                                        <td style="background-color: grey; color: white;"></td>
-                                        <td style="background-color: grey; color: white;">Faculty inflow</td>
-                                        <td style="background-color: grey; color: white;"></td>
+                                        <td colspan="2" style="background-color: grey; color: white; text-align: center;">Faculty outflow</td>
+                                        <td colspan="2" style="background-color: grey; color: white; text-align: center;">Faculty inflow</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

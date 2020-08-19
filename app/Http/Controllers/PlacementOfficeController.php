@@ -4,17 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\External_Linkages\PlacementOffice;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Mockery\Exception;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class PlacementOfficeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     public function index()
     {
-        //
+        try {
+
+            $placement_office = PlacementOffice::get()->first();
+            $office= PlacementOffice::where('id')->exists();
+
+        return view('external_linkages.placement_office',compact('placement_office','office'));
+        }catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -35,7 +48,36 @@ class PlacementOfficeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+            $uni_id = Auth::user()->campus_id;
+            $dept_id = Auth::user()->department_id;
+            PlacementOffice::updateOrCreate([
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'hierarchical_position' => $request->hierarchical_position,
+                'year_establishment' => $request->year_establishment,
+                'head' => $request->head,
+                'reports_to' => $request->reports_to,
+                'composition' => $request->composition,
+                'total_staff' => $request->total_staff,
+                'printers' => $request->printers,
+                'photocopiers' => $request->photocopiers,
+                'isComplete' => 'yes',
+                'updated_by' => Auth::user()->id
+            ]);
+
+            return response()->json(['success' => ' Placement Office Inserted successfully.']);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -67,9 +109,32 @@ class PlacementOfficeController extends Controller
      * @param  \App\Models\External_Linkages\PlacementOffice  $placementOffice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PlacementOffice $placementOffice)
+    public function update(Request $request, $id)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+            PlacementOffice::where('id', $id)->update([
+                'hierarchical_position' => $request->hierarchical_position,
+                'year_establishment' => $request->year_establishment,
+                'head' => $request->head,
+                'reports_to' => $request->reports_to,
+                'composition' => $request->composition,
+                'total_staff' => $request->total_staff,
+                'printers' => $request->printers,
+                'photocopiers' => $request->photocopiers,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => 'Placement Office updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -81,5 +146,22 @@ class PlacementOfficeController extends Controller
     public function destroy(PlacementOffice $placementOffice)
     {
         //
+    }
+
+    protected function rules() {
+        return [
+            'hierarchical_position' => 'required',
+            'year_establishment' => 'required',
+            'head' => 'required',
+            'reports_to' => 'required'
+        ];
+    }
+
+
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

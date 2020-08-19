@@ -42,7 +42,7 @@
                 <form>
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide scope of accreditation in table 1.2</h3>
+                            <h3 class="box-title">1.2.  Provide scope of accreditation in Table 1.2.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -118,7 +118,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Scope of Accreditations.</h3>
+                            <h3 class="box-title">Table 1.2 Scope of Accreditations.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

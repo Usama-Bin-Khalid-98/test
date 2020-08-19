@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title"> Provide details in Table 1.5 about the names, designations and affiliations of all external (academic and corporate), national or international members in each of the statutory bodies mentioned above in Table 1.4.</h3>
+                            <h3 class="box-title">1.5 Provide details in Table 1.5 about the names, designations and affiliations of all external (academic and corporate), national or international members in each of the statutory bodies mentioned above in Table 1.4.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -122,7 +122,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Affiliations of any external (academic and corporate), national or international members</h3>
+                            <h3 class="box-title">Table 1.5 Affiliations of any external (academic and corporate), national or international members</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

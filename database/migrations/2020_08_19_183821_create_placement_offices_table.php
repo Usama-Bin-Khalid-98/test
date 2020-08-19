@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStudentExchangesTable extends Migration
+class CreatePlacementOfficesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStudentExchangesTable extends Migration
      */
     public function up()
     {
-        Schema::create('student_exchanges', function (Blueprint $table) {
+        Schema::create('placement_offices', function (Blueprint $table) {
             $table->id();
             $table->integer('campus_id')->unsigned();
             $table->foreign('campus_id')
@@ -23,12 +23,14 @@ class CreateStudentExchangesTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->string('year',100);
-            $table->string('destination_country',255);
-            $table->string('student_name',255);
-            $table->string('source_country',255);
-            $table->string('name_student',255);
-            $table->string('file',255);
+            $table->string('hierarchical_position',100);
+            $table->string('year_establishment',100);
+            $table->string('head',100);
+            $table->string('reports_to',100);
+            $table->string('composition',100);
+            $table->string('total_staff',100);
+            $table->string('printers',100);
+            $table->string('photocopiers',100);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
@@ -55,6 +57,6 @@ class CreateStudentExchangesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('student_exchanges');
+        Schema::dropIfExists('placement_offices');
     }
 }

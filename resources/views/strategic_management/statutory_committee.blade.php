@@ -40,7 +40,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">  Provide information about the various statutory bodies in the Table 1.4. Also attach documentary information about the composition, name of members, role and functions of each statutory body as Appendix-1B. </h3>
+                            <h3 class="box-title">1.4 Provide information about the various statutory bodies in the Table 1.4. Also attach documentary information about the composition, name of members, role and functions of each statutory body as Appendix-1B. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -141,7 +141,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title"> Business school’s statutory committees</h3>
+                            <h3 class="box-title">Table 1.4 Business school’s statutory committees</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
