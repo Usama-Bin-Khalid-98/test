@@ -129,6 +129,16 @@ use Illuminate\Support\Facades\Route;
         Route::resource('internal-community','InternalCommunityController');
         Route::patch('registration-apply/{id}','HomeController@apply');
 
+
+        //External Linkages & Student Placement
+        Route::resource('placement-office','PlacementOfficeController');
+        Route::resource('linkages','LinkagesController');
+        Route::resource('body-meeting','BodyMeetingController');
+        Route::resource('student-exchange','StudentExchangeController');
+        Route::resource('faculty-exchange','FacultyExchangeController');
+        Route::resource('obtained-internship','ObtainedInternshipController');
+        Route::resource('placement-activity','PlacementActivityController');
+
         //Admission & Examination Policy
         Route::resource('credit-transfer','CreditTransferController');
         Route::resource('student-transfer','StudentTransferController');
