@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 2.5. Program Learning Outcomes (PLO)</caption>
+                                <caption style="text-align: center;color: red">Table 2.5. Program Learning Outcomes (PLO)</caption>
                                 <thead>
                                     <th>PO1: </th>
                                     <th></th>

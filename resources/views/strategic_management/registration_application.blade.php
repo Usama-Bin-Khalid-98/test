@@ -56,27 +56,89 @@
                             <h3 class="box-title"></h3>
                         </div><br>
                         <br><br><br><br><br>
-                    <p style="margin-left: 25%">Name of University: ________________________________________________________</p>
-                    <p style="margin-left: 25%">Name of Business School: ___________________________________________________</p>
-                    <p style="margin-left: 25%">Program(s) for Review:  ______________________________________________________</p>
-                    <p style="margin-left: 25%">Submission dates:  __________________________________________________________</p>
-                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                    <span style="text-align: center;"><h1>Registration</h1></spans>
-                    <div style="text-align: center;"><h1>Application</h1></div>
-                    <h5 style="text-align: center;">NBEAC</h5><br><hr>
-                    <p>The registration application is to be completed by the business school seeking for accreditation under </p><p>National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan</p>
-                    <br>
+                    @include('strategic_management.includes.pageCover')
+                    @include('strategic_management.includes.contents')
+                    
+                    <br><br><br>
+
+                    <h1>Perface</h1><br>
                     <div class="row">
-                        <div class="col  col-md-3 col-lg-3"></div>
-                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
-                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
-                        <div class="col  col-md-3 col-lg-3"></div>
+                        <div class="col  col-md-1 col-lg-1"></div>
+                        
+                        <div class="col col-sm-12 col-md-10 col-lg-10">
+                            <p class="justify">This document is intended to provide succinct factual information about the School that allows it to be assessed against the eligibility criteria of National Business Education Accreditation Council (NBEAC). A business school seeking for accreditation is expected to understand that the precision and completeness of data provided in the registration application is important for an effective accreditation process as it help NBEAC Committee accurately analyze actual situation of the program(s) under review. NBEAC will trust the data provided at this stage since it will be checked at a later stage, if applicable. Please make sure that this document contains page numbers. </p>
+                            <p class="justify">For schools applying to NBEAC for the first time, it should be noted that no additional information provided by the School besides that contained in the application will be conveyed to the NBEAC Committee.  
+                            For schools applying to NBEAC for re-accreditation/re-visit, this application should be completed when starting the reaccreditation cycle; an updated application should be submitted together with the supporting documents.
+                            </p>
+                            <p class="justify">Senior Program Manager - Accreditation</p>
+                            <p class="justify">National Business Education Accreditation Council
+                            Islamabad
+                            </p>
+                        </div>
+                        <div class="col  col-md-1 col-lg-1"></div>
+                    
+                    
+                    </div><br><br><br><br><br><br>
+
+
+                    <div>
+                        <div class="center">
+                            <h1>Instructions for the application preparation</h1>
+                        </div><br><br>
+                        <div class="row">
+                        <div class="col  col-md-1 col-lg-1"></div>
+                        
+                        <div class="col col-sm-12 col-md-10 col-lg-10">
+                            <p class="left">1.   Before starting the registration application, please go through the guidelines given in Section III of the NBEAC Accreditation Process Manual<a href="https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf"> <span style="color: blue"> https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</span></a> in order to ensure that the application is prepared in accordance with these guidelines.</p>
+                            <p class="left">2.   Note that no change in the original text and structure of the application is permitted at all. However, the data in colored font is given only for demonstrative purpose; please replace it with actual data.</p>
+                            <p class="left">3.   A question in the registration application may require certain information in the form of a table, an appendix, or descriptive text paragraphs. Please make sure that response to each of the questions is exactly the way it is asked for. </p>
+                            <p class="left">4.   Include only relevant information described in a clear, concise and meaningful way based on factual data rather than opinions.</p>
+                            <p class="left">5.   After the application is prepared, submit a copy to the NBEAC Secretariat for desk review. Follow remarks of the NBEAC Secretariat to make up for any deficiencies pointed out during the desk review. To avoid any unnecessary delay during desk review, please make sure that all required documents are included, and are properly filled in. </p>
+                            <p class="left">6.   The NBEAC Secretariat is always there to help clarifying any ambiguity regarding filling in data in the application. However, it is recommendable to carefully read through footnotes and other auxiliary texts before contacting the secretariat in this regard.</p>
+                            <p class="left">7.   Please address all correspondence to the following address:</p>
+                            <p class="left">National Business Education Accreditation Council</p>
+                            <p class="left">201, 2nd Floor, HRD Division, Higher Education Commission</p>
+                           <p class="left"> H-8 Islamabad, Pakistan</p>
+                            <p class="left">Phone: +92 51 9080 0206, Fax: +92 51 9080 0208
+                            </p>
+                        </div>
+                        <div class="col  col-md-1 col-lg-1"></div>
                     
                     
                     </div>
-                    <div ><h3
-                        ><b>Contents</b></h3>
-                    </div><br>
+                    </div><br><br><br><br><br>
+
+
+
+                    <div>
+                        <div class="center">
+                            <h1>Undertaking</h1>
+                        </div><br><br>
+                        <div class="row">
+                        <div class="col  col-md-1 col-lg-1"></div>
+                        
+                        <div class="col col-sm-12 col-md-10 col-lg-10"><p class="left">I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below. </p>
+                            <p class="left">1.  I confirm the accuracy of the information provided in the registration application, and as the authorized representative commit the business school to go through the NBEAC accreditation process. </p>
+                            <p class="left">2.  I agree that the business school under review will pay the NBEAC accreditation fee as defined in the NBEAC Fee Schedule <a style="color:blue" href="https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2"> https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2</a>, which is effective at the date of the submission of this application form.</p>
+                            <p class="left">3.  I confirm that we shall provide any relevant documents to the NBEAC committee in case they ask for during the screening process, and will accept the decisions of NBEAC with respect to the registration process. The NBEAC, its directors, employees and consultants shall not be liable for any direct or indirect, foreseeable or unforeseeable damages resulting from the conception and implementation of the standards, the accreditation process, or the final decision of the NBEAC about registration.</p>
+                            <p class="left">4.  In case the business school unilaterally decides to stop the process, a cancellation request must be submitted to the NBEAC Secretariat.</p><br><br>
+                            <p>
+                            Signature: _______________________________________ Stamp of the organization: ________________________</p>
+                            <p>Name of the signatory: _____________________________ Date __________________________________________</p>
+                            <p>Position of the signatory __________________________________________________________________________</p>
+                            <p>Name of University/Institute: ______________________________________________________________________</p>
+                            <p>Department/Business School under review: ___________________________________________________________</p>
+                            <p>Postal address: __________________________________________________________________________________</p>
+                            <p>City and country: ________________________________________________________________________________</p>
+                            <p>Telephone: ______________________________________ Fax: __________________________________________</p>
+
+                            
+                        </div>
+                        <div class="col  col-md-1 col-lg-1"></div>
+                    
+                    
+                    </div>
+                    </div><br><br><br><br><br>
 
                      
 
@@ -85,21 +147,37 @@
 
 
                         <!-- /.box-header -->
-                    <h1 style="text-align: center;">1. Strategic Management</h1>
+                    <h5 class="left" style="color:red">Section 1. Strategic Management</h5>
+                    <p class="left">1.1. Provide basic information about the business school  in Table 1.1.</p>
                     @include('strategic_management.includes.registration1')
-                    <h1 style="text-align: center;">2. Curriculum</h1>
+
+                    <h5 class="left" style="color:red">Section 2. Curriculum</h5>
                     @include('strategic_management.includes.registration2')
-                    <h1 style="text-align: center;">3. Students</h1>
+                    <h5 class="left" style="color:red">Section 3. Students</h5>
                     @include('strategic_management.includes.registration3')
-                    <h1 style="text-align: center;">4. Faculty</h1>
+                    <h5 class="left" style="color:red">Section 4. Faculty</h5>
                     @include('strategic_management.includes.registration4')
-                    <h1 style="text-align: center;">5. Research and Development</h1>
+                    <h5 class="left" style="color:red">Section 5. Research and Development</h5>
                     @include('strategic_management.includes.registration5')
                    
-                    <h1 style="text-align: center;">6. Resources</h1>
+                    <h5 class="left" style="color:red">Section 6. Resources</h5>
                     @include('strategic_management.includes.registration6')
                     
-
+                    <hr>
+                    <p class="left">1  The term “school” is used in the NBEAC process to designate the entity that is applying for NBEAC accreditation, whether it is a free standing business school or a faculty, school or department within a university.</p>
+                    <p class="left">2  Replace the text with actual semester names. In case admission are taken biennially, mark “N/A” for the semester no admission is offered.</p>
+                    <p class="left">3   Enrollment means total number of students enrolled from first semester to last semester of a program. 16 years study programs include BBA/B.Com; 18 years programs include MS/MPhil/MBA/MPA/M.Com et cetera. </p>
+                    <p class="left">4   Year t, Year t-1, and Year t-2 correspond to last three years i.e. Year t means current year, Year t-1 is the last year, and Year t-2 is the year before last year. As annual data is required, therefore each year includes both fall & spring sessions. Please replace row headers with actual years.</p>
+                    <p class="left">5   This column shows the total annual enrollment of the school/department as a whole, not just the program(s) under accreditation.</p>
+                    <p class="left">6   Core business faculty: Faculty with terminal degree in business, management and related areas and teaching core business courses.</p>
+                    <p class="left">7   Maximum teaching courses allowed as per course load policy</p>
+                    <p class="left">8   Report data on research and publication for the core faculty, defined as members of the faculty for whom the school is the principal employer. The report should not include publications of part-time staff from other schools or departments, adjunct faculty, visiting professors, or business practitioners.</p>
+                    <p class="left">9   Only include faculty members from within the school at the time of production</p>
+                    <p class="left">10  Articles, conference papers, journal articles, and other research work published in HEC recognized journals / ISI index journals, conference proceedings, and other reputable abstracting indexing service i.e. EMERALD, JSTOR, Science Direct, etc.</p>
+                    <p class="left">11  Income generated through various trainings and workshops conducted by the business school.</p>
+                    <br><br><br><br>
+                    <h1 class="center">Checklist of mandatory appendices with registration application</h1>
+                    @include('strategic_management.includes.registrationCheckList')
 
                         <!-- /.box-body -->
                     </div>

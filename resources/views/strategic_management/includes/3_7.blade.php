@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 3.7. Counselling activity</caption>
+                                <caption style="text-align: center;color: red">Table 3.7. Counselling activity</caption>
                                 <thead>
                                     <th>No</th>
                                     <th>Counsellor’s name</th>

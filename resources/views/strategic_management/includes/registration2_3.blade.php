@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                          <table class="table table-bordered table-striped">
-                            <caption style="text-align: center;">Table 2.3. Applications received </caption>
+                            <caption style="text-align: center;color: red">Table 2.3. Applications received </caption>
                               <thead>
                                 <tr>
                                   <th>Program under review</th>

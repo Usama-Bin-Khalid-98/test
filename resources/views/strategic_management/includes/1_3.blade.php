@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 1.3. Contact information</caption>
+                                <caption style="text-align: center;color: red">Table 1.3. Contact information</caption>
                                 <thead>
                                     <th></th>
                                     <th>Dean of school</th>

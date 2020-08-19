@@ -13,7 +13,7 @@ class StatutoryCommitteeSeeder extends Seeder
     {
         //
         DB::table('statutory_committees')->insert([
-            'campus_id'=>'1',
+            ['campus_id'=>'1',
             'statutory_body_id'=>'1',
             'name'=>'khan',
             'designation_id'=>'1',
