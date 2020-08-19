@@ -1,4 +1,4 @@
-@section('pageTitle', 'Student Enrolment')
+@section('pageTitle', 'Linkages')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Students Enrolment
+                Linkages
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Students Enrolment </li>
+                <li class="active"> Linkages </li>
             </ol>
         </section>
         <section class="content-header">
@@ -41,10 +41,10 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="box box-primary">
+                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">3.1.  Provide the data on student enrolment of the business school for the last three years in Table 3.1. </h3>
-                                <div class="box-tools pull-right">
+                            <h3 class="box-title">8.2.  Provide data of MoUscoveringnational,international, corporate or social linkagesinTable8.2. Attach the relevant policy as Appendix-8A. </h3>
+                            <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
@@ -56,106 +56,127 @@
                         </div>
 
                         <!-- /.box-header -->
-                        <form action="javascript:void(0)" id="form" method="POST">
-
                         <div class="box-body">
-                            <div class="col-md-3">
+                             <form action="javascript:void(0)" id="form" method="POST">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Type</label>
+                                    <input type="text"  name="type" id="type" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Location</label>
+                                    <input type="text"  name="location" id="location" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Level</label>
+                                    <input type="text"  name="level" id="level" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Signing date</label>
+                                    <input type="date"  name="signing_date" id="signing_date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Last activity date</label>
+                                    <input type="date"  name="last_activity_date" id="last_activity_date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Last activity title</label>
+                                    <input type="text"  name="last_activity_title" id="last_activity_title" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Attach Doc</label>
+                                    <input type="file" name="file" id="file" >
+                                    <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">16 Year programs(A)</label>
-                                    <input type="text" name="bs_level" id="bs_level" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">18 Year programs(B)</label>
-                                    <input type="text" name="ms_level" id="ms_level" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Doctoral Programs(C)</label>
-                                    <input type="text" name="phd_level" id="phd_level" class="form-control">
-                                </div>
-                            </div>
-                        
-
-                             <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
+                           </form>
                         </div>
-                            </div>
-                    </form>
-                    </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 3.1 Student Enrolment</h3>
+                            <h3 class="box-title">Table 8.2. List of MoUs of national and international linkages</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Year</th>
-                                    <th>16 Year</th>
-                                    <th>18 Year</th>
-                                    <th>Doctoral</th>
-                                    <th>Total Enrolment</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Level</th>
+                                    <th>Signing date</th>
+                                    <th>Last activity date</th>
+                                    <th>Last activity title</th>
+                                    <th>document</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($enrolments as $enrolement)
+                                    <tr>
+                                        <td colspan="3" style="background-color: grey; color: white; text-align: center;">Partner institution details</td>
+                                        <td colspan="4" style="background-color: grey; color: white; text-align: center;">Mou detail</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                               @foreach($genders as $enrolement)
                                 <tr>
-                                    <td>{{$enrolement->year}}</td>
-                                    <td>{{$enrolement->bs_level}}</td>
-                                    <td>{{$enrolement->ms_level}}</td>
-                                    <td>{{$enrolement->phd_level}}</td>
-                                    <td>{{$enrolement->total_students}}</td>
+                                    <td>{{$enrolement->name}}</td>
+                                    <td>{{$enrolement->type}}</td>
+                                    <td>{{$enrolement->location}}</td>
+                                    <td>{{$enrolement->level}}</td>
+                                    <td>{{$enrolement->signing_date}}</td>
+                                    <td>{{$enrolement->last_activity_date}}</td>
+                                    <td>{{$enrolement->last_activity_title}}</td>
+                                    <td><a href="{{url($enrolement->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","year":{{$enrolement->year}},"bs_level":"{{$enrolement->bs_level}}","ms_level":"{{$enrolement->ms_level}}","phd_level":"{{$enrolement->phd_level}}","total_students":"{{$enrolement->total_students}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","name":"{{$enrolement->name}}","type":"{{$enrolement->type}}","location":"{{$enrolement->location}}","level":"{{$enrolement->level}}","signing_date":"{{$enrolement->signing_date}}","last_activity_date":"{{$enrolement->last_activity_date}}","last_activity_title":"{{$enrolement->last_activity_title}}","file":"{{$enrolement->file}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
-                                <tr style="background-color: grey;color: white;">
-                                    <td style="font-weight: bold;">Total</td>
-                                    <td style="font-weight: bold;">{{@$bs}}</td>
-                                    <td style="font-weight: bold;">{{@$ms}}</td>
-                                    <td style="font-weight: bold;">{{@$phd}}</td>
-                                    <td style="font-weight: bold;">{{@$t_students}}</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Year</th>
-                                    <th>16 Year</th>
-                                    <th>18 Year</th>
-                                    <th>Doctoral</th>
-                                    <th>Total Enrolment</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Level</th>
+                                    <th>Signing date</th>
+                                    <th>Last activity date</th>
+                                    <th>Last activity title</th>
+                                    <th>document</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -177,51 +198,68 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Student Enrolment. </h4>
+                    <h4 class="modal-title">Edit Linkages </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                                <input type="hidden" name="id" id="edit_id">
-                            </div>
-
-                        <div class="col-md-6">
+                       <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">16 year Program</label>
-                                    <input type="text" name="bs_level" id="edit_bs_level" value="{{old('bs_level')}}" class="form-control">
-
+                                <label for="name">Name</label>
+                                    <input type="text" name="name"
+                                    id="edit_name" value="{{old('edit_name')}}" class="form-control">
                             </div>
                         </div>
+                       
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">18 year Program</label>
-                                    <input type="text" name="ms_level" id="edit_ms_level" value="{{old('ms_level')}}" class="form-control">
-
+                                <label for="name">Type</label>
+                                    <input type="text" name="type"
+                                    id="edit_type" value="{{old('edit_type')}}" class="form-control">
                             </div>
+                             <input type="hidden" name="id" id="edit_id">
                         </div>
-                         <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">Doctoral Program</label>
-                                    <input type="text" name="phd_level" id="edit_phd_level" value="{{old('phd_level')}}" class="form-control">
-
+                                <label for="name">Location</label>
+                                    <input type="text" name="location"
+                                    id="edit_location" value="{{old('edit_location')}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Total Students</label>
-                                    <input type="text" readonly name="total_students"
-                                    id="edit_total_students" value="{{old('total_students')}}" class="form-control">
+                                <label for="name">Level</label>
+                                    <input type="text" name="level"
+                                    id="edit_level" value="{{old('edit_level')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Signing date</label>
+                                    <input type="date" name="signing_date"
+                                    id="edit_signing_date" value="{{old('edit_signing_date')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Last activity date</label>
+                                    <input type="date" name="last_activity_date"
+                                    id="edit_last_activity_date" value="{{old('edit_last_activity_date')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Last activity title</label>
+                                    <input type="text" name="last_activity_title"
+                                    id="edit_last_activity_title" value="{{old('edit_last_activity_title')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Attach Doc</label>
+                                <input type="file" name="file" id="edit_file" >
+                                <input type="hidden" name="old_file" id="old_file" >
+                                <span class="text-blue" id="file-name"></span>
                             </div>
                         </div>
 
@@ -254,14 +292,23 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
-        })
+    $("#datatable").DataTable({
+      dom : "lBfrtip",
+    })
+  })
     </script>
     <script type="text/javascript">
 
@@ -275,17 +322,25 @@
 
         $('#form').submit(function (e) {
             // let uni_id = $('#uni_id').val();
-            let year = $('#year').val();
-            let bs_level = $('#bs_level').val();
-            let ms_level = $('#ms_level').val();
-            let phd_level = $('#phd_level').val();
+            let name = $('#name').val();
+            let type = $('#type').val();
+            let location = $('#location').val();
+            let level = $('#level').val();
+            let signing_date = $('#signing_date').val();
+            let last_activity_date = $('#last_activity_date').val();
+            let last_activity_title = $('#last_activity_title').val();
+            let file = $('#file').val();
 
-            !year?addClass('year'):removeClass('year');
-            !bs_level?addClass('bs_level'):removeClass('bs_level');
-            !ms_level?addClass('ms_level'):removeClass('ms_level');
-            !phd_level?addClass('phd_level'):removeClass('phd_level');
+            !name?addClass('name'):removeClass('name');
+            !type?addClass('type'):removeClass('type');
+            !location?addClass('location'):removeClass('location');
+            !level?addClass('level'):removeClass('level');
+            !signing_date?addClass('signing_date'):removeClass('signing_date');
+            !last_activity_date?addClass('last_activity_date'):removeClass('last_activity_date');
+            !last_activity_title?addClass('last_activity_title'):removeClass('last_activity_title');
+            !file?addClass('file'):removeClass('file');
 
-            if(!year || !bs_level || !ms_level || !phd_level  )
+            if(!name || !type || !location || !level || !signing_date || !last_activity_date || !last_activity_title || !file )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -295,7 +350,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("student-enrolment")}}',
+                url:'{{url("linkages")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -326,29 +381,39 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-            $('#edit_year').select2().val(data.year).trigger('change');
-            $('#edit_bs_level').val(data.bs_level);
-            $('#edit_ms_level').val(data.ms_level);
-            $('#edit_phd_level').val(data.phd_level);
-            $('#edit_total_students').val(data.total_students);
+           
+            $('#edit_name').val(data.name);
+            $('#edit_type').val(data.type);
+            $('#edit_location').val(data.location);
+            $('#edit_level').val(data.level);
+            $('#edit_signing_date').val(data.signing_date);
+            $('#edit_last_activity_date').val(data.last_activity_date);
+            $('#edit_last_activity_title').val(data.last_activity_title);
+            $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
-            let year = $('#edit_year').val();
-            let bs_level = $('#edit_bs_level').val();
-            let ms_level = $('#edit_ms_level').val();
-            let phd_level = $('#edit_phd_level').val();
+            let name = $('#edit_name').val();
+            let type = $('#edit_type').val();
+            let location = $('#edit_location').val();
+            let level = $('#edit_level').val();
+            let signing_date = $('#edit_signing_date').val();
+            let last_activity_date = $('#edit_last_activity_date').val();
+            let last_activity_title = $('#edit_last_activity_title').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !year?addClass('edit_year'):removeClass('edit_year');
-            !bs_level?addClass('edit_bs_level'):removeClass('edit_bs_level');
-            !ms_level?addClass('edit_ms_level'):removeClass('edit_ms_level');
-            !phd_level?addClass('edit_phd_level'):removeClass('edit_phd_level');
+            !name?addClass('name'):removeClass('name');
+            !type?addClass('type'):removeClass('type');
+            !location?addClass('location'):removeClass('location');
+            !level?addClass('level'):removeClass('level');
+            !signing_date?addClass('signing_date'):removeClass('signing_date');
+            !last_activity_date?addClass('last_activity_date'):removeClass('last_activity_date');
+            !last_activity_title?addClass('last_activity_title'):removeClass('last_activity_title');
 
-            if(!year || !bs_level || !ms_level || !phd_level)
+            if(!name || !type || !location || !level || !signing_date || !last_activity_date || !last_activity_title )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -358,7 +423,7 @@
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("student-enrolment")}}/'+id,
+                url:'{{url("linkages")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -392,7 +457,7 @@
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("student-enrolment")}}/'+id,
+                        url:'{{url("linkages")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -421,11 +486,6 @@
                 } );
 
         })
-
-
-
-
-
 
     </script>
 

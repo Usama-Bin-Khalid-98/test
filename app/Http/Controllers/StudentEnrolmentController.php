@@ -24,10 +24,10 @@ class StudentEnrolmentController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $programs = Program::where('status', 'active')->get();
-        $bs = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('bs_level');
-        $ms = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('ms_level');
-        $phd = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('phd_level');
-        $t_students = StudentEnrolment::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('total_students');
+        $bs = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('bs_level');
+        $ms = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('ms_level');
+        $phd = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('phd_level');
+        $t_students = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('total_students');
         $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.student_enrolment.enrolment', compact('programs','enrolments','bs','ms','phd','t_students'));

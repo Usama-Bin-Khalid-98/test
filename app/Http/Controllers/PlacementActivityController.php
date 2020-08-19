@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Faculty;
-use App\Models\Faculty\FacultySummary;
-use App\Models\Common\Discipline;
-use App\Models\Common\FacultyQualification;
-use App\Models\Common\Program;
+namespace App\Http\Controllers;
+
+use App\Models\External_Linkages\PlacementActivity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
-class FacultySummaryController extends Controller
+class PlacementActivityController extends Controller
 {
     public function __construct()
     {
@@ -23,15 +21,9 @@ class FacultySummaryController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $qualification = FacultyQualification::where('status', 'active')->get();
-        $discipline = Discipline::where('status', 'active')->get();
+        $genders = PlacementActivity::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-        $number = FacultySummary::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('number_faculty');
-
-        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-        return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries','number'));
-        //
+        return view('external_linkages.placement_activities', compact('genders'));
     }
 
     /**
@@ -58,18 +50,19 @@ class FacultySummaryController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            FacultySummary::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'faculty_qualification_id' => $request->faculty_qualification_id,
-                'discipline_id' => $request->discipline_id,
-                'number_faculty' => $request->number_faculty,
+            $uni_id = Auth::user()->campus_id;
+            $dept_id = Auth::user()->department_id;
+            PlacementActivity::create([
+                'campus_id' => $uni_id,
+                'department_id' => $dept_id,
+                'date' => $request->date,
+                'activity_title' => $request->activity_title,
+                'org_participate' => $request->org_participate,
                 'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
-            return response()->json(['success' => 'Faculty Summary added successfully.']);
+            return response()->json(['success' => ' Placement Activity Inserted successfully.']);
 
 
         }catch (Exception $e)
@@ -81,10 +74,10 @@ class FacultySummaryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\External_Linkages\PlacementActivity  $placementActivity
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(PlacementActivity $placementActivity)
     {
         //
     }
@@ -92,10 +85,10 @@ class FacultySummaryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\External_Linkages\PlacementActivity  $placementActivity
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PlacementActivity $placementActivity)
     {
         //
     }
@@ -104,10 +97,10 @@ class FacultySummaryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\External_Linkages\PlacementActivity  $placementActivity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, PlacementActivity $placementActivity)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -116,15 +109,14 @@ class FacultySummaryController extends Controller
         }
 
         try {
-
-            FacultySummary::where('id', $id)->update([
-                'faculty_qualification_id' => $request->faculty_qualification_id,
-                'discipline_id' => $request->discipline_id,
-                'number_faculty' => $request->number_faculty,
+            PlacementActivity::where('id', $placementActivity->id)->update([
+                'date' => $request->date,
+                'activity_title' => $request->activity_title,
+                'org_participate' => $request->org_participate,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
-            return response()->json(['success' => 'Faculty Summary updated successfully.']);
+            return response()->json(['success' => 'Placement Activity updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -135,16 +127,16 @@ class FacultySummaryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\External_Linkages\PlacementActivity  $placementActivity
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PlacementActivity $placementActivity)
     {
         try {
-            FacultySummary::where('id', $id)->update([
+        PlacementActivity::where('id', $placementActivity->id)->update([
                'deleted_by' => Auth::user()->id 
            ]);
-            FacultySummary::destroy($id);
+            PlacementActivity::destroy($placementActivity->id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -154,11 +146,13 @@ class FacultySummaryController extends Controller
 
     protected function rules() {
         return [
-            'faculty_qualification_id' => 'required',
-            'discipline_id' => 'required',
-            'number_faculty' => 'required'
+            'date' => 'required',
+            'activity_title' => 'required',
+            'org_participate' => 'required'
         ];
     }
+
+
 
     protected function messages() {
         return [

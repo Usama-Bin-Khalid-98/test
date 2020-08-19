@@ -1,10 +1,10 @@
-@section('pageTitle', 'Faculty Gender')
+@section('pageTitle', 'Statutory Body Meetings')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-    <!-- Select2 -->
+     <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Faculty Gender
+                Statutory Body Meetings
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Faculty Gender</li>
+                <li class="active"> Statutory Body Meetings </li>
             </ol>
         </section>
         <section class="content-header">
@@ -35,15 +35,15 @@
                 </div>
             </div>
         </section>
-
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-primary">
+
+                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">4.6 Provide data on the gender mix of the business school faculty in Table 4.6</h3>
+                            <h3 class="box-title">8.3.  Provide data of international representatives who have participated in formal meetings of any statutorybodies either as permanent members or through special invitation over the last three years in Table8.3. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -57,42 +57,55 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                         <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
+                             <form action="javascript:void(0)" id="form" method="POST">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Faculty Type</label>
-                                   <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Faculty Type</option>
-                                        @foreach($faculty_type as $type)
-                                         <option value="{{$type->id}}">{{$type->faculty_type}}</option>
+                                    <label for="name">Participant name</label>
+                                    <input type="text"  name="participant_name" id="participant_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Designation</label>
+                                   <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Designation</option>
+                                        @foreach($designation as $scope)
+                                         <option value="{{$scope->id}}">{{$scope->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
                             </div>
-                           
-
-                          
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Male</label>
-                                    <input type="number" name="male" id="male" class="form-control">
+                                    <label for="name">Affiliation</label>
+                                    <input type="text"  name="affiliation" id="affiliation" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Statutory body</label>
+                                   <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Statutory body</option>
+                                        @foreach($body as $bod)
+                                         <option value="{{$bod->id}}">{{$bod->name}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Meeting date</label>
+                                    <input type="date"  name="meeting_date" id="meeting_date" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Female</label>
-                                    <input type="number" name="female" id="female" class="form-control">
-                                </div>
-                            </div>
-                             <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
-                        </form>
-
+                           </form>
                         </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
@@ -100,43 +113,45 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.6 Faculty Gender Mix.</h3>
+                            <h3 class="box-title">Table 8.3. List of international participants of statutory body meetings</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
-                                    <th>Faculty Type</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
+                                    
+                                    <th>Participant name</th>
+                                    <th>Designation</th>
+                                    <th>Affiliation</th>
+                                    <th>Statutory body</th>
+                                    <th>Meeting date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                               @foreach($genders as $req)
+                               @foreach($genders as $enrolement)
                                 <tr>
-                                    <td>{{$req->campus->business_school->name}}</td>
-                                    <td>{{$req->campus->location}}</td>
-                                    <td>{{$req->lookup_faculty_type->faculty_type}}</td>
-                                    <td>{{$req->male}}</td>
-                                    <td>{{$req->female}}</td>
-                                    <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","male":"{{$req->male}}","female":"{{$req->female}}", "status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                    <td>{{$enrolement->participant_name}}</td>
+                                    <td>{{$enrolement->designation->name}}</td>
+                                    <td>{{$enrolement->affiliation}}</td>
+                                    <td>{{@$enrolement->statutory_bodies->name}}</td>
+                                    <td>{{$enrolement->meeting_date}}</td>
+                                    <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","participant_name":"{{$enrolement->participant_name}}","designation_id":"{{$enrolement->designation_id}}","affiliation":"{{$enrolement->affiliation}}","statutory_bodies_id":"{{$enrolement->statutory_bodies_id}}","meeting_date":"{{$enrolement->meeting_date}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
-                                    <th>Faculty Type</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
+                                    <th>Participant name</th>
+                                    <th>Designation</th>
+                                    <th>Affiliation</th>
+                                    <th>Statutory body</th>
+                                    <th>Meeting date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -158,40 +173,55 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Faculty Gender. </h4>
+                    <h4 class="modal-title">Edit Placement Activities </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        
-                            <div class="col-md-6">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Participant name</label>
+                                    <input type="text" name="participant_name"
+                                    id="edit_participant_name" value="{{old('edit_participant_name')}}" class="form-control">
+                            </div>
+                             <input type="hidden" name="id" id="edit_id">
+                        </div>
+                        <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Faculty Type</label>
-                                   <select name="lookup_faculty_type_id" id="edit_lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Faculty Type</option>
-                                        @foreach($faculty_type as $type)
-                                         <option value="{{$type->id}}">{{$type->faculty_type}}</option>
+                                    <label for="name">Designation</label>
+                                   <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Designation</option>
+                                        @foreach($designation as $scope)
+                                         <option value="{{$scope->id}}">{{$scope->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
-                                <input type="hidden" id="edit_id">
                             </div>
-                           
-
-
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Affiliation</label>
+                                    <input type="text" name="affiliation"
+                                    id="edit_affiliation" value="{{old('edit_affiliation')}}" class="form-control">
+                            </div>
+                        </div>
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Male</label>
-                                    <input type="number" name="male" id="edit_male" value="{{old('edit_male')}}" class="form-control">
+                                    <label for="name">Statutory body</label>
+                                   <select name="statutory_bodies_id" id="edit_statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Statutory body</option>
+                                        @foreach($body as $bod)
+                                         <option value="{{$bod->id}}">{{$bod->name}}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Female</label>
-                                    <input type="number" name="female" id="edit_female" value="{{old('edit_female')}}" class="form-control">
-                                </div>
-                              </div>
-
+                            </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Meeting date</label>
+                                    <input type="date" name="meeting_date"
+                                    id="edit_meeting_date" value="{{old('edit_meeting_date')}}" class="form-control">
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -200,8 +230,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -215,8 +243,7 @@
     </div>
     <!-- /.modal -->
 
-    
-    <!-- /.modal -->
+
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
@@ -225,14 +252,23 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
-        })
+    $("#datatable").DataTable({
+      dom : "lBfrtip",
+    })
+  })
     </script>
     <script type="text/javascript">
 
@@ -244,16 +280,21 @@
             }
         });
 
-         $('#form').submit(function (e) {
-            let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
-            let male = $('#male').val();
-            let female = $('#female').val();
+        $('#form').submit(function (e) {
+            // let uni_id = $('#uni_id').val();
+            let participant_name = $('#participant_name').val();
+            let designation_id = $('#designation_id').val();
+            let affiliation = $('#affiliation').val();
+            let statutory_bodies_id = $('#statutory_bodies_id').val();
+            let meeting_date = $('#meeting_date').val();
 
-            !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
-            !male?addClass('male'):removeClass('male');
-            !female?addClass('female'):removeClass('female');
+            !participant_name?addClass('participant_name'):removeClass('participant_name');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
+            !affiliation?addClass('affiliation'):removeClass('affiliation');
+            !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
+            !meeting_date?addClass('meeting_date'):removeClass('meeting_date');
 
-            if(!lookup_faculty_type_id || !male || !female)
+            if(!participant_name || !designation_id || !affiliation || !statutory_bodies_id || !meeting_date )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -263,7 +304,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("faculty-gender")}}',
+                url:'{{url("body-meeting")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -291,28 +332,35 @@
         });
 
 
-         $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
-            $('#edit_male').val(data.male);
-            $('#edit_female').val(data.female);
+        $('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+           
+            $('#edit_participant_name').val(data.participant_name);
+            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_affiliation').val(data.affiliation);
+            $('#edit_statutory_bodies_id').select2().val(data.statutory_bodies_id).trigger('change');
+            $('#edit_meeting_date').val(data.meeting_date);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
-            let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
-            let male = $('#edit_male').val();
-            let female = $('#edit_female').val();
+        $('#updateForm').submit(function (e) {
+            let participant_name = $('#edit_participant_name').val();
+            let designation_id = $('#edit_designation_id').val();
+            let affiliation = $('#edit_affiliation').val();
+            let statutory_bodies_id = $('#edit_statutory_bodies_id').val();
+            let meeting_date = $('#edit_meeting_date').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
-            !male?addClass('edit_male'):removeClass('edit_male');
-            !female?addClass('edit_female'):removeClass('edit_female');
+            !participant_name?addClass('participant_name'):removeClass('participant_name');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
+            !affiliation?addClass('affiliation'):removeClass('affiliation');
+            !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
+            !meeting_date?addClass('meeting_date'):removeClass('meeting_date');
 
-            if(!lookup_faculty_type_id  || !male || !female )
+            if(!participant_name || !designation_id || !affiliation || !statutory_bodies_id || !meeting_date )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -322,7 +370,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("faculty-gender")}}/'+id,
+                url:'{{url("body-meeting")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -350,14 +398,13 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-
-         $('.delete').on('click', function (e) {
+        $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("faculty-gender")}}/'+id,
+                        url:'{{url("body-meeting")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -386,6 +433,11 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
+
+
+
+
+
 
     </script>
 

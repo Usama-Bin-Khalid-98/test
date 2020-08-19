@@ -1,10 +1,10 @@
-@section('pageTitle', 'Faculty Gender')
+@section('pageTitle', 'Obtained Internships')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-    <!-- Select2 -->
+     <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Faculty Gender
+                Obtained Internships
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Faculty Gender</li>
+                <li class="active">Obtained Internships</li>
             </ol>
         </section>
         <section class="content-header">
@@ -41,9 +41,11 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">4.6 Provide data on the gender mix of the business school faculty in Table 4.6</h3>
+                            <p class="box-title">8.5.   How many number of students obtained internships during last year. Attach policy on internship and placement as Appendix-8C.</p>
+
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -57,34 +59,16 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                         <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Faculty Type</label>
-                                   <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Faculty Type</option>
-                                        @foreach($faculty_type as $type)
-                                         <option value="{{$type->id}}">{{$type->faculty_type}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
+                          <form action="javascript:void(0)" id="form" method="POST">
                            
-
-                          
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Male</label>
-                                    <input type="number" name="male" id="male" class="form-control">
+                                    <label for="name">Attach Doc</label>
+                                    <input type="file" name="file" id="file" >
+                                    <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Female</label>
-                                    <input type="number" name="female" id="female" class="form-control">
-                                </div>
-                            </div>
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -100,43 +84,37 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.6 Faculty Gender Mix.</h3>
+                            <h3 class="box-title">Obtained Internships</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
+                                    <th>Business School Name</th>
                                     <th>Campus</th>
-                                    <th>Faculty Type</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
+                                    <th>Document</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                               @foreach($genders as $req)
+                                @foreach($reports as $contact)
                                 <tr>
-                                    <td>{{$req->campus->business_school->name}}</td>
-                                    <td>{{$req->campus->location}}</td>
-                                    <td>{{$req->lookup_faculty_type->faculty_type}}</td>
-                                    <td>{{$req->male}}</td>
-                                    <td>{{$req->female}}</td>
-                                    <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","male":"{{$req->male}}","female":"{{$req->female}}", "status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
-
+                                    <td>{{$contact->campus->business_school->name}}</td>
+                                    <td>{{$contact->campus->location}}</td>
+                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
+                                 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
+                                    <th>Business School Name</th>
                                     <th>Campus</th>
-                                    <th>Faculty Type</th>
-                                    <th>Male</th>
-                                    <th>Female</th>
+                                    <th>Document</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -148,8 +126,18 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
+
+
             </div>
+            <!-- /.row -->
+
+            <!-- /.row -->
+
+            <!-- /.content -->
+
+
         </section>
+
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -158,39 +146,20 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Faculty Gender. </h4>
+                    <h4 class="modal-title">Edit Obtained Internships </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body">
-                        
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Faculty Type</label>
-                                   <select name="lookup_faculty_type_id" id="edit_lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Faculty Type</option>
-                                        @foreach($faculty_type as $type)
-                                         <option value="{{$type->id}}">{{$type->faculty_type}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
-                           
-
-
-                        <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Male</label>
-                                    <input type="number" name="male" id="edit_male" value="{{old('edit_male')}}" class="form-control">
-                                </div>
-                              </div>
+                    <div class="modal-body"> 
 
                               <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Female</label>
-                                    <input type="number" name="female" id="edit_female" value="{{old('edit_female')}}" class="form-control">
-                                </div>
-                              </div>
+                            <div class="form-group">
+                                <label for="name">Attach Doc</label>
+                                <input type="file" name="file" id="edit_file" >
+                                <input type="hidden" name="old_file" id="old_file" >
+                                <span class="text-blue" id="file-name"></span>
+                            </div>
+                            <input type="hidden" id="edit_id">
+                        </div>
 
 
                         <div class="col-md-6">
@@ -215,9 +184,9 @@
     </div>
     <!-- /.modal -->
 
-    
+   
     <!-- /.modal -->
-     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -245,15 +214,11 @@
         });
 
          $('#form').submit(function (e) {
-            let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
-            let male = $('#male').val();
-            let female = $('#female').val();
+            let file = $('#file').val();
 
-            !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
-            !male?addClass('male'):removeClass('male');
-            !female?addClass('female'):removeClass('female');
+            !file?addClass('file'):removeClass('file');
 
-            if(!lookup_faculty_type_id || !male || !female)
+            if(!file)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -263,7 +228,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("faculty-gender")}}',
+                url:'{{url("obtained-internship")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -294,35 +259,23 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
-            $('#edit_male').val(data.male);
-            $('#edit_female').val(data.female);
+            $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
-            let male = $('#edit_male').val();
-            let female = $('#edit_female').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
-            !male?addClass('edit_male'):removeClass('edit_male');
-            !female?addClass('edit_female'):removeClass('edit_female');
 
-            if(!lookup_faculty_type_id  || !male || !female )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
+            
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("faculty-gender")}}/'+id,
+                url:'{{url("obtained-internship")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -357,7 +310,7 @@ $('#updateForm').submit(function (e) {
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("faculty-gender")}}/'+id,
+                        url:'{{url("obtained-internship")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -386,6 +339,7 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
+
 
     </script>
 

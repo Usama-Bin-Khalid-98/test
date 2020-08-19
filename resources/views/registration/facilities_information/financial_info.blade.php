@@ -64,7 +64,7 @@
                                     <select name="income_source_id" id="income_source_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Particulars</option>
                                         @foreach($income as $source)
-                                         <option value="{{$source->id}}">{{$source->particular}}</option>
+                                         <option value="{{$source->id}}">{{$source->particular}} ({{$source->type}})</option>
                                         @endforeach
                                         </select>
                                 </div>

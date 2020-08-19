@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information about core business school faculty : present aggregate numbers in Table 4.1</h3>
+                            <h3 class="box-title">4.1 Provide information about core business school faculty : present aggregate numbers in Table 4.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -133,6 +133,15 @@
                                     
                                 </tr>
                                 @endforeach
+                                <tr style="background-color: grey;color: white;">
+                                    <td style="font-weight: bold;">Total</td>
+                                    <td style="font-weight: bold;"></td>
+                                    <td style="font-weight: bold;"></td>
+                                    <td style="font-weight: bold;"></td>
+                                    <td style="font-weight: bold;">{{@$number}}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
