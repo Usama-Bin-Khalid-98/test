@@ -23,7 +23,7 @@ class CreateProgramPortfoliosTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->enum('program', ['Program 1','Program 2'])->default('Program 1');
+//            $table->enum('program', ['Program 1','Program 2'])->default('Program 1');
             $table->integer('program_id')->unsigned();
             $table->foreign('program_id')
                 ->references('id')

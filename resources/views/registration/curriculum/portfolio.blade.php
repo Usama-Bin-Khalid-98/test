@@ -176,7 +176,7 @@
                                     <td>{{$portfolio->internship_req}}</td>
                                     <td>{{$portfolio->fyp_req}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program":"{{$portfolio->program}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -393,7 +393,6 @@
 $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
 
-            $('#edit_program').select2().val(data.program).trigger('change');
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_total_semesters').val(data.total_semesters);
             $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
@@ -406,7 +405,6 @@ $('.edit').on('click', function () {
         });
 
 $('#updateForm').submit(function (e) {
-            let program = $('#edit_program').val();
             let program_id = $('#edit_program_id').val();
             let total_semesters = $('#edit_total_semesters').val();
             let course_type_id = $('#edit_course_type_id').val();
@@ -417,7 +415,6 @@ $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !program?addClass('edit_program'):removeClass('edit_program');
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
             !total_semesters?addClass('edit_total_semesters'):removeClass('edit_total_semesters');
             !course_type_id?addClass('edit_course_type_id'):removeClass('edit_course_type_id');
@@ -426,7 +423,7 @@ $('#updateForm').submit(function (e) {
             !internship_req?addClass('edit_internship_req'):removeClass('edit_internship_req');
             !fyp_req?addClass('edit_fyp_req'):removeClass('edit_fyp_req');
 
-            if(!program || !program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
