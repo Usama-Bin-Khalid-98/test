@@ -108,7 +108,14 @@ use Illuminate\Support\Facades\Route;
         Route::resource('faculty-degree', 'FacultyDegreeController');
 
         //research-summary
+        Route::resource('oric','OricController');
+        Route::resource('research-center','ResearchCenterController');
+        Route::resource('research-agenda','ResearchAgendaController');
         Route::resource('research-summary','ResearchSummaryController');
+        Route::resource('research-output','ResearchOutputController');
+        Route::resource('curriculum-role','CurriculumRoleController');
+        Route::resource('faculty-development','FacultyDevelopmentController');
+        Route::resource('conference','ConferenceController');
 
         //Facilities-information
         Route::resource('financial-info','FinancialInfoController');
@@ -126,6 +133,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('formal-relationship','FormalRelationshipController');
         Route::resource('complaint-resolution','ComplaintResolutionController');
         Route::resource('internal-community','InternalCommunityController');
+        Route::resource('social-activity','SocialActivityController');
         Route::patch('registration-apply/{id}','HomeController@apply');
 
 

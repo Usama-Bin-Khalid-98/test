@@ -20,8 +20,10 @@ class AdmissionOfficeController extends Controller
     public function index()
     {
         try {
+            $campus_id = Auth::user()->campus_id;
+            $department_id = Auth::user()->department_id;
 
-            $admission_office = AdmissionOffice::get()->first();
+            $admission_office = AdmissionOffice::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
 
         return view('admission_examination.admission_office',compact('admission_office'));
         }catch (\Exception $e) {
