@@ -56,7 +56,6 @@ use Illuminate\Support\Facades\Route;
         Route::resource('registrationPrint','RegistrationPrintController');
 
     });
-
 //    Route::put('users-roles', 'Auth\UserController\user_roles');
 
     Route::group(['middleware' => ['role:BusinessSchool']], function () {
