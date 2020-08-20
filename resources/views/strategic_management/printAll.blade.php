@@ -212,6 +212,7 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                     @include('strategic_management.includes.5')
                     @include('strategic_management.includes.6')
                     @include('strategic_management.includes.7')
+                    @include('strategic_management.includes.8')
 
 
                         <!-- /.box-body -->

@@ -43,11 +43,11 @@ class PrintController extends Controller
         $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND campuses.id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
 
 
-        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=?', array($bussinessSchool[0]->id));
+        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
 
-         $affiliations = DB::select('SELECT affiliations.*,statutory_committees.name as statutoryName, statutory_bodies.name as statutoryBody, designations.name as designationName
-            FROM affiliations, statutory_committees, statutory_bodies, business_schools, designations
+         $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
+            FROM affiliations, statutory_bodies, business_schools, designations
             WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.designation_id=designations.id AND business_schools.id=?', array($bussinessSchool[0]->id));
 
 
@@ -87,8 +87,20 @@ class PrintController extends Controller
          $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($userCampus[0]->campus_id, $prevSemester));
 
          $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses, users WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id AND users.id=? AND faculty_genders.campus_id=? AND users.department_id=?', array(auth()->user()->id, $userCampus[0]->campus_id, $userCampus[0]->department_id));
+
+          $placementOffices = DB::select('SELECT placement_offices.* FROM placement_offices, campuses, users WHERE placement_offices.campus_id=campuses.id AND placement_offices.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+           $linkages = DB::select('SELECT linkages.* FROM linkages, campuses, users WHERE linkages.campus_id=campuses.id AND linkages.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $statutoryBodyMeetings = DB::select('SELECT body_meetings.*, designations.name as designation, statutory_bodies.name as statutoryBody FROM body_meetings, designations, statutory_bodies, campuses, users WHERE body_meetings.campus_id=campuses.id AND body_meetings.designation_id=designations.id AND body_meetings.statutory_bodies_id=statutory_bodies.id AND body_meetings.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $studentsExchangePrograms = DB::select('SELECT student_exchanges.* FROM student_exchanges, campuses, users WHERE student_exchanges.campus_id=campuses.id AND student_exchanges.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $facultyExchangePrograms = DB::select('SELECT faculty_exchanges.* FROM faculty_exchanges, campuses, users WHERE faculty_exchanges.campus_id=campuses.id AND faculty_exchanges.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $placementActivities = DB::select('SELECT placement_activities.* FROM placement_activities, campuses, users WHERE placement_activities.campus_id=campuses.id AND placement_activities.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
            
-        return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders'));
+            return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){
