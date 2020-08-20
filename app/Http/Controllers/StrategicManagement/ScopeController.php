@@ -55,7 +55,7 @@ class ScopeController extends Controller
         try {
             //$update = BasicInfo::find($basicInfo->id);
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
-            if (Scope::where(['campus_id' => auth()->user()->campus_id, 'program_id' => $request->program_id, 'level_id' => $request->level_id] )->exists()) {
+            if (Scope::where(['campus_id' => auth()->user()->campus_id,'department_id'=> auth()->user()->department_id, 'program_id' => $request->program_id, 'level_id' => $request->level_id] )->exists()) {
                 return response()->json(['error' => 'Record already Exists.'], 422);
             }
             if($validation->fails())

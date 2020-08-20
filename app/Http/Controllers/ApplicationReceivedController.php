@@ -26,7 +26,7 @@ class ApplicationReceivedController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $scopes = Scope::with('program')->get();
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $semesters = Semester::where('status', 'active')->get();
 
         $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
