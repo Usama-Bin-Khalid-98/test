@@ -24,11 +24,12 @@ class ProgramPortfolioController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
 
-        $scopes = Scope::with('program')->get();
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+       // dd($scopes);
         $courses = CourseType::where('status', 'active')->get();
 
         $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
+        //dd($portfolios[0]->program);
          return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
     }
 

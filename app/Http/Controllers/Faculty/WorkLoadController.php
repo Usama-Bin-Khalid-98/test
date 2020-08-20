@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Faculty;
 use App\Http\Controllers\Controller;
 use App\Models\Common\Semester;
 use App\Models\Faculty\WorkLoad;
-use App\BusinessSchool;
 use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class WorkLoadController extends Controller

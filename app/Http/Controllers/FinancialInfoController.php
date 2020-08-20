@@ -19,15 +19,30 @@ class FinancialInfoController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $department_id = Auth::user()->department_id;  
+        $department_id = Auth::user()->department_id;
         $income = IncomeSource::all();
-        $infos = FinancialInfo::with('campus','income_source')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        ///dd($contacts);
-        return view('registration.facilities_information.financial_info', compact('income','infos'));
+        $income_type ='income';
+        $infos = FinancialInfo::with('income_source')
+            ->whereHas('income_source', function($q) use ($income_type) {
+            $q->where('type', $income_type);
+            })
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+            ->get();
+        $income_type ='expense';
+        $infos_expense = FinancialInfo::with('income_source')
+            ->whereHas('income_source', function($q) use($income_type) {
+            $q->where('type', $income_type);
+            })
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+            ->get();
+
+
+        //dd($infos_expense);
+        return view('registration.facilities_information.financial_info', compact('income','infos', 'infos_expense'));
     }
 
     /**
@@ -48,6 +63,7 @@ class FinancialInfoController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -146,7 +162,7 @@ class FinancialInfoController extends Controller
     {
         try {
             FinancialInfo::where('id', $financialInfo->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             FinancialInfo::destroy($financialInfo->id);
             return response()->json(['success' => 'Record deleted successfully.']);

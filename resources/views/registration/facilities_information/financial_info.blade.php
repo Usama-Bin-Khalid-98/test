@@ -87,7 +87,7 @@
                                     <input type="text" name="year_one" id="year_one" class="form-control">
                                 </div>
                               </div>
-                            
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year t</label>
@@ -106,7 +106,7 @@
                                     <input type="text" name="year_t_plus_two" id="year_t_plus_two" class="form-control">
                                 </div>
                               </div>
-                            
+
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -129,8 +129,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
+{{--                                    <th>Business School</th>--}}
+{{--                                    <th>Campus</th>--}}
                                     <th>Income Source</th>
                                     <th>Year t-3</th>
                                     <th>Year t-2</th>
@@ -143,12 +143,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                    @php
+                                        $year3 = $year2 =  $year1 = $year_t = $year_t_plus = $year_t_plus_two = 0 ;
+                                    @endphp
                                     @foreach($infos as $summary)
+                                        @php
+                                            $year3 += $summary->year_three;
+                                            $year2 += $summary->year_two;
+                                            $year1 += $summary->year_one;
+                                            $year_t += $summary->year_t;
+                                            $year_t_plus += $summary->year_t_plus_one;
+                                            $year_t_plus_two += $summary->year_t_plus_two;
+                                        @endphp
                                 <tr>
-                                    <td>{{$summary->campus->business_school->name}}</td>
-                                    <td>{{$summary->campus->location}}</td>
-                                    <td>{{$summary->income_source->particular}}</td>
+{{--                                    <td>{{$summary->campus->business_school->name}}</td>--}}
+{{--                                    <td>{{$summary->campus->location}}</td>--}}
+                                    <td>{{@$summary->income_source->particular}}</td>
                                     <td>{{$summary->year_three}}</td>
                                     <td>{{$summary->year_two}}</td>
                                     <td>{{$summary->year_one}}</td>
@@ -159,12 +169,60 @@
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"income_source_id":"{{$summary->income_source_id}}","year_three":"{{$summary->year_three}}","year_two":"{{$summary->year_two}}","year_one":"{{$summary->year_one}}","year_t":"{{$summary->year_t}}","year_t_plus_one":"{{$summary->year_t_plus_one}}","year_t_plus_two":"{{$summary->year_t_plus_two}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                               
+
+                                <tr style="background-color: #8B98AB">
+                                    <th >TOTAL REVENUE (A)</th>
+                                    <th>{{$year3}}</th>
+                                    <th>{{$year2}}</th>
+                                    <th>{{$year1}}</th>
+                                    <th>{{$year_t}}</th>
+                                    <th>{{$year_t_plus}}</th>
+                                    <th>{{$year_t_plus_two}}</th>
+                                    <th colspan="2"></th>
+                                </tr>
+
+                                    @php
+                                        $exp_year3 = $exp_year2 =  $exp_year1 = $exp_year_t = $exp_year_t_plus = $exp_year_t_plus_two = 0 ;
+                                    @endphp
+                                    @foreach($infos_expense as $summary_expense)
+                                        @php
+                                            $exp_year3 += $summary_expense->year_three;
+                                            $exp_year2 += $summary_expense->year_two;
+                                            $exp_year1 += $summary_expense->year_one;
+                                            $exp_year_t += $summary_expense->year_t;
+                                            $exp_year_t_plus += $summary_expense->year_t_plus_one;
+                                            $exp_year_t_plus_two += $summary_expense->year_t_plus_two;
+                                        @endphp
+                                <tr>
+{{--                                    <td>{{$summary_expense->campus->business_school->name}}</td>--}}
+{{--                                    <td>{{$summary_expense->campus->location}}</td>--}}
+                                    <td>{{@$summary_expense->income_source->particular}}</td>
+                                    <td>{{$summary_expense->year_three}}</td>
+                                    <td>{{$summary_expense->year_two}}</td>
+                                    <td>{{$summary_expense->year_one}}</td>
+                                    <td>{{$summary_expense->year_t}}</td>
+                                    <td>{{$summary_expense->year_t_plus_one}}</td>
+                                    <td>{{$summary_expense->year_t_plus_two}}</td>
+                                    <td><i class="badge {{$summary_expense->status == 'active'?'bg-green':'bg-red'}}">{{$summary_expense->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary_expense->id}}"></i> | <i data-row='{"id":{{$summary_expense->id}},"income_source_id":"{{$summary_expense->income_source_id}}","year_three":"{{$summary_expense->year_three}}","year_two":"{{$summary_expense->year_two}}","year_one":"{{$summary_expense->year_one}}","year_t":"{{$summary_expense->year_t}}","year_t_plus_one":"{{$summary_expense->year_t_plus_one}}","year_t_plus_two":"{{$summary_expense->year_t_plus_two}}","status":"{{$summary_expense->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                </tr>
+                                @endforeach
+
+                                <tr style="background-color: #8B98AB">
+                                    <th>TOTAL EXPENSES (B)</th>
+                                    <th>{{$exp_year3}}</th>
+                                    <th>{{$exp_year2}}</th>
+                                    <th>{{$exp_year1}}</th>
+                                    <th>{{$exp_year_t}}</th>
+                                    <th>{{$exp_year_t_plus}}</th>
+                                    <th>{{$exp_year_t_plus_two}}</th>
+                                    <th colspan="2"></th>
+                                </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
+{{--                                    <th>Business School</th>--}}
+{{--                                    <th>Campus</th>--}}
                                     <th>Income Source</th>
                                     <th>Year t-3</th>
                                     <th>Year t-2</th>
@@ -221,7 +279,7 @@
                                     <input type="text" name="year_two" id="edit_year_two" value="{{old('edit_year_two')}}" class="form-control">
                                 </div>
                               </div>
-                            
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Year t-1</label>
@@ -254,7 +312,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -268,7 +326,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

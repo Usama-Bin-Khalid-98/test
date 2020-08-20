@@ -103,7 +103,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('faculty-gender','Faculty\FacultyGenderController');
         Route::resource('faculty-stability','Faculty\FacultyStabilityController');
         Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
-        Route::resource('work-load','Faculty\WorkloadController');
+        Route::resource('work-load','Faculty\WorkLoadController');
         Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
         Route::resource('faculty-summary','Faculty\FacultySummaryController');
         Route::resource('faculty-degree', 'FacultyDegreeController');
