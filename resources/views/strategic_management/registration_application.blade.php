@@ -39,13 +39,14 @@
                            style="color: white;"
                            value="Add New"
                             name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+                            <a href="public" download="document.getElementById('printIDABC')">Download</a>
                 </div>
             </div>
         </section>
 
         {{--Dean section --}}
         {{--Dean section --}}
-        <section class="content">
+        <section class="content" id="printIDABC">
             <div class="row">
                 <div class="col-md-12">
 
