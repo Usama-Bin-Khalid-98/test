@@ -22,9 +22,8 @@ class PlacementOfficeController extends Controller
         try {
 
             $placement_office = PlacementOffice::get()->first();
-            $office= PlacementOffice::where('id')->exists();
 
-        return view('external_linkages.placement_office',compact('placement_office','office'));
+        return view('external_linkages.placement_office',compact('placement_office'));
         }catch (\Exception $e) {
             return $e->getMessage();
         }

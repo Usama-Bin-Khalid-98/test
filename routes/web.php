@@ -140,6 +140,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('placement-activity','PlacementActivityController');
 
         //Admission & Examination Policy
+        Route::resource('admission-office','AdmissionOfficeController');
         Route::resource('credit-transfer','CreditTransferController');
         Route::resource('student-transfer','StudentTransferController');
         Route::resource('documentary-evidence','DocumentaryEvidenceController');

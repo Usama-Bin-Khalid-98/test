@@ -62,8 +62,8 @@
                                 <tr>
                                     <td>a) Hierarchical Position</td>
                                      <td>
-                                        <input type="radio" value="At university level"  name="hierarchical_position" id="hierarchical_position" > <span>At university level</span>
-                                             <input type="radio" value="dedicated to business school"  name="hierarchical_position" id="hierarchical_position" > <span>Dedicated to business school</span>
+                                        <input type="radio" value="At university level"  name="hierarchical_position" class="flat-red"  {{ @$placement_office->hierarchical_position == 'At university level' ? 'checked' : '' }} > <span>At university level</span>
+                                             <input type="radio" value="dedicated to business school"  name="hierarchical_position" class="flat-red"  {{ @$placement_office->hierarchical_position == 'dedicated to business school' ? 'checked' : '' }} > <span>Dedicated to business school</span>
                                       </td>
                                     <input type="hidden" id="id" value="{{@$placement_office->id}}">
                                 </tr>
@@ -155,7 +155,7 @@
 
         $('#update').on('click', function (e) {
 
-            let hierarchical_position = $('#hierarchical_position').val();
+            let hierarchical_position = $('input[name=hierarchical_position]:checked').val();
             let year_establishment = $('#year_establishment').val();
             let head = $('#head').val();
             let reports_to = $('#reports_to').val();
@@ -219,7 +219,7 @@
 
     $('#update').on('click', function (e) {
 
-            let hierarchical_position = $('#hierarchical_position').val();
+            let hierarchical_position = $('input[name=hierarchical_position]:checked').val();
             let year_establishment = $('#year_establishment').val();
             let head = $('#head').val();
             let reports_to = $('#reports_to').val();
@@ -228,9 +228,6 @@
             let printers = $('#printers').val();
             let photocopiers = $('#photocopiers').val();
             let id = $('#id').val();
-
-            alert(hierarchical_position);
-            exit();
 
              !hierarchical_position?addClass('hierarchical_position'):removeClass('hierarchical_position');
              !year_establishment?addClass('year_establishment'):removeClass('year_establishment');
