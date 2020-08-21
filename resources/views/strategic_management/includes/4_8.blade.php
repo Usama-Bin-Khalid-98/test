@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.8. Consultancy projects of core business faculty</caption>
+                                <caption style="text-align: center;color: red">Table 4.8. Consultancy projects of core business faculty</caption>
                                 <thead>
                                     <th>No</th>
                                     <th>Name of faculty</th>

@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 5.2. Basic information of research centers</caption>
+                                <caption style="text-align: center;color: red">Table 5.2. Basic information of research centers</caption>
                                 <thead>
                                     <th>a)  Name of research center </th>
                                     <th> </th>

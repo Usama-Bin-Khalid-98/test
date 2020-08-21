@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 2.10. Evaluation methods</caption>
+                                <caption style="text-align: center;color: red">Table 2.10. Evaluation methods</caption>
                                 <thead>
                                     <th>Items</th>
                                     <th>Frequency</th>

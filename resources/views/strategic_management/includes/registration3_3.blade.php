@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 3.3. Student gender mix</caption>
+                                <caption style="text-align: center;color: red">Table 3.3. Student gender mix</caption>
                                 <thead>
                                     <th>Program(s) under review</th>
                                     <th>Male (%)</th>

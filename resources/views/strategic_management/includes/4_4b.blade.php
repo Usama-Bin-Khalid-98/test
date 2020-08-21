@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 4.4b Visiting Faculty Equivalent (VFE) in program(s)  
 </caption>
                                 <thead>

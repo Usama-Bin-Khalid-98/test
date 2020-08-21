@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 5.1. Basic information of ORIC</caption>
+                                <caption style="text-align: center;color: red">Table 5.1. Basic information of ORIC</caption>
                                 <thead>
                                     <th>a)  Year of  establishment </th>
                                     <th> </th>

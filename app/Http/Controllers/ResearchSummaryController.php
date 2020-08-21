@@ -27,7 +27,7 @@ class ResearchSummaryController extends Controller
         $publications = PublicationType::where('status', 'active')->get();
         $publication_categories = PublicationCategory::all();
         $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        ///dd($contacts);
+       // dd($summaries);
         return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories'));
     }
 
@@ -61,6 +61,7 @@ class ResearchSummaryController extends Controller
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'total_items' => $request->total_items,
+                'year' => $request->year,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
                 'jointly_produced_other' => $request->jointly_produced_other,
                 'jointly_produced_same' => $request->jointly_produced_same,
@@ -101,6 +102,18 @@ class ResearchSummaryController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Research\ResearchSummary  $researchSummary
+     * @return \Illuminate\Http\Response
+     */
+    public function get_publication_category($researchSummary)
+    {
+        //dd($researchSummary);
+        return PublicationType::where(['publication_category_id' => $researchSummary])->get();
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -120,6 +133,7 @@ class ResearchSummaryController extends Controller
             ResearchSummary::where('id', $researchSummary->id)->update([
                 'publication_type_id' => $request->publication_type_id,
                 'total_items' => $request->total_items,
+                'year' => $request->year,
                 'contributing_core_faculty' => $request->contributing_core_faculty,
                 'jointly_produced_other' => $request->jointly_produced_other,
                 'jointly_produced_same' => $request->jointly_produced_same,

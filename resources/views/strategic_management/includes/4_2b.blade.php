@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 4.2b. Faculty workload (t-1)
 </caption>
                                 <thead>
@@ -27,7 +27,7 @@ Table 4.2b. Faculty workload (t-1)
                                      
                                      
                                     </tr><?php  ?>
-                                    @foreach($facultyWorkLoad as $data)
+                                    @foreach($facultyWorkLoadb as $data)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{$data->faculty_name}}</td>

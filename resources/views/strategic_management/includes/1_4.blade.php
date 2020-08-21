@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 1.4. Business school’s statutory committees</caption>
+                                <caption style="text-align: center;color: red">Table 1.4. Business school’s statutory committees</caption>
                                 <thead>
                                     <th>Body name</th>
                                     <th>Name and designation of Chairperson</th>

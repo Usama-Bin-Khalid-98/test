@@ -19,18 +19,18 @@ class EntryRequirementController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $scopes = Scope::with('program')->get();
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $criterias = EligibilityCriteria::where('status', 'active')->get();
 
         $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.curriculum.entry_req', compact('scopes','criterias','entryRequirements'));
-        
+
     }
 
     /**
@@ -141,7 +141,7 @@ class EntryRequirementController extends Controller
     {
         try {
             EntryRequirement::where('id', $entryRequirement->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             EntryRequirement::destroy($entryRequirement->id);
             return response()->json(['success' => 'Record deleted successfully.']);
