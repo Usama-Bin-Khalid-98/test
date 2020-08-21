@@ -12,26 +12,13 @@ Table 5.7. Role of R&D in curriculum
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($curriculumRoles as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->research_publication}}</td>
+                                        <td>{{$data->course_title}}</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
+                                   @endforeach
                                    
                                    
                                     
