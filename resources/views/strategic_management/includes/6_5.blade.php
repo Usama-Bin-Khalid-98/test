@@ -15,36 +15,15 @@ Table 6.5. Complaint resolution
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($complaintResolution as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                         
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->complaint_desc}}</td>
+                                        <td>{{$data->arbitrating_authority}}</td>
+                                        <td>{{$data->solution}}</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
-                                   
-                                   
-                                    
-                              
+                                     @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               

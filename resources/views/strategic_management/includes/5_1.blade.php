@@ -3,8 +3,7 @@
                             <table   class="table table-bordered table-striped ">
                                 <caption style="text-align: center;color: red">Table 5.1. Basic information of ORIC</caption>
                                 <thead>
-                                    <th>a)  Year of  establishment </th>
-                                    <th> </th>
+                                   
                                      
                                     
                                     
@@ -12,22 +11,22 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($orics as $data)
                                     <tr>
-                                        <td>b)  Head/supervisor of the research center</td>
-                                        <td></td>
+                                        <td class="left">a) Year of establishment</td>
+                                        <td>{{$data->year_establishment}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="left">b)  Head/supervisor of the research center</td>
+                                        <td>{{$data->head}}</td>
                                     </tr>
                                     <tr>
-                                        <td>c)  Qualification of the main  head/supervisor of research center</td>
-                                        <td>
-                                               Director ORIC
-                                               Director Research
-                                               Dean
-                                        </td>
+                                        <td class="left">c)  Qualification of the main  head/supervisor of research center</td>
+                                        <td>{{$data->qualification}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>d)  Head/Supervisor reports to</td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
+                                  
                                     
                               
                                 </tbody>
