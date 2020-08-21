@@ -16,6 +16,4 @@
                         <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
                         <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
                         <div class="col  col-md-3 col-lg-3"></div>
-
-
                     </div>

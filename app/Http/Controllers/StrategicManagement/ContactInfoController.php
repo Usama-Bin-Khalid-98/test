@@ -46,6 +46,7 @@ class ContactInfoController extends Controller
      */
     public function store(Request $request)
     {
+
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -53,33 +54,92 @@ class ContactInfoController extends Controller
         }
         try {
 //            dd($fileName);
-                $path = ''; $imageName = '';
-                if($request->file('cv')) {
-                    $imageName = $request->name . "-cv-" . time() . '.' . $request->cv->getClientOriginalExtension();
-                    $path = 'uploads/cv';
-                    $diskName = env('DISK');
-                    $disk = Storage::disk($diskName);
-                    $request->file('cv')->move($path, $imageName);
-
+            $campus_id = auth()->user()->campus_id;
+            $department_id = auth()->user()->department_id;
+            $user_id = auth()->user()->id;
+            $check = ContactInfo::where(['campus_id'=> $campus_id, 'department_id'=>$department_id])->exists();
+            dd($check);
+            if(!$check) {
+                if (!empty($request->ds_name)) {
+                    $path = '';
+                    $imageName = '';
+                    if ($request->file('ds_cv')) {
+                        $imageName = $request->ds_name . "-cv-" . time() . '.' . $request->ds_cv->getClientOriginalExtension();
+                        $path = 'uploads/cv';
+                        $diskName = env('DISK');
+                        $disk = Storage::disk($diskName);
+                        $request->file('ds_cv')->move($path, $imageName);
+                    }
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
+                    //dd($request->ds_name);
                     ContactInfo::create([
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'contact_no' => $request->contact_no,
-                        'school_contact' => $request->school_contact,
-                        'designation_id' => $request->designation_id,
-                        'focal_person' => $request->focal_person,
-                        'cv' => $path.'/'.$imageName,
+                        'name' => $request->ds_name,
+                        'email' => $request->ds_email,
+                        'contact_no' => $request->ds_tell_off,
+                        'school_contact' => $request->ds_tell_cell,
+                        'designation_id' => 2,
+                        'job_title' => $request->ds_job_title,
+                        'cv' => $path . '/' . $imageName,
                         'isComplete' => 'yes',
                         'campus_id' => auth()->user()->campus_id,
                         'department_id' => auth()->user()->department_id,
                         'created_by' => auth()->user()->id,
-                ]);
+                    ]);
+
+
+                    if ($request->file('hs_cv')) {
+                        $imageName = $request->hs_name . "-cv-" . time() . '.' . $request->hs_cv->getClientOriginalExtension();
+                        $path = 'uploads/cv';
+                        $diskName = env('DISK');
+                        $disk = Storage::disk($diskName);
+                        $request->file('hs_cv')->move($path, $imageName);
+                    }
+                    //dd($request->all());
+                    // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
+
+                    ContactInfo::create([
+                        'name' => $request->hs_name,
+                        'email' => $request->hs_email,
+                        'contact_no' => $request->hs_tell_off,
+                        'school_contact' => $request->hs_tell_cell,
+                        'designation_id' => 2,
+                        'job_title' => $request->hs_job_title,
+                        'cv' => $path . '/' . $imageName,
+                        'isComplete' => 'yes',
+                        'campus_id' => auth()->user()->campus_id,
+                        'department_id' => auth()->user()->department_id,
+                        'created_by' => auth()->user()->id,
+                    ]);
+
+                    if ($request->file('fp_cv')) {
+                        $imageName = $request->fp_name . "-cv-" . time() . '.' . $request->fp_cv->getClientOriginalExtension();
+                        $path = 'uploads/cv';
+                        $diskName = env('DISK');
+                        $disk = Storage::disk($diskName);
+                        $request->file('fp_cv')->move($path, $imageName);
+                    }
+                    //dd($request->all());
+                    // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
+
+                    ContactInfo::create([
+                        'name' => $request->fp_name,
+                        'email' => $request->fp_email,
+                        'contact_no' => $request->fp_tell_off,
+                        'school_contact' => $request->fp_tell_cell,
+                        'designation_id' => 2,
+                        'job_title' => $request->fp_job_title,
+                        'cv' => $path . '/' . $imageName,
+                        'isComplete' => 'yes',
+                        'campus_id' => auth()->user()->campus_id,
+                        'department_id' => auth()->user()->department_id,
+                        'created_by' => auth()->user()->id,
+                    ]);
+                }
+            }
 
                     return response()->json(['success' => 'Contact Information added successfully.']);
-                }
+
 
         }catch (Exception $e)
         {
@@ -194,11 +254,10 @@ class ContactInfoController extends Controller
 
     protected function rules() {
         return [
-            'name' => 'required',
-            'contact_no' => 'required',
-            'email' => 'required',
-            'school_contact' => 'required',
-            'designation_id' => 'required',
+            'ds_name' => 'required',
+            'ds_tell_off' => 'required',
+            'ds_email' => 'required',
+            'ds_tell_cell' => 'required',
             'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
         ];
     }
