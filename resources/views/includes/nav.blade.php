@@ -42,6 +42,8 @@ $output = checkIsCompleted('App\Models\Research\ResearchOutput', ['campus_id' =>
 $oric = checkIsCompleted('App\Models\Research\Oric', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_center = checkIsCompleted('App\Models\Research\ResearchCenter', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_agenda = checkIsCompleted('App\Models\Research\ResearchAgenda', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_funding = checkIsCompleted('App\Models\Research\ResearchFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 @endphp
 
 <aside class="main-sidebar">
@@ -321,7 +323,7 @@ $research_agenda = checkIsCompleted('App\Models\Research\ResearchAgenda', ['camp
         </li>
           @endhasrole
           @hasrole('BusinessSchool')
-           <li class=" treeview {{(request()->is('research-summary'))?'active':''}}{{(request()->is('conference'))?'active':''}}{{(request()->is('curriculum-role'))?'active':''}}{{(request()->is('faculty-development'))?'active':''}}{{(request()->is('research-output'))?'active':''}}{{(request()->is('oric'))?'active':''}}{{(request()->is('research-center'))?'active':''}}{{(request()->is('research-agenda'))?'active':''}} ">
+           <li class=" treeview {{(request()->is('research-summary'))?'active':''}}{{(request()->is('conference'))?'active':''}}{{(request()->is('curriculum-role'))?'active':''}}{{(request()->is('faculty-development'))?'active':''}}{{(request()->is('research-output'))?'active':''}}{{(request()->is('oric'))?'active':''}}{{(request()->is('research-center'))?'active':''}}{{(request()->is('research-agenda'))?'active':''}}{{(request()->is('research-funding'))?'active':''}}{{(request()->is('research-project'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i><span>5: Research Development</span>
              <span class="pull-right-container">
@@ -347,6 +349,16 @@ $research_agenda = checkIsCompleted('App\Models\Research\ResearchAgenda', ['camp
                     <li  class="{{ (request()->is('research-agenda')) ? 'active' : '' }}"><a href="{{url('research-agenda')}}">5.3 Research Agenda<span class="pull-right-container">
                         <span class="text text-{{$research_agenda==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$research_agenda==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-funding')) ? 'active' : '' }}"><a href="{{url('research-funding')}}">5.4 Research Funding<span class="pull-right-container">
+                        <span class="text text-{{$research_funding==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-project')) ? 'active' : '' }}"><a href="{{url('research-project')}}">5.5 Research Projects<span class="pull-right-container">
+                        <span class="text text-{{$research_project==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research_project==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
                     <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}">5.6 Research Summary<span class="pull-right-container">

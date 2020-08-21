@@ -111,6 +111,8 @@ use Illuminate\Support\Facades\Route;
         Route::resource('oric','OricController');
         Route::resource('research-center','ResearchCenterController');
         Route::resource('research-agenda','ResearchAgendaController');
+        Route::resource('research-funding','ResearchFundingController');
+        Route::resource('research-project','ResearchProjectController');
         Route::resource('research-summary','ResearchSummaryController');
         Route::resource('research-output','ResearchOutputController');
         Route::resource('curriculum-role','CurriculumRoleController');
