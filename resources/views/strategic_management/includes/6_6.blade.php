@@ -14,41 +14,14 @@ Table 6.6. Internal community welfare programs
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($internalCommunityWelfareProgram as $data)
                                     <tr>
-                                        <td></td>
-                                        <td>Health insurance</td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td class="left">{{$data->welfareProgram}}</td>
+                                        <td>{{$data->no_of_individual_covered}}</td>
                                         
                                     </tr>
-                                     <tr>                                         
-                                        <td></td>
-                                        <td>Housing </td>
-                                        <td></td>
-                                         
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Loan schemes</td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                     <tr>                                         
-                                        <td></td>
-                                        <td>Welfare fund </td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                    <tr>                                         
-                                        <td></td>
-                                        <td>Others</td>
-                                        <td></td>
-                                         
-                                    </tr>
-                                    
-                                   
-                                   
-                                    
-                              
+                                    @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               

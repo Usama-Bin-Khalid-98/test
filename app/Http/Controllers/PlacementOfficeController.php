@@ -20,11 +20,11 @@ class PlacementOfficeController extends Controller
     public function index()
     {
         try {
+            $campus_id = Auth::user()->campus_id;
+            $department_id = Auth::user()->department_id;
+            $placement_office = PlacementOffice::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
 
-            $placement_office = PlacementOffice::get()->first();
-            $office= PlacementOffice::where('id')->exists();
-
-        return view('external_linkages.placement_office',compact('placement_office','office'));
+        return view('external_linkages.placement_office',compact('placement_office'));
         }catch (\Exception $e) {
             return $e->getMessage();
         }

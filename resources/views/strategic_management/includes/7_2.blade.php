@@ -14,18 +14,14 @@ Table 7.2. Financial risks of the business school
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($financialRisks as $data)
                                     <tr>
-                                        <td></td>
-                                        <td> </td>
-                                        <td></td>
+                                        <td>{{$data->risk_identified}}</td>
+                                        <td>{{$data->stakeholder_involved}} </td>
+                                        <td>{{$data->remedial_measure}}</td>
                                         
                                     </tr>
-                                     <tr>                                         
-                                        <td></td>
-                                        <td> </td>
-                                        <td></td>
-                                         
-                                    </tr>
+                                      @endforeach
                                     
                                    
                                    
