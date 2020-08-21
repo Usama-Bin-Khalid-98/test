@@ -1,4 +1,4 @@
-@section('pageTitle', 'Credit Transfer')
+@section('pageTitle', 'Research Project')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Credit Transfer
+                Research Project
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Credit Transfer</li>
+                <li class="active"> Research Project </li>
             </ol>
         </section>
         <section class="content-header">
@@ -35,7 +35,6 @@
                 </div>
             </div>
         </section>
-
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
@@ -44,9 +43,8 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">9.4    Attach policy of business school for credit transfer and the credit exemption as Appendix-9C</p>
-
-                            <div class="box-tools pull-right">
+                            <h3 class="box-title">5.5   List details of research projects of last three years in Table 5.4.</h3>
+                                <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
@@ -58,16 +56,50 @@
                         </div>
 
                         <!-- /.box-header -->
+                        <form action="javascript:void(0)" id="form" method="POST">
+
                         <div class="box-body">
-                          <form action="javascript:void(0)" id="form" method="POST">
-                           
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc</label>
-                                    <input type="file" name="file" id="file" >
-                                    <span class="text-red">Max upload file size 2mb.</span>
+                                    <label for="name">Project title</label>
+                                    <input type="text" name="title" id="title" class="form-control">
                                 </div>
                             </div>
+                            
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Start date</label>
+                                    <input type="date" name="start_date" id="start_date" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">End date</label>
+                                    <input type="date" name="end_date" id="end_date" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Principal investigator</label>
+                                    <input type="text" name="investigator" id="investigator" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Funding agency</label>
+                                    <input type="text" name="funding_agency" id="funding_agency" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Funding amount (PKR)</label>
+                                    <input type="number" name="amount" id="amount" class="form-control">
+                                </div>
+                            </div>
+                        
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -75,46 +107,53 @@
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
-                        </form>
-
                         </div>
+                            </div>
+                    </form>
+                    </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Credit Transfer</h3>
+                            <h3 class="box-title">Table 5.4. Details of research projects</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Document</th>
+                                    <th>Project title</th>
+                                    <th>Start & end dates</th>
+                                    <th>Principal investigator</th>
+                                    <th>Funding agency</th>
+                                    <th>Funding amount  (PKR)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($reports as $contact)
+                                @foreach($enrolments as $enrolement)
                                 <tr>
-                                    <td>{{$contact->campus->business_school->name}}</td>
-                                    <td>{{$contact->campus->location}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
-                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td>{{$enrolement->title}}</td>
+                                    <td>{{$enrolement->start_date}} | {{$enrolement->end_date}}</td>
+                                    <td>{{$enrolement->investigator}}</td>
+                                    <td>{{$enrolement->funding_agency}}</td>
+                                    <td>{{$enrolement->amount}}</td>
+                                    <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","title":"{{$enrolement->title}}","start_date":"{{$enrolement->start_date}}","end_date":"{{$enrolement->end_date}}","investigator":"{{$enrolement->investigator}}","funding_agency":"{{$enrolement->funding_agency}}","amount":"{{$enrolement->amount}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+
                                 </tr>
                                 @endforeach
-                                 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Document</th>
+                                    <th>Project title</th>
+                                    <th>Start & end dates</th>
+                                    <th>Principal investigator</th>
+                                    <th>Funding agency</th>
+                                    <th>Funding amount  (PKR)</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -126,18 +165,8 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
-
-
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.content -->
-
-
         </section>
-
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -146,21 +175,54 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Credit Transfer. </h4>
+                    <h4 class="modal-title">Edit Research Project. </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body"> 
+                    <div class="modal-body">
 
-                              <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc</label>
-                                <input type="file" name="file" id="edit_file" >
-                                <input type="hidden" name="old_file" id="old_file" >
-                                <span class="text-blue" id="file-name"></span>
+                                    <label for="name">Project title</label>
+                                    <input type="text" name="title" id="edit_title" value="{{old('title')}}" class="form-control">
                             </div>
-                            <input type="hidden" id="edit_id">
+                            <input type="hidden" name="id" id="edit_id">
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                    <label for="name">Start date</label>
+                                    <input type="date" name="start_date" id="edit_start_date" value="{{old('start_date')}}" class="form-control">
+
+                            </div>
+                        </div>
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                    <label for="name">End date</label>
+                                    <input type="date" name="end_date" id="edit_end_date" value="{{old('end_date')}}" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Pricipal investigator</label>
+                                    <input type="text"  name="investigator"
+                                    id="edit_investigator" value="{{old('investigator')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Funding agency</label>
+                                    <input type="text" name="funding_agency"
+                                    id="edit_funding_agency" value="{{old('funding_agency')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Funding amount (PKR)</label>
+                                    <input type="number" name="amount"
+                                    id="edit_amount" value="{{old('amount')}}" class="form-control">
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -169,8 +231,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -184,9 +244,8 @@
     </div>
     <!-- /.modal -->
 
-   
-    <!-- /.modal -->
-   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+
+     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -213,12 +272,23 @@
             }
         });
 
-         $('#form').submit(function (e) {
-            let file = $('#file').val();
+        $('#form').submit(function (e) {
+            // let uni_id = $('#uni_id').val();
+            let title = $('#title').val();
+            let start_date = $('#start_date').val();
+            let end_date = $('#end_date').val();
+            let investigator = $('#investigator').val();
+            let funding_agency = $('#funding_agency').val();
+            let amount = $('#amount').val();
 
-            !file?addClass('file'):removeClass('file');
+            !title?addClass('title'):removeClass('title');
+            !start_date?addClass('start_date'):removeClass('start_date');
+            !end_date?addClass('end_date'):removeClass('end_date');
+            !investigator?addClass('investigator'):removeClass('investigator');
+            !funding_agency?addClass('funding_agency'):removeClass('funding_agency');
+            !amount?addClass('amount'):removeClass('amount');
 
-            if(!file)
+            if(!title || !start_date || !end_date || !investigator || !funding_agency || !amount)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -228,7 +298,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("credit-transfer")}}',
+                url:'{{url("research-project")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -256,26 +326,47 @@
         });
 
 
-         $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#file-name').text(data.file);
+        $('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+            $('#edit_title').val(data.title);
+            $('#edit_start_date').val(data.start_date);
+            $('#edit_end_date').val(data.end_date);
+            $('#edit_investigator').val(data.investigator);
+            $('#edit_funding_agency').val(data.funding_agency);
+            $('#edit_amount').val(data.amount);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
+        $('#updateForm').submit(function (e) {
+            let title = $('#edit_title').val();
+            let start_date = $('#edit_start_date').val();
+            let end_date = $('#edit_end_date').val();
+            let investigator = $('#edit_investigator').val();
+            let funding_agency = $('#edit_funding_agency').val();
+            let amount = $('#edit_amount').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
+            !title?addClass('edit_title'):removeClass('edit_title');
+            !start_date?addClass('edit_start_date'):removeClass('edit_start_date');
+            !end_date?addClass('edit_end_date'):removeClass('edit_end_date');
+            !investigator?addClass('edit_investigator'):removeClass('edit_investigator');
+            !funding_agency?addClass('edit_funding_agency'):removeClass('edit_funding_agency');
+            !amount?addClass('edit_amount'):removeClass('edit_amount');
 
-            
+            if(!title || !start_date || !end_date || !investigator || !funding_agency || !amount)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("credit-transfer")}}/'+id,
+                url:'{{url("research-project")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -303,14 +394,13 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-
-         $('.delete').on('click', function (e) {
+        $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("credit-transfer")}}/'+id,
+                        url:'{{url("research-project")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -339,6 +429,10 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
+
+
+
+
 
 
     </script>

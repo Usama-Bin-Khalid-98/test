@@ -1,4 +1,4 @@
-@section('pageTitle', 'Placement Office')
+@section('pageTitle', 'Oric')
 
 
 @if(Auth::user())
@@ -18,12 +18,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               Placement Office
+               Basic information of oric
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Placement Office </li>
+                <li class="active"> oric </li>
             </ol>
         </section>
         <section class="content-header">
@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">8.1.  Provide basic information of Placement Office in Table 8.1.</h3>
+                            <h3 class="box-title">5.1   Provide basic information about ORIC in the Table 5.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -59,60 +59,33 @@
                         <div class="box-body">
                                 <table class="table table-bordered ">
                                 <tbody>
-                                <tr>
-                                    <td>a) Hierarchical Position</td>
-                                     <td>
-                                        <input type="radio" value="At university level"  name="hierarchical_position" class="flat-red"  {{ @$placement_office->hierarchical_position == 'At university level' ? 'checked' : '' }} > <span>At university level</span>
-                                             <input type="radio" value="dedicated to business school"  name="hierarchical_position" class="flat-red"  {{ @$placement_office->hierarchical_position == 'dedicated to business school' ? 'checked' : '' }} > <span>Dedicated to business school</span>
-                                      </td>
-                                    <input type="hidden" id="id" value="{{@$placement_office->id}}">
-                                </tr>
-                                <tr>
-                                    <td>b) Year of establishment</td>
+                                    <tr>
+                                    <td>a) Year of establishment</td>
                                     <td>
-                                        <input type="textval" id="year_establishment" name="year_establishment" value="{{@$placement_office->year_establishment}}"  class="form-control">
+                                        <input type="textval" id="year_establishment" name="year_establishment" value="{{@$oric->year_establishment}}"  class="form-control">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>c) Head/supervisor of the placement office</td>
+                                    <td>b) Head/supervisor of the research center</td>
+                                     <td>
+                                        <input type="radio" value="Director of ORIC"  name="head" class="flat-red"  {{ @$oric->head == 'Director of ORIC' ? 'checked' : '' }} > <span>Director of ORIC</span>
+                                             <input type="radio" value="Director Research"  name="head" class="flat-red"  {{ @$oric->head == 'Director Research' ? 'checked' : '' }} > <span>Director Research</span>
+                                             <input type="radio" value="Dean"  name="head" class="flat-red"  {{ @$oric->head == 'Dean' ? 'checked' : '' }} > <span>Dean</span>
+                                      </td>
+                                    <input type="hidden" id="id" value="{{@$oric->id}}">
+                                </tr>
+                                <tr>
+                                    <td>c) Qualification of the main  head/supervisor of research center</td>
                                     <td>
-                                        <input type="textval" id="head" name="head" value="{{@$placement_office->head}}"  class="form-control">
+                                        <input type="textval" id="qualification" name="qualification" value="{{@$oric->qualification}}"  class="form-control">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>d) Head/Supervisor reports to</td>
                                     <td>
-                                        <input type="textval" id="reports_to" name="reports_to" value="{{@$placement_office->reports_to}}"  class="form-control">
+                                        <input type="textval" id="reports_to" name="reports_to" value="{{@$oric->reports_to}}"  class="form-control">
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>e) Composition of placement committee (if any)</td>
-                                    <td>
-                                        <input type="textval" id="composition" name="composition" value="{{@$placement_office->composition}}"  class="form-control">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>f) Total number of staff members</td>
-                                    <td>
-                                        <input type="textval" id="total_staff" name="total_staff" value="{{@$placement_office->total_staff}}"  class="form-control">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>g) Resources available
-
-                                       <tr>
-                                           <td>Number of printers</td>
-                                           <td><input type="textval" id="printers" name="printers" value="{{@$placement_office->printers}}"  class="form-control"></td>
-                                       </tr>
-                                       <tr>
-                                           <td>Number of photocopiers</td>
-                                           <td><input type="textval" id="photocopiers" name="photocopiers" value="{{@$placement_office->photocopiers}}"  class="form-control"></td>
-                                       </tr>
-
-                                    </td>
-                                </tr>
-
-
                                 </tbody>
                             </table>
                                 <div class="col-md-12">
@@ -151,27 +124,20 @@
             radioClass   : 'iradio_flat-green'
         })
 
-        <?php if($placement_office->id==null){ ?>
+        <?php if(@$oric->id==null){ ?>
 
         $('#update').on('click', function (e) {
 
-            let hierarchical_position = $('input[name=hierarchical_position]:checked').val();
             let year_establishment = $('#year_establishment').val();
-            let head = $('#head').val();
+            let head = $('input[name=head]:checked').val();
+            let qualification = $('#qualification').val();
             let reports_to = $('#reports_to').val();
-            let composition = $('#composition').val();
-            let total_staff = $('#total_staff').val();
-            let printers = $('#printers').val();
-            let photocopiers = $('#photocopiers').val();
 
-             !hierarchical_position?addClass('hierarchical_position'):removeClass('hierarchical_position');
+
              !year_establishment?addClass('year_establishment'):removeClass('year_establishment');
              !head?addClass('head'):removeClass('head');
+             !qualification?addClass('qualification'):removeClass('qualification');
              !reports_to?addClass('reports_to'):removeClass('reports_to');
-             !composition?addClass('composition'):removeClass('composition');
-             !total_staff?addClass('total_staff'):removeClass('total_staff');
-             !printers?addClass('printers'):removeClass('printers');
-             !photocopiers?addClass('photocopiers'):removeClass('photocopiers');
 
             $.ajaxSetup({
                 headers: {
@@ -180,17 +146,12 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{url('placement-office')}}",
+                url: "{{url('oric')}}",
                 data: {
-                    id: id,
-                    hierarchical_position: hierarchical_position,
                     year_establishment: year_establishment,
                     head: head,
+                    qualification: qualification,
                     reports_to: reports_to,
-                    composition: composition,
-                    total_staff: total_staff,
-                    printers: printers,
-                    photocopiers: photocopiers,
                 },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
@@ -219,24 +180,17 @@
 
     $('#update').on('click', function (e) {
 
-            let hierarchical_position = $('input[name=hierarchical_position]:checked').val();
             let year_establishment = $('#year_establishment').val();
-            let head = $('#head').val();
+            let head = $('input[name=head]:checked').val();
+            let qualification = $('#qualification').val();
             let reports_to = $('#reports_to').val();
-            let composition = $('#composition').val();
-            let total_staff = $('#total_staff').val();
-            let printers = $('#printers').val();
-            let photocopiers = $('#photocopiers').val();
             let id = $('#id').val();
 
-             !hierarchical_position?addClass('hierarchical_position'):removeClass('hierarchical_position');
+
              !year_establishment?addClass('year_establishment'):removeClass('year_establishment');
              !head?addClass('head'):removeClass('head');
+             !qualification?addClass('qualification'):removeClass('qualification');
              !reports_to?addClass('reports_to'):removeClass('reports_to');
-             !composition?addClass('composition'):removeClass('composition');
-             !total_staff?addClass('total_staff'):removeClass('total_staff');
-             !printers?addClass('printers'):removeClass('printers');
-             !photocopiers?addClass('photocopiers'):removeClass('photocopiers');
 
             $.ajaxSetup({
                 headers: {
@@ -245,17 +199,13 @@
             });
             $.ajax({
                 type: 'PUT',
-                url: "{{url('placement-office')}}/"+id,
+                url: "{{url('oric')}}/"+id,
                 data: {
                     id: id,
-                    hierarchical_position: hierarchical_position,
                     year_establishment: year_establishment,
                     head: head,
+                    qualification: qualification,
                     reports_to: reports_to,
-                    composition: composition,
-                    total_staff: total_staff,
-                    printers: printers,
-                    photocopiers: photocopiers,
                 },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');

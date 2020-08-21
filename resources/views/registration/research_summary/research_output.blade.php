@@ -1,10 +1,10 @@
-@section('pageTitle', 'Credit Transfer')
+@section('pageTitle', 'Research Output')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-     <!-- Select2 -->
+    <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Credit Transfer
+                Research Output
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Credit Transfer</li>
+                <li class="active">Research Output</li>
             </ol>
         </section>
         <section class="content-header">
@@ -41,35 +41,37 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">9.4    Attach policy of business school for credit transfer and the credit exemption as Appendix-9C</p>
-
+                            <h3 class="box-title" style="width: 92%;">5.7   List top ten research outputs of the business school noting impact in terms of solving real life problems and fulfilling industry needs in Table 5.6.Share the complete list during the peer review visit.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                          <form action="javascript:void(0)" id="form" method="POST">
-                           
-                            <div class="col-md-3">
+                            <form action="javascript:void(0)" id="form" method="POST">
+                             
+
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc</label>
-                                    <input type="file" name="file" id="file" >
-                                    <span class="text-red">Max upload file size 2mb.</span>
+                                    <label for="name">Title of research publication</label>
+                                    <input type="text" name="research" id="research" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Description of impact on real life and/or industry</label>
+                                    <input type="text" name="description" id="description" class="form-control">
                                 </div>
                             </div>
 
-                             <div class="col-md-12">
+
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
@@ -84,39 +86,42 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Credit Transfer</h3>
+                            <h3 class="box-title">Table 5.6. Top ten research outputs with impact</h3>
+
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-stripped">
                                 <thead>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Document</th>
+                                    <th>Title of research publication</th>
+                                    <th>Description of impact on real life and/or industry</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($reports as $contact)
+                               @foreach($conferences as $summary)
                                 <tr>
-                                    <td>{{$contact->campus->business_school->name}}</td>
-                                    <td>{{$contact->campus->location}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
-                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td>{{$summary->campus->business_school->name}}</td>
+                                    <td>{{$summary->campus->location}}</td>
+                                    <td>{{$summary->research}}</td>
+                                    <td>{{$summary->description}}</td>
+                                    <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"research":"{{$summary->research}}","description":"{{$summary->description}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                                 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Document</th>
+                                    <th>Title of research publication</th>
+                                    <th>Description of impact on real life and/or industry</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Action</th>>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -126,41 +131,36 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
-
-
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.content -->
-
-
         </section>
-
     </div>
 
-    <div class="modal fade" id="edit-modal">
+   <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Credit Transfer. </h4>
+                    <h4 class="modal-title">Edit Research Output. </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body"> 
+                    <div class="modal-body">
 
-                              <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc</label>
-                                <input type="file" name="file" id="edit_file" >
-                                <input type="hidden" name="old_file" id="old_file" >
-                                <span class="text-blue" id="file-name"></span>
+                                    <label for="name">Title of research publication</label>
+                                    <input type="text" name="research" id="edit_research" value="{{old('research')}}" class="form-control">
                             </div>
                             <input type="hidden" id="edit_id">
                         </div>
 
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Description of impact on real life and/or industry</label>
+                                    <input type="text" name="description"
+                                    id="edit_description" value="{{old('description')}}"  class="form-control">
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -169,8 +169,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -182,11 +180,8 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
 
-   
-    <!-- /.modal -->
-   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -213,12 +208,14 @@
             }
         });
 
-         $('#form').submit(function (e) {
-            let file = $('#file').val();
+        $('#form').submit(function (e) {
+            let research = $('#research').val();
+            let description = $('#description').val();
 
-            !file?addClass('file'):removeClass('file');
+            !research?addClass('research'):removeClass('research');
+            !description?addClass('description'):removeClass('description');
 
-            if(!file)
+            if(!research  || !description )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -228,7 +225,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("credit-transfer")}}',
+                url:'{{url("research-output")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -255,27 +252,36 @@
             })
         });
 
-
          $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#file-name').text(data.file);
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+            $('#edit_research').val(data.research);
+            $('#edit_description').val(data.description);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
+
+    $('#updateForm').submit(function (e) {
+            let research = $('#edit_research').val();
+            let description = $('#edit_description').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
+            !research?addClass('edit_research'):removeClass('edit_research');
+            !description?addClass('edit_description'):removeClass('edit_description');
 
-            
+            if(!research  || !description )
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("credit-transfer")}}/'+id,
+                url:'{{url("research-output")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -303,14 +309,13 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-
-         $('.delete').on('click', function (e) {
+    $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("credit-transfer")}}/'+id,
+                        url:'{{url("research-output")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -339,7 +344,6 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
-
 
     </script>
 

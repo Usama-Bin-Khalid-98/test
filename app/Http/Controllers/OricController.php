@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\External_Linkages\PlacementOffice;
+use App\Models\Research\Oric;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Mockery\Exception;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 
-class PlacementOfficeController extends Controller
+class OricController extends Controller
 {
     public function __construct()
     {
@@ -22,9 +22,9 @@ class PlacementOfficeController extends Controller
         try {
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
-            $placement_office = PlacementOffice::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
+            $oric = Oric::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
 
-        return view('external_linkages.placement_office',compact('placement_office'));
+        return view('registration.research_summary.oric',compact('oric'));
         }catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -56,22 +56,18 @@ class PlacementOfficeController extends Controller
         try {
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
-            PlacementOffice::updateOrCreate([
+            Oric::updateOrCreate([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
-                'hierarchical_position' => $request->hierarchical_position,
                 'year_establishment' => $request->year_establishment,
                 'head' => $request->head,
+                'qualification' => $request->qualification,
                 'reports_to' => $request->reports_to,
-                'composition' => $request->composition,
-                'total_staff' => $request->total_staff,
-                'printers' => $request->printers,
-                'photocopiers' => $request->photocopiers,
                 'isComplete' => 'yes',
                 'updated_by' => Auth::user()->id
             ]);
 
-            return response()->json(['success' => ' Placement Office Inserted successfully.']);
+            return response()->json(['success' => ' Oric Inserted successfully.']);
 
 
         }catch (Exception $e)
@@ -83,10 +79,10 @@ class PlacementOfficeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\External_Linkages\PlacementOffice  $placementOffice
+     * @param  \App\Models\Research\Oric  $oric
      * @return \Illuminate\Http\Response
      */
-    public function show(PlacementOffice $placementOffice)
+    public function show(Oric $oric)
     {
         //
     }
@@ -94,10 +90,10 @@ class PlacementOfficeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\External_Linkages\PlacementOffice  $placementOffice
+     * @param  \App\Models\Research\Oric  $oric
      * @return \Illuminate\Http\Response
      */
-    public function edit(PlacementOffice $placementOffice)
+    public function edit(Oric $oric)
     {
         //
     }
@@ -106,7 +102,7 @@ class PlacementOfficeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\External_Linkages\PlacementOffice  $placementOffice
+     * @param  \App\Models\Research\Oric  $oric
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -118,18 +114,14 @@ class PlacementOfficeController extends Controller
         }
 
         try {
-            PlacementOffice::where('id', $id)->update([
-                'hierarchical_position' => $request->hierarchical_position,
+            Oric::where('id', $id)->update([
                 'year_establishment' => $request->year_establishment,
                 'head' => $request->head,
+                'qualification' => $request->qualification,
                 'reports_to' => $request->reports_to,
-                'composition' => $request->composition,
-                'total_staff' => $request->total_staff,
-                'printers' => $request->printers,
-                'photocopiers' => $request->photocopiers,
                 'updated_by' => Auth::user()->id
             ]);
-            return response()->json(['success' => 'Placement Office updated successfully.']);
+            return response()->json(['success' => 'Oric updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -140,19 +132,20 @@ class PlacementOfficeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\External_Linkages\PlacementOffice  $placementOffice
+     * @param  \App\Models\Research\Oric  $oric
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PlacementOffice $placementOffice)
+    public function destroy(Oric $oric)
     {
         //
     }
 
+
     protected function rules() {
         return [
-            'hierarchical_position' => 'required',
             'year_establishment' => 'required',
             'head' => 'required',
+            'qualification' => 'required',
             'reports_to' => 'required'
         ];
     }

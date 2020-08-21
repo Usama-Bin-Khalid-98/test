@@ -1,10 +1,10 @@
-@section('pageTitle', 'Credit Transfer')
+@section('pageTitle', 'Conferences')
 
 
 @if(Auth::user())
 
     @include("../includes.head")
-     <!-- Select2 -->
+    <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Credit Transfer
+                Conferences
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Credit Transfer</li>
+                <li class="active">Conferences</li>
             </ol>
         </section>
         <section class="content-header">
@@ -41,35 +41,37 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">9.4    Attach policy of business school for credit transfer and the credit exemption as Appendix-9C</p>
-
+                            <h3 class="box-title" style="width: 92%;">5.10 Provide data on the conferences organized by the business school in the last three years Table 5.9., if any. .</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                          <form action="javascript:void(0)" id="form" method="POST">
-                           
+                            <form action="javascript:void(0)" id="form" method="POST">
+                             
+
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc</label>
-                                    <input type="file" name="file" id="file" >
-                                    <span class="text-red">Max upload file size 2mb.</span>
+                                    <label for="name">Conference title and theme </label>
+                                    <input type="text" name="conference" id="conference" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Date</label>
+                                    <input type="date" name="date" id="date" class="form-control">
                                 </div>
                             </div>
 
-                             <div class="col-md-12">
+
+                            <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
@@ -84,37 +86,40 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Credit Transfer</h3>
+                            <h3 class="box-title">Table 5.9. Conferences</h3>
+
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-stripped">
                                 <thead>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Document</th>
+                                    <th>Conference title and theme</th>
+                                    <th>Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($reports as $contact)
+                               @foreach($conferences as $summary)
                                 <tr>
-                                    <td>{{$contact->campus->business_school->name}}</td>
-                                    <td>{{$contact->campus->location}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
-                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td>{{$summary->campus->business_school->name}}</td>
+                                    <td>{{$summary->campus->location}}</td>
+                                    <td>{{$summary->conference}}</td>
+                                    <td>{{$summary->date}}</td>
+                                    <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"conference":"{{$summary->conference}}","date":"{{$summary->date}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                                 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Document</th>
+                                    <th>Conference title and theme</th>
+                                    <th>Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -126,41 +131,36 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
-
-
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.content -->
-
-
         </section>
-
     </div>
 
-    <div class="modal fade" id="edit-modal">
+   <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Credit Transfer. </h4>
+                    <h4 class="modal-title">Edit Conferences. </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body"> 
+                    <div class="modal-body">
 
-                              <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc</label>
-                                <input type="file" name="file" id="edit_file" >
-                                <input type="hidden" name="old_file" id="old_file" >
-                                <span class="text-blue" id="file-name"></span>
+                                    <label for="name">Conference title and theme</label>
+                                    <input type="text" name="conference" id="edit_conference" value="{{old('conference')}}" class="form-control">
                             </div>
                             <input type="hidden" id="edit_id">
                         </div>
 
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Date</label>
+                                    <input type="date" name="date"
+                                    id="edit_date" value="{{old('date')}}"  class="form-control">
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -169,8 +169,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -182,11 +180,8 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
 
-   
-    <!-- /.modal -->
-   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
@@ -213,12 +208,14 @@
             }
         });
 
-         $('#form').submit(function (e) {
-            let file = $('#file').val();
+        $('#form').submit(function (e) {
+            let conference = $('#conference').val();
+            let date = $('#date').val();
 
-            !file?addClass('file'):removeClass('file');
+            !conference?addClass('conference'):removeClass('conference');
+            !date?addClass('date'):removeClass('date');
 
-            if(!file)
+            if(!conference  || !date )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -228,7 +225,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("credit-transfer")}}',
+                url:'{{url("conference")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -255,27 +252,36 @@
             })
         });
 
-
          $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#file-name').text(data.file);
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // Initialize Select2
+            $('#edit_conference').val(data.conference);
+            $('#edit_date').val(data.date);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
+
+    $('#updateForm').submit(function (e) {
+            let conference = $('#edit_conference').val();
+            let date = $('#edit_date').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
+            !conference?addClass('edit_conference'):removeClass('edit_conference');
+            !date?addClass('edit_date'):removeClass('edit_date');
 
-            
+            if(!conference  || !date )
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("credit-transfer")}}/'+id,
+                url:'{{url("conference")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -303,14 +309,13 @@ $('#updateForm').submit(function (e) {
             })
         });
 
-
-         $('.delete').on('click', function (e) {
+    $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("credit-transfer")}}/'+id,
+                        url:'{{url("conference")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -339,7 +344,6 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
-
 
     </script>
 

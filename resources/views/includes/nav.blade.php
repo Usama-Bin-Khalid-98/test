@@ -25,12 +25,25 @@ $facultygender = checkIsCompleted('App\Models\Faculty\FacultyGender', ['campus_i
 $research = checkIsCompleted('App\Models\Research\ResearchSummary', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $financialinfo = checkIsCompleted('App\Models\Facility\FinancialInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$linkages = checkIsCompleted('App\Models\External_Linkages\Linkages', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$bodymeeting = checkIsCompleted('App\Models\External_Linkages\BodyMeeting', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$sexchange = checkIsCompleted('App\Models\External_Linkages\StudentExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$fexchange = checkIsCompleted('App\Models\External_Linkages\FacultyExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$obtained = checkIsCompleted('App\Models\External_Linkages\ObtainedInternship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$placement = checkIsCompleted('App\Models\External_Linkages\PlacementActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$linkages = checkIsCompleted('App\Models\External_linkages\Linkages', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$bodymeeting = checkIsCompleted('App\Models\External_linkages\BodyMeeting', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$sexchange = checkIsCompleted('App\Models\External_linkages\StudentExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$fexchange = checkIsCompleted('App\Models\External_linkages\FacultyExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$obtained = checkIsCompleted('App\Models\External_linkages\ObtainedInternship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$placement = checkIsCompleted('App\Models\External_linkages\PlacementActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$admission_office = checkIsCompleted('App\AdmissionOffice', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$credit_transfer = checkIsCompleted('App\CreditTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$student_transfer = checkIsCompleted('App\StudentTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$documentary_evidence = checkIsCompleted('App\DocumentaryEvidence', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$conference = checkIsCompleted('App\Model\research\Conference', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_development = checkIsCompleted('App\Models\Reasearch\FacultyDevelopment', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$curriculum_role= checkIsCompleted('App\Models\Research\CurriculumRole', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$output = checkIsCompleted('App\Models\Research\ResearchOutput', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$oric = checkIsCompleted('App\Models\Research\Oric', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_center = checkIsCompleted('App\Models\Research\ResearchCenter', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_agenda = checkIsCompleted('App\Models\Research\ResearchAgenda', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_funding = checkIsCompleted('App\Models\Research\ResearchFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 @endphp
 
 <aside class="main-sidebar">
@@ -310,7 +323,7 @@ $placement = checkIsCompleted('App\Models\External_Linkages\PlacementActivity', 
         </li>
           @endhasrole
           @hasrole('BusinessSchool')
-           <li class=" treeview {{(request()->is('research-summary'))?'active':''}} ">
+           <li class=" treeview {{(request()->is('research-summary'))?'active':''}}{{(request()->is('conference'))?'active':''}}{{(request()->is('curriculum-role'))?'active':''}}{{(request()->is('faculty-development'))?'active':''}}{{(request()->is('research-output'))?'active':''}}{{(request()->is('oric'))?'active':''}}{{(request()->is('research-center'))?'active':''}}{{(request()->is('research-agenda'))?'active':''}}{{(request()->is('research-funding'))?'active':''}}{{(request()->is('research-project'))?'active':''}} ">
           <a href="#">
             <i class="fa fa-users " style="color: #D81B60"></i><span>5: Research Development</span>
              <span class="pull-right-container">
@@ -321,6 +334,56 @@ $placement = checkIsCompleted('App\Models\External_Linkages\PlacementActivity', 
             <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}">5.1 Research Summary<span class="pull-right-container">
                         <span class="text text-{{$research==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$research==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('oric')) ? 'active' : '' }}"><a href="{{url('oric')}}">5.1 Oric<span class="pull-right-container">
+                        <span class="text text-{{$oric==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$oric==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-center')) ? 'active' : '' }}"><a href="{{url('research-center')}}">5.2 Research Center<span class="pull-right-container">
+                        <span class="text text-{{$research_center==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research_center==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-agenda')) ? 'active' : '' }}"><a href="{{url('research-agenda')}}">5.3 Research Agenda<span class="pull-right-container">
+                        <span class="text text-{{$research_agenda==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research_agenda==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-funding')) ? 'active' : '' }}"><a href="{{url('research-funding')}}">5.4 Research Funding<span class="pull-right-container">
+                        <span class="text text-{{$research_funding==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-project')) ? 'active' : '' }}"><a href="{{url('research-project')}}">5.5 Research Projects<span class="pull-right-container">
+                        <span class="text text-{{$research_project==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research_project==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}">5.6 Research Summary<span class="pull-right-container">
+                        <span class="text text-{{$research==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$research==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('research-output')) ? 'active' : '' }}"><a href="{{url('research-output')}}">5.7 Research output<span class="pull-right-container">
+                        <span class="text text-{{$output==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$output==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('curriculum-role')) ? 'active' : '' }}"><a href="{{url('curriculum-role')}}">5.8 Curriculum Role<span class="pull-right-container">
+                        <span class="text text-{{$curriculum_role==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$curriculum_role==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('faculty-development')) ? 'active' : '' }}"><a href="{{url('faculty-development')}}">5.9 Faculty Development<span class="pull-right-container">
+                        <span class="text text-{{$faculty_development==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_development==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('conference')) ? 'active' : '' }}"><a href="{{url('conference')}}">5.10 Conferences<span class="pull-right-container">
+                        <span class="text text-{{$conference==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$conference==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
 
@@ -360,23 +423,24 @@ $placement = checkIsCompleted('App\Models\External_Linkages\PlacementActivity', 
 
           <!-- Below is the module included in SAR -->
           @hasrole('BusinessSchool')
-{{--        <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}">--}}
-{{--          <a href="#">--}}
-{{--            <i class="fa fa-globe text-blue " ></i><span>Social Responsibility</span>--}}
-{{--             <span class="pull-right-container">--}}
-{{--              <i class="fa fa-angle-left pull-right"></i>--}}
-{{--            </span>--}}
-{{--          </a>--}}
-{{--          <ul class="treeview-menu">--}}
-{{--            <li  class="{{ (request()->is('student-club')) ? 'active' : '' }}"><a href="{{url('student-club')}}">Student clubs/societies</a></li>--}}
-{{--            <li  class="{{ (request()->is('project-detail')) ? 'active' : '' }}"><a href="{{url('project-detail')}}">Project Details</a></li>--}}
-{{--            <li  class="{{ (request()->is('env-protection')) ? 'active' : '' }}"><a href="{{url('env-protection')}}">Env Protection Activities</a></li>--}}
-{{--            <li  class="{{ (request()->is('formal-relationship')) ? 'active' : '' }}"><a href="{{url('formal-relationship')}}">Formal Relationships</a></li>--}}
-{{--            <li  class="{{ (request()->is('complaint-resolution')) ? 'active' : '' }}"><a href="{{url('complaint-resolution')}}">Complaint Resolution</a></li>--}}
-{{--            <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}">Internal Community WP</a></li>--}}
-{{--          </ul>--}}
-{{--        </li>--}}
-          @endhasrole
+        <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}{{(request()->is('social-activity'))?'active':''}}">
+          <a href="#">
+            <i class="fa fa-globe text-blue " ></i><span>Social Responsibility</span>
+             <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li  class="{{ (request()->is('student-club')) ? 'active' : '' }}"><a href="{{url('student-club')}}">1. Student clubs/societies</a></li>
+            <li  class="{{ (request()->is('project-detail')) ? 'active' : '' }}"><a href="{{url('project-detail')}}">2. Project Details</a></li>
+            <li  class="{{ (request()->is('env-protection')) ? 'active' : '' }}"><a href="{{url('env-protection')}}">3. Env Protection Activities</a></li>
+            <li  class="{{ (request()->is('formal-relationship')) ? 'active' : '' }}"><a href="{{url('formal-relationship')}}">4. Formal Relationships</a></li>
+            <li  class="{{ (request()->is('complaint-resolution')) ? 'active' : '' }}"><a href="{{url('complaint-resolution')}}">5. Complaint Resolution</a></li>
+            <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}">6. Internal Community WP</a></li>
+            <li  class="{{ (request()->is('social-activity')) ? 'active' : '' }}"><a href="{{url('social-activity')}}">7. Social Activity</a></li>
+          </ul>
+        </li>
+          @endhasrole 
           @hasrole('BusinessSchool')
 {{--        <li class=" treeview {{(request()->is('placement-office'))?'active':''}}{{(request()->is('linkages'))?'active':''}}{{(request()->is('body-meeting'))?'active':''}}{{(request()->is('student-exchange'))?'active':''}}{{(request()->is('faculty-exchange'))?'active':''}}{{(request()->is('obtained-internship'))?'active':''}}{{(request()->is('placement-activity'))?'active':''}}">--}}
 {{--          <a href="#">--}}
@@ -425,20 +489,47 @@ $placement = checkIsCompleted('App\Models\External_Linkages\PlacementActivity', 
 {{--        </li>--}}
           @endhasrole
            @hasrole('BusinessSchool')
-{{--        <li class=" treeview {{(request()->is('credit-transfer'))?'active':''}}{{(request()->is('student-transfer'))?'active':''}}{{(request()->is('documentary-evidence'))?'active':''}}">--}}
-{{--          <a href="#">--}}
-{{--            <i class="fa fa-globe text-black " ></i><span>9: Admission Examination</span>--}}
-{{--             <span class="pull-right-container">--}}
-{{--              <i class="fa fa-angle-left pull-right"></i>--}}
-{{--            </span>--}}
-{{--          </a>--}}
-{{--          <ul class="treeview-menu">--}}
-{{--            <li  class="{{ (request()->is('credit-transfer')) ? 'active' : '' }}"><a href="{{url('credit-transfer')}}">9.4 Credit Transfer</a></li>--}}
-{{--            <li  class="{{ (request()->is('student-transfer')) ? 'active' : '' }}"><a href="{{url('student-transfer')}}">9.5 Student Transfer</a></li>--}}
-{{--            <li  class="{{ (request()->is('documentary-evidence')) ? 'active' : '' }}"><a href="{{url('documentary-evidence')}}">9.6 Documentary Evidence</a></li>--}}
-{{--          </ul>--}}
-{{--        </li>--}}
-          @endhasrole
+        <li class=" treeview {{(request()->is('credit-transfer'))?'active':''}}{{(request()->is('student-transfer'))?'active':''}}{{(request()->is('documentary-evidence'))?'active':''}}{{(request()->is('admission-office'))?'active':''}}">
+          <a href="#">
+            <i class="fa fa-globe text-black " ></i><span>9: Admission Examination</span>
+             <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          	<li  class="{{ (request()->is('admission-office')) ? 'active' : '' }}"><a href="{{url('admission-office')}}">9.1 Admission Office<span class="pull-right-container">
+                        <span class="text text-{{$admission_office==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$admission_office==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+          	<li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}">9.2 Entry Requirements<span class="pull-right-container">
+                        <span class="text text-{{$entry==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$entry==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}">9.3 Students Enrollment<span class="pull-right-container">
+                        <span class="text text-{{$enrolment==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$enrolment==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>        
+            <li  class="{{ (request()->is('credit-transfer')) ? 'active' : '' }}"><a href="{{url('credit-transfer')}}">9.4 Credit Transfer<span class="pull-right-container">
+                        <span class="text text-{{$credit_transfer==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$credit_transfer==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('student-transfer')) ? 'active' : '' }}"><a href="{{url('student-transfer')}}">9.5 Student Transfer<span class="pull-right-container">
+                        <span class="text text-{{$student_transfer==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$student_transfer==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('documentary-evidence')) ? 'active' : '' }}"><a href="{{url('documentary-evidence')}}">9.6 Documentary Evidence<span class="pull-right-container">
+                        <span class="text text-{{$documentary_evidence==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$documentary_evidence==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+          </ul>
+        </li>
+          @endhasrole 
           <!-- ///////////////////////////////////////////////////////////////////////////// -->
 
           @hasrole('BusinessSchool')

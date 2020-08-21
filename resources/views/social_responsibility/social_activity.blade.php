@@ -1,4 +1,4 @@
-@section('pageTitle', 'Credit Transfer')
+@section('pageTitle', 'Social Activity')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Credit Transfer
+                Social Activity
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Credit Transfer</li>
+                <li class="active">Social Activity</li>
             </ol>
         </section>
         <section class="content-header">
@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">9.4    Attach policy of business school for credit transfer and the credit exemption as Appendix-9C</p>
+                            <p class="box-title">6.7    Attach documentary evidence for surveys or any other mechanism applied to assess the impact of social activities carried out by the business school during last three years.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -84,7 +84,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Credit Transfer</h3>
+                            <h3 class="box-title">Social Activity</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -146,7 +146,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Credit Transfer. </h4>
+                    <h4 class="modal-title">Edit Social Activity. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body"> 
@@ -228,7 +228,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("credit-transfer")}}',
+                url:'{{url("social-activity")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -275,7 +275,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("credit-transfer")}}/'+id,
+                url:'{{url("social-activity")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -310,7 +310,7 @@ $('#updateForm').submit(function (e) {
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("credit-transfer")}}/'+id,
+                        url:'{{url("social-activity")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
