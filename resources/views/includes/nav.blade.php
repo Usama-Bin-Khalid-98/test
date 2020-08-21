@@ -100,7 +100,7 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
             <li class="{{ (request()->is('users')) ? 'active' : '' }}"><a href="{{url('users')}}"><i class="fa fa-circle-o text-blue"></i>Users</a></li>
             <li  class="{{ (request()->is('roles')) ? 'active' : '' }}"><a href="{{url('roles')}}"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>
 {{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>--}}
-{{--            <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>--}}
+            <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>
 
           </ul>
             </li>
@@ -146,7 +146,7 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-{{--              @if(!$invoices)--}}
+             @if(!$invoices)
                 <ul class="treeview-menu">
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
@@ -205,11 +205,9 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
                     </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
-
-{{--             <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>--}}
-{{--            <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li> --}}
+        <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>           <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li> 
           </ul>
-{{--              @endif--}}
+              @endif
           </li>
         @endhasrole
         @hasrole('BusinessSchool')
@@ -269,13 +267,13 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
 
             <!-- Below are the Tables For SAR  -->
 
-{{--             <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}"><i class="fa fa-circle-o text-blue"></i>Students Intakes</a></li>--}}
-{{--            <li  class="{{ (request()->is('class-size')) ? 'active' : '' }}"><a href="{{url('class-size')}}"><i class="fa fa-circle-o text-blue"></i>Class Size</a></li>--}}
-{{--            <li  class="{{ (request()->is('personal-grooming')) ? 'active' : '' }}"><a href="{{url('personal-grooming')}}"><i class="fa fa-circle-o text-blue"></i>Personal Grooming</a></li>--}}
-{{--            <li  class="{{ (request()->is('counselling-activity')) ? 'active' : '' }}"><a href="{{url('counselling-activity')}}"><i class="fa fa-circle-o text-blue"></i>Counselling Activities</a></li>--}}
-{{--            <li  class="{{ (request()->is('extra-activity')) ? 'active' : '' }}"><a href="{{url('extra-activity')}}"><i class="fa fa-circle-o text-blue"></i>Extra Activities</a></li>--}}
-{{--            <li  class="{{ (request()->is('alumni-membership')) ? 'active' : '' }}"><a href="{{url('alumni-membership')}}"><i class="fa fa-circle-o text-blue"></i>Alumni Membership</a></li>--}}
-{{--            <li  class="{{ (request()->is('alumni-participation')) ? 'active' : '' }}"><a href="{{url('alumni-participation')}}"><i class="fa fa-circle-o text-blue"></i>Alumni Participation</a></li> --}}
+            <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}"><i class="fa fa-circle-o text-blue"></i>3.2 Students Intakes</a></li>
+           <li  class="{{ (request()->is('class-size')) ? 'active' : '' }}"><a href="{{url('class-size')}}"><i class="fa fa-circle-o text-blue"></i>3.3 Class Size</a></li>
+           <li  class="{{ (request()->is('personal-grooming')) ? 'active' : '' }}"><a href="{{url('personal-grooming')}}"><i class="fa fa-circle-o text-blue"></i>3.8 Personal Grooming</a></li>
+            <li  class="{{ (request()->is('counselling-activity')) ? 'active' : '' }}"><a href="{{url('counselling-activity')}}"><i class="fa fa-circle-o text-blue"></i>3.9 Counselling Activities</a></li>
+            <li  class="{{ (request()->is('extra-activity')) ? 'active' : '' }}"><a href="{{url('extra-activity')}}"><i class="fa fa-circle-o text-blue"></i>3.11 Extra Activities</a></li>
+           <li  class="{{ (request()->is('alumni-membership')) ? 'active' : '' }}"><a href="{{url('alumni-membership')}}"><i class="fa fa-circle-o text-blue"></i>3.12 Alumni Membership</a></li>
+            <li  class="{{ (request()->is('alumni-participation')) ? 'active' : '' }}"><a href="{{url('alumni-participation')}}"><i class="fa fa-circle-o text-blue"></i>3.13 Alumni Participation</a></li>
 
           </ul>
         </li>
@@ -413,9 +411,9 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
                         </span>
                     </span></a>
              </li>
-{{--             <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}"><i class="fa fa-circle-o text-orange"></i>Financial Risk</a></li>--}}
-{{--            <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}"><i class="fa fa-circle-o text-orange"></i>Support Staff</a></li>--}}
-{{--            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}"><i class="fa fa-circle-o text-orange"></i>Qec Info</a></li>--}}
+            <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}"><i class="fa fa-circle-o text-orange"></i>Financial Risk</a></li>
+            <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}"><i class="fa fa-circle-o text-orange"></i>Support Staff</a></li>
+            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}"><i class="fa fa-circle-o text-orange"></i>Qec Info</a></li>
 
           </ul>
         </li>
@@ -442,51 +440,47 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
         </li>
           @endhasrole 
           @hasrole('BusinessSchool')
-{{--        <li class=" treeview {{(request()->is('placement-office'))?'active':''}}{{(request()->is('linkages'))?'active':''}}{{(request()->is('body-meeting'))?'active':''}}{{(request()->is('student-exchange'))?'active':''}}{{(request()->is('faculty-exchange'))?'active':''}}{{(request()->is('obtained-internship'))?'active':''}}{{(request()->is('placement-activity'))?'active':''}}">--}}
-{{--          <a href="#">--}}
-{{--            <i class="fa fa-globe text-green " ></i><span>8: External Linkages</span>--}}
-{{--             <span class="pull-right-container">--}}
-{{--              <i class="fa fa-angle-left pull-right"></i>--}}
-{{--            </span>--}}
-{{--          </a>--}}
-{{--          <ul class="treeview-menu">--}}
-{{--            <li  class="{{ (request()->is('placement-office')) ? 'active' : '' }}"><a href="{{url('placement-office')}}">8.1 Placement Office<span class="pull-right-container">--}}
-{{--                        <span class="text text-{{$portfolio==='C'?'green':'red'}} pull-right">--}}
-{{--                            <i class="fa {{$portfolio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
-{{--                        </span>--}}
-{{--                    </span></a></li>--}}
-{{--            <li  class="{{ (request()->is('linkages')) ? 'active' : '' }}"><a href="{{url('linkages')}}">8.2 Linkages<span class="pull-right-container">--}}
-{{--                        <span class="text text-{{$linkages==='C'?'green':'red'}} pull-right">--}}
-{{--                            <i class="fa {{$linkages==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
-{{--                        </span>--}}
-{{--                    </span></a></li>--}}
-{{--            <li  class="{{ (request()->is('body-meeting')) ? 'active' : '' }}"><a href="{{url('body-meeting')}}">8.3 Statutory Body Meeting<span class="pull-right-container">--}}
-{{--                        <span class="text text-{{$bodymeeting==='C'?'green':'red'}} pull-right">--}}
-{{--                            <i class="fa {{$bodymeeting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
-{{--                        </span>--}}
-{{--                    </span></a></li>--}}
-{{--             <li  class="{{ (request()->is('student-exchange')) ? 'active' : '' }}"><a href="{{url('student-exchange')}}">8.4a Student Exchange<span class="pull-right-container">--}}
-{{--                        <span class="text text-{{$sexchange==='C'?'green':'red'}} pull-right">--}}
-{{--                            <i class="fa {{$sexchange==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
-{{--                        </span>--}}
-{{--                    </span></a></li>--}}
-{{--              <li  class="{{ (request()->is('faculty-exchange')) ? 'active' : '' }}"><a href="{{url('faculty-exchange')}}">8.4b Faculty Exchange<span class="pull-right-container">--}}
-{{--                        <span class="text text-{{$fexchange==='C'?'green':'red'}} pull-right">--}}
-{{--                            <i class="fa {{$fexchange==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
-{{--                        </span>--}}
-{{--                    </span></a></li>--}}
-{{--               <li  class="{{ (request()->is('obtained-internship')) ? 'active' : '' }}"><a href="{{url('obtained-internship')}}">8.5 Obtained Internships<span class="pull-right-container">--}}
-{{--                        <span class="text text-{{$obtained==='C'?'green':'red'}} pull-right">--}}
-{{--                            <i class="fa {{$obtained==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
-{{--                        </span>--}}
-{{--                    </span></a></li>--}}
-{{--                <li  class="{{ (request()->is('placement-activity')) ? 'active' : '' }}"><a href="{{url('placement-activity')}}">8.6 Placement Activities<span class="pull-right-container">--}}
-{{--                        <span class="text text-{{$placement==='C'?'green':'red'}} pull-right">--}}
-{{--                            <i class="fa {{$placement==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
-{{--                        </span>--}}
-{{--                    </span></a></li>--}}
-{{--          </ul>--}}
-{{--        </li>--}}
+        <li class=" treeview {{(request()->is('placement-office'))?'active':''}}{{(request()->is('linkages'))?'active':''}}{{(request()->is('body-meeting'))?'active':''}}{{(request()->is('student-exchange'))?'active':''}}{{(request()->is('faculty-exchange'))?'active':''}}{{(request()->is('obtained-internship'))?'active':''}}{{(request()->is('placement-activity'))?'active':''}}">          <a href="#">
+            <i class="fa fa-globe text-green " ></i><span>8: External Linkages</span>
+             <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li  class="{{ (request()->is('placement-office')) ? 'active' : '' }}"><a href="{{url('placement-office')}}">8.1 Placement Office<span class="pull-right-container">
+                        <span class="text text-{{$portfolio==='C'?'green':'red'}} pull-right">
+                           <i class="fa {{$portfolio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('linkages')) ? 'active' : '' }}"><a href="{{url('linkages')}}">8.2 Linkages<span class="pull-right-container">
+                        <span class="text text-{{$linkages==='C'?'green':'red'}} pull-right">                            <i class="fa {{$linkages==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>                    </span></a></li>
+            <li  class="{{ (request()->is('body-meeting')) ? 'active' : '' }}"><a href="{{url('body-meeting')}}">8.3 Statutory Body Meeting<span class="pull-right-container">
+                        <span class="text text-{{$bodymeeting==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$bodymeeting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                                            </span></a></li>
+             <li  class="{{ (request()->is('student-exchange')) ? 'active' : '' }}"><a href="{{url('student-exchange')}}">8.4a Student Exchange<span class="pull-right-container">
+                        <span class="text text-{{$sexchange==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$sexchange==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+              <li  class="{{ (request()->is('faculty-exchange')) ? 'active' : '' }}"><a href="{{url('faculty-exchange')}}">8.4b Faculty Exchange<span class="pull-right-container">
+                        <span class="text text-{{$fexchange==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$fexchange==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+               <li  class="{{ (request()->is('obtained-internship')) ? 'active' : '' }}"><a href="{{url('obtained-internship')}}">8.5 Obtained Internships<span class="pull-right-container">
+                        <span class="text text-{{$obtained==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$obtained==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                <li  class="{{ (request()->is('placement-activity')) ? 'active' : '' }}"><a href="{{url('placement-activity')}}">8.6 Placement Activities<span class="pull-right-container">
+                        <span class="text text-{{$placement==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$placement==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+          </ul>
+        </li>
           @endhasrole
            @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('credit-transfer'))?'active':''}}{{(request()->is('student-transfer'))?'active':''}}{{(request()->is('documentary-evidence'))?'active':''}}{{(request()->is('admission-office'))?'active':''}}">
@@ -553,7 +547,7 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
             </span>
               </a>
               <ul class="treeview-menu">
-{{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
+                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
               </ul>
           </li>
