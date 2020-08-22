@@ -59,34 +59,62 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                         	 <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Program(s) under review</label>
-                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program</option>
-                                        @foreach($scopes as $scope)
-                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Eligibility criteria</label>
-                                   <select name="eligibility_criteria_id" id="eligibility_criteria_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Eligibility Criteria</option>
-                                        @foreach($criterias as $criteria)
-                                         <option value="{{$criteria->id}}">{{$criteria->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Minimum requirements/relative weightage</label>
-                                    <input type="text" name="min_req" id="min_req" class="form-control">
-                                </div>
-                              </div>
+                                 <table class="table table-bordered table-striped" >
+                                     <thead>
+                                     <th >Program(s) under review</th>
+                                     <th class="fontsize">Eligibility criteria</th>
+                                     <th class="fontsize">Minimum requirements/relative weightage</th>
+                                     </thead>
+                                     <tbody>
+                                     @foreach($criterias as $criteria)
+                                     <tr>
+                                         @if($loop->iteration == 1)
+                                         <td rowspan="{{count(@$criterias)}}">
+                                             <div class="form-group">
+                                                 <label for="program_id">Eligibility criteria</label>
+                                             <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
+                                                 <option selected disabled>Select Program</option>
+                                                 @foreach($scopes as $scope)
+                                                     <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
+                                                 @endforeach
+                                             </select>
+                                             </div>
+                                         </td>
+                                         @endif
+
+                                         <td>
+                                             {{$criteria->name}}
+                                             <input type="hidden" name="eligibility_criteria_id[]" id="eligibility_criteria_id" value="{{@$criteria->id}}">
+                                         </td>
+                                         <td>
+                                             <input type="number" name="min_req[]" min="0" class="form-control">
+                                         </td>
+                                             @endforeach
+                                     </tr>
+                                         <tr>
+                                             <td colspan="2"></td>
+                                             <td><strong><span id="total"></span></strong></td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Eligibility criteria</label>--}}
+{{--                                   <select name="eligibility_criteria_id" id="eligibility_criteria_id" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select Eligibility Criteria</option>--}}
+{{--                                        @foreach($criterias as $criteria)--}}
+{{--                                         <option value="{{$criteria->id}}">{{$criteria->name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                        </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                              <div class="col-md-4">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Minimum requirements/relative weightage</label>--}}
+{{--                                    <input type="text" name="min_req" id="min_req" class="form-control">--}}
+{{--                                </div>--}}
+{{--                              </div>--}}
 
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -250,18 +278,35 @@
 
          $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
-            let eligibility_criteria_id = $('#eligibility_criteria_id').val();
-            let min_req = $('#min_req').val();
+            let eligibility_criteria_id = $('input[name*="eligibility_criteria_id"]').val();
+            let min_req = $('input[name*="min_req"]').val();
 
             !program_id?addClass('program_id'):removeClass('program_id');
             !eligibility_criteria_id?addClass('eligibility_criteria_id'):removeClass('eligibility_criteria_id');
-            !min_req?addClass('min_req'):removeClass('min_req');
+            // !min_req?addClass('min_req'):removeClass('min_req');
+
+            let percentage = 0.0;
+            let total = 0;
+            $('input[name*="min_req"]').each(function (i, val) {
+                percentage += parseFloat($(val).val()) || 0;
+            });
+
+             if( percentage !== 100)
+             {
+                 Notiflix.Notify.Failure("The weightage values are not calculated correctly, The total value should be 100. ");
+                 $('#total').text(percentage);
+                 return;
+             }
+            // console.log('percentage....', percentage);
+            // return;
+            // if()
 
             if(!program_id || !eligibility_criteria_id || !min_req)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
             }
+            //return;
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
@@ -283,7 +328,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    //location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
