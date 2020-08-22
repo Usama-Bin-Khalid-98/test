@@ -263,7 +263,6 @@ class ContactInfoController extends Controller
                         'created_by' => auth()->user()->id,
                     ]);
                 }
-            }
 
                     return response()->json(['success' => 'Contact Information added successfully.']);
 

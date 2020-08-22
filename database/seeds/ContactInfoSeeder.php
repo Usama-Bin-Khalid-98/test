@@ -22,7 +22,7 @@ class ContactInfoSeeder extends Seeder
                 'campus_id'=>'1',
                 'status'=>'active',
                 'isComplete'=>'yes',
-                'focal_person'=>'trevor'
+                'job_title'=>'Dean'
             ],
             [
                 'name'=>'Muhammad Usman',
@@ -34,7 +34,7 @@ class ContactInfoSeeder extends Seeder
                 'campus_id'=>'209',
                 'status'=>'active',
                 'isComplete'=>'yes',
-                'focal_person'=>'trevor'
+                'job_title'=>'Dean'
             ],
             [
                 'name'=>'Muhammad Omer',
@@ -46,7 +46,7 @@ class ContactInfoSeeder extends Seeder
                 'campus_id'=>'209',
                 'status'=>'active',
                 'isComplete'=>'yes',
-                'focal_person'=>''
+                'job_title'=>'Dean'
             ]
 
 
