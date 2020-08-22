@@ -2,6 +2,7 @@
 
 namespace App\Models\Faculty;
 
+use App\Models\Common\Semester;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Common\Campus;
 use App\Models\Common\Designation;
@@ -19,6 +20,11 @@ class WorkLoad extends Model
 
     public function designation() {
         return $this->belongsTo(Designation::class);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
     }
 
 }

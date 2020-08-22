@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RegionSeeder::class);
         $this->call(SectorSeeder::class);
         $this->call(DegreeSeeder::class);
+        $this->call(PublicationCategorySeeder::class);
         $this->call(PublicationTypeSeeder::class);
         $this->call(CourseTypeSeeder::class);
         $this->call(EligibilityCriteriaSeeder::class);
@@ -49,13 +50,12 @@ class DatabaseSeeder extends Seeder
         $this->call(NbeacCriteriaSeeder::class);
         $this->call(SlipSeeder::class);
         $this->call(FacultyDegreeSeeder::class);
-        //////////
+
         $this->call(ContactInfoSeeder::class);
         $this->call(DepartmentFeeSeeder::class);
         $this->call(DeskReviewSeeder::class);
         $this->call(EntryRequirementSeeder::class);
         $this->call(FacultyGenderSeeder::class);
-
         $this->call(FinancialInfoSeeder::class);
         $this->call(FinancialRiskSeeder::class);
         $this->call(FormalRelationshipSeeder::class);
@@ -75,6 +75,11 @@ class DatabaseSeeder extends Seeder
         $this->call(WorkLoadSeeder::class);
         $this->call(FundingSourcesSeeder::class);
         $this->call(ActivityEngagementSeeder::class);
-        /// /////////
+        $this->call(FacultyStudentsRatioSeeder::class);
+        $this->call(FacultyStabilitySeeder::class);
+        $this->call(BusinessSchoolFacilitySeeder::class);
+        $this->call(AffiliationSeeder::class);
+        $this->call(BudgetaryInfoSeeder::class);
+        $this->call(ProgramPortfolioSeeder::class);
     }
 }

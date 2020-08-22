@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 4.2b. Faculty workload (t-1)
 </caption>
                                 <thead>
@@ -16,50 +16,32 @@ Table 4.2b. Faculty workload (t-1)
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname
-</td>
-                                        <td>Asst. Professor
-</td>
-                                        <td>3
-</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>0</td>
-                                        <td>Sports committee convener</td>
+                                        <td> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>PhD</td>
+                                        <td>Masters</td>
+                                        <td>Bachelors</td>
+                                        <td></td>
+                                     
+                                     
+                                    </tr><?php  ?>
+                                    @foreach($facultyWorkLoadb as $data)
+                                    <tr>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->designationName}}</td>
+                                        <td>{{$data->total_courses}}</td>
+                                        <td>{{$data->phd}}</td>
+                                        <td>{{$data->masters}}</td>
+                                        <td>{{$data->bachleors}}</td>
+                                        <td>{{$data->admin_responsibilities}}</td>
                                      
                                      
                                     </tr>
-                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname
-</td>
-                                        <td>Asst. Professor
-</td>
-                                        <td>3
-</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>0</td>
-                                        <td>Sports committee convener</td>
+                                    @endforeach
                                      
-                                     
-                                    </tr>
-                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname
-</td>
-                                        <td>Asst. Professor
-</td>
-                                        <td>3
-</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>0</td>
-                                        <td>Sports committee convener</td>
-                                     
-                                     
-                                    </tr>
                                    
                                    
                                     

@@ -13,7 +13,7 @@ class StatutoryCommitteeSeeder extends Seeder
     {
         //
         DB::table('statutory_committees')->insert([
-            'campus_id'=>'1',
+            ['campus_id'=>'1',
             'statutory_body_id'=>'1',
             'name'=>'khan',
             'designation_id'=>'1',
@@ -22,7 +22,29 @@ class StatutoryCommitteeSeeder extends Seeder
             'date_third_meeting'=>'2020-08-01',
             'date_fourth_meeting'=>'2020-08-01',
             'file'=>'m.docx','status'=>'active',
-            'isComplete'=>'yes','created_by'=>'1'
+            'isComplete'=>'yes','created_by'=>'1'],
+            [
+            'campus_id'=>'209',
+            'statutory_body_id'=>'1',
+            'name'=>'khan',
+            'designation_id'=>'1',
+            'date_first_meeting'=>'2020-08-01',
+            'date_second_meeting'=>'2020-08-01',
+            'date_third_meeting'=>'2020-08-01',
+            'date_fourth_meeting'=>'2020-08-01',
+            'file'=>'m.docx','status'=>'active',
+            'isComplete'=>'yes','created_by'=>'1'],
+            [
+            'campus_id'=>'1',
+            'statutory_body_id'=>'2',
+            'name'=>'Ali',
+            'designation_id'=>'3',
+            'date_first_meeting'=>'2020-08-01',
+            'date_second_meeting'=>'2020-08-01',
+            'date_third_meeting'=>'2020-08-01',
+            'date_fourth_meeting'=>'2020-08-01',
+            'file'=>'m.docx','status'=>'active',
+            'isComplete'=>'yes','created_by'=>'1'],
         ]);
     }
 }

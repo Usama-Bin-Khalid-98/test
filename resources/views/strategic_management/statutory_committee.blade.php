@@ -10,6 +10,11 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <style>
+        .fontsize{
+            font-size: 12px !important;
+        }
+    </style>
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
@@ -40,7 +45,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">  Provide information about the various statutory bodies in the Table 1.4. Also attach documentary information about the composition, name of members, role and functions of each statutory body as Appendix-1B. </h3>
+                            <h3 class="box-title">1.4 Provide information about the various statutory bodies in the Table 1.4. Also attach documentary information about the composition, name of members, role and functions of each statutory body as Appendix-1B. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -51,83 +56,54 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
+
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body" style="padding: 0px;">
                              <form action="javascript:void(0)" method="post" id="add" enctype="multipart/form-data">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Body name</label>
-                                    <select name="statutory_body_id" id="statutory_body_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Body Name</option>
-                                        @foreach($bodies as $body)
-                                        <option value="{{$body->id}}">{{$body->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control">
-                                </div>
-                            </div>
+                                 <table class="table table-bordered table-striped" style="font-size: 5px;" >
+                                     <thead>
+                                     <th width="10" class="fontsize">Body Name</th>
+                                     <th class="fontsize">Name and designation of Chairperson</th>
+                                      <th class="fontsize">Meeting 1</th>
+                                      <th class="fontsize">Meeting 2</th>
+                                      <th class="fontsize">Meeting 3</th>
+                                      <th class="fontsize">Meeting 4</th>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Designation</option>
-                                        @foreach($designations as $designation)
-                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                     <th class="fontsize">File</th>
+                                     </thead>
+                                     <tbody>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Date of Meeting 1</label>
-                                    <input type="date" name="date_first_meeting" id="date_first_meeting" value="" class="form-control">
-                                </div>
-                            </div>
+                                         @foreach($bodies as $body)
+                                     <tr>
+                                            <td class="fontsize">
+                                                {{@$body->name}}
+                                                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_{{@$body->id}}" value="{{@$body->id}}">
+                                            </td>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Date of  Meeting 2</label>
-                                    <input type="date" name="date_second_meeting" id="date_second_meeting" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Date of Meeting 3</label>
-                                    <input type="date" name="date_third_meeting" id="date_third_meeting" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Date of  Meeting 4</label>
-                                    <input type="date" name="date_fourth_meeting" id="date_fourth_meeting" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Attach File</label>
-                                    <input type="file" name="file" value="" id="file" >
-                                    <span class="text-red">Max upload file size 2mb.</span>
-                                </div>
-                            </div>
-
+                                         <td class="fontsize">
+                                             <input type="text" name="name[]" placeholder="name" id="name_{{@$body->id}}" class="form-control" style="margin-bottom: 5px !important;">
+                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2" style="width: 100%;">
+                                                 <option value="">Select Designation</option>
+                                                 @foreach($designations as $designation)
+                                                     <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                                 @endforeach
+                                             </select>
+                                         </td>
+                                         <td><input type="date" name="date_first_meeting[]" value="" class="form-control"></td>
+                                         <td><input type="date" name="date_second_meeting[]" value="" class="form-control"></td>
+                                         <td><input type="date" name="date_third_meeting[]" value="" class="form-control"></td>
+                                         <td><input type="date" name="date_fourth_meeting[]" value="" class="form-control"></td>
+                                         <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}" value=""></td>
+                                     </tr>
+                                         @endforeach
+                                     </tbody>
+                                 </table>
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 20px;">
                                     <label for="name"></label>
-                                    <input type="submit" name="add" value="Add" class="btn btn-info">
+                                    <input type="submit" name="add" value="Submit" class="btn btn-info">
                                 </div>
                             </div>
-
-
-                        </div>
                         <!-- /.box-body -->
                         </form>
                     </div>
@@ -141,7 +117,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title"> Business school’s statutory committees</h3>
+                            <h3 class="box-title">Table 1.4 Business school’s statutory committees</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -304,7 +280,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Attach File</label>
+                                                <label for="name">Attach File (Appendix-1B)</label>
                                                 <input type="file" name="file" value="" id="edit_file" >
                                                 <span class="text-blue" id="file_name"></span>
                                             </div>
@@ -369,29 +345,29 @@
         });
         /*Add Scope*/
         $('#add').submit(function (e) {
-            let statutory_body_id = $('#statutory_body_id').val();
-            let name = $('#name').val();
-            let designation_id = $('#designation_id').val();
-            let date_first_meeting = $('#date_first_meeting').val();
-            let date_second_meeting = $('#date_second_meeting').val();
-            let date_third_meeting = $('#date_third_meeting').val();
-            let date_fourth_meeting = $('#date_fourth_meeting').val();
-            let file = $('#file').val();
-
-            !name?addClass('name'):removeClass('name');
-            !statutory_body_id?addClass('statutory_body_id'):removeClass('statutory_body_id');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !date_first_meeting?addClass('date_first_meeting'):removeClass('date_first_meeting');
-            !date_second_meeting?addClass('date_second_meeting'):removeClass('date_second_meeting');
-            !date_third_meeting?addClass('date_third_meeting'):removeClass('date_third_meeting');
-            !date_fourth_meeting?addClass('date_fourth_meeting'):removeClass('date_fourth_meeting');
-            !file?addClass('file'):removeClass('file');
-
-            if(!name || !statutory_body_id || !designation_id|| !date_first_meeting || !date_second_meeting || !date_third_meeting || !date_fourth_meeting || !file)
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
-            }
+            // let statutory_body_id = $('#statutory_body_id').val();
+            // let name = $('#name').val();
+            // let designation_id = $('#designation_id').val();
+            // let date_first_meeting = $('#date_first_meeting').val();
+            // let date_second_meeting = $('#date_second_meeting').val();
+            // let date_third_meeting = $('#date_third_meeting').val();
+            // let date_fourth_meeting = $('#date_fourth_meeting').val();
+            // let file = $('#file').val();
+            //
+            // !name?addClass('name'):removeClass('name');
+            // !statutory_body_id?addClass('statutory_body_id'):removeClass('statutory_body_id');
+            // !designation_id?addClass('designation_id'):removeClass('designation_id');
+            // !date_first_meeting?addClass('date_first_meeting'):removeClass('date_first_meeting');
+            // !date_second_meeting?addClass('date_second_meeting'):removeClass('date_second_meeting');
+            // !date_third_meeting?addClass('date_third_meeting'):removeClass('date_third_meeting');
+            // !date_fourth_meeting?addClass('date_fourth_meeting'):removeClass('date_fourth_meeting');
+            // !file?addClass('file'):removeClass('file');
+            //
+            // if(!name || !statutory_body_id || !designation_id|| !date_first_meeting || !date_second_meeting || !date_third_meeting || !date_fourth_meeting || !file)
+            // {
+            //     Notiflix.Notify.Warning("Fill all the required Fields.");
+            //     return;
+            // }
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
@@ -413,7 +389,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    //location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

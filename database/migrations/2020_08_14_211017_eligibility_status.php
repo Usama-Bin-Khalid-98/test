@@ -34,5 +34,6 @@ class EligibilityStatus extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('eligibility_statuses');
     }
 }

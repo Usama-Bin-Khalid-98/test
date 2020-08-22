@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 5.3. Details of research funding (in PKR)
 </caption>
                                 <thead>
@@ -25,19 +25,20 @@ Table 5.3. Details of research funding (in PKR)
                                      
                                      
                                     </tr>
+                                    @foreach($researchFundings as $data)
                                      <tr>
-                                        <td>year t-1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>0</td>
+                                        <td>{{$data->year}}</td>
+                                        <td>{{$data->uni_budget}}</td>
+                                        <td>{{$data->bs_budget}}</td>
+                                        <td>{{$data->gov_grant}}</td>
+                                        <td>{{$data->corp_grant}}</td>
+                                        <td>{{$data->int_grant}}</td>
+                                        <td>{{$data->total}}</td>
                                         
                                      
                                      
                                     </tr>
-                                    
+                                    @endforeach
                                    
                                    
                                     

@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on the gender mix of the business school faculty in Table 4.6</h3>
+                            <h3 class="box-title">4.6 Provide data on the gender mix of the business school faculty in Table 4.6</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

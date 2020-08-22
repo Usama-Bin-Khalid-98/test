@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 1.3. Contact information</caption>
+                                <caption style="text-align: center;color: red">Table 1.3. Contact information</caption>
                                 <thead>
                                     <th></th>
                                     <th>Dean of school</th>
@@ -14,7 +14,7 @@
                                          
                                          
                                     ?>
-                                    @foreach($contactInformation as $data)@if($data->designationName=='Dean')
+                                    @foreach($contactInformation as $data)@if($data->designationName=='Dean of school')
                                         <?php
                                             $deanName = $data->name;
                                             $deanJobTitle = $data->designationName;
@@ -24,7 +24,7 @@
                                         ?>
                                     @endif
 
-                                    @if($data->designationName=='Head')
+                                    @if($data->designationName=='Head of school')
                                         <?php
                                             $headName = $data->name;
                                             $headJobTitle = $data->designationName;
@@ -36,7 +36,7 @@
 
 
 
-                                    @if($data->designationName=='Focal')
+                                    @if($data->designationName=='NBEAC focal person')
                                         <?php
                                             $focalName = $data->name;
                                             $focalJobTitle = $data->designationName;

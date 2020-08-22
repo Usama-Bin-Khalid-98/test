@@ -9,12 +9,14 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/nette/caching" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nette/finder" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/coollection" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/countries" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/countries-laravel" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-arr" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-collection" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-str" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php70" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

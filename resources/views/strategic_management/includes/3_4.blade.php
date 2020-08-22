@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                          <table class="table table-bordered table-striped">
-                            <caption style="text-align: center;">Table 3.4. Average success percentage and drop-out Percentage </caption>
+                            <caption style="text-align: center;color: red">Table 3.4. Average success percentage and drop-out Percentage </caption>
                               <thead>
                                 <tr>
                                   <th>Program under review</th>

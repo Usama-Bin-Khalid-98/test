@@ -139,7 +139,7 @@
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
-                                    <th>Degree requirments</th>
+                                    <th>Degree Awarding Criteria</th>
                                     <th>Semester Commencement Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -156,7 +156,7 @@
                                     <td>{{$portfolio->app_received}}</td>
                                     <td>{{$portfolio->admission_offered}}</td>
                                     <td>{{$portfolio->student_intake}}</td>
-                                    <td>{{$portfolio->degree_req}}</td>
+                                    <td>{{$portfolio->degree_awarding_criteria}}</td>
                                     <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                 <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","semester_id":"{{$portfolio->semester_id}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","degree_req":"{{$portfolio->degree_req}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
@@ -173,8 +173,8 @@
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
-                                    <th>Degree requirments</th>
-                                    <th>Semester Commencement Date</th>
+                                     <th>Degree Awarding Criteria</th>
+                                     <th>Semester Commencement Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -332,6 +332,18 @@
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
             }
+             console.log(app_received);
+             console.log('adminssion offerd', admission_offered);
+            if( parseInt(app_received) < parseInt(admission_offered))
+            {
+                Notiflix.Notify.Failure("Applications received can't be less then Admission offered.");
+                return;
+            }
+            if(parseInt(admission_offered) < parseInt(student_intake))
+            {
+                Notiflix.Notify.Failure("Admission offered can't be less then Student Intake.");
+                return;
+            }
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
@@ -353,7 +365,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                   location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

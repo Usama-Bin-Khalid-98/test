@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 5.6. Top ten research outputs with impact
 </caption>
                                 <thead>
@@ -12,29 +12,13 @@ Table 5.6. Top ten research outputs with impact
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($topTenResearchOutput as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->research}}</td>
+                                        <td>{{$data->description}}</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
-                                   
-                                   
-                                    
+                                   @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

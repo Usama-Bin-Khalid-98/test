@@ -7,6 +7,7 @@ use App\InstituteType;
 use App\Models\Common\CourseType;
 use App\Models\Common\Department;
 use App\Models\Common\Program;
+use App\Models\Common\PublicationCategory;
 use App\Models\Common\Semester;
 use App\Models\Common\Degree;
 use App\Models\Common\Designation;
@@ -141,7 +142,12 @@ class ConfigController extends Controller
             }
             case 'publication_types';
             {
-                $this->TableRows =PublicationType::all();
+                $this->TableRows =PublicationType::with('publication_category')->get();
+                break;
+            }
+            case 'publication_categories';
+            {
+                $this->TableRows =PublicationCategory::all();
                 break;
             }
             case 'regions';
@@ -200,10 +206,11 @@ class ConfigController extends Controller
         $TableRows = $this->TableRows;
         $counter = $this->counter();
         $departments = Department::all();
+        $publication_categories = PublicationCategory::all();
         //dd($counter);
         $TableName = ucwords(str_replace('_',' ', $table));
 //        dd();
-        return view('config', compact('TableRows', 'TableName', 'counter', 'departments'));
+        return view('config', compact('TableRows', 'TableName', 'counter', 'departments', 'publication_categories'));
     }
 
     public function counter()
@@ -263,6 +270,9 @@ class ConfigController extends Controller
 
         $PublicationType= PublicationType::all()->count();
         $counter['PublicationType'] = $PublicationType;
+
+        $PublicationType= PublicationCategory::all()->count();
+        $counter['PublicationCategory'] = $PublicationType;
 
         $Region= Region::all()->count();
         $counter['Region'] = $Region;
@@ -420,6 +430,14 @@ class ConfigController extends Controller
             case 'publication_types':
             {
                 $this->TableRows = PublicationType::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+
+            case 'publication_categories';
+            {
+                dd($request->all());
+                $this->TableRows = PublicationCategory::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -616,6 +634,13 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+
+            case 'publication_categories';
+            {
+                $this->TableRows = PublicationCategory::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
             case 'regions':
             {
                 $this->TableRows = Region::find($id)->update($request->all());
@@ -795,6 +820,12 @@ class ConfigController extends Controller
             case 'publication_types':
             {
                 $this->TableRows  = PublicationType::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'publication_categories';
+            {
+                $this->TableRows  = PublicationCategory::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }

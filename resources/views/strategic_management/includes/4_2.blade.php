@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 4.2a. Faculty workload (t)
 </caption>
                                 <thead>
@@ -26,23 +26,23 @@ Table 4.2a. Faculty workload (t)
                                         <td></td>
 
 
+                                    
+                                    @if($facultyWorkLoad)
+                                    @foreach(@$facultyWorkLoad as $data)
+                                    <tr>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->designationName}}</td>
+                                        <td>{{$data->total_courses}}</td>
+                                        <td>{{$data->phd}}</td>
+                                        <td>{{$data->masters}}</td>
+                                        <td>{{$data->bachleors}}</td>
+                                        <td>{{$data->admin_responsibilities}}</td>
+
+
                                     </tr>
-{{--                                    @if($facultyWorkLoad)--}}
-{{--                                    @foreach(@$facultyWorkLoad as $data)--}}
-{{--                                    <tr>--}}
-{{--                                        <td>{{$loop->index+1}}</td>--}}
-{{--                                        <td>{{$data->faculty_name}}</td>--}}
-{{--                                        <td>{{$data->designationName}}</td>--}}
-{{--                                        <td>{{$data->total_courses}}</td>--}}
-{{--                                        <td>{{$data->phd}}</td>--}}
-{{--                                        <td>{{$data->masters}}</td>--}}
-{{--                                        <td>{{$data->bachleors}}</td>--}}
-{{--                                        <td>{{$data->admin_responsibilities}}</td>--}}
-
-
-{{--                                    </tr>--}}
-{{--                                    @endforeach--}}
-{{--                                    @endif--}}
+                                    @endforeach
+                                    @endif
 
 
 

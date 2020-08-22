@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                          <table class="table table-bordered table-striped">
-                            <caption style="text-align: center;">Table 2.1. Programs portfolio</caption>
+                            <caption style="text-align: center;color: red">Table 2.1. Programs portfolio</caption>
                               <thead>
                                 <tr>
                                   <th>Program(s) under review </th>
@@ -28,10 +28,10 @@
                                       <td style="text-align: center;" ><?php echo $programsPortfolio[$i]->programName;?></td>
                                       <td ><?php echo $programsPortfolio[$i]->total_semesters;?></td>
                                       <td> <?php echo $programsPortfolio[$i]->courseType;?></td>
-                                      <td><?php echo $programsPortfolio[$i]-> no_of_course;?></td>
-                                      <td><?php echo $programsPortfolio[$i]-> credit_hours;?></td>
-                                      <td></td>
-                                      <td></td>
+                                      <td><?php echo $programsPortfolio[$i]->no_of_course;?></td>
+                                      <td><?php echo $programsPortfolio[$i]->credit_hours;?></td>
+                                      <td><?php echo $programsPortfolio[$i]->internship_req;?></td>
+                                      <td><?php echo $programsPortfolio[$i]->fyp_req;?></td>
                                       
                                     </tr>
                                    

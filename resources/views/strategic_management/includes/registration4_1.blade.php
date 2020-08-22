@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.1. Summary of business schools’ faculty</caption>
+                                <caption style="text-align: center;color: red">Table 4.1. Summary of business schools’ faculty</caption>
                                 <thead>
                                     <th></th>
                                     <th>Business administration</th>
@@ -26,7 +26,7 @@
                                         <td><?php print_r($facultySummary[0][$i]->name);?></td>
                                         <td>
                                             @php
-    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],'5');
+    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],auth()->user()->campus_id);
    @endphp
    <?php 
    $total=0;

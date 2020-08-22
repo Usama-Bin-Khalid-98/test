@@ -22,7 +22,7 @@ class StudentGenderController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $programs = Scope::with('program')->get();
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('registration.student_enrolment.student_gender', compact('programs','genders'));
@@ -136,7 +136,7 @@ class StudentGenderController extends Controller
     {
        try {
         StudentGender::where('id', $studentGender->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             studentGender::destroy($studentGender->id);
             return response()->json(['success' => 'Record deleted successfully.']);

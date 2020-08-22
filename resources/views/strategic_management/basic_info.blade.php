@@ -92,7 +92,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="contactPerson">Name of Chief Administrative Officer</label>
-                                        <input type="text" id="contact_person" value="{{@$user_info->name}}" class="form-control">
+                                        <input type="text" id="contact_person" value="{{@$user_info->cao_name}}" class="form-control">
                                         <input type="hidden" id="id" value="{{@$basic_info->id}}">
                                     </div>
                                 </div>

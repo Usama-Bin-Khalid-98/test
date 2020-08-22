@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.5. Faculty stability</caption>
+                                <caption style="text-align: center;color: red">Table 4.5. Faculty stability</caption>
                                 <thead>
                                     <th>Year</th>
                                     <th>Total faculty</th>

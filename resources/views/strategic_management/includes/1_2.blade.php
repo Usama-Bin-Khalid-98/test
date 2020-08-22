@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 1.2. Scope of accreditation</caption>
+                                <caption style="text-align: center;color: red">Table 1.2. Scope of accreditation</caption>
                                 <thead>
                                     <th>Degree Program</th>
                                     <th>Level (Graduate/Undergraduate)</th>

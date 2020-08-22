@@ -12,13 +12,25 @@ class EntryRequirementSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('Entry_requirements')->insert([
+        DB::table('entry_requirements')->insert([
             ['campus_id'=>'1',
                 'program_id'=>'1',
                 'eligibility_criteria_id'=>'1',
                 'min_req'=>'matric',
                 'status'=>'active',
-                'isComplete'=>'yes']
+                'isComplete'=>'yes'],
+            ['campus_id'=>'209',
+                'program_id'=>'1',
+                'eligibility_criteria_id'=>'1',
+                'min_req'=>'matric',
+                'status'=>'active',
+                'isComplete'=>'yes'], 
+            ['campus_id'=>'209',
+                'program_id'=>'2',
+                'eligibility_criteria_id'=>'3',
+                'min_req'=>'matric',
+                'status'=>'active',
+                'isComplete'=>'yes'],   
         ]);
 
     }

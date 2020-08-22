@@ -26,9 +26,11 @@ class FacultySummaryController extends Controller
         $qualification = FacultyQualification::where('status', 'active')->get();
         $discipline = Discipline::where('status', 'active')->get();
 
+        $number = FacultySummary::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('number_faculty');
+
         $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-        return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries'));
+        return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries','number'));
         //
     }
 

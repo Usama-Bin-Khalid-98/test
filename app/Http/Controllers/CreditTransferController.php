@@ -67,6 +67,7 @@ class CreditTransferController extends Controller
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'file' => $path.'/'.$imageName, 
+                        'isComplete' => 'yes', 
                         'created_by' => Auth::user()->id 
                 ]);
 
@@ -128,7 +129,6 @@ class CreditTransferController extends Controller
                 CreditTransfer::where('id', $creditTransfer->id)->update(
                     [
                     'file' => $path.'/'.$imageName,
-                    'isComplete' => $request->isComplete,
                     'status' => $request->status,
                     'updated_by' => Auth::user()->id 
                     ]
@@ -137,7 +137,6 @@ class CreditTransferController extends Controller
                 return response()->json(['success' => 'Credit Transfer updated successfully.']);
             }
            CreditTransfer::where('id', $creditTransfer->id)->update([
-               'isComplete' => $request->isComplete,
                'status' => $request->status,
                'updated_by' => Auth::user()->id 
            ]);

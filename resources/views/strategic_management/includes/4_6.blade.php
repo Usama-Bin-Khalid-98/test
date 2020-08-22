@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.6. Gender mix</caption>
+                                <caption style="text-align: center;color: red">Table 4.6. Gender mix</caption>
                                 <thead>
                                     <th>Gender</th>
                                     <th>Permanent/Regular</th>
@@ -33,22 +33,23 @@
                                    ?>
                                     <tr>
                                         <td>Male</td>
-                                        <td><?php print_r(@$facPer[0]); ?></td>
-                                        <td><?php print_r(@$facPer[1]); ?></td>
-                                        <td><?php print_r(@$facPer[2]); ?></td>
-
-
-
+                                        <td><?php
+                                        if($facPer) print_r($facPer[0]); ?></td>
+                                        <td><?php  if($facPer) print_r($facPer[1]); ?></td>
+                                        <td><?php  if($facPer) print_r($facPer[2]); ?></td>
+                                       
+                                       
+                                       
                                     </tr>
 
                                     <tr>
                                         <td>Female</td>
-                                        <td><?php print_r(@$facPerm[0]); ?></td>
-                                        <td><?php print_r(@$facPerm[1]); ?></td>
-                                        <td><?php print_r(@$facPerm[2]); ?></td>
-
-
-
+                                        <td><?php  if($facPer) print_r($facPerm[0]); ?></td>
+                                        <td><?php  if($facPer) print_r($facPerm[1]); ?></td>
+                                        <td><?php  if($facPer) print_r($facPerm[2]); ?></td>
+                                    
+                                        
+                                        
                                     </tr>
 
 

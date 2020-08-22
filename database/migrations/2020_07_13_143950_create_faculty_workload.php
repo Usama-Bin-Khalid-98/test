@@ -33,7 +33,10 @@ class CreateFacultyWorkload extends Migration
              $table->integer('masters')->nullable();
              $table->integer('bachleors')->nullable();
              $table->string('admin_responsibilities',100)->nullable();
-             $table->string('year',100)->nullable();
+             $table->bigInteger('semester_id')->unsigned();
+             $table->foreign('semester_id')
+                 ->references('id')
+                 ->on('semesters');
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

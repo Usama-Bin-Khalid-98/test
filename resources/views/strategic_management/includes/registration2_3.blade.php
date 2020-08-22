@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                          <table class="table table-bordered table-striped">
-                            <caption style="text-align: center;">Table 2.3. Applications received </caption>
+                            <caption style="text-align: center;color: red">Table 2.3. Applications received </caption>
                               <thead>
                                 <tr>
                                   <th>Program under review</th>
@@ -25,7 +25,7 @@
                                      <td>{{$data->admission_offered}}</td>
                                       <td>{{$data->student_intake}}</td>
                                       <td>{{$data->semester_comm_date}}</td>
-                                      {{-- <!-- <td>{{$data->degree_awarding_criteria}}</td> --> --}}
+                                       <td>{{$data->degree_awarding_criteria}}</td> 
                                        
                                       
                                     </tr>
