@@ -1,50 +1,49 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 5.2. Basic information of research centers</caption>
+                                <caption style="text-align: center;color: red">Table 5.2. Basic information of research centers</caption>
                                 <thead>
-                                    <th>a)  Name of research center </th>
-                                    <th> </th>
-                                     
+                                   
                                     
                                     
                                   
                                     
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>b)  Hierarchical position</td>
-                                        <td>   Under the central ORIC office
-                                           Dedicated to business school
-                                        </td>
+                                    @foreach($researchCenters as $data)
+                                    <tr class="left">
+                                        <td >a)  Name of research center</td>
+                                        <td>{{$data->research_center}}</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="left">
+                                        <td>b)  Hierarchical position</td>
+                                        <td>{{$data->hierarchical_position}}</td>
+                                    </tr>
+                                    <tr class="left">
                                         <td>c)  Year of  establishment </td>
                                         <td>
-                                           
+                                           {{$data->year_establishment}}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="left">
                                         <td>d)  Head/supervisor of research center</td>
-                                        <td>   Director ORIC
-                                           Director Research
-                                           Dean
+                                        <td>{{$data->head}}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="left">
                                         <td>e)  Qualification of head/supervisor of research center</td>
-                                        <td></td>
+                                        <td>{{$data->qualification}}</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="left">
                                         <td>f)  Head/Supervisor reports to</td>
-                                        <td></td>
+                                        <td>{{$data->reports_to}}</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="left">
                                         <td>g)  Research committee composition</td>
-                                        <td></td>
+                                        <td>{{$data->composition}}</td>
                                     </tr>
                                     
-                              
+                                    @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               

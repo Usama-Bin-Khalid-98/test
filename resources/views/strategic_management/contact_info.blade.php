@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide contact information in the Table 1.3. Furthermore, attach CVs of the dean, head of the business school, and focal person as Appendix-1A.</h3>
+                            <h3 class="box-title">1.3 Provide contact information in the Table 1.3. Furthermore, attach CVs of the dean, head of the business school, and focal person as Appendix-1A.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -132,18 +132,50 @@
                                         </td>
                                     </tr>
 
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
-{{--                                    <p><input type="radio" name="status" class="flat-red" value="None Profit" > Active--}}
-{{--                                        <input type="radio" name="status" class="flat-red" value="For Profit" >InActive</p>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                    <tr>
+                                        <td><strong>Tel (cell): </strong></td>
+                                        <td>
+                                            <input type="text" name="ds_tell_cell" id="ds_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="hs_tell_cell" id="hs_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="fp_tell_cell" id="fp_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email </strong></td>
+                                        <td>
+                                            <input type="text" name="ds_email" id="ds_email" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="hs_email" id="hs_email" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="fp_email" id="fp_email" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CV </strong></td>
+                                        <td>
+                                            <input type="file" name="ds_cv" id="ds_cv" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="file" name="hs_cv" id="hs_cv" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="file" name="fp_cv" id="fp_cv" class="form-control">
+                                        </td>
+                                    </tr>
 
+                                </table>
+
+                                 </div>
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                 </div>
                             </div>
                            </form>
@@ -152,56 +184,125 @@
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
-                    <div class="box " >
-                        <div class="box-header">
-                            <h3 class="box-title">Contact Information</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-stripped">
-                                <thead >
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Contact</th>
-                                    <th>Job Title</th>
-                                    <th>Office Contact</th>
-                                    <th>CV</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+{{--                    <div class="box " >--}}
+{{--                        <div class="box-header">--}}
+{{--                            <h3 class="box-title">Table 1.3 Contact Information</h3>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.box-header -->--}}
+{{--                        <div class="box-body">--}}
+{{--                            <table  class="table table-bordered table-stripped">--}}
+{{--                                <thead>--}}
 
-                                @foreach($contacts as $contact)
-                                <tr>
-                                    <td>{{$contact->name}}</td>
-                                    <td>{{$contact->email}}</td>
-                                    <td>{{$contact->contact_no}}</td>
-                                    <td>{{$contact->designation->name}}</td>
-                                    <td>{{$contact->school_contact}}</td>
-                                    <td><a href="{{url($contact->cv)}}"><i class="fa fa-file-word-o"></i></a> </td>
-                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":{{$contact->id}},"name":"{{$contact->name}}","email":"{{$contact->email}}","contact_no":"{{$contact->contact_no}}","school_contact":"{{$contact->school_contact}}","designation_id":{{$contact->designation_id}},"cv":"{{$contact->cv}}","focal_person":"{{$contact->focal_person}}", "status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                                <tfoot >
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Contact</th>
-                                    <th>Job Title</th>
-                                    <th>Office Contact</th>
-                                    <th>CV</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
+{{--                                    <th></th>--}}
+{{--                                    <th>Dean of school</th>--}}
+{{--                                    <th>Head of school (if applicable)</th>--}}
+{{--                                    <th>NBEAC focal person (if different) </th>--}}
+{{--                                </thead>--}}
+{{--                                <tr>--}}
+{{--                                    <td><strong>Name:</strong></td>--}}
+{{--                                    --}}
+{{--                                    <td><input type="text" name="ds_name" id="ds_name" class="form-control"></td>--}}
+{{--                                </tr>--}}
+
+{{--                                <tr>--}}
+{{--                                    <td><strong>Job title:</strong></td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="ds_job_title" id="ds_job_title" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="hs_job_title" id="hs_job_title" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="fp_job_title" id="fp_job_title" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+
+{{--                                <tr>--}}
+{{--                                    <td><strong>Tel (off): </strong></td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="ds_tell_off" id="ds_tell_off" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="hs_tell_off" id="hs_tell_off" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="fp_tell_off" id="fp_tell_off" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+
+{{--                                <tr>--}}
+{{--                                    <td><strong>Tel (cell): </strong></td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="ds_tell_cell" id="ds_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="hs_tell_cell" id="hs_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="fp_tell_cell" id="fp_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                                <tr>--}}
+{{--                                    <td><strong>Email </strong></td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="ds_email" id="ds_email" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="hs_email" id="hs_email" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="text" name="fp_email" id="fp_email" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                                <tr>--}}
+{{--                                    <td><strong>CV </strong></td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="file" name="ds_cv" id="ds_cv" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="file" name="hs_cv" id="hs_cv" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                    <td>--}}
+{{--                                        <input type="file" name="fp_cv" id="fp_cv" class="form-control">--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+
+{{--                            </table>--}}
+
+{{--                            <table id="datatable" class="table table-bordered table-stripped">--}}
+{{--                                <thead >--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+
+{{--                                @foreach($contacts as $contact)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{$contact->name}}</td>--}}
+{{--                                    <td>{{$contact->email}}</td>--}}
+{{--                                    <td>{{$contact->contact_no}}</td>--}}
+{{--                                    <td>{{$contact->designation->name}}</td>--}}
+{{--                                    <td>{{$contact->school_contact}}</td>--}}
+{{--                                    <td><a href="{{url($contact->cv)}}"><i class="fa fa-file-word-o"></i></a> </td>--}}
+{{--                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>--}}
+{{--                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":{{$contact->id}},"name":"{{$contact->name}}","email":"{{$contact->email}}","contact_no":"{{$contact->contact_no}}","school_contact":"{{$contact->school_contact}}","designation_id":{{$contact->designation_id}},"cv":"{{$contact->cv}}","focal_person":"{{$contact->focal_person}}", "status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>--}}
+{{--                                </tr>--}}
+{{--                                @endforeach--}}
+{{--                                </tbody>--}}
+{{--                                <tfoot >--}}
+{{--                                <tr>--}}
+{{--                                    <th>Name</th>--}}
+{{--                                    <th>Email</th>--}}
+{{--                                    <th>Contact</th>--}}
+{{--                                    <th>Job Title</th>--}}
+{{--                                    <th>Office Contact</th>--}}
+{{--                                    <th>CV</th>--}}
+{{--                                    <th>Status</th>--}}
+{{--                                    <th>Action</th>--}}
+{{--                                </tr>--}}
+{{--                                </tfoot>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.box-body -->--}}
+{{--                    </div>--}}
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
@@ -328,22 +429,19 @@
         });
         /*Add Scope*/
         $('#form').submit(function (e) {
-            let name = $('#name').val();
-            let email = $('#email').val();
-            let contact_no = $('#contact_no').val();
-            let school_contact = $('#school_contact').val();
-            let designation_id = $('#designation_id').val();
-            let focal_person = $('#focal_person').val();
-            let cv = $('#cv').val();
+            let name = $('#ds_name').val();
+            let email = $('#ds_email').val();
+            let ds_tell_off = $('#ds_tell_off').val();
+            let ds_tell_cell = $('#ds_tell_cell').val();
+            let ds_cv = $('#ds_cv').val();
 
-            !name?addClass('name'):removeClass('name');
+            !name?addClass('ds_name'):removeClass('ds_name');
             !email?addClass('email'):removeClass('email');
-            !contact_no?addClass('contact_no'):removeClass('contact_no');
-            !school_contact?addClass('school_contact'):removeClass('school_contact');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !cv?addClass('cv'):removeClass('cv');
+            !ds_tell_off?addClass('ds_tell_off'):removeClass('ds_tell_off');
+            !ds_tell_cell?addClass('ds_tell_cell'):removeClass('ds_tell_cell');
+            !ds_cv?addClass('ds_cv'):removeClass('ds_cv');
 
-            if(!name || !email || !contact_no|| !school_contact || !designation_id || !cv)
+            if(!name || !ds_tell_off|| !ds_tell_cell || !email || !ds_cv)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -369,7 +467,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    //location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

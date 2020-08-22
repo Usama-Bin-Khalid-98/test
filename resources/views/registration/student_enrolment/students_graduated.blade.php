@@ -43,7 +43,7 @@
 
                      <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">3.3.State the number of students who have graduated over the past three years for each program under review in Table 3.2</h3>
+                            <h3 class="box-title">3.2.State the number of students who have graduated over the past three years for each program under review in Table 3.2</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 6.4. List of formal relationships
 </caption>
                                 <thead>
@@ -15,36 +15,16 @@ Table 6.4. List of formal relationships
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($formalRelationships as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->org_name}}</td>
+                                        <td>{{$data->mou_title}}</td>
+                                        <td>{{$data->signing_mou_date}}</td>
+                                        <td>{{$data->last_activity_date}}</td>
+                                        <td>{{$data->last_activity_desc}}</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
-                                   
-                                   
-                                    
-                              
+                                     @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               

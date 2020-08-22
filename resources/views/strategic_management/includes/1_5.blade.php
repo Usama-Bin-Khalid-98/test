@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 1.5. Affiliations of any external (academic and corporate), national or international members</caption>
+                                <caption style="text-align: center;color: red">Table 1.5. Affiliations of any external (academic and corporate), national or international members</caption>
                                 <thead>
                                     <th>Name of member</th>
                                     <th>Designation</th>

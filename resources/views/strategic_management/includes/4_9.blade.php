@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.9. Faculty participation in social and corporate organizations</caption>
+                                <caption style="text-align: center;color: red">Table 4.9. Faculty participation in social and corporate organizations</caption>
                                 <thead>
                                     <th>No</th>
                                     <th>Date</th>

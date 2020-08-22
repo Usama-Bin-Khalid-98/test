@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide information of faculty workload over the last two semesters. Attach faculty workload policy in table 4.2</h3>
+                            <h3 class="box-title">4.2 Provide information of faculty workload over the last two semesters. Attach faculty workload policy in table 4.2</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -109,12 +109,12 @@
                             </div>
                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                    <label for="name">Semester</label>
+                                    <select name="semester" id="semester" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Semester</option>
+                                        @foreach($semesters as $semester)
+                                        <option value="{{$semester->id}}">{{ $semester->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Faculty workload(t)</h3>
+                            <h3 class="box-title">Table 4.2 Faculty workload(t)</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -151,7 +151,7 @@
                                     <th>Masters</th>
                                     <th>Bachelors</th>
                                     <th>Administrative Responsibility</th>
-                                    <th>Year</th>
+                                    <th>Semester</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -168,9 +168,9 @@
                                     <td>{{$req->masters}}</td>
                                     <td>{{$req->bachleors}}</td>
                                     <td>{{$req->admin_responsibilities}}</td>
-                                    <td>{{$req->year}}</td>
+                                    <td>{{$req->semester->name}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","semester_id":"{{$req->semester->id}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -187,7 +187,7 @@
                                     <th>Masters</th>
                                     <th>Bachelors</th>
                                     <th>Administrative Responsibility</th>
-                                    <th>Year</th>
+                                    <th>Semester</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -224,7 +224,7 @@
                               </div>
 
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom: 21px;">
                                     <label for="name">Designation</label>
                                    <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Designation</option>
@@ -271,12 +271,12 @@
 
                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                    <label for="name">Semester</label>
+                                    <select name="semester" id="edit_semester" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Semester</option>
+                                        @foreach($semesters as $semester)
+                                            <option value="{{$semester->id}}">{{ $semester->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -340,7 +340,7 @@
             let masters = $('#masters').val();
             let bachleors = $('#bachleors').val();
             let admin_responsibilities = $('#admin_responsibilities').val();
-            let year = $('#year').val();
+            let semester = $('#semester').val();
 
             !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
             !designation_id?addClass('designation_id'):removeClass('designation_id');
@@ -349,9 +349,9 @@
             !masters?addClass('masters'):removeClass('masters');
             !bachleors?addClass('bachleors'):removeClass('bachleors');
             !admin_responsibilities?addClass('admin_responsibilities'):removeClass('admin_responsibilities');
-            !year?addClass('year'):removeClass('year');
+            !semester?addClass('semester'):removeClass('semester');
 
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !year)
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !semester)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -399,7 +399,7 @@
             $('#edit_masters').val(data.masters);
             $('#edit_bachleors').val(data.bachleors);
             $('#edit_admin_responsibilities').val(data.admin_responsibilities);
-            $('#edit_year').select2().val(data.year).trigger('change');
+            $('#edit_semester').select2().val(data.semester_id).trigger('change');
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -412,7 +412,7 @@ $('#updateForm').submit(function (e) {
             let masters = $('#edit_masters').val();
             let bachleors = $('#edit_bachleors').val();
             let admin_responsibilities = $('#edit_admin_responsibilities').val();
-            let year = $('#edit_year').val();
+            let semester_id = $('#edit_semester').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
@@ -423,9 +423,9 @@ $('#updateForm').submit(function (e) {
             !masters?addClass('edit_masters'):removeClass('edit_masters');
             !bachleors?addClass('edit_bachleors'):removeClass('edit_bachleors');
             !admin_responsibilities?addClass('edit_admin_responsibilities'):removeClass('edit_admin_responsibilities');
-            !year?addClass('edit_year'):removeClass('edit_year');
+            !semester_id?addClass('edit_semester'):removeClass('edit_semester');
 
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !year )
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !semester_id )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

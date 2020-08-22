@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 3.1. Student enrolment</caption>
+                                <caption style="text-align: center;color: red">Table 3.1. Student enrolment</caption>
                                 <thead>
                                     <th rowspan="2">Year <sup>4</sup></th>
                                     <th style="text-align: center;" colspan="3">Enrollment in all study programs</th>

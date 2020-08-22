@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">1.12. Provide organograms of the business school and the parent institution as Appendix-1F.</p>
+                            <p class="box-title">1.9. Provide organograms of the business school and the parent institution as Appendix-1F.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>

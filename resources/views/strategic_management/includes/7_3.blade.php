@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 7.3. Administrative/support staff
 </caption>
                                 <thead>
@@ -14,60 +14,14 @@ Table 7.3. Administrative/support staff
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($supportStaff as $data)
                                     <tr>
-                                        <td>Administration</td>
-                                        <td> </td>
-                                        <td></td>
+                                        <td>{{$data->staffCategory}}</td>
+                                        <td>{{$data->total_staff}} </td>
+                                        <td>{{$data->supervisor_qualification}}</td>
                                         
                                     </tr>
-                                     <tr>                                         
-                                        <td>Laboratories</td>
-                                        <td> </td>
-                                        <td></td>
-                                         
-                                    </tr>
-                                     <tr>
-                                        <td>Libraries</td>
-                                        <td> </td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                     <tr>                                         
-                                        <td>Examination office</td>
-                                        <td> </td>
-                                        <td></td>
-                                         
-                                    </tr>
-                                     <tr>
-                                        <td>Admission office</td>
-                                        <td> </td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                     <tr>                                         
-                                        <td>Student affairs</td>
-                                        <td> </td>
-                                        <td></td>
-                                         
-                                    </tr>
-                                     <tr>
-                                        <td>Placement office</td>
-                                        <td> </td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                     <tr>                                         
-                                        <td>Research center</td>
-                                        <td> </td>
-                                        <td></td>
-                                         
-                                    </tr>
-                                    <tr>                                         
-                                        <td>Others</td>
-                                        <td> </td>
-                                        <td></td>
-                                         
-                                    </tr>
+                                     @endforeach
                                     
                                    
                                    

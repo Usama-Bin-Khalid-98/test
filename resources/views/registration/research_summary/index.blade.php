@@ -55,19 +55,42 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Year</label>
+                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                    </select>
+                                </div>
+                            </div>
                              <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Publication type</label>
-                                    <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Publication Type</option>
-                                        @foreach($publications as $publication)
-                                         <option value="{{$publication->id}}">{{$publication->name}}</option>
+                                    <label for="name">Publication Category</label>
+                                    <select name="publication_category_id" id="publication_category_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Publication Category</option>
+                                        @foreach($publication_categories as $category)
+                                         <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                         </select>
                                 </div>
                             </div>
 
-                            
+                                <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Publication type</label>
+                                    <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Publication Type</option>
+{{--                                        @foreach($publications as $publication)--}}
+{{--                                         <option value="{{$publication->id}}">{{$publication->name}}</option>--}}
+{{--                                        @endforeach--}}
+                                        </select>
+                                </div>
+                            </div>
+
+
 
 
                             <div class="col-md-3">
@@ -133,6 +156,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
+                                    <th>Year</th>
                                     <th>Publication Type</th>
                                     <th>Total number of items</th>
                                     <th>Number of contributing core faculty members</th>
@@ -148,15 +172,15 @@
                                 <tr>
                                     <td>{{$summary->campus->business_school->name}}</td>
                                     <td>{{$summary->campus->location}}</td>
-                                    <td>{{$summary->publication_type->name}}</td>
                                     <td>{{$summary->year}}</td>
+                                    <td>{{$summary->publication_type->name}}</td>
                                     <td>{{$summary->total_items}}</td>
                                     <td>{{$summary->contributing_core_faculty}}</td>
                                     <td>{{$summary->jointly_produced_other}}</td>
                                     <td>{{$summary->jointly_produced_same}}</td>
                                     <td>{{$summary->jointly_produced_multiple}}</td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"publication_type_id":{{$summary->publication_type_id}},"total_items":"{{$summary->total_items}}","contributing_core_faculty":"{{$summary->contributing_core_faculty}}","jointly_produced_other":"{{$summary->jointly_produced_other}}","jointly_produced_same":"{{$summary->jointly_produced_same}}","jointly_produced_multiple":{{$summary->jointly_produced_multiple}}, "status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"publication_type_id":{{$summary->publication_type_id}},"total_items":"{{$summary->total_items}}","year":"{{$summary->year}}","contributing_core_faculty":"{{$summary->contributing_core_faculty}}","jointly_produced_other":"{{$summary->jointly_produced_other}}","jointly_produced_same":"{{$summary->jointly_produced_same}}","jointly_produced_multiple":{{$summary->jointly_produced_multiple}}, "status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -164,6 +188,7 @@
                                 <tr>
                                     <th>Business School</th>
                                     <th>Campus</th>
+                                    <th>Year</th>
                                     <th>Publication Type</th>
                                     <th>Total number of items</th>
                                     <th>Number of contributing core faculty members</th>
@@ -197,6 +222,18 @@
                     <div class="modal-body">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="name">Year</label>
+                                <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
+                                    <option selected disabled>Select Year</option>
+                                    <option value="{{ now()->year}}">{{ now()->year}}</option>
+                                    <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
+                                    <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="name">Publication Type</label>
                                 <select name="publication_type_id" id="edit_publication_type_id" class="form-control select2" style="width: 100%;">
                                     <option value="">Select Publication Type</option>
@@ -208,7 +245,7 @@
                             </div>
                         </div>
 
-                        
+
 
 
                         <div class="col-md-6">
@@ -294,6 +331,50 @@
             }
         });
 
+        $('#publication_category_id').on('change', function () {
+            let publication_category_id = $(this).val();
+            //console.log('id here', publication_category_id);
+            //return;
+            $.ajax({
+                url:'{{url("get_publication_category")}}/'+publication_category_id,
+                type:'GET',
+                data: {publication_category_id:publication_category_id},
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log('response here', response);
+                   // return;
+                    //if(response.success){
+                        var data =[];
+                        //$('#city').val(null);
+                        $("#publication_type_id").empty();
+                        Object.keys(response).forEach(function (index) {
+                            data.push({id:response[index].id, text:response[index].name});
+                        })
+
+                        console.log('data herer', data);
+                        $('#publication_type_id').select2({
+                            data
+                        });
+                        Notiflix.Notify.Success(response.success);
+                   // }
+
+                    console.log('response', response);
+                   // location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+
+        })
+
         $('#form').submit(function (e) {
             let publication_type_id = $('#publication_type_id').val();
             let total_items = $('#total_items').val();
@@ -301,15 +382,17 @@
             let jointly_produced_other = $('#jointly_produced_other').val();
             let jointly_produced_same = $('#jointly_produced_same').val();
             let jointly_produced_multiple = $('#jointly_produced_multiple').val();
+            let year = $('#year').val();
 
             !publication_type_id?addClass('publication_type_id'):removeClass('publication_type_id');
+            !year?addClass('year'):removeClass('year');
             !total_items?addClass('total_items'):removeClass('total_items');
             !contributing_core_faculty?addClass('contributing_core_faculty'):removeClass('contributing_core_faculty');
             !jointly_produced_other?addClass('jointly_produced_other'):removeClass('jointly_produced_other');
             !jointly_produced_same?addClass('jointly_produced_same'):removeClass('jointly_produced_same');
             !jointly_produced_multiple?addClass('jointly_produced_multiple'):removeClass('jointly_produced_multiple');
 
-            if(!publication_type_id  || !total_items || !contributing_core_faculty || !jointly_produced_other|| !jointly_produced_same || !jointly_produced_multiple)
+            if(!publication_type_id  || !total_items || !contributing_core_faculty || !jointly_produced_other|| !jointly_produced_same || !jointly_produced_multiple || !year)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -350,6 +433,7 @@
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
              $('#edit_publication_type_id').select2().val(data.publication_type_id).trigger('change');
+             $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_total_items').val(data.total_items);
             $('#edit_contributing_core_faculty').val(data.contributing_core_faculty);
             $('#edit_jointly_produced_other').val(data.jointly_produced_other);

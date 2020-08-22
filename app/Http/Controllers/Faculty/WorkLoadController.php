@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
+use App\Models\Common\Semester;
 use App\Models\Faculty\WorkLoad;
-use App\BusinessSchool;
 use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class WorkLoadController extends Controller
@@ -24,10 +23,11 @@ class WorkLoadController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
          $designations = Designation::all();
+         $semesters = Semester::all();
 
-         $workloads = WorkLoad::with('campus','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+         $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-         return view('registration.faculty.workload', compact('designations','workloads'));
+         return view('registration.faculty.workload', compact('designations','workloads', 'semesters'));
     }
 
     /**
@@ -65,7 +65,7 @@ class WorkLoadController extends Controller
                 'masters' => $request->masters,
                 'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
-                'year' => $request->year,
+                'semester_id' => $request->semester,
                 'isCompleted' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
@@ -110,6 +110,7 @@ class WorkLoadController extends Controller
      */
     public function update(Request $request, WorkLoad $workLoad)
     {
+//        dd($request->all());
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -126,7 +127,7 @@ class WorkLoadController extends Controller
                 'masters' => $request->masters,
                 'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
-                'year' => $request->year,
+                'semester_id' => $request->semester,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -148,7 +149,7 @@ class WorkLoadController extends Controller
     {
         try {
             Workload::where('id', $workLoad->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             WorkLoad::destroy($workLoad->id);
             return response()->json(['success' => 'Record deleted successfully.']);
@@ -167,7 +168,7 @@ class WorkLoadController extends Controller
             'masters' => 'required',
             'bachleors' => 'required',
             'admin_responsibilities' => 'required',
-            'year' => 'required'
+            'semester' => 'required'
         ];
     }
 

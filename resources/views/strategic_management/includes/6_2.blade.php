@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 6.2. Project details
 </caption>
                                 <thead>
@@ -12,30 +12,13 @@ Table 6.2. Project details
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($projectDetails as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->activity_title}}</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
-                                   
-                                   
-                                    
-                              
+                                    @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               

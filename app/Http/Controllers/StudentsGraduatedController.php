@@ -22,7 +22,7 @@ class StudentsGraduatedController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $programs = Scope::with('program')->get();
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
@@ -139,7 +139,7 @@ class StudentsGraduatedController extends Controller
     {
         try {
             StudentsGraduated::where('id', $studentsGraduated->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             StudentsGraduated::destroy($studentsGraduated->id);
             return response()->json(['success' => 'Record deleted successfully.']);

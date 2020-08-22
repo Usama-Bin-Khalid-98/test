@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.1(a). Business School Faculty</caption>
+                                <caption style="text-align: center;color: red">Table 4.1(a). Business School Faculty</caption>
                                 <thead>
                                     <th></th>
                                     <th>Business administration</th>

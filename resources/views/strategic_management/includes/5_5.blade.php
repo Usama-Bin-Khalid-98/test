@@ -23,7 +23,7 @@
 </style>
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">
+                                <caption style="text-align: center;color: red">
 Table 5.5. Summary of research output
 </caption>
                                 <thead>
@@ -37,159 +37,22 @@ Table 5.5. Summary of research output
                                     
                                 </thead>
                                 <tbody>
+                                   <tbody>
+                                    @foreach($researchOutput as $data)
                                     <tr>
-                                        <td class="" rowspan="8" style="text-align: center;">Academic research articles</td>
-                                        <td>Impact factor journals</td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td>                                
-
+                                        <td>{{$data->publicationType}}</td>
+                                        <td>{{$data->publicationName}}</td>
+                                        
+                                        <td>{{$data->total_items}}</td>
+                                        <td>{{$data->contributing_core_faculty}}</td>
+                                        <td>{{$data->jointly_produced_other}}</td>
+                                        <td>{{$data->jointly_produced_multiple}}</td>
                                     </tr>
-                                    <tr>
-                                        <td >HEC category W</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >HEC category X</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >HEC category Y</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >ABS or ABDC listing</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >Other listings</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >National conference papers</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >International conference papers</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td class="" rowspan="3" style="text-align: center;">Books</td>
-                                        <td>Books or research monographs</td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td>                                
-
-                                    </tr>
-                                     <tr>
-                                        <td >Text books</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >Book chapters</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td class="" rowspan="6" style="text-align: center;">Books</td>
-                                        <td>Other Publications</td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td>                                
-
-                                    </tr>
-                                     <tr>
-                                        <td >Case studies</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >Consultancy project reports</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                    <tr>
-                                        <td >Practice oriented research articles</td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                     <tr>
-                                        <td >MS/MPhil thesis </td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
-                                      <tr>
-                                        <td >Doctoral thesis </td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                                                        
-
-                                    </tr>
+                                    @endforeach
+                                   
+                                    
+                              
+                                </tbody>
 
                                     
                                   

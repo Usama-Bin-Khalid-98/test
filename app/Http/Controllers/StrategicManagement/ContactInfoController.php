@@ -54,6 +54,7 @@ class ContactInfoController extends Controller
      */
     public function store(Request $request)
     {
+
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -238,8 +239,34 @@ class ContactInfoController extends Controller
                         }
                     }
 
-                    return response()->json(['success' => 'Contact Information added successfully.']);
+                    if ($request->file('fp_cv')) {
+                        $imageName = $request->fp_name . "-cv-" . time() . '.' . $request->fp_cv->getClientOriginalExtension();
+                        $path = 'uploads/cv';
+                        $diskName = env('DISK');
+                        $disk = Storage::disk($diskName);
+                        $request->file('fp_cv')->move($path, $imageName);
+                    }
+                    //dd($request->all());
+                    // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
+
+                    ContactInfo::create([
+                        'name' => $request->fp_name,
+                        'email' => $request->fp_email,
+                        'contact_no' => $request->fp_tell_off,
+                        'school_contact' => $request->fp_tell_cell,
+                        'designation_id' => 2,
+                        'job_title' => $request->fp_job_title,
+                        'cv' => $path . '/' . $imageName,
+                        'isComplete' => 'yes',
+                        'campus_id' => auth()->user()->campus_id,
+                        'department_id' => auth()->user()->department_id,
+                        'created_by' => auth()->user()->id,
+                    ]);
                 }
+            }
+
+                    return response()->json(['success' => 'Contact Information added successfully.']);
+
 
         }catch (Exception $e)
         {
@@ -354,11 +381,10 @@ class ContactInfoController extends Controller
 
     protected function rules() {
         return [
-            'name' => 'required',
-            'contact_no' => 'required',
-            'email' => 'required',
-            'school_contact' => 'required',
-            'designation_id' => 'required',
+            'ds_name' => 'required',
+            'ds_tell_off' => 'required',
+            'ds_email' => 'required',
+            'ds_tell_cell' => 'required',
             'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
         ];
     }

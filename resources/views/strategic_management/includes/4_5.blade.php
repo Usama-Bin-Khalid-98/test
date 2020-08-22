@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.5. Student to teacher ratio</caption>
+                                <caption style="text-align: center;color: red">Table 4.5. Student to teacher ratio</caption>
                                 <thead>
                                     <th>Program(s) under review</th>
                                     <th>Total enrollment (B)</th>

@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.1(b). Detailed information of business schools’ faculty </caption>
+                                <caption style="text-align: center;color: red">Table 4.1(b). Detailed information of business schools’ faculty </caption>
                                 <thead>
                                     <th>No</th>
                                     <th>Name/

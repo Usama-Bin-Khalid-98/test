@@ -95,7 +95,6 @@
                                     <th>Campus</th>
                                     <th>Document</th>
                                     <th>Status</th>
-                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -106,8 +105,7 @@
                                     <td>{{$contact->campus->location}}</td>
                                     <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
                                  
@@ -118,7 +116,6 @@
                                     <th>Campus</th>
                                     <th>Document</th>
                                     <th>Status</th>
-                                    <th>isCompleted</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -173,13 +170,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isCompleted') }} : </label>
-                                <p><input type="radio" name="isComplete" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isComplete" class="flat-red" value="no">No</p>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -270,7 +261,6 @@
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
-            $('input[value='+data.isComplete+']').iCheck('check');
             $('input[value='+data.status+']').iCheck('check');
         });
 
@@ -278,7 +268,6 @@ $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            let isCompleted = $('input[name=edit_isComplete]:checked').val();
 
             
             e.preventDefault();

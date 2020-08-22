@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;">Table 4.6. Gender mix</caption>
+                                <caption style="text-align: center;color: red">Table 4.6. Gender mix</caption>
                                 <thead>
                                     <th>Gender</th>
                                     <th>Permanent/Regular</th>

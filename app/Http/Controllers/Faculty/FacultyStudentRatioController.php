@@ -23,7 +23,7 @@ class FacultyStudentRatioController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $programs = Scope::with('program')->get();
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
@@ -138,7 +138,7 @@ class FacultyStudentRatioController extends Controller
     {
         try {
             FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             FacultyStudentRatio::destroy($facultyStudentRatio->id);
             return response()->json(['success' => 'Record deleted successfully.']);

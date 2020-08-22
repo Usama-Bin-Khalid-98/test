@@ -43,7 +43,7 @@
 
                      <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">State the current gender wise break down of students in each program under review in Table 3.3</h3>
+                            <h3 class="box-title">3.3 State the current gender wise break down of students in each program under review in Table 3.3</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -161,7 +161,7 @@
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
 
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Program</label>
@@ -258,6 +258,14 @@
             !male?addClass('male'):removeClass('male');
             !female?addClass('female'):removeClass('female');
 
+            let totalPercent = parseInt(male) + parseInt(female)
+            console.log('percent', totalPercent);
+            //return;
+            if(totalPercent > 100 )
+            {
+                Notiflix.Notify.Failure("percentage ratio should be less then or equal to 100%.");
+                return;
+            }
             if(!program_id || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
@@ -299,7 +307,7 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-           
+
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_male').val(data.male);
             $('#edit_female').val(data.female);;

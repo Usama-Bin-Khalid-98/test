@@ -25,7 +25,7 @@ class EntryRequirementSeeder extends Seeder
                 'min_req'=>'matric',
                 'status'=>'active',
                 'isComplete'=>'yes'], 
-            ['campus_id'=>'1',
+            ['campus_id'=>'209',
                 'program_id'=>'2',
                 'eligibility_criteria_id'=>'3',
                 'min_req'=>'matric',
