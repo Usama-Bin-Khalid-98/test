@@ -129,43 +129,7 @@
                                         </td>
                                         <td>
                                             <input type="file" name="fp_cv" id="fp_cv" class="form-control">
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><strong>Tel (cell): </strong></td>
-                                        <td>
-                                            <input type="text" name="ds_tell_cell" id="ds_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="hs_tell_cell" id="hs_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="fp_tell_cell" id="fp_tell_cell" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Email </strong></td>
-                                        <td>
-                                            <input type="text" name="ds_email" id="ds_email" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="hs_email" id="hs_email" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="fp_email" id="fp_email" class="form-control">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>CV </strong></td>
-                                        <td>
-                                            <input type="file" name="ds_cv" id="ds_cv" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="file" name="hs_cv" id="hs_cv" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="file" name="fp_cv" id="fp_cv" class="form-control">
+                                            <span class="text-green">{{$fp_contacts->file}}</span>
                                         </td>
                                     </tr>
 

@@ -168,7 +168,7 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-             @if($invoices)
+{{--             @if($invoices)--}}
                 <ul class="treeview-menu">
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">

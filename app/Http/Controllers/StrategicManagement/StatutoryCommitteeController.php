@@ -54,39 +54,43 @@ class StatutoryCommitteeController extends Controller
         }
         try {
             //$data = $request;
-          for($i =0; $i<=count($request->all()); $i++)
+          for($i =0; $i<=count(@$request->all()); $i++)
           {
 //              dd($data->statutory_body_id[$i]);
 //              dd($request[$i]['name']);
 
             $path = ''; $fileName = '';
-
-            if($request->file('file')) {
-                $fileName = $request->name[$i] . "-file-" . time() . '.' . $request->file[$i]->getClientOriginalExtension();
-                $path = 'uploads/statutory_committee';
-                $diskName = env('DISK');
-                $disk = Storage::disk($diskName);
-                $request->file('file')->move($path, $fileName);
-                //dd($request->file());
-            }
             //dd('here');
-                StatutoryCommittee::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'statutory_body_id' => $request->statutory_body_id[$i],
-                    'name' => $request->name[$i],
-                    'designation_id' => $request->designation_id[$i],
-                    'date_first_meeting' => $request->date_first_meeting[$i],
-                    'date_second_meeting' => $request->date_second_meeting[$i],
-                    'date_third_meeting' => $request->date_third_meeting[$i],
-                    'date_fourth_meeting' => $request->date_fourth_meeting[$i],
-                    'file' => $path . '/' . $fileName,
-                    'isComplete' => 'yes',
-                    'created_by' => Auth::user()->id
-                ]);
+              if(@$request->name[$i]) {
+                  StatutoryCommittee::create([
+                      'campus_id' => Auth::user()->campus_id,
+                      'department_id' => Auth::user()->department_id,
+                      'statutory_body_id' => $request->statutory_body_id[$i],
+                      'name' => $request->name[$i],
+                      'designation_id' => $request->designation_id[$i],
+                      'date_first_meeting' => $request->date_first_meeting[$i],
+                      'date_second_meeting' => $request->date_second_meeting[$i],
+                      'date_third_meeting' => $request->date_third_meeting[$i],
+                      'date_fourth_meeting' => $request->date_fourth_meeting[$i],
+                      'file' => $path . '/' . $fileName,
+                      'isComplete' => 'yes',
+                      'created_by' => Auth::user()->id
+                  ]);
+              }
+              if($request->file('file'.$i)) {
+                  $fileIndex = 'file'.$i;
+                  $fileName = $request->name[$i] . "-file-" . time() . '.' . $request->$fileIndex->getClientOriginalExtension();
+                  //dd($request->name[$i]);
+                  $path = 'uploads/statutory_committee';
+                  $diskName = env('DISK');
+                  $disk = Storage::disk($diskName);
+                  $request->file('file'.$i)->move($path, $fileName);
+//                dd($request->file('file'));
+                  //dd($request->file());
+              }
             //}
-                //return response()->json(['success' => 'Statutory committee added successfully.']);
             }
+                return response()->json(['success' => 'Statutory committee added successfully.']);
 
         }catch (Exception $e)
         {
