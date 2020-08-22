@@ -122,14 +122,16 @@
                                     <tr>
                                         <td><strong>CV </strong></td>
                                         <td>
-                                            <input type="file" name="ds_cv" id="ds_cv" class="form-control">
+                                            <input type="file" name="ds_cv" id="ds_cv">
+                                            <a href="{{url(@$ds_contacts->cv?$ds_contacts->cv:'')}}"><span class="text-green">{{@$ds_contacts->cv}}</span></a>
                                         </td>
                                         <td>
-                                            <input type="file" name="hs_cv" id="hs_cv" class="form-control">
+                                            <input type="file" name="hs_cv" id="hs_cv">
+                                            <a href="{{url(@$hs_contacts->cv?$hs_contacts->cv:'')}}"><span class="text-green">{{@$hs_contacts->cv}}</span></a>
                                         </td>
                                         <td>
-                                            <input type="file" name="fp_cv" id="fp_cv" class="form-control">
-                                            <span class="text-green">{{$fp_contacts->file}}</span>
+                                            <input type="file" name="fp_cv" id="fp_cv">
+                                            <a href="{{url(@$fp_contacts->cv?$fp_contacts->cv:'')}}"><span class="text-green">{{@$fp_contacts->cv}}</span></a>
                                         </td>
                                     </tr>
 
