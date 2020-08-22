@@ -64,34 +64,71 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Name:</strong></td>
-                                        <td><input type="text" name="ds_name" id="ds_name" class="form-control"></td>
-                                        <td><input type="text" name="hs_name" id="hs_name" class="form-control"></td>
-                                        <td><input type="text" name="fp_name" id="fp_name" class="form-control"></td>
+                                        <td><input type="text" name="ds_name" id="ds_name" value="{{@$ds_contacts->name}}" class="form-control"></td>
+                                        <td><input type="text" name="hs_name" id="hs_name" value="{{@$hs_contacts->name}}" class="form-control"></td>
+                                        <td><input type="text" name="fp_name" id="fp_name" value="{{@$fp_contacts->name}}" class="form-control"></td>
                                     </tr>
 
                                     <tr>
                                         <td><strong>Job title:</strong></td>
                                         <td>
-                                            <input type="text" name="ds_job_title" id="ds_job_title" class="form-control">
+                                            <input type="text" name="ds_job_title" id="ds_job_title"  value="{{@$ds_contacts->job_title}}" class="form-control">
                                         </td>
                                         <td>
-                                            <input type="text" name="hs_job_title" id="hs_job_title" class="form-control">
+                                            <input type="text" name="hs_job_title" id="hs_job_title"  value="{{@$hs_contacts->job_title}}" class="form-control">
                                         </td>
                                         <td>
-                                            <input type="text" name="fp_job_title" id="fp_job_title" class="form-control">
+                                            <input type="text" name="fp_job_title" id="fp_job_title"  value="{{@$fp_contacts->job_title}}" class="form-control">
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td><strong>Tel (off): </strong></td>
                                         <td>
-                                            <input type="text" name="ds_tell_off" id="ds_tell_off" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                            <input type="text" name="ds_tell_off" id="ds_tell_off" value="{{@$ds_contacts->contact_no}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
                                         </td>
                                         <td>
-                                            <input type="text" name="hs_tell_off" id="hs_tell_off" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                            <input type="text" name="hs_tell_off" id="hs_tell_off" value="{{@$hs_contacts->contact_no}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
                                         </td>
                                         <td>
-                                            <input type="text" name="fp_tell_off" id="fp_tell_off" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                            <input type="text" name="fp_tell_off" id="fp_tell_off" value="{{@$fp_contacts->contact_no}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Tel (cell): </strong></td>
+                                        <td>
+                                            <input type="text" name="ds_tell_cell" id="ds_tell_cell" value="{{@$ds_contacts->school_contact}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="hs_tell_cell" id="hs_tell_cell" value="{{@$hs_contacts->school_contact}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="fp_tell_cell" id="fp_tell_cell" value="{{@$fp_contacts->school_contact}}" class="form-control" data-inputmask="'mask': '+99-99-99999999'" maxlength="15">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email </strong></td>
+                                        <td>
+                                            <input type="text" name="ds_email" id="ds_email" value="{{@$ds_contacts->email}}" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="hs_email" id="hs_email" value="{{@$hs_contacts->email}}" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="fp_email" id="fp_email" value="{{@$fp_contacts->email}}" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CV </strong></td>
+                                        <td>
+                                            <input type="file" name="ds_cv" id="ds_cv" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="file" name="hs_cv" id="hs_cv" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="file" name="fp_cv" id="fp_cv" class="form-control">
                                         </td>
                                     </tr>
 

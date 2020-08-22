@@ -53,31 +53,39 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            //$data = $request;
+          for($i =0; $i<=count($request->all()); $i++)
+          {
+//              dd($data->statutory_body_id[$i]);
+//              dd($request[$i]['name']);
 
             $path = ''; $fileName = '';
+
             if($request->file('file')) {
-                $fileName = $request->name . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $fileName = $request->name[$i] . "-file-" . time() . '.' . $request->file[$i]->getClientOriginalExtension();
                 $path = 'uploads/statutory_committee';
                 $diskName = env('DISK');
                 $disk = Storage::disk($diskName);
                 $request->file('file')->move($path, $fileName);
-
+                //dd($request->file());
+            }
+            //dd('here');
                 StatutoryCommittee::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
-                    'statutory_body_id' => $request->statutory_body_id,
-                    'name' => $request->name,
-                    'designation_id' => $request->designation_id,
-                    'date_first_meeting' => $request->date_first_meeting,
-                    'date_second_meeting' => $request->date_second_meeting,
-                    'date_third_meeting' => $request->date_third_meeting,
-                    'date_fourth_meeting' => $request->date_fourth_meeting,
-                    'file' => $path.'/'.$fileName,
+                    'statutory_body_id' => $request->statutory_body_id[$i],
+                    'name' => $request->name[$i],
+                    'designation_id' => $request->designation_id[$i],
+                    'date_first_meeting' => $request->date_first_meeting[$i],
+                    'date_second_meeting' => $request->date_second_meeting[$i],
+                    'date_third_meeting' => $request->date_third_meeting[$i],
+                    'date_fourth_meeting' => $request->date_fourth_meeting[$i],
+                    'file' => $path . '/' . $fileName,
                     'isComplete' => 'yes',
                     'created_by' => Auth::user()->id
                 ]);
-
-                return response()->json(['success' => 'Statutory committee added successfully.']);
+            //}
+                //return response()->json(['success' => 'Statutory committee added successfully.']);
             }
 
         }catch (Exception $e)
@@ -135,6 +143,7 @@ class StatutoryCommitteeController extends Controller
                 $disk = Storage::disk($diskName);
                 $request->file('file')->move($path, $fileName);
             }
+
             StatutoryCommittee::where('id', $statutoryCommittee->id)->update([
                 'statutory_body_id' => $request->statutory_body_id,
                 'name' => $request->name,
@@ -167,7 +176,7 @@ class StatutoryCommitteeController extends Controller
         //
         try {
             StatutoryCommittee::where('id', $statutoryCommittee->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             StatutoryCommittee::destroy($statutoryCommittee->id);
             return response()->json(['success'=> 'Record deleted successfully']);
@@ -180,12 +189,12 @@ class StatutoryCommitteeController extends Controller
         return [
             'statutory_body_id' => 'required',
             'name' => 'required',
-            'designation_id' => 'required',
-            'date_first_meeting' => 'required',
-            'date_second_meeting' => 'required',
-            'date_third_meeting' => 'required',
-            'date_fourth_meeting' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048'
+//            'designation_id' => 'required',
+//            'date_first_meeting' => 'required',
+//            'date_second_meeting' => 'required',
+//            'date_third_meeting' => 'required',
+//            'date_fourth_meeting' => 'required',
+//            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048'
         ];
     }
 
