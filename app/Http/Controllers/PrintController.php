@@ -99,8 +99,63 @@ class PrintController extends Controller
             $facultyExchangePrograms = DB::select('SELECT faculty_exchanges.* FROM faculty_exchanges, campuses, users WHERE faculty_exchanges.campus_id=campuses.id AND faculty_exchanges.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
             $placementActivities = DB::select('SELECT placement_activities.* FROM placement_activities, campuses, users WHERE placement_activities.campus_id=campuses.id AND placement_activities.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $entryRequirements = DB::select('SELECT entry_requirements.*, programs.name as program, eligibility_criterias.name as eligibilityCriteria FROM entry_requirements, programs, eligibility_criterias, campuses, users WHERE entry_requirements.campus_id=campuses.id AND entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+
+            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program, semesters.name as semester FROM application_receiveds, programs, semesters, campuses, users WHERE application_receiveds.campus_id=campuses.id AND application_receiveds.program_id=programs.id AND application_receiveds.semester_id=semesters.id AND application_receiveds.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $orics = DB::select('SELECT orics.* FROM orics, campuses, users WHERE orics.campus_id=campuses.id AND campuses.id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $admissionOffices = DB::select('SELECT admission_offices.* FROM admission_offices, campuses, users WHERE admission_offices.campus_id=campuses.id AND admission_offices.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $researchCenters = DB::select('SELECT research_centers.* FROM research_centers, campuses, users WHERE research_centers.campus_id=campuses.id AND research_centers.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+            $researchAgendas = DB::select('SELECT research_agendas.* FROM research_agendas, campuses, users WHERE research_agendas.campus_id=campuses.id AND research_agendas.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+
+             $researchFundings = DB::select('SELECT research_fundings.* FROM research_fundings, campuses, users WHERE research_fundings.campus_id=campuses.id AND research_fundings.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+             $researchProjects = DB::select('SELECT research_projects.* FROM research_projects, campuses, users WHERE research_projects.campus_id=campuses.id AND research_projects.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+             $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName, publication_categories.name as publicationType FROM publication_categories,research_summaries, publication_types, campuses, users WHERE research_summaries.campus_id=campuses.id AND publication_categories.id=publication_types.publication_category_id AND research_summaries.publication_type_id=publication_types.id AND users.id=? AND users.department_id=? AND research_summaries.campus_id=? ORDER BY publication_categories.name', array(auth()->user()->id, $userCampus[0]->department_id, $userCampus[0]->campus_id ));
+
+
+             $topTenResearchOutput = DB::select('SELECT research_outputs.* FROM research_outputs, campuses, users WHERE research_outputs.campus_id=campuses.id AND research_outputs.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+             $curriculumRoles = DB::select('SELECT curriculum_roles.* FROM curriculum_roles, campuses, users WHERE curriculum_roles.campus_id=campuses.id AND curriculum_roles.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $facultyDevelopments = DB::select('SELECT faculty_developments.* FROM faculty_developments, campuses, users WHERE faculty_developments.campus_id=campuses.id AND faculty_developments.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $conferences = DB::select('SELECT conferences.* FROM conferences, campuses, users WHERE conferences.campus_id=campuses.id AND conferences.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? ORDER BY income_sources.type', array( $userCampus[0]->campus_id, auth()->user()->id));
+
+             $financialRisks = DB::select('SELECT financial_risks.* FROM financial_risks, campuses, users WHERE financial_risks.campus_id=campuses.id AND financial_risks.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $supportStaff = DB::select('SELECT support_staff.*, staff_categories.name as staffCategory FROM support_staff, staff_categories, campuses, users WHERE support_staff.campus_id=campuses.id AND support_staff.staff_category_id=staff_categories.id AND support_staff.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+             $qecInformation = DB::select('SELECT qec_infos.*, qec_types.name as qecName FROM qec_infos, qec_types, campuses, users WHERE qec_infos.campus_id=campuses.id AND qec_infos.qec_type_id=qec_types.id AND qec_infos.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
+
+             $studentsClubs = DB::select('SELECT student_clubs.* FROM student_clubs, campuses, users WHERE student_clubs.campus_id=campuses.id AND student_clubs.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $projectDetails = DB::select('SELECT project_details.* FROM project_details, campuses, users WHERE project_details.campus_id=campuses.id AND project_details.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $environmentalProtectionActivities = DB::select('SELECT env_protections.* FROM env_protections, campuses, users WHERE env_protections.campus_id=campuses.id AND env_protections.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $formalRelationships = DB::select('SELECT formal_relationships.* FROM formal_relationships, campuses, users WHERE formal_relationships.campus_id=campuses.id AND formal_relationships.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+             $complaintResolution = DB::select('SELECT complaint_resolutions.* FROM complaint_resolutions, campuses, users WHERE complaint_resolutions.campus_id=campuses.id AND complaint_resolutions.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+              $internalCommunityWelfareProgram = DB::select('SELECT internal_communities.*, welfare_programs.name as welfareProgram FROM internal_communities, welfare_programs, campuses, users WHERE internal_communities.campus_id=campuses.id AND internal_communities.welfare_program_id=welfare_programs.id AND internal_communities.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
            
-            return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities'));
+            return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){

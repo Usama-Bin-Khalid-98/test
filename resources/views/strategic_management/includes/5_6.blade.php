@@ -12,29 +12,13 @@ Table 5.6. Top ten research outputs with impact
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($topTenResearchOutput as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->research}}</td>
+                                        <td>{{$data->description}}</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
-                                   
-                                   
-                                    
+                                   @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

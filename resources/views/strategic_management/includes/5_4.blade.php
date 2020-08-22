@@ -7,8 +7,8 @@ Table 5.4. Details of research projects
                                 <thead>
                                     <th >Project title</th>
                                     <th>Start & end dates 
-(mm-yy/mm-yy)
-</th>
+                                    (mm-yy/mm-yy)
+                                    </th>
                                     <th>Principal investigator</th>                                    
                                     <th >Funding agency</th>
                                     <th>Funding amount  (PKR)</th>
@@ -16,29 +16,16 @@ Table 5.4. Details of research projects
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($researchProjects as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td> </td>
-                                         
-                                     
-                                     
+                                        <td>{{$data->title}}</td>
+                                        <td>{{$data->start_date}}/{{$data->end_date}}</td>
+                                        <td>{{$data->investigator}}</td>
+                                        <td>{{$data->funding_agency}}</td>
+                                        <td>{{$data->amount}} </td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
+                                    @endforeach
+                                      
                                    
                                    
                                     

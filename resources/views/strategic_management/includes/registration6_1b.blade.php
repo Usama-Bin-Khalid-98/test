@@ -24,19 +24,20 @@
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
                                 <caption style="text-align: center;color: red">
-Table 7.1. Financial information of the business school
+Table 6.1. Financial information of the business school
 </caption>
                                 <thead>
+                                    <tr>
                                     <th class="" style="text-align: center;"></th>
                                     <th>Particulars</th>
-                                    <th>Year t-3</th>                                    
+                                    <th>Year t-3</th>
                                     <th >Year t-2</th>
                                     <th>Year t-1</th>
                                     <th>Year t</th>
                                     <th>Year t+1</th>
                                     <th>Year t+2</th>
-                                     
-                                    
+                                    </tr>
+
                                 </thead>
                                 <tbody><?php
                                     $iyt_3=$iyt_2=$iyt_1=$iyt=$iyt_p1=$iyt_p2=$eyt_3=$eyt_2=$eyt_1=$eyt=$eyt_p1=$eyt_p2=0;?>
@@ -129,8 +130,8 @@ Table 7.1. Financial information of the business school
                               
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

@@ -227,9 +227,10 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
                     </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
-        <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>           <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li> 
+             <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>
+            <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li>
           </ul>
-              @endif
+{{--              @endif--}}
           </li>
         @endhasrole
         @hasrole('BusinessSchool')
@@ -349,6 +350,7 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
                             <i class="fa {{$alumni==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+
 
           </ul>
         </li>
@@ -476,10 +478,7 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
                         <span class="text text-{{$financialinfo==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$financialinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a>
-            </li>
-
-              {{--SAR--}}
+                    </span></a></li>
              <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}">6.2 BS Facility<span class="pull-right-container">
                         <span class="text text-{{$bsfacility==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$bsfacility==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -510,7 +509,7 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}{{(request()->is('social-activity'))?'active':''}}">
           <a href="#">
-            <i class="fa fa-globe text-blue " ></i><span>Social Responsibility</span>
+            <i class="fa fa-globe text-blue " ></i><span>7 Social Responsibility</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -553,27 +552,37 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
                     </span></a></li>
           </ul>
         </li>
-          @endhasrole 
+          @endhasrole
           @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('placement-office'))?'active':''}}{{(request()->is('linkages'))?'active':''}}{{(request()->is('body-meeting'))?'active':''}}{{(request()->is('student-exchange'))?'active':''}}{{(request()->is('faculty-exchange'))?'active':''}}{{(request()->is('obtained-internship'))?'active':''}}{{(request()->is('placement-activity'))?'active':''}}">          <a href="#">
+        <li class=" treeview {{(request()->is('placement-office'))?'active':''}}{{(request()->is('linkages'))?'active':''}}{{(request()->is('body-meeting'))?'active':''}}{{(request()->is('student-exchange'))?'active':''}}{{(request()->is('faculty-exchange'))?'active':''}}{{(request()->is('obtained-internship'))?'active':''}}{{(request()->is('placement-activity'))?'active':''}}">
+          <a href="#">
             <i class="fa fa-globe text-green " ></i><span>8: External Linkages</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('placement-office')) ? 'active' : '' }}"><a href="{{url('placement-office')}}">8.1 Placement Office<span class="pull-right-container">
+            <li  class="{{ (request()->is('placement-office')) ? 'active' : '' }}">
+                <a href="{{url('placement-office')}}">8.1 Placement Office<span class="pull-right-container">
                         <span class="text text-{{$portfolio==='C'?'green':'red'}} pull-right">
-                           <i class="fa {{$portfolio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>                        </span>
-                    </span></a></li>
+                            <i class="fa {{$portfolio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span>
+                </a>
+            </li>
             <li  class="{{ (request()->is('linkages')) ? 'active' : '' }}"><a href="{{url('linkages')}}">8.2 Linkages<span class="pull-right-container">
-                        <span class="text text-{{$linkages==='C'?'green':'red'}} pull-right">                            <i class="fa {{$linkages==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>                    </span></a></li>
+                        <span class="text text-{{$linkages==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$linkages==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
             <li  class="{{ (request()->is('body-meeting')) ? 'active' : '' }}"><a href="{{url('body-meeting')}}">8.3 Statutory Body Meeting<span class="pull-right-container">
                         <span class="text text-{{$bodymeeting==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$bodymeeting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                                            </span></a></li>
+                    </span>
+                </a>
+            </li>
+
              <li  class="{{ (request()->is('student-exchange')) ? 'active' : '' }}"><a href="{{url('student-exchange')}}">8.4a Student Exchange<span class="pull-right-container">
                         <span class="text text-{{$sexchange==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$sexchange==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -620,7 +629,7 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
                         <span class="text text-{{$application==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a></li>        
+                    </span></a></li>
             <li  class="{{ (request()->is('credit-transfer')) ? 'active' : '' }}"><a href="{{url('credit-transfer')}}">9.4 Credit Transfer<span class="pull-right-container">
                         <span class="text text-{{$credit_transfer==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$credit_transfer==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -638,7 +647,7 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
                     </span></a></li>
           </ul>
         </li>
-          @endhasrole 
+          @endhasrole
           <!-- ///////////////////////////////////////////////////////////////////////////// -->
 
           @hasrole('BusinessSchool')

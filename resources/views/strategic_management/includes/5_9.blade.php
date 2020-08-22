@@ -12,30 +12,13 @@ Table 5.9. Conferences
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($conferences as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->conference}}</td>
+                                        <td>{{$data->date}}</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
-                                    
-                                   
-                                   
-                                    
-                              
+                                    @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               

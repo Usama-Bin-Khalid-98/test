@@ -13,30 +13,22 @@ Table 5.8. R&D budget allocation for faculty development
                                     
                                 </thead>
                                 <tbody>
+                                    @php
+                                    $total = 0;
+                                    @endphp
+                                    @foreach($facultyDevelopments as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                         
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->name}}</td>
+                                        <td>{{$data->description}}</td>
+                                        <td>{{$data->fund_spent}}
+                                           @php $total+=$data->fund_spent;@endphp</td>
                                     </tr>
-                                     <tr>
-                                         
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                     
-                                     
-                                    </tr>
+                                     @endforeach
+
                                     <tr >
                                         <td colspan="3">Total R&D fund spent for faculty development</td>
-                                        <td></td>
+                                        <td>{{$total}}</td>
 
                                     </tr>
                                     
