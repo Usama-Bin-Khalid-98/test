@@ -151,7 +151,7 @@
             radioClass   : 'iradio_flat-green'
         })
 
-        <?php if($placement_office->id==null){ ?>
+        <?php if(@$placement_office->id==null){ ?>
 
         $('#update').on('click', function (e) {
 

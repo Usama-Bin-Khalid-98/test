@@ -44,6 +44,28 @@ $research_center = checkIsCompleted('App\Models\Research\ResearchCenter', ['camp
 $research_agenda = checkIsCompleted('App\Models\Research\ResearchAgenda', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_funding = checkIsCompleted('App\Models\Research\ResearchFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$intake = checkIsCompleted('App\StudentIntake', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$size = checkIsCompleted('App\ClassSize', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$dropout = checkIsCompleted('App\DropoutPercentage', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$financial_assistance = checkIsCompleted('App\FinancialAssistance', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$student_financial = checkIsCompleted('App\StudentFinancial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$weak = checkIsCompleted('App\WeakStudent', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$grooming = checkIsCompleted('App\PersonalGrooming', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$counselling = checkIsCompleted('App\CounsellingActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$student_participation = checkIsCompleted('App\StudentParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$extra = checkIsCompleted('App\ExtraActivities', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$membership = checkIsCompleted('App\AlumniMembership', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$alumni = checkIsCompleted('App\AlumniParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$financialrisk = checkIsCompleted('App\Models\Facility\FinancialRisk', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$support_staff = checkIsCompleted('App\Models\Facility\SupportStaff', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$qecinfo = checkIsCompleted('App\Models\Facility\QecInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$club = checkIsCompleted('App\Models\social_responsibility\StudentClub', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$detail = checkIsCompleted('App\Models\social_responsibility\ProjectDetail', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$env = checkIsCompleted('App\Models\social_responsibility\EnvProtection', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$formal = checkIsCompleted('App\Models\social_responsibility\FormalRelationship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$complaint = checkIsCompleted('App\Models\social_responsibility\ComplaintResolution', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$internal = checkIsCompleted('App\Models\social_responsibility\InternalCommunity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 @endphp
 
 <aside class="main-sidebar">
@@ -146,7 +168,7 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-{{--             @if(!$invoices)--}}
+             @if($invoices)
                 <ul class="treeview-menu">
             <li class="{{ (request()->is('strategic/basicinfo')) ? 'active' : '' }} ">
                 <a href="{{url('strategic/basicinfo')}}">
@@ -242,7 +264,7 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
         </li>
           @endhasrole
           @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}{{(request()->is('students-graduated'))?'active':''}}{{(request()->is('student-gender'))?'active':''}}{{(request()->is('student-intake'))?'active':''}}{{(request()->is('alumni-participation'))?'active':''}}{{(request()->is('class-size'))?'active':''}}{{(request()->is('alumni-membership'))?'active':''}}{{(request()->is('personal-grooming'))?'active':''}}{{(request()->is('counselling-activity'))?'active':''}}{{(request()->is('extra-activity'))?'active':''}}">
+        <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}{{(request()->is('students-graduated'))?'active':''}}{{(request()->is('student-gender'))?'active':''}}{{(request()->is('student-intake'))?'active':''}}{{(request()->is('alumni-participation'))?'active':''}}{{(request()->is('class-size'))?'active':''}}{{(request()->is('alumni-membership'))?'active':''}}{{(request()->is('personal-grooming'))?'active':''}}{{(request()->is('counselling-activity'))?'active':''}}{{(request()->is('extra-activity'))?'active':''}}{{(request()->is('dropout-percentage'))?'active':''}}{{(request()->is('weak-student'))?'active':''}}{{(request()->is('student-participation'))?'active':''}}{{(request()->is('financial-assistance'))?'active':''}}{{(request()->is('student-financial'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user text-blue"></i><span>3: Students</span>
                   <span class="pull-right-container">
@@ -268,13 +290,66 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
 
             <!-- Below are the Tables For SAR  -->
 
-            <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}"><i class="fa fa-circle-o text-blue"></i>3.2 Students Intakes</a></li>
-           <li  class="{{ (request()->is('class-size')) ? 'active' : '' }}"><a href="{{url('class-size')}}"><i class="fa fa-circle-o text-blue"></i>3.3 Class Size</a></li>
-           <li  class="{{ (request()->is('personal-grooming')) ? 'active' : '' }}"><a href="{{url('personal-grooming')}}"><i class="fa fa-circle-o text-blue"></i>3.8 Personal Grooming</a></li>
-            <li  class="{{ (request()->is('counselling-activity')) ? 'active' : '' }}"><a href="{{url('counselling-activity')}}"><i class="fa fa-circle-o text-blue"></i>3.9 Counselling Activities</a></li>
-            <li  class="{{ (request()->is('extra-activity')) ? 'active' : '' }}"><a href="{{url('extra-activity')}}"><i class="fa fa-circle-o text-blue"></i>3.11 Extra Activities</a></li>
-           <li  class="{{ (request()->is('alumni-membership')) ? 'active' : '' }}"><a href="{{url('alumni-membership')}}"><i class="fa fa-circle-o text-blue"></i>3.12 Alumni Membership</a></li>
-            <li  class="{{ (request()->is('alumni-participation')) ? 'active' : '' }}"><a href="{{url('alumni-participation')}}"><i class="fa fa-circle-o text-blue"></i>3.13 Alumni Participation</a></li>
+            <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}">3.2 Students Intakes<span class="pull-right-container">
+                        <span class="text text-{{$intake==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$intake==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+           <li  class="{{ (request()->is('class-size')) ? 'active' : '' }}"><a href="{{url('class-size')}}">3.3 Class Size<span class="pull-right-container">
+                        <span class="text text-{{$size==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$size==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+           <li  class="{{ (request()->is('dropout-percentage')) ? 'active' : '' }}"><a href="{{url('dropout-percentage')}}">3.4 Dropout Percentage<span class="pull-right-container">
+                        <span class="text text-{{$dropout==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$dropout==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+           <li  class="{{ (request()->is('financial-assistance')) ? 'active' : '' }}"><a href="{{url('financial-assistance')}}">3.5 Financial Assistance<span class="pull-right-container">
+                        <span class="text text-{{$financial_assistance==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$financial_assistance==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+           <li  class="{{ (request()->is('student-financial')) ? 'active' : '' }}"><a href="{{url('student-financial')}}">3.6 Student Financial<span class="pull-right-container">
+                        <span class="text text-{{$student_financial==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$student_financial==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+           <li  class="{{ (request()->is('weak-student')) ? 'active' : '' }}"><a href="{{url('weak-student')}}">3.7 Weak Students<span class="pull-right-container">
+                        <span class="text text-{{$weak==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$weak==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+           <li  class="{{ (request()->is('personal-grooming')) ? 'active' : '' }}"><a href="{{url('personal-grooming')}}">3.8 Personal Grooming<span class="pull-right-container">
+                        <span class="text text-{{$grooming==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$grooming==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('counselling-activity')) ? 'active' : '' }}"><a href="{{url('counselling-activity')}}">3.9 Counselling Activities<span class="pull-right-container">
+                        <span class="text text-{{$counselling==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$counselling==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('student-participation')) ? 'active' : '' }}"><a href="{{url('student-participation')}}">3.10 Student Participation<span class="pull-right-container">
+                        <span class="text text-{{$student_participation==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$student_participation==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('extra-activity')) ? 'active' : '' }}"><a href="{{url('extra-activity')}}">3.11 Extra Activities<span class="pull-right-container">
+                        <span class="text text-{{$extra==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$extra==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+           <li  class="{{ (request()->is('alumni-membership')) ? 'active' : '' }}"><a href="{{url('alumni-membership')}}">3.12 Alumni Membership<span class="pull-right-container">
+                        <span class="text text-{{$membership==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$membership==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('alumni-participation')) ? 'active' : '' }}"><a href="{{url('alumni-participation')}}">3.13 Alumni Participation<span class="pull-right-container">
+                        <span class="text text-{{$alumni==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$alumni==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
 
           </ul>
@@ -410,12 +485,21 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
                         </span>
                     </span></a>
              </li>
-            <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}">
-                <a href="{{url('financial-risk')}}"><i class="fa fa-circle-o text-orange"></i>Financial Risk</a>
-            </li>
-
-            <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}"><i class="fa fa-circle-o text-orange"></i>Support Staff</a></li>
-            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}"><i class="fa fa-circle-o text-orange"></i>Qec Info</a></li>
+            <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}">7.2 Financial Risk<span class="pull-right-container">
+                        <span class="text text-{{$financialrisk==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$financialrisk==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}">7.3 Support Staff<span class="pull-right-container">
+                        <span class="text text-{{$support_staff==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$support_staff==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}">7.4 Qec Info<span class="pull-right-container">
+                        <span class="text text-{{$qecinfo==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$qecinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
           </ul>
         </li>
@@ -431,13 +515,41 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('student-club')) ? 'active' : '' }}"><a href="{{url('student-club')}}">1. Student clubs/societies</a></li>
-            <li  class="{{ (request()->is('project-detail')) ? 'active' : '' }}"><a href="{{url('project-detail')}}">2. Project Details</a></li>
-            <li  class="{{ (request()->is('env-protection')) ? 'active' : '' }}"><a href="{{url('env-protection')}}">3. Env Protection Activities</a></li>
-            <li  class="{{ (request()->is('formal-relationship')) ? 'active' : '' }}"><a href="{{url('formal-relationship')}}">4. Formal Relationships</a></li>
-            <li  class="{{ (request()->is('complaint-resolution')) ? 'active' : '' }}"><a href="{{url('complaint-resolution')}}">5. Complaint Resolution</a></li>
-            <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}">6. Internal Community WP</a></li>
-            <li  class="{{ (request()->is('social-activity')) ? 'active' : '' }}"><a href="{{url('social-activity')}}">7. Social Activity</a></li>
+            <li  class="{{ (request()->is('student-club')) ? 'active' : '' }}"><a href="{{url('student-club')}}">1. Student clubs/societies<span class="pull-right-container">
+                        <span class="text text-{{$club==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$club==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('project-detail')) ? 'active' : '' }}"><a href="{{url('project-detail')}}">2. Project Details<span class="pull-right-container">
+                        <span class="text text-{{$detail==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$detail==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('env-protection')) ? 'active' : '' }}"><a href="{{url('env-protection')}}">3. Env Protection Activities<span class="pull-right-container">
+                        <span class="text text-{{$env==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$env==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('formal-relationship')) ? 'active' : '' }}"><a href="{{url('formal-relationship')}}">4. Formal Relationships<span class="pull-right-container">
+                        <span class="text text-{{$formal==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$formal==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('complaint-resolution')) ? 'active' : '' }}"><a href="{{url('complaint-resolution')}}">5. Complaint Resolution<span class="pull-right-container">
+                        <span class="text text-{{$complaint==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$complaint==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}">6. Internal Community WP<span class="pull-right-container">
+                        <span class="text text-{{$internal==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$internal==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+            <li  class="{{ (request()->is('social-activity')) ? 'active' : '' }}"><a href="{{url('social-activity')}}">7. Social Activity<span class="pull-right-container">
+                        <span class="text text-{{$social==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$social==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
           </ul>
         </li>
           @endhasrole
@@ -513,9 +625,9 @@ $research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['ca
                             <i class="fa {{$entry==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('student-enrolment')) ? 'active' : '' }}"><a href="{{url('student-enrolment')}}">9.3 Students Enrollment<span class="pull-right-container">
-                        <span class="text text-{{$enrolment==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$enrolment==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+            <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}">9.3 Students Enrollment<span class="pull-right-container">
+                        <span class="text text-{{$application==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
             <li  class="{{ (request()->is('credit-transfer')) ? 'active' : '' }}"><a href="{{url('credit-transfer')}}">9.4 Credit Transfer<span class="pull-right-container">
