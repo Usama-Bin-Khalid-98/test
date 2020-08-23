@@ -11,20 +11,20 @@ class EvaluationMethodsSeeder extends Seeder
      */
     public function run()
     {
-         DB::table('evaluation_method')->insert([
+         DB::table('evaluation_methods')->insert([
             ['campus_id' => '209',
             'evaluation_items_id' => '1',
-            'frequency' => '234', 
-            'range' => '12',           
+            'frequency' => '234',
+            'range' => '12',
             'status' => 'active',
             ],
  			 ['campus_id' => '209',
             'evaluation_items_id' => '2',
-            'frequency' => '54', 
-            'range' => '1',           
+            'frequency' => '54',
+            'range' => '1',
             'status' => 'active',
             ],
-            
+
 
 
         ]);
