@@ -15,18 +15,20 @@ class CreatePlagiarismCases extends Migration
     {
         Schema::create('plagiarism_cases', function (Blueprint $table) {
             $table->increments('id');
-            
-            
-
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('date',100);
             $table->string('students_initial',50);
             $table->string('degree',100);
             $table->string('nature',50);
             $table->string('penalty',100);
+            $table->string('file',255);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
