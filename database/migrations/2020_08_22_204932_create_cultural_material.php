@@ -13,16 +13,18 @@ class CreateCulturalMaterial extends Migration
      */
     public function up()
     {
-        Schema::create('cultural_material', function (Blueprint $table) {
+        Schema::create('cultural_materials', function (Blueprint $table) {
             $table->increments('id');
-            
-                $table->integer('campus_id')->unsigned()->nullable();
+            $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('cultural_material',100);
             $table->string('course_title',50);
-            
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
@@ -49,6 +51,6 @@ class CreateCulturalMaterial extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cultural_material');
+        Schema::dropIfExists('cultural_materials');
     }
 }

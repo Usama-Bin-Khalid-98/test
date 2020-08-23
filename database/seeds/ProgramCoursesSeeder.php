@@ -17,7 +17,6 @@ class ProgramCoursesSeeder extends Seeder
             'course_type_id' => '1',
             'credit_hours' => '22',
             'pre_req_id' => '1',
-            
             'status' => 'active',
             ],
 
@@ -26,7 +25,6 @@ class ProgramCoursesSeeder extends Seeder
             'course_type_id' => '6',
             'credit_hours' => '28',
             'pre_req_id' => '4',
-            
             'status' => 'active',
             ],
             

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AlumniMembership;
+use App\Models\Carriculum\PlagiarismCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Auth;
 
-class AlumniMembershipController extends Controller
+class PlagiarismCaseController extends Controller
 {
     public function __construct()
     {
@@ -19,11 +19,11 @@ class AlumniMembershipController extends Controller
     }
     public function index()
     {
-        $campus_id = Auth::user()->campus_id;
+         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $memberships = AlumniMembership::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $memberships = PlagiarismCase::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         
-        return view('registration.student_enrolment.alumni_membership', compact('memberships'));
+        return view('registration.curriculum.plagiarism_case', compact('memberships'));
     }
 
     /**
@@ -54,7 +54,7 @@ class AlumniMembershipController extends Controller
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
-                    $path = 'uploads/alumni_membership';
+                    $path = 'uploads/plagiarism_case';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
@@ -62,19 +62,20 @@ class AlumniMembershipController extends Controller
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
 
-                    AlumniMembership::create([
+                    PlagiarismCase::create([
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
-                        'total_graduates' => $request->total_graduates,
-                        'reg_members' => $request->reg_members,
-                        'membership_percentage' => $request->membership_percentage,
-                        'maj_industries' => $request->maj_industries,
+                        'date' => $request->date,
+                        'students_initial' => $request->students_initial,
+                        'degree' => $request->degree,
+                        'nature' => $request->nature,
+                        'penalty' => $request->penalty,
                         'file' => $path.'/'.$imageName, 
                         'isComplete' => 'yes', 
                         'created_by' => Auth::user()->id 
                 ]);
 
-                    return response()->json(['success' => 'Alumni Membership added successfully.']);
+                    return response()->json(['success' => 'Plagiarism Case added successfully.']);
                 }
 
         }catch (Exception $e)
@@ -86,10 +87,10 @@ class AlumniMembershipController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\AlumniMembership  $alumniMembership
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(AlumniMembership $alumniMembership)
+    public function show($id)
     {
         //
     }
@@ -97,10 +98,10 @@ class AlumniMembershipController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\AlumniMembership  $alumniMembership
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(AlumniMembership $alumniMembership)
+    public function edit($id)
     {
         //
     }
@@ -109,10 +110,10 @@ class AlumniMembershipController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AlumniMembership  $alumniMembership
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AlumniMembership $alumniMembership)
+    public function update(Request $request, $id)
     {
         $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
@@ -124,36 +125,36 @@ class AlumniMembershipController extends Controller
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
-                $path = 'uploads/alumni_membership';
+                $path = 'uploads/plagiarism_case';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-                AlumniMembership::where('id', $alumniMembership->id)->update(
+                PlagiarismCase::where('id', $id)->update(
                     [
-                        'total_graduates' => $request->total_graduates,
-                        'reg_members' => $request->reg_members,
-                        'membership_percentage' => $request->membership_percentage,
-                        'maj_industries' => $request->maj_industries,
+                        'date' => $request->date,
+                        'students_initial' => $request->students_initial,
+                        'degree' => $request->degree,
+                        'nature' => $request->nature,
+                        'penalty' => $request->penalty,
                     'file' => $path.'/'.$imageName,
-                    'isComplete' => $request->isComplete,
                     'status' => $request->status,
                     'updated_by' => Auth::user()->id 
                     ]
                 );
 
-                return response()->json(['success' => 'Alumni Membership updated successfully.']);
+                return response()->json(['success' => 'Plagiarism Case updated successfully.']);
             }
-           AlumniMembership::where('id', $alumniMembership->id)->update([
-                        'total_graduates' => $request->total_graduates,
-                        'reg_members' => $request->reg_members,
-                        'membership_percentage' => $request->membership_percentage,
-                        'maj_industries' => $request->maj_industries,
-               'isComplete' => $request->isComplete,
+           PlagiarismCase::where('id', $id)->update([
+                        'date' => $request->date,
+                        'students_initial' => $request->students_initial,
+                        'degree' => $request->degree,
+                        'nature' => $request->nature,
+                        'penalty' => $request->penalty,
                'status' => $request->status,
                'updated_by' => Auth::user()->id 
            ]);
-            return response()->json(['success' => 'Alumni Membership updated successfully.']);
+            return response()->json(['success' => 'Plagiarism Case updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -164,16 +165,16 @@ class AlumniMembershipController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AlumniMembership  $alumniMembership
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AlumniMembership $alumniMembership)
+    public function destroy($id)
     {
-         try {
-             AlumniMembership::where('id', $alumniMembership->id)->update([
+        try {
+             PlagiarismCase::where('id', $id)->update([
                'deleted_by' => Auth::user()->id 
            ]);
-             AlumniMembership::destroy($alumniMembership->id);
+             PlagiarismCase::destroy($id);
                 return response()->json(['success' => 'Record deleted successfully.']);
          }catch (Exception $e)
              {
@@ -181,22 +182,25 @@ class AlumniMembershipController extends Controller
              }
     }
 
-    protected function rules() {
+
+     protected function rules() {
         return [
-            'total_graduates' => 'required',
-            'reg_members' => 'required',
-            'membership_percentage' => 'required',
-            'maj_industries' => 'required',
+            'date' => 'required',
+            'students_initial' => 'required',
+            'degree' => 'required',
+            'nature' => 'required',
+            'penalty' => 'required',
             'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
         ];
     }
 
     protected function update_rules() {
         return [
-            'total_graduates' => 'required',
-            'reg_members' => 'required',
-            'membership_percentage' => 'required',
-            'maj_industries' => 'required',
+            'date' => 'required',
+            'students_initial' => 'required',
+            'degree' => 'required',
+            'nature' => 'required',
+            'penalty' => 'required',
             'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
         ];
     }
