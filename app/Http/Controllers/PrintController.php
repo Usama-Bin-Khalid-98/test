@@ -207,14 +207,14 @@ class PrintController extends Controller
                $programLearningOutcomes = DB::select('SELECT learning_outcomes.*, programs.name as program FROM learning_outcomes, programs, campuses, users WHERE learning_outcomes.program_id=programs.id AND learning_outcomes.campus_id=campuses.id AND learning_outcomes.campus_id=? AND users.id=? ', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
 
-               $cultralMaterial = DB::select('SELECT cultural_material.* FROM cultural_material, campuses, users WHERE cultural_material.campus_id=campuses.id AND cultural_material.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+               $cultralMaterial = DB::select('SELECT cultural_materials.* FROM cultural_materials, campuses, users WHERE cultural_materials.campus_id=campuses.id AND cultural_materials.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
 
                $managerialSkills = DB::select('SELECT managerial_skills.* FROM managerial_skills, campuses, users WHERE managerial_skills.campus_id=campuses.id AND managerial_skills.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
                $programDeliveryMethods = DB::select('SELECT program_delivery_methods.*, teaching_methods.name as teachingMethod FROM program_delivery_methods, teaching_methods, users , campuses WHERE program_delivery_methods.teaching_methods_id=teaching_methods.id AND program_delivery_methods.campus_id=campuses.id AND program_delivery_methods.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
-               $evaluationMethods = DB::select('SELECT evaluation_method.*, evaluation_items.name as evaluationItem FROM evaluation_method, evaluation_items, users , campuses WHERE evaluation_method.evaluation_items_id=evaluation_items.id AND evaluation_method.campus_id=campuses.id AND evaluation_method.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+               $evaluationMethods = DB::select('SELECT evaluation_methods.*, evaluation_items.name as evaluationItem FROM evaluation_methods, evaluation_items, users , campuses WHERE evaluation_methods.evaluation_items_id=evaluation_items.id AND evaluation_methods.campus_id=campuses.id AND evaluation_methods.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
                $plagiarismCases = DB::select('SELECT plagiarism_cases.* FROM plagiarism_cases, campuses, users WHERE plagiarism_cases.campus_id=campuses.id AND plagiarism_cases.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 

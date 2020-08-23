@@ -25,7 +25,6 @@ class CreateManagerialSkills extends Migration
                 ->on('departments');
             $table->string('skill',100);
             $table->string('course_title',50);
-            
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
