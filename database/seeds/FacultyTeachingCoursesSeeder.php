@@ -19,7 +19,7 @@ class FacultyTeachingCoursesSeeder extends Seeder
             'designation_id' => '10',
             'max_cources_allowed' => '19',
             'tc_program1' => '12',
-            'tc_program2' => '7'
+            'tc_program2' => '7',
             'status' => 'active',
             ],
             ['name' => 'Ahmad',
@@ -28,7 +28,7 @@ class FacultyTeachingCoursesSeeder extends Seeder
             'designation_id' => '8',
             'max_cources_allowed' => '17',
             'tc_program1' => '10',
-            'tc_program2' => '7'
+            'tc_program2' => '21',
             'status' => 'active',
             ],
            

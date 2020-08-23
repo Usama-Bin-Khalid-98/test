@@ -13,30 +13,19 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($facultyWorkshops as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->venue}}</td>
+                                        <td>{{$data->title}}</td>
+                                        <td>{{$data->faculty_trainer_name}}</td>
+                                        <td>{{$data->participants}}</td>
                                        
                                        
                                        
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    
-                                        
-                                        
-                                    </tr>
-                                    
-                              
+                                    @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               

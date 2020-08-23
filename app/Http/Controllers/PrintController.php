@@ -218,9 +218,43 @@ class PrintController extends Controller
 
                $plagiarismCases = DB::select('SELECT plagiarism_cases.* FROM plagiarism_cases, campuses, users WHERE plagiarism_cases.campus_id=campuses.id AND plagiarism_cases.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
+
+               $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
+
+               $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND users.department_id=? AND faculty_stability.campus_id=? AND users.id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id,auth()->user()->id));
+
+               $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=? AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id, auth()->user()->id));
+
+               $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_ratio.campus_id=campuses.id AND faculty_student_ratio.program_id=programs.id AND users.department_id=? AND faculty_student_ratio.campus_id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id));
+
+               $facultyDetailedInfos = DB::select('SELECT faculty_detailed_infos.*, lookup_faculty_types.faculty_type as facultyType, course_types.name as courseType, degrees.name as degree, designations.name as designation FROM faculty_detailed_infos, lookup_faculty_types, course_types, campuses, degrees, designations , users WHERE faculty_detailed_infos.designation_id=designations.id AND faculty_detailed_infos.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_detailed_infos.course_type_id=course_types.id AND faculty_detailed_infos.degree_id=degrees.id AND faculty_detailed_infos.campus_id=campuses.id AND faculty_detailed_infos.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+               $facultyWorkshops = DB::select('SELECT faculty_workshops.* FROM faculty_workshops, campuses, users WHERE faculty_workshops.campus_id=campuses.id AND faculty_workshops.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+                $facultyConsultancyProjects = DB::select('SELECT faculty_consultancy_projects.* FROM faculty_consultancy_projects, campuses, users WHERE faculty_consultancy_projects.campus_id=campuses.id AND faculty_consultancy_projects.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+
+                $facultyParticipations = DB::select('SELECT faculty_participations.* FROM faculty_participations, campuses, users WHERE faculty_participations.campus_id=campuses.id AND faculty_participations.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+                $facultyMemberships = DB::select('SELECT faculty_memberships.* FROM faculty_memberships, campuses, users WHERE faculty_memberships.campus_id=campuses.id AND faculty_memberships.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+                $internationalFaculties = DB::select('SELECT international_faculties.* FROM international_faculties, campuses, users WHERE international_faculties.campus_id=campuses.id AND international_faculties.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+                $facultyExposures = DB::select('SELECT faculty_exposures.* FROM faculty_exposures, campuses, users WHERE faculty_exposures.campus_id=campuses.id AND faculty_exposures.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+               $PoPLOMappings = DB::select('SELECT po_plo_mappings.*, program_objectives.po as po, learning_outcomes.plo as plo FROM po_plo_mappings, program_objectives, learning_outcomes, campuses, users WHERE po_plo_mappings.po_id=program_objectives.id AND po_plo_mappings.plo_id=learning_outcomes.id AND po_plo_mappings.campus_id=campuses.id AND po_plo_mappings.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+
+               $PoMappings = DB::select('SELECT * FROM program_objectives', array());
+
            
-            return view('strategic_management.printAll', compact('classSize','studentsFinancial','programCourses','extraActivities','plagiarismCases','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
+            return view('strategic_management.printAll', compact('classSize','studentsFinancial','PoMappings','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','PoPLOMappings','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
     }
+
+
+        public static function getPLOsByPOId($id){
+            $PLOs = DB::select('SELECT po_plo_mappings.*, program_objectives.po as po, learning_outcomes.plo as plo FROM po_plo_mappings, program_objectives, learning_outcomes, campuses, users WHERE po_plo_mappings.po_id=program_objectives.id AND po_plo_mappings.plo_id=learning_outcomes.id AND po_plo_mappings.campus_id=campuses.id AND po_plo_mappings.campus_id=? AND users.id=? AND po_plo_mappings.po_id=?', array(auth()->user()->campus_id,auth()->user()->id,$id));
+            return $PLOs;
+        }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){
         //dd($facultySummary[$i]->id);

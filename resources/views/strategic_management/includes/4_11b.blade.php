@@ -13,24 +13,15 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($facultyExposures as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->activity}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->duration}}</td>
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                    
-                                        
-                                        
-                                    </tr>
+                                    @endforeach
                                     
                               
                                 </tbody>

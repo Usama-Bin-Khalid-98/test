@@ -13,26 +13,15 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($internationalFaculties as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->association}}</td>
+                                        <td>{{$data->time_periods}}</td>
                                        
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                        
-                                    
-                                        
-                                        
-                                    </tr>
-                                    
-                              
+                                   @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               
