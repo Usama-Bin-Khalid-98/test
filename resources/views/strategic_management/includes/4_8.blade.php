@@ -13,29 +13,19 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($facultyConsultancyProjects as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->project_name}}</td>
+                                        <td>{{$data->client_name}}</td>
+                                        <td>{{$data->start_date}}{{"/ "}}{{$data->end_date}}</td>
+                                        <td>{{$data->all_participants}}</td>
                                        
                                        
                                        
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    
-                                        
-                                        
-                                    </tr>
-                                    
+                                   @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

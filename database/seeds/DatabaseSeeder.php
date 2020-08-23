@@ -93,5 +93,14 @@ class DatabaseSeeder extends Seeder
         $this->call(EvaluationItemsSeeder::class);
         $this->call(EvaluationMethodsSeeder::class);
         $this->call(PlagiarismCasesSeeder::class);
+        $this->call(FacultySummarySeeder::class);
+        $this->call(FacultyTeachingCoursesSeeder::class);
+        $this->call(FacultyWorkshopsSeeder::class);
+        $this->call(FacultyConsultancyProjectsSeeder::class);
+        $this->call(FacultyParticipationsSeeder::class);
+        $this->call(FacultyMembershipsSeeder::class);
+        $this->call(InternationalFacultiesSeeder::class);
+        $this->call(FacultyExposuresSeeder::class);
+        $this->call(FacultyDetailedInfosSeeder::class);
     }
 }

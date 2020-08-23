@@ -13,30 +13,19 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($facultyParticipations as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->faculty_name}}</td>
+                                        <td>{{$data->organization}}</td>
+                                        <td>{{$data->title}}</td>
                                         
                                        
                                        
                                        
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                    
-                                        
-                                        
-                                    </tr>
-                                    
-                              
+                                   @endforeach
                                 </tbody>
                                 <tfoot></tfoot>
                               
