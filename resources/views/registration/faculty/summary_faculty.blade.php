@@ -59,36 +59,31 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Faculty Qualification</label>
-                                    <select name="faculty_qualification_id" id="faculty_qualification_id" class="form-control select2">
-                                        <option selected disabled>Select Qualification</option>
-                                        @foreach($qualification as $degree)
-                                        <option value="{{$degree->id}}">{{$degree->name}}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Discipline</label>
-                                    <select name="discipline_id" id="discipline_id" class="form-control select2">
-                                        <option selected disabled>Select Discipline</option>
+                                <table id="formTable" class="table table-bordered table-striped" >
+                                    <thead>
+                                    <th>Qualification</th>
+                                    @foreach($discipline as $program)
+                                    <th>{{@$program->name}}
+                                    <input type="hidden" name="discipline_id[]" value="{{@$program->id}}">
+                                    </th>
+                                    @endforeach
+                                    <th>Total</th>
+                                    </thead>
+                                    <tbody id="tbody">
+                                    @foreach($qualification as $degree)
+                                    <tr>
+                                        <td>{{$degree->name}}
+                                        <input type="hidden" name="faculty_qualification_id[]" value="{{@$degree->id}}">
+                                        </td>
                                         @foreach($discipline as $program)
-                                            <option value="{{$program->id}}">{{$program->name}}</option>
+                                            <td><input type="number" min="0" name="number_faculty[{{@$program->id}}][]" placeholder="no of Faculty" class="form-control"></td>
                                         @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                   <label for="name">Number of Faculty</label>
-                                    <input type="number" name="number_faculty" id="number_faculty" value="" class="form-control">
-                                </div>
-                            </div>
+                                        <td><input type="number" readonly name="total[]" value="" class="form-control"></td>
+                                    </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -130,7 +125,7 @@
                                     <td>{{$portfolio->number_faculty}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"faculty_qualification_id":"{{$portfolio->faculty_qualification_id}}","discipline_id":"{{$portfolio->discipline_id}}","number_faculty":"{{$portfolio->number_faculty}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
-                                    
+
                                 </tr>
                                 @endforeach
                                 <tr style="background-color: grey;color: white;">
@@ -206,7 +201,7 @@
                                     <input type="number" name="number_faculty" id="edit_number_faculty" value="{{old('edit_number_faculty')}}"class="form-control">
                                 </div>
                             </div>
-                    
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -250,6 +245,24 @@
 
         $('.select2').select2()
 
+        $(document).ready(function () {
+            let total = 0;
+            $('input[name*="number_faculty"]').keyup(function () {
+                let columns = $(this).closest('tr').find('td');
+                    // columns.addClass('row-highlight');
+                var total = 0;
+
+                columns.find('input[name*="total"]').val('');
+                jQuery.each(columns, function() {
+                    let value = parseInt($('input:eq(0)', this).val());
+                    console.log('clue here....', value);
+                    value ?total += value || 0: 0;
+                });
+                columns.find('input[name*="total"]').val(total);
+            });
+        })
+
+
          $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -257,9 +270,9 @@
         });
 
              $('#form').submit(function (e) {
-            let faculty_qualification_id = $('#faculty_qualification_id').val();
-            let discipline_id = $('#discipline_id').val();
-            let number_faculty = $('#number_faculty').val();
+            let faculty_qualification_id = $('input[name*="faculty_qualification_id"]').val();
+            let discipline_id = $('input[name*="discipline_id"]').val();
+            let number_faculty = $('input[name*="number_faculty"]').val();
 
             !faculty_qualification_id?addClass('faculty_qualification_id'):removeClass('faculty_qualification_id');
             !discipline_id?addClass('discipline_id'):removeClass('discipline_id');
@@ -291,7 +304,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                   location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
