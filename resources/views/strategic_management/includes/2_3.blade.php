@@ -10,27 +10,16 @@
                                     <th>Designation & affiliation</th>
                                 </thead>
                                 <tbody>
+                                    @foreach($curriculumReviews as $data)
                                     <tr>
-                                        <td>Meeting 1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{"Meeting "}}{{$loop->index+1}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->composition}}</td>
+                                        <td>{{$data->reviewer_names}}</td>
+                                        <td>{{$data->designation}}{{": "}}{{$data->affiliation}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Meeting 2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Meeting 3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                     @endforeach
+                                    
                               
                                 </tbody>
                                 <tfoot></tfoot>

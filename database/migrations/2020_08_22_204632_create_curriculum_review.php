@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContactInfosTable extends Migration
+class CreateCurriculumReview extends Migration
 {
     /**
      * Run the migrations.
@@ -13,29 +13,27 @@ class CreateContactInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('contact_infos', function (Blueprint $table) {
+        Schema::create('curriculum_reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 100);
-            $table->string('focal_person', 100);
-            $table->string('email', 100);
-            $table->string('contact_no', 25);
-            $table->string('school_contact', 25);
-            $table->integer('designation_id')->unsigned();
-            $table->foreign('designation_id')
-                ->references('id')
-                ->on('designations');
-            $table->string('cv', 255);
-            $table->enum('status', ['active','inactive'])->default('active');
-            $table->enum('isComplete',['yes','no'])->default('no');
+            
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
-            $table->integer('department_id')->unsigned()->nullable();
-            $table->foreign('department_id')
+            $table->string('review_meeting',100);
+            $table->string('date',50);
+            $table->string('composition',100);
+            $table->string('reviewer_names',100);
+            $table->integer('designation_id')->unsigned()->nullable();
+            $table->foreign('designation_id')
                 ->references('id')
-                ->on('departments');
-            $table->string('job_title', 100)->nullable();
+                ->on('designations');
+            $table->integer('affiliations_id')->unsigned()->nullable();
+            $table->foreign('affiliations_id')
+                ->references('id')
+                ->on('affiliations');
+            $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
@@ -48,8 +46,8 @@ class CreateContactInfosTable extends Migration
             $table->foreign('deleted_by')
                 ->references('id')
                 ->on('users');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -60,6 +58,6 @@ class CreateContactInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contact_infos');
+        Schema::dropIfExists('curriculum_review');
     }
 }

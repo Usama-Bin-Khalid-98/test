@@ -9,57 +9,14 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($evaluationMethods as $data)
                                     <tr>
-                                        <td>Mid-term exam</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$data->evaluationItem}}</td>
+                                        <td>{{$data->frequency}}</td>
+                                        <td>{{$data->range}}</td>
                                      
                                     </tr>
-                                    <tr>
-                                        <td>Final exam</td>
-                                        <td>NA</td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Quiz</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assignment</td>
-                                        <td></td>
-                                        <td></td>
-                                     
-                                    </tr>
-                                    <tr>
-                                        <td>Project based learning</td>
-                                        <td></td>
-                                         <td></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Case studies</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Internship</td>
-                                        <td></td>
-                                        <td></td>
-                                     
-                                    </tr>
-                                    <tr>
-                                        <td>Research thesis</td>
-                                        <td></td>
-                                         <td></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Others (please specify)</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
                                    
                                     
                               

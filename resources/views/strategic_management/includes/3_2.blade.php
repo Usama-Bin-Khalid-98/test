@@ -28,39 +28,32 @@ A+B+C
                                      
                                      
                                     </tr>
+                                    <?php
+                                    $pa=$pb=$pc=$pTotal=0;
+                                    ?>
+                                    @foreach($studentsIntake as $data)
+                                     <?php
+                                   $pa+=$data->bs_level;
+                                   $pb+=$data->ms_level;
+                                   $pc+=$data->phd_level;
+                                   $pTotal+=$data->total_intake;
+                                   ?>
                                     <tr>
-                                        <td>Year t-2</td>
-                                        <td></td>
-                                        <td></td>
-                                         <td></td>
-                                        <td></td>
+                                        <td>{{$data->year}}</td>
+                                        <td>{{$data->bs_level}}</td>
+                                        <td>{{$data->ms_level}}</td>
+                                         <td>{{$data->phd_level}}</td>
+                                        <td>{{$data->total_intake}}</td>
                                         
                                         
                                     </tr>
-                                    <tr>
-                                        <td>Year t-1</td>
-                                        <td></td>
-                                        <td></td>
-                                         <td></td>
-                                        <td></td>
-                                        
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Year t</td>
-                                        <td></td>
-                                        <td></td>
-                                         <td></td>
-                                        <td></td>
-                                        
-                                        
-                                    </tr>
-                                    <tr>
+                                    @endforeach
+                                  <tr>
                                         <td>Total</td>
-                                        <td></td>
-                                        <td></td>
-                                         <td></td>
-                                        <td></td>
+                                        <td>{{$pa}}</td>
+                                        <td>{{$pb}}</td>
+                                         <td>{{$pc}}</td>
+                                        <td>{{$pTotal}}</td>
                                         
                                         
                                     </tr>

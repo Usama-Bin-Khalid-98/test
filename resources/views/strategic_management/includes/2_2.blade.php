@@ -10,124 +10,70 @@
                                     
                                 </thead>
                                 <tbody>
+                                    
                                     <tr>
                                         <td></td>
-                                        <td>Core course</td>
+                                        <td><b>Core course</b></td>
                                         <td></td>
                                         <td></td>
                                         
                                     </tr>
+                                    @foreach($programCourses as $data)
+
+                                    @if($data->courseTypeName=="Core")
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->program}}</td>
+                                        <td>{{$data->credit_hours}}</td>
+                                        <td>{{$data->pre_req_id}}</td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @endif
+                                    @endforeach
+                                   
 
                                     <tr>
                                         <td></td>
-                                        <td>Support course</td>
+                                        <td><b>Support course</b></td>
                                         <td></td>
                                         <td></td>
                                         
                                     </tr>
+                                    @foreach($programCourses as $data)
+
+                                    @if($data->courseTypeName=="Elective")
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->program}}</td>
+                                        <td>{{$data->credit_hours}}</td>
+                                        <td>{{$data->pre_req_id}}</td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    @endif
+                                    @endforeach
+                                    
 
 
                                      <tr>
                                         <td></td>
-                                        <td>Electives</td>
+                                        <td><b>Electives</b></td>
                                         <td></td>
                                         <td></td>
                                         
                                     </tr>
+                                     @foreach($programCourses as $data)
+
+                                    @if($data->courseTypeName=="Support")
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->program}}</td>
+                                        <td>{{$data->credit_hours}}</td>
+                                        <td>{{$data->pre_req_id}}</td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                        
+                                    @endif
+                                    @endforeach
+                                   
                                     
                               
                                 </tbody>

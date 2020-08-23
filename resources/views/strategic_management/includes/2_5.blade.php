@@ -3,29 +3,17 @@
                             <table   class="table table-bordered table-striped ">
                                 <caption style="text-align: center;color: red">Table 2.5. Program Learning Outcomes (PLO)</caption>
                                 <thead>
-                                    <th>PO1: </th>
-                                    <th></th>
+                                    
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($programLearningOutcomes as $data)
                                     <tr>
-                                        <td>PO2:</td>
-                                        <td></td>
+                                        <td>{{$data->program}}</td>
+                                        <td>{{$data->plo}}</td>
                                      
                                     </tr>
-                                    <tr>
-                                        <td>PO3:</td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>PO4:</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>PO5:</td>
-                                        <td></td>
-                                    </tr>  
+                                   @endforeach
                                     
                               
                                 </tbody>
