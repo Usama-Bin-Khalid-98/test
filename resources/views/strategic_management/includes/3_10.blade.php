@@ -10,55 +10,15 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($alumniParticipation as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Curriculum development</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->activity}}</td>
+                                        <td>{{$data->alumni_participated}}</td>
+                                        <td>{{$data->major_input}}</td>
                                        
                                     </tr>
-                                    <tr>
-                                        <td> 2</td>
-                                        <td>Student mentoring</td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                       <tr>
-                                        <td>3</td>
-                                        <td>Program delivery</td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Industry linkages</td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Fundraising</td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                       <tr>
-                                        <td>6</td>
-                                        <td>Internships & placements</td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>Others (specify)</td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
+                                    @endforeach
                                     
                               
                                 </tbody>

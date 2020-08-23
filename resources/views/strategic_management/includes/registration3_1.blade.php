@@ -11,7 +11,7 @@
                                     </th>
                                     
                                 </thead>
-                                <tbody>
+                                 <tbody>
                                     <tr>
                                         <td></td>
                                         <td>16 year programs
@@ -27,7 +27,16 @@
                                      
                                      
                                     </tr>
-                                    @foreach($studentsEnrolment as $data)
+                                    <?php
+                                    $pa=$pb=$pc=$pTotal=0;
+                                    ?>
+                                   @foreach($studentsEnrolment as $data)
+                                   <?php
+                                   $pa+=$data->bs_level;
+                                   $pb+=$data->ms_level;
+                                   $pc+=$data->phd_level;
+                                   $pTotal+=$data->total_students;
+                                   ?>
                                     <tr>
                                         <td>{{$data->year}}</td>
                                         <td>{{$data->bs_level}}</td>
@@ -39,9 +48,15 @@
                                     </tr>
                                    
                                    @endforeach
-                                   
-                                    
-                              
+                              <tr>
+                                        <td>Total</td>
+                                        <td>{{$pa}}</td>
+                                        <td>{{$pb}}</td>
+                                         <td>{{$pc}}</td>
+                                        <td>{{$pTotal}}</td>
+                                        
+                                        
+                                    </tr>
                                 </tbody>
                                 <tfoot></tfoot>
                               

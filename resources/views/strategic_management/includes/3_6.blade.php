@@ -10,21 +10,15 @@
                                     <th>Number of participants</th>
                                 </thead>
                                 <tbody>
+                                    @foreach($personalGroomings as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->activity_title}}</td>
+                                        <td>{{$data->grooming_skill}}</td>
+                                        <td>{{$data->total_participants}}</td>
                                     </tr>
-                                    <tr>
-                                        <td> 2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    
+                                    @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

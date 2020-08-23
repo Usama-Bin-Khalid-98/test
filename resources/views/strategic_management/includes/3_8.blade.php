@@ -10,21 +10,15 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($extraActivities as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->activity_title}}</td>
+                                        <td>{{$data->budget_allocation}}</td>
                                        
                                     </tr>
-                                    <tr>
-                                        <td> 2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                    
+                                    @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

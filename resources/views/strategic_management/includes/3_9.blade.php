@@ -10,21 +10,15 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($alumniMembership as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$data->total_graduates}}</td>
+                                        <td>{{$data->reg_members}}</td>
+                                        <td>{{$data->membership_percentage}}</td>
+                                        <td>{{$data->maj_industries}}</td>
                                        
                                     </tr>
-                                    <tr>
-                                        <td> 2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                    
+                                     @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

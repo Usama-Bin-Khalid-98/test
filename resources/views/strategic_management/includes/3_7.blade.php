@@ -10,21 +10,15 @@
                                     <th>Number of students covered</th>
                                 </thead>
                                 <tbody>
+                                    @foreach($counselingActivities as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->counsellor_name}}</td>
+                                        <td>{{$data->counselling_hours}}</td>
+                                        <td>{{$data->counselling_activity}}</td>
+                                        <td>{{$data->students_covered}}</td>
                                     </tr>
-                                    <tr>
-                                        <td> 2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    
+                                    @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

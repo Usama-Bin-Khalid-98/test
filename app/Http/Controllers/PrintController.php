@@ -67,6 +67,8 @@ class PrintController extends Controller
             FROM student_enrolments , business_schools
             WHERE business_schools.id=?', array($bussinessSchool[0]->id));
 
+         $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($userCampus[0]->campus_id));
+
 
          /*$facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, users WHERE work_loads.campus_id=campuses.id AND work_loads.designation_id=designations.id AND users.id=? AND work_loads.campus_id=?', array(auth()->user()->id,auth()->user()->campus_id));*/
 
@@ -154,8 +156,70 @@ class PrintController extends Controller
 
               $internalCommunityWelfareProgram = DB::select('SELECT internal_communities.*, welfare_programs.name as welfareProgram FROM internal_communities, welfare_programs, campuses, users WHERE internal_communities.campus_id=campuses.id AND internal_communities.welfare_program_id=welfare_programs.id AND internal_communities.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
+              $studentsIntake = DB::select('SELECT student_intakes.* FROM student_intakes, campuses, users WHERE student_intakes.campus_id=campuses.id AND campuses.id=? AND users.id=? AND student_intakes.year>YEAR(CURDATE())-3', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+              $classSize = DB::select("SELECT SUM( CASE
+            WHEN class_sizes.semesters_id='1' || class_sizes.semesters_id='3' || class_sizes.semesters_id='5' || class_sizes.semesters_id='7' || class_sizes.semesters_id='9' || class_sizes.semesters_id='11' THEN class_sizes.program_a
+            ELSE 0
+        END) AS fallA,
+        SUM( CASE
+            WHEN class_sizes.semesters_id='2' || class_sizes.semesters_id='4' || class_sizes.semesters_id='6' || class_sizes.semesters_id='8' || class_sizes.semesters_id='10' || class_sizes.semesters_id='12' THEN class_sizes.program_a
+            ELSE 0
+        END) AS springA,
+        SUM( CASE
+            WHEN class_sizes.semesters_id='1' || class_sizes.semesters_id='3' || class_sizes.semesters_id='5' || class_sizes.semesters_id='7' || class_sizes.semesters_id='9' || class_sizes.semesters_id='11' THEN class_sizes.program_b
+            ELSE 0
+        END) AS fallB,
+        SUM( CASE
+            WHEN class_sizes.semesters_id='2' || class_sizes.semesters_id='4' || class_sizes.semesters_id='6' || class_sizes.semesters_id='8' || class_sizes.semesters_id='10' || class_sizes.semesters_id='12' THEN class_sizes.program_b
+            ELSE 0
+        END) AS springB
+        FROM class_sizes, campuses, users WHERE class_sizes.campus_id=campuses.id AND class_sizes.campus_id=? AND users.id=?", array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+              $dropoutPercentage = DB::select('SELECT dropout_percentages.*, programs.name as program FROM dropout_percentages, programs, campuses, users WHERE dropout_percentages.campus_id=campuses.id AND dropout_percentages.program_id=programs.id AND dropout_percentages.campus_id=? AND users.id=? ORDER BY dropout_percentages.program_id ', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+              $studentsFinancial = DB::select('SELECT student_financials.*, programs.name as program FROM student_financials, programs, users, campuses WHERE student_financials.campus_id=campuses.id AND student_financials.program_id=programs.id AND student_financials.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+              $personalGroomings = DB::select('SELECT personal_groomings.* FROM personal_groomings, campuses, users WHERE personal_groomings.campus_id=campuses.id AND personal_groomings.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+               $counselingActivities = DB::select('SELECT counselling_activities.* FROM counselling_activities, users, campuses WHERE counselling_activities.campus_id=campuses.id AND counselling_activities.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+               $extraActivities = DB::select('SELECT extra_activities.* FROM extra_activities, users, campuses WHERE extra_activities.campus_id=campuses.id AND extra_activities.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+               $alumniMembership = DB::select('SELECT alumni_memberships.* FROM alumni_memberships, users, campuses WHERE alumni_memberships.campus_id=campuses.id AND alumni_memberships.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+               $alumniParticipation = DB::select('SELECT alumni_participations.*, activity_engagements.name as activity FROM alumni_participations, activity_engagements, campuses, users WHERE alumni_participations.campus_id=campuses.id AND alumni_participations.activity_engagements_id=activity_engagements.id AND alumni_participations.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+               $programCourses = DB::select('SELECT program_courses.*, programs.name as program, course_types.name as courseTypeName FROM program_courses, programs, course_types, campuses, users WHERE program_courses.program_id=programs.id AND program_courses.course_type_id=course_types.id AND program_courses.campus_id=campuses.id AND program_courses.campus_id=? AND users.id=? ORDER BY course_types.name', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+               $curriculumReviews = DB::select('SELECT curriculum_reviews.*, designations.name as designation, affiliations.name as affiliation FROM curriculum_reviews, campuses, users, designations, affiliations WHERE curriculum_reviews.campus_id=campuses.id AND curriculum_reviews.designation_id=designations.id AND curriculum_reviews.affiliations_id=affiliations.id AND curriculum_reviews.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+               $programObjectives = DB::select('SELECT program_objectives.*, programs.name as program FROM program_objectives, programs, campuses, users WHERE program_objectives.program_id=programs.id AND program_objectives.campus_id=campuses.id AND program_objectives.campus_id=? AND users.id=? ', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+               $programLearningOutcomes = DB::select('SELECT learning_outcomes.*, programs.name as program FROM learning_outcomes, programs, campuses, users WHERE learning_outcomes.program_id=programs.id AND learning_outcomes.campus_id=campuses.id AND learning_outcomes.campus_id=? AND users.id=? ', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+               $cultralMaterial = DB::select('SELECT cultural_material.* FROM cultural_material, campuses, users WHERE cultural_material.campus_id=campuses.id AND cultural_material.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+
+               $managerialSkills = DB::select('SELECT managerial_skills.* FROM managerial_skills, campuses, users WHERE managerial_skills.campus_id=campuses.id AND managerial_skills.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+               $programDeliveryMethods = DB::select('SELECT program_delivery_methods.*, teaching_methods.name as teachingMethod FROM program_delivery_methods, teaching_methods, users , campuses WHERE program_delivery_methods.teaching_methods_id=teaching_methods.id AND program_delivery_methods.campus_id=campuses.id AND program_delivery_methods.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+               $evaluationMethods = DB::select('SELECT evaluation_method.*, evaluation_items.name as evaluationItem FROM evaluation_method, evaluation_items, users , campuses WHERE evaluation_method.evaluation_items_id=evaluation_items.id AND evaluation_method.campus_id=campuses.id AND evaluation_method.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
+               $plagiarismCases = DB::select('SELECT plagiarism_cases.* FROM plagiarism_cases, campuses, users WHERE plagiarism_cases.campus_id=campuses.id AND plagiarism_cases.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+
            
-            return view('strategic_management.printAll', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram'));
+            return view('strategic_management.printAll', compact('classSize','studentsFinancial','programCourses','extraActivities','plagiarismCases','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){

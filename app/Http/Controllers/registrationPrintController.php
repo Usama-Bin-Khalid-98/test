@@ -74,7 +74,7 @@ class RegistrationPrintController extends Controller
          $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName, semesters.name as semesterName FROM application_receiveds, programs, semesters, campuses WHERE application_receiveds.program_id=programs.id AND application_receiveds.semester_id=semesters.id  AND campuses.id=?', array($userCampus[0]->campus_id));
 
 
-         $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=?', array($userCampus[0]->campus_id));
+         $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($userCampus[0]->campus_id));
 
 
          $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName FROM students_graduateds, programs, campuses WHERE students_graduateds.campus_id=campuses.id AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id=?', array($userCampus[0]->campus_id));
