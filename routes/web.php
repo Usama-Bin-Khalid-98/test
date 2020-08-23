@@ -85,6 +85,8 @@ use Illuminate\Support\Facades\Route;
         Route::resource('entry-requirements','EntryRequirementController');
         Route::resource('application-received','ApplicationReceivedController');
         Route::resource('curriculum-review','CurriculumReviewController');
+        Route::resource('program-objective','ProgramObjectiveController');
+        Route::resource('learning-outcome','LearningOutcomeController');
         Route::resource('program-delivery','ProgramDeliveryController');
         Route::resource('question-paper','QuestionPaperController');
         Route::resource('aligned-program','AlignedProgramController');

@@ -50,10 +50,11 @@ class ProgramDeliveryMethodController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            
+            //$data = $request;
+//            dd($request->file('file1'));
           for($i =0; $i<=count(@$request->all()); $i++)
           {
-              if(@$request->course_code[$i]) {
+              if(@$request->teaching_methods_id[$i]) {
                   ProgramDeliveryMethod::create([
                       'teaching_methods_id' => $request->teaching_methods_id[$i],
                       'campus_id' => Auth::user()->campus_id,
@@ -64,7 +65,7 @@ class ProgramDeliveryMethodController extends Controller
                       'created_by' => Auth::user()->id
                   ]);
               }
-            //}
+            
             }
                 return response()->json(['success' => 'Record added successfully.']);
 
