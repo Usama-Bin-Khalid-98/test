@@ -14,11 +14,8 @@ class CreateTeachingMethods extends Migration
     public function up()
     {
         Schema::create('teaching_methods', function (Blueprint $table) {
-            $table->increments('id');
-            
-                
+            $table->increments('id');   
             $table->string('name',100);
-            
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

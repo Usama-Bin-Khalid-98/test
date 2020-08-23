@@ -84,12 +84,16 @@ use Illuminate\Support\Facades\Route;
         Route::resource('program-portfolio','ProgramPortfolioController');
         Route::resource('entry-requirements','EntryRequirementController');
         Route::resource('application-received','ApplicationReceivedController');
+        Route::resource('curriculum-review','CurriculumReviewController');
         Route::resource('program-delivery','ProgramDeliveryController');
         Route::resource('question-paper','QuestionPaperController');
         Route::resource('aligned-program','AlignedProgramController');
         Route::resource('course-outline','CourseOutlineController');
         Route::resource('course-detail','CourseDetailController');
         Route::resource('cultural-material','CulturalMaterialController');
+        Route::resource('managerial-skill','ManagerialSkillController');
+        Route::resource('program-delivery-method','ProgramDeliveryMethodController');
+        Route::resource('evaluation-method','EvaluationMethodController');
         Route::resource('plagiarism-case','PlagiarismCaseController');
 
         // Students

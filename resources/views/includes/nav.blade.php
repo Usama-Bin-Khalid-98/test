@@ -73,6 +73,10 @@ $course_detail = checkIsCompleted('App\Models\Carriculum\CourseDetail', ['campus
 $course_outline = checkIsCompleted('App\Models\Carriculum\CourseOutline', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $plagiarism_case = checkIsCompleted('App\Models\Carriculum\PlagiarismCase', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $cultural_material = checkIsCompleted('App\Models\Carriculum\CulturalMaterial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$managerial_skill = checkIsCompleted('App\Models\Carriculum\ManagerialSkill', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$program_delivery_method = checkIsCompleted('App\Models\Carriculum\ProgramDeliveryMethod', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$evaluation_method = checkIsCompleted('App\Models\Carriculum\EvaluationMethod', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$curriculum_review = checkIsCompleted('App\Models\Carriculum\CurriculumReview', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 @endphp
 
 <aside class="main-sidebar">
@@ -241,7 +245,7 @@ $cultural_material = checkIsCompleted('App\Models\Carriculum\CulturalMaterial', 
           </li>
         @endhasrole
         @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}" >
+        <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i><span>2: Curriculum</span>
              <span class="pull-right-container">
@@ -265,6 +269,11 @@ $cultural_material = checkIsCompleted('App\Models\Carriculum\CulturalMaterial', 
                             <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+                    <li  class="{{ (request()->is('curriculum-review')) ? 'active' : '' }}"><a href="{{url('curriculum-review')}}">2.3 Curriculum Review<span class="pull-right-container">
+                        <span class="text text-{{$curriculum_review==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$curriculum_review==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
                     <li  class="{{ (request()->is('aligned-program')) ? 'active' : '' }}"><a href="{{url('aligned-program')}}">2.7 Aligned Program<span class="pull-right-container">
                         <span class="text text-{{$aligned_program==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$aligned_program==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -283,6 +292,21 @@ $cultural_material = checkIsCompleted('App\Models\Carriculum\CulturalMaterial', 
                     <li  class="{{ (request()->is('cultural-material')) ? 'active' : '' }}"><a href="{{url('cultural-material')}}">2.10 Cultural Material<span class="pull-right-container">
                         <span class="text text-{{$cultural_material==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$cultural_material==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('managerial-skill')) ? 'active' : '' }}"><a href="{{url('managerial-skill')}}">2.12 Managerial Skill<span class="pull-right-container">
+                        <span class="text text-{{$managerial_skill==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$managerial_skill==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('program-delivery-method')) ? 'active' : '' }}"><a href="{{url('program-delivery-method')}}">2.13 Program Delivery Method<span class="pull-right-container">
+                        <span class="text text-{{$program_delivery_method==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$program_delivery_method==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('evaluation-method')) ? 'active' : '' }}"><a href="{{url('evaluation-method')}}">2.14 Evaluation Method<span class="pull-right-container">
+                        <span class="text text-{{$evaluation_method==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$evaluation_method==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
                     <li  class="{{ (request()->is('program-delivery')) ? 'active' : '' }}"><a href="{{url('program-delivery')}}">2.15 Program Delivery<span class="pull-right-container">
