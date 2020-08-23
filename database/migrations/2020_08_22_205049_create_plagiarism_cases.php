@@ -28,7 +28,7 @@ class CreatePlagiarismCases extends Migration
             $table->string('degree',100);
             $table->string('nature',50);
             $table->string('penalty',100);
-            $table->string('file',255);
+            $table->string('file',255)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
