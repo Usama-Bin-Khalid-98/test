@@ -73,7 +73,7 @@
                                     @foreach($qualification as $degree)
                                     <tr>
                                         <td>{{$degree->name}}
-                                        <input type="hidden" name="faculty_qualification_id[]" value="{{@$degree->id}}">
+                                        <input type="hidden" name="faculty_qualification_id[{{@$degree->id}}][]" value="{{@$degree->id}}">
                                         </td>
                                         @foreach($discipline as $program)
                                             <td><input type="number" min="0" name="number_faculty[{{@$program->id}}][]" placeholder="no of Faculty" class="form-control"></td>
