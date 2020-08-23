@@ -15,11 +15,14 @@ class CreateCurriculumReview extends Migration
     {
         Schema::create('curriculum_reviews', function (Blueprint $table) {
             $table->increments('id');
-            
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
+            $table->integer('department_id')->unsigned()->nullable();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->string('review_meeting',100);
             $table->string('date',50);
             $table->string('composition',100);
@@ -58,6 +61,6 @@ class CreateCurriculumReview extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('curriculum_review');
+        Schema::dropIfExists('curriculum_reviews');
     }
 }

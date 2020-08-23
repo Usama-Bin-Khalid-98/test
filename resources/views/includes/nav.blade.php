@@ -66,6 +66,13 @@ $formal = checkIsCompleted('App\Models\social_responsibility\FormalRelationship'
 $complaint = checkIsCompleted('App\Models\social_responsibility\ComplaintResolution', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $internal = checkIsCompleted('App\Models\social_responsibility\InternalCommunity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$program_delivery = checkIsCompleted('App\Models\Carriculum\ProgramDelivery', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$question_paper = checkIsCompleted('App\Models\Carriculum\QuestionPaper', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$aligned_program = checkIsCompleted('App\Models\Carriculum\AlignedProgram', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$course_detail = checkIsCompleted('App\Models\Carriculum\CourseDetail', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$course_outline = checkIsCompleted('App\Models\Carriculum\CourseOutline', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$plagiarism_case = checkIsCompleted('App\Models\Carriculum\PlagiarismCase', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$cultural_material = checkIsCompleted('App\Models\Carriculum\CulturalMaterial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 @endphp
 
 <aside class="main-sidebar">
@@ -234,7 +241,7 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
           </li>
         @endhasrole
         @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}" >
+        <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i><span>2: Curriculum</span>
              <span class="pull-right-container">
@@ -256,6 +263,41 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
             <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}">2.3 Applications Received<span class="pull-right-container">
                         <span class="text text-{{$application==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('aligned-program')) ? 'active' : '' }}"><a href="{{url('aligned-program')}}">2.7 Aligned Program<span class="pull-right-container">
+                        <span class="text text-{{$aligned_program==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$aligned_program==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('course-outline')) ? 'active' : '' }}"><a href="{{url('course-outline')}}">2.8 Course Outline<span class="pull-right-container">
+                        <span class="text text-{{$course_outline==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$course_outline==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('course-detail')) ? 'active' : '' }}"><a href="{{url('course-detail')}}">2.9 Course Detail<span class="pull-right-container">
+                        <span class="text text-{{$course_detail==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$course_detail==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('cultural-material')) ? 'active' : '' }}"><a href="{{url('cultural-material')}}">2.10 Cultural Material<span class="pull-right-container">
+                        <span class="text text-{{$cultural_material==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$cultural_material==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('program-delivery')) ? 'active' : '' }}"><a href="{{url('program-delivery')}}">2.15 Program Delivery<span class="pull-right-container">
+                        <span class="text text-{{$program_delivery==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$program_delivery==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('question-paper')) ? 'active' : '' }}"><a href="{{url('question-paper')}}">2.16 Question Paper<span class="pull-right-container">
+                        <span class="text text-{{$question_paper==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$question_paper==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('plagiarism-case')) ? 'active' : '' }}"><a href="{{url('plagiarism-case')}}">2.17 Plagiarism Cases<span class="pull-right-container">
+                        <span class="text text-{{$plagiarism_case==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$plagiarism_case==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
 
@@ -702,4 +744,3 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
     </section>
     <!-- /.sidebar -->
   </aside>
-{{--@endif--}}
