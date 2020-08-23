@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
+    <style>
+        .vertical{
+            direction: rtl;
+            transform: rotate(270deg);
+        }
+    </style>
     @include("../includes.header")
     @include("../includes.nav")
     <div class="content-wrapper">
@@ -55,8 +61,8 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
-                                <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-group col-md-3">
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
@@ -66,69 +72,105 @@
                                     </select>
                                 </div>
                             </div>
-                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Publication Category</label>
-                                    <select name="publication_category_id" id="publication_category_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Publication Category</option>
-                                        @foreach($publication_categories as $category)
-                                         <option value="{{$category->id}}">{{$category->name}}</option>
-                                        @endforeach
-                                        </select>
-                                </div>
-                            </div>
 
-                                <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Publication type</label>
-                                    <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Publication Type</option>
+                                <table id="datatable" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+{{--                                        <th class="vertical">Publication category</th>--}}
+                                        <th>Publication type</th>
+                                        <th>Total number of items</th>
+                                        <th>Number of contributing core faculty members</th>
+                                        <th>Number of items jointly produced in collaboration with other institutions</th>
+                                        <th>Number of items jointly produced by faculty of same university</th>
+                                        <th>Number of items jointly produced by more than 3 authors</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+{{--                                        <td class="vertical">Academic research articles</td>--}}
+                                        @foreach($publications as $publication)
+                                            <tr>
+                                                <td>
+                                                    {{@$publication->name}}
+                                                    <input type="hidden" name="publication_type_id[]" value="{{@$publication->id}}">
+                                                </td>
+                                                <td><input type="text" name="total_items[]" id="total_items" value="" placeholder="Total Items" class="form-control"></td>
+                                                <td><input type="text" name="contributing_core_faculty[]" id="contributing_core_faculty" value="" placeholder="Contributing Core Faculty" class="form-control"></td>
+                                                <td><input type="text" name="jointly_produced_other[]"
+                                                           id="jointly_produced_other" value="" placeholder="Jointly Produced Other" class="form-control"></td>
+                                                <td><input type="text" name="jointly_produced_same[]"
+                                                           id="jointly_produced_same" value="" placeholder="Jointly Produced Same " class="form-control"></td>
+                                                <td><input type="text" name="jointly_produced_multiple[]"
+                                                           id="jointly_produced_multiple" value="" placeholder="Jointly Produced Multiple" class="form-control"></td>
+                                            </tr>
+                                        @endforeach
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+{{--                             <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Publication Category</label>--}}
+{{--                                    <select name="publication_category_id" id="publication_category_id" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select Publication Category</option>--}}
+{{--                                        @foreach($publication_categories as $category)--}}
+{{--                                         <option value="{{$category->id}}">{{$category->name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                        </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                                <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Publication type</label>--}}
+{{--                                    <select name="publication_type_id" id="publication_type_id" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select Publication Type</option>--}}
 {{--                                        @foreach($publications as $publication)--}}
 {{--                                         <option value="{{$publication->id}}">{{$publication->name}}</option>--}}
 {{--                                        @endforeach--}}
-                                        </select>
-                                </div>
-                            </div>
+{{--                                        </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
 
 
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Total number of items</label>
-                                    <input type="text" name="total_items" id="total_items" value="" placeholder="Total Items" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Number of contributing core faculty members</label>
-                                    <input type="text" name="contributing_core_faculty" id="contributing_core_faculty" value="" placeholder="Contributing Core Faculty" class="form-control">
-                                </div>
-                            </div>
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Total number of items</label>--}}
+{{--                                    <input type="text" name="total_items" id="total_items" value="" placeholder="Total Items" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Number of contributing core faculty members</label>--}}
+{{--                                    <input type="text" name="contributing_core_faculty" id="contributing_core_faculty" value="" placeholder="Contributing Core Faculty" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Number of items jointly produced in collaboration with other institutionsr</label>
-                                    <input type="text" name="jointly_produced_other"
-                                    id="jointly_produced_other" value="" placeholder="Jointly Produced Other" class="form-control">
-                                </div>
-                            </div>
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Number of items jointly produced in collaboration with other institutionsr</label>--}}
+{{--                                    <input type="text" name="jointly_produced_other"--}}
+{{--                                    id="jointly_produced_other" value="" placeholder="Jointly Produced Other" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Number of items jointly produced by faculty of same university</label>
-                                    <input type="text" name="jointly_produced_same"
-                                    id="jointly_produced_same" value="" placeholder="Jointly Produced Same " class="form-control">
-                                </div>
-                            </div>
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Number of items jointly produced by faculty of same university</label>--}}
+{{--                                    <input type="text" name="jointly_produced_same"--}}
+{{--                                    id="jointly_produced_same" value="" placeholder="Jointly Produced Same " class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Number of items jointly produced by more than 3 authors</label>
-                                    <input type="text" name="jointly_produced_multiple"
-                                    id="jointly_produced_multiple" value="" placeholder="Jointly Produced Multiple" class="form-control">
-                                </div>
-                            </div>
+{{--                            <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Number of items jointly produced by more than 3 authors</label>--}}
+{{--                                    <input type="text" name="jointly_produced_multiple"--}}
+{{--                                    id="jointly_produced_multiple" value="" placeholder="Jointly Produced Multiple" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
 
                             <div class="col-md-12">
@@ -331,57 +373,57 @@
             }
         });
 
-        $('#publication_category_id').on('change', function () {
-            let publication_category_id = $(this).val();
-            //console.log('id here', publication_category_id);
-            //return;
-            $.ajax({
-                url:'{{url("get_publication_category")}}/'+publication_category_id,
-                type:'GET',
-                data: {publication_category_id:publication_category_id},
-                beforeSend: function(){
-                    Notiflix.Loading.Pulse('Processing...');
-                },
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                success: function (response) {
-                    Notiflix.Loading.Remove();
-                    console.log('response here', response);
-                   // return;
-                    //if(response.success){
-                        var data =[];
-                        //$('#city').val(null);
-                        $("#publication_type_id").empty();
-                        Object.keys(response).forEach(function (index) {
-                            data.push({id:response[index].id, text:response[index].name});
-                        })
+        {{--$('#publication_category_id').on('change', function () {--}}
+        {{--    let publication_category_id = $(this).val();--}}
+        {{--    //console.log('id here', publication_category_id);--}}
+        {{--    //return;--}}
+        {{--    $.ajax({--}}
+        {{--        url:'{{url("get_publication_category")}}/'+publication_category_id,--}}
+        {{--        type:'GET',--}}
+        {{--        data: {publication_category_id:publication_category_id},--}}
+        {{--        beforeSend: function(){--}}
+        {{--            Notiflix.Loading.Pulse('Processing...');--}}
+        {{--        },--}}
+        {{--        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');--}}
+        {{--        success: function (response) {--}}
+        {{--            Notiflix.Loading.Remove();--}}
+        {{--            console.log('response here', response);--}}
+        {{--           // return;--}}
+        {{--            //if(response.success){--}}
+        {{--                var data =[];--}}
+        {{--                //$('#city').val(null);--}}
+        {{--                $("#publication_type_id").empty();--}}
+        {{--                Object.keys(response).forEach(function (index) {--}}
+        {{--                    data.push({id:response[index].id, text:response[index].name});--}}
+        {{--                })--}}
 
-                        console.log('data herer', data);
-                        $('#publication_type_id').select2({
-                            data
-                        });
-                        Notiflix.Notify.Success(response.success);
-                   // }
+        {{--                console.log('data herer', data);--}}
+        {{--                $('#publication_type_id').select2({--}}
+        {{--                    data--}}
+        {{--                });--}}
+        {{--                Notiflix.Notify.Success(response.success);--}}
+        {{--           // }--}}
 
-                    console.log('response', response);
-                   // location.reload();
-                },
-                error:function(response, exception){
-                    Notiflix.Loading.Remove();
-                    $.each(response.responseJSON, function (index, val) {
-                        Notiflix.Notify.Failure(val);
-                    })
-                }
-            })
+        {{--            console.log('response', response);--}}
+        {{--           // location.reload();--}}
+        {{--        },--}}
+        {{--        error:function(response, exception){--}}
+        {{--            Notiflix.Loading.Remove();--}}
+        {{--            $.each(response.responseJSON, function (index, val) {--}}
+        {{--                Notiflix.Notify.Failure(val);--}}
+        {{--            })--}}
+        {{--        }--}}
+        {{--    })--}}
 
-        })
+        {{--})--}}
 
         $('#form').submit(function (e) {
-            let publication_type_id = $('#publication_type_id').val();
-            let total_items = $('#total_items').val();
-            let contributing_core_faculty = $('#contributing_core_faculty').val();
-            let jointly_produced_other = $('#jointly_produced_other').val();
-            let jointly_produced_same = $('#jointly_produced_same').val();
-            let jointly_produced_multiple = $('#jointly_produced_multiple').val();
+            let publication_type_id = $('input[name*="publication_type_id"]').val();
+            let total_items = $('input[name*="total_items"]').val();
+            let contributing_core_faculty = $('input[name*="contributing_core_faculty"]').val();
+            let jointly_produced_other = $('input[name*="jointly_produced_other"]').val();
+            let jointly_produced_same = $('input[name*="jointly_produced_same"]').val();
+            let jointly_produced_multiple = $('input[name*="jointly_produced_multiple"]').val();
             let year = $('#year').val();
 
             !publication_type_id?addClass('publication_type_id'):removeClass('publication_type_id');
@@ -392,7 +434,7 @@
             !jointly_produced_same?addClass('jointly_produced_same'):removeClass('jointly_produced_same');
             !jointly_produced_multiple?addClass('jointly_produced_multiple'):removeClass('jointly_produced_multiple');
 
-            if(!publication_type_id  || !total_items || !contributing_core_faculty || !jointly_produced_other|| !jointly_produced_same || !jointly_produced_multiple || !year)
+            if(!year)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

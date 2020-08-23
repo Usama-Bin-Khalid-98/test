@@ -55,20 +55,31 @@ class ResearchSummaryController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            //dd($request->all());
+            for($i = 0; $i <= count($request->total_items); $i++)
+            {
+               // dd($request->total_items[$i]);
+//                for($j = 0; $j<=count($request->publication_type_id); $j++)
+//                {
+//                dd($request->total_items[$i]);
+                if(!empty($request->total_items[$i])) {
+                    ResearchSummary::create([
+                        'publication_type_id' => $request->publication_type_id[$i],
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'total_items' => @$request->total_items[$i],
+                        'year' => $request->year,
+                        'contributing_core_faculty' => $request->contributing_core_faculty[$i],
+                        'jointly_produced_other' => $request->jointly_produced_other[$i],
+                        'jointly_produced_same' => $request->jointly_produced_same[$i],
+                        'jointly_produced_multiple' => $request->jointly_produced_multiple[$i],
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
+                    ]);
+                }
 
-            ResearchSummary::create([
-                'publication_type_id' => $request->publication_type_id,
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'total_items' => $request->total_items,
-                'year' => $request->year,
-                'contributing_core_faculty' => $request->contributing_core_faculty,
-                'jointly_produced_other' => $request->jointly_produced_other,
-                'jointly_produced_same' => $request->jointly_produced_same,
-                'jointly_produced_multiple' => $request->jointly_produced_multiple,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+                //}
+            }
 
             return response()->json(['success' => 'Research Summary Information added successfully.']);
 
