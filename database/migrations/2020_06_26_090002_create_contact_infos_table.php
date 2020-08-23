@@ -16,7 +16,6 @@ class CreateContactInfosTable extends Migration
         Schema::create('contact_infos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
-            $table->string('focal_person', 100);
             $table->string('email', 100);
             $table->string('contact_no', 25);
             $table->string('school_contact', 25);

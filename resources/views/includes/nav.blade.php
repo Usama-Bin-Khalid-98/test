@@ -702,4 +702,4 @@ $social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['
     </section>
     <!-- /.sidebar -->
   </aside>
-@endif
+{{--@endif--}}
