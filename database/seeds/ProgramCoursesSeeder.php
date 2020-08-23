@@ -27,9 +27,6 @@ class ProgramCoursesSeeder extends Seeder
             'pre_req_id' => '4',
             'status' => 'active',
             ],
-            
-
-
         ]);
     }
 }
