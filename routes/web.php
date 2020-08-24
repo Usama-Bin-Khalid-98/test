@@ -125,6 +125,15 @@ use Illuminate\Support\Facades\Route;
         Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
         Route::resource('faculty-summary','Faculty\FacultySummaryController');
         Route::resource('faculty-degree', 'FacultyDegreeController');
+        Route::resource('faculty-membership', 'Faculty\FacultyMembershipController');
+        Route::resource('international-faculty', 'Faculty\InternationalFacultyController');
+        Route::resource('faculty-exposure', 'Faculty\FacultyExposureController');
+        Route::resource('faculty-participation', 'Faculty\FacultyParticipationController');
+        Route::resource('consultancy-project', 'Faculty\ConsultancyProjectController');
+        Route::resource('faculty-promotion', 'FacultyPromotionController');
+        Route::resource('faculty-develop', 'FacultyDevelopController');
+        Route::resource('faculty-workshop', 'Faculty\FacultyWorkshopController');
+        Route::resource('faculty-detailed-info', 'Faculty\FacultyDetailedInfoController');
 
         //research-summary
         Route::resource('oric','OricController');

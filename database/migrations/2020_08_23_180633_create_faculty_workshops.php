@@ -29,8 +29,6 @@ class CreateFacultyWorkshops extends Migration
             $table->string('title',100)->nullable();
             $table->string('faculty_trainer_name',100)->nullable();
             $table->string('participants',100)->nullable();
-            
-           
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

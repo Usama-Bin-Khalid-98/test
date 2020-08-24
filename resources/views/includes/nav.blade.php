@@ -79,6 +79,15 @@ $evaluation_method = checkIsCompleted('App\Models\Carriculum\EvaluationMethod', 
 $curriculum_review = checkIsCompleted('App\Models\Carriculum\CurriculumReview', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $program_objective = checkIsCompleted('App\Models\Carriculum\ProgramObjective', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $learning_outcome = checkIsCompleted('App\Models\Carriculum\LearningOutcome', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_membership = checkIsCompleted('App\Models\Faculty\FacultyMembership', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_exposure = checkIsCompleted('App\Models\Faculty\FacultyExposure', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$international_faculty = checkIsCompleted('App\Models\Faculty\InternationalFaculty', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_participation = checkIsCompleted('App\Models\Faculty\FacultyParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$consultancy_project = checkIsCompleted('App\Models\Faculty\FacultyConsultancyProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_promotion = checkIsCompleted('App\Models\Faculty\FacultyPromotion', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_develop = checkIsCompleted('App\Models\Faculty\FacultyDevelop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_workshop = checkIsCompleted('App\Models\Faculty\FacultyWorkshop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 @endphp
 
 <aside class="main-sidebar">
@@ -434,7 +443,7 @@ $learning_outcome = checkIsCompleted('App\Models\Carriculum\LearningOutcome', ['
         </li>
           @endhasrole
           @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-summary'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}">
+        <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-summary'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}{{(request()->is('faculty-membership'))?'active':''}}{{(request()->is('faculty-exposure'))?'active':''}}{{(request()->is('international-faculty'))?'active':''}}{{(request()->is('faculty-participation'))?'active':''}}{{(request()->is('consultancy-project'))?'active':''}}{{(request()->is('faculty-promotion'))?'active':''}}{{(request()->is('faculty-develop'))?'active':''}}{{(request()->is('faculty-workshop'))?'active':''}}{{(request()->is('faculty-detailed-info'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-green"></i><span>4: Faculty</span>
                   <span class="pull-right-container">
@@ -445,6 +454,11 @@ $learning_outcome = checkIsCompleted('App\Models\Carriculum\LearningOutcome', ['
             <li class="{{ (request()->is('faculty-summary')) ? 'active' : '' }}"><a href="{{url('faculty-summary')}}">4.1 Summary BSF<span class="pull-right-container">
                         <span class="text text-{{$bsf==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$bsf==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                     <li class="{{ (request()->is('faculty-detailed-info')) ? 'active' : '' }}"><a href="{{url('faculty-detailed-info')}}">4.1b Faculty Detailed Info<span class="pull-right-container">
+                        <span class="text text-{{$faculty_detail==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_detail==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
             <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}">4.2 Faculty Work Load T<span class="pull-right-container">
@@ -470,6 +484,46 @@ $learning_outcome = checkIsCompleted('App\Models\Carriculum\LearningOutcome', ['
             <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{url('faculty-gender')}}">4.6 Faculty Gender Mix<span class="pull-right-container">
                         <span class="text text-{{$facultygender==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$facultygender==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('faculty-promotion')) ? 'active' : '' }}"><a href="{{url('faculty-promotion')}}">4.7 Faculty Promotion<span class="pull-right-container">
+                        <span class="text text-{{$faculty_promotion==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_promotion==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('faculty-workshop')) ? 'active' : '' }}"><a href="{{url('faculty-workshop')}}">4.8 Faculty Workshop<span class="pull-right-container">
+                        <span class="text text-{{$faculty_workshop==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_workshop==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('faculty-develop')) ? 'active' : '' }}"><a href="{{url('faculty-develop')}}">4.9 Faculty Develop<span class="pull-right-container">
+                        <span class="text text-{{$faculty_develop==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_develop==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('consultancy-project')) ? 'active' : '' }}"><a href="{{url('consultancy-project')}}">4.10 Consultancy Project<span class="pull-right-container">
+                        <span class="text text-{{$consultancy_project==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$consultancy_project==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('faculty-participation')) ? 'active' : '' }}"><a href="{{url('faculty-participation')}}">4.11 Faculty Participation<span class="pull-right-container">
+                        <span class="text text-{{$faculty_participation==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_participation==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('faculty-membership')) ? 'active' : '' }}"><a href="{{url('faculty-membership')}}">4.12 Faculty Membership<span class="pull-right-container">
+                        <span class="text text-{{$faculty_membership==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_membership==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                     <li  class="{{ (request()->is('international-faculty')) ? 'active' : '' }}"><a href="{{url('international-faculty')}}">4.13 International Faculty<span class="pull-right-container">
+                        <span class="text text-{{$international_faculty==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$international_faculty==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                    <li  class="{{ (request()->is('faculty-exposure')) ? 'active' : '' }}"><a href="{{url('faculty-exposure')}}">4.14 Faculty Exposure<span class="pull-right-container">
+                        <span class="text text-{{$faculty_exposure==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$faculty_exposure==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
           </ul>

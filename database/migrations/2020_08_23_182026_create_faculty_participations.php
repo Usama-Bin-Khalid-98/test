@@ -24,8 +24,8 @@ class CreateFacultyParticipations extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
+            $table->text('date');
             $table->string('faculty_name',100)->nullable();
-            $table->string('date',100)->nullable();
             $table->string('organization',100)->nullable();
             $table->string('title',100)->nullable();
            

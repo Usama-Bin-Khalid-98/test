@@ -1,4 +1,4 @@
-@section('pageTitle', 'Mission Vision')
+@section('pageTitle', 'Faculty Exposure')
 
 
 @if(Auth::user())
@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Mission Vision
+                Faculty Exposure
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Mission Vision </li>
+                <li class="active">Faculty Exposure</li>
             </ol>
         </section>
         <section class="content-header">
@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.7  State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.</h3>
+                            <p class="box-title">4.14 Provide details of international exposure of faculty during last three years in Table 4.11b. Attachpolicy relating to internationalexposure of faculty as Appendix-4E.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -60,23 +60,35 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="box-body pad">
-                                <label>Mission</label>
-                        <textarea id="mission" name="mission" rows="10" cols="80">
-                            {{@$get->mission}}
-                        </textarea>
-                        <input type="hidden" id="id" value="{{@$get->id}}">
-                </div>
-                <div class="box-body pad">
-                                <label>Vision</label>
-                        <textarea id="vision" name="vision" rows="10" cols="80">
-                            {{@$get->vision}}
-                        </textarea>
-                </div>
-
-                            <div class="col-md-3">
+                            
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc (Appendix-1C)</label>
+                                    <label for="name">Faculty name</label>
+                                    <input type="text" name="faculty_name" id="faculty_name"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Activity title</label>
+                                    <input type="text" name="activity" id="activity"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Date</label>
+                                    <input type="date" name="date" id="date"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Duration</label>
+                                    <input type="text" name="duration" id="duration"  class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Attach Doc</label>
                                     <input type="file" name="file" id="file" >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
@@ -85,7 +97,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
                         </form>
@@ -95,44 +107,44 @@
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
-                    <!-- <div class="box">
+                    <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Mission Vision List</h3>
+                            <h3 class="box-title">Table 4.11b International faculty</h3>
                         </div>
-                        <!- /.box-header
+                        <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Mission</th>
-                                    <th>Vision</th>
+                                    <th>Faculty name</th>
+                                    <th>Activity title</th>
+                                    <th>Date</th>
+                                    <th>Duration</th>
                                     <th>Document</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($missions as $contact)
-                                <tr>
-                                    <td>{{$contact->campus->business_school->name}}</td>
-                                    <td>{{$contact->campus->location}}</td>
-                                    <td>{{$contact->mission}}</td>
-                                    <td>{{$contact->vision}}</td>
+                                @foreach($memberships as $contact)
+                                 <tr>
+                                    <td>{{$contact->faculty_name}}</td>
+                                    <td>{{$contact->activity}}</td>
+                                    <td>{{$contact->date}}</td>
+                                    <td>{{$contact->duration}}</td>
                                     <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","mission":"{{$contact->mission}}","vision":"{{$contact->vision}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-                                </tr>
-                                @endforeach
-
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","date":"{{$contact->date}}","students_initial":"{{$contact->students_initial}}","degree":"{{$contact->degree}}","nature":"{{$contact->nature}}","penalty":"{{$contact->penalty}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                </tr> 
+                                @endforeach 
+                                 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Mission</th>
-                                    <th>Vision</th>
+                                    <th>Faculty name</th>
+                                    <th>Activity title</th>
+                                    <th>Date</th>
+                                    <th>Duration</th>
                                     <th>Document</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -140,8 +152,8 @@
                                 </tfoot>
                             </table>
                         </div>
-                     /.box-body 
-                    </div> -->
+                        <!-- /.box-body -->
+                    </div>
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
@@ -165,29 +177,45 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Strategic Plan. </h4>
+                    <h4 class="modal-title">Edit Faculty Exposure</h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-
-
-                        <div class="col-md-12">
+                              <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Mission</label>
-                                    <textarea rows="10" name="mission" id="edit_mission" class="form-control">{{old('edit_mission')}}</textarea>
+                                    <label for="name">Date of incident</label>
+                                    <input type="date" name="date" id="edit_date" value="{{old('edit_date')}}" class="form-control">
                                 </div>
-                                <input type="hidden" id="edit_id">
+                                 <input type="hidden" id="edit_id">
                               </div>
-                              <div class="col-md-12">
+                             <!--  <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Vision</label>
-                                    <textarea rows="10" name="vision" id="edit_vision"  class="form-control">{{old('edit_vision')}}</textarea>
+                                    <label for="name">Initial of students</label>
+                                    <input type="text" name="students_initial" id="edit_students_initial" value="{{old('edit_students_initial')}}" class="form-control">
                                 </div>
                               </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Degree program</label>
+                                    <input type="text" name="degree" id="edit_degree" value="{{old('edit_degree')}}" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Nature of dishonesty</label>
+                                    <input type="text" name="nature" id="edit_nature" value="{{old('edit_nature')}}" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Penalty/consequences</label>
+                                    <input type="text" name="penalty" id="edit_penalty" value="{{old('edit_penalty')}}" class="form-control">
+                                </div>
+                              </div> -->
 
                               <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc (Appendix-1C)</label>
+                                <label for="name">Attach Doc</label>
                                 <input type="file" name="file" id="edit_file" >
                                 <input type="hidden" name="old_file" id="old_file" >
                                 <span class="text-blue" id="file-name"></span>
@@ -202,8 +230,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -217,7 +243,7 @@
     </div>
     <!-- /.modal -->
 
-
+   
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -236,14 +262,6 @@
             $('#datatable').DataTable()
         })
     </script>
-    <script>
-  $(function () {
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
-    CKEDITOR.replace('mission');
-    CKEDITOR.replace('vision');
-  })
-</script>
     <script type="text/javascript">
 
         $('.select2').select2()
@@ -254,18 +272,20 @@
             }
         });
 
-         <?php if(@$get->id==null){ ?>
-
          $('#form').submit(function (e) {
-            let mission = CKEDITOR.instances.mission.getData();
-            let vision = CKEDITOR.instances.vision.getData();
+            let faculty_name = $('#faculty_name').val();
+            let activity = $('#activity').val();
+            let date = $('#date').val();
+            let duration = $('#duration').val();
             let file = $('#file').val();
 
-            !mission?addClass('mission'):removeClass('mission');
-            !vision?addClass('vision'):removeClass('vision');
+            !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
+            !activity?addClass('activity'):removeClass('activity');
+            !date?addClass('date'):removeClass('date');
+            !duration?addClass('duration'):removeClass('duration');
             !file?addClass('file'):removeClass('file');
 
-            if(!mission || !vision || !file)
+            if(!faculty_name || !activity || !date || !duration  || !file)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -275,7 +295,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("strategic/mission-vision")}}',
+                url:'{{url("faculty-exposure")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -302,56 +322,109 @@
             })
         });
 
-       <?php }else { ?>
 
-$('#form').submit(function (e) {
-             let id = $('#id').val(); 
-            let mission = CKEDITOR.instances.mission.getData();
-            let vision = CKEDITOR.instances.vision.getData();
-            let file = $('#file').val();
+         $('.edit').on('click', function () {
+            // let data = JSON.parse(JSON.stringify($(this).data('row')));
+             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#edit_date').val(data.date);
+            $('#edit_students_initial').val(data.students_initial);
+            $('#edit_degree').val(data.degree);
+            $('#edit_nature').val(data.nature);
+            $('#edit_penalty').val(data.penalty);
+            $('#file-name').text(data.file);
+            $('#edit_id').val(data.id);
+            $('input[value='+data.status+']').iCheck('check');
+        });
 
-             !mission?addClass('mission'):removeClass('mission');
-             !vision?addClass('vision'):removeClass('vision');
-             !file?addClass('file'):removeClass('file');
+$('#updateForm').submit(function (e) {
+            let date = $('#edit_date').val();
+            let students_initial = $('#edit_students_initial').val();
+            let degree = $('#edit_degree').val();
+            let nature = $('#edit_nature').val();
+            let penalty = $('#edit_penalty').val();
+            let id = $('#edit_id').val();
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            let status = $('input[name=edit_status]:checked').val();
+            !date?addClass('edit_date'):removeClass('edit_date');
+            !students_initial?addClass('students_initial'):removeClass('edit_students_initial');
+            !degree?addClass('edit_degree'):removeClass('edit_degree');
+            !nature?addClass('nature'):removeClass('edit_nature');
+            !penalty?addClass('edit_penalty'):removeClass('edit_penalty');
+
+            if(!date || !students_initial || !degree || !nature || !penalty || !file )
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            e.preventDefault();
+             var formData = new FormData(this);
+            //var formData = $("#updateForm").serialize()
+            formData.append('_method', 'PUT');
             $.ajax({
-                type: 'PUT',
-                url: "{{url('strategic/mission-vision')}}/"+id,
-                data: {
-                    id:id,
-                    mission:mission,
-                    vision:vision,
-                    file:file,
-                },
+                url:'{{url("faculty-exposure")}}/'+id,
+                type:'POST',
+                // dataType:"JSON",
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
                 // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
                     Notiflix.Loading.Remove();
-                    console.log("success resp ",response.success);
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response here', response);
+                    //console.log('response', response);
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
                     $.each(response.responseJSON, function (index, val) {
                         Notiflix.Notify.Failure(val);
-
                     })
-
                 }
-            });
+            })
         });
 
-<?php } ?>
+
+         $('.delete').on('click', function (e) {
+            let id =  $(this).data('id');
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
+                function(){
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("faculty-exposure")}}/'+id,
+                        type:'DELETE',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+                            location.reload();
+                            // console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+
+        })
 
 
     </script>
