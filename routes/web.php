@@ -63,6 +63,7 @@ use Illuminate\Support\Facades\Route;
     //// Strategic Management
     Route::prefix('strategic')->group(function () {
         Route::resource('basicinfo','StrategicManagement\BasicInfoController');
+        Route::get('invoice/{id}','StrategicManagement\SlipController@invoice');
         Route::resource('invoices','StrategicManagement\SlipController');
         Route::post('generateInvoice','StrategicManagement\SlipController@generateInvoice');
         Route::resource('scope','StrategicManagement\ScopeController');

@@ -88,6 +88,8 @@ $faculty_promotion = checkIsCompleted('App\Models\Faculty\FacultyPromotion', ['c
 $faculty_develop = checkIsCompleted('App\Models\Faculty\FacultyDevelop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_workshop = checkIsCompleted('App\Models\Faculty\FacultyWorkshop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_school_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+
 @endphp
 
 <aside class="main-sidebar">
@@ -249,9 +251,11 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                     </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
+                    @if($isActiveSAR)
              <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>
             <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li>
-          </ul>
+                    @endif
+                </ul>
 {{--              @endif--}}
           </li>
         @endhasrole
@@ -280,6 +284,7 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @if($isActiveSAR)
                     <li  class="{{ (request()->is('curriculum-review')) ? 'active' : '' }}"><a href="{{url('curriculum-review')}}">2.3 Curriculum Review<span class="pull-right-container">
                         <span class="text text-{{$curriculum_review==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$curriculum_review==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -345,7 +350,7 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$plagiarism_case==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-
+              @endif
 
           </ul>
         </li>
@@ -376,7 +381,7 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                     </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
-
+              @if($isActiveSAR)
             <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}">3.2 Students Intakes<span class="pull-right-container">
                         <span class="text text-{{$intake==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$intake==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -437,7 +442,7 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$alumni==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-
+              @endif
 
           </ul>
         </li>
@@ -486,6 +491,9 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$facultygender==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+
+{{--              SAR Menu--}}
+              @if($isActiveSAR)
                     <li  class="{{ (request()->is('faculty-promotion')) ? 'active' : '' }}"><a href="{{url('faculty-promotion')}}">4.7 Faculty Promotion<span class="pull-right-container">
                         <span class="text text-{{$faculty_promotion==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$faculty_promotion==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -526,6 +534,7 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$faculty_exposure==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @endif
           </ul>
         </li>
           @endhasrole
@@ -543,11 +552,14 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$research==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+
                     <li  class="{{ (request()->is('oric')) ? 'active' : '' }}"><a href="{{url('oric')}}">5.1 Oric<span class="pull-right-container">
                         <span class="text text-{{$oric==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$oric==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              {{--SAR Menu--}}
+              @if($isActiveSAR)
                     <li  class="{{ (request()->is('research-center')) ? 'active' : '' }}"><a href="{{url('research-center')}}">5.2 Research Center<span class="pull-right-container">
                         <span class="text text-{{$research_center==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$research_center==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -593,6 +605,7 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$conference==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @endif
 
           </ul>
         </li>
@@ -611,12 +624,13 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                             <i class="fa {{$financialinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-             <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}">6.2 BS Facility<span class="pull-right-container">
+             <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}">6.2 Business School Facility<span class="pull-right-container">
                         <span class="text text-{{$bsfacility==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$bsfacility==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a>
              </li>
+              @if($isActiveSAR)
             <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}">7.2 Financial Risk<span class="pull-right-container">
                         <span class="text text-{{$financialrisk==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$financialrisk==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -631,13 +645,16 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
                         <span class="text text-{{$qecinfo==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$qecinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a></li>
+                    </span></a>
+            </li>
+              @endif
 
           </ul>
         </li>
           @endhasrole
 
           <!-- Below is the module included in SAR -->
+          @if($isActiveSAR)
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}{{(request()->is('social-activity'))?'active':''}}">
           <a href="#">
@@ -781,7 +798,7 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
         </li>
           @endhasrole
           <!-- ///////////////////////////////////////////////////////////////////////////// -->
-
+          @endif
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-green"></i>Faculty Degree</a></li>
           @endhasrole
