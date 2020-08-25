@@ -37,16 +37,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //$userHas = Auth::user()->getPermissionsViaRoles();
-        //$check = $userHas->has('name');
-        //dd($check);
         $user_id = Auth::id();
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
+        //check is registration forms data completed:
+        $check = $this->isRegCompleted(['user_id'=> $user_id, 'campus_id'=>$campus_id, 'department_id'=>$department_id]);
         $memberShips = User::with('business_school')->where('status', 'pending')->get();
         $invoices = Slip::with('business_school', 'department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
         //dd($invoices);
-        $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
+        $registrations = Slip::with('business_school')
+            ->where('regStatus','!=','Initiated')
+            ->get();
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
         //dd($registrations);
         return view('home' , compact( 'registrations', 'invoices', 'memberShips','registration_apply'));
@@ -59,16 +60,22 @@ class HomeController extends Controller
      * @param  \User  $user
      * @return \Illuminate\Http\Response
      */
+
+    protected function isRegCompleted()
+    {
+
+
+    }
     public function apply(Request $user,  $id)
     {
-        //dd($user);
         if($id)
         {
             DB::enableQueryLog();
             try {
             $user_id = Auth::id();
-            $registration_apply = User::where(['id' => $user_id, 'department_id' => $user->department_id])->update(['request' =>'pending']);
-           // dd(DB::getQueryLog());
+            $campus_id = Auth::user()->campus_id;
+            $registration_apply = Slip::where(['created_by' => $user_id,'business_school_id'=> $campus_id, 'department_id' => $user->department_id])->update(['regStatus' =>'Review']);
+           dd(DB::getQueryLog());
             return response()->json(['success' => 'Successfully applied for department Registration']);
 
             }catch (Exception $e)

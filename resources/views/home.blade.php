@@ -483,7 +483,7 @@
                                     <td>{{@$invoice->business_school->user->email}}</td>
                                     <td><a href="{{@$invoice->slip}}">Invoice Slip</a></td>
                                     {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                                    <td><i class="badge {{$invoice->status == 'inactive'?'bg-red':''}} status" data-id="{{$invoice->id}}" style="background: red" >{{$invoice->status != ''?ucwords($invoice->status):'inactive'}}</i></td>
+                                    <td><i class="badge {{$invoice->regStatus == 'inactive'?'bg-red':''}} status" data-id="{{$invoice->id}}" style="background: red" >{{$invoice->regStatus != ''?ucwords($invoice->regStatus):'inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
                                 </tr>
                             @endforeach
@@ -539,6 +539,7 @@
                             <tr>
                                 <th>Business School Name</th>
                                 <th>Campus</th>
+                                <th>Department</th>
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
                                 <th>Email</th>
@@ -555,12 +556,13 @@
                                 <tr>
                                     <td>{{@$regist->business_school->name}}</td>
                                     <td>{{@$regist->campus->location??'Main Campus'}}</td>
+                                    <td>{{@$regist->department->name}}</td>
                                     <td>{{@$regist->business_school->user->name}}</td>
                                     <td>{{@$regist->business_school->user->contact_no}}</td>
                                     <td>{{@$regist->business_school->user->email}}</td>
                                     <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Review</a></td>
                                     {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                                    <td><i class="badge {{$regist->request == 'pending'?'bg-red':''}}" >{{$regist->request != ''?ucwords($regist->request):'created'}}</i></td>
+                                    <td><i class="badge {{$regist->regStatus == 'pending'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'Initiated'}}</i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
                                 </tr>
 
@@ -571,6 +573,7 @@
                             <tr>
                                 <th>Business School Name</th>
                                 <th>Campus</th>
+                                <th>Department</th>
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
                                 <th>Email</th>
@@ -631,15 +634,15 @@
 
                       <tbody>
 
-                      @foreach($registration_apply as $registration)
+                      @foreach($invoices as $invoice_re)
                           <tr>
-                              <td>{{@$registration->business_school->name}}</td>
-                              <td>{{@$registration->campus->location??'Main Campus'}}</td>
-                              <td>{{@$registration->department->name}}</td>
-{{--                              <td><a href="{{@$registration->slip}}">Invoice Slip</a></td>--}}
+                              <td>{{@$invoice_re->business_school->name}}</td>
+                              <td>{{@$invoice_re->campus->location??'Main Campus'}}</td>
+                              <td>{{@$invoice_re->department->name}}</td>
+{{--                              <td><a href="{{@$invoice_re->slip}}">Invoice Slip</a></td>--}}
                               {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                              <td><i class="badge  status" data-id="{{@$registration->id}}"  style="background: {{$registration->request == 'created'?'red':''}}{{$registration->request == 'pending'?'brown':''}}{{$registration->request == 'approved'?'green':''}}" >{{@$registration->request != ''?ucwords($registration->request):'created'}}</i></td>
-                              <td>@if($registration->request =='created') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$registration->id}}" data-row="{{@$registration->department->id}}"> Apply Now </button> @endif</td>
+                              <td><i class="badge  status" data-id="{{@$invoice_re->id}}"  style="background: {{$invoice_re->regStatus == 'Initiated'?'red':''}}{{$invoice_re->regStatus == 'Review'?'brown':''}}{{$invoice_re->regStatus == 'Approved'?'green':''}}" >{{@$invoice_re->regStatus != ''?ucwords($invoice_re->regStatus):'Initiated'}}</i></td>
+                              <td>@if($invoice_re->regStatus =='Initiated') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department->id}}"> Apply Now </button>  @elseif($invoice_re->regStatus =='Review')Desk Review In-progress @endif</td>
                           </tr>
                       @endforeach
 

@@ -45,29 +45,74 @@
                         <h4 class="modal-title">Generate Invoice for department Registration</h4>
                     </div>
                     <form role="form" method="post">
-                        <div class="modal-body">
-                            <div class="col-md-3">
+                        <div class="box-body">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="program">Invoice Number</label>
-                                    <input type="text" name="invoice_no" id="invoice_no" value="{{$invoice_no??old('invoice_no')}}" readonly class="form-control">
+                                    <label for="name">Degree Department</label>
+                                    <input type="text" readonly id="department" name="department" readonly class="form-control" value="{{@$departments->name}}">
+                                    <input type="hidden" readonly id="department_id" name="department_id" readonly class="form-control" value="{{@$departments->id}}">
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="program">Apply for Department</label>
-                                    <select id="department_id" name="department_id" class="form-control select2" style="width: 100%;">
-                                        <option value="">Select Department</option>
-                                        @foreach($departments as $department)
-                                            <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>
+                                    <label for="name">Invoice No</label>
+                                    <input type="text" readonly id="invoice_no" readonly name="invoice_no" value="{{@$invoice_no??old('invoice_no')}}" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="date">Date of transaction</label>
+                                    <input type="date" id="add_transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-bottom: 22px;">
+                                    <label for="type">Payment Method </label>
+                                    <select name="payment_method" id="add_payment_method" class="form-control select2">
+                                        <option value="">Select Payment Method</option>
+                                        @foreach($payment_methods as $method)
+                                            <option value="{{$method->id}}">{{$method->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Cheque No</label>
+                                    <input type="text" id="add_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-bottom: 18px;">
+                                    <label for="type">{{ __('Status') }} : </label>
+                                    <select name="status" id="add_status" class="form-control select2">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="paid">Paid</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="slip">Bank Deposit Slip</label>
+                                    <input type="file" name="slip" id="add_slip" value="{{old('slip')}}" class="form">
+                                    <span class="text-blue">Max 2mb file size allowed. </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="comments">Payment Details</label>
+                                    <textarea name="comments" id="add_comments" class="form-control">{{old('comments')}}</textarea>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="button" class="btn btn-info" value="Submit" id="add">
+                            <input type="button" class="btn btn-info" value="Generate" id="add">
                         </div>
                     </form>
                 </div>
@@ -79,104 +124,6 @@
 
         {{--Dean section --}}
         <section class="content">
-{{--            <div class=" form row">--}}
-{{--                <div class="col-md-12">--}}
-{{--                <form action="javascript:void(0)" method="post" enctype="multipart/form-data" id="addForm">--}}
-{{--                    <div class="box box-primary">--}}
-{{--                        <div class="box-header">--}}
-{{--                            <h3 class="box-title">Submit Registration Invoices.</h3>--}}
-{{--                            <div class="box-tools pull-right">--}}
-{{--                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>--}}
-{{--                                </button>--}}
-{{--                                <div class="btn-group">--}}
-{{--                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">--}}
-{{--                                        <i class="fa fa-file-pdf-o"></i></button>--}}
-{{--                                     </div>--}}
-{{--                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <!-- /.box-header -->--}}
-{{--                        <div class="box-body">--}}
-
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="program">Degree Department</label>--}}
-{{--                                    <select id="department_id" name="department_id" class="form-control select2" style="width: 100%;">--}}
-{{--                                        <option value="">Select Department</option>--}}
-{{--                                        @foreach($departments as $department)--}}
-{{--                                        <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                        </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="name">Invoice No</label>--}}
-{{--                                    <select id="update_invoice_no" name="invoice_no" class="form-control select2" style="width: 100%;">--}}
-{{--                                        <option value="">Select Invoice No</option>--}}
-{{--                                        @foreach($invoices as $invoice)--}}
-{{--                                            <option value="{{$invoice->id}}">{{$invoice->invoice_no }}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="date">Date of transaction</label>--}}
-{{--                                    <input type="date" id="transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="col-md-3">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="type">Payment Method </label>--}}
-{{--                                    <select name="payment_method" id="payment_method" class="form-control select2">--}}
-{{--                                        <option value="">Select Payment Method</option>--}}
-{{--                                        @foreach($payment_methods as $method)--}}
-{{--                                            <option value="{{$method->id}}">{{$method->name}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="form-row col-md-12">--}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="comments">Payment Details</label>--}}
-{{--                                        <textarea name="comments" id="comments" class="form-control">{{old('comments')}}</textarea>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-3">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="slip">Bank Deposit Slip</label>--}}
-{{--                                        <input type="file" name="slip" id="slip" value="{{old('slip')}}" class="form">--}}
-{{--                                        <span class="text-blue">Max 2mb file size allowed. </span>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-
-
-{{--                            <div class="col-md-12">--}}
-{{--                                <div class="form-group pull-right" style="margin-top: 40px">--}}
-{{--                                    <label for="slip">&nbsp;&nbsp;</label>--}}
-{{--                                    <input type="submit" value="Add" class="btn btn-info">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                        </div>--}}
-{{--                        <!-- /.box-body -->--}}
-
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--                    <!-- /.box -->--}}
-{{--                </div>--}}
-{{--                <!-- Main content -->--}}
-{{--            </div>--}}
-
             <div class="form row">
                 <div class="col-md-12">
 
@@ -202,8 +149,10 @@
                                 <thead>
                                 <tr>
                                     <th>Department</th>
+                                    <th>Invoice No</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
+                                    <th>Details</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -212,12 +161,14 @@
                                 @foreach($invoices as $invoice)
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
+                                    <td>{{$invoice->invoice_no}}</td>
                                     <td><a href="{{$invoice->slip}}">Invoice</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
+                                    <td>{{$invoice->comments}}</td>
                                     <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
                                     <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" >
                                             <i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
-                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$invoice->id}}"  data-toggle="modal" data-target="#edit-modal"></i> </td>
+                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
                                 </tr>
                                 @endforeach
 
@@ -225,8 +176,10 @@
                                 <tfoot>
                                 <tr>
                                     <th>Department</th>
+                                    <th>Invoice No</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
+                                    <th>Details</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -529,6 +482,11 @@
 
             let department_id = $('#department_id').val();
             let invoice_no = $('#invoice_no').val();
+            let transaction_date =  $('#add_transaction_date').val();
+            let payment_method =  $('#add_payment_method').val();
+            let status = $('#add_status').val();
+            let cheque_no = $('#add_cheque_no').val();
+            let comments = $('#add_comments').val();
 
             !department_id?addClass('department_id'):removeClass('department_id');
             !invoice_no?addClass('invoice_no'):removeClass('invoice_no');
@@ -541,7 +499,15 @@
                 $.ajax({
                     url:'{{url("strategic/generateInvoice")}}',
                     type:'POST',
-                    data: {invoice_no:invoice_no, department_id:department_id},
+                    data: {
+                        invoice_no:invoice_no,
+                        department_id:department_id,
+                        transaction_date:transaction_date,
+                        payment_method:payment_method,
+                        status:status,
+                        cheque_no:cheque_no,
+                        comments:comments
+                    },
                     beforeSend: function(){
                         Notiflix.Loading.Pulse('Processing...');
                     },

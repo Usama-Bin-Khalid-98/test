@@ -32,7 +32,21 @@ class CreateSlipsTable extends Migration
             $table->string('cheque_no')->nullable();
             $table->date('transaction_date')->nullable();
             $table->enum('status', ['active', 'inactive','pending', 'paid','approved'])->nullable();
+            $table->enum('isEligible', ['yes', 'no'])->nullable();
+            $table->enum('regStatus', ['Initiated','Pending','Review','Eligibility','SAR','Active', 'Inactive', 'Approved'])->nullable()->default('Initiated');
             $table->string('comments', 255)->nullable();
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->foreign('deleted_by')
+                ->references('id')
+                ->on('users');
             $table->softDeletes();
             $table->timestamps();
         });

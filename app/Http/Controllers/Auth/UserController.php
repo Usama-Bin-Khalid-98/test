@@ -16,6 +16,8 @@ use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Hash;
+use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -25,32 +27,16 @@ class UserController extends Controller
     //
     public function index() {
         $users = User::with('business_school', 'roles', 'permissions')->get();
-//        dd($users);
-        $designations = Designation::all();
+        //dd($users->roles[0]->name);
+//        $designations = Designation::all();
         $permissions = Permission::all();
         $roles = Role::all();
-        /////
-        ///
-        $countries = Countries::all();
-        $institute_types=InstituteType::where('status', 'active')->get();
-        $chart_types=CharterType::where('status', 'active')->get();
-        $business_school=BusinessSchool::where('status', 'active')->get();
         $designations=Designation::where('status', 'active')->get();
-        $departments = Department::where('status', 'active')->get();
-        $disciplines = Discipline::where('status', 'active')->get();
-        $regions = Region::where('status', 'active')->get();
-        $reviewerRoles = ReviewerRole::where('status', 'active')->get();
-        $sectors = Sector::where('status', 'active')->get();
-        $degrees = Degree::where('status', 'active')->get();
-        $peer_reviewer = User::where('user_type', 'peer_reviewer');
-        $questions = Question::where('status', 'active')->get();
+
         //dd($users);
 
         return view('auth.users.index', compact(
-                'institute_types', 'chart_types',
-                'business_school','designations','countries',
-                'departments', 'disciplines','regions', 'reviewerRoles',
-                'sectors', 'degrees','users', 'questions', 'permissions', 'roles', 'peer_reviewer')
+                'designations','users','permissions', 'roles')
         );
         //return view('auth.users.index', compact('users', 'designations', 'permissions', 'roles'));
     }
@@ -73,21 +59,41 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'contact_no' => 'required',
+            'designation_id' => 'required',
+            'cnic' => 'required',
+            'password' => 'required',
+            'role_id' => 'required'
         ]);
 
+        try {
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+       // dd($request->all());
+        $user =  User::create([
+            'name' => $request->name,
+            'designation_id' => $request->designation_id,
+            'cnic' => $request->cnic,
+            'contact_no' => $request->contact_no,
+            'address' => $request->address,
+            'email' => $request->email,
+            'email_verified_at' => date('Y-m-d H:i:s'),
+            'password' => Hash::make($request->password),
+            'status' => 'active',
+            'user_type' => 'EligibilitySc',
+        ]);
 
+        $user->assignRole('EligibilityScreening');
 
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        if ($user)
+        {
+            return response()->json(['message'=> 'User created successfully'], 200);
+        }
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
 
-
-        return redirect()->route('users.index')
-            ->with('success','User created successfully');
     }
 
 
@@ -195,8 +201,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        try {
         User::find($id)->delete();
-        return redirect()->route('users.index')
-            ->with('success','User deleted successfully');
+        return response()->json(['message' => 'user successfully deleted'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 }
