@@ -321,7 +321,7 @@
                                 @if(@$desk_reviews)
                                    @foreach(@$desk_reviews as $review)
                                 <tr>
-                                    <td>{{$review->campus->business_school->name}}</td>
+                                    <td>{{$review->business_school->name}}</td>
                                     <td>{{$review->department->name}}</td>
                                     <td>{{$review->comments}}</td>
                                     <td><i class="badge {{$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{$review->isEligible == 'yes'?'Yes':'No'}}</i></td>

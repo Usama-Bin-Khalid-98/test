@@ -29,16 +29,16 @@ class SlipController extends Controller
         @$school_id = Auth::user()->campus_id;
         @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
         //dd($invoices);
-        @$departments = Department::where('status', 'active')->get();
+        @$departments = Department::where(['status'=> 'active', 'id'=>Auth::user()->department_id])->get()->first();
         $payment_methods = PaymentMethod::where('status', 'active')->get();
         //// generate invoice ///////////
         $latest = Slip::latest()->first();
         $invoice_no ='';
         if (! $latest) {
-            $invoice_no =  '0001';
+            $invoice_no =  'NBEAC-HEC/ GU, Karachi:0001';
         }else {
             $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
-            $invoice_no = sprintf('%04d', $string + 1);
+            $invoice_no = 'NBEAC-HEC/ GU, Karachi:'. sprintf('%05d', $string + 1);
         }
         //dd($invoice_no);
         return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods'));
@@ -106,8 +106,9 @@ class SlipController extends Controller
             Slip::create([
                 'business_school_id' => Auth::user()->campus_id,
                 'invoice_no' => $request->invoice_no,
-                'department_id' => $request->department_id,
+                'department_id' => Auth::user()->department_id,
                 'status' => 'pending',
+                'created_by' => Auth::id(),
             ]);
             return response()->json(['success' => 'Invoice Slip added successfully.'], 200);
         }

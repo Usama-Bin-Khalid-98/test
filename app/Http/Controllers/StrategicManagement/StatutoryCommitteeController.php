@@ -53,28 +53,17 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            //$data = $request;
-//            dd($request->file('file1'));
           for($i =0; $i<=count(@$request->all()); $i++)
           {
-//              dd($data->statutory_body_id[$i]);
-//              dd($request[$i]['name']);
-
             $path = ''; $fileName = '';
-            //dd('file'.$i+1);
               if(@$request->file('file'.intval( $i+1))) {
-                 //dd('image path here....', $request->file('file'.intval( $i+1)));
                   $fileIndex = 'file'.intval( $i+1);
                   $fileName = $request->name[$i] . "-file-" . time() . '.' . $request->$fileIndex->getClientOriginalExtension();
-                  //dd($request->name[$i]);
                   $path = 'uploads/statutory_committee';
                   $diskName = env('DISK');
                   $disk = Storage::disk($diskName);
                   $request->file('file'.intval( $i+1))->move($path, $fileName);
-//                dd($request->file('file'));
-                  //dd($request->file());
               }
-             // dd('here');
               if(@$request->name[$i]) {
                   StatutoryCommittee::create([
                       'campus_id' => Auth::user()->campus_id,
