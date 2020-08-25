@@ -9,19 +9,20 @@
                                      
                                 </thead>
                                 <tbody>
+                                    @foreach($classSize as $data)
                                     <tr>
                                         <td>Fall t</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$data->fallA}}</td>
+                                        <td>{{$data->fallB}}</td>
                                         
                                     </tr>
                                     <tr>
                                         <td> Spring  t</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$data->springA}}</td>
+                                        <td>{{$data->springB}}</td>
                                          
                                     </tr>
-                                    
+                                    @endforeach
                               
                                 </tbody>
                                 <tfoot></tfoot>

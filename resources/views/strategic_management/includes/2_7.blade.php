@@ -8,21 +8,13 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($cultralMaterial as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$data->cultural_material}}</td>
+                                        <td>{{$data->course_title}}</td>
                                      
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                   
+                                    @endforeach
                                     
                               
                                 </tbody>

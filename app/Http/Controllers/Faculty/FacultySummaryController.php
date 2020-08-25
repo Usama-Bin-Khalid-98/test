@@ -52,6 +52,7 @@ class FacultySummaryController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -59,16 +60,21 @@ class FacultySummaryController extends Controller
         }
         try {
 
-            FacultySummary::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'faculty_qualification_id' => $request->faculty_qualification_id,
-                'discipline_id' => $request->discipline_id,
-                'number_faculty' => $request->number_faculty,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+            for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
+                for ($j = 0; $j < count($request->discipline_id); $j++) {
+                    //dd($request->number_faculty[$j+1][$i]);
 
+                    FacultySummary::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'faculty_qualification_id' => $request->faculty_qualification_id[$i],
+                        'discipline_id' => $request->discipline_id[$j],
+                        'number_faculty' => $request->number_faculty[$j+1][$i],
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
+                    ]);
+                }
+            }
             return response()->json(['success' => 'Faculty Summary added successfully.']);
 
 
@@ -142,7 +148,7 @@ class FacultySummaryController extends Controller
     {
         try {
             FacultySummary::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             FacultySummary::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);

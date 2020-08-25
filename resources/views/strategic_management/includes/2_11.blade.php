@@ -10,20 +10,15 @@
                                     <th>Penalty/consequences</th>
                                 </thead>
                                 <tbody>
+                                    @foreach($plagiarismCases as $data)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$data->date}}</td>
+                                        <td>{{$data->students_initial}}</td>
+                                        <td>{{$data->degree}}</td>
+                                        <td>{{$data->nature}}</td>
+                                        <td>{{$data->penalty}}</td>
                                     </tr>
-                                    <tr>
-                                        <td> </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                     @endforeach
                                     
                               
                                 </tbody>

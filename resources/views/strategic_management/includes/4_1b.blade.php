@@ -23,67 +23,25 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($facultyDetailedInfos as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Firstname Lastname
-                                        12345-1234567-1
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$data->name}}{{"/ "}}
+                                        {{$data->cnic}}
                                         </td>
-                                        <td>Professor/
-                                        Permanent
+                                        <td>{{$data->designation}}{{"/ "}}{{$data->facultyType}}
                                         </td>
-                                        <td>PhD
-                                        Accounting &Finance
+                                        <td>{{$data->degree}}
                                         </td>
-                                        <td>Humboldt University of Berlin
-                                        Germany 
+                                        <td>{{$data->awarding_institute}}
                                         </td>
-                                        <td>Core</td>
-                                        <td>12
-                                        3
+                                        <td>{{$data->courseType}}</td>
+                                        <td>{{$data->hec_experience}}
                                         </td>
-                                       <td>2.5</td>
+                                       <td>{{$data->current_job_duration}}</td>
                                     </tr>
-                                    <tr>
-                                        <td> 2</td>
-                                        <td>Firstname Lastname
-12345-1234567-1
-</td>
-                                        <td>Assistant
-Professor/
-adjunct
-</td>
-                                        <td>PhD
-Marketing
-</td>
-<td>Cornell University
-United States
-</td>
-<td>Core</td>
-<td>2
-0
-</td>
-<td>2</td>
+                                    @endforeach
                                        
-                                    </tr>
-                                       <tr>
-                                        <td>3</td>
-                                        <td>Firstname Lastname
-12345-1234567-1
-</td>
-                                        <td>Lecturer/
-visiting
-</td>
-                                        <td>MA
-English
-</td>
-<td>Karachi University
-Pakistan
-</td>
-<td>Support</td>
-<td></td>
-<td></td>
-                                       
-                                    </tr>
                                       </tbody>
                                 <tfoot></tfoot>
                               

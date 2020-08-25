@@ -53,14 +53,17 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            //$data = $request;
           for($i =0; $i<=count(@$request->all()); $i++)
           {
-//              dd($data->statutory_body_id[$i]);
-//              dd($request[$i]['name']);
-
             $path = ''; $fileName = '';
-            //dd('here');
+              if(@$request->file('file'.intval( $i+1))) {
+                  $fileIndex = 'file'.intval( $i+1);
+                  $fileName = $request->name[$i] . "-file-" . time() . '.' . $request->$fileIndex->getClientOriginalExtension();
+                  $path = 'uploads/statutory_committee';
+                  $diskName = env('DISK');
+                  $disk = Storage::disk($diskName);
+                  $request->file('file'.intval( $i+1))->move($path, $fileName);
+              }
               if(@$request->name[$i]) {
                   StatutoryCommittee::create([
                       'campus_id' => Auth::user()->campus_id,
@@ -76,17 +79,6 @@ class StatutoryCommitteeController extends Controller
                       'isComplete' => 'yes',
                       'created_by' => Auth::user()->id
                   ]);
-              }
-              if($request->file('file'.$i)) {
-                  $fileIndex = 'file'.$i;
-                  $fileName = $request->name[$i] . "-file-" . time() . '.' . $request->$fileIndex->getClientOriginalExtension();
-                  //dd($request->name[$i]);
-                  $path = 'uploads/statutory_committee';
-                  $diskName = env('DISK');
-                  $disk = Storage::disk($diskName);
-                  $request->file('file'.$i)->move($path, $fileName);
-//                dd($request->file('file'));
-                  //dd($request->file());
               }
             //}
             }

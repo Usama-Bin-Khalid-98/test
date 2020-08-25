@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common\EligibilityStatus;
+use App\Models\Common\Slip;
 use App\Models\DeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
@@ -38,9 +39,13 @@ class DeskReviewController extends Controller
      */
     public function index()
     {
-        $registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
-        //$campus_id = $registrations[0]->campus_id;
-        //$department_id = $registrations[0]->department_id;
+        //$registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
+
+        $registrations = Slip::with('business_school')
+            ->where(['status' => 'active'])
+            ->orWhere('regStatus', "!=", 'Initiated')
+            ->get();
+       // dd($registrations);
         //dd($desk_reviews);
 
         return view('desk_review.index', compact('registrations'));
@@ -54,19 +59,15 @@ class DeskReviewController extends Controller
      */
     public function deskreview($id=null)
     {
+
         $nbeac_criteria = NbeacCriteria::all()->first();
-        @$business_school_user = User::where(['id' => $id])->get()->first();
+        @$business_school_user = Slip::where(['id' => $id])->get()->first();
+       // dd($business_school_user);
         $campus_id = $business_school_user->campus_id;
         $department_id = $business_school_user->department_id;
 
-//        if(!$id)
-//        {
-//            $campus_id = Auth::user()->campus_id;
-//        }
-
-
-        $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id])->get();
-//      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id])->get();
+        $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
+//      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
         //dd($accreditation);
         $program_dates = [];
         foreach ($accreditation as $accred)
@@ -76,30 +77,30 @@ class DeskReviewController extends Controller
             @$program_dates[$accred->id]['date'] = $accred->date_program;
         }
 
-        $mission_vision = MissionVision::all()->where('campus_id', $campus_id)->first();
-        @$strategic_plan = StrategicPlan::all()->where('campus_id', $campus_id)->first();
-        @$application_received = ApplicationReceived::all()->where('campus_id', $campus_id)->first();
-        $student_enrolment = StudentEnrolment::all()->where('campus_id', $campus_id);
-        $graduated_students = StudentsGraduated::with('program')->where('campus_id', $campus_id)->get();
+        $mission_vision = MissionVision::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
+        @$strategic_plan = StrategicPlan::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
+        @$application_received = ApplicationReceived::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
+        $student_enrolment = StudentEnrolment::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id]);
+        $graduated_students = StudentsGraduated::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 
-        $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('number_faculty');
-        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
+        $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('number_faculty');
+        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
 
-        $getFullProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>8])->get()->count();
-        $AssociateProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>9])->get()->count();
-        $AssistantProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>10])->get()->count();
-        $lecturers = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>11])->get()->count();
-        $permanent_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
-        $adjunct_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>3])->get()->count();
-        $other = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'designation_id'=>13])->get()->count();
-        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'lookup_faculty_type_id'=>1])->get()->count();
+        $getFullProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>8])->get()->count();
+        $AssociateProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>9])->get()->count();
+        $AssistantProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>10])->get()->count();
+        $lecturers = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>11])->get()->count();
+        $permanent_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'lookup_faculty_type_id'=>1])->get()->count();
+        $adjunct_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'lookup_faculty_type_id'=>3])->get()->count();
+        $other = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>13])->get()->count();
+        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'lookup_faculty_type_id'=>1])->get()->count();
         $faculty_degree = FacultyDegree::get()->first();
-        $total_induction = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('new_induction');
-        $faculty_terminated = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('terminated');
-        $faculty_resigned = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('resigned');
-        $faculty_retired = FacultyStability::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('retired');
+        $total_induction = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('new_induction');
+        $faculty_terminated = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('terminated');
+        $faculty_resigned = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('resigned');
+        $faculty_retired = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('retired');
 
-        $total_courses = WorkLoad::where(['campus_id'=> $campus_id, 'status' => 'active'])->get()->sum('total_courses');
+        $total_courses = WorkLoad::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('total_courses');
 
         $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
         $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
@@ -114,7 +115,7 @@ class DeskReviewController extends Controller
         //// get scope
         //$scope = Scope::where('')
 
-        @$desk_reviews = EligibilityStatus::with('department', 'campus')->where(['campus_id'=> $campus_id])->get();
+        @$desk_reviews = Slip::with('department', 'business_school')->where(['id'=> $id])->get();
         //dd($desk_reviews);
         return view('desk_review.desk_review', compact(
             'program_dates',
@@ -181,11 +182,11 @@ class DeskReviewController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            $getUserData = User::where(['id' => $request->id])->get()->first();
+            $getUserData = Slip::where(['id' => $request->id])->get()->first();
             foreach ($request->all() as $key=>$isEligible){
                 if($key !=='comments' && $key !=='id') {
                     DeskReview::create([
-                        'campus_id' =>$getUserData->campus_id,
+                        'campus_id' =>$getUserData->business_school_id,
                         'department_id' => $getUserData->department_id,
                         'nbeac_criteria' => $key,
                         'isEligible' => $isEligible,
@@ -207,11 +208,11 @@ class DeskReviewController extends Controller
             {
                 $isEligible = 'yes';
             }
-            EligibilityStatus::create(['campus_id' => $getUserData->campus_id,
-                'department_id' => $getUserData->department_id,
+            Slip::where(['business_school_id' => $getUserData->business_school_id,
+                'department_id' => $getUserData->department_id])
+                ->update([
                 'isEligible' => $isEligible,
-                'comments' => $request->comments,
-                'status' => 'active'
+                'regStatus' => 'Eligibility'
                 ]
             );
 

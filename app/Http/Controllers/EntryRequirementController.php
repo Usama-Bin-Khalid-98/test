@@ -57,17 +57,20 @@ class EntryRequirementController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            EntryRequirement::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'program_id' => $request->program_id,
-                'eligibility_criteria_id' => $request->eligibility_criteria_id,
-                'min_req' => $request->min_req,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
-
+            $program_id = $request->program_id;
+           // dd($program_id);
+            for ($i = 0; $i<= count($request->all()); $i++) {
+                //dd('value.....', $request->min_req[$i]);
+                EntryRequirement::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $program_id,
+                    'eligibility_criteria_id' => $request->eligibility_criteria_id[$i],
+                    'min_req' => $request->min_req[$i],
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
+                ]);
+            }
             return response()->json(['success' => 'Entry Requirement added successfully.']);
 
 

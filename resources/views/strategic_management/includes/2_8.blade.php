@@ -8,20 +8,13 @@
                                     
                                 </thead>
                                 <tbody>
+                                    @foreach($managerialSkills as $data)
                                     <tr>
-                                        <td>Team work</td>
-                                        <td></td>
+                                        <td>{{$data->skill}}</td>
+                                        <td>{{$data->course_title}}</td>
                                      
                                     </tr>
-                                    <tr>
-                                        <td>Leadership skills</td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Other skills (please specify)</td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
                                    
                                     
                               

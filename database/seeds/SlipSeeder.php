@@ -13,7 +13,7 @@ class SlipSeeder extends Seeder
     {
         //
         DB::table('slips')->insert([
-        ['invoice_no' => '0001', 'business_school_id' => 209, 'department_id' => 1, 'status' => 'pending']
+        ['invoice_no' => 'NBEAC-HEC/ GU, Karachi:0001', 'business_school_id' => 209, 'department_id' => 1, 'status' => 'pending']
     ]);
     }
 }

@@ -27,55 +27,41 @@ Table 4.4a FTE for the permanent, regular and adjunct faculty in program(s)
                                         <td>FTE for program 1=F/E</td>
                                         <td>FTE for program 2=G/E</td>
                                     </tr>
+                                    @php
+                                    $totalFTE1=$totalFTE2=0;
+                                    @endphp
+                                    @foreach($facultyTeachingCourses as $data)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname</td>
-                                        <td>Asst. Professor</td>
-                                        <td>Permanent</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>0.5</td>
-                                     
-                                     
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{@$data->name}}</td>
+                                        <td>{{@$data->desName}}</td>
+                                        <td>{{@$data->lookupFacultyType}}</td>
+                                        <td>{{$data->   max_cources_allowed}}</td>
+                                        <td>{{$data->tc_program1}}</td>
+                                        <td>{{$data->tc_program2}}</td>
+                                        <td>{{number_format((float)$data->tc_program1/$data->max_cources_allowed, 3, '.', '')}}</td>
+                                        <td>{{number_format((float)$data->tc_program2/$data->max_cources_allowed, 3, '.', '')}}</td>
+
+                                        @php
+                                        $totalFTE1+=$data->tc_program1/$data->max_cources_allowed;
+                                        $totalFTE2+=$data->tc_program2/$data->max_cources_allowed;
+                                        @endphp
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname</td>
-                                        <td>Asst. Professor</td>
-                                        <td>Permanent</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>0.5</td>
-                                     
-                                     
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dr. Firstname Lastname</td>
-                                        <td>Asst. Professor</td>
-                                        <td>Permanent</td>
-                                        <td>2</td>
-                                        <td>4</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>0.5</td>
-                                     
-                                     
-                                    </tr>
+                                    @endforeach
+
                                     <tr>
                                         <td colspan="7">Total FTE</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{number_format((float)$totalFTE1, 3, '.', '')}}</td>
+                                        <td>{{number_format((float)$totalFTE2, 3, '.', '')}}</td>
                                     </tr>
-                                   
-                                   
-                                   
-                                    
-                              
+
+                                   @php
+
+                                   View::share('FTE', $totalFTE1+$totalFTE2);
+                                   @endphp
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
                               

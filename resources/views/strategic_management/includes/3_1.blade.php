@@ -29,41 +29,33 @@
                                      
                                      
                                     </tr>
-                                    @foreach($studentEnrolment as $enr)
-                                    @if($enr->year==2018)
+                                    <?php
+                                    $pa=$pb=$pc=$pTotal=0;
+                                    ?>
+                                   @foreach($studentsEnrolment as $data)
+                                   <?php
+                                   $pa+=$data->bs_level;
+                                   $pb+=$data->ms_level;
+                                   $pc+=$data->phd_level;
+                                   $pTotal+=$data->total_students;
+                                   ?>
                                     <tr>
-                                        <td>Year t-2</td>
-                                        <td>{{$enr->bs_level}}</td>
-                                        <td>{{$enr->ms_level}}</td>
-                                         <td>{{$enr->phd_level}}</td>
-                                        <td></td>
-                                    </tr>
-                                    @elseif($enr->year==2019)
-                                    <tr>
-                                        <td>Year t-1</td>
-                                        <td>{{$enr->phd_level}}</td>
-                                        <td>{{$enr->phd_level}}</td>
-                                         <td>{{$enr->phd_level}}</td>
-                                        <td></td>
+                                        <td>{{$data->year}}</td>
+                                        <td>{{$data->bs_level}}</td>
+                                        <td>{{$data->ms_level}}</td>
+                                         <td>{{$data->phd_level}}</td>
+                                        <td>{{$data->total_students}}</td>
                                         
                                         
                                     </tr>
-                                    @elseif($enr->year==2020)
-                                    <tr>
-                                        <td>Year t</td>
-                                        <td>{{$enr->phd_level}}</td>
-                                        <td>{{$enr->phd_level}}</td>
-                                         <td>{{$enr->phd_level}}</td>
-                                        <td></td>
-                                    </tr>
-                                    @endif
-                              @endforeach
+                                   
+                                   @endforeach
                               <tr>
                                         <td>Total</td>
-                                        <td></td>
-                                        <td></td>
-                                         <td></td>
-                                        <td></td>
+                                        <td>{{$pa}}</td>
+                                        <td>{{$pb}}</td>
+                                         <td>{{$pc}}</td>
+                                        <td>{{$pTotal}}</td>
                                         
                                         
                                     </tr>

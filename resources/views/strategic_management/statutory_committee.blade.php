@@ -93,7 +93,7 @@
                                          <td><input type="date" name="date_second_meeting[]" value="" class="form-control"></td>
                                          <td><input type="date" name="date_third_meeting[]" value="" class="form-control"></td>
                                          <td><input type="date" name="date_fourth_meeting[]" value="" class="form-control"></td>
-                                         <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}" value=""></td>
+                                         <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}"></td>
                                      </tr>
                                          @endforeach
                                      </tbody>
@@ -389,7 +389,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

@@ -4,55 +4,28 @@
                                 <caption style="text-align: center;color: red">
                                 Table 2.6. Mapping of POs and PLOs
                                 </caption>
-                                <thead>
-                                    <th></th>
-                                    <th>PLO1</th>
-                                    <th>PLO2</th>
-                                    <th>PLO3</th>
-                                    <th>PLO4</th>
-                                    <th>PLO5</th>
-                                </thead>
+                                
                                 <tbody>
+                                   
+    
+                                    <?php
+                                    foreach ($PoMappings as $data) {
+                                         
+                                                      
+                                    
+                                    ?>
                                     <tr>
-                                        <td>PO1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <?php echo "<td>".$data->po."</td>";
+                                        $a=  App\Http\Controllers\PrintController::getPLOsByPOId($data->id);
+                                      
+                                        for ($i=0; $i < 4; $i++) { 
+                                         
+                                       if(isset($a[$i]->plo)) echo  "<td>".$a[$i]->plo."</td>";else echo "<td></td>";
+                                       
+                                         } ?>
+                                        
                                     </tr>
-                                    <tr>
-                                        <td>PO2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>PO3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                      <tr>
-                                        <td>PO4</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>PO5</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                   <?php } ?>
                               
                                 </tbody>
                                 <tfoot></tfoot>

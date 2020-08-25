@@ -21,9 +21,10 @@ class MissionVisionController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
+        $get = MissionVision::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
         $missions = MissionVision::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-        return view('strategic_management.mission_vision',compact('missions'));
+        return view('strategic_management.mission_vision',compact('get','missions'));
     }
 
     /**
@@ -132,7 +133,6 @@ class MissionVisionController extends Controller
                     'mission' => $request->mission,
                     'vision' => $request->vision,
                     'file' => $path.'/'.$imageName,
-                    'status' => $request->status,
                     'updated_by' => Auth::user()->id
                     ]
                 );
@@ -142,7 +142,6 @@ class MissionVisionController extends Controller
            MissionVision::where('id', $missionVision->id)->update([
                'mission' => $request->mission,
                'vision' => $request->vision,
-               'status' => $request->status,
                'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Mission Vision updated successfully.']);
@@ -175,16 +174,13 @@ class MissionVisionController extends Controller
 
     protected function rules() {
         return [
-            'mission' => 'required',
-            'vision' => 'required',
             'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
         ];
     }
 
     protected function update_rules() {
         return [
-            'mission' => 'required',
-            'vision' => 'required',
+            
             'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
         ];
     }

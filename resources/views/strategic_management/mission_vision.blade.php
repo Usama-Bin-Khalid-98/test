@@ -60,19 +60,19 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="name">Mission</label>
-                                    <textarea name="mission" id="mission" class="form-control"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="name">Vision</label>
-                                    <textarea name="vision" id="vision" class="form-control"></textarea>
-                                </div>
-                            </div>
+                            <div class="box-body pad">
+                                <label>Mission</label>
+                        <textarea id="mission" name="mission" rows="10" cols="80">
+                            {{@$get->mission}}
+                        </textarea>
+                        <input type="hidden" id="id" value="{{@$get->id}}">
+                </div>
+                <div class="box-body pad">
+                                <label>Vision</label>
+                        <textarea id="vision" name="vision" rows="10" cols="80">
+                            {{@$get->vision}}
+                        </textarea>
+                </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -85,7 +85,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                 </div>
                             </div>
                         </form>
@@ -95,11 +95,11 @@
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
-                    <div class="box">
+                    <!-- <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Mission Vision List</h3>
                         </div>
-                        <!-- /.box-header -->
+                        <!- /.box-header
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
@@ -140,8 +140,8 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <!-- /.box-body -->
-                    </div>
+                     /.box-body 
+                    </div> -->
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
@@ -236,6 +236,14 @@
             $('#datatable').DataTable()
         })
     </script>
+    <script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('mission');
+    CKEDITOR.replace('vision');
+  })
+</script>
     <script type="text/javascript">
 
         $('.select2').select2()
@@ -246,9 +254,11 @@
             }
         });
 
+         <?php if(@$get->id==null){ ?>
+
          $('#form').submit(function (e) {
-            let mission = $('#mission').val();
-            let vision = $('#vision').val();
+            let mission = CKEDITOR.instances.mission.getData();
+            let vision = CKEDITOR.instances.vision.getData();
             let file = $('#file').val();
 
             !mission?addClass('mission'):removeClass('mission');
@@ -292,102 +302,56 @@
             })
         });
 
+       <?php }else { ?>
 
-         $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_mission').text(data.mission);
-            $('#edit_vision').text(data.vision);
-            $('#file-name').text(data.file);;
-            $('#edit_id').val(data.id);
-            $('input[value='+data.isComplete+']').iCheck('check');
-            $('input[value='+data.status+']').iCheck('check');
-        });
+$('#form').submit(function (e) {
+             let id = $('#id').val(); 
+            let mission = CKEDITOR.instances.mission.getData();
+            let vision = CKEDITOR.instances.vision.getData();
+            let file = $('#file').val();
 
-$('#updateForm').submit(function (e) {
-            let mission = $('#edit_mission').val();
-            let vision = $('#edit_vision').val();
-            let id = $('#edit_id').val();
+             !mission?addClass('mission'):removeClass('mission');
+             !vision?addClass('vision'):removeClass('vision');
+             !file?addClass('file'):removeClass('file');
 
-            let status = $('input[name=edit_status]:checked').val();
-            let isCompleted = $('input[name=edit_isComplete]:checked').val();
-            !mission?addClass('edit_mission'):removeClass('edit_mission');
-            !vision?addClass('edit_vision'):removeClass('edit_vision');
-
-            if(!mission || !vision )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
-            e.preventDefault();
-             var formData = new FormData(this);
-            //var formData = $("#updateForm").serialize()
-            formData.append('_method', 'PUT');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
-                url:'{{url("strategic/mission-vision")}}/'+id,
-                type:'POST',
-                // dataType:"JSON",
-                data: formData,
-                cache:false,
-                contentType:false,
-                processData:false,
+                type: 'PUT',
+                url: "{{url('strategic/mission-vision')}}/"+id,
+                data: {
+                    id:id,
+                    mission:mission,
+                    vision:vision,
+                    file:file,
+                },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
                 // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
                     Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    //console.log('response', response);
-                    location.reload();
+                    console.log('response here', response);
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
                     $.each(response.responseJSON, function (index, val) {
                         Notiflix.Notify.Failure(val);
+
                     })
+
                 }
-            })
+            });
         });
 
-
-         $('.delete').on('click', function (e) {
-            let id =  $(this).data('id');
-            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
-                function(){
-                    // Yes button callback
-                    $.ajax({
-                        url:'{{url("strategic/mission-vision")}}/'+id,
-                        type:'DELETE',
-                        data: { id:id},
-                        beforeSend: function(){
-                            Notiflix.Loading.Pulse('Processing...');
-                        },
-                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                        success: function (response) {
-                            Notiflix.Loading.Remove();
-                            console.log("success resp ",response.success);
-                            if(response.success){
-                                Notiflix.Notify.Success(response.success);
-                            }
-                            location.reload();
-                            // console.log('response here', response);
-                        },
-                        error:function(response, exception){
-                            Notiflix.Loading.Remove();
-                            $.each(response.responseJSON, function (index, val) {
-                                Notiflix.Notify.Failure(val);
-                            })
-                        }
-                    })
-                },
-                function(){ // No button callback
-                    // alert('If you say so...');
-                } );
-
-        })
+<?php } ?>
 
 
     </script>

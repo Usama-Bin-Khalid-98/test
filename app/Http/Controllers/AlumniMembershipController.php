@@ -70,6 +70,7 @@ class AlumniMembershipController extends Controller
                         'membership_percentage' => $request->membership_percentage,
                         'maj_industries' => $request->maj_industries,
                         'file' => $path.'/'.$imageName, 
+                        'isComplete' => 'yes', 
                         'created_by' => Auth::user()->id 
                 ]);
 
