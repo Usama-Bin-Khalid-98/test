@@ -15,7 +15,6 @@ class CreateFacultyExposures extends Migration
     {
         Schema::create('faculty_exposures', function (Blueprint $table) {
             $table->increments('id');
-            
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
@@ -26,9 +25,9 @@ class CreateFacultyExposures extends Migration
                 ->on('departments');
             $table->string('faculty_name',100)->nullable();
             $table->string('activity',100)->nullable();
-            $table->string('date',100)->nullable();           
-            $table->string('duration',100)->nullable(); 
-            $table->string('file',255); 
+            $table->string('date',100)->nullable();
+            $table->string('duration',100)->nullable();
+            $table->string('file',255)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

@@ -15,7 +15,7 @@ class CreateFacultyConsultancyProjects extends Migration
     {
         Schema::create('faculty_consultancy_projects', function (Blueprint $table) {
             $table->increments('id');
-            
+
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
@@ -30,7 +30,7 @@ class CreateFacultyConsultancyProjects extends Migration
             $table->text('start_date');
             $table->text('end_date');
             $table->string('all_participants',100)->nullable();
-            $table->string('file',255);
+            $table->string('file',255)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

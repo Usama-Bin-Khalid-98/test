@@ -17,7 +17,7 @@ class FacultyExposuresSeeder extends Seeder
             'faculty_name' => 'Alia',
             'activity' => 'ABC',
             'date' => '1-1-2020',
-            'duration' => '10 Months',            
+            'duration' => '10 Months',
             'status' => 'active',
             ],
              ['campus_id' => '209',
@@ -25,13 +25,9 @@ class FacultyExposuresSeeder extends Seeder
             'faculty_name' => 'Linta',
             'activity' => 'XYZ',
             'date' => '1-1-2010',
-            'duration' => '12 Months',            
+            'duration' => '12 Months',
             'status' => 'active',
             ],
- 			
-            
-
-
         ]);
     }
 }
