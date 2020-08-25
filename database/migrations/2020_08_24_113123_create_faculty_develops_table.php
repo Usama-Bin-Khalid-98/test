@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFacultyConsultancyProjects extends Migration
+class CreateFacultyDevelopsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFacultyConsultancyProjects extends Migration
      */
     public function up()
     {
-        Schema::create('faculty_consultancy_projects', function (Blueprint $table) {
+        Schema::create('faculty_develops', function (Blueprint $table) {
             $table->increments('id');
             
             $table->integer('campus_id')->unsigned()->nullable();
@@ -23,14 +23,8 @@ class CreateFacultyConsultancyProjects extends Migration
             $table->integer('department_id')->unsigned()->nullable();
             $table->foreign('department_id')
                 ->references('id')
-                ->on('departments');
-            $table->string('faculty_name',100)->nullable();
-            $table->string('project_name',100)->nullable();
-            $table->string('client_name',100)->nullable();
-            $table->text('start_date');
-            $table->text('end_date');
-            $table->string('all_participants',100)->nullable();
-            $table->string('file',255);
+                ->on('departments'); 
+            $table->string('file',255); 
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
@@ -57,6 +51,6 @@ class CreateFacultyConsultancyProjects extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty_consultancy_projects');
+        Schema::dropIfExists('faculty_develops');
     }
 }

@@ -41,13 +41,12 @@ class CreateFacultyDetailedInfos extends Migration
                 ->on('departments');
             $table->string('awarding_institute',100)->nullable();
             $table->string('country',40)->nullable();
-
-           
-
             $table->string('name',100)->nullable();
             $table->string('cnic',40)->nullable();
-             $table->string('hec_experience',100)->nullable();
+            $table->string('hec_experience',100)->nullable();
             $table->string('current_job_duration',40)->nullable();
+            $table->string('specialization',100)->nullable();
+            $table->string('industry',100)->nullable();
            
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');

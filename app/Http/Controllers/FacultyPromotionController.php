@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StrategicManagement\MissionVision;
+use App\Models\Faculty\FacultyPromotion;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 use Auth;
 
-class MissionVisionController extends Controller
+class FacultyPromotionController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +21,10 @@ class MissionVisionController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $get = MissionVision::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
-        $missions = MissionVision::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-        return view('strategic_management.mission_vision',compact('get','missions'));
+        
+        $reports = FacultyPromotion::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        
+        return view('registration.faculty.faculty_promotion', compact('reports'));
     }
 
     /**
@@ -45,7 +45,7 @@ class MissionVisionController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -54,8 +54,8 @@ class MissionVisionController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName = "file-" . time() . '.' . $request->file->getClientOriginalExtension();
-                    $path = 'uploads/mission_vision';
+                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $path = 'uploads/faculty_promotion';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
@@ -63,17 +63,15 @@ class MissionVisionController extends Controller
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
 
-                    MissionVision::create([
+                    FacultyPromotion::create([
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
-                        'mission' => $request->mission,
-                        'vision' => $request->vision,
-                        'file' => $path.'/'.$imageName,
-                        'isComplete' => 'yes',
-                        'created_by' => Auth::user()->id
+                        'file' => $path.'/'.$imageName, 
+                        'isComplete' => 'yes', 
+                        'created_by' => Auth::user()->id 
                 ]);
 
-                    return response()->json(['success' => 'Mission Vision added successfully.']);
+                    return response()->json(['success' => ' Recordadded successfully.']);
                 }
 
         }catch (Exception $e)
@@ -85,10 +83,10 @@ class MissionVisionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\MissionVision  $missionVision
+     * @param  \App\Models\Faculty\FacultyPromotion  $facultyPromotion
      * @return \Illuminate\Http\Response
      */
-    public function show(MissionVision $missionVision)
+    public function show(FacultyPromotion $facultyPromotion)
     {
         //
     }
@@ -96,10 +94,10 @@ class MissionVisionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\MissionVision  $missionVision
+     * @param  \App\Models\Faculty\FacultyPromotion  $facultyPromotion
      * @return \Illuminate\Http\Response
      */
-    public function edit(MissionVision $missionVision)
+    public function edit(FacultyPromotion $facultyPromotion)
     {
         //
     }
@@ -108,12 +106,12 @@ class MissionVisionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\MissionVision  $missionVision
+     * @param  \App\Models\Faculty\FacultyPromotion  $facultyPromotion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MissionVision $missionVision)
+    public function update(Request $request, $id)
     {
-        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+         $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
@@ -122,29 +120,27 @@ class MissionVisionController extends Controller
         try {
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName = $request->mission . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
-                $path = 'uploads/mission_vision';
+                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $path = 'uploads/faculty_promotion';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-                MissionVision::where('id', $missionVision->id)->update(
+                FacultyPromotion::where('id', $id)->update(
                     [
-                    'mission' => $request->mission,
-                    'vision' => $request->vision,
                     'file' => $path.'/'.$imageName,
-                    'updated_by' => Auth::user()->id
+                    'status' => $request->status,
+                    'updated_by' => Auth::user()->id 
                     ]
                 );
 
-                return response()->json(['success' => 'Mission Vision updated successfully.']);
+                return response()->json(['success' => 'Record updated successfully.']);
             }
-           MissionVision::where('id', $missionVision->id)->update([
-               'mission' => $request->mission,
-               'vision' => $request->vision,
-               'updated_by' => Auth::user()->id
+           FacultyPromotion::where('id', $id)->update([
+               'status' => $request->status,
+               'updated_by' => Auth::user()->id 
            ]);
-            return response()->json(['success' => 'Mission Vision updated successfully.']);
+            return response()->json(['success' => 'Record updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -155,16 +151,16 @@ class MissionVisionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\MissionVision  $missionVision
+     * @param  \App\Models\Faculty\FacultyPromotion  $facultyPromotion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, MissionVision $missionVision)
+    public function destroy($id)
     {
          try {
-             MissionVision::where('id', $missionVision->id)->update([
-               'deleted_by' => Auth::user()->id
+             FacultyPromotion::where('id', $id)->update([
+               'deleted_by' => Auth::user()->id 
            ]);
-             MissionVision::destroy($missionVision->id);
+             FacultyPromotion::destroy($id);
                 return response()->json(['success' => 'Record deleted successfully.']);
          }catch (Exception $e)
              {
@@ -172,7 +168,7 @@ class MissionVisionController extends Controller
              }
     }
 
-    protected function rules() {
+     protected function rules() {
         return [
             'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
         ];
@@ -180,7 +176,6 @@ class MissionVisionController extends Controller
 
     protected function update_rules() {
         return [
-            
             'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
         ];
     }

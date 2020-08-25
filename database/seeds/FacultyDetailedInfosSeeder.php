@@ -24,6 +24,8 @@ class FacultyDetailedInfosSeeder extends Seeder
             'cnic' => '12021-7351723-7',
             'hec_experience' => '9',
             'current_job_duration' => '3',            
+            'specialization' => 'marketing',            
+            'industry' => '5',            
             'status' => 'active',
             ],
             ['campus_id' => '209',
@@ -38,6 +40,8 @@ class FacultyDetailedInfosSeeder extends Seeder
             'cnic' => '42322-43432342-7',
             'hec_experience' => '3',
             'current_job_duration' => '2',            
+            'specialization' => 'finance',            
+            'industry' => '5',            
             'status' => 'active',
             ],
  			  
