@@ -118,6 +118,15 @@ class SlipController extends Controller
         }
     }
 
+    public function invoice($id=null)
+    {
+        //dd('invoice here ');
+        $user_data = Auth::user();
+        $getInvoice = Slip::with('business_school', 'department')->where(['id' => $id])->get()->first();
+        //dd($getInvoice);
+        return view('strategic_management.invoice', compact('getInvoice'));
+    }
+
     /**
      * Display the specified resource.
      *

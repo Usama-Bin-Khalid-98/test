@@ -15,10 +15,10 @@ class CreateDepartmentFeesTable extends Migration
     {
         Schema::create('department_fees', function (Blueprint $table) {
             $table->id();
-            $table->integer('campus_id')->unsigned();
-            $table->foreign('campus_id')
-                ->references('id')
-                ->on('campuses');
+//            $table->integer('campus_id')->unsigned();
+//            $table->foreign('campus_id')
+//                ->references('id')
+//                ->on('campuses');
             $table->integer('department_id')->unsigned();
             $table->foreign('department_id')
                 ->references('id')
@@ -27,6 +27,7 @@ class CreateDepartmentFeesTable extends Migration
             $table->foreign('fee_type_id')
                 ->references('id')
                 ->on('fee_types');
+            $table->integer('amount');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

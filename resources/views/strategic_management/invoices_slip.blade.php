@@ -44,6 +44,12 @@
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Generate Invoice for department Registration</h4>
                     </div>
+                        <div class="pad margin no-print">
+                          <div class="callout callout-info" style="margin-bottom: 0!important;">
+                            <h4><i class="fa fa-info"></i> Note:</h4>
+                                If you have paid the registration amount, please fill all the required fields, otherwise generate the invoice.
+                          </div>
+                        </div>
                     <form role="form" method="post">
                         <div class="box-body">
                             <div class="col-md-6">
@@ -150,6 +156,7 @@
                                 <tr>
                                     <th>Department</th>
                                     <th>Invoice No</th>
+                                    <th>Invoice</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
@@ -162,7 +169,8 @@
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
-                                    <td><a href="{{$invoice->slip}}">Invoice</a></td>
+                                    <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
+                                    <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
                                     <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
@@ -177,6 +185,7 @@
                                 <tr>
                                     <th>Department</th>
                                     <th>Invoice No</th>
+                                    <th>Invoice</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>

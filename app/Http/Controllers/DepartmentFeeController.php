@@ -19,13 +19,13 @@ class DepartmentFeeController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $departments = Department::all();
         $fees = FeeType::all();
 
-        $depts = DepartmentFee::with('campus','department','fee_type')->get();
+        $depts = DepartmentFee::with('department','fee_type')->get();
 
         return view('department_fee.department_fee',compact('departments','fees','depts'));
     }
@@ -56,9 +56,9 @@ class DepartmentFeeController extends Controller
         try {
 
            DepartmentFee::create([
-                'campus_id' => Auth::user()->campus_id,
                 'department_id' => $request->department_id,
                 'fee_type_id' => $request->fee_type_id,
+                'amount' => $request->amount,
                 'created_by' => Auth::user()->id
 
             ]);
@@ -114,6 +114,7 @@ class DepartmentFeeController extends Controller
             DepartmentFee::where('id', $departmentFee->id)->update([
                 'department_id' => $request->department_id,
                 'fee_type_id' => $request->fee_type_id,
+                'amount' => $request->amount,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -135,7 +136,7 @@ class DepartmentFeeController extends Controller
     {
         try {
             DepartmentFee::where('id', $departmentFee->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             DepartmentFee::destroy($departmentFee->id);
             return response()->json(['success' => 'Record deleted successfully.']);
@@ -149,7 +150,8 @@ class DepartmentFeeController extends Controller
         return [
 
             'department_id' => 'required',
-            'fee_type_id' => 'required'
+            'fee_type_id' => 'required',
+            'amount' => 'required'
         ];
     }
 

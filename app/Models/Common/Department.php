@@ -2,6 +2,7 @@
 
 namespace App\Models\Common;
 
+use App\DepartmentFee;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,5 +26,9 @@ class Department extends Model
     public function program()
     {
         return $this->hasOne(Program::class);
+    }
+    public function department_fee()
+    {
+        return $this->hasOne(DepartmentFee::class);
     }
 }

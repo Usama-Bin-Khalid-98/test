@@ -59,9 +59,9 @@
                         <div class="box-body">
                            <form action="javascript:void(0)" id="form" method="POST">
 
-                               
 
-                           
+
+
                           <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Department</label>
@@ -83,6 +83,12 @@
                                             <option value="{{$fee->id}}">{{$fee->name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Amount</label>
+                                    <input type="number" name="amount" id="amount" class="form-control">
                                 </div>
                             </div>
 
@@ -127,35 +133,32 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Department</th>
                                     <th>Fee Type</th>
+                                    <th>Amount</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                               
+
                                 @foreach($depts as $affiliation)
                                 <tr>
 
-                                    <td>{{$affiliation->campus->business_school->name}}</td>
-                                    <td>{{$affiliation->campus->location}}</td>
                                     <td>{{$affiliation->department->name}}</td>
                                     <td>{{$affiliation->fee_type->name}}</td>
+                                    <td>{{$affiliation->amount}}</td>
                                     <td><i class="badge {{$affiliation->status == 'active'?'bg-green':'bg-red'}}">{{$affiliation->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","department_id":"{{$affiliation->department_id}}","fee_type_id":"{{$affiliation->fee_type_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","department_id":"{{$affiliation->department_id}}","fee_type_id":"{{$affiliation->fee_type_id}}","status":"{{$affiliation->status}}","amount":"{{$affiliation->amount}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
                                     <th>Department</th>
                                     <th>Fee Type</th>
+                                    <th>Amount</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -212,6 +215,13 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="amount">Amount</label>
+                                <input type="number" name="amount" id="edit_amount" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
                                 <p><input type="radio" name="status" class="flat-red" value="active" > Active
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
@@ -262,12 +272,14 @@
          $('#form').submit(function (e) {
             let department_id = $('#department_id').val();
             let fee_type_id = $('#fee_type_id').val();
+            let amount = $('#amount').val();
 
-            
+
             !department_id?addClass('department_id'):removeClass('department_id');
             !fee_type_id?addClass('fee_type_id'):removeClass('fee_type_id');
+            !amount?addClass('amount'):removeClass('amount');
 
-            if(!department_id || !fee_type_id )
+            if(!department_id || !fee_type_id || !amount )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -311,15 +323,15 @@
             $('#edit_department_id').select2().val(data.department_id).trigger('change');
             $('#edit_fee_type_id').select2().val(data.fee_type_id).trigger('change');
             $('#edit_id').val(data.id);
+            $('#edit_amount').val(data.amount);
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
-            let name = $('#edit_name').val();
+        $('#updateForm').submit(function (e) {
             let department_id = $('#edit_department_id').val();
-            let affiliation = $('#edit_affiliation').val();
             let fee_type_id = $('#edit_fee_type_id').val();
             let id = $('#edit_id').val();
+            let amount = $('#edit_amount').val();
 
             let status = $('input[name=edit_status]:checked').val();
             !department_id?addClass('edit_department_id'):removeClass('edit_department_id');
