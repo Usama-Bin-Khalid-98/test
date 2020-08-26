@@ -60,34 +60,31 @@
                     <p class="left_25">Program(s) for Review:  ______________________________________________________</p>
                     <p class="left_25">Submission dates:  __________________________________________________________</p>
                     <br /><br />
-                    <span class="center" ><h1><b>Self</b></h1></spans>
-                    <div class="center"><h1><b>Assessment</b></h1></div>
-                    <span class="center"><h1><b>Report</b></h1></spans>
-                        <div class="center"><h1><b>(SAR)</b></h1></div>
-                    <h5 style="text-align: center;height: 200px;">NBEAC</h5><br><hr>
+                    <span class="center"><h1>Self</h1></spans>
+                    <div class="center"><h1>Assessment</h1></div>
+                    <span class="center"><h1>Report</h1></spans>
+                        <div class="center"><h1>(SAR)</h1></div>
+                    <h5 style="text-align: center;">NBEAC</h5><br><hr>
                     <p>The SAR is to be completed by the business school seeking accreditation from the  
-                    National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan
-                    </p>
-                                        
-                    <div class="row" style="page-break-after: always;">
-                         
-                        
-                            <img  src="{{asset('/images/nbeacLogo.jpg')}}" width="100px">
-                         
-                        
-                            <img src="{{asset('/images/HECLogo.jpg')}}" width="100px">
-                         
+National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan
+</p>
+                    <br>
+                    <div class="row">
+                        <div class="col  col-md-3 col-lg-3"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
+                        <div class="col  col-md-3 col-lg-3"></div>
                     
                     
                     </div>
 
 
-                    <br>
+
                     <div >
-                        <div class="center" >
-                            <h2 style="height: 150px;"><b>Contents</b></h2>
+                        <div class="center">
+                            <h2><b>Contents</b></h2>
                         </div><br>
-                        <div class="center" style="page-break-after: always;">
+                        <div class="left left_20" >
                         <ul style="list-style-type: none">
                             <li>Preface---------------------------------------------------------------------------------------------------------------------------2</li>
                             <li>Preparation Instructions----------------------------------------------------------------------------------------------------3</li>
@@ -103,23 +100,21 @@
                             <li>9. Admission and Examination Policy----------------------------------------------------------------------------------29</li>
                         </ul>
                         </div>
+                    </div><br><br><br><br><br>
+                    <div class="row">
+                        <div class="col  col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"></div>
+                        <div class="col col-sm-12 col-md-3 col-lg-3"></div>
+                        <div class="col  col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
                     
-                    <div class="row " style="position: relative;width: 100%">
-                        <div style="position: absolute;left: 50px;top:20px">
-                         <img  width="100px" src="{{asset('/images/nbeacLogo.jpg')}}"> 
-                     </div>
-                     <div class=" " style="position: absolute;right:50px;">
-                         <img class="right" width="100px" src="{{asset('/images/HECLogo.jpg')}}"> 
-                    </div>
                     
                     </div>
 
 
-                    <br><br><br><br><br>
-                    
+                    <br><br><br>
 
                     <h1>Perface</h1><br>
-                    <div class="row" style="page-break-after: always;">
+                    <div class="row">
                         <div class="col  col-md-1 col-lg-1"></div>
                         
                         <div class="col col-sm-12 col-md-10 col-lg-10">
@@ -143,14 +138,14 @@
                         <div class="col  col-md-1 col-lg-1"></div>
                     
                     
-                    </div><br><br><br>
+                    </div><br><br><br><br><br><br>
 
 
                     <div>
                         <div class="center">
                             <h1>Preparation Instructions</h1>
                         </div><br><br>
-                        <div class="row" style="page-break-after: always;">
+                        <div class="row">
                         <div class="col  col-md-1 col-lg-1"></div>
                         
                         <div class="col col-sm-12 col-md-10 col-lg-10">
@@ -181,7 +176,7 @@
                         <div class="center">
                             <h1>Undertaking</h1>
                         </div><br><br>
-                        <div class="row" style="page-break-after: always;">
+                        <div class="row">
                         <div class="col  col-md-1 col-lg-1"></div>
                         
                         <div class="col col-sm-12 col-md-10 col-lg-10"><p class="left">I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below. </p>

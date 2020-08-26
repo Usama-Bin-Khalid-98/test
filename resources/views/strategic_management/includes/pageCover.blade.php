@@ -5,15 +5,14 @@
                     <p class="centerme" class="left_25">Name of Business School: ___________________________________________________</p>
                     <p class="centerme" class="left_25">Program(s) for Review:  ______________________________________________________</p>
                     <p class="centerme" class="left_25">Submission dates:  __________________________________________________________</p>
-                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                    <span class="center"><h1>Registration</h1></spans>
-                    <div class="center"><h1>Application</h1></div>
-                    <h5 style="text-align: center;">NBEAC</h5><br><hr>
-                    <p class="centerme">The registration application is to be completed by the business school seeking for accreditation under </p><p>National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan</p>
+                    <br /><br /><br /><br /><br /><br /><br /><br />
+                    <span class="center"><h1><b>Registration</b></h1></spans>
+                    <div class="center"><h1><b>Application</b></h1></div>
+                    <h5 style="text-align: center;height: 200px;"><b>NBEAC</b></h5><br><hr>
+                    <p class="center">The registration application is to be completed by the business school seeking for accreditation under </p><p>National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan</p>
                     <br>
-                    <div class="row">
-                        <div class="col  col-md-3 col-lg-3"></div>
-                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
-                        <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
-                        <div class="col  col-md-3 col-lg-3"></div>
+                    <div class="row" style="page-break-after: always;">
+                        <img src="{{asset('/images/nbeacLogo.jpg')}}" width="100px">
+                        <img src="{{asset('/images/HECLogo.jpg')}}" width="100px">
+                        
                     </div>

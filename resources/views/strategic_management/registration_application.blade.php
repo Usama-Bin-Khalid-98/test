@@ -60,10 +60,10 @@
                     @include('strategic_management.includes.pageCover')
                     @include('strategic_management.includes.contents')
                     
-                    <br><br><br>
+                     <br><br><br><br><br>
 
                     <h1>Perface</h1><br>
-                    <div class="row">
+                    <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
                         
                         <div class="col col-sm-12 col-md-10 col-lg-10">
@@ -86,7 +86,7 @@
                         <div class="center">
                             <h1>Instructions for the application preparation</h1>
                         </div><br><br>
-                        <div class="row">
+                        <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
                         
                         <div class="col col-sm-12 col-md-10 col-lg-10">
@@ -115,7 +115,7 @@
                         <div class="center">
                             <h1>Undertaking</h1>
                         </div><br><br>
-                        <div class="row">
+                        <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
                         
                         <div class="col col-sm-12 col-md-10 col-lg-10"><p class="left">I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below. </p>
