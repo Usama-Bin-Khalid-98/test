@@ -9,6 +9,8 @@
 <!-- jvectormap -->
 <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
 <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.dataTables.min.css" />
+
 
 @include("includes.header")
 @include("includes.nav")
@@ -457,7 +459,7 @@
                     <div class="box-body">
 
 
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example2" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>Business School Name</th>
@@ -534,7 +536,7 @@
                     <div class="box-body">
 
 
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example3" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>Business School Name</th>
@@ -593,6 +595,80 @@
 
             </section>
             <!-- right col -->
+
+
+             <!--Registrations list-->
+            <section class="col-lg-12 connectedSortable">
+                <!-- TO DO List -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Business school Campuses. </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-file-pdf-o"></i></button>
+                            </div>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+
+                        <table id="example4" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Business School Name</th>
+                                <th>Campus</th>                              
+                                <th>Contact Person Name</th>
+                                <th>Contact</th>
+                                <th>Website</th>                                
+                                <th>Status</th>
+                                <!-- <th>Action</th> -->
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @foreach($businessSchools as $school)
+                                <tr>
+                                    <td width="25%">{{$school->name}}</td>
+                                    <td width="15%">{{$school->campus}} </td>
+                                    <td>{{$school->contact_person}} </td>
+                                    <td>{{$school->charter_number}} </td>
+                                    <td>{{$school->web_url}} </td>
+                                    
+                                    <td><a href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a></td>
+                                     
+                                   <!--  <td><i class="badge  " > </i></td>
+                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
+                                </tr>
+
+                            @endforeach
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Business School Name</th>
+                                <th>Campus</th>                              
+                                <th>Contact Person Name</th>
+                                <th>Contact</th>
+                                <th>Website</th>                                
+                                <th>Status</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                    </div>
+
+                </div>
+                <!-- /.box -->
+
+            </section>
+            <!-- right col -->
         </div>
         <!-- /.row (main row) -->
     </section>
@@ -619,7 +695,7 @@
               <div class="box-body">
 
 
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="example5" class="table table-bordered table-striped">
                       <thead>
                       <tr>
                           <th>Business School Name</th>
@@ -675,9 +751,10 @@
   </div>
 
 
-
+ 
 <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
 
+<!-- <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script> -->
 @include("includes.footer")
  @else
 {{"Login to Access this page"}}
@@ -697,7 +774,20 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="dist/js/pages/dashboard.js"></script>--}}
 @hasrole('NBEACAdmin')
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script>
+    $(document).ready( function () {
+    $('#example1').DataTable();
+    $('#example2').DataTable();
+    $('#example3').DataTable();
+    $('#example4').DataTable();
+} );
+
     $('.status').on('click', function (e) {
         var id = $(this).data('id');
 
@@ -741,6 +831,7 @@
                 // alert('If you say so...');
             } );
     });
+
 
 
 </script>
