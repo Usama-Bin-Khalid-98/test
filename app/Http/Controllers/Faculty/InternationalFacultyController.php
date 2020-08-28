@@ -101,7 +101,27 @@ class InternationalFacultyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            InternationalFaculty::where('id', $id)->update([
+                'faculty_name' => $request->faculty_name,
+                'association' => $request->association,
+                'time_periods' => $request->time_periods,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

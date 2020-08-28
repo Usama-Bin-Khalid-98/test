@@ -181,6 +181,18 @@
                     </span>
                     </li>
                     <li class="list-group-item">
+                        <a href="{{url('config/teaching_methods')}}" class="text-green"><b>Teaching Methods</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['TeachingMethod']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/evaluation_items')}}" class="text-green"><b>Evaluation Items</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['EvaluationItem']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
                         <a href="{{url('config/reviewer_roles')}}" class="text-green"><b>Reviewer Roles</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['ReviewerRole']}}</span>

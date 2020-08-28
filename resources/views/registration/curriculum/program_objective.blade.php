@@ -110,7 +110,7 @@
                                     <td>{{$portfolio->program->name}}</td>
                                     <td>{{$portfolio->po}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"faculty_qualification_id":"{{$portfolio->faculty_qualification_id}}","discipline_id":"{{$portfolio->discipline_id}}","number_faculty":"{{$portfolio->number_faculty}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":"{{$portfolio->program_id}}","po":"{{$portfolio->po}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                     
                                 </tr>
                                 @endforeach
@@ -144,11 +144,22 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Programs under review</label>
+                                    <select name="program_id" id="edit_program_id" class="form-control select2">
+                                        <option selected disabled>--Select--</option>
+                                        @foreach($scopes as $pro)
+                                        <option value="{{$pro->program->id}}">{{$pro->program->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                        
                             <div class="col-md-6">
                                 <div class="form-group">
-                                   <label for="name">Number of Faculty</label>
-                                    <input type="number" name="number_faculty" id="edit_number_faculty" value="{{old('edit_number_faculty')}}"class="form-control">
+                                   <label for="name">Program objective</label>
+                                    <input type="text" name="po" id="edit_po" value="{{old('edit_po')}}"class="form-control">
                                 </div>
                                   <input type="hidden" id="edit_id">
                             </div>
@@ -249,25 +260,22 @@
 $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
 
-            $('#edit_faculty_qualification_id').select2().val(data.faculty_qualification_id).trigger('change');
-            $('#edit_discipline_id').select2().val(data.discipline_id).trigger('change');
-            $('#edit_number_faculty').val(data.number_faculty);
+            $('#edit_program_id').select2().val(data.program_id).trigger('change');
+            $('#edit_po').val(data.po);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let faculty_qualification_id = $('#edit_faculty_qualification_id').val();
-            let discipline_id = $('#edit_discipline_id').val();
-            let number_faculty = $('#edit_number_faculty').val();
+            let program_id = $('#edit_program_id').val();
+            let po = $('#edit_po').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !faculty_qualification_id?addClass('edit_faculty_qualification_id'):removeClass('edit_faculty_qualification_id');
-            !discipline_id?addClass('edit_discipline_id'):removeClass('edit_discipline_id');
-            !number_faculty?addClass('edit_number_faculty'):removeClass('edit_number_faculty');
+            !program_id?addClass('program_id'):removeClass('program_id');
+            !po?addClass('po'):removeClass('po');
 
-            if(!faculty_qualification_id || !discipline_id || !number_faculty)
+            if(!program_id || !po)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\CharterType;
 use App\InstituteType;
+use App\TeachingMethod;
+use App\EvaluationItem;
 use App\Models\Common\CourseType;
 use App\Models\Common\Department;
 use App\Models\Common\Program;
@@ -200,6 +202,16 @@ class ConfigController extends Controller
                 $this->TableRows =ActivityEngagement::all();
                 break;
             }
+            case 'teaching_methods';
+            {
+                $this->TableRows =TeachingMethod::all();
+                break;
+            }
+            case 'evaluation_items';
+            {
+                $this->TableRows =EvaluationItem::all();
+                break;
+            }
         }
 
 
@@ -303,6 +315,12 @@ class ConfigController extends Controller
 
         $ActivityEngagement= ActivityEngagement::all()->count();
         $counter['ActivityEngagement'] = $ActivityEngagement;
+
+        $TeachingMethod= TeachingMethod::all()->count();
+        $counter['TeachingMethod'] = $TeachingMethod;
+
+        $EvaluationItem= EvaluationItem::all()->count();
+        $counter['EvaluationItem'] = $EvaluationItem;
 
 
         return $counter;
@@ -498,6 +516,18 @@ class ConfigController extends Controller
             case 'activity_engagements':
             {
                 $this->TableRows =ActivityEngagement::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'teaching_methods':
+            {
+                $this->TableRows =TeachingMethod::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'evaluation_items':
+            {
+                $this->TableRows =EvaluationItem::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -701,6 +731,18 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+            case 'teaching_methods':
+            {
+                $this->TableRows =TeachingMethod::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
+            case 'evaluation_items':
+            {
+                $this->TableRows = EvaluationItem::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
         }
     }
 
@@ -886,6 +928,18 @@ class ConfigController extends Controller
             case 'activity_engagements':
             {
                 $this->TableRows  = ActivityEngagement::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+             case 'teaching_methods':
+            {
+                $this->TableRows  =TeachingMethod::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+             case 'evaluation_items':
+            {
+                $this->TableRows  = EvaluationItem::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }
