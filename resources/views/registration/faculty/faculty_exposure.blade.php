@@ -132,9 +132,9 @@
                                     <td>{{$contact->activity}}</td>
                                     <td>{{$contact->date}}</td>
                                     <td>{{$contact->duration}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td><a href="{{($contact->file)}}"><i class="fa fa-file-word-o"></i></a></td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","date":"{{$contact->date}}","students_initial":"{{$contact->students_initial}}","degree":"{{$contact->degree}}","nature":"{{$contact->nature}}","penalty":"{{$contact->penalty}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","date":"{{$contact->date}}","faculty_name":"{{$contact->faculty_name}}","activity":"{{$contact->activity}}","duration":"{{$contact->duration}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr> 
                                 @endforeach 
                                  
@@ -181,37 +181,32 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                              <div class="col-md-6">
+                              
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Date of incident</label>
-                                    <input type="date" name="date" id="edit_date" value="{{old('edit_date')}}" class="form-control">
+                                    <label for="name">Faculty name</label>
+                                    <input type="text" name="faculty_name" id="edit_faculty_name" value="{{old('edit_faculty_name')}}" class="form-control">
                                 </div>
-                                 <input type="hidden" id="edit_id">
-                              </div>
-                             <!--  <div class="col-md-6">
+                                <input type="hidden" id="edit_id">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Initial of students</label>
-                                    <input type="text" name="students_initial" id="edit_students_initial" value="{{old('edit_students_initial')}}" class="form-control">
+                                    <label for="name">Activity title</label>
+                                    <input type="text" name="activity" id="edit_activity" value="{{old('edit_activity')}}"  class="form-control">
                                 </div>
-                              </div>
-                              <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Degree program</label>
-                                    <input type="text" name="degree" id="edit_degree" value="{{old('edit_degree')}}" class="form-control">
+                                    <label for="name">Date</label>
+                                    <input type="date" name="date" id="edit_date" value="{{old('edit_date')}}"  class="form-control">
                                 </div>
-                              </div>
-                              <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Nature of dishonesty</label>
-                                    <input type="text" name="nature" id="edit_nature" value="{{old('edit_nature')}}" class="form-control">
+                                    <label for="name">Duration</label>
+                                    <input type="text" name="duration" id="edit_duration" value="{{old('edit_duration')}}"  class="form-control">
                                 </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Penalty/consequences</label>
-                                    <input type="text" name="penalty" id="edit_penalty" value="{{old('edit_penalty')}}" class="form-control">
-                                </div>
-                              </div> -->
+                            </div>
 
                               <div class="col-md-6">
                             <div class="form-group">
@@ -326,32 +321,29 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#edit_faculty_name').val(data.faculty_name);
+            $('#edit_activity').val(data.activity);
             $('#edit_date').val(data.date);
-            $('#edit_students_initial').val(data.students_initial);
-            $('#edit_degree').val(data.degree);
-            $('#edit_nature').val(data.nature);
-            $('#edit_penalty').val(data.penalty);
+            $('#edit_duration').val(data.duration);
             $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
+            let faculty_name = $('#edit_faculty_name').val();
+            let activity = $('#edit_activity').val();
             let date = $('#edit_date').val();
-            let students_initial = $('#edit_students_initial').val();
-            let degree = $('#edit_degree').val();
-            let nature = $('#edit_nature').val();
-            let penalty = $('#edit_penalty').val();
+            let duration = $('#edit_duration').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !date?addClass('edit_date'):removeClass('edit_date');
-            !students_initial?addClass('students_initial'):removeClass('edit_students_initial');
-            !degree?addClass('edit_degree'):removeClass('edit_degree');
-            !nature?addClass('nature'):removeClass('edit_nature');
-            !penalty?addClass('edit_penalty'):removeClass('edit_penalty');
+            !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
+            !activity?addClass('activity'):removeClass('activity');
+            !date?addClass('date'):removeClass('date');
+            !duration?addClass('duration'):removeClass('duration');
 
-            if(!date || !students_initial || !degree || !nature || !penalty || !file )
+            if(!faculty_name || !activity || !date || !duration )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

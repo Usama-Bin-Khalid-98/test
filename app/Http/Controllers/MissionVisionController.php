@@ -111,7 +111,7 @@ class MissionVisionController extends Controller
      * @param  \App\Models\StrategicManagement\MissionVision  $missionVision
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MissionVision $missionVision)
+    public function update(Request $request, $id)
     {
         $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
@@ -128,7 +128,7 @@ class MissionVisionController extends Controller
                 Storage::disk($diskName);
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-                MissionVision::where('id', $missionVision->id)->update(
+                MissionVision::where('id', $id)->update(
                     [
                     'mission' => $request->mission,
                     'vision' => $request->vision,
@@ -139,7 +139,7 @@ class MissionVisionController extends Controller
 
                 return response()->json(['success' => 'Mission Vision updated successfully.']);
             }
-           MissionVision::where('id', $missionVision->id)->update([
+           MissionVision::where('id', $id)->update([
                'mission' => $request->mission,
                'vision' => $request->vision,
                'updated_by' => Auth::user()->id

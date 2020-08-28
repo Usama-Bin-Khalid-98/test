@@ -146,9 +146,9 @@
                                     <td>{{$contact->client_name}}</td>
                                     <td>{{$contact->start_date}} | {{$contact->end_date}} </td>
                                     <td>{{$contact->all_participants}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td><a href="{{($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","date":"{{$contact->date}}","students_initial":"{{$contact->students_initial}}","degree":"{{$contact->degree}}","nature":"{{$contact->nature}}","penalty":"{{$contact->penalty}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","faculty_name":"{{$contact->faculty_name}}","project_name":"{{$contact->project_name}}","client_name":"{{$contact->client_name}}","start_date":"{{$contact->start_date}}","end_date":"{{$contact->end_date}}","all_participants":"{{$contact->all_participants}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr> 
                                 @endforeach 
                                  
@@ -196,37 +196,44 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                              <div class="col-md-6">
+                              
+                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Date of incident</label>
-                                    <input type="date" name="date" id="edit_date" value="{{old('edit_date')}}" class="form-control">
+                                    <label for="name">Name of faculty</label>
+                                    <input type="text" name="faculty_name" id="edit_faculty_name" value="{{old('edit_faculty_name')}}"  class="form-control">
                                 </div>
-                                 <input type="hidden" id="edit_id">
-                              </div>
-                             <!--  <div class="col-md-6">
+                                <input type="hidden" id="edit_id">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Initial of students</label>
-                                    <input type="text" name="students_initial" id="edit_students_initial" value="{{old('edit_students_initial')}}" class="form-control">
+                                    <label for="name">Name of project</label>
+                                    <input type="text" name="project_name" id="edit_project_name" value="{{old('edit_project_name')}}"  class="form-control">
                                 </div>
-                              </div>
-                              <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Degree program</label>
-                                    <input type="text" name="degree" id="edit_degree" value="{{old('edit_degree')}}" class="form-control">
+                                    <label for="name">Name of client</label>
+                                    <input type="text" name="client_name" id="edit_client_name" value="{{old('edit_client_name')}}"  class="form-control">
                                 </div>
-                              </div>
-                              <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Nature of dishonesty</label>
-                                    <input type="text" name="nature" id="edit_nature" value="{{old('edit_nature')}}" class="form-control">
+                                    <label for="name">start date</label>
+                                    <input type="date" name="start_date" id="edit_start_date" value="{{old('edit_start_date')}}"  class="form-control">
                                 </div>
-                              </div>
-                              <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Penalty/consequences</label>
-                                    <input type="text" name="penalty" id="edit_penalty" value="{{old('edit_penalty')}}" class="form-control">
+                                    <label for="name">end date</label>
+                                    <input type="date" name="end_date" id="edit_end_date" value="{{old('edit_end_date')}}"  class="form-control">
                                 </div>
-                              </div> -->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name of all partners in the project</label>
+                                    <input type="text" name="all_participants" id="edit_all_participants"  value="{{old('edit_all_participants')}}" class="form-control">
+                                </div>
+                            </div>
 
                               <div class="col-md-6">
                             <div class="form-group">
@@ -345,32 +352,35 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_date').val(data.date);
-            $('#edit_students_initial').val(data.students_initial);
-            $('#edit_degree').val(data.degree);
-            $('#edit_nature').val(data.nature);
-            $('#edit_penalty').val(data.penalty);
+            $('#edit_faculty_name').val(data.faculty_name);
+            $('#edit_project_name').val(data.project_name);
+            $('#edit_client_name').val(data.client_name);
+            $('#edit_start_date').val(data.start_date);
+            $('#edit_end_date').val(data.end_date);
+            $('#edit_all_participants').val(data.all_participants);
             $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let date = $('#edit_date').val();
-            let students_initial = $('#edit_students_initial').val();
-            let degree = $('#edit_degree').val();
-            let nature = $('#edit_nature').val();
-            let penalty = $('#edit_penalty').val();
+            let faculty_name = $('#edit_faculty_name').val();
+            let project_name = $('#edit_project_name').val();
+            let client_name = $('#edit_client_name').val();
+            let start_date = $('#edit_start_date').val();
+            let end_date = $('#edit_end_date').val();
+            let all_participants = $('#edit_all_participants').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !date?addClass('edit_date'):removeClass('edit_date');
-            !students_initial?addClass('students_initial'):removeClass('edit_students_initial');
-            !degree?addClass('edit_degree'):removeClass('edit_degree');
-            !nature?addClass('nature'):removeClass('edit_nature');
-            !penalty?addClass('edit_penalty'):removeClass('edit_penalty');
+            !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
+            !project_name?addClass('project_name'):removeClass('project_name');
+            !client_name?addClass('client_name'):removeClass('client_name');
+            !start_date?addClass('start_date'):removeClass('start_date');
+            !end_date?addClass('end_date'):removeClass('end_date');
+            !all_participants?addClass('all_participants'):removeClass('all_participants');
 
-            if(!date || !students_initial || !degree || !nature || !penalty || !file )
+            if(!faculty_name || !project_name || !client_name || !start_date  || !end_date || !all_participants)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

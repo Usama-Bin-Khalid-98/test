@@ -658,43 +658,43 @@ $isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-club'))?'active':''}}{{(request()->is('project-detail'))?'active':''}}{{(request()->is('env-protection'))?'active':''}}{{(request()->is('formal-relationship'))?'active':''}}{{(request()->is('complaint-resolution'))?'active':''}}{{(request()->is('internal-community'))?'active':''}}{{(request()->is('social-activity'))?'active':''}}">
           <a href="#">
-            <i class="fa fa-globe text-blue " ></i><span>7 Social Responsibility</span>
+            <i class="fa fa-globe text-blue " ></i><span>6. Social Responsibility</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('student-club')) ? 'active' : '' }}"><a href="{{url('student-club')}}">1. Student clubs/societies<span class="pull-right-container">
+            <li  class="{{ (request()->is('student-club')) ? 'active' : '' }}"><a href="{{url('student-club')}}">6.1. Student clubs/societies<span class="pull-right-container">
                         <span class="text text-{{$club==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$club==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('project-detail')) ? 'active' : '' }}"><a href="{{url('project-detail')}}">2. Project Details<span class="pull-right-container">
+            <li  class="{{ (request()->is('project-detail')) ? 'active' : '' }}"><a href="{{url('project-detail')}}">6.2. Project Details<span class="pull-right-container">
                         <span class="text text-{{$detail==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$detail==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('env-protection')) ? 'active' : '' }}"><a href="{{url('env-protection')}}">3. Env Protection Activities<span class="pull-right-container">
+            <li  class="{{ (request()->is('env-protection')) ? 'active' : '' }}"><a href="{{url('env-protection')}}">6.3. Env Protection Activities<span class="pull-right-container">
                         <span class="text text-{{$env==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$env==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('formal-relationship')) ? 'active' : '' }}"><a href="{{url('formal-relationship')}}">4. Formal Relationships<span class="pull-right-container">
+            <li  class="{{ (request()->is('formal-relationship')) ? 'active' : '' }}"><a href="{{url('formal-relationship')}}">6.4. Formal Relationships<span class="pull-right-container">
                         <span class="text text-{{$formal==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$formal==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('complaint-resolution')) ? 'active' : '' }}"><a href="{{url('complaint-resolution')}}">5. Complaint Resolution<span class="pull-right-container">
+            <li  class="{{ (request()->is('complaint-resolution')) ? 'active' : '' }}"><a href="{{url('complaint-resolution')}}">6.5. Complaint Resolution<span class="pull-right-container">
                         <span class="text text-{{$complaint==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$complaint==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}">6. Internal Community WP<span class="pull-right-container">
+            <li  class="{{ (request()->is('internal-community')) ? 'active' : '' }}"><a href="{{url('internal-community')}}">6.6. Internal Community WP<span class="pull-right-container">
                         <span class="text text-{{$internal==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$internal==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('social-activity')) ? 'active' : '' }}"><a href="{{url('social-activity')}}">7. Social Activity<span class="pull-right-container">
+            <li  class="{{ (request()->is('social-activity')) ? 'active' : '' }}"><a href="{{url('social-activity')}}">6.7. Social Activity<span class="pull-right-container">
                         <span class="text text-{{$social==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$social==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>

@@ -104,7 +104,29 @@ class FacultyWorkshopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            FacultyWorkshop::where('id', $id)->update([
+                'date' => $request->date,
+                'venue' => $request->venue,
+                'title' => $request->title,
+                'faculty_trainer_name' => $request->faculty_trainer_name,
+                'participants' => $request->participants,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

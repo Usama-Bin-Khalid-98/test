@@ -109,7 +109,30 @@ class CurriculumReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            CurriculumReview::where('id', $id)->update([
+                'review_meeting' => $request->review_meeting,
+                'date' => $request->date,
+                'composition' => $request->composition,
+                'reviewer_names' => $request->reviewer_names,
+                'designation_id' => $request->designation_id,
+                'affiliations_id' => $request->affiliations_id,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

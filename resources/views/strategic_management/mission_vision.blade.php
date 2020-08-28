@@ -79,8 +79,12 @@
                                     <label for="name">Attach Doc (Appendix-1C)</label>
                                     <input type="file" name="file" id="file" >
                                     <span class="text-red">Max upload file size 2mb.</span>
+                                     @if(@$get->file!=null)
+                                <p><a href="{{url(@$get->file)}}"><i class="fa fa-file-word-o"></i></a> </p>
+                                @endif
                                 </div>
                             </div>
+
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">

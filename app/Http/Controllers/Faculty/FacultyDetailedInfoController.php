@@ -119,7 +119,36 @@ class FacultyDetailedInfoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            FacultyDetailedInfo::where('id', $id)->update([
+                'designation_id' => $request->designation_id,
+                'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
+                'course_type_id' => $request->course_type_id,
+                'degree_id' => $request->degree_id,
+                'awarding_institute' => $request->awarding_institute,
+                'country' => $request->country,
+                'name' => $request->name,
+                'cnic' => $request->cnic,
+                'hec_experience' => $request->hec_experience,
+                'current_job_duration' => $request->current_job_duration,
+                'specialization' => $request->current_job_duration,
+                'industry' => $request->current_job_duration,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -130,7 +159,16 @@ class FacultyDetailedInfoController extends Controller
      */
     public function destroy($id)
     {
-        //
+         try {
+        FacultyDetailedInfo::where('id', $id)->update([
+               'deleted_by' => Auth::user()->id 
+           ]);
+        FacultyDetailedInfo::destroy($id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
     }
 
     protected function rules() {

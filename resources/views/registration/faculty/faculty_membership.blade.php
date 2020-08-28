@@ -125,7 +125,7 @@
                                     <td>{{$enrolement->from}}</td>
                                     <td>{{$enrolement->to}}</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","title":"{{$enrolement->title}}","start_date":"{{$enrolement->start_date}}","end_date":"{{$enrolement->end_date}}","investigator":"{{$enrolement->investigator}}","funding_agency":"{{$enrolement->funding_agency}}","amount":"{{$enrolement->amount}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","faculty_name":"{{$enrolement->faculty_name}}","organization":"{{$enrolement->organization}}","from":"{{$enrolement->from}}","to":"{{$enrolement->to}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
@@ -161,50 +161,34 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name of faculty</label>
+                                    <input type="text" name="faculty_name" id="edit_faculty_name" value="{{old('edit_faculty_name')}}" class="form-control">
+                                </div>
+                                 <input type="hidden" name="id" id="edit_id">
+                            </div>
+                            
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">Project title</label>
-                                    <input type="text" name="title" id="edit_title" value="{{old('title')}}" class="form-control">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Membership organization</label>
+                                    <input type="text" name="organization" id="edit_organization" value="{{old('edit_organization')}}" class="form-control">
+                                </div>
                             </div>
-                            <input type="hidden" name="id" id="edit_id">
-                        </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">Start date</label>
-                                    <input type="date" name="start_date" id="edit_start_date" value="{{old('start_date')}}" class="form-control">
-
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Valid since(year)</label>
+                                    <input type="text" name="from" id="edit_from" value="{{old('edit_from')}}" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                         <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="name">End date</label>
-                                    <input type="date" name="end_date" id="edit_end_date" value="{{old('end_date')}}" class="form-control">
-
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Valid till(year)</label>
+                                    <input type="text" name="to" id="edit_to" value="{{old('edit_to')}}" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Pricipal investigator</label>
-                                    <input type="text"  name="investigator"
-                                    id="edit_investigator" value="{{old('investigator')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Funding agency</label>
-                                    <input type="text" name="funding_agency"
-                                    id="edit_funding_agency" value="{{old('funding_agency')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Funding amount (PKR)</label>
-                                    <input type="number" name="amount"
-                                    id="edit_amount" value="{{old('amount')}}" class="form-control">
-                            </div>
-                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -307,34 +291,28 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-            $('#edit_title').val(data.title);
-            $('#edit_start_date').val(data.start_date);
-            $('#edit_end_date').val(data.end_date);
-            $('#edit_investigator').val(data.investigator);
-            $('#edit_funding_agency').val(data.funding_agency);
-            $('#edit_amount').val(data.amount);
+            $('#edit_faculty_name').val(data.faculty_name);
+            $('#edit_organization').val(data.organization);
+            $('#edit_from').val(data.from);
+            $('#edit_to').val(data.to);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
-            let title = $('#edit_title').val();
-            let start_date = $('#edit_start_date').val();
-            let end_date = $('#edit_end_date').val();
-            let investigator = $('#edit_investigator').val();
-            let funding_agency = $('#edit_funding_agency').val();
-            let amount = $('#edit_amount').val();
+            let faculty_name = $('#edit_faculty_name').val();
+            let organization = $('#edit_organization').val();
+            let from = $('#edit_from').val();
+            let to = $('#edit_to').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !title?addClass('edit_title'):removeClass('edit_title');
-            !start_date?addClass('edit_start_date'):removeClass('edit_start_date');
-            !end_date?addClass('edit_end_date'):removeClass('edit_end_date');
-            !investigator?addClass('edit_investigator'):removeClass('edit_investigator');
-            !funding_agency?addClass('edit_funding_agency'):removeClass('edit_funding_agency');
-            !amount?addClass('edit_amount'):removeClass('edit_amount');
+            !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
+            !organization?addClass('organization'):removeClass('organization');
+            !from?addClass('from'):removeClass('from');
+            !to?addClass('to'):removeClass('to');
 
-            if(!title || !start_date || !end_date || !investigator || !funding_agency || !amount)
+            if(!faculty_name || !organization || !from || !to)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
