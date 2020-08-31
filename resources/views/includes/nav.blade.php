@@ -845,6 +845,10 @@ $isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yelow"></i>NBEAC System Settings</a></li>
           @endhasrole
+
+          @hasanyrole('ESScheduler|PeerReviewer')
+          <li  class="{{ (request()->is('esScheduler')) ? 'active' : '' }}"><a href="{{url('esScheduler')}}"><i class="fa fa-gears text-yelow"></i>Eligibility Screening Scheduler</a></li>
+          @endhasrole
           </ul>
         </li>
       </ul>
