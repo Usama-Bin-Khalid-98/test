@@ -203,7 +203,7 @@ class StatutoryCommitteeController extends Controller
             'date_second_meeting' => 'required',
             'date_third_meeting' => 'required',
             'date_fourth_meeting' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048'
+            'file' => 'mimes:pdf,docx'
         ];
     }
 

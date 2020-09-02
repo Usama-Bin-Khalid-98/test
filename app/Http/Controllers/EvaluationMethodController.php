@@ -193,6 +193,7 @@ class EvaluationMethodController extends Controller
         return [
             'frequency' => 'required',
             'range' => 'required',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -201,14 +202,14 @@ class EvaluationMethodController extends Controller
             'evaluation_items_id' => 'required',
             'frequency' => 'required',
             'range' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048'
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'CV must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'CV must be of the following file type: pdf or docx.'
         ];
     }
 }

@@ -179,7 +179,7 @@ class EnvProtectionController extends Controller
         return [
             'date' => 'required',
             'activity_desc' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -187,7 +187,7 @@ class EnvProtectionController extends Controller
         return [
             'date' => 'required',
             'activity_desc' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 

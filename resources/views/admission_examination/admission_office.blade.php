@@ -145,7 +145,9 @@
                                     <label for="name">Attach Doc</label>
                                     <input type="file" name="file" id="file" >
                                     <span class="text-red">Max upload file size 2mb.</span>
-                                    <span><a href="{{url(@$admission_office->file['url'])}}"><i class="fa fa-file-word-o"></i></a></span>
+                                    <?php if(@$admission_office->id!=null){ ?>
+                                    <span><a href="{{url(@$admission_office->file)}}"><i class="fa fa-file-word-o"></i></a></span>
+                                  <?php } ?>
                                 </div>
                             </div>
                                 <div class="col-md-12">
