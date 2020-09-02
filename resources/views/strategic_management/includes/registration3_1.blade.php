@@ -3,7 +3,7 @@
                             <table   class="table table-bordered table-striped ">
                                 <caption style="text-align: center;color: red">Table 3.1. Student enrolment</caption>
                                 <thead>
-                                    <th rowspan="2">Year <sup>4</sup></th>
+                                    <th >Year <sup>4</sup></th>
                                     <th style="text-align: center;" colspan="3">Enrollment in all study programs</th>
                                     
                                     <th>Total annual enrollment<sup>5</sup> 

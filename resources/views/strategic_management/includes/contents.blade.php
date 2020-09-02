@@ -18,7 +18,7 @@
                     </div> 
                     <div class="row" style="position: relative;width: 100%">
                         <div style="position: absolute;left: 50px;top:20px">
-                            <img width="100px" src="{{asset('/images/nbeacLogo.jpg')}}">
+                            <img  width="100px" src="{{asset('/images/nbeacLogo.jpg')}}">
                         </div>
                         
 

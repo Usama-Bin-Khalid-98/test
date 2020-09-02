@@ -54,6 +54,7 @@ use Illuminate\Support\Facades\Route;
     Route::group(['middleware' => ['role:NBEACAdmin|BusinessSchool']], function () {
         Route::resource('print','PrintController');
         Route::resource('registrationPrint','RegistrationPrintController');
+        Route::get('registrationPrintPdf','RegistrationPrintController@createPDF');
 
     });
 
