@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/login', function() {
         return view('auth.login');
     });
+
     // Registration Routes...
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
@@ -199,5 +200,10 @@ use Illuminate\Support\Facades\Route;
         Route::PUT('/{table}/{id}', 'ConfigController@update');
         Route::DELETE('/{table}/{id}', 'ConfigController@destroy');
         });
+
+    });
+
+    Route::group(['middleware' => ['role:ESScheduler|PeerReviewer']], function () {
+        Route::get('esScheduler', 'EligibilityScreeningController@schedule');
 
     });

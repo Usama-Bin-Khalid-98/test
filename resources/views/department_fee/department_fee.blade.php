@@ -144,7 +144,6 @@
 
                                 @foreach($depts as $affiliation)
                                 <tr>
-
                                     <td>{{$affiliation->department->name}}</td>
                                     <td>{{$affiliation->fee_type->name}}</td>
                                     <td>{{$affiliation->amount}}</td>

@@ -41,6 +41,7 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'AccreditationAwardCommittee']);
         Permission::create(['name' => 'CouncilMeeting']);
         Permission::create(['name' => 'Reports']);
+        Permission::create(['name' => 'ESScheduler']);
 
         // create roles and assign created permissions
 
@@ -71,6 +72,14 @@ class RolePermissionSeeder extends Seeder
                 'PeerReview',
                 ]
             );
+
+        $ESScheduler = Role::create(['name' => 'ESScheduler'])
+            ->givePermissionTo([
+                'ESScheduler',
+                ]
+            );
+
+
 
         $NBEACAdmin = Role::create(['name' => 'NBEACAdmin']);
         $NBEACAdmin->givePermissionTo(Permission::all());
