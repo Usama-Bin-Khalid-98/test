@@ -384,7 +384,7 @@ class ContactInfoController extends Controller
             'ds_tell_off' => 'required',
             'ds_email' => 'required',
             'ds_tell_cell' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -394,14 +394,14 @@ class ContactInfoController extends Controller
             'ds_tell_off' => 'required',
             'ds_email' => 'required',
             'ds_tell_cell' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'CV must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'CV must be of the following file type: pdf or docx.'
         ];
     }
 }

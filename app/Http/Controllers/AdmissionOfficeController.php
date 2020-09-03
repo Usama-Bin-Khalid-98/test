@@ -178,7 +178,7 @@ class AdmissionOfficeController extends Controller
             'system_handling' => 'required',
             'head' => 'required',
             'qualification' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -188,14 +188,14 @@ class AdmissionOfficeController extends Controller
             'system_handling' => 'required',
             'head' => 'required',
             'qualification' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }
