@@ -64,7 +64,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Attach Doc (Appendix-1F)</label>
-                                    <input type="file" name="file" id="file" >
+                                    <input type="file" name="file" id="file" accept="application/pdf"  >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
