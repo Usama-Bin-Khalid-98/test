@@ -50,7 +50,7 @@ class HomeController extends Controller
             ->get();
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
 
-        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, campuses, slips WHERE campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=business_schools.id AND slips.status="paid"', array());
+        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, campuses, slips WHERE campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=business_schools.id AND slips.status="paid" AND slips.isEligibleNBEAC="yes" ', array());
         return view('home' , compact( 'registrations', 'invoices', 'memberShips','registration_apply','businessSchools'));
     }
 

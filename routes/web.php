@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('mailsend', 'Auth\RegisterController@mailsend');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('admin', 'DashboardController@index');
+    Route::get('submitSAR', 'PrintController@submitSAR');
 
     ////// Users permissions
     //Route::get('permission', 'Auth\UserController@permissions');
@@ -168,6 +169,8 @@ use Illuminate\Support\Facades\Route;
         Route::resource('internal-community','InternalCommunityController');
         Route::resource('social-activity','SocialActivityController');
         Route::patch('registration-apply/{id}','HomeController@apply');
+        Route::patch('share-nbeac/{id}','PrintController@applyNBEAC');
+        Route::patch('share-mentor/{id}','PrintController@applyMentor');
 
 
         //External Linkages & Student Placement

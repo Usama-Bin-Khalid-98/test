@@ -12,10 +12,10 @@
                     <p class="center">The registration application is to be completed by the business school seeking for accreditation under </p><p class="center">National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan</p>
                     <br>
                     <div class="row center" style="page-break-after: always;position: relative;width: 100%;">
-                        <div style="position: absolute;left: 40%;top:20px">
+                        <div style="position: absolute;left: 35%;top:20px">
                             <img src="{{asset('/images/nbeacLogo.jpg')}}" width="100px">
                         </div>
-                        <div style="position: absolute;right:40%;">
+                        <div style="position: absolute;left:50%;">
                             <img src="{{asset('/images/HECLogo.jpg')}}" width="100px">
                         </div>
                         
