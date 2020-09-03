@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Common\Slip;
+use App\User;
 use App\BusinessSchool;
 use App\Models\Common\Campus;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
+use Mockery\Exception;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use DB;
 use Auth;
 use Carbon\Carbon;
@@ -15,6 +20,12 @@ class PrintController extends Controller
     {
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
+    }
+
+    protected function isRegCompleted()
+    {
+
+
     }
     public function index(Request $req)
     {
@@ -480,11 +491,78 @@ class PrintController extends Controller
             return $PLOs;
         }
 
+    public function submitSAR($value='')
+    {
+        $user_id = Auth::id();
+        $campus_id = Auth::user()->campus_id;
+        $department_id = Auth::user()->department_id;
+        //check is registration forms data completed:
+        $check = $this->isRegCompleted(['user_id'=> $user_id, 'campus_id'=>$campus_id, 'department_id'=>$department_id]);
+        $memberShips = User::with('business_school')->where('status', 'pending')->get();
+        $invoices = Slip::with('business_school', 'department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
+        //dd($invoices);
+        $registrations = Slip::with('business_school')
+            ->where('regStatus','!=','Initiated')
+            ->get();
+        $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
+        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, campuses, slips WHERE campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=business_schools.id AND slips.status="paid"', array());
+         return view('sumbitSAR' ,compact( 'registrations', 'invoices', 'memberShips','registration_apply','businessSchools'));
+    }
+
      public static function getfacultySummary($i, $facultySummary, $userCampus){
         //dd($facultySummary[$i]->id);
         
             $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=?', array($facultySummary[$i]->id,auth()->user()->campus_id));
             return $facultySummary12;
+    }
+
+
+
+    public function applyNBEAC(Request $user,  $id)
+    {
+        if($id)
+        {
+            DB::enableQueryLog();
+            try {
+            $user_id = Auth::id();
+            $campus_id = Auth::user()->campus_id;
+           // $registration_apply = Slip::where(['created_by' => $user_id,'business_school_id'=> $campus_id, 'department_id' => $user->department_id])->update(['isEligibleNBEAC' =>'yes']);
+           //dd(DB::getQueryLog());
+            //dd($registration_apply);
+            $result = DB::update('update slips set isEligibleNBEAC=?, created_by=? where id=?', array('yes',$user_id,$id));
+            //dd($result);
+            return response()->json(['success' => 'Successfully Shared with NBEAC']);
+
+            }catch (Exception $e)
+            {
+                return response()->json(['message' => $e->getMessage()]);
+            }
+
+        }
+    }
+
+
+
+
+    public function applyMentor(Request $user,  $id)
+    {
+        if($id)
+        {
+            DB::enableQueryLog();
+            try {
+            $user_id = Auth::id();
+            $campus_id = Auth::user()->campus_id;
+           
+            $result = DB::update('update slips set isEligibleMentor=?, created_by=? where id=?', array('yes',$user_id,$id));
+            //dd($result);
+            return response()->json(['success' => 'Successfully Shared with Mentor']);
+
+            }catch (Exception $e)
+            {
+                return response()->json(['message' => $e->getMessage()]);
+            }
+
+        }
     }
 
     /**
