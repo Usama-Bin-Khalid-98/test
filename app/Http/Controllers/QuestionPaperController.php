@@ -118,12 +118,17 @@ class QuestionPaperController extends Controller
         }
 
         try {
+
+            $update=QuestionPaper::find($questionPaper->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/question_paper';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(QuestionPaper::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 QuestionPaper::where('id', $questionPaper->id)->update(

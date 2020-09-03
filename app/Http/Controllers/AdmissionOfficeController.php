@@ -57,7 +57,7 @@ class AdmissionOfficeController extends Controller
         try {
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/admission_office';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);

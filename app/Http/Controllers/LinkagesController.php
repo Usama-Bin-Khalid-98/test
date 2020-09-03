@@ -52,7 +52,7 @@ class LinkagesController extends Controller
         try {
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName = "file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName = Auth::user()->id."file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/linkages';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -120,12 +120,17 @@ class LinkagesController extends Controller
         }
 
         try {
+
+            $update=Linkages::find($id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName = $request->mission . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/linkages';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(Linkages::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 Linkages::where('id', $id)->update(

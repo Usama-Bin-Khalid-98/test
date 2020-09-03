@@ -63,7 +63,7 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->name]);
 //        dd($role->id);
        $role->syncPermissions($request->ids);
-        return response()->json(['message' => 'Role added successfully'],200);
+         return response()->json(['success' => 'Record added successfully.']);
 //        return redirect()->route('roles.index')
 //            ->with('success','Role created successfully');
     }
@@ -122,7 +122,7 @@ class RoleController extends Controller
             $role->name = $request->name;
             $role->save();
             $role->syncPermissions($request->permission);
-            return response()->json(['success' => 'Role added successfully'],200);
+             return response()->json(['success' => 'Record Updated successfully.']);
         } catch (Exception $e)
         {
           response()->json(['success' => $e->getMessage()]);
@@ -137,8 +137,12 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-            ->with('success','Role deleted successfully');
+         try {
+            Role::destroy($id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
     }
 }

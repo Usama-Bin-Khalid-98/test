@@ -54,7 +54,7 @@ class SocialActivityController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/social_activity';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -118,12 +118,16 @@ class SocialActivityController extends Controller
         }
 
         try {
+            $update=SocialActivity::find($socialActivity->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/social_activity';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(SocialActivity::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 SocialActivity::where('id', $socialActivity->id)->update(

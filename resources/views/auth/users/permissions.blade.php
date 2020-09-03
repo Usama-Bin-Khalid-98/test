@@ -109,15 +109,8 @@
 {{--                                        <td>@if($permission->status=='active')<span class="label gradient-bg-color">Active</span>@else--}}
 {{--                                                <span class="label label-danger">Inactive</span>@endif</td>--}}
                                         <td>
-                                            <i class="fa fa-fw fa-edit text-purple"
-                                            data-toggle="modal" data-target="#edit-model"
-                                            data-placement="left"
-                                            title="Edit"
-                                            onclick="update('{{$permission->id}}',
-                                                    '{{$permission->name}}')">
-                                            </i>
-                                            |<a href='permission/{{ $permission->id }}'><i
-                                                        class="fa fa-fw fa-trash-o text-red" data-toggle="tooltip" data-placement="right" title="Delete"  ></i></a></td>
+                                            <i data-row='{"id":{{$permission->id}},"name":"{{$permission->name}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i>
+                                            | <i class="fa fa-trash text-info delete" data-id="{{@$permission->id}}"></i></td>
                                     </tr>
 
                                 @endforeach
@@ -153,80 +146,35 @@
 
     <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Default Modal</h4>
-            </div>
-            <div class="modal-body">
-              <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-
-      <div class="modal fade" id="add-modal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Add Permission</h4>
-            </div>
-            <form role="form" action="" method="post">
-            <div class="modal-body">
-                @csrf
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder=" Permission Name" name="name">
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Permission. </h4>
                 </div>
+                <form role="form" id="updateForm" >
+                    <div class="modal-body">
+                        
 
-                {{-- <div class="col-lg-1">
-                    <div class="form-group">
-
-                        <label> Status
-                         <input type="checkbox" name="status" class="flat-red" checked >
-                        </label>
-                        <select id="status" name="status" class="form-control">
-                            <option>Select Status</option>
-                            <option value="enabled">Enable</option>
-                            <option value="disabled">Disable</option>
-                        </select>
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="name" id="edit_name" value="{{old('edit_name')}}" class="form-control">
+                                </div>
+                                <input type="hidden" id="edit_id">
+                              </div>
+                              
                     </div>
-                </div> --}}
-                {{-- <div class="col-lg-2">
-                    <div class="form-group">
-
-                <input type="button" onclick="updatePermission()" class="btn btn-danger pull-right" value="Update"
-                       name="Update" id="Update" style="display: none;">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" name="update" value="update" class="btn btn-info">
                     </div>
-                </div> --}}
-                <!-- /.box-body -->
-                {{-- <div class="box-footer">
-
-            </div> --}}
-
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn gradient-bg-color" style="color: white;" value="Submit"
-                name="add_user" id="add">
-            </div>
-        </form>
-          </div>
-          <!-- /.modal-content -->
+            <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-      </div>
+    </div>
+      <!-- /.modal -->
       <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("includes.footer")
@@ -294,38 +242,17 @@
         ///// edit record
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            // Initialize Select2
-            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_name').val(data.name);
-            $('#edit_email').val(data.email);
-            $('#edit_contact_no').val(data.contact_no);
-            $('#edit_school_contact').val(data.school_contact);
-            $('#cv-name').text(data.cv);
             $('#edit_id').val(data.id);
-            $('#old_cv').val(data.cv);
-            $('#edit_focal_person').val(data.focal_person);
-            // console.log('check', data.status);
-            // $('#update-form').attr('action', 'contact-info/'+data.id);
-            $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
             let name = $('#edit_name').val();
-            let email = $('#edit_email').val();
-            let contact_no = $('#edit_contact_no').val();
-            let school_contact = $('#edit_school_contact').val();
-            let designation_id = $('#edit_designation_id').val();
             let id = $('#edit_id').val();
-            let edit_focal_person = $('#edit_focal_person').val();
-
-            let status = $('input[name=edit_status]:checked').val();
+            
             !name?addClass('edit_name'):removeClass('edit_name');
-            !email?addClass('edit_email'):removeClass('edit_email');
-            !contact_no?addClass('edit_contact_no'):removeClass('edit_contact_no');
-            !school_contact?addClass('edit_school_contact'):removeClass('edit_school_contact');
-            !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
 
-            if(!name || !email || !contact_no || !school_contact || !designation_id)
+            if(!name )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -335,7 +262,7 @@
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("strategic/contact-info")}}/'+id,
+                url:'{{url("permissions")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -370,7 +297,7 @@
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("strategic/contact-info")}}/'+id,
+                        url:'{{url("permissions")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){

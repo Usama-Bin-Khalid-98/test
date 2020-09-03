@@ -133,7 +133,7 @@ $isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_
           {{ (request()->is('users')) ? 'active' : '' }}
           {{ (request()->is('rolesPermission')) ? 'active' : '' }}
           {{ (request()->is('roles')) ? 'active' : '' }}
-          {{ (request()->is('permission')) ? 'active' : '' }}
+          {{ (request()->is('permissions')) ? 'active' : '' }}
 
           ">
           <a href="#">
@@ -146,7 +146,7 @@ $isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_
             <li class="{{ (request()->is('users')) ? 'active' : '' }}"><a href="{{url('users')}}"><i class="fa fa-circle-o text-blue"></i>Users</a></li>
             <li  class="{{ (request()->is('roles')) ? 'active' : '' }}"><a href="{{url('roles')}}"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>
 {{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>--}}
-            <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>
+            <!-- <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li> -->
 
           </ul>
             </li>

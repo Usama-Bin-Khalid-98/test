@@ -53,7 +53,7 @@ class DocumentaryEvidenceController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/documentary_evidence';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -117,12 +117,17 @@ class DocumentaryEvidenceController extends Controller
         }
 
         try {
+
+            $update=DocumentaryEvidence::find($documentaryEvidence->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/documentary_evidence';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(DocumentaryEvidence::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 DocumentaryEvidence::where('id', $documentaryEvidence->id)->update(

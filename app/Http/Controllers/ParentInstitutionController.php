@@ -53,7 +53,7 @@ class ParentInstitutionController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/parent_institution';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -117,12 +117,18 @@ class ParentInstitutionController extends Controller
         }
 
         try {
+
+            $update=ParentInstitution::find($parentInstitution->id);
+
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/parent_institution';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(ParentInstitution::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 ParentInstitution::where('id', $parentInstitution->id)->update(
