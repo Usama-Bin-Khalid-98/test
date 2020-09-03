@@ -118,12 +118,17 @@ class ProjectDetailController extends Controller
         }
 
         try {
+
+            $update=ProjectDetail::find($projectDetail->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName = $request->activity_title . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/project_details';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(ProjectDetail::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 ProjectDetail::where('id', $projectDetail->id)->update(

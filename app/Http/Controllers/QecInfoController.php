@@ -120,12 +120,17 @@ class QecInfoController extends Controller
         }
 
         try {
+
+            $update=QecInfo::find($qecInfo->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName = $request->level . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/qec_infos';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(QecInfo::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 QecInfo::where('id', $qecInfo->id)->update(

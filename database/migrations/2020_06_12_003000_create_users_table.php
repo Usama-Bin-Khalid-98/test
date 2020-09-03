@@ -67,6 +67,7 @@ class CreateUsersTable extends Migration
             $table->enum('status', ['active', 'inactive', 'pending', 'approved']);
             $table->enum('request', ['created', 'pending', 'sent', 'approved'])->default('created');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

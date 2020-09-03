@@ -118,12 +118,16 @@ class ResearchAgendaController extends Controller
         }
 
         try {
+            $update=ResearchAgenda::find($researchAgenda->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/research_agenda';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(ResearchAgenda::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 ResearchAgenda::where('id', $researchAgenda->id)->update(

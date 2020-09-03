@@ -55,7 +55,7 @@ class AuditReportController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/audit_reports';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -118,12 +118,18 @@ class AuditReportController extends Controller
         }
 
         try {
+
+            $update=AuditReport::find($auditReport->id);
+
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/audit_reports';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(AuditReport::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 AuditReport::where('id', $auditReport->id)->update(

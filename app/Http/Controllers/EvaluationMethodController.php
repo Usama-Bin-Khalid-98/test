@@ -132,12 +132,17 @@ class EvaluationMethodController extends Controller
         }
 
         try {
+
+            $update=EvaluationMethod::find($id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/evaluation_method';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(EvaluationMethod::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 EvaluationMethod::where('id', $id)->update(

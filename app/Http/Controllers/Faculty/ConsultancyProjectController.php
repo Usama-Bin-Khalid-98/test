@@ -123,12 +123,16 @@ class ConsultancyProjectController extends Controller
         }
 
         try {
+            $update=FacultyConsultancyProject::find($id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/faculty_consultancy_project';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(FacultyConsultancyProject::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 FacultyConsultancyProject::where('id', $id)->update(

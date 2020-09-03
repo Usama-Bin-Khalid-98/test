@@ -122,12 +122,17 @@ class PlagiarismCaseController extends Controller
         }
 
         try {
+
+            $update=PlagiarismCase::find($id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/plagiarism_case';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(PlagiarismCase::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 PlagiarismCase::where('id', $id)->update(

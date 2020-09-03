@@ -54,7 +54,7 @@ class CourseOutlineController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/course_outline';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -118,12 +118,17 @@ class CourseOutlineController extends Controller
         }
 
         try {
+
+            $update=CourseOutline::find($courseOutline->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/course_outline';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(CourseOutline::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 CourseOutline::where('id', $courseOutline->id)->update(

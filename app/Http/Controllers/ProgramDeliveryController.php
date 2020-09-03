@@ -54,7 +54,7 @@ class ProgramDeliveryController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/program_delivery';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -118,12 +118,17 @@ class ProgramDeliveryController extends Controller
         }
 
         try {
+
+            $update=ProgramDelivery::find($programDelivery->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/program_delivery';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(ProgramDelivery::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 ProgramDelivery::where('id', $programDelivery->id)->update(

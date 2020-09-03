@@ -240,7 +240,7 @@ class ContactInfoController extends Controller
                     }
 
                     if ($request->file('fp_cv')) {
-                        $imageName = $request->fp_name . "-cv-" . time() . '.' . $request->fp_cv->getClientOriginalExtension();
+                        $imageName = auth()->user()->id . "-cv-" . time() . '.' . $request->fp_cv->getClientOriginalExtension();
                         $path = 'uploads/cv';
                         $diskName = env('DISK');
                         $disk = Storage::disk($diskName);
@@ -317,12 +317,18 @@ class ContactInfoController extends Controller
         }
 
         try {
+
+            $update=ContactInfo::find($contactInfo->id);
+
             $path = ''; $imageName = '';
             if($request->file('cv')) {
-                $imageName = $request->name . "-cv-" . time() . '.' . $request->cv->getClientOriginalExtension();
+                $imageName = auth()->user()->id . "-cv-" . time() . '.' . $request->cv->getClientOriginalExtension();
                 $path = 'uploads/cv';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(ContactInfo::exists($update->cv)){
+                    unlink($update->cv);
+               }
                 $request->file('cv')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 ContactInfo::where('id', $contactInfo->id)->update(

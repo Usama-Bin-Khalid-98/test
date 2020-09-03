@@ -121,12 +121,17 @@ class AlumniMembershipController extends Controller
         }
 
         try {
+
+            $update=AlumniMembership::find($alumniMembership->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/alumni_membership';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(AlumniMembership::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 AlumniMembership::where('id', $alumniMembership->id)->update(
