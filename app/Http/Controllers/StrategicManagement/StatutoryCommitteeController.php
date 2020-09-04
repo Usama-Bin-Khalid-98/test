@@ -130,13 +130,16 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-//            dd($fileName);
+            $update=StatutoryCommittee::find($statutoryCommittee->id);
             $path = ''; $fileName = '';
             if($request->file('file')) {
                 $fileName = $request->name . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/statutory_committee';
                 $diskName = env('DISK');
                 $disk = Storage::disk($diskName);
+                if(StatutoryCommittee::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $fileName);
             }
 
@@ -203,7 +206,7 @@ class StatutoryCommitteeController extends Controller
             'date_second_meeting' => 'required',
             'date_third_meeting' => 'required',
             'date_fourth_meeting' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048'
+            'file' => 'mimes:pdf,docx'
         ];
     }
 

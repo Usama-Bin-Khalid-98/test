@@ -21,6 +21,8 @@ use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\MatchOldPassword;
 
 class UserController extends Controller
 {
@@ -136,6 +138,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            User::where('id', $id)->update([
+                'name' => $request->name,
+                'cnic' => $request->cnic,
+                'contact_no' => $request->contact_no,
+                'address' => $request->address,
+                'designation_id' => $request->designation_id,
+                'email' => $request->email,
+                'password' => Hash::make($request->new_password),
+                'status' => $request->status
+            ]);
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }  
+    }
+
+
+    public function updateUserRecord(Request $request, $id)
+    {
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -162,6 +193,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
+       
     }
 
 
@@ -202,12 +234,35 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-        User::find($id)->delete();
-        return response()->json(['message' => 'user successfully deleted'], 200);
-        }
-        catch (Exception $e)
-        {
-            return response()->json(['message' => $e->getMessage()], 400);
-        }
+             User::destroy($id);
+                return response()->json(['success' => 'Record deleted successfully.']);
+         }catch (Exception $e)
+             {
+                return response()->json(['error' => 'Failed to delete record.']);
+             }
+    }
+
+
+
+    protected function update_rules() {
+        return [
+            'name' => 'required',
+            'designation_id' => 'required',
+            'cnic' => 'required',
+            'contact_no' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'current_password' =>['required', new MatchOldPassword],
+            'new_password' => 'required',
+            'confirm_new_password' => 'same:new_password',
+        ];
+    }
+
+
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

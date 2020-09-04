@@ -556,12 +556,12 @@
 
                             @foreach($registrations as $regist)
                                 <tr>
-                                    <td>{{@$regist->school}}</td>
-                                    <td>{{@$regist->campus??'Main Campus'}}</td>
-                                    <td>{{@$regist->department}}</td>
-                                    <td>{{@$regist->user}}</td>
-                                    <td>{{@$regist->contact_no}}</td>
-                                    <td>{{@$regist->email}}</td>
+                                    <td>{{@$regist->business_school->name}}</td>
+                                    <td>{{@$regist->campus->location??'Main Campus'}}</td>
+                                    <td>{{@$regist->department->name}}</td>
+                                    <td>{{@$regist->business_school->user->name}}</td>
+                                    <td>{{@$regist->business_school->user->contact_no}}</td>
+                                    <td>{{@$regist->business_school->user->email}}</td>
                                     <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Review</a></td>
                                     {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                     <td><i class="badge {{$regist->regStatus == 'pending'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'Initiated'}}</i></td>
@@ -621,11 +621,11 @@
                             <thead>
                             <tr>
                                 <th>Business School Name</th>
-                                <th>Campus</th>
+                                <th>Campus</th>                              
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
                                 <th>Website</th>                                
-                                <th>Action</th>
+                                <th>Status</th>
                                 <!-- <th>Action</th> -->
                             </tr>
                             </thead>
@@ -640,7 +640,7 @@
                                     <td>{{$school->charter_number}} </td>
                                     <td>{{$school->web_url}} </td>
                                     
-                                    <td><a class="btn btn-info" href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print SAR</a></td>
+                                    <td><a href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a></td>
                                      
                                    <!--  <td><i class="badge  " > </i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
@@ -652,11 +652,11 @@
                             <tfoot>
                             <tr>
                                 <th>Business School Name</th>
-                                <th>Campus</th>
+                                <th>Campus</th>                              
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
                                 <th>Website</th>                                
-                                <th>Action</th>
+                                <th>Status</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -703,7 +703,7 @@
                           <th>Department</th>
 {{--                          <th>Invoice Slip</th>--}}
 {{--                          <th>Account Type</th>--}}
-                          <th>Status</th>
+                        
                           <th>Action</th>
                       </tr>
                       </thead>
@@ -717,8 +717,9 @@
                               <td>{{@$invoice_re->department->name}}</td>
 {{--                              <td><a href="{{@$invoice_re->slip}}">Invoice Slip</a></td>--}}
                               {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                              <td><i class="badge" data-id="{{@$invoice_re->id}}"  style="background: {{$invoice_re->regStatus == 'Initiated'?'red':''}}{{$invoice_re->regStatus == 'Review'?'brown':''}}{{$invoice_re->regStatus == 'Approved'?'green':''}}" >{{@$invoice_re->regStatus != ''?ucwords($invoice_re->regStatus):'Initiated'}}</i></td>
-                              <td>@if($invoice_re->regStatus =='Initiated') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department->id}}"> Apply Now </button>  @elseif($invoice_re->regStatus =='Review')Desk Review In-progress @endif</td>
+                              
+                              <td><button class="btn-xs btn-info apply" name="NBEACapply" id="NBEACapply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department->id}}"> Share with NBEAC </button>
+                              <button class="btn-xs btn-info apply" name="Mentorapply" id="Mentorapply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department->id}}"> Share with Mentor </button>  </td>
                           </tr>
                       @endforeach
 
@@ -730,84 +731,7 @@
                           <th>Department</th>
 {{--                          <th>Invoice Slip</th>--}}
                           {{-- <th>Account Type</th>--}}
-                          <th>Status</th>
-                          <th>Action</th>
-                      </tr>
-                      </tfoot>
-                  </table>
-
-                  <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-              </div>
-              <!-- /.box-body -->
-
-          </div>
-          <!-- /.box -->
-
-      </section>
-      <!-- right col -->
-        @endhasrole
-
-
-  @hasrole('PeerReviewer')
-      <!--Invoices list-->
-      <section class="col-lg-12 connectedSortable">
-          <!-- TO DO List -->
-          <div class="box box-primary">
-              <div class="box-header">
-                  <h3 class="box-title">Business school Registrations Eligibility Screening. </h3>
-                  <div class="box-tools pull-right">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                      </button>
-                      <div class="btn-group">
-                          <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                              <i class="fa fa-file-pdf-o"></i></button>
-                      </div>
-                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                  </div>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-
-
-                  <table id="example5" class="table table-bordered table-striped">
-                      <thead>
-                      <tr>
-                          <th>Business School Name</th>
-                          <th>Campus</th>
-                          <th>Department</th>
-                          <th>Desk Review</th>
-                          <th>Registration Print</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                      </tr>
-                      </thead>
-
-                      <tbody>
-
-                      @foreach($eligibility_registrations as $screening)
-                          <tr>
-                              <td>{{@$screening->business_school->name}}</td>
-                              <td>{{@$screening->campus->location??'Main Campus'}}</td>
-                              <td>{{@$screening->department->name}}</td>
-                              <td><a href="{{url('deskreview')}}/{{@$screening->id}}">Desk Review</a></td>
-{{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                              <td><a href="{{url('print?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->id}}">Registration Print </a></td>
-
-                              {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                              <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
-                              <td>@if($screening->regStatus =='Eligibility') <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department->id}}"> Schedule Eligibility Screening </a>  @elseif($screening->regStatus =='Review')Desk Review In-progress @endif</td>
-                          </tr>
-                      @endforeach
-
-                      </tbody>
-                      <tfoot>
-                      <tr>
-                          <th>Business School Name</th>
-                          <th>Campus</th>
-                          <th>Department</th>
-                          <th>Desk Review</th>
-                          <th>Registration Print</th>
-                          <th>Status</th>
+                           
                           <th>Action</th>
                       </tr>
                       </tfoot>
@@ -828,7 +752,7 @@
   </div>
 
 
-
+ 
 <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
 
 <!-- <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script> -->
@@ -917,13 +841,13 @@
 
 @hasrole('BusinessSchool')
 <script>
-    $('.apply').on('click', function (e) {
+    $('#NBEACapply').on('click', function (e) {
         var id = $(this).data('id');
         var department_id = $(this).data('row');
         //
         // console.log('depaertid ', department_id);
         // return;
-        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to Apply?', 'Yes', 'No',
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to Share?', 'Yes', 'No',
             function(){
                 $.ajaxSetup({
                     headers: {
@@ -932,7 +856,7 @@
                 })
                 // Yes button callback
                 $.ajax({
-                    url:'{{url("registration-apply")}}/'+id,
+                    url:'{{url("share-nbeac")}}/'+id,
                     type:'patch',
                     data: { id:id, department_id:department_id},
                     beforeSend: function(){
@@ -945,8 +869,58 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
+                        //alert(response.success)
+                        //location.reload();
 
-                        location.reload();
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+            },
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );
+    })
+
+
+
+
+     $('#Mentorapply').on('click', function (e) {
+        var id = $(this).data('id');
+        var department_id = $(this).data('row');
+        //
+        // console.log('depaertid ', department_id);
+        // return;
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to Share?', 'Yes', 'No',
+            function(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("share-mentor")}}/'+id,
+                    type:'patch',
+                    data: { id:id, department_id:department_id},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+                        //alert(response.success)
+                        //location.reload();
 
                         console.log('response here', response);
                     },

@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('mailsend', 'Auth\RegisterController@mailsend');
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('admin', 'DashboardController@index');
+    Route::get('submitSAR', 'PrintController@submitSAR');
 
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
     ////// Users permissions

@@ -54,7 +54,7 @@ class EnvProtectionController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName = $request->activity_desc . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/env_protection';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -119,12 +119,17 @@ class EnvProtectionController extends Controller
         }
 
         try {
+
+            $update=EnvProtection::find($envProtection->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName = $request->activity_desc . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName = Auth::user()->id. "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/env_protection';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(EnvProtection::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 EnvProtection::where('id', $envProtection->id)->update(
@@ -179,7 +184,7 @@ class EnvProtectionController extends Controller
         return [
             'date' => 'required',
             'activity_desc' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -187,7 +192,7 @@ class EnvProtectionController extends Controller
         return [
             'date' => 'required',
             'activity_desc' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 

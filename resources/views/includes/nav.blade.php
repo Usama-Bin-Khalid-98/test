@@ -134,7 +134,7 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           {{ (request()->is('users')) ? 'active' : '' }}
           {{ (request()->is('rolesPermission')) ? 'active' : '' }}
           {{ (request()->is('roles')) ? 'active' : '' }}
-          {{ (request()->is('permission')) ? 'active' : '' }}
+          {{ (request()->is('permissions')) ? 'active' : '' }}
 
           ">
           <a href="#">
@@ -147,7 +147,7 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
             <li class="{{ (request()->is('users')) ? 'active' : '' }}"><a href="{{url('users')}}"><i class="fa fa-circle-o text-blue"></i>Users</a></li>
             <li  class="{{ (request()->is('roles')) ? 'active' : '' }}"><a href="{{url('roles')}}"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>
 {{--            <li  class="{{ (request()->is('')) ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o text-blue"></i>Roles</a></li>--}}
-            <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li>
+            <!-- <li  class="{{ (request()->is('permissions')) ? 'active' : '' }}"><a href="{{url('permissions')}}"><i class="fa fa-circle-o text-blue"></i>Permissions</a></li> -->
 
           </ul>
             </li>
@@ -261,7 +261,7 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           </li>
         @endhasrole
         @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}{{(request()->is('program-objective'))?'active':''}}{{(request()->is('learning-outcome'))?'active':''}}" >
+        <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}{{(request()->is('program-objective'))?'active':''}}{{(request()->is('learning-outcome'))?'active':''}}{{(request()->is('managerial-skill'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i><span>2: Curriculum</span>
              <span class="pull-right-container">
@@ -811,6 +811,9 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           @endhasrole
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('registration-apply')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+          @endhasrole
+          @hasrole('BusinessSchool')
+            <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
           <li class=" treeview {{request()->is('registrations')?'active':''}}">

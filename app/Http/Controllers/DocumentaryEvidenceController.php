@@ -53,7 +53,7 @@ class DocumentaryEvidenceController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/documentary_evidence';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -117,12 +117,17 @@ class DocumentaryEvidenceController extends Controller
         }
 
         try {
+
+            $update=DocumentaryEvidence::find($documentaryEvidence->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/documentary_evidence';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(DocumentaryEvidence::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 DocumentaryEvidence::where('id', $documentaryEvidence->id)->update(
@@ -169,20 +174,20 @@ class DocumentaryEvidenceController extends Controller
 
     protected function rules() {
         return [
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function update_rules() {
         return [
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

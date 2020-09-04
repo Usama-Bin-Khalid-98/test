@@ -121,12 +121,17 @@ class FacultyExposureController extends Controller
         }
 
         try {
+
+            $update=FacultyExposure::find($id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/faculty_exposure';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(FacultyExposure::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 FacultyExposure::where('id', $id)->update(
@@ -186,7 +191,7 @@ class FacultyExposureController extends Controller
             'activity' => 'required',
             'date' => 'required',
             'duration' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -196,14 +201,14 @@ class FacultyExposureController extends Controller
             'activity' => 'required',
             'date' => 'required',
             'duration' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

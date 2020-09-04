@@ -5,7 +5,7 @@
 Table 4.2b. Faculty workload (t-1)
 </caption>
                                 <thead>
-                                    <th rowspan="2">No </th>
+                                    <th>No </th>
                                     <th>Name</th>
                                     <th>Designation</th>
                                     <th>Number of courses taught in all programs</th>
