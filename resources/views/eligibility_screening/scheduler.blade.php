@@ -10,8 +10,13 @@
 {{--    <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">--}}
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     <!-- fullCalendar -->
-    <link rel="stylesheet" href="{{url('bower_components/fullcalendar/dist/fullcalendar.min.css')}}">
-    <link rel="stylesheet" href="{{url('bower_components/fullcalendar/dist/fullcalendar.print.min.css')}}" media="print">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css">
+{{--    <link rel="stylesheet" href="{{url('bower_components/fullcalendar/dist/fullcalendar.print.min.css')}}" media="print">--}}
+    <link rel="stylesheet" href="{{url('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{url('bower_components/select2/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{url('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
+
     @include("includes.header")
     @include("includes.nav")
 
@@ -32,68 +37,61 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <div class="col-md-2">
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">Draggable Events</h4>
-                        </div>
-                        <div class="box-body">
-                            <!-- the events -->
-                            <div id="external-events">
-                                <div class="external-event bg-green">Lunch</div>
-                                <div class="external-event bg-yellow">Go home</div>
-                                <div class="external-event bg-aqua">Do homework</div>
-                                <div class="external-event bg-light-blue">Work on UI design</div>
-                                <div class="external-event bg-red">Sleep tight</div>
-                                <div class="checkbox">
-                                    <label for="drop-remove">
-                                        <input type="checkbox" id="drop-remove">
-                                        remove after drop
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /. box -->
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Create Event</h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                                <ul class="fc-color-picker" id="color-chooser">
-                                    <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
-                                </ul>
-                            </div>
-                            <!-- /btn-group -->
-                            <div class="input-group">
-                                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+{{--                <div class="col-md-2">--}}
+{{--                    <div class="box box-solid">--}}
+{{--                        <div class="box-header with-border">--}}
+{{--                            <h4 class="box-title">Draggable Events</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="box-body">--}}
+{{--                            <!-- the events -->--}}
+{{--                            <div id="external-events">--}}
 
-                                <div class="input-group-btn">
-                                    <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
-                                </div>
-                                <!-- /btn-group -->
-                            </div>
-                            <!-- /input-group -->
-                        </div>
-                    </div>
-                </div>
+{{--                                @foreach(@$registrations as $reg)--}}
+{{--                                <div class="external-event bg-green">{{@$reg->school}}--{{@$reg->department}}</div>--}}
+{{--                                @endforeach--}}
+{{--                                    --}}{{--                                <div class="external-event bg-yellow">Go home</div>--}}
+{{--                                <div class="external-event bg-aqua">Do homework</div>--}}
+{{--                                <div class="external-event bg-light-blue">Work on UI design</div>--}}
+{{--                                <div class="external-event bg-red">Sleep tight</div>--}}
+
+{{--                                <div class="checkbox">--}}
+{{--                                    <label for="drop-remove">--}}
+{{--                                        <input type="checkbox" id="drop-remove">--}}
+{{--                                        remove after drop--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.box-body -->--}}
+{{--                    </div><div class="box box-solid">--}}
+{{--                        <div class="box-header with-border">--}}
+{{--                            <h4 class="box-title">Draggable Peer Reviewers</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="box-body">--}}
+{{--                            <!-- the events -->--}}
+{{--                            <div id="external-events">--}}
+
+{{--                                @foreach(@$reviewers as $reviewer)--}}
+{{--                                <div class="external-event bg-primary">{{@$reviewer->name}}</div>--}}
+{{--                                @endforeach--}}
+{{--                                    --}}{{--                                <div class="external-event bg-yellow">Go home</div>--}}
+{{--                                <div class="external-event bg-aqua">Do homework</div>--}}
+{{--                                <div class="external-event bg-light-blue">Work on UI design</div>--}}
+{{--                                <div class="external-event bg-red">Sleep tight</div>--}}
+
+{{--                                <div class="checkbox">--}}
+{{--                                    <label for="drop-remove">--}}
+{{--                                        <input type="checkbox" id="drop-remove">--}}
+{{--                                        remove after drop--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.box-body -->--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <!-- /.col -->
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-body no-padding">
                             <!-- THE CALENDAR -->
@@ -110,6 +108,75 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    <div class="modal fade" id="add-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Schedule Meeting. </h4>
+                </div>
+                <form role="form" id="updateForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Registrations:</label>
+                            <div class="input-group">
+                                <select name="registrations" id="registrations" class="form-control select2">
+                                    @foreach(@$registrations as $reg)
+                                        <option value="{{@$reg->id}}">{{@$reg->school}}-{{@$reg->department}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label>Reviewers:</label>
+                            <select class="form-control select2" name="reviewers" id="reviewers" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
+                                @foreach(@$reviewers as $reviewer)
+                                    <option value="{{@$reviewer->id}}">{{@$reviewer->name}}</option>
+                                @endforeach
+                            </select>
+                            <!-- /.input group -->
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date and time range:</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="esScheduleDateTime">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <!-- /.form group -->
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="type">{{ __('Event Color') }} : </label>
+                                <input type="text" name="color" id="color" class="form-control my-colorpicker1">
+                            </div>
+                        </div>
+
+{{--                        <div class="col-md-12">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                <p><input type="radio" name="status" class="flat-red" value="active" > Active--}}
+{{--                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" name="schedule" id="notifyAll" class="btn btn-info">Notify All</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -309,7 +376,13 @@
 
     @include("includes.footer")
 
-    <script src="{{url('bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="{{url('bower_components/moment/min/moment.min.js')}}"></script>
+    <script src="{{url('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{url('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{url('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
 
 @else
     {{"Login to Access this page"}}
@@ -319,8 +392,72 @@
 @hasrole('ESScheduler|PeerReviewer')
 <!-- Page specific script -->
 <script>
-    $(function () {
+    //Date range picker with time picker
+    //$('#esScheduleDateTime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' }})
 
+    var myCalendar;
+    $(function () {
+        $('.select2').select2();
+        // calendar
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+        var date = new Date()
+        var d    = date.getDate(),
+            m    = date.getMonth(),
+            y    = date.getFullYear()
+        var calendarEl = document.getElementById('calendar');
+
+         myCalendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                center: 'addEventButton'
+            },
+            selectable  : true,
+            select : function(info) {
+                $('#add-modal').modal('show');
+                console.log('select area end', info.startStr+" 12:00");
+                console.log('select area end', info.endStr+" 12:00");
+                $('#esScheduleDateTime').daterangepicker({
+                    timePicker: true, timePickerIncrement: 30, locale: {format: 'YYYY/MM/DD hh:mm A'},
+                    "startDate": info.startStr,
+                    "endDate": info.endStr
+                })
+            },
+             eventTimeFormat: { // like '14:30:00'
+                hour: '2-digit',
+                minute: '2-digit',
+                meridiem: true
+        }
+            // customButtons: {
+            //     addEventButton: {
+            //         text: 'add event...',
+            //         click: function() {
+            //             var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+            //             var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+            //
+            //             if (!isNaN(date.valueOf())) { // valid?
+            //                 calendar.addEvent({
+            //                     title: 'dynamic event',
+            //                     start: date,
+            //                     allDay: true
+            //                 });
+            //                 alert('Great. Now, update your database...');
+            //             } else {
+            //                 alert('Invalid date.');
+            //             }
+            //         }
+            //     }
+            // }
+        });
+        myCalendar.render();
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker();
+        let eventsList = [];
+        let list = [];
+        //color picker with addon
         /* initialize the external events
          -----------------------------------------------------------------*/
         function init_events(ele) {
@@ -349,102 +486,45 @@
 
         /* initialize the calendar
          -----------------------------------------------------------------*/
-        //Date for the calendar events (dummy data)
-        var date = new Date()
-        var d    = date.getDate(),
-            m    = date.getMonth(),
-            y    = date.getFullYear()
-        $('#calendar').fullCalendar({
-            header    : {
-                left  : 'prev,next today',
-                center: 'title',
-                right : 'month,agendaWeek,agendaDay'
+
+        $.ajax({
+            url:"{{url('getAllEvents')}}",
+            type:"get",
+            data: {events:'events'},
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
             },
-            buttonText: {
-                today: 'today',
-                month: 'month',
-                week : 'week',
-                day  : 'day'
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                 Notiflix.Loading.Remove();
+                let data = JSON.parse(JSON.stringify(response));
+                console.log('response data...', data);
+
+
+                $.each(data, function (index, val) {
+                    console.log('index...', index);
+                    eventsList[index] ={}
+                    eventsList[index]['id'] = val.id
+                    eventsList[index]['title'] = val.title
+                    eventsList[index]['start'] = new Date(val.start)
+                    eventsList[index]['end'] = new Date(val.end)
+                    eventsList[index]['backgroundColor'] = val.backgroundColor
+                    eventsList[index]['borderColor'] = val.borderColor
+                    const ev = myCalendar.addEvent(eventsList[index]);
+                    //ev.setDates(new Date(val.start), new Date(val.end), false);
+                    console.log('EV::::', ev);
+                    //return;
+                });
+                console.log(' events values', eventsList);
             },
-            //Random default events
-            events    : [
-                {
-                    title          : 'All Day Event',
-                    start          : new Date(y, m, 1),
-                    backgroundColor: '#f56954', //red
-                    borderColor    : '#f56954' //red
-                },
-                {
-                    title          : 'Long Event',
-                    start          : new Date(y, m, d - 5),
-                    end            : new Date(y, m, d - 2),
-                    backgroundColor: '#f39c12', //yellow
-                    borderColor    : '#f39c12' //yellow
-                },
-                {
-                    title          : 'Meeting',
-                    start          : new Date(y, m, d, 10, 30),
-                    allDay         : false,
-                    backgroundColor: '#0073b7', //Blue
-                    borderColor    : '#0073b7' //Blue
-                },
-                {
-                    title          : 'Lunch',
-                    start          : new Date(y, m, d, 12, 0),
-                    end            : new Date(y, m, d, 14, 0),
-                    allDay         : false,
-                    backgroundColor: '#00c0ef', //Info (aqua)
-                    borderColor    : '#00c0ef' //Info (aqua)
-                },
-                {
-                    title          : 'Birthday Party',
-                    start          : new Date(y, m, d + 1, 19, 0),
-                    end            : new Date(y, m, d + 1, 22, 30),
-                    allDay         : false,
-                    backgroundColor: '#00a65a', //Success (green)
-                    borderColor    : '#00a65a' //Success (green)
-                },
-                {
-                    title          : 'Click for Google',
-                    start          : new Date(y, m, 28),
-                    end            : new Date(y, m, 29),
-                    url            : 'http://google.com/',
-                    backgroundColor: '#3c8dbc', //Primary (light-blue)
-                    borderColor    : '#3c8dbc' //Primary (light-blue)
-                }
-            ],
-            editable  : true,
-            droppable : true, // this allows things to be dropped onto the calendar !!!
-
-            drop      : function (date, allDay) { // this function is called when something is dropped
-
-                // retrieve the dropped element's stored Event Object
-                var originalEventObject = $(this).data('eventObject')
-
-                console.log('drop zone orig.....', originalEventObject);
-                console.log('drop zone day.....', date);
-                console.log('drop zone all day.....', allDay);
-                // we need to copy it, so that multiple events don't have a reference to the same object
-                var copiedEventObject = $.extend({}, originalEventObject)
-
-                // assign it the date that was reported
-                copiedEventObject.start           = date
-                copiedEventObject.allDay          = allDay
-                copiedEventObject.backgroundColor = $(this).css('background-color')
-                copiedEventObject.borderColor     = $(this).css('border-color')
-
-                // render the event on the calendar
-                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-
-                // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
-                    $(this).remove()
-                }
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
 
             }
-        })
+        });
 
         /* ADDING EVENTS */
         var currColor = '#3c8dbc' //Red by default
@@ -480,6 +560,69 @@
 
             //Remove event from text input
             $('#new-event').val('')
+        })
+    });
+
+    $('#notifyAll').on('click', function () {
+        let registrations = $('#registrations').val();
+        let title = $('#registrations option:selected').text();
+        let reviewers = $('#reviewers').val();
+        let esScheduleDateTime = $('#esScheduleDateTime').val();
+        let color = $('#color').val();
+
+        !registrations?addClass('registrations'):removeClass('registrations');
+        !reviewers?addClass('reviewers'):removeClass('reviewers');
+        !esScheduleDateTime?addClass('esScheduleDateTime'):removeClass('esScheduleDateTime');
+        !color?addClass('color'):removeClass('color');
+        if(!registrations || !reviewers || !esScheduleDateTime)
+        {
+            Notiflix.notify.error('Fill all the required Fields');
+            return false;
+        }
+        $.ajax({
+            url:"{{url('esNotifyAll')}}",
+            type:"POST",
+            data: {registrations:registrations, reviewers:reviewers, esScheduleDateTime:esScheduleDateTime, color:color, title:title},
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                console.log("success resp ",response.success);
+                if(response.success){
+                    Notiflix.Notify.Success(response.success);
+                }
+                let dateTime = esScheduleDateTime.split('-');
+                console.log('start date ...', dateTime[0] );
+                let DateSplit = dateTime[0].split(' ');
+                let DateSplitEnd = dateTime[1].split(' ');
+                let timeSplitStart = DateSplit[1];
+                let timeSplitEnd = DateSplitEnd[1];
+                //return;
+                let start = new Date(DateSplit[0]);
+                let end = new Date(DateSplitEnd[1]);
+                console.log('start date is ....', start);
+                console.log('end date is ....', end);
+                myCalendar.addEvent({
+                    title: title,
+                    start: start,
+                    end: end,
+                    allDay: false,
+                    backgroundColor: color,
+                    borderColor: color,
+                });
+                myCalendar.render();
+                //location.reload();
+                console.log('response here', response);
+            },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
+
+            }
         })
     })
 </script>

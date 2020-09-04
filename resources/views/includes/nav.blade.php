@@ -89,6 +89,7 @@ $faculty_develop = checkIsCompleted('App\Models\Faculty\FacultyDevelop', ['campu
 $faculty_workshop = checkIsCompleted('App\Models\Faculty\FacultyWorkshop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_school_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+$isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 
 @endphp
 
@@ -846,9 +847,11 @@ $isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_
           <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yelow"></i>NBEAC System Settings</a></li>
           @endhasrole
 
+          @if(@$isFiveRegistrations >= 1)
           @hasanyrole('ESScheduler|PeerReviewer')
-          <li  class="{{ (request()->is('esScheduler')) ? 'active' : '' }}"><a href="{{url('esScheduler')}}"><i class="fa fa-gears text-yelow"></i>Eligibility Screening Scheduler</a></li>
+          <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-gears text-yelow"></i>Eligibility Screening Scheduler</a></li>
           @endhasrole
+          @endif
           </ul>
         </li>
       </ul>

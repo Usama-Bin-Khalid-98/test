@@ -15,7 +15,7 @@ class CreateFacultyMemberships extends Migration
     {
         Schema::create('faculty_memberships', function (Blueprint $table) {
              $table->increments('id');
-            
+
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
@@ -28,8 +28,6 @@ class CreateFacultyMemberships extends Migration
             $table->string('organization',100)->nullable();
             $table->string('from',100)->nullable();
             $table->string('to',100)->nullable();
-           
-           
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

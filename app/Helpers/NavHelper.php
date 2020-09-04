@@ -23,5 +23,12 @@ if (!function_exists('human_file_size')) {
         //dd($result);
         return $result;
     }
+
+    function isFiveRegistrations($model, $where)
+    {
+        $result = $model::where($where)->get()->count();
+        //dd($result);
+        return $result;
+    }
 }
 ?>
