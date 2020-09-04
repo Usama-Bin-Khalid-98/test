@@ -56,6 +56,7 @@ use Illuminate\Support\Facades\Route;
         Route::group(['middleware' => ['role:NBEACAdmin|BusinessSchool|EligibilityScreening|PeerReviewer']], function () {
             Route::resource('print','PrintController');
             Route::resource('registrationPrint','RegistrationPrintController');
+            Route::get('registrationPrintPdf','RegistrationPrintController@createPDF');
 
         });
 
@@ -168,6 +169,8 @@ use Illuminate\Support\Facades\Route;
             Route::resource('internal-community','InternalCommunityController');
             Route::resource('social-activity','SocialActivityController');
             Route::patch('registration-apply/{id}','HomeController@apply');
+            Route::patch('share-nbeac/{id}','PrintController@applyNBEAC');
+            Route::patch('share-mentor/{id}','PrintController@applyMentor');
 
 
             //External Linkages & Student Placement
