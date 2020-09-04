@@ -224,8 +224,9 @@
                                         </td>
                                         <td>
                                             <!-- <i class="fa fa-check-square permissions" data-toggle="modal" data-target="#permissions-modal" data-row='{"id":{{@$user->id}},"role_id":"{{@$user->roles}}","permissions":"{{@$user->permissions}}"}'> </i> | -->
-                                            <i class="fa fa-trash text-info delete" data-id="{{@$user->id}}"></i> |
-                                            <i data-row='{"id":{{$user->id}},"name":"{{$user->name}}","designation_id":"{{$user->designation_id}}","cnic":"{{$user->cnic}}","email":"{{$user->email}}","contact_no":"{{$user->contact_no}}","address":"{{$user->address}}","status":"{{$user->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i>
+                                            <i data-row='{"id":"{{$user->id}}","name":"{{$user->name}}","designation_id":"{{$user->designation_id}}","cnic":"{{$user->cnic}}","email":"{{$user->email}}","contact_no":"{{$user->contact_no}}","address":"{{$user->address}}","role_id":"{{@$user->roles[0]->id}}","status":"{{$user->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-edit text-blue edit"></i>
+                                             | <i class="fa fa-trash text-info delete" data-id="{{@$user->id}}"></i> | <i data-row='{"Passid":"{{$user->id}}"}' class="fa fa-lock text-info changePassword" data-toggle="modal" data-target="#change-password" data-id="{{@$user->id}}"></i>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
@@ -264,7 +265,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit User. </h4>
+                    <h4 class="modal-title">Edit User Data. </h4>
                 </div>
                 <form role="form" id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -312,24 +313,17 @@
                                                     <textarea name="address" id="edit_address" class="form-control">{{old('edit_address')}}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="name">Current Password</label>
-                                                    <input type="password" name="current_password" id="current_password" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="name">New Password</label>
-                                                    <input type="password" name="new_password" id="new_password" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="name">Confirm New Password</label>
-                                                    <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control">
-                                                </div>
-                                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Role</label>
+                                <select name="role_id" class="form-control select2" id="edit_role_id">
+                                    <option disabled selected >Select Role</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                                </div>
+                            </div>
 
 
                         <div class="col-md-12">
@@ -351,7 +345,49 @@
         <!-- /.modal-dialog -->
     </div>
 
-    <div class="modal fade" id="permissions-modal">
+    <div class="modal fade" id="change-password">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Change Password. </h4>
+                </div>
+                <form role="form" id="updatePassword" >
+                    <div class="modal-body">
+                        <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">Current Password</label>
+                                                    <input type="password" name="current_password" id="current_password" class="form-control">
+                                                </div>
+                                                <input type="hidden" id="pass_id">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">New Password</label>
+                                                    <input type="password" name="new_password" id="new_password" class="form-control">
+                                                </div>
+                                                 
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name">Confirm New Password</label>
+                                                    <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control">
+                                                </div>
+                                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" name="update" value="update" class="btn btn-info">
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <!-- <div class="modal fade" id="permissions-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -388,10 +424,10 @@
                 </form>
             </div>
 
-            <!-- /.modal-content -->
+            /.modal-content
         </div>
-        <!-- /.modal-dialog -->
-    </div>
+         /.modal-dialog 
+    </div> -->
     <!-- /.modal -->
     <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
@@ -637,6 +673,7 @@
             $('#edit_email').val(data.email);
             $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_address').val(data.address);
+            $('#edit_role_id').select2().val(data.role_id).trigger('change');
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -651,7 +688,7 @@
             let email = $('#edit_email').val();
             let designation_id = $('#edit_designation_id').val();
             let address = $('#edit_address').val();
-            let new_password = $('#new_password').val();
+            let role_id = $('#edit_role_id').val();
             let id = $('#edit_id').val();
             let status = $('input[name=edit_status]:checked').val();
             
@@ -661,8 +698,9 @@
             !email?addClass('edit_email'):removeClass('edit_email');
             !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
             !address?addClass('edit_address'):removeClass('edit_address');
+            !role_id?addClass('edit_role_id'):removeClass('edit_role_id');
 
-            if(!name || !designation_id || !cnic || !contact_no || !email || !address )
+            if(!name || !designation_id || !cnic || !contact_no || !email || !address || !role_id  )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -673,6 +711,52 @@
             formData.append('_method', 'PUT');
             $.ajax({
                 url:'{{url("users")}}/'+id,
+                type:'POST',
+                // dataType:"JSON",
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    //console.log('response', response);
+                    //location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        })
+
+
+
+
+        $('.changePassword').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            $('#pass_id').val(data.Passid);
+        });
+
+
+        $('#updatePassword').submit(function (e) {
+            let id = $('#pass_id').val();
+            let new_password = $('#new_password').val();
+
+            e.preventDefault();
+            var formData = new FormData(this);
+            //var formData = $("#updateForm").serialize()
+            formData.append('_method', 'POST');
+            $.ajax({
+                url:'{{ route("change-password") }}',
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,

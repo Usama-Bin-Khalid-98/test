@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Route;
         Route::patch('admin/{id}', 'DashboardController@schoolStatus');
         // Users resource route.
         Route::resource('users', 'Auth\UserController');
+        Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');
         // Roles resource route.
         Route::resource('roles', 'Auth\RoleController');
         // Permissions resource route.

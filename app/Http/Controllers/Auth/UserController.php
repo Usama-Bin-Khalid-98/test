@@ -23,6 +23,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\MatchOldPassword;
+use DB;
 
 class UserController extends Controller
 {
@@ -153,9 +154,13 @@ class UserController extends Controller
                 'address' => $request->address,
                 'designation_id' => $request->designation_id,
                 'email' => $request->email,
-                'password' => Hash::make($request->new_password),
                 'status' => $request->status
             ]);
+
+           $user = User::find($id);
+          //$user->update($request->role_id);
+          DB::table('model_has_roles')->where('model_id',$id)->delete();
+          $user->assignRole($request->input('role_id'));
             return response()->json(['success' => 'Record updated successfully.']);
 
         }catch (Exception $e)
@@ -165,7 +170,28 @@ class UserController extends Controller
     }
 
 
-    public function updateUserRecord(Request $request, $id)
+    public function updatePassword(Request $request )
+    {
+      $validation = Validator::make($request->all(), $this->password_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+            User::where('id', $request->id)->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+            return response()->json(['success' => ' Password updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }  
+    }
+
+
+    /*public function updateUserRecord(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -181,20 +207,16 @@ class UserController extends Controller
         }else{
             $input = array_except($input,array('password'));
         }
-
-
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-
         $user->assignRole($request->input('roles'));
 
 
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
        
-    }
+    }*/
 
 
     /**
@@ -204,7 +226,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function user_roles(Request $request, $id)
+    /*public function user_roles(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -222,7 +244,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
-    }
+    }*/
 
 
     /**
@@ -252,9 +274,16 @@ class UserController extends Controller
             'contact_no' => 'required',
             'email' => 'required',
             'address' => 'required',
+            'role_id' => 'required'
+        ];
+    }
+
+
+    protected function password_rules() {
+        return [
             'current_password' =>['required', new MatchOldPassword],
             'new_password' => 'required',
-            'confirm_new_password' => 'same:new_password',
+            'confirm_new_password' => 'same:new_password'
         ];
     }
 
