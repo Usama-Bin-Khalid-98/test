@@ -340,12 +340,15 @@
                                 @if(@$desk_reviews)
                                    @foreach(@$desk_reviews as $review)
                                 <tr>
-                                    <td>{{$review->business_school->name}}</td>
-                                    <td>{{$review->department->name}}</td>
+                                    <td>{{$review->school}}</td>
+                                    <td>{{$review->department}}</td>
                                     <td>{{$review->comments}}</td>
                                     <td><i class="badge {{$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
                                     @hasrole('NBEACAdmin')<td><i class="badge {{$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
-                                    @hasrole('NBEACAdmin')<td><i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> | <i data-row='{"id":{{$review->id}},"facility_id":"{{$review->department->name}}","isChecked":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
+                                    @hasrole('NBEACAdmin')<td>
+                                        @if($review->isEligible === 'yes')<span data-toggle="tooltip" title="" class="badge bg-yellow ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$review->id}}"><i class="fa fa-check-square-o text-white"></i></span>|@endif
+                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> |
+                                        <i data-row='{"id":{{$review->id}},"facility_id":"{{$review->department}}","isChecked":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
                                 </tr>
                                 @endforeach
                                 @endif
@@ -614,6 +617,50 @@
                 } );
 
         })
+
+        $('.ForwardToES').on('click', function (e) {
+            var id = $(this).data('id');
+
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to Eligibility Screening?', 'Yes', 'No',
+                function(){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("deskreviewStatus")}}',
+                        type:'post',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+
+                            //location.reload();
+
+                            console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+        });
 
     </script>
 

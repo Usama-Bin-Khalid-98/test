@@ -28,12 +28,12 @@ class CreateEligibilityScreeningsTable extends Migration
                 ->references('id')
                 ->on('slips');
             $table->string('title', 100);
-            $table->date('start');
-            $table->date('end');
-            $table->string('allDay', 100);
-            $table->string('url', 255);
-            $table->string('backgroundColor', 20);
-            $table->string('borderColor', 20);
+            $table->dateTime('start');
+            $table->dateTime('end');
+            $table->string('allDay', 100)->nullable();
+            $table->string('url', 255)->nullable();
+            $table->string('backgroundColor', 20)->nullable();
+            $table->string('borderColor', 20)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

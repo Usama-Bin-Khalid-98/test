@@ -48,6 +48,7 @@ use Illuminate\Support\Facades\Route;
             // Permissions resource route.
             Route::resource('permissions', 'Auth\PermissionController');
             Route::resource('desk-review', 'DeskReviewController');
+            Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::resource('nbeac-criteria', 'NbeacCriteriaController');
             Route::resource('department-fee', 'DepartmentFeeController');
@@ -210,7 +211,9 @@ use Illuminate\Support\Facades\Route;
             Route::get('esScheduler-all', 'EligibilityScreeningController@schedule');
             Route::get('esScheduler/{id}', 'EligibilityScreeningController@schedule');
             Route::get('getAllEvents', 'EligibilityScreeningController@show');
+            Route::get('getReviewerAllEvents', 'EligibilityScreeningController@getReviewerAllEvents');
             Route::post('esNotifyAll', 'EligibilityScreeningController@esNotifyAll');
+            Route::resource('PRAvailability', 'ReviewerAvailabilityController');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {

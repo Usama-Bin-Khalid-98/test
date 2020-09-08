@@ -824,14 +824,14 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
             </span>
               </a>
               <ul class="treeview-menu">
-                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>
+{{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
               </ul>
           </li>
 
           @endhasrole
            @hasrole('NBEACAdmin')
-            <li  class="{{ (request()->is('print')) ? 'active' : '' }}"><a href="{{url('print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print SAR</a></li>
+{{--            <li  class="{{ (request()->is('print')) ? 'active' : '' }}"><a href="{{url('print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print SAR</a></li>--}}
           @endhasrole
           @hasrole('NBEACAdmin')
             <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-yellow"></i>Department Fee</a></li>
@@ -851,7 +851,7 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           @endhasrole
 
           @if(@$isFiveRegistrations >= 1)
-          @hasanyrole('ESScheduler|PeerReviewer')
+          @hasanyrole('ESScheduler')
           <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-gears text-yelow"></i>Eligibility Screening Scheduler</a></li>
           @endhasrole
           @endif
