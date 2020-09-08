@@ -651,6 +651,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     $('#add-modal').modal('hide');
+                   location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception) {
@@ -691,7 +692,7 @@
             let role_id = $('#edit_role_id').val();
             let id = $('#edit_id').val();
             let status = $('input[name=edit_status]:checked').val();
-            
+
             !name?addClass('edit_name'):removeClass('edit_name');
             !cnic?addClass('edit_cnic'):removeClass('edit_cnic');
             !contact_no?addClass('edit_contact_no'):removeClass('edit_contact_no');

@@ -115,7 +115,21 @@ class DeskReviewController extends Controller
         //// get scope
         //$scope = Scope::where('')
 
-        @$desk_reviews = Slip::with('department', 'business_school')->where(['id'=> $id])->get();
+        //@$desk_reviews = Slip::with('department', 'business_school')->where(['id'=> $id])->get();
+
+        $query = '
+        SELECT slips.*, campuses.location as campus,
+        departments.name as department,
+        users.name as user,
+        users.email, users.contact_no,
+        business_schools.name as school
+        FROM slips, campuses, departments, business_schools, users
+        WHERE slips.business_school_id=campuses.id
+        AND departments.id=slips.department_id
+        AND campuses.business_school_id=business_schools.id
+        AND users.id = slips.created_by
+        AND slips.id = '.$id;
+        @$desk_reviews = DB::select($query);
         //dd($desk_reviews);
         return view('desk_review.desk_review', compact(
             'program_dates',
@@ -255,6 +269,20 @@ class DeskReviewController extends Controller
     public function update(Request $request, DeskReview $deskReview)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\DeskReview  $deskReview
+     * @return \Illuminate\Http\Response
+     */
+    public function deskreviewStatus(Request $request, DeskReview $deskReview)
+    {
+        //
+        dd($request->all());
+
     }
 
     /**

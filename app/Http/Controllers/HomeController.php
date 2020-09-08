@@ -43,7 +43,23 @@ class HomeController extends Controller
         //check is registration forms data completed:
         $check = $this->isRegCompleted(['user_id'=> $user_id, 'campus_id'=>$campus_id, 'department_id'=>$department_id]);
         $memberShips = User::with('business_school')->where('status', 'pending')->get();
-        $invoices = Slip::with('business_school', 'department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
+
+        $query = '
+        SELECT slips.*, campuses.location as campus,
+        departments.name as department,
+        users.name as user,
+        users.email, users.contact_no,
+        business_schools.name as school
+        FROM slips, campuses, departments, business_schools, users
+        WHERE slips.business_school_id=campuses.id
+        AND departments.id=slips.department_id
+        AND campuses.business_school_id=business_schools.id
+        AND users.id = slips.created_by ';
+        $campus_id? $query.='AND campuses.id = '.$campus_id:'';
+
+        $department_id? $query.=' AND departments.id = '.$department_id:'';
+        $invoices = DB::select($query);
+
         //dd($invoices);
 //        $registrations = Slip::with('business_school')
 //            ->where('regStatus','!=','Initiated')
@@ -61,12 +77,38 @@ class HomeController extends Controller
 
         //dd($registrations);
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
+        //$eligibility_registrations = Slip::where(['status' => 'paid', 'regStatus' =>'Eligibility'])->get();
+        $eligibility_registrations = DB::select("
+        SELECT slips.*, campuses.location as campus, departments.name as department, users.name as user, users.email, users.contact_no,
+        business_schools.name as school
+        FROM slips, campuses, departments, business_schools, users
+        WHERE slips.business_school_id=campuses.id
+        AND departments.id=slips.department_id
+        AND campuses.business_school_id=business_schools.id
+        AND users.id = slips.created_by
+        AND slips.status ='paid'
+        AND slips.regStatus = 'Eligibility'
+        ");
 
-        $eligibility_registrations = Slip::where(['status' => 'paid', 'regStatus' =>'Eligibility'])->get();
+        $eligibility_screening = DB::select("
+        SELECT slips.*, campuses.location as campus,
+        departments.name as department,
+        users.name as user, users.email, users.contact_no,
+        business_schools.name as school
+        FROM slips, campuses, departments, business_schools, users, e_s_reviewers
+        WHERE slips.business_school_id=campuses.id
+        AND departments.id=slips.department_id
+        AND campuses.business_school_id=business_schools.id
+        AND users.id = e_s_reviewers.user_id
+        AND slips.id = e_s_reviewers.slip_id
+        AND slips.status ='paid' AND slips.regStatus = 'ScheduledES'
+        AND e_s_reviewers.user_id = ".Auth::id()
+        );
 
+        //dd($eligibility_screening);
         $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID FROM business_schools, campuses WHERE campuses.business_school_id=business_schools.id AND business_schools.status="active"', array());
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
-            'registration_apply','businessSchools', 'eligibility_registrations'));
+            'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening'));
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Models\EligibilityScreening;
 use App\Models\Common\Slip;
 use Illuminate\Database\Eloquent\Model;
 
-class EligibilityScreening extends Model
+class ESReviewer extends Model
 {
     //
     protected $guarded = [];

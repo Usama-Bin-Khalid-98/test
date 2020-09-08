@@ -3,15 +3,18 @@
 namespace App\Models\EligibilityScreening;
 
 use App\Models\Common\Slip;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class EligibilityScreening extends Model
+class ReviewerAvailability extends Model
 {
     //
     protected $guarded = [];
 
-    public function slip()
-    {
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+    public function slip() {
         return $this->belongsTo(Slip::class);
     }
 }

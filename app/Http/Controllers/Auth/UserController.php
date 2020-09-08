@@ -71,7 +71,9 @@ class UserController extends Controller
 
         try {
 
-       // dd($request->all());
+        //dd($request->all());
+        $roleName = Role::where('id', $request->role_id)->get()->first()->name;
+        //dd($roleName);
         $user =  User::create([
             'name' => $request->name,
             'designation_id' => $request->designation_id,
@@ -82,13 +84,13 @@ class UserController extends Controller
             'email_verified_at' => date('Y-m-d H:i:s'),
             'password' => Hash::make($request->password),
             'status' => 'active',
-            'user_type' => 'EligibilitySc',
+            'user_type' => $roleName,
         ]);
-
-        $user->assignRole('EligibilityScreening');
+        $user->assignRole($roleName);
 
         if ($user)
         {
+            //$user->syncRoles($request->role_id);
             return response()->json(['message'=> 'User created successfully'], 200);
         }
         }
@@ -166,7 +168,7 @@ class UserController extends Controller
         }catch (Exception $e)
         {
             return response()->json($e->getMessage(), 422);
-        }  
+        }
     }
 
 
