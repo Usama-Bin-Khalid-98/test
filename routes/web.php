@@ -37,21 +37,21 @@ use Illuminate\Support\Facades\Route;
 
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
     ////// Users permissions
-        //Route::get('permission', 'Auth\UserController@permissions');
-        Route::group(['middleware' => ['role:NBEACAdmin']], function () {
-            ///// Dashboard
-            Route::patch('admin/{id}', 'DashboardController@schoolStatus');
-            // Users resource route.
-            Route::resource('users', 'Auth\UserController');
-            // Roles resource route.
-            Route::resource('roles', 'Auth\RoleController');
-            // Permissions resource route.
-            Route::resource('permissions', 'Auth\PermissionController');
-            Route::resource('desk-review', 'DeskReviewController');
-            Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
-            Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
-            Route::resource('nbeac-criteria', 'NbeacCriteriaController');
-            Route::resource('department-fee', 'DepartmentFeeController');
+    //Route::get('permission', 'Auth\UserController@permissions');
+    Route::group(['middleware' => ['role:NBEACAdmin']], function () {
+        ///// Dashboard
+        Route::patch('admin/{id}', 'DashboardController@schoolStatus');
+        // Users resource route.
+        Route::resource('users', 'Auth\UserController');
+        Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');
+        // Roles resource route.
+        Route::resource('roles', 'Auth\RoleController');
+        // Permissions resource route.
+        // Route::resource('permissions', 'Auth\PermissionController');
+        Route::resource('desk-review', 'DeskReviewController');
+        Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
+        Route::resource('nbeac-criteria', 'NbeacCriteriaController');
+        Route::resource('department-fee', 'DepartmentFeeController');
 
 
         });
