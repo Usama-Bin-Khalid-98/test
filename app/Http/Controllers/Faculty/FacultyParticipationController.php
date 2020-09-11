@@ -103,7 +103,28 @@ class FacultyParticipationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            FacultyParticipation::where('id', $id)->update([
+                'date' => $request->date,
+                'faculty_name' => $request->faculty_name,
+                'organization' => $request->organization,
+                'title' => $request->title,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

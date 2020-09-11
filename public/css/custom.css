@@ -84,3 +84,36 @@ a span,.status
 .justify{
   text-align: justify;
 }
+
+
+.right{
+  text-align: right;
+}
+
+.left_10{
+    margin-left: 10%;
+}
+
+.left_15{
+    margin-left: 15%;
+}
+
+.right_10{
+    margin-right: 10%;
+}
+
+#leftImage {
+  top: 20px; /* your required value */
+  left: 0;
+  width: 150px;
+  height: 100%;
+  position: fixed;
+}
+
+#rightImage {
+  top: 20px; /* your required value */
+  right: 0;
+  width: 150px;
+  height: 100%;
+  position: fixed;
+}

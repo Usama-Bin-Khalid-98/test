@@ -5,10 +5,12 @@ namespace App;
 use App\Models\Common\Campus;
 use App\Models\Common\Department;
 use App\Models\Common\Designation;
+use App\Models\EligibilityScreening\ReviewerAvailability;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -19,6 +21,8 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
+
+    use SoftDeletes;
     protected $guarded = [];
 
     /**
@@ -50,6 +54,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function business_school()
     {
         return $this->belongsTo(BusinessSchool::class)->with('slip')->with('campus');
+    }
+    public function reviewer_availability() {
+        return $this->hasOne(ReviewerAvailability::class);
     }
 
     public function campus()

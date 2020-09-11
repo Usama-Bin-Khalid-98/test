@@ -54,7 +54,7 @@ class ComplaintResolutionController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName = $request->solution . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/complaint_resolution';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -121,12 +121,17 @@ class ComplaintResolutionController extends Controller
         }
 
         try {
+
+            $update=ComplaintResolution::find($complaintResolution->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName = $request->solution . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/complaint_resolution';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(ComplaintResolution::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 ComplaintResolution::where('id', $complaintResolution->id)->update(
@@ -187,7 +192,7 @@ class ComplaintResolutionController extends Controller
             'complaint_desc' => 'required',
             'arbitrating_authority' => 'required',
             'solution' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -197,14 +202,14 @@ class ComplaintResolutionController extends Controller
             'complaint_desc' => 'required',
             'arbitrating_authority' => 'required',
             'solution' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

@@ -151,7 +151,7 @@
                                     <td>{{$portfolio->reviewer_names}}</td>
                                     <td>{{$portfolio->designation->name}}-{{$portfolio->affiliations->affiliation}} </td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"faculty_qualification_id":"{{$portfolio->faculty_qualification_id}}","discipline_id":"{{$portfolio->discipline_id}}","number_faculty":"{{$portfolio->number_faculty}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"review_meeting":"{{$portfolio->review_meeting}}","date":"{{$portfolio->date}}","composition":"{{$portfolio->composition}}","reviewer_names":"{{$portfolio->reviewer_names}}","designation_id":"{{$portfolio->designation_id}}","affiliations_id":"{{$portfolio->affiliations_id}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                     
                                 </tr>
                                 @endforeach
@@ -190,23 +190,39 @@
                     <div class="modal-body">
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Faculty Qualification</label>
-                                    <select name="faculty_qualification_id" id="edit_faculty_qualification_id" class="form-control select2">
-                                        <option value="">Select Qualification</option>
-                                        @foreach($qualification as $degree)
-                                        <option value="{{$degree->id}}">{{$degree->name}}</option>
-                                        @endforeach
-
+                                    <label for="name">Curriculum review meeting</label>
+                                    <select name="review_meeting" id="edit_review_meeting" class="form-control select2">
+                                        <option selected disabled>--Select--</option>
+                                        <option value="Meeting 1">Meeting 1</option>
+                                        <option value="Meeting 2">Meeting 2</option>
+                                        <option value="Meeting 3">Meeting 3</option>
                                     </select>
                                 </div>
-                                <input type="hidden" id="edit_id">
+                                 <input type="hidden" id="edit_id">
                             </div>
-
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                   <label for="name">Date</label>
+                                    <input type="date" name="date" id="edit_date" value="{{old('edit_date')}}"class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                   <label for="name">Composition</label>
+                                    <input type="text" name="composition" id="edit_composition" value="{{old('edit_composition')}}"class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                   <label for="name">Reviewer names</label>
+                                    <input type="text" name="reviewer_names" id="edit_reviewer_names" value="{{old('edit_reviewer_names')}}"class="form-control">
+                                </div>
+                            </div>
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Discipline</label>
-                                    <select name="discipline_id" id="edit_discipline_id" class="form-control">
-                                        <option value="">Select Discipline</option>
+                                    <label for="name">Designation</label>
+                                    <select name="designation_id" id="edit_designation_id" class="form-control select2">
+                                        <option selected disabled>Select Designation</option>
                                         @foreach($discipline as $program)
                                             <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach
@@ -215,8 +231,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                   <label for="name">Number of Faculty</label>
-                                    <input type="number" name="number_faculty" id="edit_number_faculty" value="{{old('edit_number_faculty')}}"class="form-control">
+                                    <label for="name">Affiliation</label>
+                                    <select name="affiliations_id" id="edit_affiliations_id" class="form-control select2">
+                                        <option selected disabled>Select Affiliation</option>
+                                        @foreach($qualification as $degree)
+                                        <option value="{{$degree->id}}">{{$degree->affiliation}}</option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
                             </div>
                     
@@ -323,26 +345,35 @@
 
 $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
-
-            $('#edit_faculty_qualification_id').select2().val(data.faculty_qualification_id).trigger('change');
-            $('#edit_discipline_id').select2().val(data.discipline_id).trigger('change');
-            $('#edit_number_faculty').val(data.number_faculty);
+            
+            $('#edit_review_meeting').select2().val(data.review_meeting).trigger('change');
+            $('#edit_date').val(data.date);
+            $('#edit_composition').val(data.composition);
+            $('#edit_reviewer_names').val(data.reviewer_names);
+            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_affiliations_id').select2().val(data.affiliations_id).trigger('change');
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let faculty_qualification_id = $('#edit_faculty_qualification_id').val();
-            let discipline_id = $('#edit_discipline_id').val();
-            let number_faculty = $('#edit_number_faculty').val();
+            let review_meeting = $('#edit_review_meeting').val();
+            let date = $('#edit_date').val();
+            let composition = $('#edit_composition').val();
+            let reviewer_names = $('#edit_reviewer_names').val();
+            let designation_id = $('#edit_designation_id').val();
+            let affiliations_id = $('#edit_affiliations_id').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !faculty_qualification_id?addClass('edit_faculty_qualification_id'):removeClass('edit_faculty_qualification_id');
-            !discipline_id?addClass('edit_discipline_id'):removeClass('edit_discipline_id');
-            !number_faculty?addClass('edit_number_faculty'):removeClass('edit_number_faculty');
+            !review_meeting?addClass('review_meeting'):removeClass('review_meeting');
+            !date?addClass('date'):removeClass('date');
+            !composition?addClass('composition'):removeClass('composition');
+            !reviewer_names?addClass('reviewer_names'):removeClass('reviewer_names');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
+            !affiliations_id?addClass('affiliations_id'):removeClass('affiliations_id');
 
-            if(!faculty_qualification_id || !discipline_id || !number_faculty)
+            if(!review_meeting || !date || !composition || !reviewer_names || !designation_id || !affiliations_id)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

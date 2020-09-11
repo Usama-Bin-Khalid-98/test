@@ -21,6 +21,9 @@ use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\MatchOldPassword;
+use DB;
 
 class UserController extends Controller
 {
@@ -68,7 +71,9 @@ class UserController extends Controller
 
         try {
 
-       // dd($request->all());
+        //dd($request->all());
+        $roleName = Role::where('id', $request->role_id)->get()->first()->name;
+        //dd($roleName);
         $user =  User::create([
             'name' => $request->name,
             'designation_id' => $request->designation_id,
@@ -79,13 +84,13 @@ class UserController extends Controller
             'email_verified_at' => date('Y-m-d H:i:s'),
             'password' => Hash::make($request->password),
             'status' => 'active',
-            'user_type' => 'EligibilitySc',
+            'user_type' => $roleName,
         ]);
-
-        $user->assignRole('EligibilityScreening');
+        $user->assignRole($roleName);
 
         if ($user)
         {
+            //$user->syncRoles($request->role_id);
             return response()->json(['message'=> 'User created successfully'], 200);
         }
         }
@@ -136,6 +141,60 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            User::where('id', $id)->update([
+                'name' => $request->name,
+                'cnic' => $request->cnic,
+                'contact_no' => $request->contact_no,
+                'address' => $request->address,
+                'designation_id' => $request->designation_id,
+                'email' => $request->email,
+                'status' => $request->status
+            ]);
+
+           $user = User::find($id);
+          //$user->update($request->role_id);
+          DB::table('model_has_roles')->where('model_id',$id)->delete();
+          $user->assignRole($request->input('role_id'));
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+
+    public function updatePassword(Request $request )
+    {
+      $validation = Validator::make($request->all(), $this->password_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+            User::where('id', $request->id)->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+            return response()->json(['success' => ' Password updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }  
+    }
+
+
+    /*public function updateUserRecord(Request $request, $id)
+    {
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -150,19 +209,16 @@ class UserController extends Controller
         }else{
             $input = array_except($input,array('password'));
         }
-
-
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-
         $user->assignRole($request->input('roles'));
 
 
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
-    }
+       
+    }*/
 
 
     /**
@@ -172,7 +228,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function user_roles(Request $request, $id)
+    /*public function user_roles(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -190,7 +246,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
-    }
+    }*/
 
 
     /**
@@ -202,12 +258,42 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-        User::find($id)->delete();
-        return response()->json(['message' => 'user successfully deleted'], 200);
-        }
-        catch (Exception $e)
-        {
-            return response()->json(['message' => $e->getMessage()], 400);
-        }
+             User::destroy($id);
+                return response()->json(['success' => 'Record deleted successfully.']);
+         }catch (Exception $e)
+             {
+                return response()->json(['error' => 'Failed to delete record.']);
+             }
+    }
+
+
+
+    protected function update_rules() {
+        return [
+            'name' => 'required',
+            'designation_id' => 'required',
+            'cnic' => 'required',
+            'contact_no' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'role_id' => 'required'
+        ];
+    }
+
+
+    protected function password_rules() {
+        return [
+            'current_password' =>['required', new MatchOldPassword],
+            'new_password' => 'required',
+            'confirm_new_password' => 'same:new_password'
+        ];
+    }
+
+
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.'
+        ];
     }
 }

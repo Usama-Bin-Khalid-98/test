@@ -118,12 +118,17 @@ class QuestionPaperController extends Controller
         }
 
         try {
+
+            $update=QuestionPaper::find($questionPaper->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/question_paper';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(QuestionPaper::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 QuestionPaper::where('id', $questionPaper->id)->update(
@@ -170,20 +175,20 @@ class QuestionPaperController extends Controller
 
     protected function rules() {
         return [
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function update_rules() {
         return [
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

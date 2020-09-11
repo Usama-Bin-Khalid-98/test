@@ -118,12 +118,17 @@ class ProjectDetailController extends Controller
         }
 
         try {
+
+            $update=ProjectDetail::find($projectDetail->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
                 $imageName = $request->activity_title . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/project_details';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(ProjectDetail::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 ProjectDetail::where('id', $projectDetail->id)->update(
@@ -178,7 +183,7 @@ class ProjectDetailController extends Controller
         return [
             'date' => 'required',
             'activity_title' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -186,14 +191,14 @@ class ProjectDetailController extends Controller
         return [
             'date' => 'required',
             'activity_title' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

@@ -54,7 +54,7 @@ class MissionVisionController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName = "file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName = Auth::user()->id."file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/mission_vision';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -111,7 +111,7 @@ class MissionVisionController extends Controller
      * @param  \App\Models\StrategicManagement\MissionVision  $missionVision
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MissionVision $missionVision)
+    public function update(Request $request, $id)
     {
         $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
         if($validation->fails())
@@ -120,15 +120,20 @@ class MissionVisionController extends Controller
         }
 
         try {
+
+            $update=MissionVision::find($id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName = $request->mission . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/mission_vision';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(MissionVision::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-                MissionVision::where('id', $missionVision->id)->update(
+                MissionVision::where('id', $id)->update(
                     [
                     'mission' => $request->mission,
                     'vision' => $request->vision,
@@ -139,7 +144,7 @@ class MissionVisionController extends Controller
 
                 return response()->json(['success' => 'Mission Vision updated successfully.']);
             }
-           MissionVision::where('id', $missionVision->id)->update([
+           MissionVision::where('id', $id)->update([
                'mission' => $request->mission,
                'vision' => $request->vision,
                'updated_by' => Auth::user()->id
@@ -174,21 +179,20 @@ class MissionVisionController extends Controller
 
     protected function rules() {
         return [
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function update_rules() {
         return [
-            
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

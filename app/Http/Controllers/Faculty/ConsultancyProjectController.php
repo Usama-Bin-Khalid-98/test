@@ -116,7 +116,57 @@ class ConsultancyProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validation = Validator::make($request->all(), $this->update_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+            $update=FacultyConsultancyProject::find($id);
+            $path = ''; $imageName = '';
+            if($request->file('file')) {
+                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $path = 'uploads/faculty_consultancy_project';
+                $diskName = env('DISK');
+                Storage::disk($diskName);
+                if(FacultyConsultancyProject::exists($update->file)){
+                    unlink($update->file);
+               }
+                $request->file('file')->move($path, $imageName);
+                // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
+                FacultyConsultancyProject::where('id', $id)->update(
+                    [
+                        'faculty_name' => $request->faculty_name,
+                        'project_name' => $request->project_name,
+                        'client_name' => $request->client_name,
+                        'start_date' => $request->start_date,
+                        'end_date' => $request->end_date,
+                        'all_participants' => $request->all_participants,
+                    'file' => $path.'/'.$imageName,
+                    'status' => $request->status,
+                    'updated_by' => Auth::user()->id 
+                    ]
+                );
+
+                return response()->json(['success' => 'Record updated successfully.']);
+            }
+           FacultyConsultancyProject::where('id', $id)->update([
+                        'faculty_name' => $request->faculty_name,
+                        'project_name' => $request->project_name,
+                        'client_name' => $request->client_name,
+                        'start_date' => $request->start_date,
+                        'end_date' => $request->end_date,
+                        'all_participants' => $request->all_participants,
+               'status' => $request->status,
+               'updated_by' => Auth::user()->id 
+           ]);
+            return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -147,7 +197,7 @@ class ConsultancyProjectController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'all_participants' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -159,14 +209,14 @@ class ConsultancyProjectController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'all_participants' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

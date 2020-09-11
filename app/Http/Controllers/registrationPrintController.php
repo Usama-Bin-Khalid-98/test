@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Carbon\Carbon;
+use PDF;
 
 class RegistrationPrintController extends Controller
 {
@@ -125,6 +126,45 @@ class RegistrationPrintController extends Controller
         
             $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=? AND users.id=?', array($facultySummary[$i]->id,$userCampus,auth()->user()->id));
             return $facultySummary12;
+    }
+
+
+
+
+    public function createPDF() {
+      $bussinessSchool  = DB::table('users')
+            ->leftJoin('business_schools', 'users.business_school_id', '=', 'business_schools.id')
+            ->leftJoin('institute_types','business_schools.institute_type_id','=','institute_types.id')
+            ->leftJoin('charter_types','business_schools.charter_type_id','=','charter_types.id')
+            ->leftJoin('designations','business_schools.cao_id','=','designations.id')
+            ->where('users.id',auth()->user()->id)
+            ->select('business_schools.*','institute_types.name as typeName', 'charter_types.name as charterName', 'designations.name as designationName' )
+            ->get();
+
+
+        $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
+        //dd($userCampus[0]->campus_id);
+        $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
+        
+         $scopeOfAcredation = DB::table('scopes')
+        ->leftJoin('programs','scopes.program_id','=','programs.id')
+        ->leftJoin('levels','scopes.level_id','=','levels.id')
+        ->select('scopes.*','levels.name as levelName', 'programs.name as programName')
+        ->where('scopes.campus_id',$bussinessSchool[0]->id)
+        ->get();
+
+
+        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, business_schools WHERE designations.id=contact_infos.designation_id AND business_schools.id=?', array($bussinessSchool[0]->id));
+
+
+        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+
+      // share data to view
+      view()->share('campuses',$campuses);
+      $pdf = PDF::loadView('pdf_view', $campuses);
+
+      // download PDF file with download method
+      return $pdf->download('pdf_file.pdf');
     }
         
 

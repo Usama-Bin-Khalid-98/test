@@ -62,7 +62,7 @@
                                         <tr>
                                             <th style="width: 45%">Data provided by University</th>
                                             <th style="width: 45%">NBEAC Criteria</th>
-                                            <th style="width: 10%">Is Eligible</th>
+                                            @hasrole('NBEACAdmin')<th style="width: 10%">Is Eligible</th>@endhasrole
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,10 +81,12 @@
                                                 {!! $nbeac_criteria->program_started !!}
 
                                             </td>
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_program" value="yes"> yes
                                                 <input type="radio" name="eligibility_program" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
 
                                         <tr>
@@ -102,11 +104,12 @@
                                                 {{--                                            The vision and mission should be displayed on the Department's webpage. There should be synchronization between both versions i.e.  Presented to NBEAC and displayed on website.--}}
 
                                             </td>
-
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_mission" value="yes"> yes
                                                 <input type="radio" name="eligibility_mission" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
 
                                         <tr>
@@ -117,11 +120,12 @@
                                             <td>
                                                 {!! @$nbeac_criteria->strategic_plan !!}
                                             </td>
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_plan" value="yes"> yes
                                                 <input type="radio" name="eligibility_plan" value="no"> no
                                             </td>
-
+                                            @endhasrole
                                         </tr>
 
                                         <tr>
@@ -130,10 +134,12 @@
                                                 <p>Student Intake {{@$application_received->student_intake}}</p>
                                             </td>
                                             <td> {!! @$nbeac_criteria->student_intake !!} </td>
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_student" value="yes"> yes
                                                 <input type="radio" name="eligibility_student" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
 
                                         <tr>
@@ -187,10 +193,13 @@
                                                 {!! @$nbeac_criteria->student_enrollment !!}
 
                                             </td>
+
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_enrollment" value="yes"> yes
                                                 <input type="radio" name="eligibility_enrollment" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
                                         <tr>
                                             <td>
@@ -199,10 +208,13 @@
                                             <td>
                                                 {!! @$nbeac_criteria->course_load !!}
                                             </td>
+                                            @hasrole('NBEACAdmin')
+
                                             <td>
                                                 <input type="radio" name="eligibility_load" value="yes"> yes
                                                 <input type="radio" name="eligibility_load" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
 
                                         <tr>
@@ -242,10 +254,12 @@
                                             <td>
                                                 {!! @$nbeac_criteria->research_output !!}
                                             </td>
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_output" value="yes"> yes
                                                 <input type="radio" name="eligibility_output" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
 
                                         <tr>
@@ -255,11 +269,12 @@
                                             <td>
                                                 {!! @$nbeac_criteria->bandwidth !!}
                                             </td>
-
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_bandwidth" value="yes"> yes
                                                 <input type="radio" name="eligibility_bandwidth" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
 
                                         <tr>
@@ -268,29 +283,33 @@
                                             </td>
 
                                             <td>{!! $nbeac_criteria->std_comp_ratio !!}</td>
+                                            @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_ratio" value="yes"> yes
                                                 <input type="radio" name="eligibility_ratio" value="no"> no
                                             </td>
+                                            @endhasrole
                                         </tr>
                                     </tbody>
                                 </table>
 
 
+                                @hasrole('NBEACAdmin')
                                 <div class="col-md-12">
                                     <div class="col-md-12 form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">Comments</label>
                                         <textarea rows="5" name="comments" id="comments" class="form-control">{{old('comments')}}</textarea>
                                     </div>
                                 </div>
-
+                                @endhasrole
+                                @hasrole('NBEACAdmin')
                                 <div class="col-md-12">
                                     <div class="form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">&nbsp;&nbsp;</label>
                                         <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                     </div>
                                 </div>
-
+@endhasrole
 
                             </form>
 
@@ -313,20 +332,23 @@
                                     <th>Department</th>
                                     <th>Comments</th>
                                     <th>isEligible</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    @hasrole('NBEACAdmin')<th>Status</th>@endhasrole
+                                    @hasrole('NBEACAdmin')<th>Action</th>@endhasrole
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @if(@$desk_reviews)
                                    @foreach(@$desk_reviews as $review)
                                 <tr>
-                                    <td>{{$review->business_school->name}}</td>
-                                    <td>{{$review->department->name}}</td>
+                                    <td>{{$review->school}}</td>
+                                    <td>{{$review->department}}</td>
                                     <td>{{$review->comments}}</td>
                                     <td><i class="badge {{$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
-                                    <td><i class="badge {{$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> | <i data-row='{"id":{{$review->id}},"facility_id":"{{$review->department->name}}","isChecked":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                                    @hasrole('NBEACAdmin')<td><i class="badge {{$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
+                                    @hasrole('NBEACAdmin')<td>
+                                        @if($review->isEligible === 'yes')<span data-toggle="tooltip" title="" class="badge bg-yellow ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$review->id}}"><i class="fa fa-check-square-o text-white"></i></span>|@endif
+                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> |
+                                        <i data-row='{"id":{{$review->id}},"facility_id":"{{$review->department}}","isChecked":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
                                 </tr>
                                 @endforeach
                                 @endif
@@ -339,8 +361,8 @@
                                     <th>Department</th>
                                     <th>Comments</th>
                                     <th>isEligible</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    @hasrole('NBEACAdmin')<th>Status</th>@endhasrole
+                                    @hasrole('NBEACAdmin')<th>Action</th>@endhasrole
                                 </tr>
                                 </tfoot>
                             </table>
@@ -595,6 +617,50 @@
                 } );
 
         })
+
+        $('.ForwardToES').on('click', function (e) {
+            var id = $(this).data('id');
+
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to Eligibility Screening?', 'Yes', 'No',
+                function(){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("deskreviewStatus")}}',
+                        type:'post',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+
+                            //location.reload();
+
+                            console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+        });
 
     </script>
 

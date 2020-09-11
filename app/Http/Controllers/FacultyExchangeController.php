@@ -53,7 +53,7 @@ class FacultyExchangeController extends Controller
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
-                    $imageName = "file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $imageName = Auth::user()->id."file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/faculty_exchange';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
@@ -122,12 +122,17 @@ class FacultyExchangeController extends Controller
         }
 
         try {
+
+            $update=FacultyExchange::find($facultyExchange->id);
             $path = ''; $imageName = '';
             if($request->file('file')) {
-                $imageName = $request->mission . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                 $path = 'uploads/faculty_exchange';
                 $diskName = env('DISK');
                 Storage::disk($diskName);
+                if(FacultyExchange::exists($update->file)){
+                    unlink($update->file);
+               }
                 $request->file('file')->move($path, $imageName);
                 // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                 FacultyExchange::where('id', $facultyExchange->id)->update(
@@ -189,7 +194,7 @@ class FacultyExchangeController extends Controller
             'faculty_name' => 'required',
             'source_country' => 'required',
             'name_faculty' => 'required',
-            'file.*' => 'required|file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
@@ -200,14 +205,14 @@ class FacultyExchangeController extends Controller
             'faculty_name' => 'required',
             'source_country' => 'required',
             'name_faculty' => 'required',
-            'file.*' => 'file|mimetypes:application/msword,application/pdf|max:2048',
+            'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'Document must be of the following file type: pdf, doc or docx.'
+            'file.mimes' => 'Document must be of the following file type: pdf or docx.'
         ];
     }
 }

@@ -1,4 +1,4 @@
-@section('pageTitle', 'Permissions')
+@section('pageTitle', 'Roles')
 
 
 @if(Auth::user())
@@ -84,9 +84,8 @@
                                                title="Edit"
                                                data-row='{"id":"{{$role->id}}","name":"{{$role->name}}","permissions":{{$role->permissions}} }'
                                                >
-                                            </i>
-                                            |<a href='permission/{{ $role->id }}'><i
-                                                    class="fa fa-fw fa-trash-o text-red" data-toggle="tooltip" data-placement="right" title="Delete"  ></i></a></td>
+                                            </i><!-- 
+                                            | <i class="fa fa-trash text-info delete" data-id="{{@$role->id}}"></i> --></td>
                                     </tr>
 
                                 @endforeach
@@ -125,7 +124,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Default Modal</h4>
+                    <h4 class="modal-title">Edit Roles</h4>
                 </div>
                 <form action="" method="PUT">
                 <div class="modal-body">
@@ -338,7 +337,7 @@
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("strategic/contact-info")}}/'+id,
+                        url:'{{url("roles")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
