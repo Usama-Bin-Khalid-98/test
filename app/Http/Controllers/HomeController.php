@@ -78,17 +78,31 @@ class HomeController extends Controller
         //dd($registrations);
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
         //$eligibility_registrations = Slip::where(['status' => 'paid', 'regStatus' =>'Eligibility'])->get();
-        $eligibility_registrations = DB::select("
-        SELECT slips.*, campuses.location as campus, departments.name as department, users.name as user, users.email, users.contact_no,
-        business_schools.name as school
-        FROM slips, campuses, departments, business_schools, users
-        WHERE slips.business_school_id=campuses.id
-        AND departments.id=slips.department_id
-        AND campuses.business_school_id=business_schools.id
-        AND users.id = slips.created_by
-        AND slips.status ='paid'
-        AND slips.regStatus = 'Eligibility'
-        ");
+
+        $eligibility_registrations = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school')
+            ->where('s.regStatus', 'Eligibility')
+            ->orWhere('s.regStatus', 'ScheduledES')
+            ->get();
+        //dd($eligibility_registrations);
+
+//        $eligibility_registrations = DB::select("
+//        SELECT slips.*, campuses.location as campus, departments.name as department, users.name as user, users.email, users.contact_no,
+//        business_schools.name as school
+//        FROM slips, campuses, departments, business_schools, users
+//        WHERE slips.business_school_id=campuses.id
+//        AND departments.id=slips.department_id
+//        AND campuses.business_school_id=business_schools.id
+//        AND users.id = slips.created_by
+//        AND slips.status ='paid'
+//        AND slips.regStatus = 'Eligibility'
+//        ");
+        //OR is not working here
+//        OR slips.regStatus = 'ScheduledES'
 
         $eligibility_screening = DB::select("
         SELECT slips.*, campuses.location as campus,

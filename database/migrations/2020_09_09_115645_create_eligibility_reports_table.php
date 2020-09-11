@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReviewerAvailabilitiesTable extends Migration
+class CreateEligibilityReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateReviewerAvailabilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('reviewer_availabilities', function (Blueprint $table) {
+        Schema::create('eligibility_reports', function (Blueprint $table) {
             $table->id();
             $table->integer('slip_id')->unsigned();
             $table->foreign('slip_id')
                 ->references('id')
                 ->on('slips');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-            $table->date('availability_dates');
-            $table->enum('is_confirm', ['yes', 'no'])->nullable();
+            $table->text('comments');
+            $table->enum('status', ['Deferred', 'Approved', 'ConditionalApproval'])->nullable();
+            $table->date('es_meeting_date');
+            $table->string('file', 255)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
@@ -49,6 +47,6 @@ class CreateReviewerAvailabilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviewer_availabilities');
+        Schema::dropIfExists('eligibility_reports');
     }
 }
