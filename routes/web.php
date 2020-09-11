@@ -190,6 +190,8 @@ use Illuminate\Support\Facades\Route;
             Route::resource('student-transfer','StudentTransferController');
             Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
+            Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
+
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {

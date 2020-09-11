@@ -815,6 +815,10 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
           @endhasrole
+
+          @hasrole('BusinessSchool')
+            <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+          @endhasrole
           @hasrole('NBEACAdmin')
           <li class=" treeview {{request()->is('registrations')?'active':''}}">
               <a href="#">
