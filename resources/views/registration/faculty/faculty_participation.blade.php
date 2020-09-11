@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
@@ -62,7 +63,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Date</label>
-                                    <input type="date" name="date" id="date" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="date" id="date" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -163,7 +169,12 @@
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Date</label>
-                                    <input type="date" name="date" id="edit_date" value="{{old('edit_date')}}" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="date" id="edit_date" value="{{old('edit_date')}}" class="form-control">
+                                </div>
                                 </div>
                                  <input type="hidden" name="id" id="edit_id">
                             </div>
@@ -216,6 +227,7 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -228,7 +240,13 @@
     </script>
     <script type="text/javascript">
 
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#date').datepicker({
+      autoclose:true
+    });
+        $('#edit_date').datepicker({
+      autoclose:true
+    });
 
          $.ajaxSetup({
             headers: {

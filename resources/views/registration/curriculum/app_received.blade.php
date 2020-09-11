@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
@@ -107,7 +108,12 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Semester commencement date</label>
-                                    <input type="date" name="semester_comm_date" id="semester_comm_date" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="semester_comm_date" id="semester_comm_date" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                </div>
                                 </div>
                             </div>
 
@@ -159,7 +165,7 @@
                                     <td>{{$portfolio->degree_awarding_criteria}}</td>
                                     <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","semester_id":"{{$portfolio->semester_id}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","degree_req":"{{$portfolio->degree_req}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","semester_id":"{{$portfolio->semester_id}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","degree_req":"{{$portfolio->degree_awarding_criteria}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
@@ -248,13 +254,18 @@
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Semester Commencement Date</label>
-                                    <input type="date" name="semester_comm_date" id="edit_semester_comm_date" value="{{old('edit_semester_comm_date')}}" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="semester_comm_date" id="edit_semester_comm_date" value="{{old('edit_semester_comm_date')}}" class="form-control">
+                                </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Degree awarding critarea/requirments</label>
-                                    <input type="text" name="degree_req" id="degree_req" value="{{old('edit_degree_req')}}" class="form-control">
+                                    <input type="text" name="degree_req" id="edit_degree_req" value="{{old('edit_degree_req')}}" class="form-control">
                                 </div>
                             </div>
 
@@ -288,6 +299,7 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -300,7 +312,14 @@
     </script>
     <script type="text/javascript">
 
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#semester_comm_date').datepicker({
+      autoclose:true
+    });
+
+        $('#edit_semester_comm_date').datepicker({
+      autoclose:true
+    });
 
          $.ajaxSetup({
             headers: {
@@ -385,7 +404,7 @@
             $('#edit_app_received').val(data.app_received);
             $('#edit_admission_offered').val(data.admission_offered);
             $('#edit_student_intake').val(data.student_intake);
-            $('#degree_req').val(data.degree_req);
+            $('#edit_degree_req').val(data.degree_req);
             $('#edit_semester_comm_date').val(data.semester_comm_date);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
@@ -397,7 +416,7 @@ $('#updateForm').submit(function (e) {
             let app_received = $('#edit_app_received').val();
             let admission_offered = $('#edit_admission_offered').val();
             let student_intake = $('#edit_student_intake').val();
-            let degree_req=$('#degree_req').val();
+            let degree_req=$('#edit_degree_req').val();
             let semester_comm_date = $('#edit_semester_comm_date').val();
             let id = $('#edit_id').val();
 

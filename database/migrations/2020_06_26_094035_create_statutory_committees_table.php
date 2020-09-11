@@ -32,10 +32,10 @@ class CreateStatutoryCommitteesTable extends Migration
             $table->foreign('designation_id')
                 ->references('id')
                 ->on('designations');
-            $table->date('date_first_meeting');
-            $table->date('date_second_meeting');
-            $table->date('date_third_meeting');
-            $table->date('date_fourth_meeting');
+            $table->string('date_first_meeting',100)->nullable();
+            $table->string('date_second_meeting',100)->nullable();
+            $table->string('date_third_meeting',100)->nullable();
+            $table->string('date_fourth_meeting',100)->nullable();
             $table->string('file', 255)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');

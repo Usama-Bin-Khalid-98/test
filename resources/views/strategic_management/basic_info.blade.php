@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <!--===============================================================================================-->
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
@@ -75,7 +76,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Year of  establishment (university/parent institution)</label>
-                                        <input type="date" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
+                                        <div class="input-group">
+                                        <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -113,7 +119,12 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Year of establishment of the business school</label>
-                                        <input type="date" id="campus_year_estb" value="{{@$basic_info->campus_year_estb}}" class="form-control">
+                                        <div class="input-group">
+                                        <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" id="campus_year_estb" value="{{@$basic_info->campus_year_estb}}" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
 
@@ -127,7 +138,12 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Date of charter granted</label>
-                                        <input type="date" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" class="form-control">
+                                        <div class="input-group">
+                                        <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -218,6 +234,7 @@
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
     <script type="text/javascript">
 
@@ -227,6 +244,16 @@
         $('#designation_id').select2();
         $('#charter_type_id').select2();
         $('#institute_type_id').select2();
+        $('#campus_year_estb').datepicker({
+      autoclose: true
+    });
+        $('#year_estb').datepicker({
+            autoclose:true
+        });
+
+        $('#date_charter_granted').datepicker({
+            autoclose:true
+        });
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
