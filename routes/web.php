@@ -214,6 +214,10 @@ use Illuminate\Support\Facades\Route;
             Route::get('getReviewerAllEvents', 'EligibilityScreeningController@getReviewerAllEvents');
             Route::post('esNotifyAll', 'EligibilityScreeningController@esNotifyAll');
             Route::resource('PRAvailability', 'ReviewerAvailabilityController');
+            Route::post('changeConfirmStatus', 'EligibilityScreeningController@changeConfirmStatus');
+            Route::get('esReport/{id}', 'EligibilityScreeningController@esReport');
+            Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
+            Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {

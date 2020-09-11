@@ -847,12 +847,16 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           @endhasrole
 
           @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yelow"></i>NBEAC System Settings</a></li>
+          <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yellow"></i>NBEAC System Settings</a></li>
+          @endhasrole
+
+          @hasrole('PeerReviewer')
+            <li class="{{(request()->is('PeerReviewerReport')) ? 'active' : '' }}"><a href="{{url('PeerReviewerReport')}}"><i class="fa fa-list text-yellow"></i>Peer Reviewer Registrations Report</a></li>
           @endhasrole
 
           @if(@$isFiveRegistrations >= 1)
           @hasanyrole('ESScheduler')
-          <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-gears text-yelow"></i>Eligibility Screening Scheduler</a></li>
+          <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-gears text-yellow"></i>Eligibility Screening Scheduler</a></li>
           @endhasrole
           @endif
           </ul>

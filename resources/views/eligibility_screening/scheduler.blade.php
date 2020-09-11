@@ -38,7 +38,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                @hasrole('PeerReviewer')
+                @hasrole('PeerReviewer|ESScheduler')
                 @foreach(@$userDates as $index => $reviewerDates)
                 <div class="col-md-3">
                         <div class="box box-solid">
@@ -52,7 +52,7 @@
 
                                         <span>Available on.</span>
                                         @foreach($reviewerDates['dates'] as $dates)
-                                    <div class="external-event bg-green fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                                    <div class="external-event bg-red fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
                                         <p>{{@$dates}}</p>
                                     </div>
                                         @endforeach
@@ -72,24 +72,25 @@
                 <div class="col-md-3">
                     <div class="box box-solid">
                     <div class="box-header with-border">
-                        <h5>Max Selected/Availability Date</h5>
+                        <h5>Peer Reviewers Most Selected/Availability Date.</h5>
                     </div>
                     <div class="box-body">
                         <!-- the events -->
                         <div id='external-events'>
-                            @foreach(@$availability as $available)
-                                @if($available->availability_dates == $availability[$index - 1]->availability_dates)
-                                <div class="external-event @if($maxSelectedDate == $available->availability_dates)bg-blue @else bg-red @endif fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                                   Date: {{@$available->availability_dates}}
-                                </div>
-                                @endif
-                            @endforeach
-                            <div class="checkbox">
-                                <label for="drop-remove">
-                                    <input type="checkbox" id="drop-remove">
-                                    remove after drop
-                                </label>
+                            <div class="external-event bg-green fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                                @hasrole('ESScheduler')<input type="checkbox" value="{{@$maxSelectedDate}}" @foreach($reviewers as $checkDate) @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) checked @endif @endforeach id="confirmDate" data-id="{{@request()->route('id')}}">@endhasrole Date: {{@$maxSelectedDate}}
+                                : @php $confirm = 'Not Confirmed yet'; @endphp @foreach($reviewers as $checkDate) @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) @php $confirm = 'confirmed'; @endphp @break @endif @endforeach @php echo $confirm @endphp
                             </div>
+
+{{--                            @foreach(@$availability as $available)--}}
+{{--                                @if($available->availability_dates !== $availability[$index - 1]->availability_dates)--}}
+
+{{--                                    <div class="external-event @if($maxSelectedDate == $available->availability_dates)bg-blue @else bg-red @endif fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">--}}
+{{--                                        <input type="checkbox" id="drop-remove"> Date: {{@$available->availability_dates}}--}}
+{{--                                </div>--}}
+{{--                                @endif--}}
+{{--                            @endforeach--}}
+
                         </div>
                     </div>
                         <!-- /.box-body -->
@@ -97,63 +98,6 @@
                 </div>
                 @endhasrole
 
-                @hasrole('EsScheduler')
-                <div class="col-md-2">
-{{--                    <div class="box box-solid">--}}
-{{--                        <div class="box-header with-border">--}}
-{{--                            <h4 class="box-title">Draggable Events</h4>--}}
-{{--                        </div>--}}
-{{--                        <div class="box-body">--}}
-{{--                            <div id='external-events'>--}}
-{{--                                <p>--}}
-{{--                                    <strong>Draggable Events</strong>--}}
-{{--                                </p>--}}
-{{--                                @foreach(@$registrations as $reg)--}}
-{{--                                    <div class="external-event bg-green fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">--}}
-{{--                                        <div class='fc-event-main'>{{@$reg->school}}--{{@$reg->department}}</div>--}}
-{{--                                    </div>--}}
-{{--                                @endforeach--}}
-{{--                                --}}
-{{--                                <p>--}}
-{{--                                    <input type='checkbox' id='drop-remove' />--}}
-{{--                                    <label for='drop-remove'>remove after drop</label>--}}
-{{--                                </p>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <!-- /.box-body -->--}}
-{{--                    </div> --}}
-
-                        <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h5>PeerReviewers</h5>
-{{--                        <p>Drag and drop on dates you are free.</p>--}}
-                        </div>
-                        <div class="box-body">
-                            <!-- the events -->
-                            <div id='external-events'>
-
-                                @foreach(@$reviewers as $reviewer)
-                                    <div class="external-event bg-green fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                                       Name: {{@$reviewer->name}} <br> <span>Available on.</span>
-                                    </div>
-                                @endforeach
-{{--                                <div class="external-event bg-yellow">Go home</div>--}}
-{{--                                <div class="external-event bg-aqua">Do homework</div>--}}
-{{--                                <div class="external-event bg-light-blue">Work on UI design</div>--}}
-{{--                                <div class="external-event bg-red">Sleep tight</div>--}}
-
-                                <div class="checkbox">
-                                    <label for="drop-remove">
-                                        <input type="checkbox" id="drop-remove">
-                                        remove after drop
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                </div>
-                @endhasrole
                 <!-- /.col -->
                 @hasrole('PeerReviewer')<div class="col-md-12">@endhasrole
                 @hasrole('ESScheduler')<div class="col-md-12">@endhasrole
@@ -777,6 +721,38 @@
             }
         });
 
+        $('#confirmDate').on('change', function () {
+            let confirmCheck = $(this).is(':checked');
+            let slip_id = $(this).data('id');
+            let confirm = confirmCheck?'yes':'';
+            let dateVal = $(this).val();
+            //console.log('checked....', confirmCheck);
+            $.ajax({
+                url:"{{url('changeConfirmStatus')}}",
+                type:"post",
+                data: {confirm:confirm,slip_id:slip_id,dateVal:dateVal},
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                     Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    //let data = JSON.parse(JSON.stringify(response));
+                    console.log('response data...', response);
+
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+        });
         /* ADDING EVENTS */
         // var currColor = '#3c8dbc' //Red by default
         // //Color chooser button

@@ -798,7 +798,11 @@
 
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
-                              <td>@if($screening->regStatus =='Eligibility') <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Schedule Eligibility Screening </a>  @elseif($screening->regStatus =='Review')Desk Review In-progress @endif</td>
+                              <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES')
+                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}">Eligibility Screening Calendar</a>
+                                  @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
+
+                              </td>
                           </tr>
                       @endforeach
 
@@ -866,7 +870,11 @@
                               <td><a href="{{url('print?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->id}}">Registration Print </a></td>
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
-                              <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' ) <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Schedule Eligibility Screening </a>  @elseif($screening->regStatus =='Review')Desk Review In-progress @endif</td>
+                              <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' )
+                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Eligibility Screening Calendar</a>
+                                  @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
+                                  <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" >Eligibility Report</a>
+                              </td>
                           </tr>
                       @endforeach
 
