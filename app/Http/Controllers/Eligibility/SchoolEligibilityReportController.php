@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Eligibility;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SchoolEligibilityReportController extends Controller
@@ -16,6 +17,7 @@ class SchoolEligibilityReportController extends Controller
     public function index()
     {
         //
+        $userInfo = Auth::user();
         $registrations_reports = DB::table('slips as s')
             ->join('campuses as c', 'c.id', '=', 's.business_school_id')
             ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
@@ -24,7 +26,8 @@ class SchoolEligibilityReportController extends Controller
             ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
                 'er.status as eligibility_status', 'er.comments', 'er.file')
 //                ->where('s.regStatus', 'Mentoring')
-//            ->where('s.id', $id)
+            ->where('s.business_school_id', $userInfo->campus_id)
+            ->where('s.department_id', $userInfo->department_id)
             ->get();
 
         return view('eligibility_screening.school_eligibility_report', compact('registrations_reports'));
