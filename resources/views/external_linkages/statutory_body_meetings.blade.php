@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
@@ -95,7 +96,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Meeting date</label>
-                                    <input type="date"  name="meeting_date" id="meeting_date" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text"  name="meeting_date" id="meeting_date" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                </div>
                                 </div>
                             </div>
 
@@ -218,8 +224,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Meeting date</label>
-                                    <input type="date" name="meeting_date"
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="meeting_date"
                                     id="edit_meeting_date" value="{{old('edit_meeting_date')}}" class="form-control">
+                                </div>
                             </div>
                         </div>
 
@@ -252,6 +263,7 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -272,7 +284,13 @@
     </script>
     <script type="text/javascript">
 
-        $('.select2').select2()
+        $('.select2').select2();
+         $('#meeting_date').datepicker({
+      autoclose:true
+    });
+          $('#edit_meeting_date').datepicker({
+      autoclose:true
+    });
 
          $.ajaxSetup({
             headers: {

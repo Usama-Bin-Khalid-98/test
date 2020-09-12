@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
@@ -84,7 +85,12 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Date of program commencement</label>
-                                    <input type="date" id="date_program" value="{{old('date_program')}}" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" id="date_program" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                    </div>
                                 </div>
                             </div>
 
@@ -246,6 +252,7 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -259,7 +266,10 @@
     <script type="text/javascript">
 
         //Initialize Select2 Elements
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#date_program').datepicker({
+      autoclose:true
+    });
 
         $.ajaxSetup({
             headers: {
