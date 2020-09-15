@@ -53,7 +53,7 @@
                         </div>
                     <form role="form" method="post">
                         <div class="box-body">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Degree Department</label>
                                     <input type="text" readonly id="department" name="department" readonly class="form-control" value="{{@$departments->name}}">
@@ -296,7 +296,7 @@
                             <div class="box box-primary">
                                 <!-- /.box-header -->
                                 <div class="box-body">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="name">Degree Department</label>
                                             <input type="text" readonly id="edit_department_id" name="department_id" readonly class="form-control">

@@ -182,8 +182,8 @@
                                              <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="name">Account Type</label>
-                                                    <p><input type="radio" name="account_type" id="business_school" class="flat-red" value="business_school" {{ old('account_type') == 'business_school' ? 'checked' : '' }}><span class="status">Business School</span></p>
-                                                    <p><input type="radio" name="account_type" id="peer_review" class="flat-red" value="peer_review" {{ old('account_type') == 'peer_review' ? 'checked' : '' }}><span class="status">Peer Reviewer</span></p>
+                                                    <p><input type="radio" name="account_type" id="BusinessSchool" class="flat-red" value="BusinessSchool" {{ old('account_type') == 'BusinessSchool' ? 'checked' : '' }}><span class="status">Business School</span></p>
+                                                    <p><input type="radio" name="account_type" id="PeerReviewer" class="flat-red" value="PeerReviewer" {{ old('account_type') == 'PeerReviewer' ? 'checked' : '' }}><span class="status">Peer Reviewer</span></p>
                                                     @error('account_type')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -196,7 +196,7 @@
                         </li>
                         <!-- END timeline item -->
                         <!-- timeline item -->
-                        <li id="business-school-tab" style="display: {{old('account_type')==='business_school'?'block':'none'}};">
+                        <li id="business-school-tab" style="display: {{old('account_type')==='BusinessSchool'?'block':'none'}};">
                             <i class="fa fa-university bg-aqua"></i>
 
                             <div class="timeline-item">
@@ -323,7 +323,7 @@
                         </li>
                         <!-- END timeline item -->
                         <!-- timeline item -->
-                        <li id="peer-review-tab" style="display: {{old('account_type')==='peer_review'?'block':'none'}};"  >
+                        <li id="peer-review-tab" style="display: {{old('account_type')==='PeerReviewer'?'block':'none'}};"  >
                             <i class="fa fa-search bg-yellow"></i>
 
                             <div class="timeline-item">
@@ -684,15 +684,15 @@
 
         $('input[name=account_type]').on('ifChecked', function(e){
             console.log(' account type ', $(this).val());
-            if($(this).val() !== 'business_school') {
+            if($(this).val() !== 'BusinessSchool') {
                 $('button[name=submit]').removeAttr('disabled');
             }
 
             console.log('change school type', $(this).val());
             let toggle = $(this).val();
 
-            (toggle==='business_school')?$('#business-school-tab').toggle('slow'):$('#business-school-tab').fadeOut('slow');
-            (toggle==='peer_review')?$('#peer-review-tab').toggle('slow'):$('#peer-review-tab').fadeOut('slow');
+            (toggle==='BusinessSchool')?$('#business-school-tab').toggle('slow'):$('#business-school-tab').fadeOut('slow');
+            (toggle==='PeerReviewer')?$('#peer-review-tab').toggle('slow'):$('#peer-review-tab').fadeOut('slow');
 
         });
 

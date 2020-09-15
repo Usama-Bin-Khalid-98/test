@@ -36,22 +36,23 @@ use Illuminate\Support\Facades\Route;
     Route::get('submitSAR', 'PrintController@submitSAR');
 
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
-    ////// Users permissions
-    //Route::get('permission', 'Auth\UserController@permissions');
-    Route::group(['middleware' => ['role:NBEACAdmin']], function () {
-        ///// Dashboard
-        Route::patch('admin/{id}', 'DashboardController@schoolStatus');
-        // Users resource route.
-        Route::resource('users', 'Auth\UserController');
-        Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');
-        // Roles resource route.
-        Route::resource('roles', 'Auth\RoleController');
-        // Permissions resource route.
-        // Route::resource('permissions', 'Auth\PermissionController');
-        Route::resource('desk-review', 'DeskReviewController');
-        Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
-        Route::resource('nbeac-criteria', 'NbeacCriteriaController');
-        Route::resource('department-fee', 'DepartmentFeeController');
+        ////// Users permissions
+        //Route::get('permission', 'Auth\UserController@permissions');
+        Route::group(['middleware' => ['role:NBEACAdmin']], function () {
+            ///// Dashboard
+            Route::patch('admin/{id}', 'DashboardController@schoolStatus');
+            // Users resource route.
+            Route::resource('users', 'Auth\UserController');
+            Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');
+            // Roles resource route.
+            Route::resource('roles', 'Auth\RoleController');
+            // Permissions resource route.
+            // Route::resource('permissions', 'Auth\PermissionController');
+            Route::resource('desk-review', 'DeskReviewController');
+            Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
+            Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
+            Route::resource('nbeac-criteria', 'NbeacCriteriaController');
+            Route::resource('department-fee', 'DepartmentFeeController');
 
 
         });
@@ -62,25 +63,24 @@ use Illuminate\Support\Facades\Route;
 
         });
 
-    //    Route::put('users-roles', 'Auth\UserController\user_roles');
+        //Route::put('users-roles', 'Auth\UserController\user_roles');
 
         Route::group(['middleware' => ['role:BusinessSchool']], function () {
         //// Strategic Management
-        Route::prefix('strategic')->group(function () {
-            Route::resource('basicinfo','StrategicManagement\BasicInfoController');
-            Route::get('invoice/{id}','StrategicManagement\SlipController@invoice');
-            Route::resource('invoices','StrategicManagement\SlipController');
-            Route::post('generateInvoice','StrategicManagement\SlipController@generateInvoice');
-            Route::resource('scope','StrategicManagement\ScopeController');
-            Route::resource('contact-info','StrategicManagement\ContactInfoController');
-            Route::resource('statutory-committees','StrategicManagement\StatutoryCommitteeController');
-            Route::resource('affiliations','StrategicManagement\AffiliationController');
-            Route::resource('budgetary-info','BudgetaryInfoController');
-            Route::resource('strategic-plan','StrategicPlanController');
-            Route::resource('mission-vision','MissionVisionController');
-            Route::resource('sources-funding','SourcesFundingController');
-            Route::resource('audit-report','AuditReportController');
-            Route::resource('parent-institution','ParentInstitutionController');
+            Route::prefix('strategic')->group(function () {
+                Route::resource('basicinfo','StrategicManagement\BasicInfoController');
+                Route::resource('invoices','StrategicManagement\SlipController');
+                Route::post('generateInvoice','StrategicManagement\SlipController@generateInvoice');
+                Route::resource('scope','StrategicManagement\ScopeController');
+                Route::resource('contact-info','StrategicManagement\ContactInfoController');
+                Route::resource('statutory-committees','StrategicManagement\StatutoryCommitteeController');
+                Route::resource('affiliations','StrategicManagement\AffiliationController');
+                Route::resource('budgetary-info','BudgetaryInfoController');
+                Route::resource('strategic-plan','StrategicPlanController');
+                Route::resource('mission-vision','MissionVisionController');
+                Route::resource('sources-funding','SourcesFundingController');
+                Route::resource('audit-report','AuditReportController');
+                Route::resource('parent-institution','ParentInstitutionController');
             });
 
     //        Route::resource('print','PrintController');
@@ -199,7 +199,6 @@ use Illuminate\Support\Facades\Route;
           Route::prefix('config')->group(function (){
             //        Route::resource('{table}', 'ConfigController');
             //   });
-
             Route::Get('/{table}', 'ConfigController@index');
             Route::Get('/{table}/create', 'ConfigController@create'); // {user:username}/add
             Route::Post('/{table}', 'ConfigController@store');
@@ -207,6 +206,8 @@ use Illuminate\Support\Facades\Route;
             Route::PUT('/{table}/{id}', 'ConfigController@update');
             Route::DELETE('/{table}/{id}', 'ConfigController@destroy');
             });
+
+          Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer']], function () {
@@ -220,10 +221,34 @@ use Illuminate\Support\Facades\Route;
             Route::get('esReport/{id}', 'EligibilityScreeningController@esReport');
             Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
             Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
+            Route::patch('PeerReviewerReport/{id}', 'EligibilityScreeningController@update');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
+
+        });
+
+        Route::group(['middleware' => ['role:NBEACAdmin|BusinessSchool']], function () {
+            Route::get('invoicesList', 'StrategicManagement\SlipController@invoicesList');
+            Route::get('strategic/invoice/{id}','StrategicManagement\SlipController@invoice');
+        });
+
+        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool']], function () {
+            Route::resource('MentoringScheduler', 'ScheduleMentorMeetingController');
+            Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');
+
+        });
+//
+        Route::group(['middleware' => ['role:Mentor|BusinessSchool']], function () {
+            Route::post('mentorsAvailability', 'ScheduleMentorMeetingController@mentorsAvailability');
+
+        });
+
+        Route::group(['middleware' => ['role:Mentor|ESScheduler|BusinessSchool']], function () {
+            Route::get('meetingsList/{id?}', 'ScheduleMentorMeetingController@index');
+            Route::get('getMentoringAllEvents', 'ScheduleMentorMeetingController@getMentoringAllEvents');
+
 
         });
     });

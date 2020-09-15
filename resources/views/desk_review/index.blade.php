@@ -113,13 +113,13 @@
 
                                 @foreach($registrations as $regist)
                                     <tr>
-                                        <td>{{@$regist->business_school->name}}</td>
-                                        <td>{{@$regist->campus->location??'Main Campus'}}</td>
-                                        <td>{{@$regist->department->name}}</td>
-                                        <td>{{@$regist->business_school->user->name}}</td>
-                                        <td>{{@$regist->business_school->user->contact_no}}</td>
-                                        <td>{{@$regist->business_school->user->email}}</td>
-                                        <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Review</a></td>
+                                        <td>{{@$regist->school}}</td>
+                                        <td>{{@$regist->campus??'Main Campus'}}</td>
+                                        <td>{{@$regist->department}}</td>
+                                        <td>{{@$regist->user}}</td>
+                                        <td>{{@$regist->contact_no}}</td>
+                                        <td>{{@$regist->email}}</td>
+                                        <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Click to Review</a></td>
                                         {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                         <td><i class="badge {{$regist->regStatus == 'Review'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'created'}}</i></td>
                                         <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>

@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Mentoring\ScheduleMentorMeeting;
 use App\Models\Common\Campus;
 use App\Models\Common\Department;
 use App\Models\Common\Designation;
 use App\Models\EligibilityScreening\ReviewerAvailability;
+use App\Models\MentoringMentor;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,6 +64,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function campus()
     {
         return $this->belongsTo(Campus::class);
+    }
+
+    public function mentoring_mentor()
+    {
+        return $this->hasOne(MentoringMentor::class);
+    }
+
+    public function schedule_mentor_meeting()
+    {
+        return $this->hasOne(ScheduleMentorMeeting::class);
     }
 }
 

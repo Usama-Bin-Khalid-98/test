@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEligibilityScreeningsTable extends Migration
+class CreateMentoringMeetingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEligibilityScreeningsTable extends Migration
      */
     public function up()
     {
-        Schema::create('eligibility_screenings', function (Blueprint $table) {
+        Schema::create('mentoring_meetings', function (Blueprint $table) {
             $table->id();
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
@@ -27,7 +27,7 @@ class CreateEligibilityScreeningsTable extends Migration
             $table->foreign('slip_id')
                 ->references('id')
                 ->on('slips');
-            $table->string('title', 255);
+            $table->string('title', 100);
             $table->dateTime('start');
             $table->dateTime('end');
             $table->string('allDay', 100)->nullable();
@@ -35,7 +35,6 @@ class CreateEligibilityScreeningsTable extends Migration
             $table->string('backgroundColor', 20)->nullable();
             $table->string('borderColor', 20)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
-            $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
@@ -60,6 +59,6 @@ class CreateEligibilityScreeningsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('eligibility_screenings');
+        Schema::dropIfExists('mentoring_meetings');
     }
 }

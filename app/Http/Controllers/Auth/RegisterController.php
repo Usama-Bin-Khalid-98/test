@@ -63,7 +63,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if ($data['account_type'] === 'business_school')
+        if ($data['account_type'] === 'BusinessSchool')
         {
             return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],
@@ -86,7 +86,7 @@ class RegisterController extends Controller
             );
         }
 
-        if($data['account_type'] === 'peer_review')
+        if($data['account_type'] === 'PeerReviewer')
         {
             return Validator::make($data, [
                 'reviewer_role_id' => 'required',
@@ -130,7 +130,7 @@ class RegisterController extends Controller
     {
         $businessSchool = BusinessSchool::where('id', $data['business_school_id']);
 
-        if($data['account_type']== 'business_school') {
+        if($data['account_type']== 'BusinessSchool') {
 //            try {
 //                $update = BusinessSchool::find($data['business_school_id']);
 ////                $update->update([
@@ -186,7 +186,7 @@ class RegisterController extends Controller
                 return $e->getMessage();
             }
         }
-        if($data['account_type']== 'peer_review') {
+        if($data['account_type']== 'PeerReviewer') {
             try {
                 $user = User::create([
                     'name' => $data['name'],
@@ -247,7 +247,7 @@ class RegisterController extends Controller
         $reviewerRoles = ReviewerRole::where('status', 'active')->get();
         $sectors = Sector::where('status', 'active')->get();
         $degrees = Degree::where('status', 'active')->get();
-        $users = \App\User::where('user_type', 'peer_reviewer');
+        $users = \App\User::where('user_type', 'PeerReviewer');
         $questions = Question::where('status', 'active')->get();
         //dd($users);
 

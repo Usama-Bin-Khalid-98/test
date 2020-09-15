@@ -44,6 +44,36 @@ class SlipController extends Controller
         return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods'));
     }
 
+    public function invoicesList()
+    {
+        //
+        $invoices = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school')
+            ->get();
+        //dd($invoices);
+        return view('admin.slip', compact('invoices'));
+    }
+
+    public function approvementStatus(Request $request)
+    {
+//        dd($request->all());
+        try {
+            Slip::find($request->id)->update([
+                'status' => $request->status,
+                'updated_by' => Auth::id(),
+            ]);
+            return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
