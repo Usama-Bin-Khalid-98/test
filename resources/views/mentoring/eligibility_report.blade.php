@@ -91,33 +91,32 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <form action="javascript:void(0)"  @if(@$registrations_reports[0]->comments) id="update" @else id="form" @endif method="POST">
+                            <form action="javascript:void(0)" id="form" method="POST">
 
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="registration_id">Registrations</label>
                                         <select name="slip_id" id="slip_id" class="form-control select2">
                                             @foreach($registrations as $register)
-                                            <option value="{{@$register->id}}" > {{@$register->school}} {{@$register->campus}} - {{@$register->department}}</option>
+                                            <option value="{{@$register->id}}"> {{@$register->school}} {{@$register->campus}} - {{@$register->department}}</option>
                                             @endforeach
                                         </select>
-                                        <input type="hidden" id="report_id" name="report_id" value="{{@$registrations_reports[0]->report_id}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4" style="margin-bottom: 10px;">
                                     <div class="form-group">
                                         <label for="status">Status</label>
                                         <select name="status" id="status" class="form-control select2">
-                                            <option value="Deferred" @if($registrations_reports[0]->eligibility_status==='Deferred') selected @endif>Deferred</option>
-                                            <option value="Approved" @if($registrations_reports[0]->eligibility_status==='Approved') selected @endif>Approved</option>
-                                            <option value="ConditionalApproval" @if($registrations_reports[0]->eligibility_status==='ConditionalApproval') selected @endif>Conditional Approval</option>
+                                            <option value="Deferred">Deferred</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="ConditionalApproval">Conditional Approval</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="name">Date</label>
-                                        <input type="date" name="es_meeting_date" id="es_meeting_date" class="form-control" value="@if(@$registrations_reports[0]->es_meeting_date){{@$registrations_reports[0]->es_meeting_date}}@else{{date('Y-m-d')}} @endif" >
+                                        <input type="date" name="es_meeting_date" id="es_meeting_date" class="form-control" value="{{date('Y-m-d')}}" >
                                     </div>
                                 </div>
 
@@ -125,8 +124,7 @@
                                     <div class="form-group">
                                         <label for="name">Attach Doc</label>
                                         <input type="file" name="file" id="file" accept=".doc,.docx,application/msword,.pdf">
-                                        @if(@$registrations_reports[0]->file)<span class="text-red"><a href="{{@$registrations_reports[0]->file}}">Click on link to download the file.</a></span> @else <span class="text-red">Max upload file size 2mb.</span> @endif
-
+                                        <span class="text-red">Max upload file size 2mb.</span>
                                     </div>
                                 </div>
 
@@ -134,18 +132,14 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="comments">Comments</label>
-                                        <textarea name="comments" id="comments" > {{@$registrations_reports[0]->comments}} </textarea>
+                                        <textarea name="comments" id="comments" > </textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">&nbsp;&nbsp;</label>
-                                        @if(@$registrations_reports[0]->comments)
-                                            <input type="submit" name="update" id="update" value="Update" class="btn btn-info">
-                                        @else
-                                            <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
-                                        @endif
+                                        <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                     </div>
                                 </div>
                             </form>
@@ -264,7 +258,6 @@
         // Replace the <textarea id="editor1"> with a CKEditor
         CKEDITOR.replace('comments');
     });
-
     $('#form').submit(function (e) {
         var slip_id = $('#slip_id').val();
         var comments = CKEDITOR.instances.comments.getData();
@@ -306,62 +299,6 @@
                     }
 
                     location.reload();
-
-                    console.log('response here', response);
-                },
-                error:function(response, exception){
-                    Notiflix.Loading.Remove();
-                    $.each(response.responseJSON, function (index, val) {
-                        Notiflix.Notify.Failure(val);
-                    })
-
-                }
-            })
-    });
-
-    $('#update').submit(function (e) {
-        var slip_id = $('#slip_id').val();
-        var report_id = $('#report_id').val();
-        var comments = CKEDITOR.instances.comments.getData();
-        var file = $('#file').val();
-
-        !file?addClass('file'):removeClass('file');
-        !comments?addClass('comments'):removeClass('comments');
-        !slip_id?addClass('slip_id'):removeClass('slip_id');
-
-        if(!file || !slip_id || !comments || !report_id)
-        {
-            Notiflix.Notify.Warning("Fill all the required Fields.");
-            return;
-        }
-        e.preventDefault();
-        let formData = new FormData(this)
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
-            // Yes button callback
-            formData.append('_method', 'PATCH')
-            $.ajax({
-                url:'{{url("PeerReviewerReport")}}/'+report_id,
-                type:'post',
-                data: formData,
-                cache:false,
-                contentType:false,
-                processData:false,
-                beforeSend: function(){
-                    Notiflix.Loading.Pulse('Processing...');
-                },
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                success: function (response) {
-                    Notiflix.Loading.Remove();
-                    console.log("success resp ",response.success);
-                    if(response.success){
-                        Notiflix.Notify.Success(response.success);
-                    }
-
-                    //location.reload();
 
                     console.log('response here', response);
                 },

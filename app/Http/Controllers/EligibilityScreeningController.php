@@ -29,7 +29,6 @@ class EligibilityScreeningController extends Controller
     public function index()
     {
         //
-        $registrations = Slip::where(['status' => 'paid'])->get();
 
     }
 
@@ -62,7 +61,7 @@ class EligibilityScreeningController extends Controller
                 ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
                 ->join('departments as d', 'd.id', '=', 's.department_id')
                 ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department')
-                ->where('s.regStatus', 'ScheduledES')
+//                ->where('s.regStatus', 'ScheduledES')
                 ->where('s.id', $id)
                 ->get();
 
@@ -72,7 +71,7 @@ class EligibilityScreeningController extends Controller
                 ->join('departments as d', 'd.id', '=', 's.department_id')
                 ->join('eligibility_reports as er', 'er.slip_id', '=', 's.id')
                 ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
-                    'er.status as eligibility_status', 'er.comments', 'er.file')
+                    'er.status as eligibility_status', 'er.comments', 'er.file', 'er.es_meeting_date', 'er.id as report_id')
 //                ->where('s.regStatus', 'Mentoring')
                 ->where('s.id', $id)
                 ->get();
@@ -83,6 +82,7 @@ class EligibilityScreeningController extends Controller
                 ->join('departments as d', 'd.id', '=', 's.department_id')
                 ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department')
                 ->where('s.regStatus', 'ScheduledES')
+                ->orWhere('s.regStatus', 'ScheduledPR')
                 ->get();
 
             $registrations_reports = DB::table('slips as s')
@@ -93,10 +93,11 @@ class EligibilityScreeningController extends Controller
                 ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
                     'er.status as eligibility_status', 'er.comments', 'er.file')
                 ->where('s.regStatus', 'ScheduledES')
+                ->orWhere('s.regStatus', 'ScheduledPR')
                 ->get();
         }
 
-        //dd($registrations);
+//        dd($registrations_reports);
         return view('eligibility_screening.eligibility_report', compact('registrations', 'registrations_reports'));
     }
     /**
@@ -115,11 +116,13 @@ class EligibilityScreeningController extends Controller
         AND departments.id=slips.department_id
         AND campuses.business_school_id=business_schools.id
         AND users.id = slips.created_by
-        AND slips.status ='paid' AND slips.regStatus = 'Eligibility'";
+        AND slips.status ='approved' AND slips.regStatus = 'Eligibility'";
         $id ? $query .= ' AND slips.id = ' . $id : '';
         $registrations = DB::select($query, array());
 //        dd($registrations);
-        //$reviewers = User::role('PeerReviewer')->get();
+
+        $reviewers_all = User::role('PeerReviewer')->get();
+//        dd($reviewers_all);
         $reviewers = ReviewerAvailability::with('slip', 'user')->where('slip_id', $id)->get();
 //        dd($reviewers);
         $reviewersDates = ReviewerAvailability::with('slip', 'user')->where('slip_id', $id)->get()->groupBy('user_id');
@@ -151,15 +154,15 @@ class EligibilityScreeningController extends Controller
         }
         $count_val = array_count_values($dates);
         $maxSelectedDate = $this->doublemax($count_val);
-        return view('eligibility_screening.scheduler', compact('registrations', 'reviewers','userDates', 'availability','maxSelectedDate'));
+        return view('eligibility_screening.scheduler', compact('registrations', 'reviewers','userDates', 'availability','maxSelectedDate', 'reviewers_all'));
     }
 
     public function doublemax($mylist){
-        $maxvalue=max($mylist);
+        @$maxvalue=max($mylist);
         foreach ($mylist as $key=>$value) {
             if($value==$maxvalue)$maxindex=$key;
         }
-        return $maxindex;
+        return @$maxindex;
         //return array("m"=>$maxvalue,"i"=>$maxindex);
     }
 
@@ -267,7 +270,9 @@ class EligibilityScreeningController extends Controller
                     ]
                 );
                 if ($insert) {
-                    $update_slip = Slip::find($request->slip_id)->update(['regStatus'=> 'Mentoring']);
+                    if ($request->status === 'Approved'){
+                        $update_slip = Slip::find($request->slip_id)->update(['regStatus' => 'Mentoring']);
+                    }
 
 
                     ///////////////////// Email to Business School //////////////////////
@@ -318,7 +323,7 @@ class EligibilityScreeningController extends Controller
             })
             ->where([
                 'regStatus' =>'ScheduledES',
-                'status'=>'paid'
+                'status'=>'approved'
                 ]
             )->get();
        // dd($eligibilityScreening);
@@ -359,6 +364,50 @@ class EligibilityScreeningController extends Controller
     public function update(Request $request, EligibilityScreening $eligibilityScreening)
     {
         //
+        $validation = Validator::make($request->all(), $this->report_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+
+                $imageName = '';
+                if ($request->file('file')) {
+                    $imageName = $request->status . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $path = 'uploads/eligibility_reports/';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $request->file('file')->move($path, $imageName);
+                }
+                $insert = EligibilityReport::find($request->report_id)->update(
+                    [
+                        'comments' => $request->comments,
+                        'status' => $request->status,
+                        'file' => $path.$imageName,
+                        'updated_by' => Auth::id(),
+                        'es_meeting_date' => $request->es_meeting_date
+                    ]
+                );
+                if ($insert) {
+                    if ($request->status === 'Approved'){
+                        $update_slip = Slip::find($request->slip_id)->update(['regStatus' => 'Mentoring']);
+                    }
+
+
+                    ///////////////////// Email to Business School //////////////////////
+                    ///
+                    ///////////////////// End Email to Business School //////////////////////
+
+
+                    return response()->json(['success' => 'report added successfully.'], 200);
+                }
+
+
+        }catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
     }
 
     /**

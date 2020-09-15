@@ -3,9 +3,12 @@
 namespace App\Models\Common;
 
 use App\BusinessSchool;
+use App\Mentoring\ScheduleMentorMeeting;
 use App\Models\EligibilityScreening\EligibilityScreening;
 use App\Models\EligibilityScreening\ESReviewer;
 use App\Models\EligibilityScreening\ReviewerAvailability;
+use App\Models\MentoringMeeting;
+use App\Models\MentoringMentor;
 use Illuminate\Database\Eloquent\Model;
 
 class Slip extends Model
@@ -34,5 +37,20 @@ class Slip extends Model
     }
     public function reviewer_availability() {
         return $this->hasOne(ReviewerAvailability::class);
+    }
+
+    public function mentoring_mentor()
+    {
+        return $this->hasOne(MentoringMentor::class);
+    }
+
+    public function mentoring_meeting()
+    {
+        return $this->hasOne(MentoringMeeting::class);
+    }
+
+    public  function schedule_mentor_meeting()
+    {
+        return $this->hasOne(ScheduleMentorMeeting::class);
     }
 }

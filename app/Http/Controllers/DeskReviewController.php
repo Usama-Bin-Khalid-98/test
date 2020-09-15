@@ -41,11 +41,14 @@ class DeskReviewController extends Controller
     {
         //$registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
 
-        $registrations = Slip::with('business_school')
-            ->where(['status' => 'active'])
-            ->orWhere('regStatus', "!=", 'Initiated')
+        $registrations = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school')
+//            ->where('s.reg')
             ->get();
-       // dd($registrations);
         //dd($desk_reviews);
 
         return view('desk_review.index', compact('registrations'));
@@ -226,7 +229,7 @@ class DeskReviewController extends Controller
                 'department_id' => $getUserData->department_id])
                 ->update([
                 'isEligible' => $isEligible,
-                'regStatus' => 'Eligibility'
+//                'regStatus' => 'Eligibility'
                 ]
             );
 
@@ -281,7 +284,17 @@ class DeskReviewController extends Controller
     public function deskreviewStatus(Request $request, DeskReview $deskReview)
     {
         //
-        dd($request->all());
+       // dd($request->all());
+        try {
+            $update = Slip::find($request->id)->update(['regStatus' => 'Eligibility']);
+            if($update)
+            {
+                return response()->json(['success' => 'Case forwarded to eligibility screening']);
+            }
+        }catch (\Exception $e)
+        {
+            return response()->json(['message' => 'Forwarding case to eligibility screening Failed.']);
+        }
 
     }
 

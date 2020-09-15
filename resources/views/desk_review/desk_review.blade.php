@@ -320,7 +320,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Business School Facilities Table.</h3>
+                            <h3 class="box-title">Business School eligibility list.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

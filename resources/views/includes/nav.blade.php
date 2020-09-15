@@ -1,6 +1,6 @@
 @php
 use \Illuminate\Support\Facades\Auth;
-$invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ]);
+$invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id, 'status'=>'approved' ]);
 $basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes' ]);
 $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes' ]);
 $contact = checkIsCompleted('App\Models\StrategicManagement\ContactInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -90,6 +90,7 @@ $faculty_workshop = checkIsCompleted('App\Models\Faculty\FacultyWorkshop', ['cam
 $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_school_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
+$isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
 
 @endphp
 
@@ -157,6 +158,19 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">
               <a href="{{url('strategic/invoices')}}">
                   <i class="fa fa-file-text-o" style="color: #D81B60"></i>Invoices
+                  <span class="pull-right-container">
+                        <span class="text text-{{$invoices==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$invoices==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                  </span>
+              </a>
+          </li>
+          @endhasrole
+
+          @hasrole('BusinessSchool')
+          <li class="{{ (request()->is('mentoring-invoices')) ? 'active' : '' }} ">
+              <a href="{{url('mentoring-invoices')}}">
+                  <i class="fa fa-file-text-o" style="color: #D81B60"></i>Mentoring Invoices
                   <span class="pull-right-container">
                         <span class="text text-{{$invoices==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$invoices==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -806,20 +820,24 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>
           @endhasrole
+          @if($isActiveSAR)
            @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('print')) ? 'active' : '' }}"><a href="{{url('print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print SAR</a></li>
           @endhasrole
+          @endif
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('registration-apply')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
           @endhasrole
+          @if($isActiveSAR)
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
           @endhasrole
-
+          @endif
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
+
           <li class=" treeview {{request()->is('registrations')?'active':''}}">
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations</span>
@@ -829,6 +847,7 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
               </a>
               <ul class="treeview-menu">
 {{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
+                  <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-circle-o text-green"></i>Invoices List</a></li>
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
               </ul>
           </li>
@@ -863,6 +882,15 @@ $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus
           <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-gears text-yellow"></i>Eligibility Screening Scheduler</a></li>
           @endhasrole
           @endif
+
+          @if(@$isFiveRegistrationsMentoring >= 1)
+          @hasanyrole('ESScheduler')
+          <li  class="{{ (request()->is('MentoringScheduler')) ? 'active' : '' }}"><a href="{{url('MentoringScheduler')}}"><i class="fa fa-gears text-yellow"></i>Mentoring Scheduler</a></li>
+          @endhasrole
+          @endif
+          @hasanyrole('Mentor')
+{{--          <li  class="{{ (request()->is('meetingsList')) ? 'active' : '' }}"><a href="{{url('meetingsList')}}"><i class="fa fa-meetup text-red"></i>Mentoring Meetings</a></li>--}}
+          @endhasrole
           </ul>
         </li>
       </ul>
