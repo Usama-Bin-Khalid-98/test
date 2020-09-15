@@ -643,7 +643,7 @@
                                     <td>{{$school->charter_number}} </td>
                                     <td>{{$school->web_url}} </td>
 
-                                    <td><a class="btn btn-info" href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print SAR</a></td>
+                                    <td><a class="btn btn-info" href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print SAR</a><a class="btn btn-primary" href="registrationPrint?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print Registration</a></td>
 
                                    <!--  <td><i class="badge  " > </i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->

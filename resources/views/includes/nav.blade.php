@@ -827,6 +827,8 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @endif
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('registration-apply')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+
+             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
           @endhasrole
           @if($isActiveSAR)
           @hasrole('BusinessSchool')
@@ -851,6 +853,9 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
               </ul>
           </li>
+
+
+          <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
 
           @endhasrole
            @hasrole('NBEACAdmin')
