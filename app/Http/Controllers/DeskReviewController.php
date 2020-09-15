@@ -108,7 +108,7 @@ class DeskReviewController extends Controller
         $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
         $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
 
-        $summaries = ResearchSummary::get();
+        $summaries = ResearchSummary::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get();
 
         //dd($female_faculty);
 
@@ -133,6 +133,8 @@ class DeskReviewController extends Controller
         AND users.id = slips.created_by
         AND slips.id = '.$id;
         @$desk_reviews = DB::select($query);
+
+        $desk_rev= DeskReview::with('campus','department')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
         //dd($desk_reviews);
         return view('desk_review.desk_review', compact(
             'program_dates',
@@ -162,7 +164,8 @@ class DeskReviewController extends Controller
             'comp_ratio',
             'summaries',
             'nbeac_criteria',
-            'desk_reviews'
+            'desk_reviews',
+            'desk_rev'
 
         ));
     }
@@ -271,7 +274,25 @@ class DeskReviewController extends Controller
      */
     public function update(Request $request, DeskReview $deskReview)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            DeskReview::where('id', $deskReview->id)->update([
+                'isEligible' => $request->isEligible,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => ' Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -306,7 +327,16 @@ class DeskReviewController extends Controller
      */
     public function destroy(DeskReview $deskReview)
     {
-        //
+        try {
+            DeskReview::where('id', $deskReview->id)->update([
+                'deleted_by' => Auth::user()->id
+            ]);
+            DeskReview::destroy($deskReview->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
     }
 
     protected function rules() {
