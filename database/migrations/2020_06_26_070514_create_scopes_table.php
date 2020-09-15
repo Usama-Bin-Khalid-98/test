@@ -33,7 +33,7 @@ class CreateScopesTable extends Migration
                 ->references('id')
                 ->on('levels')
                 ->onDelete('cascade');;
-            $table->date('date_program');
+            $table->string('date_program',100)->nullable();
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

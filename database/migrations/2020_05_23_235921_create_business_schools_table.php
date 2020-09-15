@@ -17,12 +17,12 @@ class CreateBusinessSchoolsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('contact_person', 80)->nullable();
-            $table->date('year_estb')->nullable();
-            $table->date('campus_year_estb')->nullable();
+            $table->string('year_estb',100)->nullable();
+            $table->string('campus_year_estb',100)->nullable();
             $table->string('address', 255)->nullable();
             $table->integer('cao_id' )->nullable();
             $table->string('web_url',255)->nullable();
-            $table->date('date_charter_granted')->nullable();
+            $table->string('date_charter_granted',100)->nullable();
             $table->string('charter_number', 255)->nullable();
             $table->integer('charter_type_id')->nullable();
             $table->integer('institute_type_id')->nullable();

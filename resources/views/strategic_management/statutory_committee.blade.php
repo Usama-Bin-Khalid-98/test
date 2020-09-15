@@ -8,6 +8,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <style>
@@ -89,10 +90,38 @@
                                                  @endforeach
                                              </select>
                                          </td>
-                                         <td><input type="date" name="date_first_meeting[]" value="" class="form-control"></td>
-                                         <td><input type="date" name="date_second_meeting[]" value="" class="form-control"></td>
-                                         <td><input type="date" name="date_third_meeting[]" value="" class="form-control"></td>
-                                         <td><input type="date" name="date_fourth_meeting[]" value="" class="form-control"></td>
+                                         <td>
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                            <input type="text" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            </div>
+                                        </td>
+                                         <td>
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                            <input type="text" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            </div>
+                                        </td>
+                                         <td>
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                            <input type="text" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            </div>
+                                        </td>
+                                         <td>
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                            <input type="text" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            </div>
+                                        </td>
                                          <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}"></td>
                                      </tr>
                                          @endforeach
@@ -320,6 +349,7 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
         $(function () {
@@ -329,7 +359,19 @@
     <script type="text/javascript">
 
         //Initialize Select2 Elements
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#date_first_meeting').datepicker({
+      autoclose:true
+    });
+        $('#date_second_meeting').datepicker({
+      autoclose:true
+    });
+        $('#date_third_meeting').datepicker({
+      autoclose:true
+    });
+        $('#date_fourth_meeting').datepicker({
+      autoclose:true
+    });
 
         //Flat red color scheme for iCheck
         $('input[type="radio"].flat-red').iCheck({
