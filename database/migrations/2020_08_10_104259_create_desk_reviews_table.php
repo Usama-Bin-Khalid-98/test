@@ -29,7 +29,6 @@ class CreateDeskReviewsTable extends Migration
 //                ->references('id')
 //                ->on('nbeac_criterias');
             $table->enum('isEligible',['yes','no'])->default('no');
-            $table->string('comments', 1000)->nullable();
             $table->enum('status',['active','inactive'])->default('active');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')

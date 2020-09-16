@@ -232,6 +232,7 @@ class DeskReviewController extends Controller
                 'department_id' => $getUserData->department_id])
                 ->update([
                 'isEligible' => $isEligible,
+                'comments' => $request->comments
 //                'regStatus' => 'Eligibility'
                 ]
             );
