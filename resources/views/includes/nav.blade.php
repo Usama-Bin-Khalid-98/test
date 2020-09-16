@@ -120,7 +120,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
       <ul class="sidebar-menu" data-widget="tree">
         <li class=" treeview">
           <a href="#">
-               <li class="{{ (request()->is('home')) ? 'active' : '' }}"><a href="/home"><i class="fa fa-dashboard text-green"></i>Dashboard</a></li>
+               <li class="{{ (request()->is('home')) ? 'active' : '' }}"><a href="public/home"><i class="fa fa-dashboard text-green"></i>Dashboard</a></li>
           </a>
         <!--   <ul class="treeview-menu">
             <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
@@ -855,7 +855,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           </li>
 
 
-          <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
+          <!-- <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li> -->
 
           @endhasrole
            @hasrole('NBEACAdmin')

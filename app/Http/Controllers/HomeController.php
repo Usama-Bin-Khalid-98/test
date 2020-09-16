@@ -177,7 +177,7 @@ class HomeController extends Controller
         }
 //        dd($MentoringMeetings);
 
-        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, campuses, slips WHERE campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=business_schools.id AND slips.status="paid" AND slips.isEligibleNBEAC="yes"', array());
+        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, users, campuses, slips WHERE users.business_school_id=business_schools.id AND campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=campuses.id AND slips.status="paid" ', array());
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
             'MentoringMeetings'));
