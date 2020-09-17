@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ChangeResgistrationStatusMail;
 
 
 class SlipController extends Controller
@@ -52,7 +54,8 @@ class SlipController extends Controller
             ->join('departments as d', 'd.id', '=', 's.department_id')
             ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
             ->join('users as u', 'u.id', '=', 's.created_by')
-            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school')
+            ->join('designations as dg', 'dg.id', '=', 'u.designation_id')
+            ->select('s.*', 'c.location as campus','dg.name as designation', 'd.name as department', 'u.name as user', 'u.email as email', 'u.contact_no', 'bs.name as school')
             ->get();
         //dd($invoices);
         return view('admin.slip', compact('invoices'));
@@ -66,6 +69,17 @@ class SlipController extends Controller
                 'status' => $request->status,
                 'updated_by' => Auth::id(),
             ]);
+
+            $data = array(
+                'user'      =>  $request->user,
+                'designation'      =>  $request->designation,
+                'school'      =>  $request->school,
+                'campus'      =>  $request->campus,
+                'cheque_no'      =>  $request->cheque_no,
+                'transaction_date'      =>  $request->transaction_date
+            );
+
+            Mail::to($request->email)->send(new ChangeResgistrationStatusMail($data));
             return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
         }
         catch (Exception $e)
