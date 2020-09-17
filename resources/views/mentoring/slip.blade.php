@@ -16,7 +16,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Business School Submitted Registration Invoices.
+                Business School Mentoring Invoices.
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -27,10 +27,10 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-{{--                    <button class="btn gradient-bg-color"--}}
-{{--                            data-toggle="modal" data-target="#generate-modal" style="color: white;"--}}
-{{--                            value="Add New">Generate Invoice <i class="fa fa-file-pdf-o"></i>--}}
-{{--                    </button>--}}
+                    <button class="btn gradient-bg-color"
+                            data-toggle="modal" data-target="#generate-modal" style="color: white;"
+                            value="Add New">Generate Invoice <i class="fa fa-file-pdf-o"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -42,7 +42,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Registration Invoices.</h3>
+                            <h3 class="box-title">Scope of Accreditation.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -80,7 +80,7 @@
                                         <td>{{@$invoice->campus??'main campus'}}</td>
                                         <td>{{@$invoice->department}}</td>
                                         <td>{{$invoice->invoice_no}}</td>
-                                        <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
+                                        <td><a href="{{url('mentoringInvoice/'.$invoice->id)}}">Invoice</a></td>
                                         <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                         <td>{{$invoice->transaction_date}}</td>
                                         <td>{{$invoice->comments}}</td>
@@ -88,7 +88,7 @@
                                         <td>
                                             <span data-toggle="tooltip" title="Invoice Slip Details" >
                                                 <i class="fa fa-money text-info my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
-                                                data-row='{"id":"{{$invoice->id}}","user":"{{$invoice->user}}","designation":"{{$invoice->designation}}","school":"{{$invoice->school}}","campus":"{{$invoice->campus}}","department_id":"{{$invoice->department}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}","email":"{{$invoice->email}}"}' ></i> </span></td>
+                                                data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span></td>
                                     </tr>
                                 @endforeach
 
@@ -122,7 +122,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"> Department Registration invoice details.  </h4>
+                    <h4 class="modal-title"> Mentoring invoice details.  </h4>
                 </div>
                 <div class="modal-body">
                     <form action="javascript:void(0)" method="POST" id="Invoice">
@@ -161,13 +161,6 @@
                                         <label for="comments">Payment Details</label>
                                         <p id="comments" > </p>
                                         <input type="hidden" name="id" id="id">
-                                        <input type="hidden" name="user" id="user">
-                                        <input type="hidden" name="designation" id="designation">
-                                        <input type="hidden" name="school" id="school">
-                                        <input type="hidden" name="campus" id="campus">
-                                        <input type="hidden" name="cheque_no" id="cheque_no">
-                                        <input type="hidden" name="transaction_date" id="transaction_date">
-                                        <input type="hidden" name="email" id="email">
                                     </div>
                                 </div>
 
@@ -234,15 +227,8 @@
         $(".my-invoice").on('click', function () {
             // console.log('this value', $(this));
             //console.log('modal showed', $(this).data('id'));
-            let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#id').val($(this).data('id'));
-            $('#user').val(data.user);
-            $('#designation').val(data.designation);
-            $('#school').val(data.school);
-            $('#campus').val(data.campus);
-            $('#transaction_date').val(data.transaction_date);
-            $('#cheque_no').val(data.cheque_no);
-            $('#email').val(data.email);
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
             console.log('invoice id ', data);
             $('#edit_department_id').text(data.department_id);
             $('#transaction_date').text(data.transaction_date);
@@ -262,20 +248,12 @@
         $('#update-button').on('click', function () {
             let status = $('#approvementStatus:checked').val();
             let id = $('#id').val();
-            let user = $('#user').val();
-            let designation = $('#designation').val();
-            let school = $('#school').val();
-            let campus = $('#campus').val();
-            let transaction_date = $('#transaction_date').val();
-            let cheque_no = $('#cheque_no').val();
-            let email = $('#email').val();
-
             status? status = 'approved':status = 'paid';
 
             $.ajax({
                 url:'{{url("approvementStatus")}}',
                 type:'POST',
-                data: {status:status, id:id ,user:user,designation:designation,school:school,campus:campus,transaction_date:transaction_date,cheque_no:cheque_no,email:email},
+                data: {status:status, id:id},
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },

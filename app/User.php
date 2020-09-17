@@ -7,6 +7,7 @@ use App\Models\Common\Campus;
 use App\Models\Common\Department;
 use App\Models\Common\Designation;
 use App\Models\EligibilityScreening\ReviewerAvailability;
+use App\Models\MentoringInvoice;
 use App\Models\MentoringMentor;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -74,6 +75,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function schedule_mentor_meeting()
     {
         return $this->hasOne(ScheduleMentorMeeting::class);
+    }
+
+    public function mentoring_invoice()
+    {
+        return $this->hasOne(MentoringInvoice::class, 'id', 'created_by');
     }
 }
 
