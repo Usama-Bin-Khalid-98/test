@@ -16,7 +16,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Business School Submitted Registration Invoices.
+                Business School Mentoring Invoices.
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -27,10 +27,10 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-{{--                    <button class="btn gradient-bg-color"--}}
-{{--                            data-toggle="modal" data-target="#generate-modal" style="color: white;"--}}
-{{--                            value="Add New">Generate Invoice <i class="fa fa-file-pdf-o"></i>--}}
-{{--                    </button>--}}
+                    <button class="btn gradient-bg-color"
+                            data-toggle="modal" data-target="#generate-modal" style="color: white;"
+                            value="Add New">Generate Invoice <i class="fa fa-file-pdf-o"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -42,7 +42,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Registration Invoices.</h3>
+                            <h3 class="box-title">Scope of Accreditation.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -80,7 +80,7 @@
                                         <td>{{@$invoice->campus??'main campus'}}</td>
                                         <td>{{@$invoice->department}}</td>
                                         <td>{{$invoice->invoice_no}}</td>
-                                        <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
+                                        <td><a href="{{url('mentoringInvoice/'.$invoice->id)}}">Invoice</a></td>
                                         <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                         <td>{{$invoice->transaction_date}}</td>
                                         <td>{{$invoice->comments}}</td>
@@ -122,7 +122,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"> Department Registration invoice details.  </h4>
+                    <h4 class="modal-title"> Mentoring invoice details.  </h4>
                 </div>
                 <div class="modal-body">
                     <form action="javascript:void(0)" method="POST" id="Invoice">

@@ -605,7 +605,7 @@
                 <!-- TO DO List -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Business school Campuses. </h3>
+                        <h3 class="box-title">Business school Campuses SAR/Registrations print list. </h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                             </button>

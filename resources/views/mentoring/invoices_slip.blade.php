@@ -17,7 +17,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Business School Submitted Registration Invoices.
+                Business School Submitted Mentoring Invoices.
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -43,12 +43,12 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Generate Invoice for department Registration</h4>
+                        <h4 class="modal-title">Generate Invoice for mentoring.</h4>
                     </div>
                         <div class="pad margin no-print">
                           <div class="callout callout-info" style="margin-bottom: 0!important;">
                             <h4><i class="fa fa-info"></i> Note:</h4>
-                                If you have paid the registration amount, please fill all the required fields, otherwise generate the invoice.
+                                Please fill all the required fields and generate the invoice for mentoring.
                           </div>
                         </div>
                     <form role="form" method="post">
@@ -56,8 +56,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Degree Department</label>
-                                    <input type="text" readonly id="department" name="department" readonly class="form-control" value="{{@$departments->name}}">
-                                    <input type="hidden" readonly id="department_id" name="department_id" readonly class="form-control" value="{{@$departments->id}}">
+                                    <select name="department_id" id="department_id" class="form-control">
+                                        @foreach($departments as $department)
+                                        <option value="{{@$department->id}}">{{@$department->name}}</option>
+                                        @endforeach
+                                    </select>
+{{--                                    <input type="text" readonly id="department" name="department" readonly class="form-control" value="{{@$departments->name}}">--}}
+{{--                                    <input type="hidden" readonly id="department_id" name="department_id" readonly class="form-control" value="{{@$departments->id}}">--}}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -69,58 +74,66 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="date">Date of transaction</label>
-                                    <div class="input-group">
-                                    <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                                    <input type="text" id="add_transaction_date" name="transaction_date" value="<?php echo date('m/d/Y'); ?>" class="form-control">
-                                    </div>
+                                    <label for="name">Fee Amount</label>
+                                    <input type="text" readonly id="amount" readonly name="amount" value="{{@$fee_amount->amount??old('amount')}}" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group" style="margin-bottom: 22px;">
-                                    <label for="type">Payment Method </label>
-                                    <select name="payment_method" id="add_payment_method" class="form-control select2">
-                                        <option value="">Select Payment Method</option>
-                                        @foreach($payment_methods as $method)
-                                            <option value="{{$method->id}}">{{$method->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="date">Date of transaction</label>--}}
+{{--                                    <div class="input-group">--}}
+{{--                                    <div class="input-group-addon">--}}
+{{--                    <i class="fa fa-calendar"></i>--}}
+{{--                  </div>--}}
+{{--                                    <input type="text" id="add_transaction_date" name="transaction_date" value="<?php echo date('m/d/Y'); ?>" class="form-control">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Cheque No</label>
-                                    <input type="text" id="add_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group" style="margin-bottom: 18px;">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <select name="status" id="add_status" class="form-control select2">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="paid">Paid</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="slip">Bank Deposit Slip</label>
-                                    <input type="file" name="slip" id="add_slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">
-                                    <span class="text-blue">Max 2mb file size allowed. </span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="comments">Payment Details</label>
-                                    <textarea name="comments" id="add_comments" class="form-control">{{old('comments')}}</textarea>
-                                </div>
-                            </div>
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group" style="margin-bottom: 22px;">--}}
+{{--                                    <label for="type">Payment Method </label>--}}
+{{--                                    <select name="payment_method" id="add_payment_method" class="form-control select2">--}}
+{{--                                        <option value="">Select Payment Method</option>--}}
+{{--                                        @foreach($payment_methods as $method)--}}
+{{--                                            <option value="{{$method->id}}">{{$method->name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Cheque No</label>--}}
+{{--                                    <input type="text" id="add_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group" style="margin-bottom: 18px;">--}}
+{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                    <select name="status" id="add_status" class="form-control select2">--}}
+{{--                                        <option value="active">Active</option>--}}
+{{--                                        <option value="inactive">Inactive</option>--}}
+{{--                                        <option value="pending">Pending</option>--}}
+{{--                                        <option value="paid">Paid</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="slip">Bank Deposit Slip</label>--}}
+{{--                                    <input type="file" name="slip" id="add_slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">--}}
+{{--                                    <span class="text-blue">Max 2mb file size allowed. </span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="comments">Payment Details</label>--}}
+{{--                                    <textarea name="comments" id="add_comments" class="form-control">{{old('comments')}}</textarea>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        --}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -141,7 +154,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Department registration invoices.</h3>
+                            <h3 class="box-title">Scope of Accreditation.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -163,6 +176,7 @@
                                     <th>Department</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
+                                    <th>Amount</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
@@ -175,14 +189,20 @@
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
-                                    <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
+                                    <td>
+                                        <a href="{{url('mentoringInvoice/'.$invoice->id)}}">
+                                            <span data-toggle="tooltip" title="Print invoice slip" class=" badge bg-yellow InvoicePrint" > Invoice </span>
+                                        </a>
+                                    </td>
+{{--                                    <td>Invoice</a></td>--}}
+                                    <td>{{@$invoice->amount}}</td>
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
                                     <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
-                                    <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" >
-                                            <i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
-                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
+                                    <td><span data-toggle="tooltip" title="Invoice Payment" >
+                                            <i class="fa fa-money text-info my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
+                                               data-row='{"id":"{{$invoice->id}}","amount":"{{$invoice->amount}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
                                 </tr>
                                 @endforeach
 
@@ -192,6 +212,7 @@
                                     <th>Department</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
+                                    <th>Amount</th>
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
@@ -289,7 +310,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add Invoice Slip for Department Registration </h4>
+                    <h4 class="modal-title">Department Registration Mentoring Invoice. </h4>
                 </div>
                     <div class="modal-body">
                         <form action="javascript:void(0)" method="POST" enctype="multipart/form-data" id="Invoice">
@@ -298,10 +319,10 @@
                                 <div class="box-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="name">Degree Department</label>
+                                            <label for="name">Department</label>
                                             <input type="text" readonly id="edit_department_id" name="department_id" readonly class="form-control">
 
-                                            {{--                                            <select id="edit_department_id" name="department_id" readonly class="form-control select2" style="width: 100%;">--}}
+                                            {{--<select id="edit_department_id" name="department_id" readonly class="form-control select2" style="width: 100%;">--}}
 {{--                                                <option value="">Select Department</option>--}}
 {{--                                                @foreach($departments as $department)--}}
 {{--                                                    <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>--}}
@@ -321,20 +342,23 @@
                                         </div>
                                     </div>
 
+
+
+
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group" >
                                             <label for="date">Date of transaction</label>
                                             <div class="input-group">
                                             <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
                                             <input type="text" id="transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="form-group" style="margin-bottom: 22px;">
+                                        <div class="form-group" style="margin-bottom: 0px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
                                                 <option value="">Select Payment Method</option>
@@ -356,11 +380,19 @@
                                             <label for="type">{{ __('Status') }} : </label>
                                             <select name="status" id="status" class="form-control select2">
 {{--                                                <option value="">Select Status</option>--}}
-                                                <option value="active">Active</option>
-                                                <option value="inactive">Inactive</option>
+{{--                                                <option value="active">Active</option>--}}
+{{--                                                <option value="inactive">Inactive</option>--}}
                                                 <option value="pending">Pending</option>
                                                 <option value="paid">Paid</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="date">Mentoring Fee</label>
+                                            <div class="input-group">
+                                                <p><span id="fee_amount"></span></p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -448,9 +480,9 @@
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             console.log('invoice id ', data);
             $('#edit_department_id').val(data.department_id);
+            $('#fee_amount').text(data.amount);
             $('#transaction_date').val(data.transaction_date);
             $('#update_invoice_no').val(data.invoice_no);
-
             $('#payment_method').select2().val(data.payment_method_id).trigger('change');
             $('#status').select2().val(data.status).trigger('change');
             $('#cheque_no').val(data.cheque_no);
@@ -470,7 +502,7 @@
             !payment_method?addClass('payment_method'):removeClass('payment_method');
             !transaction_date?addClass('transaction_date'):removeClass('transaction_date');
             !slip?addClass('slip'):removeClass('slip');
-            if(!transaction_date || !invoice_no || !payment_method)
+            if(!transaction_date || !invoice_no || !payment_method || !slip)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -479,7 +511,7 @@
                 let formData = new FormData(this);
                 formData.append('_method', 'PUT');
                 $.ajax({
-                    url:'{{url("strategic/invoices")}}/'+id,
+                    url:'{{url("updateMentoringInvoice")}}/'+id,
                     type:'POST',
                     data: formData,
                     cache:false,
@@ -525,7 +557,7 @@
             }
                 // Yes button callback
                 $.ajax({
-                    url:'{{url("strategic/generateInvoice")}}',
+                    url:'{{url("generateMentoringInvoice")}}',
                     type:'POST',
                     data: {
                         invoice_no:invoice_no,

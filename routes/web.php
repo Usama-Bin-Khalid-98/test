@@ -195,7 +195,7 @@ use Illuminate\Support\Facades\Route;
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
-        // Route::get('config', 'ConfigController@index')->name('config');
+         Route::get('mentoringInvoices', 'MentoringInvoiceController@mentoringInvoices');
           Route::prefix('config')->group(function (){
             //        Route::resource('{table}', 'ConfigController');
             //   });
@@ -231,7 +231,12 @@ use Illuminate\Support\Facades\Route;
 
         Route::group(['middleware' => ['role:NBEACAdmin|BusinessSchool']], function () {
             Route::get('invoicesList', 'StrategicManagement\SlipController@invoicesList');
+            Route::get('mentoring-invoices', 'MentoringInvoiceController@index');
             Route::get('strategic/invoice/{id}','StrategicManagement\SlipController@invoice');
+            Route::get('mentoringInvoice/{id}','MentoringInvoiceController@invoice');
+            Route::post('generateMentoringInvoice','MentoringInvoiceController@generateInvoice');
+            Route::put('updateMentoringInvoice/{id}','MentoringInvoiceController@update');
+
         });
 
         Route::group(['middleware' => ['role:ESScheduler|BusinessSchool']], function () {
