@@ -320,7 +320,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Business School eligibility list.</h3>
+                            <h3 class="box-title">Desk Review list.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -330,7 +330,7 @@
 
                                     <th>Business School</th>
                                     <th>Department</th>
-                                    <th>Comments</th>
+                                    <th>Nbeac Criteria</th>
                                     <th>isEligible</th>
                                     @hasrole('NBEACAdmin')<th>Status</th>@endhasrole
                                     @hasrole('NBEACAdmin')<th>Action</th>@endhasrole
@@ -338,17 +338,17 @@
                                 </thead>
                                 <tbody>
                                 @if(@$desk_reviews)
-                                   @foreach(@$desk_reviews as $review)
+                                   @foreach(@$desk_rev as $review)
                                 <tr>
-                                    <td>{{$review->school}}</td>
-                                    <td>{{$review->department}}</td>
-                                    <td>{{$review->comments}}</td>
+                                    <td>{{$review->campus->business_school->name}}</td>
+                                    <td>{{$review->department->name}}</td>
+                                    <td>{{$review->nbeac_criteria}}</td>
                                     <td><i class="badge {{$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
                                     @hasrole('NBEACAdmin')<td><i class="badge {{$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
                                     @hasrole('NBEACAdmin')<td>
-                                        @if($review->isEligible === 'yes')<span data-toggle="tooltip" title="" class="badge bg-yellow ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$review->id}}"><i class="fa fa-check-square-o text-white"></i></span>|@endif
+                                        @if($review->isEligible === 'yes' && $review->status === 'active' )<span data-toggle="tooltip" title="" class="badge bg-yellow ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$review->id}}"><i class="fa fa-check-square-o text-white"></i></span>|@endif
                                         <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> |
-                                        <i data-row='{"id":{{$review->id}},"facility_id":"{{$review->department}}","isChecked":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
+                                        <i data-row='{"id":{{$review->id}},"nbeac_criteria":"{{$review->nbeac_criteria}}","isEligible":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
                                 </tr>
                                 @endforeach
                                 @endif
@@ -387,22 +387,22 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Business School Facility. </h4>
+                    <h4 class="modal-title">Edit Desk Review. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Facility</label>
-                                <input type="text" readonly name="facility_id" id="edit_facility_id" value="{{old('edit_facility_id')}}" class="form-control">
+                                <label for="name">Nbeac Criteria</label>
+                                <input type="text" readonly name="nbeac_criteria" id="edit_nbeac_criteria" value="{{old('edit_nbeac-criteria')}}" class="form-control">
                             </div>
                             <input type="hidden" id="edit_id">
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="type">{{ __('isChecked') }} : </label>
-                                <p><input type="radio" name="isChecked" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isChecked" class="flat-red" value="no">No</p>
+                                <label for="type">{{ __('isEligible') }} : </label>
+                                <p><input type="radio" name="isEligible" class="flat-red" value="yes" > Yes
+                                    <input type="radio" name="isEligible" class="flat-red" value="no">No</p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -536,15 +536,15 @@
         $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_facility_id').val(data.facility_id);
+            $('#edit_nbeac_criteria').val(data.nbeac_criteria);
             $('#edit_id').val(data.id);
-            $('input[value='+data.isChecked+']').iCheck('check');
+            $('input[value='+data.isEligible+']').iCheck('check');
             $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
             let id = $('#edit_id').val();
-            let isChecked = $('input[name=edit_isChecked]:checked').val();
+            let isEligible = $('input[name=edit_isEligible]:checked').val();
             let status = $('input[name=edit_status]:checked').val();
 
 
@@ -553,7 +553,7 @@
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("business-school-facility")}}/'+id,
+                url:'{{url("desk-review")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -588,7 +588,7 @@
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("business-school-facility")}}/'+id,
+                        url:'{{url("desk-review")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){

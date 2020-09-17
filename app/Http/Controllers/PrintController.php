@@ -44,7 +44,7 @@ class PrintController extends Controller
         ->get();
 
 
-        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND campuses.id=? ', array(auth()->user()->campus_id));
+        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, campuses WHERE designations.id=contact_infos.designation_id AND contact_infos.campus_id=? AND contact_infos.campus_id=campuses.id', array($req->cid));
 
 
         $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($req->bid, $req->cid));
@@ -505,8 +505,9 @@ class PrintController extends Controller
             ->where('regStatus','!=','Initiated')
             ->get();
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
-        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, campuses, slips WHERE campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=business_schools.id AND slips.status="paid"', array());
-         return view('sumbitSAR' ,compact( 'registrations', 'invoices', 'memberShips','registration_apply','businessSchools'));
+        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, users, campuses, slips WHERE users.business_school_id=business_schools.id AND campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=campuses.id AND slips.status="paid" AND users.id=?', array(auth()->user()->id));
+        //dd($businessSchools);
+         return view('submitSAR' ,compact( 'registrations', 'invoices', 'memberShips','registration_apply','businessSchools'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){

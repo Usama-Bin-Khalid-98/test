@@ -89,17 +89,17 @@
                                 <input type="text" name="affiliation" id="affiliation" class="form-control">
                             </div>
                            </div>
-                           <div class="col-md-3">
-                               <div class="form-group">
-                                   <label for="name">Name of statutory body </label>
-                                   <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
-                                       <option selected disabled >Select Body Name</option>
-                                       @foreach($bodies as $designation)
-                                           <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                       @endforeach
-                                   </select>
+                               <div class="col-md-3">
+                                   <div class="form-group">
+                                       <label for="name">Name of statutory body </label>
+                                       <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                           <option selected disabled >Select Body Name</option>
+                                           @foreach($bodies as $designation)
+                                               <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
                                </div>
-                           </div>
 
 
                                <div class="col-md-12">
