@@ -167,18 +167,6 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           </li>
           @endhasrole
 
-          @hasrole('BusinessSchool')
-          <li class="{{ (request()->is('mentoring-invoices')) ? 'active' : '' }} ">
-              <a href="{{url('mentoring-invoices')}}">
-                  <i class="fa fa-file-text-o" style="color: #D81B60"></i>Mentoring Invoices
-                  <span class="pull-right-container">
-                        <span class="text text-{{$invoices==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$invoices==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                  </span>
-              </a>
-          </li>
-          @endhasrole
 {{--          <li class="treeview {{(request()->is('strategic/invoices'))?'active':''}}{{(request()->is('strategic/generate-invoices'))?'active':''}} ">--}}
 {{--              <a href="#">--}}
 {{--                  <i class="fa fa-money " style="color: #D81B60"></i> <span>Invoices</span>--}}
@@ -828,7 +816,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('registration-apply')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
 
-             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
+{{--             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>--}}
           @endhasrole
           @if($isActiveSAR)
           @hasrole('BusinessSchool')
@@ -837,6 +825,8 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @endif
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>
+
           @endhasrole
           @hasrole('NBEACAdmin')
 
@@ -850,7 +840,6 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
               <ul class="treeview-menu">
 {{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
                   <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-circle-o text-green"></i>Invoices List</a></li>
-                  <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-circle-o text-green"></i>Mentoring Invoices List</a></li>
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
               </ul>
           </li>
