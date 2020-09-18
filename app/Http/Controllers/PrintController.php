@@ -36,12 +36,8 @@ class PrintController extends Controller
         $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
 
 
-        $scopeOfAcredation = DB::table('scopes')
-        ->leftJoin('programs','scopes.program_id','=','programs.id')
-        ->leftJoin('levels','scopes.level_id','=','levels.id')
-        ->select('scopes.*','levels.name as levelName', 'programs.name as programName')
-        ->where('scopes.campus_id',$req->bid)
-        ->get();
+        $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array($req->cid));
+
 
 
         $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, campuses WHERE designations.id=contact_infos.designation_id AND contact_infos.campus_id=? AND contact_infos.campus_id=campuses.id', array($req->cid));
@@ -55,13 +51,13 @@ class PrintController extends Controller
             WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.designation_id=designations.id AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid, $req->cid));
 
 
-         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools WHERE business_schools.id=? AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
+         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
 
 
-          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, business_schools WHERE financial_infos.income_source_id=income_sources.id AND business_schools.id=financial_infos.campus_id AND business_schools.id=?', array($req->bid));
+          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( $req->cid));
 
 
-         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools WHERE business_schools.id=? AND strategic_plans.campus_id=?', array($req->bid, $req->cid));
+         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses AND strategic_plans.campus_id=?', array($req->cid));
 
          $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
             FROM program_portfolios, programs, course_types, business_schools
@@ -81,14 +77,15 @@ class PrintController extends Controller
         $currMonth = $now->month;
         $currSemester = "";
         $prevSemester = "";
-        if($currMonth>8 && $currMonth<2){
+        if($currMonth>8 && $currMonth<=2){
             $currSemester = "Fall t";
             $prevSemester = "Spring t";
-        }else if($currMonth>2 && $currMonth<9){
+        }else if($currMonth>2 && $currMonth<=9){
             $currSemester = "Spring t";
             $prevSemester = "Fall t-1";
         }
          $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($req->cid , $currSemester));
+
 
          $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($req->cid, $prevSemester));
 
@@ -265,16 +262,10 @@ class PrintController extends Controller
         $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
 
 
-        $scopeOfAcredation = DB::table('scopes')
-        ->leftJoin('programs','scopes.program_id','=','programs.id')
-        ->leftJoin('levels','scopes.level_id','=','levels.id')
-        ->select('scopes.*','levels.name as levelName', 'programs.name as programName')
-        ->where('scopes.campus_id',$bussinessSchool[0]->id)
-        ->get();
+        $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(auth()->user()->campus_id));
 
-
-        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND campuses.id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
-
+        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND contact_infos.campus_id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
+        
 
         $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
@@ -284,21 +275,21 @@ class PrintController extends Controller
             WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.designation_id=designations.id AND business_schools.id=? AND affiliations.campus_id=?', array($bussinessSchool[0]->id,auth()->user()->campus_id));
 
 
-         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools WHERE business_schools.id=?', array($bussinessSchool[0]->id));
+         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
 
-          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, business_schools WHERE financial_infos.income_source_id=income_sources.id AND business_schools.id=financial_infos.campus_id AND business_schools.id=?', array($bussinessSchool[0]->id));
+          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( auth()->user()->campus_id));
 
 
-         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools WHERE business_schools.id=?', array($bussinessSchool[0]->id));
+         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses AND strategic_plans.campus_id=?', array(auth()->user()->campus_id));
 
          $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
             FROM program_portfolios, programs, course_types, business_schools
-            WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=?', array($bussinessSchool[0]->id));
+            WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
          $studentEnrolment = DB::select('SELECT student_enrolments.*
             FROM student_enrolments , business_schools
-            WHERE business_schools.id=?', array($bussinessSchool[0]->id));
+            WHERE business_schools.id=? AND student_enrolments.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
          $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($userCampus[0]->campus_id));
 
@@ -310,14 +301,16 @@ class PrintController extends Controller
         $currMonth = $now->month;
         $currSemester = "";
         $prevSemester = "";
-        if($currMonth>8 && $currMonth<2){
+        if($currMonth>8 && $currMonth<=2){
             $currSemester = "Fall t";
             $prevSemester = "Spring t";
-        }else if($currMonth>2 && $currMonth<9){
+        }else if($currMonth>2 && $currMonth<=9){
             $currSemester = "Spring t";
             $prevSemester = "Fall t-1";
         }
-         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,users, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id AND users.department_id=? AND semesters.name=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id, $currSemester));
+        
+         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id AND semesters.name=?', array($userCampus[0]->campus_id, $currSemester));
+         //dd($facultyWorkLoad);
 
          $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($userCampus[0]->campus_id, $prevSemester));
 
