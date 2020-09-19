@@ -62,6 +62,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="name">Department Fee amount</label>
+                                    <input type="text" readonly id="fee_amount" readonly name="fee_amount" value="{{@$fee_amount->amount}}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="name">Invoice No</label>
                                     <input type="text" readonly id="invoice_no" readonly name="invoice_no" value="{{@$invoice_no??old('invoice_no')}}" class="form-control">
                                 </div>
@@ -161,6 +167,7 @@
                                 <thead>
                                 <tr>
                                     <th>Department</th>
+                                    <th>Fee amount</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
                                     <th>Slip</th>
@@ -174,6 +181,7 @@
                                 @foreach($invoices as $invoice)
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
+                                    <td>{{@$invoice->department->department_fee->amount}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
                                     <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
@@ -190,6 +198,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Department</th>
+                                    <th>Fee amount</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
                                     <th>Slip</th>
@@ -337,7 +346,7 @@
                                         <div class="form-group" style="margin-bottom: 22px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
-                                                <option value="">Select Payment Method</option>
+                                                <option disabled selected>Select Payment Method</option>
                                                 @foreach($payment_methods as $method)
                                                     <option value="{{$method->id}}">{{$method->name}}</option>
                                                 @endforeach
@@ -345,7 +354,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 ChequeNumber">
                                         <div class="form-group">
                                             <label for="name">Cheque No</label>
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
@@ -373,7 +382,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="comments">Payment Details</label>
-                                            <textarea name="comments" id="comments" class="form-control">{{old('comments')}}</textarea>
+                                            <textarea name="comments" id="comments" required class="form-control">{{old('comments')}}</textarea>
                                             <input type="hidden" name="id" id="id">
                                         </div>
                                     </div>
@@ -436,7 +445,25 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        })
+        });
+
+        $(document).on('change',"#payment_method",function(e){
+
+        var payment_method = $(this).val();
+
+        if(payment_method == 2) {
+
+            $('.ChequeNumber').show();
+            $('#cheque_no').attr('required',true);
+
+        }else {
+
+            $('.ChequeNumber').hide();
+            $('#cheque_no').val(' ').trigger('change');
+            $('#cheque_no').removeAttr('required',false);
+        }
+
+    });
 
         //let data = JSON.parse(JSON.stringify($(this).data('row')));
         //$('#edit_program_id').select2().val(data.program_id).trigger('change');
