@@ -210,6 +210,7 @@ use Illuminate\Support\Facades\Route;
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
         });
 
+
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer']], function () {
             Route::get('esScheduler-all', 'EligibilityScreeningController@schedule');
             Route::get('esScheduler/{id}', 'EligibilityScreeningController@schedule');
