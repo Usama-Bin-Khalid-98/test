@@ -369,6 +369,7 @@
                                                 <option value="inactive">Inactive</option>
                                                 <option value="pending">Pending</option>
                                                 <option value="paid">Paid</option>
+                                                <option value="approved">Approved</option>
                                             </select>
                                         </div>
                                     </div>
