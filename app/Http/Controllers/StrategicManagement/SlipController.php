@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Common\Department;
 use App\Models\Common\FeeType;
 use App\Models\Common\PaymentMethod;
+use App\DepartmentFee;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class SlipController extends Controller
         //dd($invoices);
         @$departments = Department::where(['status'=> 'active', 'id'=>Auth::user()->department_id])->get()->first();
         $payment_methods = PaymentMethod::where('status', 'active')->get();
+        $fee_amount = DepartmentFee::with('department','fee_type')->where(['status'=> 'active', 'department_id'=>Auth::user()->department_id])->get()->first();
         //// generate invoice ///////////
         $latest = Slip::latest()->first();
         $invoice_no ='';
@@ -43,7 +45,7 @@ class SlipController extends Controller
             $invoice_no = 'NBEAC-HEC/ GU, Karachi:'. sprintf('%05d', $string + 1);
         }
         //dd($invoice_no);
-        return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods'));
+        return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods','fee_amount'));
     }
 
     public function invoicesList()
