@@ -24,6 +24,7 @@ class CreateScheduleMentorMeetingsTable extends Migration
                 ->references('id')
                 ->on('users');
             $table->date('availability_dates');
+            $table->enum('is_confirm', ['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

@@ -293,7 +293,6 @@
                                     </tbody>
                                 </table>
 
-
                                 @hasrole('NBEACAdmin')
                                 <div class="col-md-12">
                                     <div class="col-md-12 form-group pull-right" style="margin-top: 40px">
@@ -309,9 +308,13 @@
                                         <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                     </div>
                                 </div>
-@endhasrole
+                                @endhasrole
 
                             </form>
+
+                            <div>
+                                @if($desk_rev[0]->isEligible === 'yes' && $desk_rev[0]->status === 'active' )<button data-toggle="tooltip" title="" class="button button-info text-white ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$desk_reviews[0]->id}}">Forward to Eligibility Screening<i class="fa fa-check-square-o text-white"></i></button>@endif
+                            </div>
 
                         </div>
                         <!-- /.box-body -->
@@ -346,7 +349,6 @@
                                     <td><i class="badge {{$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
                                     @hasrole('NBEACAdmin')<td><i class="badge {{$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
                                     @hasrole('NBEACAdmin')<td>
-                                        @if($review->isEligible === 'yes' && $review->status === 'active' )<span data-toggle="tooltip" title="" class="badge bg-yellow ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$review->id}}"><i class="fa fa-check-square-o text-white"></i></span>|@endif
                                         <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> |
                                         <i data-row='{"id":{{$review->id}},"nbeac_criteria":"{{$review->nbeac_criteria}}","isEligible":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
                                 </tr>

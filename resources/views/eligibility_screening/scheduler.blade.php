@@ -629,7 +629,7 @@
 
          customButtons: {
             addEventButton: {
-                text: 'add event...',
+                text: 'Add Eligibility Scheduler...',
                 click: function() {
                     $('#add-modal').modal('show')
 

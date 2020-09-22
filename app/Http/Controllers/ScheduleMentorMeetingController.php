@@ -106,7 +106,7 @@ class ScheduleMentorMeetingController extends Controller
             try {
                 $update = ScheduleMentorMeeting::where(['slip_id' => $request->slip_id, 'availability_dates' =>$request->dateVal])->update(['is_confirm' => $request->confirm]);
                 if($update){
-                    return response()->json($validation->messages()->all(), 200);
+                    return response()->json(['success' => 'updated successfully'], 200);
                 }
 
             } catch (Exception $e) {

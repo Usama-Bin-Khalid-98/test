@@ -550,7 +550,7 @@
          -----------------------------------------------------------------*/
 
         $.ajax({
-            url:"{{url('MentoringScheduler')}}/"+{{request()->route('id')}},
+            url:"{{url('MentoringScheduler')}}/"+{{@request()->route('id')}},
             type:"get",
             data: {events:'events'},
             beforeSend: function(){

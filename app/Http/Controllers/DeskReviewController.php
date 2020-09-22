@@ -66,8 +66,9 @@ class DeskReviewController extends Controller
         $nbeac_criteria = NbeacCriteria::all()->first();
         @$business_school_user = Slip::where(['id' => $id])->get()->first();
        // dd($business_school_user);
-        $campus_id = $business_school_user->campus_id;
+        $campus_id = $business_school_user->business_school_id;
         $department_id = $business_school_user->department_id;
+        //dd($campus_id, ' dep', $department_id);
 
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
 //      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
@@ -133,9 +134,10 @@ class DeskReviewController extends Controller
         AND users.id = slips.created_by
         AND slips.id = '.$id;
         @$desk_reviews = DB::select($query);
+//        dd($desk_reviews);
 
         $desk_rev= DeskReview::with('campus','department')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
-        //dd($desk_reviews);
+//        dd($desk_rev);
         return view('desk_review.desk_review', compact(
             'program_dates',
             'mission_vision',
@@ -166,7 +168,6 @@ class DeskReviewController extends Controller
             'nbeac_criteria',
             'desk_reviews',
             'desk_rev'
-
         ));
     }
     /**

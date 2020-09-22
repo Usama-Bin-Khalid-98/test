@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DeskReview extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = [];
 
     public function campus() {
-        return $this->belongsTo(Campus::class);
+        return $this->belongsTo(Campus::class)->with('business_school');
     }
 
 
