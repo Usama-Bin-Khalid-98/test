@@ -361,7 +361,7 @@
                                         <div class="form-group" style="margin-bottom: 0px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
-                                                <option value="">Select Payment Method</option>
+                                                <option disabled selected >Select Payment Method</option>
                                                 @foreach($payment_methods as $method)
                                                     <option value="{{$method->id}}">{{$method->name}}</option>
                                                 @endforeach
@@ -369,7 +369,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 ChequeNumber">
                                         <div class="form-group">
                                             <label for="name">Cheque No</label>
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
@@ -468,7 +468,25 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        })
+        });
+
+        $(document).on('change',"#payment_method",function(e){
+
+            var payment_method = $(this).val();
+
+            if(payment_method == 2) {
+
+                $('.ChequeNumber').show();
+                $('#cheque_no').attr('required',true);
+
+            }else {
+
+                $('.ChequeNumber').hide();
+                $('#cheque_no').val(' ').trigger('change');
+                $('#cheque_no').removeAttr('required',false);
+            }
+
+        });
 
         //let data = JSON.parse(JSON.stringify($(this).data('row')));
         //$('#edit_program_id').select2().val(data.program_id).trigger('change');
