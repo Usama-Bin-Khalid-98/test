@@ -794,7 +794,7 @@
                               <td>{{@$screening->department}}</td>
                               <td><a href="{{url('deskreview')}}/{{@$screening->id}}">Desk Review</a></td>
 {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                              <td><a href="{{url('print?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->id}}">Registration Print </a></td>
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->id}}">Registration Print </a></td>
 
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
@@ -943,10 +943,10 @@
                               <td>{{@$mentorMeeting->department}}</td>
                               <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
 {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                              <td><a href="{{url('print?cid=')}}{{@$mentorMeeting->business_school_id}}&bid={{$mentorMeeting->id}}">Registration Print </a></td>
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus_id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
-                              <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' )
+                              <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' || $mentorMeeting->regStatus =='Mentoring' )
                                       <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Mentoring Meeting Calendar</a>
                                   @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
                               </td>

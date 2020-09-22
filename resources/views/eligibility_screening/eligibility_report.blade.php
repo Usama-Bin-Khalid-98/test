@@ -108,9 +108,9 @@
                                     <div class="form-group">
                                         <label for="status">Status</label>
                                         <select name="status" id="status" class="form-control select2">
-                                            <option value="Deferred" @if($registrations_reports[0]->eligibility_status==='Deferred') selected @endif>Deferred</option>
-                                            <option value="Approved" @if($registrations_reports[0]->eligibility_status==='Approved') selected @endif>Approved</option>
-                                            <option value="ConditionalApproval" @if($registrations_reports[0]->eligibility_status==='ConditionalApproval') selected @endif>Conditional Approval</option>
+                                            <option value="Deferred" @if(@$registrations_reports[0]->eligibility_status==='Deferred') selected @endif>Deferred</option>
+                                            <option value="Approved" @if(@$registrations_reports[0]->eligibility_status==='Approved') selected @endif>Approved</option>
+                                            <option value="ConditionalApproval" @if(@$registrations_reports[0]->eligibility_status==='ConditionalApproval') selected @endif>Conditional Approval</option>
                                         </select>
                                     </div>
                                 </div>

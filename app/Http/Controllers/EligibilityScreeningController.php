@@ -83,6 +83,7 @@ class EligibilityScreeningController extends Controller
                 ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department')
                 ->where('s.regStatus', 'ScheduledES')
                 ->orWhere('s.regStatus', 'ScheduledPR')
+                ->orWhere('s.regStatus', 'Mentoring')
                 ->get();
 
             $registrations_reports = DB::table('slips as s')
@@ -94,6 +95,7 @@ class EligibilityScreeningController extends Controller
                     'er.status as eligibility_status', 'er.comments', 'er.file')
                 ->where('s.regStatus', 'ScheduledES')
                 ->orWhere('s.regStatus', 'ScheduledPR')
+                ->orWhere('s.regStatus', 'Mentoring')
                 ->get();
         }
 
