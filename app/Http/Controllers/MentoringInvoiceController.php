@@ -87,7 +87,7 @@ class MentoringInvoiceController extends Controller
                 'status' => $request->status,
                 'updated_by' => Auth::id(),
             ]);
-            return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
+            return response()->json(['success' => 'Invoice Slip status updated successfully.'], 200);
         }
         catch (Exception $e)
         {
@@ -190,7 +190,10 @@ class MentoringInvoiceController extends Controller
     public function mentoringInvoices()
     {
 //        @$campus_id = Auth::user()->campus_id;
-        @$invoices = MentoringInvoice::with('campus','department')->where('status', 'paid')->get();
+        @$invoices = MentoringInvoice::with('campus','department')
+            ->where('status', 'paid')
+            ->orWhere('status', 'approved')
+            ->get();
         return view('mentoring.mentoring_invoices', compact('invoices'));
     }
 

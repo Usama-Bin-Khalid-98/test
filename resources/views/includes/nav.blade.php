@@ -877,7 +877,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @endhasrole
           @endif
           @hasanyrole('Mentor')
-{{--          <li  class="{{ (request()->is('meetingsList')) ? 'active' : '' }}"><a href="{{url('meetingsList')}}"><i class="fa fa-meetup text-red"></i>Mentoring Meetings</a></li>--}}
+          <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report</a></li>
           @endhasrole
           </ul>
         </li>

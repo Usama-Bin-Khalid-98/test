@@ -25,60 +25,21 @@
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Dashboard</li>
+                <li>Mentoring Report</li>
             </ol>
         </section><!-- Main content -->
 
 
-        @hasrole('PeerReviewer')
+        @hasrole('Mentor')
         <section class="content">
 
             <div class="row" >
-                <!-- Left col -->
-                <section class="col-lg-7  connectedSortable" style="display: none;">
-                    <!-- Custom tabs (Charts with tabs)-->
-                    <!-- quick email widget -->
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <i class="fa fa-envelope"></i>
-
-                            <h3 class="box-title">Quick Email</h3>
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">
-                                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
-                                        title="Remove">
-                                    <i class="fa fa-times"></i></button>
-                            </div>
-                            <!-- /. tools -->
-                        </div>
-                        <div class="box-body">
-                            <form action="#" method="post">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="emailto" placeholder="Email to:">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="subject" placeholder="Subject">
-                                </div>
-                                <div>
-                  <textarea class="" placeholder="Message"
-                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="box-footer clearfix">
-                            <button type="button" class="pull-right btn btn-default" id="sendEmail">Send
-                                <i class="fa fa-arrow-circle-right"></i></button>
-                        </div>
-                    </div>
-
-                </section>
-                <!-- /.Left col -->
-
                 <!--Registrations list-->
                 <section class="col-lg-12 connectedSortable">
                     <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Eligibility Screening Report submission. </h3>
+                            <h3 class="box-title">Mentoring Report. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -98,7 +59,7 @@
                                         <label for="registration_id">Registrations</label>
                                         <select name="slip_id" id="slip_id" class="form-control select2">
                                             @foreach($registrations as $register)
-                                            <option value="{{@$register->id}}"> {{@$register->school}} {{@$register->campus}} - {{@$register->department}}</option>
+                                            <option value="{{@$register->id}}"> {{@$register->campus->business_school->name}} {{@$register->campus->location}} - {{@$register->department->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -158,7 +119,7 @@
                     <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Eligibility Screening Reports </h3>
+                            <h3 class="box-title">Mentors Reports </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -188,19 +149,19 @@
 
                                 <tbody>
 
-                                @foreach($registrations_reports as $screening)
+                                @foreach($mentor_reports as $report)
                                     <tr>
-                                        <td>{{@$screening->school}}</td>
-                                        <td>{{@$screening->campus??'Main Campus'}}</td>
-                                        <td>{{@$screening->department}}</td>
-                                         <td><a href="{{asset(@$screening->file)}}" >Doc File</a></td>
-                                         <td>{!!substr($screening->comments, 0, 100) !!}...</td>
-                                        <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
-                                        <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' )
-{{--                                                <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Eligibility Screening Calendar</a>--}}
-                                            @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
-                                            <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" >Eligibility Report</a>
-                                        </td>
+{{--                                        <td>{{@$report->school}}</td>--}}
+{{--                                        <td>{{@$report->campus??'Main Campus'}}</td>--}}
+{{--                                        <td>{{@$report->department}}</td>--}}
+{{--                                         <td><a href="{{asset(@$report->file)}}" >Doc File</a></td>--}}
+{{--                                         <td>{!!substr($report->comments, 0, 100) !!}...</td>--}}
+{{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
+{{--                                        <td>@if($report->regStatus =='Eligibility' || $report->regStatus =='ScheduledES' )--}}
+{{--                                                <a href="{{url('esScheduler')}}/{{$report->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$report->id}}" data-row="{{@$report->department_id}}"> Eligibility Screening Calendar</a>--}}
+{{--                                            @elseif($report->regStatus =='Review')Desk Review In-progress @endif--}}
+{{--                                            <a href="{{url('esReport')}}/{{$report->id}}" class="btn-xs btn-success report" name="report" id="report" >Eligibility Report</a>--}}
+{{--                                        </td>--}}
                                     </tr>
                                 @endforeach
 

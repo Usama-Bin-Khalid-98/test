@@ -196,6 +196,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
          Route::get('mentoringInvoices', 'MentoringInvoiceController@mentoringInvoices');
+          Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
+          Route::Post('MentoringInvoiceStatus', 'MentoringInvoiceController@approvementStatus');
           Route::prefix('config')->group(function (){
             //        Route::resource('{table}', 'ConfigController');
             //   });
@@ -207,7 +209,6 @@ use Illuminate\Support\Facades\Route;
             Route::DELETE('/{table}/{id}', 'ConfigController@destroy');
             });
 
-          Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
         });
 
 
@@ -254,7 +255,9 @@ use Illuminate\Support\Facades\Route;
         Route::group(['middleware' => ['role:Mentor|ESScheduler|BusinessSchool']], function () {
             Route::get('meetingsList/{id?}', 'ScheduleMentorMeetingController@index');
             Route::get('getMentoringAllEvents', 'ScheduleMentorMeetingController@getMentoringAllEvents');
+        });
 
-
+        Route::group(['middleware' => ['role:Mentor']], function () {
+            Route::resource('mentorReport', 'MentoringReportController');
         });
     });
