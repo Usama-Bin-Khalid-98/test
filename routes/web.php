@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Route;
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
             ///// Dashboard
             Route::patch('admin/{id}', 'DashboardController@schoolStatus');
+            Route::patch('deskReviewReport/{id}', 'DeskReviewController@submitDeskReport');
             // Users resource route.
             Route::resource('users', 'Auth\UserController');
             Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');

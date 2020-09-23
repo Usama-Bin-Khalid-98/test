@@ -31,6 +31,7 @@ use App\Mail\EligibilityScreeningEmail;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use DB;
+use App\Mail\ActivationMail;
 
 class DeskReviewController extends Controller
 {
@@ -48,12 +49,31 @@ class DeskReviewController extends Controller
             ->join('departments as d', 'd.id', '=', 's.department_id')
             ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
             ->join('users as u', 'u.id', '=', 's.created_by')
-            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId')
 //            ->where('s.reg')
             ->get();
         //dd($desk_reviews);
 
         return view('desk_review.index', compact('registrations'));
+    }
+
+
+    public function submitDeskReport(Request $request, $id)
+    {
+        try {
+            $validation = Validator::make($request->all(), ['id'=> 'required'], ['required'=> 'The :attribute can not be blank.']);
+            if($validation->fails()){
+                return response()->json($validation->messages()->all(), 422);
+            }
+            $slips = DB::update('update slips set comments=?, regStatus=? where id=?', array($request->comments, $request->review, $request->id));
+            dd($slips);
+            //dd($content->email);
+            Mail::to($content->email)->queue(new ActivationMail($content));
+            return response()->json(['success' => 'Status updated Successfully'], 200);
+        }catch (Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     /**

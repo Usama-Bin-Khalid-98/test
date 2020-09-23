@@ -119,10 +119,10 @@
                                         <td>{{@$regist->user}}</td>
                                         <td>{{@$regist->contact_no}}</td>
                                         <td>{{@$regist->email}}</td>
-                                        <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Click to Review</a></td>
+                                        <td><a href="{{url('deskreview')}}/{{@$regist->id}}">SAR Review</a></td>
                                         {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                         <td><i class="badge {{$regist->regStatus == 'Review'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'created'}}</i></td>
-                                        <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
+                                        <td><i class="fa fa-trash text-info"></i> | <i  class="fa fa-pencil text-blue edit" onclick="deskReview({{$regist->id}})"></i> </td>
                                     </tr>
 
                                 @endforeach
@@ -157,6 +157,62 @@
         </section>
         @endhasrole
 
+<div class="container">
+
+
+  
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Desk Review Status</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        <form class="form-group">
+            @csrf
+          <div class="row">
+              <div class="col col-sm-12 col-md-3 col-lg-3">
+                  <label> Review</label>
+              </div>
+              <div class="col col-sm-12 col-md-9 col-lg-9">
+                  <select class="form-control" name="review" id="review">
+                      <option value="">Select Review</option>
+                      <option value="Review">Further Improvements</option>
+                      <option value="SAR">Go-ahead for final SAR submission</option>
+                  </select>
+              </div>
+          </div><br>
+          <div class="row">
+              <div class="col col-sm-12 col-md-3 col-lg-3">
+                  <label> Comments</label>
+              </div>
+              <div class="col col-sm-12 col-md-9 col-lg-9">
+                  <textarea name="comments" id="comments" class="form-control" style="height: 200px"></textarea>
+              </div>
+          </div>
+          <input type="text" name="slipId" id="slipId" hidden="hidden">
+        </form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="submitReview(event)">Submit</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+</div>
+
         <!-- /.content -->
     </div>
 
@@ -170,6 +226,9 @@
     <script type="text/javascript">window.location.replace('login');</script>
 
 @endif
+<!-- /.modal -->
+ <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+ <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
 <!-- Morris.js charts -->
 {{--<script src="bower_components/raphael/raphael.min.js"></script>--}}
 {{--<script src="bower_components/morris.js/morris.min.js"></script>--}}
@@ -228,7 +287,56 @@
             } );
     });
 
+function deskReview(id){
+    $('#myModal').modal("show");     
+    $("#slipId").val(id);
+}
 
+ function submitReview(e) {
+        var id = $('#slipId').val();
+         
+        var comments = $('#comments').val();
+        var review = $('#review').val();
+        //Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
+           /* function(){*/
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("deskReviewReport")}}/'+id,
+                    type:'PATCH',
+                    data: { id:id, comments:comments, review:review},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+            /*},
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );*/
+    }
 </script>
 
 @endhasrole
