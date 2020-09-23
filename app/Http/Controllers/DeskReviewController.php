@@ -26,6 +26,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EligibilityScreeningEmail;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use DB;
@@ -306,12 +308,16 @@ class DeskReviewController extends Controller
      */
     public function deskreviewStatus(Request $request, DeskReview $deskReview)
     {
-        //
+
        // dd($request->all());
         try {
             $update = Slip::find($request->id)->update(['regStatus' => 'Eligibility']);
-            if($update)
+            if($update!=null)
             {
+                $data = array(
+                    'name'      => 'Safiullah'
+                );
+                Mail::to('yoursafi509@gmail.com')->send(new EligibilityScreeningEmail($data));
                 return response()->json(['success' => 'Case forwarded to eligibility screening']);
             }
         }catch (\Exception $e)
