@@ -166,26 +166,18 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
               </a>
           </li>
           @endhasrole
-
-{{--          <li class="treeview {{(request()->is('strategic/invoices'))?'active':''}}{{(request()->is('strategic/generate-invoices'))?'active':''}} ">--}}
-{{--              <a href="#">--}}
-{{--                  <i class="fa fa-money " style="color: #D81B60"></i> <span>Invoices</span>--}}
-{{--                  <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>--}}
-{{--              </a>--}}
-
-{{--              --}}
-{{--              <ul class="treeview-menu">--}}
-{{--                  <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">--}}
-{{--                      <a href="{{url('strategic/generate-invoices')}}">--}}
-{{--                          <i class="fa fa-circle-o" style="color: #D81B60"></i> Generate Invoices--}}
-{{--                          <span class="pull-right-container">--}}
-{{--                        <span class="label label-danger pull-right">In</span>--}}
-{{--                        </span>--}}
-{{--                      </a>--}}
-{{--                  </li>--}}
-
-
-{{--              </ul>--}}
+          @hasrole('BusinessSchool')
+          <li class="{{ (request()->is('mentoring-invoices')) ? 'active' : '' }} ">
+              <a href="{{url('mentoring-invoices')}}">
+                  <i class="fa fa-file-text-o" style="color: #D81B60"></i>Mentoring Invoices
+                  <span class="pull-right-container">
+                        <span class="text text-{{$invoices==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$invoices==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                  </span>
+              </a>
+          </li>
+          @endhasrole
 
           @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
@@ -840,6 +832,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
               <ul class="treeview-menu">
 {{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
                   <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-circle-o text-green"></i>Invoices List</a></li>
+                  <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-circle-o text-green"></i>Mentoring Invoices List</a></li>
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
               </ul>
           </li>
@@ -884,7 +877,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @endhasrole
           @endif
           @hasanyrole('Mentor')
-{{--          <li  class="{{ (request()->is('meetingsList')) ? 'active' : '' }}"><a href="{{url('meetingsList')}}"><i class="fa fa-meetup text-red"></i>Mentoring Meetings</a></li>--}}
+          <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report</a></li>
           @endhasrole
           </ul>
         </li>
