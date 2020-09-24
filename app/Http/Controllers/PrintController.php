@@ -57,7 +57,7 @@ class PrintController extends Controller
           $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( $req->cid));
 
 
-         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses AND strategic_plans.campus_id=?', array($req->cid));
+         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=?', array($req->cid));
 
          $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
             FROM program_portfolios, programs, course_types, business_schools
@@ -281,7 +281,7 @@ class PrintController extends Controller
           $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( auth()->user()->campus_id));
 
 
-         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses AND strategic_plans.campus_id=?', array(auth()->user()->campus_id));
+         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=?', array(auth()->user()->campus_id));
 
          $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
             FROM program_portfolios, programs, course_types, business_schools
