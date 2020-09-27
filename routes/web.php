@@ -41,6 +41,8 @@ use Illuminate\Support\Facades\Route;
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
             ///// Dashboard
             Route::patch('admin/{id}', 'DashboardController@schoolStatus');
+            Route::patch('deskReviewReport/{id}', 'DeskReviewController@submitDeskReport');
+            Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
             // Users resource route.
             Route::resource('users', 'Auth\UserController');
             Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');
@@ -49,6 +51,7 @@ use Illuminate\Support\Facades\Route;
             // Permissions resource route.
             // Route::resource('permissions', 'Auth\PermissionController');
             Route::resource('desk-review', 'DeskReviewController');
+            Route::resource('sar-desk-review', 'SARDeskReviewController');
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
             Route::resource('nbeac-criteria', 'NbeacCriteriaController');
@@ -191,9 +194,10 @@ use Illuminate\Support\Facades\Route;
             Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
             Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
+            
 
         });
-
+    
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
          Route::get('mentoringInvoices', 'MentoringInvoiceController@mentoringInvoices');
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
