@@ -64,6 +64,9 @@ class DashboardController extends Controller
             return $e->getMessage();
         }
     }
+
+
+    
     /**
      * Show the form for creating a new resource.
      *

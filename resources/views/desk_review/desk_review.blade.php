@@ -341,7 +341,10 @@
                                 </thead>
                                 <tbody>
                                 @if(@$desk_reviews)
+
                                    @foreach(@$desk_rev as $review)
+                                }
+                                }
                                 <tr>
                                     <td>{{$review->campus->business_school->name}}</td>
                                     <td>{{$review->department->name}}</td>
@@ -410,8 +413,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
-                                <p><input type="radio" name="status" class="flat-red" value="active" > Active
-                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
+                                <p>
+                                    <input type="radio" name="status" class="flat-red" value="active" > Active
+                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive
+                                </p>
                             </div>
                         </div>
                     </div>

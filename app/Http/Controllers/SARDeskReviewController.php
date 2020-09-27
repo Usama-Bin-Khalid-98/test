@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\EligibilityStatus;
 use App\Models\Common\Slip;
-use App\Models\DeskReview;
+use App\Models\SARDeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
 use App\Models\Faculty\FacultyTeachingCources;
@@ -33,7 +33,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\Mail\ActivationMail;
 
-class DeskReviewController extends Controller
+class SARDeskReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -49,12 +49,12 @@ class DeskReviewController extends Controller
             ->join('departments as d', 'd.id', '=', 's.department_id')
             ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
             ->join('users as u', 'u.id', '=', 's.created_by')
-            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId','c.id as campusId')
 //            ->where('s.reg')
             ->get();
         //dd($desk_reviews);
 
-        return view('desk_review.index', compact('registrations'));
+        return view('desk_review.sar_desk_review', compact('registrations'));
     }
 
 
@@ -66,7 +66,7 @@ class DeskReviewController extends Controller
                 return response()->json($validation->messages()->all(), 422);
             }
             $slips = DB::update('update slips set comments=?, regStatus=? where id=?', array($request->comments, $request->review, $request->id));
-            dd($slips);
+            //dd($slips);
             //dd($content->email);
             Mail::to($content->email)->queue(new ActivationMail($content));
             return response()->json(['success' => 'Status updated Successfully'], 200);
