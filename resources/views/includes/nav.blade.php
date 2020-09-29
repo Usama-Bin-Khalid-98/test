@@ -851,6 +851,9 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}"><a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-circle-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
