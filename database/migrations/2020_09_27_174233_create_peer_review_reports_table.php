@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMentoringReportsTable extends Migration
+class CreatePeerReviewReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateMentoringReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mentoring_reports', function (Blueprint $table) {
+        Schema::create('peer_review_reports', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('mentoring_invoice_id')->unsigned();
-            $table->foreign('mentoring_invoice_id')
+            $table->integer('slip_id')->unsigned();
+            $table->foreign('slip_id')
                 ->references('id')
-                ->on('mentoring_invoices');
+                ->on('slips');
             $table->text('comments');
-            $table->enum('status', ['Mentor', 'Approved', 'nbeac'])->nullable();
+            $table->enum('status', ['active', 'inactive','Approved'])->nullable();
             $table->date('report_date');
-            $table->date('registration_date');
-            $table->date('sar_date');
             $table->string('file', 255)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
@@ -49,6 +47,6 @@ class CreateMentoringReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mentoring_reports');
+        Schema::dropIfExists('peer_review_reports');
     }
 }
