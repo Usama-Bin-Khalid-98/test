@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\Route;
 
 
         });
-        Route::group(['middleware' => ['role:NBEACAdmin|BusinessSchool|EligibilityScreening|PeerReviewer|ESScheduler|Mentor']], function () {
+        Route::group(['middleware' => ['role:NBEACAdmin|NbeacFocalPerson|BusinessSchool|EligibilityScreening|PeerReviewer|ESScheduler|Mentor']], function () {
             Route::resource('print','PrintController');
             Route::resource('registrationPrint','RegistrationPrintController');
             Route::get('registrationPrintPdf','RegistrationPrintController@createPDF');
@@ -192,6 +192,9 @@ use Illuminate\Support\Facades\Route;
 
             Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
 
+
+            Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
+
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
@@ -228,6 +231,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
+            Route::get('PeerReviewerAvailability', 'SchedulePeerReviewController@peerAvailability');
 
         });
 
@@ -241,9 +245,12 @@ use Illuminate\Support\Facades\Route;
 
         });
 
-        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool']], function () {
+        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {
             Route::resource('MentoringScheduler', 'ScheduleMentorMeetingController');
+            Route::resource('PeerReviewScheduler', 'SchedulePeerReviewController');
             Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');
+            Route::post('changePeerReviewConfirmStatus', 'SchedulePeerReviewController@changeConfirmStatus');
+            Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
 
         });
 //
@@ -259,5 +266,10 @@ use Illuminate\Support\Facades\Route;
 
         Route::group(['middleware' => ['role:Mentor']], function () {
             Route::resource('mentorReport', 'MentoringReportController');
+            Route::put('updateInvoiceStatus/{id}', 'MentoringInvoiceController@updateInvoiceStatus');
+        });
+
+        Route::group(['middleware' => ['role:NbeacFocalPerson']], function () {
+            Route::resource('peerReviewReport', 'PeerReviewReportController');
         });
     });

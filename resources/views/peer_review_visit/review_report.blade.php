@@ -25,12 +25,12 @@
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Dashboard</li>
-                <li>Mentoring Report</li>
+                <li>Peer Review Report</li>
             </ol>
         </section><!-- Main content -->
 
 
-        @hasrole('Mentor')
+        @hasrole('NbeacFocalPerson')
         <section class="content">
 
             <div class="row" >
@@ -39,7 +39,7 @@
                     <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Mentoring Report. </h3>
+                            <h3 class="box-title">Peer Review Report. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -57,7 +57,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="registration_id">Registrations</label>
-                                        <select name="mentoring_invoice_id" id="mentoring_invoice_id" class="form-control select2">
+                                        <select name="slip_id" id="slip_id" class="form-control select2">
                                             @foreach($registrations as $register)
                                             <option value="{{@$register->id}}"> {{@$register->campus->business_school->name}} {{@$register->campus->location}} - {{@$register->department->name}}</option>
                                             @endforeach
@@ -139,7 +139,7 @@
                     <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Mentors Reports </h3>
+                            <h3 class="box-title">Peer Review Reports </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -238,7 +238,7 @@
         CKEDITOR.replace('comments');
     });
     $('#form').submit(function (e) {
-        var mentoring_invoice_id = $('#mentoring_invoice_id').val();
+        var slip_id = $('#slip_id').val();
         var report_date = $('#report_date').val();
         var registration_date = $('#registration_date').val();
         var sar_date = $('#sar_date').val();
@@ -249,9 +249,9 @@
         !comments?addClass('comments'):removeClass('comments');
         !registration_date?addClass('registration_date'):removeClass('registration_date');
         !sar_date?addClass('sar_date'):removeClass('sar_date');
-        !mentoring_invoice_id?addClass('mentoring_invoice_id'):removeClass('mentoring_invoice_id');
+        !slip_id?addClass('slip_id'):removeClass('slip_id');
 
-        if(!file || !mentoring_invoice_id || !report_date || !sar_date || !registration_date)
+        if(!file || !slip_id || !report_date || !sar_date || !registration_date)
         {
             Notiflix.Notify.Warning("Fill all the required Fields.");
             return;

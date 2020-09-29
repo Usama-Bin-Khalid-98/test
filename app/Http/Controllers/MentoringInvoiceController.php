@@ -95,6 +95,19 @@ class MentoringInvoiceController extends Controller
         }
     }
 
+    public function updateInvoiceStatus(Request $request)
+    {
+//        dd($request->all());
+        try {
+            MentoringInvoice::find($request->id)->update($request->all());
+            return response()->json(['success' => 'Invoice Slip status updated successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
     public function invoice($id=null)
     {
 //        dd('invoice here ', $id);

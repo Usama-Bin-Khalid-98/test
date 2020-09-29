@@ -88,7 +88,7 @@ $faculty_promotion = checkIsCompleted('App\Models\Faculty\FacultyPromotion', ['c
 $faculty_develop = checkIsCompleted('App\Models\Faculty\FacultyDevelop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_workshop = checkIsCompleted('App\Models\Faculty\FacultyWorkshop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$isActiveSAR = getFirst('App\Models\Common\Slip' ,['regStatus'=>'SAR','business_school_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
 
@@ -867,20 +867,30 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
 
           @if(@$isFiveRegistrations >= 1)
           @hasanyrole('ESScheduler')
-          <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-gears text-yellow"></i>Eligibility Screening Scheduler</a></li>
+          <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-calendar text-yellow"></i>Eligibility Screening Scheduler</a></li>
           @endhasrole
           @endif
 
           @if(@$isFiveRegistrationsMentoring >= 1)
           @hasanyrole('ESScheduler')
-          <li  class="{{ (request()->is('MentoringScheduler')) ? 'active' : '' }}"><a href="{{url('MentoringScheduler')}}"><i class="fa fa-gears text-yellow"></i>Mentoring Scheduler</a></li>
+          <li  class="{{ (request()->is('MentoringScheduler')) ? 'active' : '' }}"><a href="{{url('MentoringScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Mentoring Scheduler</a></li>
+          <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>
           @endhasrole
           @endif
+          @hasanyrole('ESScheduler|NbeacFocalPerson')
+          <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>
+          @endhasrole
+
+          @hasanyrole('NbeacFocalPerson')
+          <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file-word-o text-yellow"></i>Peer Review Report</a></li>
+          @endhasrole
           @hasanyrole('Mentor')
           <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report</a></li>
           @endhasrole
           </ul>
         </li>
+
+
       </ul>
     </section>
     <!-- /.sidebar -->

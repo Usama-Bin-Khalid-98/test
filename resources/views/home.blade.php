@@ -978,6 +978,83 @@
       <!-- right col -->
         @endhasrole
 
+      @hasrole('NbeacFocalPerson|ESScheduler|BusinessSchool')
+      <!--Invoices list-->
+      <section class="col-lg-12 connectedSortable">
+          <!-- TO DO List -->
+          <div class="box box-primary">
+              <div class="box-header">
+                  <h3 class="box-title">Peer Review Visit. </h3>
+                  <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                      </button>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-file-pdf-o"></i></button>
+                      </div>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                  </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                  <table id="example5" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+                          <th>Desk Review</th>
+                          <th>Registration Print</th>
+                          <th>SAR</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      @foreach($PeerReviewVisit as $mentorMeeting)
+                          <tr>
+                              <td>{{@$mentorMeeting->school}}</td>
+                              <td>{{@$mentorMeeting->campus??'Main Campus'}}</td>
+                              <td>{{@$mentorMeeting->department}}</td>
+                              <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
+{{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus_id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
+                              <td><a class="badge bg-maroon" href="print?cid={{$mentorMeeting->campus_id}}&bid={{$mentorMeeting->business_school_id}}">SAR</a></td>
+                              <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
+                              <td>@if($mentorMeeting->regStatus =='ScheduledPRVisit' || $mentorMeeting->regStatus =='PeerReviewVisit' )
+                                      <a href="{{url('showOnCalendar')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Peer Reviewer Visit Calendar</a>
+                                  @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
+                              </td>
+                          </tr>
+                      @endforeach
+
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+                          <th>Desk Review</th>
+                          <th>Registration Print</th>
+                          <th>SAR</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </tfoot>
+                  </table>
+
+                  <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+              </div>
+              <!-- /.box-body -->
+
+          </div>
+          <!-- /.box -->
+
+      </section>
+      <!-- right col -->
+        @endhasrole
+
     <!-- /.content -->
   </div>
 
