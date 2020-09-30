@@ -57,6 +57,20 @@ class SARDeskReviewController extends Controller
         return view('desk_review.sar_desk_review', compact('registrations'));
     }
 
+    public function sap_report()
+    {
+        $registrations = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId','c.id as campusId')
+//            ->where('s.reg')
+            ->get();
+
+        return view('desk_review.sap_report', compact('registrations'));
+    }
+
 
     public function submitDeskReport(Request $request, $id)
     {
@@ -65,10 +79,10 @@ class SARDeskReviewController extends Controller
             if($validation->fails()){
                 return response()->json($validation->messages()->all(), 422);
             }
+            //dd($request->all());
             $slips = DB::update('update slips set comments=?, regStatus=? where id=?', array($request->comments, $request->review, $request->id));
-            //dd($slips);
             //dd($content->email);
-            Mail::to($content->email)->queue(new ActivationMail($content));
+//            Mail::to($content->email)->queue(new ActivationMail($content));
             return response()->json(['success' => 'Status updated Successfully'], 200);
         }catch (Exception $e)
         {

@@ -42,7 +42,6 @@ use Illuminate\Support\Facades\Route;
             ///// Dashboard
             Route::patch('admin/{id}', 'DashboardController@schoolStatus');
             Route::patch('deskReviewReport/{id}', 'DeskReviewController@submitDeskReport');
-            Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
             // Users resource route.
             Route::resource('users', 'Auth\UserController');
             Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');
@@ -51,7 +50,6 @@ use Illuminate\Support\Facades\Route;
             // Permissions resource route.
             // Route::resource('permissions', 'Auth\PermissionController');
             Route::resource('desk-review', 'DeskReviewController');
-            Route::resource('sar-desk-review', 'SARDeskReviewController');
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
             Route::resource('nbeac-criteria', 'NbeacCriteriaController');
@@ -194,13 +192,13 @@ use Illuminate\Support\Facades\Route;
             Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
             Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
-            
+
 
 
             Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
 
         });
-    
+
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
          Route::get('mentoringInvoices', 'MentoringInvoiceController@mentoringInvoices');
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
@@ -251,6 +249,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {
             Route::resource('MentoringScheduler', 'ScheduleMentorMeetingController');
+            Route::get('MentorScheduler/{id?}', 'ScheduleMentorMeetingController@MentorScheduler');
             Route::resource('PeerReviewScheduler', 'SchedulePeerReviewController');
             Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');
             Route::post('changePeerReviewConfirmStatus', 'SchedulePeerReviewController@changeConfirmStatus');
@@ -271,6 +270,14 @@ use Illuminate\Support\Facades\Route;
         Route::group(['middleware' => ['role:Mentor']], function () {
             Route::resource('mentorReport', 'MentoringReportController');
             Route::put('updateInvoiceStatus/{id}', 'MentoringInvoiceController@updateInvoiceStatus');
+        });
+
+        Route::group(['middleware' => ['role:Mentor|NBEACAdmin']], function () {
+            Route::resource('sar-desk-review', 'SARDeskReviewController');
+            Route::get('sap-report', 'SARDeskReviewController@sap_report');
+            Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
+
+
         });
 
         Route::group(['middleware' => ['role:NbeacFocalPerson']], function () {

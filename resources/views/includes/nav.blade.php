@@ -850,7 +850,11 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review</a></li>
           @endhasrole
+
           @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-circle-o text-blue " ></i>Self Assessment Process Report</a></li>
+          @endhasrole
+          @hasrole('NBEACAdmin|Mentor')
           <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}"><a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
@@ -876,7 +880,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
 
           @if(@$isFiveRegistrationsMentoring >= 1)
           @hasanyrole('ESScheduler')
-          <li  class="{{ (request()->is('MentoringScheduler')) ? 'active' : '' }}"><a href="{{url('MentoringScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Mentoring Scheduler</a></li>
+          <li  class="{{ (request()->is('MentorScheduler')) ? 'active' : '' }}"><a href="{{url('MentorScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Mentoring Scheduler</a></li>
           <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>
           @endhasrole
           @endif

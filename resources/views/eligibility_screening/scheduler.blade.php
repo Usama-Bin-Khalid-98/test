@@ -438,6 +438,7 @@
 
 @endif
 <script>
+    $('.my-colorpicker1').colorpicker()
     var myCalendar;
 </script>
 @hasrole('PeerReviewer')
@@ -573,6 +574,7 @@
                 let data = JSON.parse(JSON.stringify(response));
                 console.log('response data here...', data);
                 //return false;
+                location.reload();
                 $('#peerReviewer-modal').modal('hide');
 
             },

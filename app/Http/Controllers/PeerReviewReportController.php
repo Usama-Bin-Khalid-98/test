@@ -15,7 +15,6 @@ class PeerReviewReportController extends Controller
      */
     public function index()
     {
-        //
         $registrations = PeerReviewReport::with('slip')->get();
         //dd($registrations);
         return view('peer_review_visit', compact('registrations'));

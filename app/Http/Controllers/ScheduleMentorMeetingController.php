@@ -209,6 +209,40 @@ class ScheduleMentorMeetingController extends Controller
         }
     }
 
+ public function MentorScheduler($scheduleMentorMeeting = null)
+    {
+        if(Auth::user()->user_type=='Mentor') {
+//            dd('mentors ');
+            $MentoringMeetings = DB::table('slips as s')
+                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+                ->join('departments as d', 'd.id', '=', 's.department_id')
+                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+                ->join('mentoring_mentors as mm', 's.id', '=', 'mm.slip_id')
+                ->join('users as u', 'u.id', '=', 'mm.user_id')
+                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as business_school_id')
+                ->where('s.regStatus', 'ScheduledMentoring')
+                ->orWhere('s.regStatus', 'Mentoring')
+                ->where('s.status', 'approved')
+                ->where('mm.user_id', Auth::id())
+                ->get();
+            //dd($MentoringMeetings);
+        }else {
+            $MentoringMeetings = DB::table('slips as s')
+                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+                ->join('departments as d', 'd.id', '=', 's.department_id')
+                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+                ->join('users as u', 'u.id', '=', 's.created_by')
+//                ->join('mentoring_mentors as mm', 'u.id', '=', 'mm.user_id')
+                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as business_school_id')
+                ->where('s.regStatus', 'ScheduledMentoring')
+                ->orWhere('s.regStatus', 'Mentoring')
+                ->where('s.status', 'approved')
+                ->get();
+        }
+
+        return view('mentoring.mentoring_meetings', compact('MentoringMeetings'));
+    }
+
 
     public function getMentoringAllEvents($id =null)
     {
