@@ -29,7 +29,7 @@
         </section><!-- Main content -->
 
 
-        @hasrole('NBEACAdmin')
+        @hasrole('NBEACAdmin|Mentor')
         <section class="content">
 
             <div class="row" >
@@ -160,19 +160,19 @@
 <div class="container">
 
 
-  
+
 
   <!-- The Modal -->
   <div class="modal fade" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
-      
+
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Desk Review Status</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        
+
         <!-- Modal body -->
         <div class="modal-body">
         <form class="form-group">
@@ -184,8 +184,8 @@
               <div class="col col-sm-12 col-md-9 col-lg-9">
                   <select class="form-control" name="review" id="review">
                       <option value="">Select Review</option>
-                      <option value="Review">Further Improvements</option>
-                      <option value="SAR">Go-ahead for final SAR submission</option>
+                      <option value="SARDeskReview">Further Improvements</option>
+                      <option value="PeerReviewVisit">Go-ahead for final SAR submission</option>
                   </select>
               </div>
           </div><br>
@@ -200,17 +200,17 @@
           <input type="text" name="slipId" id="slipId" hidden="hidden">
         </form>
         </div>
-        
+
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" onclick="submitReview(event)">Submit</button>
         </div>
-        
+
       </div>
     </div>
   </div>
-  
+
 </div>
 
         <!-- /.content -->
@@ -241,7 +241,7 @@
 {{--<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>--}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="dist/js/pages/dashboard.js"></script>--}}
-@hasrole('NBEACAdmin')
+@hasrole('NBEACAdmin|Mentor')
 <script>
     $('.status').on('click', function (e) {
         var id = $(this).data('id');
@@ -288,16 +288,16 @@
     });
 
 function deskReview(id){
-    $('#myModal').modal("show");     
+    $('#myModal').modal("show");
     $("#slipId").val(id);
 }
 
  function submitReview(e) {
         var id = $('#slipId').val();
-         
+
         var comments = $('#comments').val();
         var review = $('#review').val();
-        
+
         //Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
            /* function(){*/
                 $.ajaxSetup({

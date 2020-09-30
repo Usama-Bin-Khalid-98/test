@@ -445,7 +445,7 @@ class PrintController extends Controller
         $invoices = Slip::with('business_school', 'department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
         //dd($invoices);
         $registrations = Slip::with('business_school')
-            ->where('regStatus','!=','Initiated')
+            ->where('regStatus','!=','ScheduledMentoring')
             ->get();
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
         $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, users, campuses, slips WHERE users.business_school_id=business_schools.id AND campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=campuses.id AND slips.status="approved" AND users.id=?', array(auth()->user()->id));
@@ -471,7 +471,7 @@ class PrintController extends Controller
             //$registration_apply = Slip::where(['created_by' => $user_id,'business_school_id'=> $campus_id, 'department_id' => $user->department_id])->update(['isEligibleNBEAC' =>'yes']);
             //dd(DB::getQueryLog());
             //dd($registration_apply);
-            $result = DB::update('update slips set isEligibleNBEAC=?, created_by=? where id=?', array('yes',$user_id,$id));
+            $result = DB::update('update slips set isEligibleNBEAC=?, created_by=?, regStatus=? where id=?', array('yes',$user_id,'SAP',$id));
             //dd($result);
             return response()->json(['success' => 'Successfully Shared with NBEAC']);
 

@@ -313,7 +313,15 @@
                             </form>
 
                             <div>
-                                @if($desk_rev[0]->isEligible === 'yes' && $desk_rev[0]->status === 'active' )<button data-toggle="tooltip" title="" class="button button-info text-white ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$desk_reviews[0]->id}}">Forward to Eligibility Screening<i class="fa fa-check-square-o text-white"></i></button>@endif
+                                @if(@$desk_rev[0]->isEligible === 'yes' && @$desk_rev[0]->status === 'active' )
+                                    @if(@$desk_reviews->regStatus === 'Pending' || @$desk_reviews->regStatus === 'Review')
+                                        <button data-toggle="tooltip" title="" class="btn btn-success ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{@$desk_reviews[0]->id}}">Forward to Eligibility Screening &nbsp;&nbsp; <i class="fa fa-check-square-o text-white"></i></button>
+                                    @endif
+
+                                @endif
+                                @if(@$desk_reviews->regStatus !== 'Initiated' && @$desk_reviews->regStatus !== 'Pending' && @$desk_reviews->regStatus !== 'Review' )
+                                    <i class="badge bg-maroon"> Case Forwarded to Eligibility Screening</i>
+                                @endif
                             </div>
 
                         </div>
@@ -343,17 +351,16 @@
                                 @if(@$desk_reviews)
 
                                    @foreach(@$desk_rev as $review)
-                                }
-                                }
                                 <tr>
-                                    <td>{{$review->campus->business_school->name}}</td>
-                                    <td>{{$review->department->name}}</td>
-                                    <td>{{$review->nbeac_criteria}}</td>
-                                    <td><i class="badge {{$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
-                                    @hasrole('NBEACAdmin')<td><i class="badge {{$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
+                                    <td>{{@$review->campus->business_school->name}}</td>
+                                    <td>{{@$review->department->name}}</td>
+                                    <td>{{@$review->nbeac_criteria}}</td>
+                                    <td><i class="badge {{@$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{@$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
+                                    @hasrole('NBEACAdmin')<td><i class="badge {{@$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
                                     @hasrole('NBEACAdmin')<td>
+{{--                                        @if($review->isEligible === 'yes' && $review->status === 'active' )<span data-toggle="tooltip" title="" class="badge bg-yellow ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$review->id}}"><i class="fa fa-check-square-o text-white"></i></span>|@endif--}}
                                         <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> |
-                                        <i data-row='{"id":{{$review->id}},"nbeac_criteria":"{{$review->nbeac_criteria}}","isEligible":"{{$review->isEligible}}","status":"{{$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
+                                        <i data-row='{"id":{{@$review->id}},"nbeac_criteria":"{{@$review->nbeac_criteria}}","isEligible":"{{@$review->isEligible}}","status":"{{@$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
                                 </tr>
                                 @endforeach
                                 @endif
@@ -528,7 +535,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
