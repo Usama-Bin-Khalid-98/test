@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Common\Department;
 use App\Models\Common\FeeType;
 use App\Models\Common\PaymentMethod;
+use App\DepartmentFee;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
 use Illuminate\Http\Request;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ChangeResgistrationStatusMail;
 
 
 class SlipController extends Controller
@@ -31,6 +34,7 @@ class SlipController extends Controller
         //dd($invoices);
         @$departments = Department::where(['status'=> 'active', 'id'=>Auth::user()->department_id])->get()->first();
         $payment_methods = PaymentMethod::where('status', 'active')->get();
+        $fee_amount = DepartmentFee::with('department','fee_type')->where(['status'=> 'active', 'department_id'=>Auth::user()->department_id])->get()->first();
         //// generate invoice ///////////
         $latest = Slip::latest()->first();
         $invoice_no ='';
@@ -41,7 +45,49 @@ class SlipController extends Controller
             $invoice_no = 'NBEAC-HEC/ GU, Karachi:'. sprintf('%05d', $string + 1);
         }
         //dd($invoice_no);
-        return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods'));
+        return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods','fee_amount'));
+    }
+
+    public function invoicesList()
+    {
+        //
+        $invoices = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->join('designations as dg', 'dg.id', '=', 'u.designation_id')
+            ->select('s.*', 'c.location as campus','dg.name as designation', 'd.name as department', 'u.name as user', 'u.email as email', 'u.contact_no', 'bs.name as school')
+            ->get();
+        //dd($invoices);
+        return view('admin.slip', compact('invoices'));
+    }
+
+    public function approvementStatus(Request $request)
+    {
+//        dd($request->all());
+        try {
+            Slip::find($request->id)->update([
+                'status' => $request->status,
+                'updated_by' => Auth::id(),
+            ]);
+
+            $data = array(
+                'user'      =>  $request->user,
+                'designation'      =>  $request->designation,
+                'school'      =>  $request->school,
+                'campus'      =>  $request->campus,
+                'cheque_no'      =>  $request->cheque_no,
+                'transaction_date'      =>  $request->transaction_date
+            );
+
+            Mail::to($request->email)->send(new ChangeResgistrationStatusMail($data));
+            return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**

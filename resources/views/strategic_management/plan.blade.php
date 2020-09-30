@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
@@ -64,20 +65,35 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Period of the strategic plan (From)</label>
-                                    <input type="date" name="plan_period" id="plan_period" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="plan_period" id="plan_period" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                               <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Period of the strategic plan (To)</label>
-                                    <input type="date" name="plan_period_to" id="plan_period_to" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="plan_period_to" id="plan_period_to" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Date of approval</label>
-                                    <input type="date" name="aproval_date" id="aproval_date" class="form-control">
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                    <input type="text" name="aproval_date" id="aproval_date" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -226,6 +242,7 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -238,7 +255,18 @@
     </script>
     <script type="text/javascript">
 
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#plan_period').datepicker({
+      autoclose:true
+    });
+
+        $('#plan_period_to').datepicker({
+      autoclose:true
+    });
+
+        $('#aproval_date').datepicker({
+      autoclose:true
+    });
 
          $.ajaxSetup({
             headers: {

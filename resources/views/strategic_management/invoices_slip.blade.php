@@ -9,6 +9,7 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
     @include("../includes.nav")
@@ -52,11 +53,17 @@
                         </div>
                     <form role="form" method="post">
                         <div class="box-body">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Degree Department</label>
+                                    <label for="name">Department</label>
                                     <input type="text" readonly id="department" name="department" readonly class="form-control" value="{{@$departments->name}}">
                                     <input type="hidden" readonly id="department_id" name="department_id" readonly class="form-control" value="{{@$departments->id}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Department Fee amount</label>
+                                    <input type="text" readonly id="fee_amount" readonly name="fee_amount" value="{{@$fee_amount->amount}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -66,55 +73,60 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="date">Date of transaction</label>
-                                    <input type="date" id="add_transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">
-                                </div>
-                            </div>
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="date">Date of transaction</label>--}}
+{{--                                    <div class="input-group">--}}
+{{--                                    <div class="input-group-addon">--}}
+{{--                    <i class="fa fa-calendar"></i>--}}
+{{--                  </div>--}}
+{{--                                    <input type="text" id="add_transaction_date" name="transaction_date" value="<?php echo date('m/d/Y'); ?>" class="form-control">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-6">
-                                <div class="form-group" style="margin-bottom: 22px;">
-                                    <label for="type">Payment Method </label>
-                                    <select name="payment_method" id="add_payment_method" class="form-control select2">
-                                        <option value="">Select Payment Method</option>
-                                        @foreach($payment_methods as $method)
-                                            <option value="{{$method->id}}">{{$method->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group" style="margin-bottom: 22px;">--}}
+{{--                                    <label for="type">Payment Method </label>--}}
+{{--                                    <select name="payment_method" id="add_payment_method" class="form-control select2">--}}
+{{--                                        <option value="">Select Payment Method</option>--}}
+{{--                                        @foreach($payment_methods as $method)--}}
+{{--                                            <option value="{{$method->id}}">{{$method->name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Cheque No</label>
-                                    <input type="text" id="add_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group" style="margin-bottom: 18px;">
-                                    <label for="type">{{ __('Status') }} : </label>
-                                    <select name="status" id="add_status" class="form-control select2">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="paid">Paid</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="slip">Bank Deposit Slip</label>
-                                    <input type="file" name="slip" id="add_slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">
-                                    <span class="text-blue">Max 2mb file size allowed. </span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="comments">Payment Details</label>
-                                    <textarea name="comments" id="add_comments" class="form-control">{{old('comments')}}</textarea>
-                                </div>
-                            </div>
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Cheque No</label>--}}
+{{--                                    <input type="text" id="add_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group" style="margin-bottom: 18px;">--}}
+{{--                                    <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                    <select name="status" id="add_status" class="form-control select2">--}}
+{{--                                        <option value="active">Active</option>--}}
+{{--                                        <option value="inactive">Inactive</option>--}}
+{{--                                        <option value="pending">Pending</option>--}}
+{{--                                        <option value="paid">Paid</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="slip">Bank Deposit Slip</label>--}}
+{{--                                    <input type="file" name="slip" id="add_slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">--}}
+{{--                                    <span class="text-blue">Max 2mb file size allowed. </span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="comments">Payment Details</label>--}}
+{{--                                    <textarea name="comments" id="add_comments" class="form-control">{{old('comments')}}</textarea>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -135,7 +147,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Scope of Accreditation.</h3>
+                            <h3 class="box-title">Department registration invoices.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -155,6 +167,7 @@
                                 <thead>
                                 <tr>
                                     <th>Department</th>
+                                    <th>Fee amount</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
                                     <th>Slip</th>
@@ -168,6 +181,7 @@
                                 @foreach($invoices as $invoice)
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
+                                    <td>{{@$invoice->department->department_fee->amount}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
                                     <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
@@ -184,6 +198,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Department</th>
+                                    <th>Fee amount</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
                                     <th>Slip</th>
@@ -290,7 +305,7 @@
                             <div class="box box-primary">
                                 <!-- /.box-header -->
                                 <div class="box-body">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="name">Degree Department</label>
                                             <input type="text" readonly id="edit_department_id" name="department_id" readonly class="form-control">
@@ -318,7 +333,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="date">Date of transaction</label>
-                                            <input type="date" id="transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                                            <input type="text" id="transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -326,7 +346,7 @@
                                         <div class="form-group" style="margin-bottom: 22px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
-                                                <option value="">Select Payment Method</option>
+                                                <option disabled selected>Select Payment Method</option>
                                                 @foreach($payment_methods as $method)
                                                     <option value="{{$method->id}}">{{$method->name}}</option>
                                                 @endforeach
@@ -334,7 +354,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 ChequeNumber">
                                         <div class="form-group">
                                             <label for="name">Cheque No</label>
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
@@ -349,6 +369,7 @@
                                                 <option value="inactive">Inactive</option>
                                                 <option value="pending">Pending</option>
                                                 <option value="paid">Paid</option>
+                                                <option value="approved">Approved</option>
                                             </select>
                                         </div>
                                     </div>
@@ -362,7 +383,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="comments">Payment Details</label>
-                                            <textarea name="comments" id="comments" class="form-control">{{old('comments')}}</textarea>
+                                            <textarea name="comments" id="comments" required class="form-control">{{old('comments')}}</textarea>
                                             <input type="hidden" name="id" id="id">
                                         </div>
                                     </div>
@@ -398,6 +419,7 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -411,13 +433,38 @@
     <script type="text/javascript">
 
         //Initialize Select2 Elements
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#add_transaction_date').datepicker({
+      autoclose:true
+    });
+
+        $('#transaction_date').datepicker({
+      autoclose:true
+    });
 
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        })
+        });
+
+        $(document).on('change',"#payment_method",function(e){
+
+        var payment_method = $(this).val();
+
+        if(payment_method == 2) {
+
+            $('.ChequeNumber').show();
+            $('#cheque_no').attr('required',true);
+
+        }else {
+
+            $('.ChequeNumber').hide();
+            $('#cheque_no').val(' ').trigger('change');
+            $('#cheque_no').removeAttr('required',false);
+        }
+
+    });
 
         //let data = JSON.parse(JSON.stringify($(this).data('row')));
         //$('#edit_program_id').select2().val(data.program_id).trigger('change');

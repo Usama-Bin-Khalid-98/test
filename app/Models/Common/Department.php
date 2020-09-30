@@ -3,6 +3,7 @@
 namespace App\Models\Common;
 
 use App\DepartmentFee;
+use App\Models\MentoringInvoice;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,5 +31,10 @@ class Department extends Model
     public function department_fee()
     {
         return $this->hasOne(DepartmentFee::class);
+    }
+
+    public function mentoring_invoice()
+    {
+        return $this->hasOne(MentoringInvoice::class);
     }
 }

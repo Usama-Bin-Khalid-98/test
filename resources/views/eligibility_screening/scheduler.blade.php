@@ -52,7 +52,7 @@
 
                                         <span>Available on.</span>
                                         @foreach($reviewerDates['dates'] as $dates)
-                                    <div class="external-event bg-red fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                                    <div class="external-event @if($maxSelectedDate==$dates) bg-green @else bg-red @endif fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
                                         <p>{{@$dates}}</p>
                                     </div>
                                         @endforeach
@@ -78,7 +78,11 @@
                         <!-- the events -->
                         <div id='external-events'>
                             <div class="external-event bg-green fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                                @hasrole('ESScheduler')<input type="checkbox" value="{{@$maxSelectedDate}}" @foreach($reviewers as $checkDate) @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) checked @endif @endforeach id="confirmDate" data-id="{{@request()->route('id')}}">@endhasrole Date: {{@$maxSelectedDate}}
+                                @hasrole('ESScheduler')
+                                    <input type="checkbox" value="{{@$maxSelectedDate}}"
+                                          @foreach($reviewers as $checkDate)
+                                          @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) checked @endif @endforeach
+                                    id="confirmDate" data-id="{{@request()->route('id')}}">@endhasrole Date: {{@$maxSelectedDate}}
                                 : @php $confirm = 'Not Confirmed yet'; @endphp @foreach($reviewers as $checkDate) @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) @php $confirm = 'confirmed'; @endphp @break @endif @endforeach @php echo $confirm @endphp
                             </div>
 
@@ -99,8 +103,7 @@
                 @endhasrole
 
                 <!-- /.col -->
-                @hasrole('PeerReviewer')<div class="col-md-12">@endhasrole
-                @hasrole('ESScheduler')<div class="col-md-12">@endhasrole
+                <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-body no-padding">
                             <!-- THE CALENDAR -->
@@ -113,7 +116,6 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-            </div>
         </section>
         <!-- /.content -->
     </div>
@@ -121,7 +123,7 @@
 
     <div class="modal fade" id="add-modal">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" style="width: 658px;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
@@ -143,7 +145,7 @@
                         <div class="form-group">
                             <label>Reviewers:</label>
                             <select class="form-control select2" name="reviewers" id="reviewers" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                                @foreach(@$reviewers as $reviewer)
+                                @foreach(@$reviewers_all as $reviewer)
                                     <option value="{{@$reviewer->id}}">{{@$reviewer->name}}</option>
                                 @endforeach
                             </select>
@@ -151,7 +153,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Date and time range:</label>
+                            <label>Select dates on which you are available.</label>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
@@ -436,6 +438,7 @@
 
 @endif
 <script>
+    $('.my-colorpicker1').colorpicker()
     var myCalendar;
 </script>
 @hasrole('PeerReviewer')
@@ -571,6 +574,7 @@
                 let data = JSON.parse(JSON.stringify(response));
                 console.log('response data here...', data);
                 //return false;
+                location.reload();
                 $('#peerReviewer-modal').modal('hide');
 
             },
@@ -592,7 +596,7 @@
 
 <script>
     //Date range picker with time picker
-    //$('#esScheduleDateTime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' }})
+    $('#esScheduleDateTime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' }})
     $(function () {
         $('.select2').select2();
         // calendar
@@ -623,28 +627,27 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 meridiem: true
-        }
+        },
 
-             // customButtons: {
-            //     addEventButton: {
-            //         text: 'add event...',
-            //         click: function() {
-            //             var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-            //             var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-            //
-            //             if (!isNaN(date.valueOf())) { // valid?
-            //                 calendar.addEvent({
-            //                     title: 'dynamic event',
-            //                     start: date,
-            //                     allDay: true
-            //                 });
-            //                 alert('Great. Now, update your database...');
-            //             } else {
-            //                 alert('Invalid date.');
-            //             }
-            //         }
-            //     }
-            // }
+         customButtons: {
+            addEventButton: {
+                text: 'Add Eligibility Scheduler...',
+                click: function() {
+                    $('#add-modal').modal('show')
+
+                    // if (!isNaN(date.valueOf())) { // valid?
+                    //     calendar.addEvent({
+                    //         title: 'dynamic event',
+                    //         start: date,
+                    //         allDay: true
+                    //     });
+                    //     alert('Great. Now, update your database...');
+                    // } else {
+                    //     alert('Invalid date.');
+                    // }
+                }
+            }
+        }
         });
 
         myCalendar.render();
@@ -841,7 +844,7 @@
                 });
                 myCalendar.render();
                 $('#add-modal').modal('hide');
-                //location.reload();
+                location.reload();
                 console.log('response here', response);
             },
             error:function(response, exception){

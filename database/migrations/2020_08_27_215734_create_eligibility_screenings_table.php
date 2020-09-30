@@ -27,7 +27,7 @@ class CreateEligibilityScreeningsTable extends Migration
             $table->foreign('slip_id')
                 ->references('id')
                 ->on('slips');
-            $table->string('title', 100);
+            $table->string('title', 255);
             $table->dateTime('start');
             $table->dateTime('end');
             $table->string('allDay', 100)->nullable();

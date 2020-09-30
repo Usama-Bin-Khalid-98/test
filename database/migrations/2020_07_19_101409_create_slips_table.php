@@ -30,12 +30,12 @@ class CreateSlipsTable extends Migration
                 ->references('id')
                 ->on('payment_methods');
             $table->string('cheque_no')->nullable();
-            $table->date('transaction_date')->nullable();
+            $table->string('transaction_date',100)->nullable();
             $table->enum('status', ['active', 'inactive','pending', 'paid','approved'])->nullable();
             $table->enum('isEligible', ['yes', 'no'])->nullable();
             $table->enum('isEligibleNBEAC', ['yes', 'no'])->nullable()->default('no');
             $table->enum('isEligibleMentor', ['yes', 'no'])->nullable()->default('no');
-            $table->enum('regStatus', ['Initiated','Pending','Review','Eligibility','ScheduledES','ScheduledPR','Mentoring','SAR','Active', 'Inactive', 'Approved'])->nullable()->default('Initiated');
+            $table->enum('regStatus', ['Initiated','Pending','Review','Eligibility','ScheduledES','ScheduledPR','Mentoring','ScheduledMentoring','SAR','SAP','SARDeskReview','PeerReviewVisit','ScheduledPRVisit','Active', 'Inactive', 'Approved'])->nullable()->default('Initiated');
             $table->string('comments', 255)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')

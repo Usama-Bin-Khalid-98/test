@@ -5,9 +5,9 @@
 
 @include("includes.head")
 <!-- Morris chart -->
-<link rel="stylesheet" href="bower_components/morris.js/morris.css">
+{{--<link rel="stylesheet" href="bower_components/morris.js/morris.css">--}}
 <!-- jvectormap -->
-<link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+{{--<link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">--}}
 <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.dataTables.min.css" />
 
@@ -440,163 +440,163 @@
             </section>
 
             <!--Invoices list-->
-            <section class="col-lg-12 connectedSortable">
-                <!-- TO DO List -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Business school Invoices. </h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                            </button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-file-pdf-o"></i></button>
-                            </div>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
+{{--            <section class="col-lg-12 connectedSortable">--}}
+{{--                <!-- TO DO List -->--}}
+{{--                <div class="box box-primary">--}}
+{{--                    <div class="box-header">--}}
+{{--                        <h3 class="box-title">Business school Invoices. </h3>--}}
+{{--                        <div class="box-tools pull-right">--}}
+{{--                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>--}}
+{{--                            </button>--}}
+{{--                            <div class="btn-group">--}}
+{{--                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">--}}
+{{--                                    <i class="fa fa-file-pdf-o"></i></button>--}}
+{{--                            </div>--}}
+{{--                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- /.box-header -->--}}
+{{--                    <div class="box-body">--}}
 
 
-                        <table id="example2" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Business School Name</th>
-                                <th>Campus</th>
-                                <th>Department</th>
-                                <th>Contact Person Name</th>
-                                <th>Contact</th>
-                                <th>Email</th>
-                                <th>Invoice Slip</th>
-                                {{--                            <th>Account Type</th>--}}
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
+{{--                        <table id="example2" class="table table-bordered table-striped">--}}
+{{--                            <thead>--}}
+{{--                            <tr>--}}
+{{--                                <th>Business School Name</th>--}}
+{{--                                <th>Campus</th>--}}
+{{--                                <th>Department</th>--}}
+{{--                                <th>Contact Person Name</th>--}}
+{{--                                <th>Contact</th>--}}
+{{--                                <th>Email</th>--}}
+{{--                                <th>Invoice Slip</th>--}}
+{{--                                --}}{{--                            <th>Account Type</th>--}}
+{{--                                <th>Status</th>--}}
+{{--                                <th>Action</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
 
-                            <tbody>
+{{--                            <tbody>--}}
 
-                            @foreach($invoices as $invoice)
-                                <tr>
-                                    <td>{{@$invoice->school}}</td>
-                                    <td>{{@$invoice->campus??'Main Campus'}}</td>
-                                    <td>{{@$invoice->department}}</td>
-                                    <td>{{@$invoice->user}}</td>
-                                    <td>{{@$invoice->contact_no}}</td>
-                                    <td>{{@$invoice->email}}</td>
-                                    <td><a href="{{@$invoice->slip}}">Invoice Slip</a></td>
-                                    {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                                    <td><i class="badge {{$invoice->regStatus == 'inactive'?'bg-red':''}} status" data-id="{{$invoice->id}}" style="background: red" >{{$invoice->regStatus != ''?ucwords($invoice->regStatus):'inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
-                                </tr>
-                            @endforeach
+{{--                            @foreach($invoices as $invoice)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{@$invoice->school}}</td>--}}
+{{--                                    <td>{{@$invoice->campus??'Main Campus'}}</td>--}}
+{{--                                    <td>{{@$invoice->department}}</td>--}}
+{{--                                    <td>{{@$invoice->user}}</td>--}}
+{{--                                    <td>{{@$invoice->contact_no}}</td>--}}
+{{--                                    <td>{{@$invoice->email}}</td>--}}
+{{--                                    <td><a href="{{@$invoice->slip}}">Invoice Slip</a></td>--}}
+{{--                                    --}}{{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+{{--                                    <td><i class="badge {{$invoice->regStatus == 'inactive'?'bg-red':''}}" data-id="{{$invoice->id}}" style="background: red" >{{$invoice->regStatus != ''?ucwords($invoice->regStatus):'inactive'}}</i></td>--}}
+{{--                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>--}}
+{{--                                </tr>--}}
+{{--                            @endforeach--}}
 
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Business School Name</th>
-                                <th>Campus</th>
-                                <th>Department</th>
-                                <th>Contact Person Name</th>
-                                <th>Contact</th>
-                                <th>Email</th>
-                                <th>Invoice Slip</th>
-                                {{--                            <th>Account Type</th>--}}
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </tfoot>
-                        </table>
+{{--                            </tbody>--}}
+{{--                            <tfoot>--}}
+{{--                            <tr>--}}
+{{--                                <th>Business School Name</th>--}}
+{{--                                <th>Campus</th>--}}
+{{--                                <th>Department</th>--}}
+{{--                                <th>Contact Person Name</th>--}}
+{{--                                <th>Contact</th>--}}
+{{--                                <th>Email</th>--}}
+{{--                                <th>Invoice Slip</th>--}}
+{{--                                --}}{{--                            <th>Account Type</th>--}}
+{{--                                <th>Status</th>--}}
+{{--                                <th>Action</th>--}}
+{{--                            </tr>--}}
+{{--                            </tfoot>--}}
+{{--                        </table>--}}
 
-                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                    </div>
-                    <!-- /.box-body -->
+{{--                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->--}}
+{{--                    </div>--}}
+{{--                    <!-- /.box-body -->--}}
 
-                </div>
-                <!-- /.box -->
+{{--                </div>--}}
+{{--                <!-- /.box -->--}}
 
-            </section>
+{{--            </section>--}}
             <!-- right col -->
 
             <!--Registrations list-->
-            <section class="col-lg-12 connectedSortable">
-                <!-- TO DO List -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Business school Department Registrations. </h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                            </button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-file-pdf-o"></i></button>
-                            </div>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
+{{--            <section class="col-lg-12 connectedSortable">--}}
+{{--                <!-- TO DO List -->--}}
+{{--                <div class="box box-primary">--}}
+{{--                    <div class="box-header">--}}
+{{--                        <h3 class="box-title">Business school Department Registrations. </h3>--}}
+{{--                        <div class="box-tools pull-right">--}}
+{{--                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>--}}
+{{--                            </button>--}}
+{{--                            <div class="btn-group">--}}
+{{--                                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">--}}
+{{--                                    <i class="fa fa-file-pdf-o"></i></button>--}}
+{{--                            </div>--}}
+{{--                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- /.box-header -->--}}
+{{--                    <div class="box-body">--}}
 
 
-                        <table id="example3" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Business School Name</th>
-                                <th>Campus</th>
-                                <th>Department</th>
-                                <th>Contact Person Name</th>
-                                <th>Contact</th>
-                                <th>Email</th>
+{{--                        <table id="example3" class="table table-bordered table-striped">--}}
+{{--                            <thead>--}}
+{{--                            <tr>--}}
+{{--                                <th>Business School Name</th>--}}
+{{--                                <th>Campus</th>--}}
+{{--                                <th>Department</th>--}}
+{{--                                <th>Contact Person Name</th>--}}
+{{--                                <th>Contact</th>--}}
+{{--                                <th>Email</th>--}}
 {{--                                <th>Invoice Slip</th>--}}
-                                <th>Desk Review</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
+{{--                                <th>Desk Review</th>--}}
+{{--                                <th>Status</th>--}}
+{{--                                <th>Action</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
 
-                            <tbody>
+{{--                            <tbody>--}}
 
-                            @foreach($registrations as $regist)
-                                <tr>
-                                    <td>{{@$regist->school}}</td>
-                                    <td>{{@$regist->campus??'Main Campus'}}</td>
-                                    <td>{{@$regist->department}}</td>
-                                    <td>{{@$regist->user}}</td>
-                                    <td>{{@$regist->contact_no}}</td>
-                                    <td>{{@$regist->email}}</td>
-                                    <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Review</a></td>
-                                    {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                                    <td><i class="badge {{$regist->regStatus == 'pending'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'Initiated'}}</i></td>
-                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
-                                </tr>
+{{--                            @foreach($registrations as $regist)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{@$regist->school}}</td>--}}
+{{--                                    <td>{{@$regist->campus??'Main Campus'}}</td>--}}
+{{--                                    <td>{{@$regist->department}}</td>--}}
+{{--                                    <td>{{@$regist->user}}</td>--}}
+{{--                                    <td>{{@$regist->contact_no}}</td>--}}
+{{--                                    <td>{{@$regist->email}}</td>--}}
+{{--                                    <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Review</a></td>--}}
+{{--                                    --}}{{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+{{--                                    <td><i class="badge {{$regist->regStatus == 'pending'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'Initiated'}}</i></td>--}}
+{{--                                    <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>--}}
+{{--                                </tr>--}}
 
-                            @endforeach
+{{--                            @endforeach--}}
 
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Business School Name</th>
-                                <th>Campus</th>
-                                <th>Department</th>
-                                <th>Contact Person Name</th>
-                                <th>Contact</th>
-                                <th>Email</th>
+{{--                            </tbody>--}}
+{{--                            <tfoot>--}}
+{{--                            <tr>--}}
+{{--                                <th>Business School Name</th>--}}
+{{--                                <th>Campus</th>--}}
+{{--                                <th>Department</th>--}}
+{{--                                <th>Contact Person Name</th>--}}
+{{--                                <th>Contact</th>--}}
+{{--                                <th>Email</th>--}}
 {{--                                <th>Invoice Slip</th>--}}
-                                <th>Desk Review</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </tfoot>
-                        </table>
+{{--                                <th>Desk Review</th>--}}
+{{--                                <th>Status</th>--}}
+{{--                                <th>Action</th>--}}
+{{--                            </tr>--}}
+{{--                            </tfoot>--}}
+{{--                        </table>--}}
 
-                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                    </div>
+{{--                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->--}}
+{{--                    </div>--}}
 
-                </div>
-                <!-- /.box -->
+{{--                </div>--}}
+{{--                <!-- /.box -->--}}
 
-            </section>
+{{--            </section>--}}
             <!-- right col -->
 
 
@@ -605,7 +605,7 @@
                 <!-- TO DO List -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Business school Campuses. </h3>
+                        <h3 class="box-title">Business school Campuses SAR/Registrations print list. </h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                             </button>
@@ -643,7 +643,7 @@
                                     <td>{{$school->charter_number}} </td>
                                     <td>{{$school->web_url}} </td>
 
-                                    <td><a class="btn btn-info" href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print SAR</a></td>
+                                    <td><a class="btn btn-info" href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print SAR</a><a class="btn btn-primary" href="registrationPrint?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print Registration</a></td>
 
                                    <!--  <td><i class="badge  " > </i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
@@ -794,7 +794,7 @@
                               <td>{{@$screening->department}}</td>
                               <td><a href="{{url('deskreview')}}/{{@$screening->id}}">Desk Review</a></td>
 {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                              <td><a href="{{url('print?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->id}}">Registration Print </a></td>
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->id}}">Registration Print </a></td>
 
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
@@ -903,6 +903,158 @@
       <!-- right col -->
         @endhasrole
 
+      @hasrole('Mentor|ESScheduler|BusinessSchool')
+      <!--Invoices list-->
+      <section class="col-lg-12 connectedSortable">
+          <!-- TO DO List -->
+          <div class="box box-primary">
+              <div class="box-header">
+                  <h3 class="box-title">Business school Registrations Mentoring Meetings. </h3>
+                  <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                      </button>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-file-pdf-o"></i></button>
+                      </div>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                  </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                  <table id="example5" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+                          <th>Desk Review</th>
+                          <th>Registration Print</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      @foreach($MentoringMeetings as $mentorMeeting)
+                          <tr>
+                              <td>{{@$mentorMeeting->school}}</td>
+                              <td>{{@$mentorMeeting->campus??'Main Campus'}}</td>
+                              <td>{{@$mentorMeeting->department}}</td>
+                              <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
+{{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus_id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
+                              {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                              <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
+                              <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' || $mentorMeeting->regStatus =='Mentoring' )
+                                      <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Mentoring Meeting Calendar</a>
+                                  @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
+                              </td>
+                          </tr>
+                      @endforeach
+
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+                          <th>Desk Review</th>
+                          <th>Registration Print</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </tfoot>
+                  </table>
+
+                  <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+              </div>
+              <!-- /.box-body -->
+
+          </div>
+          <!-- /.box -->
+
+      </section>
+      <!-- right col -->
+        @endhasrole
+
+      @hasrole('NbeacFocalPerson|ESScheduler|BusinessSchool')
+      <!--Invoices list-->
+      <section class="col-lg-12 connectedSortable">
+          <!-- TO DO List -->
+          <div class="box box-primary">
+              <div class="box-header">
+                  <h3 class="box-title">Peer Review Visit. </h3>
+                  <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                      </button>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-file-pdf-o"></i></button>
+                      </div>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                  </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                  <table id="example5" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+                          <th>Desk Review</th>
+                          <th>Registration Print</th>
+                          <th>SAR</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      @foreach($PeerReviewVisit as $mentorMeeting)
+                          <tr>
+                              <td>{{@$mentorMeeting->school}}</td>
+                              <td>{{@$mentorMeeting->campus??'Main Campus'}}</td>
+                              <td>{{@$mentorMeeting->department}}</td>
+                              <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
+{{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus_id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
+                              <td><a class="badge bg-maroon" href="print?cid={{$mentorMeeting->campus_id}}&bid={{$mentorMeeting->business_school_id}}">SAR</a></td>
+                              <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
+                              <td>@if($mentorMeeting->regStatus =='ScheduledPRVisit' || $mentorMeeting->regStatus =='PeerReviewVisit' )
+                                      <a href="{{url('showOnCalendar')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Peer Reviewer Visit Calendar</a>
+                                  @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
+                              </td>
+                          </tr>
+                      @endforeach
+
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                          <th>Business School Name</th>
+                          <th>Campus</th>
+                          <th>Department</th>
+                          <th>Desk Review</th>
+                          <th>Registration Print</th>
+                          <th>SAR</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                      </tfoot>
+                  </table>
+
+                  <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+              </div>
+              <!-- /.box-body -->
+
+          </div>
+          <!-- /.box -->
+
+      </section>
+      <!-- right col -->
+        @endhasrole
+
     <!-- /.content -->
   </div>
 
@@ -930,12 +1082,12 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="dist/js/pages/dashboard.js"></script>--}}
 @hasrole('NBEACAdmin')
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <script
   src="https://code.jquery.com/jquery-3.5.1.js"
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous"></script>
-<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready( function () {
     $('#example1').DataTable();

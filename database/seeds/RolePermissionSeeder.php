@@ -84,6 +84,9 @@ class RolePermissionSeeder extends Seeder
         $NBEACAdmin = Role::create(['name' => 'NBEACAdmin']);
         $NBEACAdmin->givePermissionTo(Permission::all());
 
+        $NbeacFocalPerson = Role::create(['name' => 'NbeacFocalPerson']);
+        $NbeacFocalPerson->givePermissionTo(Permission::all());
+
         $EligibilityScreening = Role::create(['name' => 'EligibilityScreening'])
             ->givePermissionTo(['EligibilityScreening']);
 

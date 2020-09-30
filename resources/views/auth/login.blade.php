@@ -79,7 +79,7 @@
 							Don’t have an account?
 						</span>
 
-                    <a class="txt2" href="/register">
+                    <a class="txt2" href="register">
                         Sign Up
                     </a>
                 </div>

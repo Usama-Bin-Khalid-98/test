@@ -19,6 +19,15 @@ class CreateReviewerAvailabilitiesTable extends Migration
             $table->foreign('slip_id')
                 ->references('id')
                 ->on('slips');
+            $table->integer('campus_id')->unsigned();
+            $table->foreign('campus_id')
+                ->references('id')
+                ->on('campuses');
+
+            $table->integer('department_id')->unsigned();
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departments');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')

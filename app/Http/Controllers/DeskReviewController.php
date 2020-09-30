@@ -26,9 +26,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EligibilityScreeningEmail;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use DB;
+use App\Mail\ActivationMail;
 
 class DeskReviewController extends Controller
 {
@@ -41,14 +44,36 @@ class DeskReviewController extends Controller
     {
         //$registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
 
-        $registrations = Slip::with('business_school')
-            ->where(['status' => 'active'])
-            ->orWhere('regStatus', "!=", 'Initiated')
+        $registrations = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId')
+//            ->where('s.reg')
             ->get();
-       // dd($registrations);
         //dd($desk_reviews);
 
         return view('desk_review.index', compact('registrations'));
+    }
+
+
+    public function submitDeskReport(Request $request, $id)
+    {
+        try {
+            $validation = Validator::make($request->all(), ['id'=> 'required'], ['required'=> 'The :attribute can not be blank.']);
+            if($validation->fails()){
+                return response()->json($validation->messages()->all(), 422);
+            }
+            $slips = DB::update('update slips set comments=?, regStatus=? where id=?', array($request->comments, $request->review, $request->id));
+            dd($slips);
+            //dd($content->email);
+            Mail::to($content->email)->queue(new ActivationMail($content));
+            return response()->json(['success' => 'Status updated Successfully'], 200);
+        }catch (Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -63,8 +88,9 @@ class DeskReviewController extends Controller
         $nbeac_criteria = NbeacCriteria::all()->first();
         @$business_school_user = Slip::where(['id' => $id])->get()->first();
        // dd($business_school_user);
-        $campus_id = $business_school_user->campus_id;
+        $campus_id = $business_school_user->business_school_id;
         $department_id = $business_school_user->department_id;
+        //dd($campus_id, ' dep', $department_id);
 
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
 //      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
@@ -105,7 +131,7 @@ class DeskReviewController extends Controller
         $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
         $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
 
-        $summaries = ResearchSummary::get();
+        $summaries = ResearchSummary::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get();
 
         //dd($female_faculty);
 
@@ -130,7 +156,10 @@ class DeskReviewController extends Controller
         AND users.id = slips.created_by
         AND slips.id = '.$id;
         @$desk_reviews = DB::select($query);
-        //dd($desk_reviews);
+//        dd($desk_reviews);
+
+        $desk_rev= DeskReview::with('campus','department')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
+//        dd($desk_rev);
         return view('desk_review.desk_review', compact(
             'program_dates',
             'mission_vision',
@@ -159,8 +188,8 @@ class DeskReviewController extends Controller
             'comp_ratio',
             'summaries',
             'nbeac_criteria',
-            'desk_reviews'
-
+            'desk_reviews',
+            'desk_rev'
         ));
     }
     /**
@@ -226,7 +255,8 @@ class DeskReviewController extends Controller
                 'department_id' => $getUserData->department_id])
                 ->update([
                 'isEligible' => $isEligible,
-                'regStatus' => 'Eligibility'
+                'comments' => $request->comments
+//                'regStatus' => 'Eligibility'
                 ]
             );
 
@@ -268,7 +298,25 @@ class DeskReviewController extends Controller
      */
     public function update(Request $request, DeskReview $deskReview)
     {
-        //
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+
+        try {
+
+            DeskReview::where('id', $deskReview->id)->update([
+                'isEligible' => $request->isEligible,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
+            return response()->json(['success' => ' Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
     }
 
     /**
@@ -280,8 +328,22 @@ class DeskReviewController extends Controller
      */
     public function deskreviewStatus(Request $request, DeskReview $deskReview)
     {
-        //
-        dd($request->all());
+
+       // dd($request->all());
+        try {
+            $update = Slip::find($request->id)->update(['regStatus' => 'Eligibility']);
+            if($update!=null)
+            {
+                $data = array(
+                    'name'      => 'Safiullah'
+                );
+                Mail::to('yoursafi509@gmail.com')->send(new EligibilityScreeningEmail($data));
+                return response()->json(['success' => 'Case forwarded to eligibility screening']);
+            }
+        }catch (\Exception $e)
+        {
+            return response()->json(['message' => 'Forwarding case to eligibility screening Failed.']);
+        }
 
     }
 
@@ -293,7 +355,16 @@ class DeskReviewController extends Controller
      */
     public function destroy(DeskReview $deskReview)
     {
-        //
+        try {
+            DeskReview::where('id', $deskReview->id)->update([
+                'deleted_by' => Auth::user()->id
+            ]);
+            DeskReview::destroy($deskReview->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
     }
 
     protected function rules() {
