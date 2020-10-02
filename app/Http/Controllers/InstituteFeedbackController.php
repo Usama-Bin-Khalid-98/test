@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EligibilityScreeningEmail;
+use App\Models\Common\Slip;
 use App\Models\PeerReview\InstituteFeedback;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -43,7 +47,13 @@ class InstituteFeedbackController extends Controller
                 ->join('campuses as c', 'c.id', 's.business_school_id')
                 ->join('business_schools as bs', 'bs.id', 'c.business_school_id')
                 ->join('departments as d', 'd.id', 's.department_id')
-                ->select('s.*', 'c.location as campus', 'bs.name as name','bs.id as business_school_id', 'd.name as department', 'c.id as campus_id')
+                ->select('s.*', 'c.location as campus',
+                    'bs.name',
+                    'bs.id as business_school_id',
+                    'd.name as department',
+                    'c.id as campus_id',
+                    'if.file as feedback_file'
+                )
                 ->where('s.created_by', Auth::id())
                 ->get();
         }
@@ -170,6 +180,47 @@ class InstituteFeedbackController extends Controller
     public function destroy(InstituteFeedback $instituteFeedback)
     {
         //
+    }
+
+    public function peerReviewStatus(Request $request)
+    {
+//        dd($request->all());
+        try {
+            $update = Slip::find($request->id)->update(['regStatus' => 'PeerReviewReport']);
+//            dd($update);
+            if($update)
+            {
+//                echo "working here";
+                $businessSchool = DB::table('slips as s')
+                    ->join('institute_feedback as if', 'if.slip_id', 's.id')
+                    ->join('campuses as c', 'c.id', 's.business_school_id')
+                    ->join('business_schools as bs', 'bs.id', 'c.business_school_id')
+                    ->join('departments as d', 'd.id', 's.department_id')
+                    ->join('users as u', 'u.id', 's.created_by')
+                    ->select('s.*',
+                        'bs.name',
+                        'bs.id as business_school_id',
+                        'd.name as department',
+                        'c.id as campus_id','c.location as campus',
+                        'if.file as feedback_file',
+                        'u.name as username', 'u.email'
+                    )
+                    ->where('s.id', $request->id)
+                    ->get();
+
+                //////////////////////// send email here /////////////////////////////////////
+                //dd($businessSchool);
+
+//                $data = array(
+//                    'name'      => $businessSchool->username
+//                );
+//                Mail::to($businessSchool->email)->send(new EligibilityScreeningEmail($data));
+                return response()->json(['success' => 'Case forwarded to Peer Review Report']);
+            }
+        }catch (\Exception $e)
+        {
+            return response()->json(['message' => 'Forwarding case to Peer Review Report Failed.', 'error' => $e->getMessage()]);
+        }
     }
 
     public function rules(){
