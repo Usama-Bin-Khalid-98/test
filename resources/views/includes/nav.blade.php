@@ -881,19 +881,24 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @if(@$isFiveRegistrationsMentoring >= 1)
           @hasanyrole('ESScheduler')
           <li  class="{{ (request()->is('MentorScheduler')) ? 'active' : '' }}"><a href="{{url('MentorScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Mentoring Scheduler</a></li>
-          <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>
+{{--          <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>--}}
           @endhasrole
           @endif
           @hasanyrole('ESScheduler|NbeacFocalPerson')
           <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>
           @endhasrole
 
-          @hasanyrole('NbeacFocalPerson')
-          <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file-word-o text-yellow"></i>Peer Review Report</a></li>
+          @hasanyrole('NbeacFocalPerson|NBEACAdmin')
+          <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-yellow"></i>Notifications</a></li>
+          @endhasrole
+          @hasanyrole('NbeacFocalPerson|NBEACAdmin')
+          <li  class="{{ (request()->is('instituteFeedback')) ? 'active' : '' }}"><a href="{{url('instituteFeedback')}}"><i class="fa fa-backward text-yellow"></i>Institutional Feedback Form</a></li>
           @endhasrole
           @hasanyrole('Mentor')
           <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report</a></li>
           @endhasrole
+
+
           </ul>
         </li>
 

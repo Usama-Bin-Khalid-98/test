@@ -10,7 +10,7 @@
 {{--<link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">--}}
 <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.dataTables.min.css" />
-
+<link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 
 @include("includes.header")
 @include("includes.nav")
@@ -383,7 +383,7 @@
                     <div class="box-body">
 
 
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="datatable1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>Business School Name</th>
@@ -459,7 +459,7 @@
 {{--                    <div class="box-body">--}}
 
 
-{{--                        <table id="example2" class="table table-bordered table-striped">--}}
+{{--                        <table id="datatable2" class="table table-bordered table-striped">--}}
 {{--                            <thead>--}}
 {{--                            <tr>--}}
 {{--                                <th>Business School Name</th>--}}
@@ -539,7 +539,7 @@
 {{--                    <div class="box-body">--}}
 
 
-{{--                        <table id="example3" class="table table-bordered table-striped">--}}
+{{--                        <table id="datatable3" class="table table-bordered table-striped">--}}
 {{--                            <thead>--}}
 {{--                            <tr>--}}
 {{--                                <th>Business School Name</th>--}}
@@ -620,7 +620,7 @@
                     <div class="box-body">
 
 
-                        <table id="example4" class="table table-bordered table-striped">
+                        <table id="datatable4" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>Business School Name</th>
@@ -698,7 +698,7 @@
               <div class="box-body">
 
 
-                  <table id="example5" class="table table-bordered table-striped">
+                  <table id="datatable5" class="table table-bordered table-striped">
                       <thead>
                       <tr>
                           <th>Business School Name</th>
@@ -772,7 +772,7 @@
               <div class="box-body">
 
 
-                  <table id="example5" class="table table-bordered table-striped">
+                  <table id="datatable6" class="table table-bordered table-striped">
                       <thead>
                       <tr>
                           <th>Business School Name</th>
@@ -846,7 +846,7 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
-                  <table id="example5" class="table table-bordered table-striped">
+                  <table id="datatable7" class="table table-bordered table-striped">
                       <thead>
                       <tr>
                           <th>Business School Name</th>
@@ -922,7 +922,7 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
-                  <table id="example5" class="table table-bordered table-striped">
+                  <table id="datatable8" class="table table-bordered table-striped">
                       <thead>
                       <tr>
                           <th>Business School Name</th>
@@ -997,7 +997,7 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
-                  <table id="example5" class="table table-bordered table-striped">
+                  <table id="datatable9" class="table table-bordered table-striped">
                       <thead>
                       <tr>
                           <th>Business School Name</th>
@@ -1012,19 +1012,29 @@
                       </thead>
 
                       <tbody>
-                      @foreach($PeerReviewVisit as $mentorMeeting)
+                      @foreach(@$PeerReviewVisit as $slip)
                           <tr>
-                              <td>{{@$mentorMeeting->school}}</td>
-                              <td>{{@$mentorMeeting->campus??'Main Campus'}}</td>
-                              <td>{{@$mentorMeeting->department}}</td>
-                              <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
-{{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus_id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
-                              <td><a class="badge bg-maroon" href="print?cid={{$mentorMeeting->campus_id}}&bid={{$mentorMeeting->business_school_id}}">SAR</a></td>
-                              <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
-                              <td>@if($mentorMeeting->regStatus =='ScheduledPRVisit' || $mentorMeeting->regStatus =='PeerReviewVisit' )
-                                      <a href="{{url('showOnCalendar')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Peer Reviewer Visit Calendar</a>
-                                  @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
+                              <td>{{@$slip->school}}</td>
+                              <td>{{@$slip->campus??'Main Campus'}}</td>
+                              <td>{{@$slip->department}}</td>
+                              <td><a href="{{url('deskreview')}}/{{@$slip->id}}">Desk Review</a></td>
+                              {{--<a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$slip->campus_id}}&bid={{@$slip->business_school_id}}">Registration Print </a></td>
+                              <td><a class="badge bg-maroon" href="print?cid={{$slip->campus_id}}&bid={{$slip->business_school_id}}">SAR</a></td>
+                              <td><i class="badge" data-id="{{@$slip->id}}"  style="background: {{$slip->regStatus == 'Initiated'?'red':''}}{{$slip->regStatus == 'Review'?'brown':''}}{{$slip->regStatus == 'Approved'?'green':''}}" >{{@$slip->regStatus != ''?ucwords($slip->regStatus):'Initiated'}}</i></td>
+                              <td>
+                                  @if(@$slip->regStatus =='ScheduledPRVisit' || @$slip->regStatus =='PeerReviewVisit' )
+                                      <a href="{{url('showOnCalendar')}}/{{@$slip->id}}" class="btn-xs btn-info"> Peer Reviewer Visit Calendar <i class="fa fa-calendar"></i></a><br>
+                                  @elseif(@$slip->regStatus =='Review')Desk Review In-progress @endif
+                                  @hasrole('NbeacFocalPerson|NBEACAdmin')
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer">Generate Travel Plan <i class="fa fa-car"></i></a><br>
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer">Upload Profile Sheet <i class="fa fa-file-excel-o"></i></a> <br>
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer">Thank You Email <i class="fa fa-envelope"></i></a>
+                                  @endhasrole
+                                  @hasrole('BusinessSchool')
+                                      <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#feedback-modal" class="btn-xs btn-primary feedback" style="cursor: pointer">Institutional Feedback Form<i class="fa fa-backward"></i></a> <br>
+                                  @endhasrole
+                                  {{--'{"id":"{{$affiliation->id}}",--}}
                               </td>
                           </tr>
                       @endforeach
@@ -1055,14 +1065,167 @@
       <!-- right col -->
         @endhasrole
 
-    <!-- /.content -->
+
+      <div class="modal fade" id="TravelPlane-modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Generate Travel Plane to the focal person and peers. </h4>
+                  </div>
+                  <form role="form" id="visit-form" enctype="multipart/form-data" >
+                      <div class="modal-body">
+                          <div class="col-md-12">
+                             <h4>Visit Confirm Data is : <span id="confirm_date"></span></h4>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="name">Select Visit Date</label>
+                                  <div class="input-group">
+                                      <div class="input-group-addon">
+                                          <i class="fa fa-calendar"></i>
+                                      </div>
+                                      <input type="text" id="visit_date" name="visit_date" value="{{@old('visit_date')}}" class="form-control">
+                                      <input type="hidden" id="slip_id" name="slip_id">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                          <div class="form-group">
+                              <label>Travel Plan File </label>
+                              <input type="file" name="file" id="file">
+                              @if(!empty(@$travel_plan->pr_travel_plan))
+                              <a href="#" class="badge bg-maroon" id="fileName">Download Travel Plan File</a>
+                              @endif
+                          </div>
+                          </div>
+
+                          @if(!empty(@$travel_plan->pr_travel_plan))
+                          <div class="col-md-12">
+                          <div class="form-group">
+                              <label>Status </label>
+                             <span class="badge bg-green" style="margin-top: 10px">Travel plan already sent</span>
+                          </div>
+                          </div>
+                          @endif
+                          <!-- /.form group -->
+
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <input type="submit" name="submit" id="submit" class="btn btn-info" value="submit">
+                      </div>
+                  </form>
+              </div>
+              <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+      </div>
+
+       <div class="modal fade" id="feedback-modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Upload feedback form. </h4>
+                  </div>
+                  <form role="form" id="feedback-form" enctype="multipart/form-data" >
+                      <div class="modal-body">
+                          <div class="col-md-12">
+                              <input type="hidden" id="feedback_slip_id" name="slip_id">
+                          @if(!empty(@$travel_plan->feedback_last_date))<h4>Feedback Last Date: {{@$travel_plan->feedback_last_date}}</h4>@endif
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label>Feedback File </label>
+                                  <input type="file" name="file" id="feedback">
+                                  @if(!empty(@$feedbacks->file))
+                                  <a href="{{@$feedbacks->file}}" class="badge bg-maroon" style="margin-top: 20px">Download Feedback File</a>
+                                  @endif
+                              </div>
+                          </div>
+
+                          @if(!empty(@$feedbacks->file))
+                          <div class="col-md-6">
+                              <div class="form-group" style="margin-bottom: 55px;">
+                                  <label>Status </label>
+                                 <span class="badge bg-green" style="margin-top: 10px">Feedback already uploaded.</span>
+                              </div>
+                          </div>
+                          @endif
+                          <!-- /.form group -->
+
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <input type="submit" name="submit" id="submit" class="btn btn-info" value="submit">
+                      </div>
+                  </form>
+              </div>
+              <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="profileSheet-modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Conduct peer review visit. Fill the profile Sheet and upload here. </h4>
+                  </div>
+                  <form role="form" id="sheet-form" enctype="multipart/form-data" >
+                      <div class="modal-body">
+                          <input type="hidden" id="sheet_slip_id" name="slip_id">
+
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label>Profile Sheet </label>
+                                  <input type="file" name="file" id="sheet">
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group" style="margin-top: 24px">
+                                  @if(!empty(@$travel_plan->profile_sheet))
+                                      <a href="#" class="badge bg-maroon" id="profile_sheet">Download Profile sheet.</a>
+                                  @endif
+                              </div>
+                          </div>
+
+                          @if(!empty(@$travel_plan->profile_sheet))
+                          <div class="col-md-12">
+                          <div class="form-group">
+                              <label>Status </label>
+                             <span class="badge bg-green" style="margin-top: 10px">Profile sheet already uploaded</span>
+                          </div>
+                          </div>
+                          @endif
+                          <!-- /.form group -->
+
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <input type="submit" name="submit" class="btn btn-info" value="submit">
+                      </div>
+                  </form>
+              </div>
+              <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+      </div>
+
+
+      <!-- /.content -->
   </div>
 
 
 
 <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
 
-<!-- <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script> -->
+{{--<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>--}}
 @include("includes.footer")
  @else
 {{"Login to Access this page"}}
@@ -1081,31 +1244,312 @@
 {{--<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>--}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="dist/js/pages/dashboard.js"></script>--}}
-@hasrole('NBEACAdmin')
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <script
   src="https://code.jquery.com/jquery-3.5.1.js"
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<script>
+    $('#visit_date').datepicker({
+        autoclose:true,
+        format:'yyyy-mm-dd'
+    });
+</script>
 <script>
     $(document).ready( function () {
-    $('#example1').DataTable();
-    $('#example2').DataTable();
-    $('#example3').DataTable();
-    $('#example4').DataTable();
+    $('#datatable1').DataTable();
+    $('#datatable2').DataTable();
+    $('#datatable3').DataTable();
+    $('#datatable4').DataTable();
+    $('#datatable5').DataTable();
+    $('#datatable6').DataTable();
+    $('#datatable7').DataTable();
+    $('#datatable8').DataTable();
+    $('#datatable9').DataTable();
 } );
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
+    $('.TravelPlane').on('click', function () {
+        let id = $(this).data('id');
+        $('#slip_id').val(id);
+
+        $.ajax({
+            url:'{{url("getInvoice")}}/'+id,
+            type:'get',
+            // data: { get:'get'},
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                let data = JSON.parse(JSON.stringify(response));
+                console.log("success resp ",data);
+                console.log('pr date value',data.pr_visit_date);
+                $('#confirm_date').text(data.confirm_date);
+                $('#fileName').attr('href',data.pr_travel_plan);
+
+                $("#visit_date").datepicker("setDate", data.pr_visit_date);
+
+                // $('#visit_date').val(data.pr_visit_date);
+                // if(response.success){
+                //     Notiflix.Notify.Success(response.success);
+                // }
+
+                // location.reload();
+
+                console.log('response here', response);
+            },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
+
+            }
+        })
+
+        console.log('show modal .....');
+    })
+
+    $('.feedback').on('click', function () {
+        let id = $(this).data('id');
+        $('#feedback_slip_id').val(id);
+
+        $.ajax({
+            url:'{{url("instituteFeedback")}}/'+id,
+            type:'get',
+            // data: { get:'get'},
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                let data = JSON.parse(JSON.stringify(response));
+                console.log("success resp ",data);
+                console.log('pr date value',data.pr_visit_date);
+                $('#confirm_date').text(data.confirm_date);
+                $('#fileName').attr('href',data.pr_travel_plan);
+
+                $("#visit_date").datepicker("setDate", data.pr_visit_date);
+
+                // $('#visit_date').val(data.pr_visit_date);
+                // if(response.success){
+                //     Notiflix.Notify.Success(response.success);
+                // }
+
+                // location.reload();
+
+                console.log('response here', response);
+             },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                // $.each(response.responseJSON, function (index, val) {
+                //     Notiflix.Notify.Failure(val);
+                // })
+
+            }
+        })
+
+        console.log('show modal .....');
+    })
+
+    $('.profileSheet').on('click', function () {
+        let id = $(this).data('id');
+        $('#sheet_slip_id').val(id);
+
+        $.ajax({
+            url:'{{url("getInvoice")}}/'+id,
+            type:'get',
+            // data: { get:'get'},
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                let data = JSON.parse(JSON.stringify(response));
+                console.log("success resp ",data);
+                console.log('pr date value',data.pr_visit_date);
+                $('#profile_sheet').attr('href',data.profile_sheet);
+
+                // $('#visit_date').val(data.pr_visit_date);
+                // if(response.success){
+                //     Notiflix.Notify.Success(response.success);
+                // }
+
+                // location.reload();
+
+                console.log('response here', response);
+            },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
+
+            }
+        })
+
+        console.log('show modal .....');
+    })
+
+    $('#visit-form').on('submit', function (e) {
+        var visit_date = $('#visit_date').val();
+        let file = $('#file').val();
+        let slip_id = $('#slip_id').val();
+        e.preventDefault();
+        !visit_date?addClass('visit_date'):removeClass('visit_date');
+        !file?addClass('file'):removeClass('file');
+
+        if(!visit_date || !slip_id )
+        {
+            Notiflix.Notify.Warning("Fill all the required Fields.");
+            return;
+        }
+                // Yes button callback
+                 var formData = new FormData(this);
+                $.ajax({
+                    url:'{{url("travelPlan")}}',
+                    type:'POST',
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data: formData,
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+    });
+
+    $('#sheet-form').on('submit', function (e) {
+        let file = $('#sheet').val();
+        let slip_id = $('#sheet_slip_id').val();
+        e.preventDefault();
+        !file?addClass('sheet'):removeClass('sheet');
+
+        if( !slip_id )
+        {
+            Notiflix.Notify.Warning("Fill all the required Fields.");
+            return;
+        }
+                // Yes button callback
+                 var formData = new FormData(this);
+                $.ajax({
+                    url:'{{url("profileSheet")}}',
+                    type:'POST',
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data: formData,
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+    });
+
+    $('#feedback-form').on('submit', function (e) {
+        let file = $('#feedback').val();
+        let slip_id = $('#feedback_slip_id').val();
+        e.preventDefault();
+        !file?addClass('sheet'):removeClass('sheet');
+
+        if( !slip_id )
+        {
+            Notiflix.Notify.Warning("Fill all the required Fields.");
+            return;
+        }
+                // Yes button callback
+                 var formData = new FormData(this);
+                $.ajax({
+                    url:'{{url("instituteFeedback")}}',
+                    type:'POST',
+                    cache:false,
+                    contentType:false,
+                    processData:false,
+                    data: formData,
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+    });
+
+
+
+</script>
+    @hasrole('NBEACAdmin')
+    <script>
     $('.status').on('click', function (e) {
         var id = $(this).data('id');
 
         Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
             function(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                })
                 // Yes button callback
                 $.ajax({
                     url:'{{url("admin")}}/'+id,
@@ -1140,9 +1584,9 @@
             } );
     });
 
-
-
 </script>
+
+
 
 @endhasrole
 
@@ -1156,11 +1600,6 @@
         // return;
         Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to Apply?', 'Yes', 'No',
             function(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                })
                 // Yes button callback
                 $.ajax({
                     url:'{{url("registration-apply")}}/'+id,
@@ -1197,3 +1636,4 @@
 </script>
 
 @endhasrole
+

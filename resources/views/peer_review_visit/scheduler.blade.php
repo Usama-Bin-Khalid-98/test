@@ -255,6 +255,8 @@
 
 @endif
 <script>
+    $('.my-colorpicker1').colorpicker()
+
     var myCalendar;
 </script>
 @hasrole('NbeacFocalPerson')
@@ -390,7 +392,7 @@
                 console.log('response data here...', data);
                 //return false;
                 $('#peerReviewer-modal').modal('hide');
-                // window.reload();
+                location.reload();
 
             },
             error:function(response, exception){
@@ -430,7 +432,7 @@
                 console.log('response data here...', data);
                 //return false;
                 $('#peerReviewer-modal').modal('hide');
-                //window.reload();
+                location.reload();
 
             },
             error:function(response, exception){

@@ -37,7 +37,11 @@ class CreateSlipsTable extends Migration
             $table->enum('isEligibleMentor', ['yes', 'no'])->nullable()->default('no');
             $table->enum('regStatus', ['Initiated','Pending','Review','Eligibility','ScheduledES','ScheduledPR','Mentoring','ScheduledMentoring','SAR','SAP','SARDeskReview','PeerReviewVisit','ScheduledPRVisit','Active', 'Inactive', 'Approved'])->nullable()->default('Initiated');
             $table->string('comments', 255)->nullable();
+            $table->date('pr_visit_date')->nullable();
+            $table->string('pr_travel_plan', 255)->nullable();
+            $table->string('profile_sheet', 255)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
+            $table->date('feedback_last_date')->nullable();
             $table->foreign('created_by')
                 ->references('id')
                 ->on('users');
