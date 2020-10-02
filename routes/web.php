@@ -290,5 +290,7 @@ use Illuminate\Support\Facades\Route;
         Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
             Route::get('instituteFeedback', 'InstituteFeedbackController@index');
             Route::get('instituteFeedback/{id}', 'InstituteFeedbackController@edit');
+            Route::put('peerReviewStatus', 'InstituteFeedbackController@peerReviewStatus');
+
         });
     });

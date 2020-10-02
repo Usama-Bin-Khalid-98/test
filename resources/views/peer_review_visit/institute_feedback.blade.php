@@ -80,9 +80,9 @@
                                 <td>
                                     <i class="badge bg-success" data-id="{{@$feedback->id}}"  style="background: {{$feedback->regStatus == 'Initiated'?'red':''}}{{$feedback->regStatus == 'Review'?'brown':''}}{{$feedback->regStatus == 'Approved'?'green':''}}" >{{@$feedback->regStatus != ''?ucwords($feedback->regStatus):'Initiated'}}</i>
                                 </td>
-                                <td>@if($feedback->regStatus =='ScheduledMentoring' || $feedback->regStatus =='ScheduledES' || $feedback->regStatus =='Mentoring' )
-                                        <a href="{{url('meetingsList')}}/{{$feedback->id}}" class="btn-xs btn-info"> Mentoring Meeting Calendar</a>
-                                    @elseif($feedback->regStatus =='Review')Desk Review In-progress @endif
+                                <td>
+                                    <a data-id="{{@$feedback->id}}" data-toggle="tooltip" data-widget="Forward" data-placement="left" title="Forward Case to Peer Review Report" class="btn-xs bg-maroon ForwardToPRR" style="cursor: pointer"> Forward PRR <i class="fa fa-fast-forward"></i></a>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -128,7 +128,7 @@
 
 @endif
 
-@hasrole('NBEACAdmin')
+@hasrole('NBEACAdmin|NbeacFocalPerson')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <script
     src="https://code.jquery.com/jquery-3.5.1.js"
@@ -143,16 +143,17 @@
         $('#example4').DataTable();
     } );
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
     $('.status').on('click', function (e) {
         var id = $(this).data('id');
 
         Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
             function(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                })
                 // Yes button callback
                 $.ajax({
                     url:'{{url("admin")}}/'+id,
@@ -186,6 +187,47 @@
                 // alert('If you say so...');
             } );
     });
+
+    $('.ForwardToPRR').on('click', function (e) {
+        var id = $(this).data('id');
+
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case for Peer Review Report ?', 'Yes', 'No',
+            function(){
+
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("peerReviewStatus")}}',
+                    type:'put',
+                    data: { id:id},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+            },
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );
+    });
+
 
 
 
