@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PeerReview\InstituteFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -21,9 +22,30 @@ class InstituteFeedbackController extends Controller
         //
         $user = Auth::user();
         if($user->user_type === 'NBEACAdmin' || $user->user_type === 'NbeacFocalPerson' ) {
-            $feedbacks = InstituteFeedback::all();
-        }else{
-            $feedbacks = InstituteFeedback::where('created_by', $user->id)->get();
+
+            $feedbacks = DB::table('slips as s')
+            ->join('institute_feedback as if', 'if.slip_id', 's.id')
+            ->join('campuses as c', 'c.id', 's.business_school_id')
+            ->join('business_schools as bs', 'bs.id', 'c.business_school_id')
+            ->join('departments as d', 'd.id', 's.department_id')
+            ->select('s.*', 'c.location as campus',
+                'bs.name',
+                'bs.id as business_school_id',
+                'd.name as department',
+                'c.id as campus_id',
+                'if.file as feedback_file'
+                )
+                ->get();
+//            dd($feedbacks);
+        }elseif($user->user_type === 'BusinessSchool'){
+            $feedbacks = DB::table('slips as s')
+                ->join('institute_feedback as if', 'if.slip_id', 's.id')
+                ->join('campuses as c', 'c.id', 's.business_school_id')
+                ->join('business_schools as bs', 'bs.id', 'c.business_school_id')
+                ->join('departments as d', 'd.id', 's.department_id')
+                ->select('s.*', 'c.location as campus', 'bs.name as name','bs.id as business_school_id', 'd.name as department', 'c.id as campus_id')
+                ->where('s.created_by', Auth::id())
+                ->get();
         }
 
         return view('peer_review_visit.institute_feedback', compact('feedbacks'));

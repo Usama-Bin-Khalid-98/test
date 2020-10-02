@@ -55,27 +55,34 @@
                             <th>Business School Name</th>
                             <th>Campus</th>
                             <th>Department</th>
-                            <th>Desk Review</th>
+{{--                            <th>Desk Review</th>--}}
                             <th>Registration Print</th>
+                            <th>Feedback File</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        @foreach(@$MentoringMeetings as $mentorMeeting)
+                        @foreach(@$feedbacks as $feedback)
                             <tr>
-                                <td>{{@$mentorMeeting->school}}</td>
-                                <td>{{@$mentorMeeting->campus??'Main Campus'}}</td>
-                                <td>{{@$mentorMeeting->department}}</td>
-                                <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
+                                <td>{{@$feedback->name}}</td>
+                                <td>{{@$feedback->campus??'Main Campus'}}</td>
+                                <td>{{@$feedback->department}}</td>
+{{--                                <td><a href="{{url('deskreview')}}/{{@$feedback->id}}">Desk Review</a></td>--}}
                                 {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                                <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus_id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
+                                <td><a href="{{url('registrationPrint?cid=')}}{{@$feedback->campus_id}}&bid={{@$feedback->business_school_id}}">Registration Print </a></td>
                                 {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                                <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
-                                <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' || $mentorMeeting->regStatus =='Mentoring' )
-                                        <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Mentoring Meeting Calendar</a>
-                                    @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
+                                <td>
+                                    <a href="{{$feedback->feedback_file}}" class="badge bg-green"> feedback <i class="fa fa-file-excel-o"></i></a>
+                                </td>
+
+                                <td>
+                                    <i class="badge bg-success" data-id="{{@$feedback->id}}"  style="background: {{$feedback->regStatus == 'Initiated'?'red':''}}{{$feedback->regStatus == 'Review'?'brown':''}}{{$feedback->regStatus == 'Approved'?'green':''}}" >{{@$feedback->regStatus != ''?ucwords($feedback->regStatus):'Initiated'}}</i>
+                                </td>
+                                <td>@if($feedback->regStatus =='ScheduledMentoring' || $feedback->regStatus =='ScheduledES' || $feedback->regStatus =='Mentoring' )
+                                        <a href="{{url('meetingsList')}}/{{$feedback->id}}" class="btn-xs btn-info"> Mentoring Meeting Calendar</a>
+                                    @elseif($feedback->regStatus =='Review')Desk Review In-progress @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -86,8 +93,9 @@
                             <th>Business School Name</th>
                             <th>Campus</th>
                             <th>Department</th>
-                            <th>Desk Review</th>
+{{--                            <th>Desk Review</th>--}}
                             <th>Registration Print</th>
+                            <th>Feedback File</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
