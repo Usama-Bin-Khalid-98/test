@@ -10,10 +10,12 @@ use App\Models\Common\PaymentMethod;
 use App\DepartmentFee;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
+use App\Models\PeerReview\SchedulePeerReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangeResgistrationStatusMail;
@@ -90,17 +92,115 @@ class SlipController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function travelPlan(Request $request)
     {
         //
+//        dd($request->all());
+        $validation = Validator::make($request->all(), $this->plan_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+//            $check = Slip::where(['id' => $request->slip_id])->exists();
+                $imageName = ''; $path = '';
+                if ($request->file('file')) {
+                    $imageName = 'travel' . "-plan-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $path = 'uploads/travel/';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $request->file('file')->move($path, $imageName);
+                }
 
+                $updateData['pr_visit_date'] = $request->visit_date;
+                $imageName ? $updateData['pr_travel_plan'] = $path.$imageName:'';
+//                dd($updateData);
+                $update = Slip::where(['id'=>$request->slip_id])->update($updateData);
+
+                if($update)
+                {
+                    ////////////////////////////////// email here //////////////
+
+                    ////////////////////////////////// end email //////////////
+                    return response()->json(['success' => 'Travel plan added successfully.'], 200);
+                }
+                else{
+                    return response()->json(['message' => 'updating travel plan failed.'], 422);
+
+                }
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 422);
+
+        }
     }
 
+
+
+
+    public function profileSheet(Request $request)
+    {
+        //
+//        dd($request->all());
+        $validation = Validator::make($request->all(), $this->sheet_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+//            $check = Slip::where(['id' => $request->slip_id])->exists();
+                $imageName = ''; $path = '';
+                if ($request->file('file')) {
+                    $imageName = 'profile' . "-sheet-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $path = 'uploads/profile_sheet/';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $request->file('file')->move($path, $imageName);
+                }
+
+                $imageName ? $updateData['profile_sheet'] = $path.$imageName:'';
+//                dd($updateData);
+                $update = Slip::where(['id'=>$request->slip_id])->update($updateData);
+
+                if($update)
+                {
+                    ////////////////////////////////// email here //////////////
+
+                    ////////////////////////////////// end email //////////////
+                    return response()->json(['success' => 'Profile sheet added successfully.'], 200);
+                }
+                else{
+                    return response()->json(['message' => 'updating profile sheet failed.'], 422);
+
+                }
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 422);
+
+        }
+    }
+
+
+    public function plan_rules(){
+        return [
+            'visit_date' => 'required',
+            'slip_id' => 'required',
+            'file' => 'mimes:pdf,docx'
+        ];
+    }
+    public function sheet_rules(){
+        return [
+            'slip_id' => 'required',
+            'file' => 'mimes:pdf,docx,xlsx,xls,doc'
+        ];
+    }
+    protected function messages() {
+        return [
+            'required'=> 'The :attribute can not be blanked. '
+        ];
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -190,9 +290,14 @@ class SlipController extends Controller
      * @param  \App\Models\Common\Slip  $slip
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slip $slip)
+    public function edit($slip)
     {
         //
+        $slips = Slip::where('id', $slip)->get()->first();
+        $confirm_date = SchedulePeerReview::where(['slip_id'=> $slip, 'is_confirm' => 'yes'])->get()->first();
+        $slips['confirm_date'] = $confirm_date->availability_dates;
+//        dd($slips);
+        return response()->json($slips, 200);
     }
 
     /**

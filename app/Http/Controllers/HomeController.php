@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common\Slip;
+use App\Models\PeerReview\InstituteFeedback;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -207,16 +208,23 @@ class HomeController extends Controller
 //        dd($PeerReviewVisit);
 
         $businessSchools = DB::select('
-SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus
+SELECT business_schools.*, campuses.location as campus, campuses.id as campusID,slips.id as slip_id, slips.status as slipStatus
 FROM business_schools, users, campuses, slips
 WHERE users.business_school_id=business_schools.id
 AND campuses.business_school_id=business_schools.id
 AND business_schools.status="active"
 AND slips.business_school_id=campuses.id
 AND slips.status="approved" AND slips.regStatus="SAR" ', array());
+
+        $travel_plan = Slip::where('id', $PeerReviewVisit[0]->id)->get()->first();
+        $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => $PeerReviewVisit[0]->id])->get()->first();
+
+//        dd($travel_plan->pr_travel_plan);
+
+
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
-            'MentoringMeetings', 'PeerReviewVisit'));
+            'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks'));
     }
 
     /**

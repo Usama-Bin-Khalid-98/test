@@ -192,10 +192,7 @@ use Illuminate\Support\Facades\Route;
             Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
             Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
-
-
-
-            Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
+            Route::resource('instituteFeedback', 'InstituteFeedbackController');
 
         });
 
@@ -254,6 +251,8 @@ use Illuminate\Support\Facades\Route;
             Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');
             Route::post('changePeerReviewConfirmStatus', 'SchedulePeerReviewController@changeConfirmStatus');
             Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
+            Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
+
 
         });
 //
@@ -280,7 +279,16 @@ use Illuminate\Support\Facades\Route;
 
         });
 
-        Route::group(['middleware' => ['role:NbeacFocalPerson']], function () {
+        Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
             Route::resource('peerReviewReport', 'PeerReviewReportController');
+            Route::post('travelPlan', 'StrategicManagement\SlipController@travelPlan');
+            Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
+            Route::get('getInvoice/{id}', 'StrategicManagement\SlipController@edit');
+
+        });
+
+        Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
+            Route::get('instituteFeedback', 'InstituteFeedbackController@index');
+            Route::get('instituteFeedback/{id}', 'InstituteFeedbackController@edit');
         });
     });
