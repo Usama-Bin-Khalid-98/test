@@ -826,8 +826,8 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations</span>
                   <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
               </a>
               <ul class="treeview-menu">
 {{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
@@ -848,14 +848,24 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
             <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-yellow"></i>Department Fee</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}"><a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review</a></li>
+          <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}">
+              <a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review
+                  <span class="pull-right-container">
+                    <i class="badge bg-maroon pull-right">1</i>
+                  </span>
+              </a>
+          </li>
           @endhasrole
 
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-circle-o text-blue " ></i>Self Assessment Process Report</a></li>
           @endhasrole
           @hasrole('NBEACAdmin|Mentor')
-          <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}"><a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review</a></li>
+          <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}">
+              <a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review
+                  <span class="pull-right-container">
+                    <i class="badge bg-maroon pull-right">1</i>
+                  </span></a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-circle-o text-green"></i>Nbeac Criteria</a></li>
@@ -896,6 +906,10 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @endhasrole
           @hasanyrole('Mentor')
           <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report</a></li>
+          @endhasrole
+
+          @hasanyrole('AccreditationAwardCommittee')
+          <li class="{{ (request()->is('AACommittee')) ? 'active' : '' }}"><a href="{{url('AACommittee')}}"><i class="fa fa-meetup text-red"></i>Accreditation Award Committee</a></li>
           @endhasrole
 
 

@@ -78,7 +78,7 @@
                                 </td>
 
                                 <td>
-                                    <i class="badge bg-success" data-id="{{@$feedback->id}}"  style="background: {{$feedback->regStatus == 'Initiated'?'red':''}}{{$feedback->regStatus == 'Review'?'brown':''}}{{$feedback->regStatus == 'Approved'?'green':''}}" >{{@$feedback->regStatus != ''?ucwords($feedback->regStatus):'Initiated'}}</i>
+                                    <i class="badge bg-aqua-active" data-id="{{@$feedback->id}}"  style="background: {{$feedback->regStatus == 'Initiated'?'red':''}}{{$feedback->regStatus == 'Review'?'brown':''}}{{$feedback->regStatus == 'Approved'?'green':''}}" >{{@$feedback->regStatus != ''?ucwords($feedback->regStatus):'Initiated'}}</i>
                                 </td>
                                 <td>
                                     <a data-id="{{@$feedback->id}}" data-toggle="tooltip" data-widget="Forward" data-placement="left" title="Forward Case to Peer Review Report" class="btn-xs bg-maroon ForwardToPRR" style="cursor: pointer"> Forward PRR <i class="fa fa-fast-forward"></i></a>
