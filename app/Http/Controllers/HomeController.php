@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common\Slip;
-use App\Models\PeerReview\InstituteFeedback;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\InstituteFeedbackController;
+use App\Models\PeerReview\InstituteFeedback;
 use DB;
 
 class HomeController extends Controller
@@ -176,6 +177,8 @@ class HomeController extends Controller
                 ->where('s.status', 'approved')
                 ->get();
         }
+//        dd($MentoringMeetings);
+
 
         if(Auth::user()->user_type=='NbeacFocalPerson') {
 //            dd('mentors ');
@@ -222,9 +225,12 @@ AND slips.status="approved" AND slips.regStatus="SAR" ', array());
 //        dd($travel_plan->pr_travel_plan);
 
 
+
+        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, users, campuses, slips WHERE users.business_school_id=business_schools.id AND campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=campuses.id AND slips.status="paid" ', array());
+
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
-            'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks'));
+            'MentoringMeetings'));
     }
 
     /**
