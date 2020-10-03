@@ -905,7 +905,6 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @if(@$isFiveRegistrationsMentoring >= 1)
           @hasanyrole('ESScheduler')
           <li  class="{{ (request()->is('MentorScheduler')) ? 'active' : '' }}"><a href="{{url('MentorScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Mentoring Scheduler</a></li>
-{{--          <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>--}}
           @endhasrole
           @endif
           @hasanyrole('ESScheduler|NbeacFocalPerson')
@@ -913,6 +912,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @endhasrole
 
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')
+          <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Report</a></li>
           <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-yellow"></i>Notifications</a></li>
           @endhasrole
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')

@@ -285,10 +285,14 @@ use Illuminate\Support\Facades\Route;
         });
 
         Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
-            Route::resource('peerReviewReport', 'PeerReviewReportController');
+            Route::get('peerReviewReport', 'PeerReviewReportController@index');
+            Route::post('peerReviewReport', 'PeerReviewReportController@store');
+            Route::put('updateSlipStatus/{id}', 'PeerReviewReportController@updateSlipStatus');
+            Route::get('peerReviewDetails/{id?}', 'PeerReviewReportController@details');
             Route::post('travelPlan', 'StrategicManagement\SlipController@travelPlan');
             Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
             Route::get('getInvoice/{id}', 'StrategicManagement\SlipController@edit');
+
 
         });
 
