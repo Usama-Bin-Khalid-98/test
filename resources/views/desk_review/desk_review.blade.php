@@ -312,7 +312,7 @@
 
                             </form>
 
-                           <div>
+                            <div>
 {{--                                @if(@$desk_rev[0]->isEligible === 'yes' && @$desk_rev[0]->status === 'active' )--}}
                                     @if(@$desk_reviews[0]->regStatus === 'Pending' || @$desk_reviews[0]->regStatus === 'Review')
                                         <button data-toggle="tooltip" title="" class="btn btn-success ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{@$desk_reviews[0]->id}}">Forward to Eligibility Screening &nbsp;&nbsp; <i class="fa fa-check-square-o text-white"></i></button>
@@ -534,7 +534,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

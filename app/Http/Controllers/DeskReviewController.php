@@ -251,18 +251,7 @@ class DeskReviewController extends Controller
             )
             {
                 $isEligible = 'yes';
-                
-                
             }
-            $users = DB::select('SELECT * from users where user_type="NBEACAdmin"', array());
-                //dd(auth()->user()->email);
-                foreach ($users as $data) {
-                  //dd($data->email);  
-                $dataEmail = array(
-                    'name'      => $data->name
-                );
-                Mail::to($data->email)->send(new EligibilityScreeningEmail($dataEmail));
-                }
             Slip::where(['business_school_id' => $getUserData->business_school_id,
                 'department_id' => $getUserData->department_id])
                 ->update([
