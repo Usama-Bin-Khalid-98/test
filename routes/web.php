@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\Route;
             ///// Dashboard
             Route::patch('admin/{id}', 'DashboardController@schoolStatus');
             Route::patch('deskReviewReport/{id}', 'DeskReviewController@submitDeskReport');
+            Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
             // Users resource route.
             Route::resource('users', 'Auth\UserController');
             Route::post('change-password', 'Auth\UserController@updatePassword')->name('change-password');
@@ -50,6 +51,8 @@ use Illuminate\Support\Facades\Route;
             // Permissions resource route.
             // Route::resource('permissions', 'Auth\PermissionController');
             Route::resource('desk-review', 'DeskReviewController');
+            Route::resource('sar-desk-review', 'SARDeskReviewController');
+            Route::resource('registration', 'registrationController');
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
             Route::resource('nbeac-criteria', 'NbeacCriteriaController');
@@ -57,7 +60,7 @@ use Illuminate\Support\Facades\Route;
 
 
         });
-        Route::group(['middleware' => ['role:NBEACAdmin|NbeacFocalPerson|BusinessSchool|EligibilityScreening|PeerReviewer|ESScheduler|Mentor']], function () {
+        Route::group(['middleware' => ['role:NBEACAdmin|BusinessSchool|EligibilityScreening|PeerReviewer|ESScheduler|Mentor']], function () {
             Route::resource('print','PrintController');
             Route::resource('registrationPrint','RegistrationPrintController');
             Route::get('registrationPrintPdf','RegistrationPrintController@createPDF');
@@ -192,10 +195,10 @@ use Illuminate\Support\Facades\Route;
             Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
             Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
-            Route::resource('instituteFeedback', 'InstituteFeedbackController');
+            
 
         });
-
+    
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
          Route::get('mentoringInvoices', 'MentoringInvoiceController@mentoringInvoices');
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
@@ -230,7 +233,6 @@ use Illuminate\Support\Facades\Route;
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
-            Route::get('PeerReviewerAvailability', 'SchedulePeerReviewController@peerAvailability');
 
         });
 
@@ -244,15 +246,9 @@ use Illuminate\Support\Facades\Route;
 
         });
 
-        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {
+        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool']], function () {
             Route::resource('MentoringScheduler', 'ScheduleMentorMeetingController');
-            Route::get('MentorScheduler/{id?}', 'ScheduleMentorMeetingController@MentorScheduler');
-            Route::resource('PeerReviewScheduler', 'SchedulePeerReviewController');
             Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');
-            Route::post('changePeerReviewConfirmStatus', 'SchedulePeerReviewController@changeConfirmStatus');
-            Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
-            Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
-
 
         });
 //
@@ -268,29 +264,5 @@ use Illuminate\Support\Facades\Route;
 
         Route::group(['middleware' => ['role:Mentor']], function () {
             Route::resource('mentorReport', 'MentoringReportController');
-            Route::put('updateInvoiceStatus/{id}', 'MentoringInvoiceController@updateInvoiceStatus');
-        });
-
-        Route::group(['middleware' => ['role:Mentor|NBEACAdmin']], function () {
-            Route::resource('sar-desk-review', 'SARDeskReviewController');
-            Route::get('sap-report', 'SARDeskReviewController@sap_report');
-            Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
-
-
-        });
-
-        Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
-            Route::resource('peerReviewReport', 'PeerReviewReportController');
-            Route::post('travelPlan', 'StrategicManagement\SlipController@travelPlan');
-            Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
-            Route::get('getInvoice/{id}', 'StrategicManagement\SlipController@edit');
-
-        });
-
-        Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
-            Route::get('instituteFeedback', 'InstituteFeedbackController@index');
-            Route::get('instituteFeedback/{id}', 'InstituteFeedbackController@edit');
-            Route::put('peerReviewStatus', 'InstituteFeedbackController@peerReviewStatus');
-
         });
     });
