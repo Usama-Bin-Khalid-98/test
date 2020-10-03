@@ -834,7 +834,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
 {{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
                   <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-circle-o text-green"></i>Invoices List</a></li>
                   <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-circle-o text-green"></i>Mentoring Invoices List</a></li>
-                  <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registration')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
+                  <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
               </ul>
           </li>
 
