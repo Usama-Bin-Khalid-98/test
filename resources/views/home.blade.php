@@ -678,8 +678,193 @@
       @endhasrole
 
       @hasrole('BusinessSchool')
-      <!--Invoices list-->
+      <!-- Info boxes -->
+      <section class="content">
+          <div class="row">
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Invoices</span>
+                          <span class="info-box-number">2<small></small></span>
+                      </div>
+                      <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+              </div>
+
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Mentoring Invoices</span>
+                          <span class="info-box-number">5<small></small></span>
+                      </div>
+                      <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-maroon"><i class="fa fa-home"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Departments</span>
+                          <span class="info-box-number">4</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+
+              <!-- fix for small devices only -->
+              <div class="clearfix visible-sm-block"></div>
+
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-green"><i class="ion ion-ios-home-outline"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Campuses</span>
+                          <span class="info-box-number">760</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Students</span>
+                          <span class="info-box-number">2,000</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+              </div>
+
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-aqua-gradient"><i class="ion ion-ios-people"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Faculty</span>
+                          <span class="info-box-number">200</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+          </div>
+          <!-- /.row -->
+
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="box">
+                      <div class="box-header with-border">
+                          <h3 class="box-title">Registration Progress</h3>
+                          <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                              </button>
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                      <i class="fa fa-file-pdf-o"></i></button>
+                              </div>
+                              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                          </div>
+                          <div class="box-tools pull-right">
+
+                          </div>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                          <div class="row">
+                              <div class="col-md-8">
+
+                                  <div class="alert alert-danger alert-dismissible">
+                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                      <h4><i class="icon fa fa-sticky-note"></i>Note</h4>
+                                      <ol type="1">
+
+                                          <li><h5>Generate Invoice</h5>
+                                              <p>Generate invoice in invoices tab, to change the status of invoice click on the the dollor icon and make it paid. The approvement request will be sent to nbeac admin. </p>
+                                          </li>
+                                          <li><h5>Fill all the required forms</h5>
+                                              <p>All the registration forms are required to submit before apply for registration. fill all the required form from strategic management to Faculty Information. </p>
+                                          </li>
+
+                                          <li><h5>Apply for registratoin</h5>
+                                              <p>Apply for registration. when complete required forms from strategic management to Faculty Information. A registration requiest will be sent to NBEAC Admin. </p>
+                                          </li>
+                                      </ol>
+
+
+                                  </div>
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-md-4">
+                                  <p class="text-center">
+                                      <strong>Registration Completion</strong>
+                                  </p>
+
+                                  <div class="progress-group">
+                                      <span class="progress-text">Invoice</span>
+                                      <span class="progress-number"><b>100</b>/100</span>
+
+                                      <div class="progress sm">
+                                          <div class="progress-bar progress-bar-green" style="width: 100%"></div>
+                                      </div>
+                                  </div>
+                                  <!-- /.progress-group -->
+                                  <div class="progress-group">
+                                      <span class="progress-text">Registration Forms</span>
+                                      <span class="progress-number"><b>80</b>/100</span>
+
+                                      <div class="progress sm">
+                                          <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+                                      </div>
+                                  </div>
+                                  <!-- /.progress-group -->
+                                  <div class="progress-group">
+                                      <span class="progress-text">Eligibility Screening</span>
+                                      <span class="progress-number"><b>50</b>/100</span>
+
+                                      <div class="progress sm">
+                                          <div class="progress-bar progress-bar-red" style="width: 50%"></div>
+                                      </div>
+                                  </div>
+                                  <!-- /.progress-group -->
+                                  <div class="progress-group">
+                                      <span class="progress-text">Mentoring</span>
+                                      <span class="progress-number"><b>0</b>/100</span>
+
+                                      <div class="progress sm">
+                                          <div class="progress-bar progress-bar-yellow" style="width: 0%"></div>
+                                      </div>
+                                  </div>
+                                  <!-- /.progress-group -->
+                              </div>
+                              <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+                      </div>
+                  </div>
+                  <!-- /.box -->
+              </div>
+              <!-- /.col -->
+          </div>
+          <!--Invoices list-->
+      </section>
       <section class="col-lg-12 connectedSortable">
+
           <!-- TO DO List -->
           <div class="box box-primary">
               <div class="box-header">

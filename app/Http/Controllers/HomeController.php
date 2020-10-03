@@ -189,9 +189,9 @@ class HomeController extends Controller
                 ->where('s.regStatus', 'ScheduledPRVisit')
                 ->orWhere('s.regStatus', 'PeerReviewVisit')
                 ->where('s.status', 'approved')
-                ->where('mm.user_id', Auth::id())
+//                ->where('mm.user_id', Auth::id())
                 ->get();
-            //dd($PeerReviewVisit);
+//            dd($PeerReviewVisit);
             }else {
             $PeerReviewVisit = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -216,8 +216,8 @@ AND business_schools.status="active"
 AND slips.business_school_id=campuses.id
 AND slips.status="approved" AND slips.regStatus="SAR" ', array());
 
-        $travel_plan = Slip::where('id', $PeerReviewVisit[0]->id)->get()->first();
-        $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => $PeerReviewVisit[0]->id])->get()->first();
+        $travel_plan = Slip::where('id', @$PeerReviewVisit[0]->id)->get()->first();
+        $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();
 
 //        dd($travel_plan->pr_travel_plan);
 
