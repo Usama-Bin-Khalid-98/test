@@ -50,6 +50,24 @@ class SlipController extends Controller
         return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods','fee_amount'));
     }
 
+    public function registrations()
+    {
+        //
+        $registrations = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->join('designations as dg', 'dg.id', '=', 'u.designation_id')
+            ->select('s.*', 'c.location as campus','c.id as campus_id',
+                'dg.name as designation', 'd.name as department',
+                'u.name as user', 'u.email as email', 'u.contact_no',
+                'bs.name as school', 'bs.id as business_school_id')
+            ->get();
+        //dd($invoice_no);
+        return view('registration.index', compact('registrations'));
+    }
+
     public function invoicesList()
     {
         //

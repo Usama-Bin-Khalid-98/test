@@ -37,9 +37,43 @@
                 <!--Registrations list-->
                 <section class="col-lg-12 connectedSortable">
                     <!-- TO DO List -->
+                    <div class="box box-primary collapsed-box">
+                        <div class="box-header">
+                            <h3 class="box-title">Read Me! </h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-file-pdf-o"></i></button>
+                                </div>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-check"></i> Notes! </h4>
+                                <ol>
+                                    <li>Download the sample doc from  <a href="{{url('samples/Sample-Format-Peer-Review-Report.docx')}}">here</a>. </li>
+                                    <li>Put all the required data and upload again.  </li>
+                                    <li>Send <a href="{{url('samples/Feedback form-Shadow-Participant-at-PRT.docx')}}">shadow feedback</a> form to Chair PRT  </li>
+                                    <li>Send PRR to Accreditation Award Committee. </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box -->
+
+                </section>
+
+                <section class="col-lg-12 connectedSortable">
+                    <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Peer Review Report. </h3>
+                            <h3 class="box-title">Upload Peer Review Report. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -52,28 +86,9 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <form action="javascript:void(0)" id="form" method="POST">
+                            <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
 
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label for="registration_id">Registrations</label>
-                                        <select name="slip_id" id="slip_id" class="form-control select2">
-                                            @foreach($registrations as $register)
-                                            <option value="{{@$register->id}}"> {{@$register->campus->business_school->name}} {{@$register->campus->location}} - {{@$register->department->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-{{--                                <div class="col-md-4" style="margin-bottom: 10px;">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="status">Status</label>--}}
-{{--                                        <select name="status" id="status" class="form-control select2">--}}
-{{--                                            <option value="Deferred">Deferred</option>--}}
-{{--                                            <option value="Approved">Approved</option>--}}
-{{--                                            <option value="ConditionalApproval">Conditional Approval</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                <input type="hidden" name="slip_id" value="{{Request()->route('id')}}">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="name">Report Date</label>
@@ -83,28 +98,14 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="name">Registration application submission date</label>
-                                        <input type="date" name="registration_date" id="registration_date" class="form-control" value="{{date('Y-m-d')}}" >
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">SAR submission date</label>
-                                        <input type="date" name="sar_date" id="sar_date" class="form-control" value="{{date('Y-m-d')}}" >
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Attach Doc</label>
+                                        <label for="name">Upload PRR Doc</label>
                                         <input type="file" name="file" id="file" accept=".doc,.docx,application/msword,.pdf">
                                         <span class="text-red">Max upload file size 2mb.</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="sample">Download Sample</label>
+                                        <label for="sample">Download Sample</label><br>
                                         <a href=""><span href="" class="badge bg-green">Download</span></a>
                                     </div>
                                 </div>
@@ -117,7 +118,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div class="form-group pull-right" style="margin-top: 40px">
+                                    <div class="form-group pull-right" style="margin-top: 10px">
                                         <label for="sector">&nbsp;&nbsp;</label>
                                         <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                     </div>
@@ -134,12 +135,11 @@
                 </section>
                 <!-- right col -->
 
-                <!--Registrations list-->
                 <section class="col-lg-12 connectedSortable">
                     <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Peer Review Reports </h3>
+                            <h3 class="box-title">Peer Review Report. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -152,9 +152,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-
-
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Business School Name</th>
@@ -169,17 +167,22 @@
                                 </thead>
 
                                 <tbody>
-
-                                @foreach($mentor_reports as $report)
+                                @foreach($registrations as $registration)
                                     <tr>
-                                        <td>{{@$report->mentoring_invoice->campus->business_school->name}}</td>
-                                        <td>{{@$report->mentoring_invoice->campus->location??'Main Campus'}}</td>
-                                        <td>{{@$report->mentoring_invoice->department->name}}</td>
-                                         <td><a href="{{asset(@$report->file)}}" >Doc File</a></td>
-                                         <td>{!!substr($report->comments, 0, 100) !!}...</td>
-{{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$report->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
+                                        <td>{{@$registration->school}}</td>
+                                        <td>{{@$registration->campus??'Main Campus'}}</td>
+                                        <td>{{@$registration->department}}</td>
+                                        <td><a href="{{url('deskreview')}}/{{@$registration->id}}">Desk Review</a></td>
+                                        {{--<a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
+                                        <td><a href="{{url('registrationPrint?cid=')}}{{@$registration->campus_id}}&bid={{@$registration->business_school_id}}">Registration Print </a></td>
+                                        <td><a class="badge bg-maroon" href="print?cid={{$registration->campus_id}}&bid={{$registration->business_school_id}}">SAR</a></td>
+                                        <td><i class="badge" data-id="{{@$registration->id}}"  style="background: {{$registration->regStatus == 'Initiated'?'red':''}}{{$registration->regStatus == 'Review'?'brown':''}}{{$registration->regStatus == 'Approved'?'green':''}}" >{{@$registration->regStatus != ''?ucwords($registration->regStatus):'Initiated'}}</i></td>
                                         <td>
-                                            @if($report->mentoring_invoice->regStatus ==='SAR') <i class="badge bg-aqua">Case Forwarded to SAP</i> @else <a data-id="{{$report->id}}" class="btn-xs btn-success forward_sar" >Forward to SAP</a> @endif
+                                            @if($registration->regStatus =='PeerReviewReport')
+                                                <i data-id ="{{$registration->id}}" class="btn-xs btn-info forwartToAAC" data-toggle="tooltip" data-placement="left" title="Forward to Accreditation Award Committee"> <i class="fa fa-forward"></i></i>
+                                            @elseif($registration->regStatus =='Review')
+                                                Desk Review In-progress
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -201,12 +204,13 @@
 
                             <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                         </div>
+                        <!-- /.box-body -->
 
                     </div>
                     <!-- /.box -->
 
                 </section>
-                <!-- right col -->
+
             </div>
             <!-- /.row (main row) -->
         </section>
@@ -231,7 +235,7 @@
 
 @endif
 
-@hasrole('Mentor')
+@hasrole('NbeacFocalPerson|NBEACAdmin')
 <script>
     $('.select2').select2();
 
@@ -240,20 +244,13 @@
         CKEDITOR.replace('comments');
     });
     $('#form').submit(function (e) {
-        var slip_id = $('#slip_id').val();
-        var report_date = $('#report_date').val();
-        var registration_date = $('#registration_date').val();
-        var sar_date = $('#sar_date').val();
         var comments = CKEDITOR.instances.comments.getData();
         var file = $('#file').val();
 
         !file?addClass('file'):removeClass('file');
         !comments?addClass('comments'):removeClass('comments');
-        !registration_date?addClass('registration_date'):removeClass('registration_date');
-        !sar_date?addClass('sar_date'):removeClass('sar_date');
-        !slip_id?addClass('slip_id'):removeClass('slip_id');
 
-        if(!file || !slip_id || !report_date || !sar_date || !registration_date)
+        if(!file || !comments)
         {
             Notiflix.Notify.Warning("Fill all the required Fields.");
             return;
@@ -267,7 +264,7 @@
             })
             // Yes button callback
             $.ajax({
-                url:'{{url("mentorReport")}}',
+                url:'{{url("peerReviewReport")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -298,7 +295,7 @@
     });
 
 
-    $('.forward_sar').on('click', function (e) {
+    $('.forwartToAAC').on('click', function (e) {
         var id = $(this).data('id');
 
         Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to SAP?', 'Yes', 'No',
@@ -310,9 +307,9 @@
                 })
                 // Yes button callback
                 $.ajax({
-                    url:'{{url("updateInvoiceStatus")}}/'+id,
+                    url:'{{url("updateSlipStatus")}}/'+id,
                     type:'put',
-                    data: { id:id, 'regStatus':'SAR'},
+                    data: { id:id, 'regStatus':'AwardCommittee'},
                     beforeSend: function(){
                         Notiflix.Loading.Pulse('Processing...');
                     },
@@ -324,7 +321,7 @@
                             Notiflix.Notify.Success(response.success);
                         }
 
-                        // location.reload();
+                        location.reload();
 
                         console.log('response here', response);
                     },
