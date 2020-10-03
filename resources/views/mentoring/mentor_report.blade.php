@@ -178,7 +178,7 @@
                                          <td>{!!substr($report->comments, 0, 100) !!}...</td>
 {{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$report->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
                                         <td>
-                                            @if($report->mentoring_invoice->regStatus ==='SAR') <i class="badge bg-aqua" >Case Forwarded to SAP</i> @else <a data-id="{{$report->id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar" >Forward to SAP</a> @endif
+                                            @if($report->mentoring_invoice->regStatus !=='SAR') <i class="badge bg-aqua" >Case Forwarded for Desk Review</i> @else <a data-id="{{$report->id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar" >Forward For Desk Review</a> @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -310,7 +310,7 @@
                 $.ajax({
                     url:'{{url("updateInvoiceStatus")}}/'+id,
                     type:'put',
-                    data: { id:id, 'regStatus':'SAR'},
+                    data: { id:id, 'regStatus':'SARDeskReview'},
                     beforeSend: function(){
                         Notiflix.Loading.Pulse('Processing...');
                     },

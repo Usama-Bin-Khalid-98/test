@@ -122,7 +122,7 @@
                                         <td><a href="print?cid={{@$regist->campusId}}&bid={{@$regist->schoolId}}">SAR Review</a></td>
                                         {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                         <td><i class="badge {{$regist->regStatus == 'Review'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'created'}}</i></td>
-                                        <td><i class="fa fa-trash text-info"></i> | <i  class="fa fa-pencil text-blue edit" onclick="deskReview({{$regist->id}})"></i> </td>
+                                        <td><i class="fa fa-trash text-info"></i> | <i  class="fa fa-pencil text-blue edit" data-id="{{$regist->id}}" data-row='{"id":"{{$regist->id}}","review":"{{$regist->regStatus}}","mentor_comments":"{{$regist->mentor_comments}}"}' onclick="deskReview({{$regist->id}})"></i> </td>
                                     </tr>
 
                                 @endforeach
@@ -289,8 +289,19 @@
 
 function deskReview(id){
     $('#myModal').modal("show");
+    // let data = $(this).data();
+
     $("#slipId").val(id);
 }
+
+$('.edit').on('click', function () {
+    var data =JSON.parse(JSON.stringify($(this).data('row')));
+
+    console.log(data.review);
+    $('#review').val(data.review)
+    $('#comments').val(data.mentor_comments)
+
+})
 
  function submitReview(e) {
         var id = $('#slipId').val();

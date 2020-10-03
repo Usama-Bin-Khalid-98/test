@@ -1,6 +1,7 @@
 @php
 use \Illuminate\Support\Facades\Auth;
 $invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id, 'status'=>'approved' ]);
+$Mentoringinvoice = checkIsCompleted('App\Models\MentoringInvoice', ['campus_id' => Auth::user()->campus_id, 'status'=>'approved' ]);
 $basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes' ]);
 $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes' ]);
 $contact = checkIsCompleted('App\Models\StrategicManagement\ContactInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -171,8 +172,8 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
               <a href="{{url('mentoring-invoices')}}">
                   <i class="fa fa-file-text-o" style="color: #D81B60"></i>Mentoring Invoices
                   <span class="pull-right-container">
-                        <span class="text text-{{$invoices==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$invoices==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        <span class="text text-{{$Mentoringinvoice==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$Mentoringinvoice==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                   </span>
               </a>
@@ -856,10 +857,13 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
               </a>
           </li>
           @endhasrole
-
+          @hasanyrole('Mentor')
+          <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report on Registraion</a></li>
+          @endhasrole
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-circle-o text-blue " ></i>Self Assessment Process Report</a></li>
           @endhasrole
+{{--          @if($isActiveSAR)--}}
           @hasrole('NBEACAdmin|Mentor')
           <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}">
               <a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review
@@ -867,6 +871,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
                     <i class="badge bg-maroon pull-right">1</i>
                   </span></a></li>
           @endhasrole
+{{--          @endif--}}
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-circle-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
@@ -903,9 +908,6 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           @endhasrole
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')
           <li  class="{{ (request()->is('instituteFeedback')) ? 'active' : '' }}"><a href="{{url('instituteFeedback')}}"><i class="fa fa-backward text-yellow"></i>Institutional Feedback Form</a></li>
-          @endhasrole
-          @hasanyrole('Mentor')
-          <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report</a></li>
           @endhasrole
 
           @hasanyrole('AccreditationAwardCommittee')
