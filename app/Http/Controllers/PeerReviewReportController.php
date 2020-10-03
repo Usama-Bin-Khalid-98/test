@@ -17,7 +17,7 @@ class PeerReviewReportController extends Controller
     {
         $registrations = PeerReviewReport::with('slip')->get();
         //dd($registrations);
-        return view('peer_review_visit', compact('registrations'));
+        return view('peer_review_visit.review_report', compact('registrations'));
 
     }
 

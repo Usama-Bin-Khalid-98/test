@@ -789,7 +789,7 @@
                           <div class="row">
                               <div class="col-md-8">
 
-                                  <div class="alert alert-danger alert-dismissible">
+                                  <div class="alert alert-success alert-dismissible">
                                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                       <h4><i class="icon fa fa-sticky-note"></i>Note</h4>
                                       <ol type="1">

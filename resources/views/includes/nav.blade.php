@@ -154,11 +154,19 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           </ul>
             </li>
           @endhasrole
-
           @hasrole('BusinessSchool')
+          <li class=" treeview {{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('mentoring-invoices'))?'active':''}} ">
+              <a href="#" >
+                  <i class="fa fa-money " style="color: #D81B60"></i><span>Registration</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+
           <li class="{{ (request()->is('strategic/invoices')) ? 'active' : '' }} ">
               <a href="{{url('strategic/invoices')}}">
-                  <i class="fa fa-file-text-o" style="color: #D81B60"></i>Invoices
+                  <i class="fa fa-file-text-o" style="color: #D81B60"></i>Registration Invoices
                   <span class="pull-right-container">
                         <span class="text text-{{$invoices==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$invoices==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -166,8 +174,6 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
                   </span>
               </a>
           </li>
-          @endhasrole
-          @hasrole('BusinessSchool')
           <li class="{{ (request()->is('mentoring-invoices')) ? 'active' : '' }} ">
               <a href="{{url('mentoring-invoices')}}">
                   <i class="fa fa-file-text-o" style="color: #D81B60"></i>Mentoring Invoices
@@ -177,6 +183,9 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
                         </span>
                   </span>
               </a>
+          </li>
+              </ul>
+              {{--              @endif--}}
           </li>
           @endhasrole
 
@@ -825,16 +834,16 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
 
           <li class=" treeview {{request()->is('registrations')?'active':''}}">
               <a href="#">
-                  <i class="fa fa-globe text-blue " ></i><span>Registrations</span>
+                  <i class="fa fa-globe text-blue " ></i><span>Registrations / Invoices</span>
                   <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
               <ul class="treeview-menu">
 {{--                  <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>--}}
-                  <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-circle-o text-green"></i>Invoices List</a></li>
-                  <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-circle-o text-green"></i>Mentoring Invoices List</a></li>
-                  <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-circle-o text-green"></i>Registrations</a></li>
+                  <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-registered text-green"></i>Registrations</a></li>
+                  <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-money text-green"></i>Invoices List</a></li>
+                  <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-money text-green"></i>Mentoring Invoices List</a></li>
               </ul>
           </li>
 

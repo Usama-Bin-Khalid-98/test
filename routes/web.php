@@ -192,12 +192,17 @@ use Illuminate\Support\Facades\Route;
             Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
             Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
+//<<<<<<< Updated upstream
             Route::resource('instituteFeedback', 'InstituteFeedbackController');
+//=======
+
+//>>>>>>> Stashed changes
 
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
          Route::get('mentoringInvoices', 'MentoringInvoiceController@mentoringInvoices');
+         Route::get('registrations', 'StrategicManagement\SlipController@registrations');
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
           Route::Post('MentoringInvoiceStatus', 'MentoringInvoiceController@approvementStatus');
           Route::prefix('config')->group(function (){
