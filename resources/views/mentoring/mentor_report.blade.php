@@ -57,27 +57,41 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="registration_id">Registrations</label>
-                                        <select name="slip_id" id="slip_id" class="form-control select2">
+                                        <select name="mentoring_invoice_id" id="mentoring_invoice_id" class="form-control select2">
                                             @foreach($registrations as $register)
                                             <option value="{{@$register->id}}"> {{@$register->campus->business_school->name}} {{@$register->campus->location}} - {{@$register->department->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="margin-bottom: 10px;">
-                                    <div class="form-group">
-                                        <label for="status">Status</label>
-                                        <select name="status" id="status" class="form-control select2">
-                                            <option value="Deferred">Deferred</option>
-                                            <option value="Approved">Approved</option>
-                                            <option value="ConditionalApproval">Conditional Approval</option>
-                                        </select>
-                                    </div>
-                                </div>
+{{--                                <div class="col-md-4" style="margin-bottom: 10px;">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="status">Status</label>--}}
+{{--                                        <select name="status" id="status" class="form-control select2">--}}
+{{--                                            <option value="Deferred">Deferred</option>--}}
+{{--                                            <option value="Approved">Approved</option>--}}
+{{--                                            <option value="ConditionalApproval">Conditional Approval</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="name">Date</label>
-                                        <input type="date" name="es_meeting_date" id="es_meeting_date" class="form-control" value="{{date('Y-m-d')}}" >
+                                        <label for="name">Report Date</label>
+                                        <input type="date" name="report_date" id="report_date" class="form-control" value="{{date('Y-m-d')}}" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Registration application submission date</label>
+                                        <input type="date" name="registration_date" id="registration_date" class="form-control" value="{{date('Y-m-d')}}" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">SAR submission date</label>
+                                        <input type="date" name="sar_date" id="sar_date" class="form-control" value="{{date('Y-m-d')}}" >
                                     </div>
                                 </div>
 
@@ -88,7 +102,12 @@
                                         <span class="text-red">Max upload file size 2mb.</span>
                                     </div>
                                 </div>
-
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="sample">Download Sample</label>
+                                        <a href=""><span href="" class="badge bg-green">Download</span></a>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -103,6 +122,7 @@
                                         <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                     </div>
                                 </div>
+
                             </form>
 
                             <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
@@ -142,7 +162,7 @@
                                     <th>Department</th>
                                     <th>Letter Doc</th>
                                     <th>Peer Reviewer Comments</th>
-                                    <th>Status</th>
+{{--                                    <th>Status</th>--}}
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -151,17 +171,15 @@
 
                                 @foreach($mentor_reports as $report)
                                     <tr>
-{{--                                        <td>{{@$report->school}}</td>--}}
-{{--                                        <td>{{@$report->campus??'Main Campus'}}</td>--}}
-{{--                                        <td>{{@$report->department}}</td>--}}
-{{--                                         <td><a href="{{asset(@$report->file)}}" >Doc File</a></td>--}}
-{{--                                         <td>{!!substr($report->comments, 0, 100) !!}...</td>--}}
-{{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
-{{--                                        <td>@if($report->regStatus =='Eligibility' || $report->regStatus =='ScheduledES' )--}}
-{{--                                                <a href="{{url('esScheduler')}}/{{$report->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$report->id}}" data-row="{{@$report->department_id}}"> Eligibility Screening Calendar</a>--}}
-{{--                                            @elseif($report->regStatus =='Review')Desk Review In-progress @endif--}}
-{{--                                            <a href="{{url('esReport')}}/{{$report->id}}" class="btn-xs btn-success report" name="report" id="report" >Eligibility Report</a>--}}
-{{--                                        </td>--}}
+                                        <td>{{@$report->mentoring_invoice->campus->business_school->name}}</td>
+                                        <td>{{@$report->mentoring_invoice->campus->location??'Main Campus'}}</td>
+                                        <td>{{@$report->mentoring_invoice->department->name}}</td>
+                                         <td><a href="{{asset(@$report->file)}}" >Doc File</a></td>
+                                         <td>{!!substr($report->comments, 0, 100) !!}...</td>
+{{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$report->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
+                                        <td>
+                                            @if($report->mentoring_invoice->regStatus !=='SAR') <i class="badge bg-aqua" >Case Forwarded for Desk Review</i> @else <a data-id="{{$report->id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar" >Forward For Desk Review</a> @endif
+                                        </td>
                                     </tr>
                                 @endforeach
 
@@ -173,7 +191,7 @@
                                     <th>Department</th>
                                     <th>Letter Doc</th>
                                     <th>Peer Reviewer Comments</th>
-                                    <th>Status</th>
+{{--                                    <th>Status</th>--}}
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -211,7 +229,7 @@
 
 @endif
 
-@hasrole('PeerReviewer')
+@hasrole('Mentor')
 <script>
     $('.select2').select2();
 
@@ -220,15 +238,20 @@
         CKEDITOR.replace('comments');
     });
     $('#form').submit(function (e) {
-        var slip_id = $('#slip_id').val();
+        var mentoring_invoice_id = $('#mentoring_invoice_id').val();
+        var report_date = $('#report_date').val();
+        var registration_date = $('#registration_date').val();
+        var sar_date = $('#sar_date').val();
         var comments = CKEDITOR.instances.comments.getData();
         var file = $('#file').val();
 
         !file?addClass('file'):removeClass('file');
         !comments?addClass('comments'):removeClass('comments');
-        !slip_id?addClass('slip_id'):removeClass('slip_id');
+        !registration_date?addClass('registration_date'):removeClass('registration_date');
+        !sar_date?addClass('sar_date'):removeClass('sar_date');
+        !mentoring_invoice_id?addClass('mentoring_invoice_id'):removeClass('mentoring_invoice_id');
 
-        if(!file || !slip_id || !comments)
+        if(!file || !mentoring_invoice_id || !report_date || !sar_date || !registration_date)
         {
             Notiflix.Notify.Warning("Fill all the required Fields.");
             return;
@@ -242,7 +265,7 @@
             })
             // Yes button callback
             $.ajax({
-                url:'{{url("PeerReviewerReport")}}',
+                url:'{{url("mentorReport")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -259,8 +282,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
 
-                    location.reload();
-
+                   location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception){
@@ -271,6 +293,51 @@
 
                 }
             })
+    });
+
+
+    $('.forward_sar').on('click', function (e) {
+        var id = $(this).data('id');
+
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to SAP?', 'Yes', 'No',
+            function(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("updateInvoiceStatus")}}/'+id,
+                    type:'put',
+                    data: { id:id, 'regStatus':'SARDeskReview'},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+            },
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );
     });
 
 

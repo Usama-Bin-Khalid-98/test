@@ -40,8 +40,9 @@ class CreateMentoringInvoicesTable extends Migration
             $table->enum('isEligible', ['yes', 'no'])->nullable();
             $table->enum('isEligibleNBEAC', ['yes', 'no'])->nullable()->default('no');
             $table->enum('isEligibleMentor', ['yes', 'no'])->nullable()->default('no');
-            $table->enum('regStatus', ['Initiated','Pending','Review','Eligibility','ScheduledES','ScheduledPR','Mentoring','ScheduledMentoring','SAR','Active', 'Inactive', 'Approved'])->nullable()->default('Initiated');
-            $table->string('comments', 255)->nullable();
+            $table->enum('regStatus', ['Initiated','Pending','Review','Eligibility','ScheduledES','ScheduledPR','Mentoring','ScheduledMentoring','SAR','SARDeskReview','PeerReviewVisit','Active', 'Inactive', 'Approved'])->nullable()->default('Initiated');
+            $table->text('comments')->nullable();
+            $table->text('mentor_comments')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

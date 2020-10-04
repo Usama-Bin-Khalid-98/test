@@ -22,6 +22,8 @@ class CreateMentoringReportsTable extends Migration
             $table->text('comments');
             $table->enum('status', ['Mentor', 'Approved', 'nbeac'])->nullable();
             $table->date('report_date');
+            $table->date('registration_date');
+            $table->date('sar_date');
             $table->string('file', 255)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')

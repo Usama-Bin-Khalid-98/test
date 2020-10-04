@@ -6,6 +6,7 @@ use App\BusinessSchool;
 use App\Models\Common\Department;
 use App\Models\Common\FeeType;
 use App\Models\Common\PaymentMethod;
+use App\Models\Common\Slip;
 use App\Models\MentoringInvoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,6 +88,27 @@ class MentoringInvoiceController extends Controller
                 'status' => $request->status,
                 'updated_by' => Auth::id(),
             ]);
+            return response()->json(['success' => 'Invoice Slip status updated successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+    public function updateInvoiceStatus(Request $request)
+    {
+//        dd($request->all());
+        try {
+            $updateMentoringStatus = MentoringInvoice::find($request->id)
+                ->update(['regStatus' => $request->regStatus]);
+
+            if($updateMentoringStatus)
+            {
+                $getBusinessSchool = MentoringInvoice::where('id', $request->id)->get()->first();
+                Slip::where(['business_school_id' => $getBusinessSchool->campus_id, 'department_id' => $getBusinessSchool->department_id])
+                    ->update(['regStatus' => $request->regStatus]);
+            }
             return response()->json(['success' => 'Invoice Slip status updated successfully.'], 200);
         }
         catch (Exception $e)

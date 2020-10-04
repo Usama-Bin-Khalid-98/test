@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\EligibilityStatus;
 use App\Models\Common\Slip;
+use App\Models\MentoringInvoice;
 use App\Models\SARDeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
@@ -44,6 +45,21 @@ class SARDeskReviewController extends Controller
     {
         //$registrations = User::with('business_school')->where(['status' => 'active', 'request'=>'pending'])->get();
 
+        $registrations = DB::table('mentoring_invoices as s')
+            ->join('campuses as c', 'c.id', '=', 's.campus_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId','c.id as campusId')
+            ->where('s.regStatus', 'SARDeskReview')
+            ->get();
+//        dd($registrations);
+
+        return view('desk_review.sar_desk_review', compact('registrations'));
+    }
+
+    public function sap_report()
+    {
         $registrations = DB::table('slips as s')
             ->join('campuses as c', 'c.id', '=', 's.business_school_id')
             ->join('departments as d', 'd.id', '=', 's.department_id')
@@ -52,9 +68,8 @@ class SARDeskReviewController extends Controller
             ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId','c.id as campusId')
 //            ->where('s.reg')
             ->get();
-        //dd($desk_reviews);
 
-        return view('desk_review.sar_desk_review', compact('registrations'));
+        return view('desk_review.sap_report', compact('registrations'));
     }
 
 
@@ -65,10 +80,15 @@ class SARDeskReviewController extends Controller
             if($validation->fails()){
                 return response()->json($validation->messages()->all(), 422);
             }
-            $slips = DB::update('update slips set comments=?, regStatus=? where id=?', array($request->comments, $request->review, $request->id));
-            //dd($slips);
+            $updateMentorInvoice = MentoringInvoice::find($request->id)->update(['regStatus'=>$request->review, 'mentor_comments'=> $request->comments]);
+            $getBusinessSchool = MentoringInvoice::where('id' , $request->id)->get()->first();
+//            dd($getBusinessSchool);
+            $slips = DB::update('update slips set comments=?, regStatus=?
+                where business_school_id=? AND department_id=?',
+                array($request->comments, $request->review,
+                     $getBusinessSchool->campus_id, $getBusinessSchool->department_id));
             //dd($content->email);
-            Mail::to($content->email)->queue(new ActivationMail($content));
+//            Mail::to($content->email)->queue(new ActivationMail($content));
             return response()->json(['success' => 'Status updated Successfully'], 200);
         }catch (Exception $e)
         {

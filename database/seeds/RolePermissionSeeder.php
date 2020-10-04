@@ -84,13 +84,17 @@ class RolePermissionSeeder extends Seeder
         $NBEACAdmin = Role::create(['name' => 'NBEACAdmin']);
         $NBEACAdmin->givePermissionTo(Permission::all());
 
+        $NbeacFocalPerson = Role::create(['name' => 'NbeacFocalPerson']);
+        $NbeacFocalPerson->givePermissionTo(Permission::all());
+
         $EligibilityScreening = Role::create(['name' => 'EligibilityScreening'])
             ->givePermissionTo(['EligibilityScreening']);
 
         $Mentor = Role::create(['name' => 'Mentor'])
             ->givePermissionTo(['Mentoring']);
 
-        $AccreditationAwardCommittee = Role::create(['name' => 'AccreditationAwardCommittee']);
+        $AccreditationAwardCommittee = Role::create(['name' => 'AccreditationAwardCommittee'])
+        ->givePermissionTo(['AccreditationAwardCommittee']);
 
         // admin
         $admin = User::find(1);
