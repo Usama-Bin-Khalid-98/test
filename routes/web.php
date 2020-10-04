@@ -228,6 +228,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
             Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
             Route::patch('PeerReviewerReport/{id}', 'EligibilityScreeningController@update');
+            Route::resource('prr', 'PrrController');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {
