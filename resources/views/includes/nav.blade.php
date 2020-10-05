@@ -93,6 +93,10 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
 
+$RegDesk = get('App\Models\Common\Slip' ,['regStatus'=>'Review']);
+$SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
+
+
 @endphp
 
 <aside class="main-sidebar">
@@ -861,7 +865,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}">
               <a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review
                   <span class="pull-right-container">
-                    <i class="badge bg-maroon pull-right">1</i>
+                    <i class="badge bg-maroon pull-right">{{count(@$RegDesk)}}</i>
                   </span>
               </a>
           </li>
@@ -877,7 +881,7 @@ $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['
           <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}">
               <a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review
                   <span class="pull-right-container">
-                    <i class="badge bg-maroon pull-right">1</i>
+                    <i class="badge bg-maroon pull-right">{{count(@$SarDesk)}}</i>
                   </span></a></li>
           @endhasrole
 {{--          @endif--}}

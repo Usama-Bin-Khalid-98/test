@@ -694,7 +694,7 @@
                   <!-- /.info-box -->
               </div>
 
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <!-- <div class="col-md-2 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
 
@@ -702,18 +702,30 @@
                           <span class="info-box-text">Mentoring Invoices</span>
                           <span class="info-box-number">5<small></small></span>
                       </div>
+                      <!- /.info-box-content
+                  </div>
+                 /.info-box
+              </div> -->
+              <!-- /.col -->
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-yellow"><i class="fa fa-home"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Business Schools</span>
+                          <span class="info-box-number">{{@$bs_count}}</span>
+                      </div>
                       <!-- /.info-box-content -->
                   </div>
                   <!-- /.info-box -->
               </div>
-              <!-- /.col -->
               <div class="col-md-2 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-maroon"><i class="fa fa-home"></i></span>
 
                       <div class="info-box-content">
                           <span class="info-box-text">Departments</span>
-                          <span class="info-box-number">4</span>
+                          <span class="info-box-number">{{@$dept_count}}</span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
@@ -730,25 +742,26 @@
 
                       <div class="info-box-content">
                           <span class="info-box-text">Campuses</span>
-                          <span class="info-box-number">760</span>
+                          <span class="info-box-number">{{@$campus_count}}</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+              </div>
+
+              <div class="col-md-2 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                      <span class="info-box-icon bg-green"><i class="fa fa-home"></i></span>
+
+                      <div class="info-box-content">
+                          <span class="info-box-text">Programs</span>
+                          <span class="info-box-number">{{@$programs}}<small></small></span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
                   <!-- /.info-box -->
               </div>
               <!-- /.col -->
-              <div class="col-md-2 col-sm-6 col-xs-12">
-                  <div class="info-box">
-                      <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people"></i></span>
-
-                      <div class="info-box-content">
-                          <span class="info-box-text">Students</span>
-                          <span class="info-box-number">2,000</span>
-                      </div>
-                      <!-- /.info-box-content -->
-                  </div>
-                  <!-- /.info-box -->
-              </div>
 
               <div class="col-md-2 col-sm-6 col-xs-12">
                   <div class="info-box">
@@ -756,7 +769,7 @@
 
                       <div class="info-box-content">
                           <span class="info-box-text">Faculty</span>
-                          <span class="info-box-number">200</span>
+                          <span class="info-box-number">{{@$fm_count + @$fem_count}}</span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>

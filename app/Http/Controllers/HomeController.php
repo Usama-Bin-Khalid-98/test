@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\Slip;
 use App\Models\PeerReview\InstituteFeedback;
+use App\Models\Common\Campus;
+use App\Models\Common\Department;
+use App\BusinessSchool;
+use App\Models\Faculty\FacultyGender;
+use App\Models\Common\Program;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -205,7 +210,26 @@ class HomeController extends Controller
                 ->where('s.status', 'approved')
                 ->get();
         }
-//        dd($PeerReviewVisit);
+
+        /*$this->model->leftJoin('Rooms', 'Properties.ID', '=', 'Rooms.Property')
+  ->selectRaw('Properties.*, count(Rooms.RoomID) as RoomsCount')
+  ->groupBy('Properties.ID')
+  ->get();*/
+
+       /* $campus_count = DB::table('slips as s')
+                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+                ->join('departments as d', 'd.id', '=', 's.department_id')
+                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+                ->selectRaw('count(c.id) as c_id')
+                ->where('s.regStatus', 'Review')
+                ->get();*/
+
+       $campus_count = Campus::where(['status' => 'active'])->get()->count('location');
+       $dept_count = Department::where(['status' => 'active'])->get()->count('name');
+       $bs_count = BusinessSchool::where(['status' => 'active'])->get()->count('name');
+       $programs = Program::where(['status' => 'active'])->get()->count('name');
+       $fm_count = FacultyGender::where(['status' => 'active'])->get()->sum('male');
+       $fem_count = FacultyGender::where(['status' => 'active'])->get()->sum('female');
 
         $businessSchools = DB::select('
 SELECT business_schools.*, campuses.location as campus, campuses.id as campusID,slips.id as slip_id, slips.status as slipStatus
@@ -224,8 +248,14 @@ AND slips.status="approved" AND slips.regStatus="SAR" ', array());
 
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
-            'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks'));
+            'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks' ,'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs'));
     }
+
+    public static function totalReg()
+        {
+            $result = Slip::get()->count();
+            return $result;
+        }
 
     /**
      * Update the specified resource in storage.
