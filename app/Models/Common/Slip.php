@@ -4,6 +4,8 @@ namespace App\Models\Common;
 
 use App\BusinessSchool;
 use App\Mentoring\ScheduleMentorMeeting;
+use App\Models\AccreditationAC\AccreditationMeeting;
+use App\Models\AccreditationAC\AccreditationReviewer;
 use App\Models\EligibilityScreening\EligibilityScreening;
 use App\Models\EligibilityScreening\ESReviewer;
 use App\Models\EligibilityScreening\ReviewerAvailability;
@@ -64,5 +66,15 @@ class Slip extends Model
     public function peer_review_report()
     {
         return $this->hasOne(PeerReviewReport::class);
+    }
+
+    public function accreditation_award_committee()
+    {
+        return $this->hasOne(AccreditationMeeting::class);
+    }
+
+    public function accreditation_reviewer()
+    {
+        return $this->hasOne(AccreditationReviewer::class);
     }
 }

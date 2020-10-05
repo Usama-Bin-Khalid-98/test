@@ -30,18 +30,18 @@
         </section><!-- Main content -->
 
 
-        @hasrole('NbeacFocalPerson|NBEACAdmin')
+        @hasrole('BusinessSchool')
         <section class="content">
 
             <div class="row" >
                 <!--Registrations list-->
-                <section class="col-lg-12 connectedSortable">
+                <section class="col-lg-6 connectedSortable">
                     <!-- TO DO List -->
-                    <div class="box box-primary collapsed-box">
+                    <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">Read Me! </h3>
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
@@ -56,10 +56,10 @@
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <h4><i class="icon fa fa-check"></i> Notes! </h4>
                                 <ol>
-                                    <li>Download the sample doc from  <a href="{{url('samples/Sample-Format-Peer-Review-Report.docx')}}">here</a>. </li>
-                                    <li>Put all the required data and upload again.  </li>
-                                    <li>Send <a href="{{url('samples/Feedback form-Shadow-Participant-at-PRT.docx')}}">shadow feedback</a> form to Chair PRT  </li>
-                                    <li>Send PRR to Accreditation Award Committee. </li>
+                                    <li>check the Peer Reviewer Report.  </li>
+                                    <li>Peer Reviewer Report Doc File <a href="{{url('samples/Feedback form-Shadow-Participant-at-PRT.docx')}}"> Download</a> </li>
+                                    <li>upload the feedback on word copy of PRR with track changes. </li>
+                                    <li>The AAC Chair and PRT will check the report if no changes required then will forward the case to Council Meeting. </li>
                                 </ol>
                             </div>
                         </div>
@@ -68,12 +68,57 @@
                     <!-- /.box -->
 
                 </section>
+                <section class="col-lg-6 connectedSortable">
+                    <!-- TO DO List -->
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Peer Review Report. </h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-file-pdf-o"></i></button>
+                                </div>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="sample">Download File</label>
+                                    <a href="{{@$peerReview->file}}" download="{{@$peerReview->file}}" class="badge bg-green">Download</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="sample">Report Date</label>
+                                    <p class="badge bg-green">{{@$peerReview->report_date}}</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="comments">Peer Reviewer Comments</label>
+                                    {!! @$peerReview->comments !!}
+                                </div>
+                            </div>
+                            <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        </div>
+
+                    </div>
+                    <!-- /.box -->
+
+                </section>
+
 
                 <section class="col-lg-12 connectedSortable">
                     <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Upload Peer Review Report. </h3>
+                            <h3 class="box-title">Feedback on Peer Review Report. </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -103,13 +148,13 @@
                                         <span class="text-red">Max upload file size 2mb.</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="sample">Download Sample</label><br>
-                                        <a href="" class="file"><span href="" class="badge bg-green">Download</span></a>
-                                        <input type="hidden" id="prr_id" name="prr_id">
-                                    </div>
-                                </div>
+{{--                                <div class="col-md-4">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="sample">Download Sample</label><br>--}}
+{{--                                        <a href="" class="file"><span href="" class="badge bg-green">Download</span></a>--}}
+{{--                                        <input type="hidden" id="prr_id" name="prr_id">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -135,91 +180,11 @@
 
                 </section>
                 <!-- right col -->
-
-                <section class="col-lg-12 connectedSortable">
-                    <!-- TO DO List -->
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title">Peer Review Report. </h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Department</th>
-                                    <th>Desk Review</th>
-                                    <th>Registration Print</th>
-                                    <th>SAR</th>
-                                    <th>Report Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                @foreach($registrations as $registration)
-                                    <tr>
-                                        <td>{{@$registration->school}}</td>
-                                        <td>{{@$registration->campus??'Main Campus'}}</td>
-                                        <td>{{@$registration->department}}</td>
-                                        <td><a href="{{url('deskreview')}}/{{@$registration->id}}">Desk Review</a></td>
-                                        {{--<a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                                        <td><a href="{{url('registrationPrint?cid=')}}{{@$registration->campus_id}}&bid={{@$registration->business_school_id}}">Registration Print </a></td>
-                                        <td><a class="badge bg-maroon" href="print?cid={{$registration->campus_id}}&bid={{$registration->business_school_id}}">SAR</a></td>
-                                        <td><i class="badge" data-id="{{@$registration->id}}"  style="background: {{$registration->regStatus == 'Initiated'?'red':''}}{{$registration->regStatus == 'Review'?'brown':''}}{{$registration->regStatus == 'Approved'?'green':''}}" >{{@$registration->regStatus != ''?ucwords($registration->regStatus):'Initiated'}}</i></td>
-                                        <td>{{@$registration->report_date}}</td>
-                                        <td>
-                                            @if($registration->regStatus =='PeerReviewReport')
-                                                <i data-id ="{{$registration->id}}" class="btn-xs btn-info forwartToAAC" data-toggle="tooltip" data-placement="left" title="Forward to Accreditation Award Committee"> <i class="fa fa-forward"></i></i> |
-                                            @elseif($registration->regStatus =='Review')
-                                                Desk Review In-progress
-                                            @endif
-                                            <i class="fa fa-pencil-square-o text-blue edit" data-row='{"date":"{{$registration->report_date}}","file":"{{@$registration->file}}","comments":"{{@$registration->prr_comments}}","prr_id":{{@$registration->prr_id}},"update":"update"}'></i>
-                                             | <i class="fa fa-list text-blue" ></i>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Department</th>
-                                    <th>Desk Review</th>
-                                    <th>Registration Print</th>
-                                    <th>SAR</th>
-                                    <th>Report Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-
-                            <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                        </div>
-                        <!-- /.box-body -->
-
-                    </div>
-                    <!-- /.box -->
-
-                </section>
-
             </div>
             <!-- /.row (main row) -->
         </section>
+
+
         @endhasrole
 
         <!-- /.content -->
@@ -241,19 +206,19 @@
 
 @endif
 
-@hasrole('NbeacFocalPerson|NBEACAdmin')
+@hasrole('BusinessSchool')
 <script>
 
-    $('.edit').on('click', function () {
-        let row = JSON.parse(JSON.stringify($(this).data('row')));
-        console.log('darta here....', row);
-        $('#report_date').val(row.date);
-        CKEDITOR.instances.comments.setData(row.comments);
-        $('.file').attr('href', row.file);
-        $('#prr_id').val(row.prr_id);
-
-
-    })
+    // $('.edit').on('click', function () {
+    //     let row = JSON.parse(JSON.stringify($(this).data('row')));
+    //     console.log('darta here....', row);
+    //     $('#report_date').val(row.date);
+    //     CKEDITOR.instances.comments.setData(row.comments);
+    //     $('.file').attr('href', row.file);
+    //     $('#prr_id').val(row.prr_id);
+    //
+    //
+    // })
     $('.select2').select2();
 
     $(function () {
@@ -284,7 +249,7 @@
             })
             // Yes button callback
             $.ajax({
-                url:'{{url("peerReviewReport")}}',
+                url:'{{url("bs_feedback_PRR")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -301,7 +266,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
 
-                   location.reload();
+                   // location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception){
