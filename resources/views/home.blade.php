@@ -681,20 +681,20 @@
       <!-- Info boxes -->
       <section class="content">
           <div class="row">
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
 
                       <div class="info-box-content">
                           <span class="info-box-text">Invoices</span>
-                          <span class="info-box-number">2<small></small></span>
+                          <span class="info-box-number">{{@$count_slips}}<small></small></span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
                   <!-- /.info-box -->
               </div>
 
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
 
@@ -707,13 +707,13 @@
                   <!-- /.info-box -->
               </div>
               <!-- /.col -->
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-maroon"><i class="fa fa-home"></i></span>
 
                       <div class="info-box-content">
                           <span class="info-box-text">Departments</span>
-                          <span class="info-box-number">4</span>
+                          <span class="info-box-number">{{@$dept_count}}</span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
@@ -724,39 +724,39 @@
               <!-- fix for small devices only -->
               <div class="clearfix visible-sm-block"></div>
 
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-green"><i class="ion ion-ios-home-outline"></i></span>
 
                       <div class="info-box-content">
                           <span class="info-box-text">Campuses</span>
-                          <span class="info-box-number">760</span>
+                          <span class="info-box-number">{{@$campus_count}}</span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
                   <!-- /.info-box -->
               </div>
               <!-- /.col -->
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people"></i></span>
 
                       <div class="info-box-content">
-                          <span class="info-box-text">Students</span>
-                          <span class="info-box-number">2,000</span>
+                          <span class="info-box-text">Business Schools</span>
+                          <span class="info-box-number">{{@$bs_count}}</span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
                   <!-- /.info-box -->
               </div>
 
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-aqua-gradient"><i class="ion ion-ios-people"></i></span>
 
                       <div class="info-box-content">
-                          <span class="info-box-text">Faculty</span>
-                          <span class="info-box-number">200</span>
+                          <span class="info-box-text">Faculty male/Female</span>
+                          <span class="info-box-number">{{@$fm_count+$fem_count}}</span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>

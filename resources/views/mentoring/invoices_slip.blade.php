@@ -282,7 +282,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 ChequeNumber" >
                             <div class="form-group">
                                 <label for="name">Cheque No</label>
                                 <input type="text" id="edit_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
@@ -373,7 +373,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 ChequeNumber">
                                         <div class="form-group">
                                             <label for="name">Cheque No</label>
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
@@ -455,6 +455,24 @@
         $(function () {
             $('#datatable').DataTable()
         })
+        $(document).on('change',"#payment_method",function(e){
+
+            var payment_method = $(this).val();
+
+            if(payment_method == 2) {
+
+                $('.ChequeNumber').show();
+                $('#cheque_no').attr('required',true);
+
+            }else {
+
+                $('.ChequeNumber').hide();
+                $('#cheque_no').val(' ').trigger('change');
+                $('#cheque_no').removeAttr('required',false);
+            }
+
+        });
+
     </script>
     <script type="text/javascript">
 

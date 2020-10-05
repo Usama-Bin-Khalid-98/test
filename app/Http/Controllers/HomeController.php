@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\Common\Campus;
+use App\Models\Common\Department;
+use App\BusinessSchool;
+use App\Models\Faculty\FacultyGender;
+use App\Models\Common\Program;
+
 use DB;
 
 class HomeController extends Controller
@@ -75,8 +81,9 @@ class HomeController extends Controller
         AND campuses.business_school_id=business_schools.id
         AND users.id = slips.created_by
         ');
-
-        //dd($registrations);
+//        dd($registrations);
+        @$count_slips = count(@$registrations);
+//        dd($count_slips);
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
         //$eligibility_registrations = Slip::where(['status' => 'paid', 'regStatus' =>'Eligibility'])->get();
 
@@ -220,11 +227,18 @@ AND slips.status="approved" AND slips.regStatus="SAR" ', array());
         $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();
 
 //        dd($travel_plan->pr_travel_plan);
+        $campus_count = Campus::where(['status' => 'active'])->get()->count('location');
+        $dept_count = Department::where(['status' => 'active'])->get()->count('name');
+        $bs_count = BusinessSchool::where(['status' => 'active'])->get()->count('name');
+        $programs = Program::where(['status' => 'active'])->get()->count('name');
+        $fm_count = FacultyGender::where(['status' => 'active'])->get()->sum('male');
+        $fem_count = FacultyGender::where(['status' => 'active'])->get()->sum('female');
 
 
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
-            'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks'));
+            'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks',
+            'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips'));
     }
 
     /**
