@@ -363,6 +363,7 @@ class SlipController extends Controller
             }
         }
 
+
         try {
             //dd($request->all());
             $updateSlipStatus = Slip::where('id', $request->id)->update([
