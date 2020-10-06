@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
     });
 
 Route::get('/peer', function() {
-    return view('registration.mail.PeerReviewVisit');
+    return view('registration.mail.institutional_feedback_email');
 });
 
     // Registration Routes...
