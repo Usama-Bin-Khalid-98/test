@@ -415,6 +415,20 @@ class SlipController extends Controller
         }
     }
 
+
+    public function updateInvoiceStatus(Request $request)
+    {
+//        dd($request->all());
+        try {
+
+            Slip::find($request->id)->update(['regStatus' => $request->regStatus]);
+            return response()->json(['success' => 'Invoice Slip status updated successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

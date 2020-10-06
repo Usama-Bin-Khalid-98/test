@@ -40,6 +40,8 @@ class ScheduleAccreditationAwardController extends Controller
                 ->orWhere('s.regStatus', 'AACReview')
                 ->orWhere('s.regStatus', 'AACSharedBSFocalPerson')
                 ->orWhere('s.regStatus', 'NeedChangesAAC')
+                ->orWhere('s.regStatus', 'CouncilMeeting')
+                ->orWhere('s.regStatus', 'ScheduledCouncilMeeting')
                 ->orWhere('s.regStatus', 'AACFinal')
                 ->where('s.status', 'approved')
 //                ->where('mm.user_id', Auth::id())
