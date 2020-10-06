@@ -1046,7 +1046,7 @@
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
                               <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES')
-                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}">Eligibility Screening Calendar</a>
+                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"><i data-toggle="tooltip" title="Eligibility Screening Calendar" class="fa fa-calendar"></i></a>
                                   @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
 
                               </td>
@@ -1118,9 +1118,9 @@
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
                               <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' )
-                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Eligibility Screening Calendar</a>
+                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> <i data-toggle="tooltip" title="Eligibility Screening Calendar" class="fa fa-calendar"></i></a>
                                   @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
-                                  <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" >Eligibility Report</a>
+                                   | <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" >  <i data-toggle="tooltip" title="Eligibility Screening Report" class="fa fa-files-o"></i></a>
                               </td>
                           </tr>
                       @endforeach
@@ -1493,10 +1493,10 @@
 {{--<script src="dist/js/pages/dashboard.js"></script>--}}
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
+{{--<script--}}
+{{--  src="https://code.jquery.com/jquery-3.5.1.js"--}}
+{{--  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="--}}
+{{--  crossorigin="anonymous"></script>--}}
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 <script>

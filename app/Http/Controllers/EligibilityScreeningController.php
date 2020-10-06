@@ -9,6 +9,7 @@ use App\Models\EligibilityScreening\ESReviewer;
 use App\Models\EligibilityScreening\ReviewerAvailability;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -278,7 +279,22 @@ class EligibilityScreeningController extends Controller
 
 
                     ///////////////////// Email to Business School //////////////////////
-                    ///
+                    $data= [];
+                    $mailInfo = [
+                        'to' => 'nbeac@gmail.com',
+                        'to_name' => 'Bilal Ahmad',
+                        'school' => "NBEAC Focal Person",
+                        'from' => "peer@gmail.com",
+                        'from_name' => 'PeerReviewer',
+                    ];
+                    Mail::send('eligibility_screening.email.eligibility_report', $data, function($message) use ($mailInfo) {
+                        //dd($user);
+                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                            ->subject('Eligibility Screening Committee comments - '. $mailInfo['school']);
+                        $message->from($mailInfo['from'],$mailInfo['from_name']);
+                    });
+
+                    return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
                     ///////////////////// End Email to Business School //////////////////////
 
 

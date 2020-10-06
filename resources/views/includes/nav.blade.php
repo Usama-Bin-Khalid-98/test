@@ -903,6 +903,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
 
           @hasrole('PeerReviewer')
+            <li class="{{(request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="fa fa-files-o text-yellow"></i>Eligibility Screening Report</a></li>
             <li class="{{(request()->is('PeerReviewerReport')) ? 'active' : '' }}"><a href="{{url('PeerReviewerReport')}}"><i class="fa fa-list text-yellow"></i>Peer Reviewer Registrations Report</a></li>
           @endhasrole
 
