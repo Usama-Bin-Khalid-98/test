@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Mentoring\ScheduleMentorMeeting;
+use App\Models\AccreditationAC\AccreditationReviewer;
 use App\Models\Common\Campus;
 use App\Models\Common\Department;
 use App\Models\Common\Designation;
@@ -86,6 +87,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function schedule_peer_review()
     {
         return $this->hasOne(SchedulePeerReview::class);
+    }
+
+    public function accreditation_reviewer()
+    {
+        return $this->hasOne(AccreditationReviewer::class);
     }
 }
 

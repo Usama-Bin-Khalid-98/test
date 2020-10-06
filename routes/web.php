@@ -192,11 +192,11 @@ use Illuminate\Support\Facades\Route;
             Route::resource('documentary-evidence','DocumentaryEvidenceController');
 
             Route::resource('eligibility-screening-report','Eligibility\SchoolEligibilityReportController');
-//<<<<<<< Updated upstream
             Route::resource('instituteFeedback', 'InstituteFeedbackController');
-//=======
+            Route::get('peer-review-report', 'PeerReviewReportController@school_prr');
+            Route::get('peer-review-details/{id}', 'PeerReviewReportController@peer_review_details');
+            Route::post('bs_feedback_PRR', 'StrategicManagement\SlipController@bs_feedback_prr');
 
-//>>>>>>> Stashed changes
 
         });
 
@@ -258,10 +258,24 @@ use Illuminate\Support\Facades\Route;
             Route::post('changePeerReviewConfirmStatus', 'SchedulePeerReviewController@changeConfirmStatus');
             Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
             Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
+        });
+
+        Route::group(['middleware' => ['role:ESScheduler|NbeacFocalPerson|AccreditationAwardCommittee']], function () {
+            Route::resource('accreditationACScheduler', 'ScheduleAccreditationAwardController');
+            Route::get('aac-showOnCalendar/{id?}', 'ScheduleAccreditationAwardController@accreditation_award_committee');
+            Route::post('changeAccreditationAwardConfirmStatus', 'ScheduleAccreditationAwardController@changeConfirmStatus');
+            Route::post('ACAvailability', 'ScheduleAccreditationAwardController@ACAvailability');
+            Route::get('AACommittee', 'ScheduleAccreditationAwardController@index');
+        });
+
+        Route::group(['middleware' => ['role:AccreditationAwardCommittee']], function () {
+            Route::get('AAwardCommitteeDetails/{id}', 'AccreditationMeetingController@show');
+            Route::put('submitAACReport', 'AccreditationMeetingController@update');
+            Route::put('forwardToCM/{id}', 'StrategicManagement\SlipController@updateInvoiceStatus');
 
 
         });
-//
+
         Route::group(['middleware' => ['role:Mentor|BusinessSchool']], function () {
             Route::post('mentorsAvailability', 'ScheduleMentorMeetingController@mentorsAvailability');
 
@@ -294,9 +308,7 @@ use Illuminate\Support\Facades\Route;
             Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
             Route::get('getInvoice/{id}', 'StrategicManagement\SlipController@edit');
 
-
         });
-
         Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
             Route::get('instituteFeedback', 'InstituteFeedbackController@index');
             Route::get('instituteFeedback/{id}', 'InstituteFeedbackController@edit');

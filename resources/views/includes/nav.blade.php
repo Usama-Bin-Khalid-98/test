@@ -92,10 +92,8 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
 $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
-
-$RegDesk = get('App\Models\Common\Slip' ,['regStatus'=>'Review']);
-$SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
-
+$RegDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Review']);
+$SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
 
 @endphp
 
@@ -831,12 +829,13 @@ $SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
           @endif
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
-          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>
+{{--          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>--}}
+          <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
 
           @endhasrole
           @hasrole('NBEACAdmin')
 
-          <li class=" treeview {{request()->is('registrations')?'active':''}}">
+          <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}">
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations / Invoices</span>
                   <span class="pull-right-container">
@@ -864,9 +863,12 @@ $SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}">
               <a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review
-                  <span class="pull-right-container">
-                    <i class="badge bg-maroon pull-right">{{count(@$RegDesk)}}</i>
-                  </span>
+                  @if(@$RegDesk != 0)
+                      <span class="pull-right-container">
+                        <i class="badge bg-maroon pull-right">{{@$RegDesk}}</i>
+                      </span>
+                  @endif
+
               </a>
           </li>
           @endhasrole
@@ -880,9 +882,13 @@ $SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
           @hasrole('NBEACAdmin|Mentor')
           <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}">
               <a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review
-                  <span class="pull-right-container">
-                    <i class="badge bg-maroon pull-right">{{count(@$SarDesk)}}</i>
-                  </span></a></li>
+                  @if($SarDesk != 0)
+                      <span class="pull-right-container">
+                        <i class="badge bg-maroon pull-right">{{@$SarDesk}}</i>
+                      </span>
+                  @endif
+              </a>
+          </li>
           @endhasrole
 {{--          @endif--}}
           @hasrole('NBEACAdmin')
@@ -913,11 +919,12 @@ $SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
           @endif
           @hasanyrole('ESScheduler|NbeacFocalPerson')
           <li  class="{{ (request()->is('peerReviewScheduler')) ? 'active' : '' }}"><a href="{{url('peerReviewScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Visit Scheduler</a></li>
+          <li  class="{{ (request()->is('accreditationACScheduler')) ? 'active' : '' }}"><a href="{{url('accreditationACScheduler')}}"><i class="fa fa-calendar text-green"></i>Accreditation AC Scheduler</a></li>
           @endhasrole
 
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')
-          <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-calendar text-yellow"></i>Peer Review Report</a></li>
-          <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-yellow"></i>Notifications</a></li>
+          <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file text-yellow"></i>Peer Review Report</a></li>
+          <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-red"></i>Notifications</a></li>
           @endhasrole
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')
           <li  class="{{ (request()->is('instituteFeedback')) ? 'active' : '' }}"><a href="{{url('instituteFeedback')}}"><i class="fa fa-backward text-yellow"></i>Institutional Feedback Form</a></li>

@@ -101,6 +101,64 @@
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>1</h3>
+
+                        <p>Registration Invoices</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-maroon">
+                    <div class="inner">
+                        <h3>1</h3>
+
+                        <p>Users</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-light-blue-active">
+                    <div class="inner">
+                        <h3>1</h3>
+                        <p>Registrations Desk Review</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-fuchsia">
+                    <div class="inner">
+                        <h3>1</h3>
+
+                        <p>SAR Desk Review</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
                 <div class="small-box" style="background-color: #00c0ef;color:#fff;">
                     <div class="inner">
                         <h3>1</h3>
@@ -681,45 +739,37 @@
       <!-- Info boxes -->
       <section class="content">
           <div class="row">
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                  <a href="{{url('strategic/invoices')}}">
                   <div class="info-box">
-                      <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+                       <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
 
                       <div class="info-box-content">
                           <span class="info-box-text">Invoices</span>
-                          <span class="info-box-number">2<small></small></span>
+                          <span class="info-box-number">{{@$count_slips}}<small></small></span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
+                  </a>
                   <!-- /.info-box -->
               </div>
 
-              <!-- <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                  <a href="{{url('mentoring-invoices')}}">
                   <div class="info-box">
                       <span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
 
                       <div class="info-box-content">
                           <span class="info-box-text">Mentoring Invoices</span>
-                          <span class="info-box-number">5<small></small></span>
-                      </div>
-                      <!- /.info-box-content
-                  </div>
-                 /.info-box
-              </div> -->
-              <!-- /.col -->
-              <div class="col-md-2 col-sm-6 col-xs-12">
-                  <div class="info-box">
-                      <span class="info-box-icon bg-yellow"><i class="fa fa-home"></i></span>
-
-                      <div class="info-box-content">
-                          <span class="info-box-text">Business Schools</span>
-                          <span class="info-box-number">{{@$bs_count}}</span>
+                          <span class="info-box-number">{{@$mentoring_slip_count}}<small></small></span>
                       </div>
                       <!-- /.info-box-content -->
                   </div>
+                  </a>
                   <!-- /.info-box -->
               </div>
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <!-- /.col -->
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-maroon"><i class="fa fa-home"></i></span>
 
@@ -736,7 +786,7 @@
               <!-- fix for small devices only -->
               <div class="clearfix visible-sm-block"></div>
 
-              <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="info-box">
                       <span class="info-box-icon bg-green"><i class="ion ion-ios-home-outline"></i></span>
 
@@ -748,33 +798,32 @@
                   </div>
                   <!-- /.info-box -->
               </div>
-
-              <div class="col-md-2 col-sm-6 col-xs-12">
-                  <div class="info-box">
-                      <span class="info-box-icon bg-green"><i class="fa fa-home"></i></span>
-
-                      <div class="info-box-content">
-                          <span class="info-box-text">Programs</span>
-                          <span class="info-box-number">{{@$programs}}<small></small></span>
-                      </div>
-                      <!-- /.info-box-content -->
-                  </div>
-                  <!-- /.info-box -->
-              </div>
               <!-- /.col -->
+{{--              <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                  <div class="info-box">--}}
+{{--                      <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people"></i></span>--}}
 
-              <div class="col-md-2 col-sm-6 col-xs-12">
-                  <div class="info-box">
-                      <span class="info-box-icon bg-aqua-gradient"><i class="ion ion-ios-people"></i></span>
+{{--                      <div class="info-box-content">--}}
+{{--                          <span class="info-box-text">Business Schools</span>--}}
+{{--                          <span class="info-box-number">{{@$bs_count}}</span>--}}
+{{--                      </div>--}}
+{{--                      <!-- /.info-box-content -->--}}
+{{--                  </div>--}}
+{{--                  <!-- /.info-box -->--}}
+{{--              </div>--}}
 
-                      <div class="info-box-content">
-                          <span class="info-box-text">Faculty</span>
-                          <span class="info-box-number">{{@$fm_count + @$fem_count}}</span>
-                      </div>
-                      <!-- /.info-box-content -->
-                  </div>
-                  <!-- /.info-box -->
-              </div>
+{{--              <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                  <div class="info-box">--}}
+{{--                      <span class="info-box-icon bg-aqua-gradient"><i class="ion ion-ios-people"></i></span>--}}
+
+{{--                      <div class="info-box-content">--}}
+{{--                          <span class="info-box-text">Faculty male/Female</span>--}}
+{{--                          <span class="info-box-number">{{@$fm_count+$fem_count}}</span>--}}
+{{--                      </div>--}}
+{{--                      <!-- /.info-box-content -->--}}
+{{--                  </div>--}}
+{{--                  <!-- /.info-box -->--}}
+{{--              </div>--}}
               <!-- /.col -->
           </div>
           <!-- /.row -->

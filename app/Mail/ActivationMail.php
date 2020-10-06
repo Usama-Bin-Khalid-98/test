@@ -30,9 +30,9 @@ class ActivationMail extends Mailable
      */
     public function build()
     {
-        return $this->from('mail@example.com','NBEAC Admin')
+        return $this->from('nbeac@nbeac.pk','NBEAC Admin')
             ->subject('Account Registration Request mail')
-            ->view('registration.mail.activation_mail')
+            ->view('registration.mail.activation_temp')
             ->with('message', 'message here');
 
     }

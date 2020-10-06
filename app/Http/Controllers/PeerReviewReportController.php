@@ -7,6 +7,7 @@ use App\Models\PeerReview\PeerReviewReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -87,7 +88,49 @@ class PeerReviewReportController extends Controller
                     return response()->json(['success' => 'Report uploaded successfully.'], 200);
                 }
             }else{
-                return response()->json(['message' => 'Report already exists.'], 422);
+//                if($request->prr_id) {
+                    $fileName = '';
+                    $path = '';
+                    $path = '';
+                    if ($request->file('file')) {
+                        $fileName = 'peer-review' . "-report-" . time() . '.' . $request->file->getClientOriginalExtension();
+                        $path = 'uploads/peer_review/';
+                        $diskName = env('DISK');
+                        $disk = Storage::disk($diskName);
+                        $request->file('file')->move($path, $fileName);
+                    }
+
+                    $insert = PeerReviewReport::find($request->prr_id)->update([
+//                        'slip_id' => $request->slip_id,
+                        'comments' => $request->comments,
+//                        'status' => 'active',
+                        'report_date' => $request->report_date,
+                        'file' => $path . $fileName,
+                        'updated_by' => Auth::id()
+                    ]);
+
+                    /////////////////////////// Send Email To ///////////////////
+                    $mailInfo = [
+                        'to' => 'school@gmail.com',
+                        'to_name' => 'Habib Ahmad',
+                        'school' => "School Name Here",
+                        'from' => "nbeac@gmail.com",
+                        'from_name' => 'NBEAC focal Person Name',
+                    ];
+
+                    $data= [];
+
+                    Mail::send('email_templates.accreditation_update_report', $data, function($message) use ($mailInfo) {
+                        //dd($user);
+                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                            ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                        $message->from($mailInfo['from'],$mailInfo['from_name']);
+                    });
+                return response()->json(['success' => 'Report updated successfully.'], 200);
+//                }else{
+//                    return response()->json(['message' => 'Failed to update the Peer Review Report.'], 422);
+
+//                }
 
             }
 
@@ -155,10 +198,58 @@ class PeerReviewReportController extends Controller
             ->select('s.*', 'c.location as campus','c.id as campus_id',
                 'dg.name as designation', 'd.name as department',
                 'u.name as user', 'u.email as email', 'u.contact_no',
-                'bs.name as school', 'bs.id as business_school_id')
+                'bs.name as school', 'bs.id as business_school_id',
+                'prr.report_date','prr.file', 'prr.id as prr_id', 'prr.comments as prr_comments')
             ->where('s.id', $id)
             ->get();
         return view('peer_review_report.review_report_details', compact('registrations', 'peerReviewReport'));
+    }
+
+    public function school_prr()
+    {
+        $user = Auth::user();
+//        if($id) {
+            $registrations = DB::table('slips as s')
+                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+                ->join('departments as d', 'd.id', '=', 's.department_id')
+                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+                ->join('users as u', 'u.id', '=', 's.created_by')
+                ->join('designations as dg', 'dg.id', '=', 'u.designation_id')
+                ->join('peer_review_reports as prr', 'prr.slip_id', '=', 's.id')
+                ->select('s.*', 'c.location as campus', 'c.id as campus_id',
+                    'dg.name as designation', 'd.name as department',
+                    'u.name as user', 'u.email as email', 'u.contact_no',
+                    'bs.name as school', 'bs.id as business_school_id',
+                    'prr.report_date', 'prr.file', 'prr.id as prr_id', 'prr.comments as prr_comments')
+//                ->where('s.id', $id)
+                ->where('s.business_school_id', $user->campus_id)
+                ->orWhere('s.department_id', $user->department_id)
+                ->get();
+//        }
+        return view('peer_review_report.bspr_report', compact('registrations'));
+    }
+
+    public function peer_review_details($id = null)
+    {
+        $user = Auth::user();
+        $registrations = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->join('designations as dg', 'dg.id', '=', 'u.designation_id')
+            ->select('s.*', 'c.location as campus','c.id as campus_id',
+                'dg.name as designation', 'd.name as department',
+                'u.name as user', 'u.email as email', 'u.contact_no',
+                'bs.name as school', 'bs.id as business_school_id')
+            ->where('s.id', $id)
+            ->orWhere('s.business_school_id', $user->campus_id)
+            ->orWhere('s.department_id', $user->department_id)
+            ->get();
+//        dd($registrations);
+        $peerReview = PeerReviewReport::where(['slip_id'=> $id, 'status' => 'active'])->get()->first();
+
+        return view('peer_review_report.pr_report_details', compact('registrations', 'peerReview'));
     }
 
     /**

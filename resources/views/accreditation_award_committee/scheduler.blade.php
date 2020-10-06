@@ -38,41 +38,43 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                @hasrole('PeerReviewer|ESScheduler')
-                @foreach(@$userDates as $index => $reviewerDates)
-                <div class="col-md-3">
-                        <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">PeerReviewer</h3>
-                            <h3  class="box-title">Name: {{@$reviewerDates['user_name']}}</h3>
-                        </div>
-                        <div class="box-body">
-                            <!-- the events -->
-                            <div id='external-events'>
-
-                                        <span>Available on.</span>
-                                        @foreach($reviewerDates['dates'] as $dates)
-                                    <div class="external-event @if($maxSelectedDate==$dates) bg-green @else bg-red @endif fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                                        <p>{{@$dates}}</p>
-                                    </div>
-                                        @endforeach
-
-{{--                                <div class="checkbox">--}}
-{{--                                    <label for="drop-remove">--}}
-{{--                                        <input type="checkbox" id="drop-remove">--}}
-{{--                                        remove after drop--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
+                @hasrole('ESScheduler|AccreditationAwardCommittee|NbeacFocalPerson|NBEACAdmin')
+                @if(@$userDates)
+                    @foreach(@$userDates as $index => $reviewerDates)
+                    <div class="col-md-3">
+                            <div class="box box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">@if($reviewerDates['user_type'] == 'BusinessSchool') Business School Admin @else Member @endif</h3>
+                                <h3  class="box-title">Name: {{@$reviewerDates['user_name']}} ({{@$reviewerDates['user_type']}})</h3>
                             </div>
+                            <div class="box-body">
+                                <!-- the events -->
+                                <div id='external-events'>
+
+                                            <span>Available on.</span>
+                                            @foreach($reviewerDates['dates'] as $dates)
+                                        <div class="external-event  @if($maxSelectedDate==$dates) bg-green @else bg-red @endif fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                                            <p>{{@$dates}}</p>
+                                        </div>
+                                            @endforeach
+
+    {{--                                <div class="checkbox">--}}
+    {{--                                    <label for="drop-remove">--}}
+    {{--                                        <input type="checkbox" id="drop-remove">--}}
+    {{--                                        remove after drop--}}
+    {{--                                    </label>--}}
+    {{--                                </div>--}}
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
+                @endif
                 <div class="col-md-3">
                     <div class="box box-solid">
                     <div class="box-header with-border">
-                        <h5>Peer Reviewers Most Selected/Availability Date.</h5>
+                        <h5>Committee Members Most Selected/Availability Date.</h5>
                     </div>
                     <div class="box-body">
                         <!-- the events -->
@@ -80,10 +82,15 @@
                             <div class="external-event bg-green fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
                                 @hasrole('ESScheduler')
                                     <input type="checkbox" value="{{@$maxSelectedDate}}"
-                                          @foreach($reviewers as $checkDate)
-                                          @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) checked @endif @endforeach
-                                    id="confirmDate" data-id="{{@request()->route('id')}}">@endhasrole Date: {{@$maxSelectedDate}}
-                                : @php $confirm = 'Not Confirmed yet'; @endphp @foreach($reviewers as $checkDate) @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) @php $confirm = 'confirmed'; @endphp @break @endif @endforeach @php echo $confirm @endphp
+                                       @foreach($MentorsDates as $checkDate)
+                                           @foreach($checkDate as $availableDate)
+                                        @if($availableDate->availability_dates == $maxSelectedDate && $availableDate->is_confirm =='yes' ) checked @endif
+                                       @endforeach
+                                       @endforeach
+                                    id="confirmDate" data-id="{{@request()->route('id')}}"
+                                    >
+                                @endhasrole Date: {{@$maxSelectedDate}}
+                                : @php $confirm = 'Not Confirmed yet'; @endphp @foreach($MentorsDates as $checkDate) @foreach($checkDate as $availableDate) @if($availableDate->availability_dates == $maxSelectedDate && $availableDate->is_confirm =='yes' ) @php $confirm = 'confirmed'; @endphp @break @endif @endforeach @endforeach @php echo $confirm @endphp
                             </div>
 
 {{--                            @foreach(@$availability as $available)--}}
@@ -103,7 +110,7 @@
                 @endhasrole
 
                 <!-- /.col -->
-                <div class="col-md-12">
+               <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-body no-padding">
                             <!-- THE CALENDAR -->
@@ -123,11 +130,11 @@
 
     <div class="modal fade" id="add-modal">
         <div class="modal-dialog">
-            <div class="modal-content" style="width: 658px;">
+            <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Schedule Meeting. </h4>
+                        <h4 class="modal-title">Schedule Accreditation Award Meeting. </h4>
                 </div>
                 <form role="form" id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -143,17 +150,17 @@
                             <!-- /.input group -->
                         </div>
                         <div class="form-group">
-                            <label>Reviewers:</label>
-                            <select class="form-control select2" name="reviewers" id="reviewers" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                                @foreach(@$reviewers_all as $reviewer)
-                                    <option value="{{@$reviewer->id}}">{{@$reviewer->name}}</option>
+                            <label>NBEAC Focal Person:</label>
+                            <select class="form-control select2" name="user_id" id="user_id" multiple="multiple" data-placeholder="Select a registration" style="width: 100%;">
+                                @foreach(@$NbeacFocalPerson as $person)
+                                    <option value="{{@$person->id}}">{{@$person->name}}</option>
                                 @endforeach
                             </select>
                             <!-- /.input group -->
                         </div>
 
                         <div class="form-group">
-                            <label>Select dates on which you are available.</label>
+                            <label>Select available dates.</label>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
@@ -167,7 +174,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="type">{{ __('Event Color') }} : </label>
-                                <input type="text" name="color" id="color" autocomplete="off" class="form-control my-colorpicker1">
+                                <input type="text" name="color" id="color" class="form-control my-colorpicker1">
                             </div>
                         </div>
 
@@ -181,7 +188,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" name="schedule" id="notifyAll" class="btn btn-info">Schedule ES Committee</button>
+                        <button type="button" name="schedule" id="schedule" class="btn btn-info">Schedule Accreditation Award Meeting</button>
                     </div>
                 </form>
             </div>
@@ -190,24 +197,24 @@
         <!-- /.modal-dialog -->
     </div>
 
-    <div class="modal fade" id="peerReviewer-modal">
+    <div class="modal fade" id="AccreditationAward-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Set Peer Reviewer Meeting availability. </h4>
+                        <h4 class="modal-title">Set Accreditation Award Committee availability Date. </h4>
                 </div>
                 <form role="form" id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Date and time range:</label>
+                            <label>Select dates on which you are available.</label>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
                                 </div>
                                 <input type="text" class="form-control pull-right" id="multiDatesPicker">
-                                <input type="hidden" class="form-control pull-right" id="eligibility_screenings_id">
+                                <input type="hidden" class="form-control pull-right" id="meeting_id">
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -225,196 +232,6 @@
         <!-- /.modal-dialog -->
     </div>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                <p>New phone +1(800)555-1234</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                <p>nora@example.com</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                <p>Execution time 5 seconds</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="label label-danger pull-right">70%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Update Resume
-                                <span class="label label-success pull-right">95%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Laravel Integration
-                                <span class="label label-warning pull-right">50%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Back End Framework
-                                <span class="label label-primary pull-right">68%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Other sets of options are available
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Allow the user to show his name in blog posts
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Show me as online
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Turn off notifications
-                            <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Delete chat history
-                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
-    </aside>
-    <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -439,9 +256,10 @@
 @endif
 <script>
     $('.my-colorpicker1').colorpicker()
+
     var myCalendar;
 </script>
-@hasrole('PeerReviewer')
+@hasrole('NbeacFocalPerson|NBEACAdmin|AccreditationAwardCommittee')
 <script>
     $.ajaxSetup({
         headers: {
@@ -488,9 +306,9 @@
                 })
             },
             eventClick: function(info) {
-                $('#peerReviewer-modal').modal('show');
+                $('#AccreditationAward-modal').modal('show');
                 console.log('Event: complete details' + info.event.id);
-                $('#eligibility_screenings_id').val(info.event.id);
+                $('#meeting_id').val(info.event.id);
                 console.log('Event: complete campus_id' + info.event.campus_id);
                 console.log('Event: complete title' + info.event.title);
                 console.log('Event: complete start' + info.event.start);
@@ -512,7 +330,7 @@
         });
 
         $.ajax({
-            url:"{{url('getReviewerAllEvents')}}",
+            url:"{{url('accreditationACScheduler')}}/"+{{request()->route('id')}},
             type:"get",
             data: {events:'events'},
             beforeSend: function(){
@@ -527,17 +345,16 @@
                 let eventsList = [];
 
                 $.each(data, function (index, val) {
-                    console.log('index value in loop...', val.eligibility_screening);
-                    //return
+                    console.log('index...', index);
                     eventsList[index] ={}
-                    eventsList[index]['id'] = val.eligibility_screening.id
-                    eventsList[index]['campus_id'] = val.eligibility_screening.campus_id
-                    eventsList[index]['department_id'] = val.eligibility_screening.department_id
-                    eventsList[index]['title'] = val.eligibility_screening.title
-                    eventsList[index]['start'] = new Date(val.eligibility_screening.start)
-                    eventsList[index]['end'] = new Date(val.eligibility_screening.end)
-                    eventsList[index]['backgroundColor'] = val.eligibility_screening.backgroundColor
-                    eventsList[index]['borderColor'] = val.eligibility_screening.borderColor
+                    eventsList[index]['id'] = val.id
+                    eventsList[index]['campus_id'] = val.campus_id
+                    eventsList[index]['department_id'] = val.department_id
+                    eventsList[index]['title'] = val.title
+                    eventsList[index]['start'] = new Date(val.start)
+                    eventsList[index]['end'] = new Date(val.end)
+                    eventsList[index]['backgroundColor'] = val.backgroundColor
+                    eventsList[index]['borderColor'] = val.borderColor
                     const ev = myCalendar.addEvent(eventsList[index]);
                     //ev.setDates(new Date(val.start), new Date(val.end), false);
                     console.log('EV::::', ev);
@@ -559,12 +376,12 @@
     $('#add_availability').on('click', function () {
 
         let dates = $('#multiDatesPicker').val();
-        let eligibility_screenings_id = $('#eligibility_screenings_id').val();
+        let meeting_id = $('#meeting_id').val();
         console.log('working on datepicker.....', dates);
         $.ajax({
-            url:"{{url('PRAvailability')}}",
+            url:"{{url('ACAvailability')}}",
             type:"POST",
-            data: {dates:dates, eligibility_screenings_id:eligibility_screenings_id},
+            data: {dates:dates, meeting_id:meeting_id},
             beforeSend: function(){
                 Notiflix.Loading.Pulse('Processing...');
             },
@@ -574,8 +391,8 @@
                 let data = JSON.parse(JSON.stringify(response));
                 console.log('response data here...', data);
                 //return false;
+                $('#AccreditationAward-modal').modal('hide');
                 location.reload();
-                $('#peerReviewer-modal').modal('hide');
 
             },
             error:function(response, exception){
@@ -591,10 +408,44 @@
 
 </script>
 @endhasrole
+
 @hasrole('ESScheduler')
 <!-- Page specific script -->
 
 <script>
+    $('#add_availability').on('click', function () {
+
+        let dates = $('#multiDatesPicker').val();
+        let meeting_id = $('#meeting_id').val();
+        console.log('working on datepicker.....', dates);
+        $.ajax({
+            url:"{{url('businessSchoolAvailability')}}",
+            type:"POST",
+            data: {dates:dates, meeting_id:meeting_id},
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                let data = JSON.parse(JSON.stringify(response));
+                console.log('response data here...', data);
+                //return false;
+                $('#AccreditationAward-modal').modal('hide');
+                location.reload();
+
+            },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
+
+            }
+        });
+
+    })
+
     //Date range picker with time picker
     $('#esScheduleDateTime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' }})
     $(function () {
@@ -623,31 +474,48 @@
                     "endDate": info.endStr
                 })
             },
+        @hasrole('BusinessSchool') eventClick: function(info) {
+                 $('#AccreditationAward-modal').modal('show');
+                 console.log('Event: complete details' + info.event.id);
+                 $('#meeting_id').val(info.event.id);
+                 console.log('Event: complete campus_id' + info.event.campus_id);
+                 console.log('Event: complete title' + info.event.title);
+                 console.log('Event: complete start' + info.event.start);
+                 // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                 // alert('View: ' + info.view.type);
+
+                 // change the border color just for fun
+                 info.el.style.borderColor = 'red';
+             },
+             editable: true,@endhasrole
+             droppable: true, // this allows things to be dropped onto the calendar
              eventTimeFormat: { // like '14:30:00'
                 hour: '2-digit',
                 minute: '2-digit',
                 meridiem: true
-        },
+             },
 
-         customButtons: {
-            addEventButton: {
-                text: 'Add Eligibility Scheduler...',
-                click: function() {
-                    $('#add-modal').modal('show')
+             customButtons: {
+                addEventButton: {
+                    text: 'add Accreditation Award Committee...',
+                    click: function() {
+                        $('#add-modal').modal('show');
+                       // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+                       // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
 
-                    // if (!isNaN(date.valueOf())) { // valid?
-                    //     calendar.addEvent({
-                    //         title: 'dynamic event',
-                    //         start: date,
-                    //         allDay: true
-                    //     });
-                    //     alert('Great. Now, update your database...');
-                    // } else {
-                    //     alert('Invalid date.');
-                    // }
+                        // if (!isNaN(date.valueOf())) { // valid?
+                        //     calendar.addEvent({
+                        //         title: 'dynamic event',
+                        //         start: date,
+                        //         allDay: true
+                        //     });
+                        //     alert('Great. Now, update your database...');
+                        // } else {
+                        //     alert('Invalid date.');
+                        // }
+                    }
                 }
             }
-        }
         });
 
         myCalendar.render();
@@ -683,7 +551,7 @@
          -----------------------------------------------------------------*/
 
         $.ajax({
-            url:"{{url('getAllEvents')}}",
+            url:"{{url('accreditationACScheduler')}}/"+{{request()->route('id')}},
             type:"get",
             data: {events:'events'},
             beforeSend: function(){
@@ -731,7 +599,7 @@
             let dateVal = $(this).val();
             //console.log('checked....', confirmCheck);
             $.ajax({
-                url:"{{url('changeConfirmStatus')}}",
+                url:"{{url('changeAccreditationAwardConfirmStatus')}}",
                 type:"post",
                 data: {confirm:confirm,slip_id:slip_id,dateVal:dateVal},
                 beforeSend: function(){
@@ -756,63 +624,28 @@
                 }
             });
         });
-        /* ADDING EVENTS */
-        // var currColor = '#3c8dbc' //Red by default
-        // //Color chooser button
-        // var colorChooser = $('#color-chooser-btn')
-        // $('#color-chooser > li > a').click(function (e) {
-        //     e.preventDefault()
-        //     //Save color
-        //     currColor = $(this).css('color')
-        //     //Add color effect to button
-        //     $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor })
-        // })
-        // $('#add-new-event').click(function (e) {
-        //     e.preventDefault()
-        //     //Get value and make sure it is not null
-        //     var val = $('#new-event').val()
-        //     if (val.length == 0) {
-        //         return
-        //     }
-        //
-        //     //Create events
-        //     var event = $('<div />')
-        //     event.css({
-        //         'background-color': currColor,
-        //         'border-color'    : currColor,
-        //         'color'           : '#fff'
-        //     }).addClass('external-event')
-        //     event.html(val)
-        //     $('#external-events').prepend(event)
-        //
-        //     //Add draggable funtionality
-        //     init_events(event)
-        //
-        //     //Remove event from text input
-        //     $('#new-event').val('')
-        // })
     });
 
-    $('#notifyAll').on('click', function () {
+    $('#schedule').on('click', function () {
         let registrations = $('#registrations').val();
         let title = $('#registrations option:selected').text();
-        let reviewers = $('#reviewers').val();
+        let user_id = $('#user_id').val();
         let esScheduleDateTime = $('#esScheduleDateTime').val();
         let color = $('#color').val();
 
         !registrations?addClass('registrations'):removeClass('registrations');
-        !reviewers?addClass('reviewers'):removeClass('reviewers');
+        !user_id?addClass('user_id'):removeClass('user_id');
         !esScheduleDateTime?addClass('esScheduleDateTime'):removeClass('esScheduleDateTime');
         !color?addClass('color'):removeClass('color');
-        if(!registrations || !reviewers || !esScheduleDateTime)
+        if(!registrations || !user_id || !esScheduleDateTime)
         {
             Notiflix.notify.error('Fill all the required Fields');
             return false;
         }
         $.ajax({
-            url:"{{url('esNotifyAll')}}",
+            url:"{{url('accreditationACScheduler')}}",
             type:"POST",
-            data: {registrations:registrations, reviewers:reviewers, esScheduleDateTime:esScheduleDateTime, color:color, title:title},
+            data: {registrations:registrations, user_id:user_id, esScheduleDateTime:esScheduleDateTime, color:color, title:title},
             beforeSend: function(){
                 Notiflix.Loading.Pulse('Processing...');
             },
@@ -844,7 +677,7 @@
                 });
                 myCalendar.render();
                 $('#add-modal').modal('hide');
-                location.reload();
+                //location.reload();
                 console.log('response here', response);
             },
             error:function(response, exception){
