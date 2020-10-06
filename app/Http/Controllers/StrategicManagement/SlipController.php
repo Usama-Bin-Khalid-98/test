@@ -376,6 +376,45 @@ class SlipController extends Controller
 
     }
 
+    public function bs_feedback_prr(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $updateSlip = Slip::find($request->slip_id)->update(
+                [
+                    'bs_feedback_prr' => $request->comments
+                ]
+            );
+            if ($updateSlip)
+            {
+                $data= [];
+                $mailInfo = [
+                    'to' => 'nbeac@gmail.com',
+                    'to_name' => 'Bilal Ahmad',
+                    'school' => "School Name Here",
+                    'from' => "city@gmail.com",
+                    'from_name' => 'Business School focal Person Name',
+                ];
+                Mail::send('email_templates.bs_feedback_prr', $data, function($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                        ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                    $message->from($mailInfo['from'],$mailInfo['from_name']);
+                });
+
+                return response()->json(['success' => 'Feedback updated successfully.'], 200);
+            }else{
+                return response()->json(['message' => 'Failed to update the feedback report.', 422]);
+
+            }
+        }
+        catch (\Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage(), 422]);
+
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

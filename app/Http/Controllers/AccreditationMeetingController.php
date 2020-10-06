@@ -69,12 +69,12 @@ class AccreditationMeetingController extends Controller
             ->orWhere('s.regStatus', 'NeedChangesAAC')
             ->orWhere('s.regStatus', 'AACFinal')
             ->where('s.status', 'approved')
-                ->where('s.id', $accreditationMeeting)
+            ->where('s.id', $accreditationMeeting)
             ->get();
 
         $peerReview = PeerReviewReport::where(['slip_id'=> $accreditationMeeting, 'status' => 'active'])->get()->first();
 
-//        dd($peerReviewer);
+//        dd($registration);
 
 //        dd($registration);
         return view('accreditation_award_committee.details', compact('registration','peerReview'));

@@ -122,6 +122,36 @@
                     <!-- /.box -->
 
                 </section>
+                <section class="col-lg-6 connectedSortable">
+                    <!-- TO DO List -->
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Business School Comments on Peer Review Report. </h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-file-pdf-o"></i></button>
+                                </div>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="comments"> Comments</label>
+                                        {!! @$registration[0]->bs_feedback_prr !!}
+                                    </div>
+                                </div>
+                            <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        </div>
+
+                    </div>
+                    <!-- /.box -->
+
+                </section>
                 <section class="col-lg-12 connectedSortable">
                     <!-- TO DO List -->
                     <form method="post" id="submitAACReport" enctype="multipart/form-data">
@@ -143,7 +173,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="comments">Peer Reviewer Comments</label>
-                                    <textarea name="comments" id="comments"></textarea>
+                                    <textarea name="comments" id="comments">{!! $registration[0]->AACcomments !!}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -208,7 +238,7 @@
                                         <td>{{@$slip->department}}</td>
                                         <td>{!! @$slip->AACcomments !!}</a></td>
                                         <td><i class="badge" data-id="{{@$slip->id}}"  style="background: {{$slip->regStatus == 'Initiated'?'red':''}}{{$slip->regStatus == 'Review'?'brown':''}}{{$slip->regStatus == 'Approved'?'green':''}}" >{{@$slip->regStatus != ''?ucwords($slip->regStatus):'Initiated'}}</i></td>
-                                        <td></td>
+                                        <td><span class="badge bg-green"><i class="fa fa-forward forward" data-toggle="tooltip" data-content="left" title="Forward case for Council Meeting."></i></span> </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -319,10 +349,10 @@
     });
 
 
-    $('.forward_sar').on('click', function (e) {
+    $('.forward').on('click', function (e) {
         var id = $(this).data('id');
 
-        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to SAP?', 'Yes', 'No',
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case for Council Meeting?', 'Yes', 'No',
             function(){
                 $.ajaxSetup({
                     headers: {

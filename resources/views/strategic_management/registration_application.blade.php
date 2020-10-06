@@ -13,7 +13,7 @@
     @include("../includes.header")
     <style type="text/css">
         table, th, td, thead{
-            border: 0.5px solid black !important; 
+            border: 0.5px solid black !important;
             border-collapse: collapse !important;
         }
     </style>
@@ -29,17 +29,17 @@
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
                 <li class="active"> Print Registration </li>
             </ol>
-            
+
         </section>
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <button class="btn gradient-bg-color"
+{{--                    <button class="btn gradient-bg-color"--}}
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                            <button onclick="Export2Doc('printIDABC');">Export as .doc</button>
+{{--                           style="color: white;"--}}
+{{--                           value="Add New"--}}
+{{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
+                            <button class="btn gradient-bg-color" style="color: white;" onclick="Export2Doc('printIDABC');">Export as .doc <i class="fa fa-file-word-o"></i></button>
                             <a class="btn btn-primary" href="{{ URL::to('/registrationPrintPdf') }}">Export to PDF</a>
                 </div>
             </div>
@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                   
+
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
@@ -60,16 +60,16 @@
                         <br><br><br><br><br>
                     @include('strategic_management.includes.pageCover')
                     @include('strategic_management.includes.contents')
-                    
+
                      <br><br><br><br><br>
 
                     <h1 class="center">Perface</h1><br>
                     <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10">
                             <p class="justify">This document is intended to provide succinct factual information about the School that allows it to be assessed against the eligibility criteria of National Business Education Accreditation Council (NBEAC). A business school seeking for accreditation is expected to understand that the precision and completeness of data provided in the registration application is important for an effective accreditation process as it help NBEAC Committee accurately analyze actual situation of the program(s) under review. NBEAC will trust the data provided at this stage since it will be checked at a later stage, if applicable. Please make sure that this document contains page numbers. </p>
-                            <p class="justify">For schools applying to NBEAC for the first time, it should be noted that no additional information provided by the School besides that contained in the application will be conveyed to the NBEAC Committee.  
+                            <p class="justify">For schools applying to NBEAC for the first time, it should be noted that no additional information provided by the School besides that contained in the application will be conveyed to the NBEAC Committee.
                             For schools applying to NBEAC for re-accreditation/re-visit, this application should be completed when starting the reaccreditation cycle; an updated application should be submitted together with the supporting documents.
                             </p>
                             <p class="justify">Senior Program Manager - Accreditation</p>
@@ -78,8 +78,8 @@
                             </p>
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div><br><br><br><br><br><br>
 
 
@@ -89,7 +89,7 @@
                         </div><br><br>
                         <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10">
                             <p class="left">1.   Before starting the registration application, please go through the guidelines given in Section III of the NBEAC Accreditation Process Manual<a href="https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf"> <span style="color: blue"> https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</span></a> in order to ensure that the application is prepared in accordance with these guidelines.</p>
                             <p class="left">2.   Note that no change in the original text and structure of the application is permitted at all. However, the data in colored font is given only for demonstrative purpose; please replace it with actual data.</p>
@@ -105,8 +105,8 @@
                             </p>
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div>
                     </div><br><br><br><br><br>
 
@@ -118,7 +118,7 @@
                         </div><br><br>
                         <div class="row" >
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10"><p class="left">I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below. </p>
                             <p class="left">1.  I confirm the accuracy of the information provided in the registration application, and as the authorized representative commit the business school to go through the NBEAC accreditation process. </p>
                             <p class="left">2.  I agree that the business school under review will pay the NBEAC accreditation fee as defined in the NBEAC Fee Schedule <a style="color:blue" href="https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2"> https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2</a>, which is effective at the date of the submission of this application form.</p>
@@ -134,17 +134,17 @@
                             <p>City and country: ________________________________________________________________________________</p>
                             <p>Telephone: ______________________________________ Fax: __________________________________________</p>
 
-                            
+
                         </div>
                         <div style="page-break-after: always;" class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div>
                     </div><br><br><br><br><br>
 
-                     
 
-                    
+
+
 
 
 
@@ -161,10 +161,10 @@
                     @include('strategic_management.includes.registration4')
                     <h5 class="left" style="color:red">Section 5. Research and Development</h5>
                     @include('strategic_management.includes.registration5')
-                   
+
                     <h5 class="left" style="color:red">Section 6. Resources</h5>
                     @include('strategic_management.includes.registration6')
-                    
+
                     <hr>
                     <p class="left">1  The term “school” is used in the NBEAC process to designate the entity that is applying for NBEAC accreditation, whether it is a free standing business school or a faculty, school or department within a university.</p>
                     <p class="left">2  Replace the text with actual semester names. In case admission are taken biennially, mark “N/A” for the semester no admission is offered.</p>
@@ -208,7 +208,7 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Strategic Plan. </h4>
                 </div>
-               
+
             </div>
             <!-- /.modal-content -->
         </div>
@@ -216,7 +216,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -399,31 +399,31 @@ $('#updateForm').submit(function (e) {
             var blob = new Blob(['\ufeff', html], {
                 type: 'application/msword'
             });
-            
+
             // Specify link url
             var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
-            
+
             // Specify file name
             filename = filename?filename+'.doc':'document.doc';
-            
+
             // Create download link element
             var downloadLink = document.createElement("a");
 
             document.body.appendChild(downloadLink);
-            
+
             if(navigator.msSaveOrOpenBlob ){
                 navigator.msSaveOrOpenBlob(blob, filename);
             }else{
                 // Create a link to the file
                 downloadLink.href = url;
-                
+
                 // Setting the file name
                 downloadLink.download = filename;
-                
+
                 //triggering the function
                 downloadLink.click();
             }
-            
+
             document.body.removeChild(downloadLink);
         }
 

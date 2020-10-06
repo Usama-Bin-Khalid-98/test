@@ -38,8 +38,9 @@ class CreateSlipsTable extends Migration
             $table->enum('regStatus', ['Initiated','Pending','Review','Eligibility','ScheduledES',
                 'ScheduledPR','Mentoring','ScheduledMentoring','SAR','SAP','SARDeskReview','PeerReviewVisit',
                 'ScheduledPRVisit','PeerReviewReport','AwardCommittee','ScheduledAwardCommittee',
-                'AACReview','AACSharedBSFocalPerson','NeedChangesAAC','NeedMajorChangesAAC','AACFinal','CouncilMeeting','Active', 'Inactive',
-                'Approved'])
+                'AACReview','AACSharedBSFocalPerson','NeedChangesAAC','NeedMajorChangesAAC','AACFinal',
+                'CouncilMeeting','ScheduledCouncilMeeting',
+                'Active', 'Inactive','Approved'])
                 ->nullable()
                 ->default('Initiated');
             $table->text('comments', 255)->nullable();
@@ -49,6 +50,7 @@ class CreateSlipsTable extends Migration
             $table->string('profile_sheet', 255)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->date('feedback_last_date')->nullable();
+            $table->text('bs_feedback_prr')->nullable();
             $table->foreign('created_by')
                 ->references('id')
                 ->on('users');

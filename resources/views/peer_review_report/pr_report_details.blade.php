@@ -134,20 +134,14 @@
                             <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
 
                                 <input type="hidden" name="slip_id" value="{{Request()->route('id')}}">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Report Date</label>
-                                        <input type="date" name="report_date" id="report_date" class="form-control" value="{{date('Y-m-d')}}" >
-                                    </div>
-                                </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Upload PRR Doc</label>
-                                        <input type="file" name="file" id="file" accept=".doc,.docx,application/msword,.pdf">
-                                        <span class="text-red">Max upload file size 2mb.</span>
-                                    </div>
-                                </div>
+{{--                                <div class="col-md-4">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="name">Upload PRR Doc</label>--}}
+{{--                                        <input type="file" name="file" id="file" accept=".doc,.docx,application/msword,.pdf">--}}
+{{--                                        <span class="text-red">Max upload file size 2mb.</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 {{--                                <div class="col-md-4">--}}
 {{--                                    <div class="form-group">--}}
 {{--                                        <label for="sample">Download Sample</label><br>--}}
@@ -159,7 +153,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="comments">Comments</label>
-                                        <textarea name="comments" id="comments" > </textarea>
+                                        <textarea name="comments" id="comments" >{{ @$registrations[0]->bs_feedback_prr }} </textarea>
                                     </div>
                                 </div>
 
@@ -230,12 +224,12 @@
             CKEDITOR.instances[instance].updateElement();
         }
         var comments = CKEDITOR.instances.comments.getData();
-        var file = $('#file').val();
+        // var file = $('#file').val();
 
-        !file?addClass('file'):removeClass('file');
+        // !file?addClass('file'):removeClass('file');
         !comments?addClass('comments'):removeClass('comments');
 
-        if(!file || !comments)
+        if(!comments)
         {
             Notiflix.Notify.Warning("Fill all the required Fields.");
             return;
