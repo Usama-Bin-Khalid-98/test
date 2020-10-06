@@ -173,7 +173,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="comments">Peer Reviewer Comments</label>
-                                    <textarea name="comments" id="comments">{!! $registration[0]->AACcomments !!}</textarea>
+                                    <textarea name="comments" id="comments">{!! @$registration[0]->AACcomments !!}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -238,7 +238,7 @@
                                         <td>{{@$slip->department}}</td>
                                         <td>{!! @$slip->AACcomments !!}</a></td>
                                         <td><i class="badge" data-id="{{@$slip->id}}"  style="background: {{$slip->regStatus == 'Initiated'?'red':''}}{{$slip->regStatus == 'Review'?'brown':''}}{{$slip->regStatus == 'Approved'?'green':''}}" >{{@$slip->regStatus != ''?ucwords($slip->regStatus):'Initiated'}}</i></td>
-                                        <td><span class="badge bg-green"><i class="fa fa-forward forward" data-toggle="tooltip" data-content="left" title="Forward case for Council Meeting."></i></span> </td>
+                                        <td><span class="badge bg-green"><i class="fa fa-forward forward" data-id="{{@$slip->id}}" data-toggle="tooltip" data-content="left" title="Forward case for Council Meeting."></i></span> </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -361,9 +361,9 @@
                 })
                 // Yes button callback
                 $.ajax({
-                    url:'{{url("updateInvoiceStatus")}}/'+id,
+                    url:'{{url("forwardToCM")}}/'+id,
                     type:'put',
-                    data: { id:id, 'regStatus':'SAR'},
+                    data: { id:id, 'regStatus':'CouncilMeeting'},
                     beforeSend: function(){
                         Notiflix.Loading.Pulse('Processing...');
                     },
@@ -375,7 +375,7 @@
                             Notiflix.Notify.Success(response.success);
                         }
 
-                        // location.reload();
+                        location.reload();
 
                         console.log('response here', response);
                     },

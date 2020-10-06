@@ -68,6 +68,8 @@ class AccreditationMeetingController extends Controller
             ->orWhere('s.regStatus', 'AACSharedBSFocalPerson')
             ->orWhere('s.regStatus', 'NeedChangesAAC')
             ->orWhere('s.regStatus', 'AACFinal')
+            ->orWhere('s.regStatus', 'CouncilMeeting')
+            ->orWhere('s.regStatus', 'ScheduledCouncilMeeting')
             ->where('s.status', 'approved')
             ->where('s.id', $accreditationMeeting)
             ->get();

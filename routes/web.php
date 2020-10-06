@@ -197,6 +197,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('peer-review-details/{id}', 'PeerReviewReportController@peer_review_details');
             Route::post('bs_feedback_PRR', 'StrategicManagement\SlipController@bs_feedback_prr');
 
+
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
@@ -269,6 +270,8 @@ use Illuminate\Support\Facades\Route;
         Route::group(['middleware' => ['role:AccreditationAwardCommittee']], function () {
             Route::get('AAwardCommitteeDetails/{id}', 'AccreditationMeetingController@show');
             Route::put('submitAACReport', 'AccreditationMeetingController@update');
+            Route::put('forwardToCM/{id}', 'StrategicManagement\SlipController@updateInvoiceStatus');
+
 
         });
 
