@@ -88,7 +88,7 @@ class PeerReviewReportController extends Controller
                     return response()->json(['success' => 'Report uploaded successfully.'], 200);
                 }
             }else{
-                if($request->prr_id) {
+//                if($request->prr_id) {
                     $fileName = '';
                     $path = '';
                     $path = '';
@@ -114,8 +114,8 @@ class PeerReviewReportController extends Controller
                         'to' => 'school@gmail.com',
                         'to_name' => 'Habib Ahmad',
                         'school' => "School Name Here",
-                        'from' => "city@gmail.com",
-                        'from_name' => 'Business School focal Person Name',
+                        'from' => "nbeac@gmail.com",
+                        'from_name' => 'NBEAC focal Person Name',
                     ];
 
                     $data= [];
@@ -127,10 +127,10 @@ class PeerReviewReportController extends Controller
                         $message->from($mailInfo['from'],$mailInfo['from_name']);
                     });
                 return response()->json(['success' => 'Report updated successfully.'], 200);
-                }else{
-                    return response()->json(['message' => 'Failed to update the Peer Review Report.'], 422);
+//                }else{
+//                    return response()->json(['message' => 'Failed to update the Peer Review Report.'], 422);
 
-                }
+//                }
 
             }
 
@@ -246,7 +246,7 @@ class PeerReviewReportController extends Controller
             ->orWhere('s.business_school_id', $user->campus_id)
             ->orWhere('s.department_id', $user->department_id)
             ->get();
-//        dd($peerReviewReport);
+//        dd($registrations);
         $peerReview = PeerReviewReport::where(['slip_id'=> $id, 'status' => 'active'])->get()->first();
 
         return view('peer_review_report.pr_report_details', compact('registrations', 'peerReview'));

@@ -6,8 +6,8 @@ use App\Models\Common\Campus;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use DB;
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 class RegistrationPrintController extends Controller
@@ -17,7 +17,7 @@ class RegistrationPrintController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index(Request $req)
     {
         if(isset($req->cid) && isset($req->bid)){
@@ -49,12 +49,12 @@ class RegistrationPrintController extends Controller
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
 
 
-            
+
 
 
              $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools, campuses WHERE business_schools.id=? AND strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=?', array($req->bid, $req->cid));
 
-             
+
              $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
                 FROM program_portfolios, programs, course_types, business_schools, campuses
                 WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=campuses.id AND program_portfolios.campus_id=?', array($req->bid, $req->cid));
@@ -76,7 +76,7 @@ class RegistrationPrintController extends Controller
 
              $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
              $now = Carbon::now();
-            
+
             $currMonth = $now->month;
             $currSemester = "";
             $prevSemester = "";
@@ -87,7 +87,7 @@ class RegistrationPrintController extends Controller
                 $currSemester = "Spring t";
                 $prevSemester = "Fall t-1";
             }
-            
+
             //dd($currSemester);
             //dd($prevSemester);
              $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($req->cid, $currSemester));
@@ -119,7 +119,7 @@ class RegistrationPrintController extends Controller
                 ->get();
 
 
-            $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
+            $userCampus = DB::select('SELECT * from users where id=?', array(Auth::id()));
             //dd($userCampus[0]->campus_id);
             $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
 
@@ -142,12 +142,12 @@ class RegistrationPrintController extends Controller
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
 
-            
+
 
 
              $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools, campuses WHERE business_schools.id=? AND strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
-             
+
              $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
                 FROM program_portfolios, programs, course_types, business_schools, campuses
                 WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=campuses.id AND program_portfolios.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
@@ -169,7 +169,7 @@ class RegistrationPrintController extends Controller
 
              $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
              $now = Carbon::now();
-            
+
             $currMonth = $now->month;
             $currSemester = "";
             $prevSemester = "";
@@ -180,7 +180,7 @@ class RegistrationPrintController extends Controller
                 $currSemester = "Spring t";
                 $prevSemester = "Fall t-1";
             }
-            
+
             //dd($currSemester);
             //dd($prevSemester);
              $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($userCampus[0]->campus_id, $currSemester));
@@ -201,13 +201,13 @@ class RegistrationPrintController extends Controller
 
                $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
             }
-         
+
         return view('strategic_management.registration_application', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){
         //dd($userCampus);
-        
+
             $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=? AND users.id=?', array($facultySummary[$i]->id,$userCampus,auth()->user()->id));
             return $facultySummary12;
     }
@@ -221,16 +221,17 @@ class RegistrationPrintController extends Controller
             ->leftJoin('institute_types','business_schools.institute_type_id','=','institute_types.id')
             ->leftJoin('charter_types','business_schools.charter_type_id','=','charter_types.id')
             ->leftJoin('designations','business_schools.cao_id','=','designations.id')
-            ->where('users.id',auth()->user()->id)
+            ->where('users.id',Auth::id())
             ->select('business_schools.*','institute_types.name as typeName', 'charter_types.name as charterName', 'designations.name as designationName' )
             ->get();
 
 
-        $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
+
+        $userCampus = DB::select('SELECT * from users where id=?', array(Auth::id()));
         //dd($userCampus[0]->campus_id);
         $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
-        
-         $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(auth()->user->campus_id));
+
+         $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(Auth::user()->campus_id));
 
 
         $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, business_schools WHERE designations.id=contact_infos.designation_id AND business_schools.id=?', array($bussinessSchool[0]->id));
@@ -245,9 +246,9 @@ class RegistrationPrintController extends Controller
       // download PDF file with download method
       return $pdf->download('pdf_file.pdf');
     }
-        
 
-         
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -316,5 +317,5 @@ class RegistrationPrintController extends Controller
     }
 
 
-   
+
 }

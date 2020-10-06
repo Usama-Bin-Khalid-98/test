@@ -195,6 +195,7 @@ use Illuminate\Support\Facades\Route;
             Route::resource('instituteFeedback', 'InstituteFeedbackController');
             Route::get('peer-review-report', 'PeerReviewReportController@school_prr');
             Route::get('peer-review-details/{id}', 'PeerReviewReportController@peer_review_details');
+            Route::post('bs_feedback_PRR', 'StrategicManagement\SlipController@bs_feedback_prr');
 
         });
 
