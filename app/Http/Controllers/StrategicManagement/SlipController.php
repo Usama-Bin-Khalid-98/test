@@ -328,7 +328,7 @@ class SlipController extends Controller
     public function update(Request $request, Slip $slip)
     {
         //
-        //dd($request->all());
+//        dd($request->all());
         $path = ''; $imageName = '';
         if(@$request->file('slip')) {
             try {
@@ -350,8 +350,13 @@ class SlipController extends Controller
                 @$request->cheque_no? $data['cheque_no'] = $request->cheque_no:'';
                 @$request->status? $data['status'] = $request->status:'';
                 //dd($data);
-                Slip::where('id', $request->id)->update($data);
-                return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
+                $updateSlip = Slip::where('id', $request->id)->update($data);
+                if($updateSlip) {
+                    return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
+                }
+                else{
+                    return response()->json(['message' => 'Invoice Slip Updating Failed.'], 422);
+                }
             }catch (Exception $e)
             {
                 return response()->json($e->getMessage(), 422);
@@ -360,13 +365,34 @@ class SlipController extends Controller
 
         try {
             //dd($request->all());
-            Slip::where('id', $request->id)->update([
+            $updateSlipStatus = Slip::where('id', $request->id)->update([
 //                'department_id' => $request->department_id,
                 'comments' => $request->comments,
                 'transaction_date' => $request->transaction_date,
                 'payment_method_id' => $request->payment_method,
                 'status' => $request->status,
             ]);
+            if($updateSlipStatus) {
+                $data= [];
+                $mailInfo = [
+                    'to' => 'nbeac@gmail.com',
+                    'to_name' => 'Bilal Ahmad',
+                    'school' => "School Name Here",
+                    'from' => "city@gmail.com",
+                    'from_name' => 'Business School focal Person Name',
+                ];
+                Mail::send('registration.mail.acknowledgement_fee_mail', $data, function($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                        ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                    $message->from($mailInfo['from'],$mailInfo['from_name']);
+                });
+
+                return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
+            }
+            else{
+                return response()->json(['message' => 'sending email Failed.'], 422);
+            }
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
 
         }catch (Exception $e)

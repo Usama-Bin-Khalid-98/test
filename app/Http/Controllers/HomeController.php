@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common\Slip;
+use App\Models\MentoringInvoice;
 use App\Models\PeerReview\InstituteFeedback;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -227,18 +229,25 @@ AND slips.status="approved" AND slips.regStatus="SAR" ', array());
         $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();
 
 //        dd($travel_plan->pr_travel_plan);
-        $campus_count = Campus::where(['status' => 'active'])->get()->count('location');
+        if(Auth::user()->user_type == 'NBEACAdmin') {
+            $campus_count = Campus::where(['status' => 'active'])->get()->count('location');
+        }else{
+            $campus_count = User::with('campus')->where(['status' => 'active', 'id' =>Auth::id()])->get()->count('location');
+//            dd($campus_count);
+        }
         $dept_count = Department::where(['status' => 'active'])->get()->count('name');
         $bs_count = BusinessSchool::where(['status' => 'active'])->get()->count('name');
         $programs = Program::where(['status' => 'active'])->get()->count('name');
         $fm_count = FacultyGender::where(['status' => 'active'])->get()->sum('male');
         $fem_count = FacultyGender::where(['status' => 'active'])->get()->sum('female');
+        $mentoring_slip_count = MentoringInvoice::where(['status' => 'active'])->get()->count();
+//        dd($mentoring_slip_count);
 
 
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
             'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks',
-            'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips'));
+            'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips', 'mentoring_slip_count'));
     }
 
     /**
@@ -265,6 +274,26 @@ AND slips.status="approved" AND slips.regStatus="SAR" ', array());
             $campus_id = Auth::user()->campus_id;
             $registration_apply = Slip::where(['id' => $id,'business_school_id'=> $campus_id, 'department_id' => $user->department_id])->update(['regStatus' =>'Review']);
            //dd(DB::getQueryLog());
+
+            if($registration_apply)
+            {
+                $data= [];
+                $mailInfo = [
+                    'to' => 'nbeac@gmail.com',
+                    'to_name' => 'Bilal Ahmad',
+                    'school' => "School Name Here",
+                    'from' => "city@gmail.com",
+                    'from_name' => 'Business School focal Person Name',
+                ];
+                Mail::send('registration.mail.reg_apply_temp', $data, function($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                        ->subject('Apply For Registration - '. $mailInfo['school']);
+                    $message->from($mailInfo['from'],$mailInfo['from_name']);
+                });
+
+                return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
+            }
             return response()->json(['success' => 'Successfully applied for department Registration']);
 
             }catch (Exception $e)
