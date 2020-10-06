@@ -96,6 +96,9 @@ class RolePermissionSeeder extends Seeder
         $AccreditationAwardCommittee = Role::create(['name' => 'AccreditationAwardCommittee'])
         ->givePermissionTo(['AccreditationAwardCommittee']);
 
+        $councilMeeting = Role::create(['name' => 'CouncilMeeting'])
+        ->givePermissionTo(['CouncilMeeting']);
+
         // admin
         $admin = User::find(1);
         $admin->assignRole('NBEACAdmin');

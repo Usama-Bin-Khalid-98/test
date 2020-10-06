@@ -340,13 +340,13 @@
                                             <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                                            <input type="text" id="transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">
+                                            <input type="text" id="transaction_date" name="transaction_date" autocomplete="off" value="{{old('transaction_date')}}" class="form-control">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="form-group" style="margin-bottom: 22px;">
+                                        <div class="form-group" style="margin-bottom: 20px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
                                                 <option disabled selected>Select Payment Method</option>
@@ -526,7 +526,7 @@
                             Notiflix.Notify.Success(response.success);
                         }
                         console.log('invoices', response);
-                        location.reload();
+                        // location.reload();
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

@@ -92,8 +92,8 @@ $faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['ca
 $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
-$RegDesk = get('App\Models\Common\Slip' ,['regStatus'=>'Review']);
-$SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
+$RegDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Review']);
+$SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
 
 @endphp
 
@@ -835,7 +835,7 @@ $SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
           @endhasrole
           @hasrole('NBEACAdmin')
 
-          <li class=" treeview {{request()->is('registrations')?'active':''}}">
+          <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}">
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations / Invoices</span>
                   <span class="pull-right-container">
@@ -863,9 +863,9 @@ $SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}">
               <a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review
-                  @if(count(@$SarDesk) !== 0)
+                  @if(@$RegDesk != 0)
                       <span class="pull-right-container">
-                        <i class="badge bg-maroon pull-right">{{count(@$RegDesk)}}</i>
+                        <i class="badge bg-maroon pull-right">{{@$RegDesk}}</i>
                       </span>
                   @endif
 
@@ -882,9 +882,9 @@ $SarDesk = get('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
           @hasrole('NBEACAdmin|Mentor')
           <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}">
               <a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review
-                  @if(count(@$SarDesk) !== 0)
+                  @if($SarDesk != 0)
                       <span class="pull-right-container">
-                        <i class="badge bg-maroon pull-right">{{count(@$SarDesk)}}</i>
+                        <i class="badge bg-maroon pull-right">{{@$SarDesk}}</i>
                       </span>
                   @endif
               </a>
