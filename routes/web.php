@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
         return view('auth.login');
     });
 
+Route::get('/peer', function() {
+    return view('registration.mail.PeerReviewVisit');
+});
+
     // Registration Routes...
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
