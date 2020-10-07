@@ -181,6 +181,7 @@
                                     <th>Transaction Date </th>
                                     <th>Details</th>
                                     <th>Status</th>
+                                    <th>Reg Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -200,6 +201,8 @@
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
                                     <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
+                                    <td><i class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
+
                                     <td><span data-toggle="tooltip" title="Invoice Payment" >
                                             <i class="fa fa-money text-info my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
                                                data-row='{"id":"{{$invoice->id}}","amount":"{{$invoice->amount}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
@@ -217,6 +220,7 @@
                                     <th>Transaction Date </th>
                                     <th>Details</th>
                                     <th>Status</th>
+                                    <th>Reg Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -278,7 +282,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 ChequeNumber" >
                             <div class="form-group">
                                 <label for="name">Cheque No</label>
                                 <input type="text" id="edit_cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
@@ -361,7 +365,7 @@
                                         <div class="form-group" style="margin-bottom: 0px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
-                                                <option value="">Select Payment Method</option>
+                                                <option disabled selected >Select Payment Method</option>
                                                 @foreach($payment_methods as $method)
                                                     <option value="{{$method->id}}">{{$method->name}}</option>
                                                 @endforeach
@@ -369,7 +373,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 ChequeNumber">
                                         <div class="form-group">
                                             <label for="name">Cheque No</label>
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
@@ -451,6 +455,24 @@
         $(function () {
             $('#datatable').DataTable()
         })
+        $(document).on('change',"#payment_method",function(e){
+
+            var payment_method = $(this).val();
+
+            if(payment_method == 2) {
+
+                $('.ChequeNumber').show();
+                $('#cheque_no').attr('required',true);
+
+            }else {
+
+                $('.ChequeNumber').hide();
+                $('#cheque_no').val(' ').trigger('change');
+                $('#cheque_no').removeAttr('required',false);
+            }
+
+        });
+
     </script>
     <script type="text/javascript">
 
@@ -468,7 +490,25 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        })
+        });
+
+        $(document).on('change',"#payment_method",function(e){
+
+            var payment_method = $(this).val();
+
+            if(payment_method == 2) {
+
+                $('.ChequeNumber').show();
+                $('#cheque_no').attr('required',true);
+
+            }else {
+
+                $('.ChequeNumber').hide();
+                $('#cheque_no').val(' ').trigger('change');
+                $('#cheque_no').removeAttr('required',false);
+            }
+
+        });
 
         //let data = JSON.parse(JSON.stringify($(this).data('row')));
         //$('#edit_program_id').select2().val(data.program_id).trigger('change');

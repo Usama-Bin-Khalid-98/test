@@ -19,7 +19,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Dashboard
+                Peer Review Report
                 <small>Control panel</small>
             </h1>
             <ol class="breadcrumb">
@@ -30,7 +30,7 @@
         </section><!-- Main content -->
 
 
-        @hasrole('NbeacFocalPerson')
+        @hasrole('NbeacFocalPerson|NBEACAdmin')
         <section class="content">
 
             <div class="row" >
@@ -160,9 +160,10 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <th>Letter Doc</th>
-                                    <th>Peer Reviewer Comments</th>
-{{--                                    <th>Status</th>--}}
+                                    <th>Desk Review</th>
+                                    <th>Registration Print</th>
+                                    <th>SAR</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -189,9 +190,10 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <th>Letter Doc</th>
-                                    <th>Peer Reviewer Comments</th>
-{{--                                    <th>Status</th>--}}
+                                    <th>Desk Review</th>
+                                    <th>Registration Print</th>
+                                    <th>SAR</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>

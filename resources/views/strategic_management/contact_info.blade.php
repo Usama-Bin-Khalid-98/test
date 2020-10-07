@@ -314,7 +314,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -385,7 +385,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     //console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

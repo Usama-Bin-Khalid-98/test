@@ -23,7 +23,7 @@ class ScopeController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'paid' ])->get()->first()->department_id;
+        @$department_id = Slip::where(['business_school_id' => Auth::user()->campus_id, 'status'=>'approved' ])->get()->first()->department_id;
         //dd(DB::getQueryLog());
         //dd($department_id);
         $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();

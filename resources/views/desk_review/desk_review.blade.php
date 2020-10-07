@@ -313,13 +313,12 @@
                             </form>
 
                             <div>
-                                @if(@$desk_rev[0]->isEligible === 'yes' && @$desk_rev[0]->status === 'active' )
-                                    @if(@$desk_reviews->regStatus === 'Pending' || @$desk_reviews->regStatus === 'Review')
+{{--                                @if(@$desk_rev[0]->isEligible === 'yes' && @$desk_rev[0]->status === 'active' )--}}
+                                    @if(@$desk_reviews[0]->regStatus === 'Pending' || @$desk_reviews[0]->regStatus === 'Review')
                                         <button data-toggle="tooltip" title="" class="btn btn-success ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{@$desk_reviews[0]->id}}">Forward to Eligibility Screening &nbsp;&nbsp; <i class="fa fa-check-square-o text-white"></i></button>
-                                    @endif
 
-                                @endif
-                                @if(@$desk_reviews->regStatus !== 'Initiated' && @$desk_reviews->regStatus !== 'Pending' && @$desk_reviews->regStatus !== 'Review' )
+{{--                                @endif--}}
+                                @else(@$desk_reviews->regStatus !== 'Initiated' && @$desk_reviews->regStatus !== 'Pending' && @$desk_reviews->regStatus !== 'Review' )
                                     <i class="badge bg-maroon"> Case Forwarded to Eligibility Screening</i>
                                 @endif
                             </div>
@@ -635,13 +634,9 @@
         $('.ForwardToES').on('click', function (e) {
             var id = $(this).data('id');
 
+            console.log('working here');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to Eligibility Screening?', 'Yes', 'No',
                 function(){
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    })
                     // Yes button callback
                     $.ajax({
                         url:'{{url("deskreviewStatus")}}',
@@ -658,7 +653,7 @@
                                 Notiflix.Notify.Success(response.success);
                             }
 
-                            //location.reload();
+                            location.reload();
 
                             console.log('response here', response);
                         },

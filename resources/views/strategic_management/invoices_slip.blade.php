@@ -173,7 +173,8 @@
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
-                                    <th>Status</th>
+                                    <th>Invoice Status</th>
+                                    <th>Reg Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -187,7 +188,8 @@
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
-                                    <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
+                                    <td><i class="badge {{$invoice->status ==='approved'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
+                                    <td><i class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
                                     <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" >
                                             <i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
                                                data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
@@ -204,7 +206,8 @@
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
-                                    <th>Status</th>
+                                    <th>Invoice Status</th>
+                                    <th>Reg Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -337,13 +340,13 @@
                                             <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                                            <input type="text" id="transaction_date" name="transaction_date" value="{{old('transaction_date')}}" class="form-control">
+                                            <input type="text" id="transaction_date" name="transaction_date" autocomplete="off" value="{{old('transaction_date')}}" class="form-control">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="form-group" style="margin-bottom: 22px;">
+                                        <div class="form-group" style="margin-bottom: 20px;">
                                             <label for="type">Payment Method </label>
                                             <select name="payment_method" id="payment_method" class="form-control select2">
                                                 <option disabled selected>Select Payment Method</option>

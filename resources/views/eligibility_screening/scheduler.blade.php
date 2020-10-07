@@ -167,7 +167,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="type">{{ __('Event Color') }} : </label>
-                                <input type="text" name="color" id="color" class="form-control my-colorpicker1">
+                                <input type="text" name="color" id="color" autocomplete="off" class="form-control my-colorpicker1">
                             </div>
                         </div>
 

@@ -93,7 +93,11 @@ class RolePermissionSeeder extends Seeder
         $Mentor = Role::create(['name' => 'Mentor'])
             ->givePermissionTo(['Mentoring']);
 
-        $AccreditationAwardCommittee = Role::create(['name' => 'AccreditationAwardCommittee']);
+        $AccreditationAwardCommittee = Role::create(['name' => 'AccreditationAwardCommittee'])
+        ->givePermissionTo(['AccreditationAwardCommittee']);
+
+        $councilMeeting = Role::create(['name' => 'CouncilMeeting'])
+        ->givePermissionTo(['CouncilMeeting']);
 
         // admin
         $admin = User::find(1);

@@ -47,189 +47,189 @@
             <div class="box-body">
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <a href="{{url('config/charter_types')}}" class="text-green"><b>Charter Types</b> </a>
+                        <a href="{{url('config/charter_types')}}" class="text-purple"><b>Charter Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['CharterType']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/institute_types')}}" class="text-green"><b>Institute Types</b> </a>
+                        <a href="{{url('config/institute_types')}}" class="text-purple"><b>Institute Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['InstituteType']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/course_types')}}" class="text-green"><b>Cource Types</b> </a>
+                        <a href="{{url('config/course_types')}}" class="text-purple"><b>Cource Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['CourseType']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/departments')}}" class="text-green"><b>Departments</b> </a>
+                        <a href="{{url('config/departments')}}" class="text-purple"><b>Departments</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Department']}}</span>
                     </span>
                     </li>
 
                     <li class="list-group-item">
-                        <a href="{{url('config/programs')}}" class="text-green"><b>Programs</b> </a>
+                        <a href="{{url('config/programs')}}" class="text-purple"><b>Programs</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Program']}}</span>
                     </span>
                     </li>
 
                     <li class="list-group-item">
-                        <a href="{{url('config/semesters')}}" class="text-green"><b>Semesters</b> </a>
+                        <a href="{{url('config/semesters')}}" class="text-purple"><b>Semesters</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Semester']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/degrees')}}" class="text-green"><b>Degrees</b> </a>
+                        <a href="{{url('config/degrees')}}" class="text-purple"><b>Degrees</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Degree']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/business_school')}}" class="text-green"><b>Business Schools</b> </a>
+                        <a href="{{url('config/business_school')}}" class="text-purple"><b>Business Schools</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['BusinessSchool']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/designations')}}" class="text-green"><b>Designations</b> </a>
+                        <a href="{{url('config/designations')}}" class="text-purple"><b>Designations</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Designation']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/disciplines')}}" class="text-green"><b>Disciplines</b> </a>
+                        <a href="{{url('config/disciplines')}}" class="text-purple"><b>Disciplines</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Discipline']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/eligibility_criterias')}}" class="text-green"><b>Eligibility Criterias</b> </a>
+                        <a href="{{url('config/eligibility_criterias')}}" class="text-purple"><b>Eligibility Criterias</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['EligibilityCriteria']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/faculty_qualifications')}}" class="text-green"><b>Faculty Qualifications</b> </a>
+                        <a href="{{url('config/faculty_qualifications')}}" class="text-purple"><b>Faculty Qualifications</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['FacultyQualification']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/facility_types')}}" class="text-green"><b>Facility Types</b> </a>
+                        <a href="{{url('config/facility_types')}}" class="text-purple"><b>Facility Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['FacilityType']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/facilities')}}" class="text-green"><b>Facilities</b> </a>
+                        <a href="{{url('config/facilities')}}" class="text-purple"><b>Facilities</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Facility']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/fee_types')}}" class="text-green"><b>Fee Types</b> </a>
+                        <a href="{{url('config/fee_types')}}" class="text-purple"><b>Fee Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['FeeType']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/fyp_requirements')}}" class="text-green"><b>Fyp Requirements</b> </a>
+                        <a href="{{url('config/fyp_requirements')}}" class="text-purple"><b>Fyp Requirements</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['FypRequirement']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/funding_sources')}}" class="text-green"><b>Funding Sources</b> </a>
+                        <a href="{{url('config/funding_sources')}}" class="text-purple"><b>Funding Sources</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['FundingSources']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/levels')}}" class="text-green"><b>Levels</b> </a>
+                        <a href="{{url('config/levels')}}" class="text-purple"><b>Levels</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Level']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/payment_methods')}}" class="text-green"><b>Payment Methods</b> </a>
+                        <a href="{{url('config/payment_methods')}}" class="text-purple"><b>Payment Methods</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['PaymentMethod']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/publication_categories')}}" class="text-green"><b>Publication Categories</b> </a>
+                        <a href="{{url('config/publication_categories')}}" class="text-purple"><b>Publication Categories</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['PublicationCategory']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/publication_types')}}" class="text-green"><b>Publication Types</b> </a>
+                        <a href="{{url('config/publication_types')}}" class="text-purple"><b>Publication Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['PublicationType']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/regions')}}" class="text-green"><b>Regions</b> </a>
+                        <a href="{{url('config/regions')}}" class="text-purple"><b>Regions</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Region']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/teaching_methods')}}" class="text-green"><b>Teaching Methods</b> </a>
+                        <a href="{{url('config/teaching_methods')}}" class="text-purple"><b>Teaching Methods</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['TeachingMethod']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/evaluation_items')}}" class="text-green"><b>Evaluation Items</b> </a>
+                        <a href="{{url('config/evaluation_items')}}" class="text-purple"><b>Evaluation Items</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['EvaluationItem']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/reviewer_roles')}}" class="text-green"><b>Reviewer Roles</b> </a>
+                        <a href="{{url('config/reviewer_roles')}}" class="text-purple"><b>Reviewer Roles</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['ReviewerRole']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/sectors')}}" class="text-green"><b>Sectors</b> </a>
+                        <a href="{{url('config/sectors')}}" class="text-purple"><b>Sectors</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Sector']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/statutory_bodies')}}" class="text-green"><b>Statutory Bodies</b> </a>
+                        <a href="{{url('config/statutory_bodies')}}" class="text-purple"><b>Statutory Bodies</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['StatutoryBody']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/welfare_programs')}}" class="text-green"><b>Welfare Programs</b> </a>
+                        <a href="{{url('config/welfare_programs')}}" class="text-purple"><b>Welfare Programs</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['WelfareProgram']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/staff_categories')}}" class="text-green"><b>Staff Categories</b> </a>
+                        <a href="{{url('config/staff_categories')}}" class="text-purple"><b>Staff Categories</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['StaffCategory']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/qec_types')}}" class="text-green"><b>Qec Types</b> </a>
+                        <a href="{{url('config/qec_types')}}" class="text-purple"><b>Qec Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['QecType']}}</span>
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/activity_engagements')}}" class="text-green"><b>Activity Engagements</b> </a>
+                        <a href="{{url('config/activity_engagements')}}" class="text-purple"><b>Activity Engagements</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['ActivityEngagement']}}</span>
                     </span>

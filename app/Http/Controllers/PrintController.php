@@ -448,8 +448,15 @@ class PrintController extends Controller
             ->where('regStatus','!=','ScheduledMentoring')
             ->get();
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
-        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID, slips.status as slipStatus FROM business_schools, users, campuses, slips WHERE users.business_school_id=business_schools.id AND campuses.business_school_id=business_schools.id AND business_schools.status="active" AND slips.business_school_id=campuses.id AND slips.status="approved" AND users.id=?', array(auth()->user()->id));
-        //dd($businessSchools);
+        $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID,
+            slips.status as slipStatus FROM business_schools, users, campuses, slips WHERE
+            users.business_school_id=business_schools.id AND
+            campuses.business_school_id=business_schools.id AND
+            business_schools.status="active" AND
+            slips.business_school_id=campuses.id AND
+            slips.status="approved" AND
+            users.id=?', array(auth()->user()->id));
+//        dd(auth()->user()->id);
          return view('submitSAR' ,compact( 'registrations', 'invoices', 'memberShips','registration_apply','businessSchools'));
     }
 

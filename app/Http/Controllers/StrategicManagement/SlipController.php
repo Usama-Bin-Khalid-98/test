@@ -10,10 +10,12 @@ use App\Models\Common\PaymentMethod;
 use App\DepartmentFee;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
+use App\Models\PeerReview\SchedulePeerReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangeResgistrationStatusMail;
@@ -46,6 +48,24 @@ class SlipController extends Controller
         }
         //dd($invoice_no);
         return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods','fee_amount'));
+    }
+
+    public function registrations()
+    {
+        //
+        $registrations = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('users as u', 'u.id', '=', 's.created_by')
+            ->join('designations as dg', 'dg.id', '=', 'u.designation_id')
+            ->select('s.*', 'c.location as campus','c.id as campus_id',
+                'dg.name as designation', 'd.name as department',
+                'u.name as user', 'u.email as email', 'u.contact_no',
+                'bs.name as school', 'bs.id as business_school_id')
+            ->get();
+        //dd($invoice_no);
+        return view('registration.index', compact('registrations'));
     }
 
     public function invoicesList()
@@ -90,17 +110,115 @@ class SlipController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function travelPlan(Request $request)
     {
         //
+//        dd($request->all());
+        $validation = Validator::make($request->all(), $this->plan_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+//            $check = Slip::where(['id' => $request->slip_id])->exists();
+                $imageName = ''; $path = '';
+                if ($request->file('file')) {
+                    $imageName = 'travel' . "-plan-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $path = 'uploads/travel/';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $request->file('file')->move($path, $imageName);
+                }
 
+                $updateData['pr_visit_date'] = $request->visit_date;
+                $imageName ? $updateData['pr_travel_plan'] = $path.$imageName:'';
+//                dd($updateData);
+                $update = Slip::where(['id'=>$request->slip_id])->update($updateData);
+
+                if($update)
+                {
+                    ////////////////////////////////// email here //////////////
+
+                    ////////////////////////////////// end email //////////////
+                    return response()->json(['success' => 'Travel plan added successfully.'], 200);
+                }
+                else{
+                    return response()->json(['message' => 'updating travel plan failed.'], 422);
+
+                }
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 422);
+
+        }
     }
 
+
+
+
+    public function profileSheet(Request $request)
+    {
+        //
+//        dd($request->all());
+        $validation = Validator::make($request->all(), $this->sheet_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        try {
+//            $check = Slip::where(['id' => $request->slip_id])->exists();
+                $imageName = ''; $path = '';
+                if ($request->file('file')) {
+                    $imageName = 'profile' . "-sheet-" . time() . '.' . $request->file->getClientOriginalExtension();
+                    $path = 'uploads/profile_sheet/';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $request->file('file')->move($path, $imageName);
+                }
+
+                $imageName ? $updateData['profile_sheet'] = $path.$imageName:'';
+//                dd($updateData);
+                $update = Slip::where(['id'=>$request->slip_id])->update($updateData);
+
+                if($update)
+                {
+                    ////////////////////////////////// email here //////////////
+
+                    ////////////////////////////////// end email //////////////
+                    return response()->json(['success' => 'Profile sheet added successfully.'], 200);
+                }
+                else{
+                    return response()->json(['message' => 'updating profile sheet failed.'], 422);
+
+                }
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 422);
+
+        }
+    }
+
+
+    public function plan_rules(){
+        return [
+            'visit_date' => 'required',
+            'slip_id' => 'required',
+            'file' => 'mimes:pdf,docx'
+        ];
+    }
+    public function sheet_rules(){
+        return [
+            'slip_id' => 'required',
+            'file' => 'mimes:pdf,docx,xlsx,xls,doc'
+        ];
+    }
+    protected function messages() {
+        return [
+            'required'=> 'The :attribute can not be blanked. '
+        ];
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -190,9 +308,14 @@ class SlipController extends Controller
      * @param  \App\Models\Common\Slip  $slip
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slip $slip)
+    public function edit($slip)
     {
         //
+        $slips = Slip::where('id', $slip)->get()->first();
+        $confirm_date = SchedulePeerReview::where(['slip_id'=> $slip, 'is_confirm' => 'yes'])->get()->first();
+        $slips['confirm_date'] = $confirm_date->availability_dates;
+//        dd($slips);
+        return response()->json($slips, 200);
     }
 
     /**
@@ -205,7 +328,7 @@ class SlipController extends Controller
     public function update(Request $request, Slip $slip)
     {
         //
-        //dd($request->all());
+//        dd($request->all());
         $path = ''; $imageName = '';
         if(@$request->file('slip')) {
             try {
@@ -227,23 +350,50 @@ class SlipController extends Controller
                 @$request->cheque_no? $data['cheque_no'] = $request->cheque_no:'';
                 @$request->status? $data['status'] = $request->status:'';
                 //dd($data);
-                Slip::where('id', $request->id)->update($data);
-                return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
+                $updateSlip = Slip::where('id', $request->id)->update($data);
+                if($updateSlip) {
+                    return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
+                }
+                else{
+                    return response()->json(['message' => 'Invoice Slip Updating Failed.'], 422);
+                }
             }catch (Exception $e)
             {
                 return response()->json($e->getMessage(), 422);
             }
         }
 
+
         try {
             //dd($request->all());
-            Slip::where('id', $request->id)->update([
+            $updateSlipStatus = Slip::where('id', $request->id)->update([
 //                'department_id' => $request->department_id,
                 'comments' => $request->comments,
                 'transaction_date' => $request->transaction_date,
                 'payment_method_id' => $request->payment_method,
                 'status' => $request->status,
             ]);
+            if($updateSlipStatus) {
+                $data= [];
+                $mailInfo = [
+                    'to' => 'nbeac@gmail.com',
+                    'to_name' => 'Bilal Ahmad',
+                    'school' => "School Name Here",
+                    'from' => "city@gmail.com",
+                    'from_name' => 'Business School focal Person Name',
+                ];
+                Mail::send('registration.mail.acknowledgement_fee_mail', $data, function($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                        ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                    $message->from($mailInfo['from'],$mailInfo['from_name']);
+                });
+
+                return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
+            }
+            else{
+                return response()->json(['message' => 'sending email Failed.'], 422);
+            }
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
 
         }catch (Exception $e)
@@ -253,6 +403,59 @@ class SlipController extends Controller
 
     }
 
+    public function bs_feedback_prr(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $updateSlip = Slip::find($request->slip_id)->update(
+                [
+                    'bs_feedback_prr' => $request->comments
+                ]
+            );
+            if ($updateSlip)
+            {
+                $data= [];
+                $mailInfo = [
+                    'to' => 'nbeac@gmail.com',
+                    'to_name' => 'Bilal Ahmad',
+                    'school' => "School Name Here",
+                    'from' => "city@gmail.com",
+                    'from_name' => 'Business School focal Person Name',
+                ];
+                Mail::send('email_templates.bs_feedback_prr', $data, function($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                        ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                    $message->from($mailInfo['from'],$mailInfo['from_name']);
+                });
+
+                return response()->json(['success' => 'Feedback updated successfully.'], 200);
+            }else{
+                return response()->json(['message' => 'Failed to update the feedback report.', 422]);
+
+            }
+        }
+        catch (\Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage(), 422]);
+
+        }
+    }
+
+
+    public function updateInvoiceStatus(Request $request)
+    {
+//        dd($request->all());
+        try {
+
+            Slip::find($request->id)->update(['regStatus' => $request->regStatus]);
+            return response()->json(['success' => 'Invoice Slip status updated successfully.'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        
+
         DB::table('users')->insert([
             ['name' => 'admin',
             'cnic' => '17101-1234324-1',
@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'email' => 'nbeac@hec.pk',
             'email_verified_at' => '2020-07-29 17:32:04',
             'password' => Hash::make('admin!@#$'),
-            'user_type' => 'admin',
+            'user_type' => 'NBEACAdmin',
             'status' => 'active',
             ],
             ['name' => 'Sania Tufail',
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
 
             'email_verified_at' => '2020-07-29 17:32:04',
             'password' => Hash::make('admin!@#$'),
-            'user_type' => 'admin',
+            'user_type' => 'NBEACAdmin',
             'status' => 'active',
             ],
         ]);
@@ -43,12 +43,12 @@ class UserSeeder extends Seeder
             'email' => 'city@gmail.com',
             'email_verified_at' => '2020-08-13 23:13:12',
             'password' => Hash::make('admin!@#$'),
-            'business_school_id' => '1',            
+            'business_school_id' => '1',
             'campus_id' => '209',
             'department_id' => '1',
             'country' => 'pakistan',
             'city' => 'peshawar',
-            'user_type' => 'business_school',
+            'user_type' => 'BusinessSchool',
             'status' => 'active',
         ],
     ]);
