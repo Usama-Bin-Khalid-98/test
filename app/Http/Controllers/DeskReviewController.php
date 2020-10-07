@@ -268,15 +268,6 @@ class DeskReviewController extends Controller
         }
     }
 
-
-    public static function totalDeskReviews()
-        {
-            
-            $result = Slip::count();
-
-            return $result;
-        }
-
     /**
      * Display the specified resource.
      *

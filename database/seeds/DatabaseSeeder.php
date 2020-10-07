@@ -102,6 +102,5 @@ class DatabaseSeeder extends Seeder
         $this->call(InternationalFacultiesSeeder::class);
         $this->call(FacultyExposuresSeeder::class);
         $this->call(FacultyDetailedInfosSeeder::class);
-        $this->call(PrrSeeder::class);
     }
 }

@@ -20,10 +20,6 @@ use Illuminate\Support\Facades\Route;
         return view('auth.login');
     });
 
-Route::get('/peer', function() {
-    return view('registration.mail.institutional_feedback_email');
-});
-
     // Registration Routes...
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
@@ -235,7 +231,6 @@ Route::get('/peer', function() {
             Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
             Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
             Route::patch('PeerReviewerReport/{id}', 'EligibilityScreeningController@update');
-            Route::resource('prr', 'PrrController');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {
