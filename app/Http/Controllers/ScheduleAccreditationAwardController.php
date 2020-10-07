@@ -25,7 +25,7 @@ class ScheduleAccreditationAwardController extends Controller
     public function index()
     {
 
-        if(Auth::user()->user_type == 'NbeacFocalPerson' || Auth::user()->user_type == 'ESScheduler'|| Auth::user()->user_type == 'AccreditationAwardCommittee') {
+        if(Auth::user()->user_type == 'NbeacFocalPerson' || Auth::user()->user_type == 'AccreditationAwardCommittee') {
 //            dd('mentors ');
             $registrations = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -61,6 +61,27 @@ class ScheduleAccreditationAwardController extends Controller
                 ->orWhere('s.regStatus', 'AACSharedBSFocalPerson')
                 ->orWhere('s.regStatus', 'NeedChangesAAC')
                 ->orWhere('s.regStatus', 'AACFinal')
+                ->get();
+        }
+        elseif(Auth::user()->user_type=='ESScheduler') {
+            $registrations = DB::table('slips as s')
+                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+                ->join('departments as d', 'd.id', '=', 's.department_id')
+                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+//                ->join('accreditation_reviewers as mm', 's.id', '=', 'mm.slip_id')
+//                ->join('users as u', 'u.id', '=', 'mm.user_id')
+                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department',
+                     'bs.name as school', 'bs.id as business_school_id')
+                ->where('s.regStatus', 'AwardCommittee')
+                ->orWhere('s.regStatus', 'ScheduledAwardCommittee')
+                ->orWhere('s.regStatus', 'AACReview')
+                ->orWhere('s.regStatus', 'AACSharedBSFocalPerson')
+                ->orWhere('s.regStatus', 'NeedChangesAAC')
+                ->orWhere('s.regStatus', 'CouncilMeeting')
+                ->orWhere('s.regStatus', 'ScheduledCouncilMeeting')
+                ->orWhere('s.regStatus', 'AACFinal')
+                ->where('s.status', 'approved')
+//                ->where('mm.user_id', Auth::id())
                 ->get();
         }
 

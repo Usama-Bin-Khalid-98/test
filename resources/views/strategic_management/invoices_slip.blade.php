@@ -526,7 +526,7 @@
                             Notiflix.Notify.Success(response.success);
                         }
                         console.log('invoices', response);
-                        // location.reload();
+                        location.reload();
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

@@ -178,7 +178,8 @@
                                          <td>{!!substr($report->comments, 0, 100) !!}...</td>
 {{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$report->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
                                         <td>
-                                            @if($report->mentoring_invoice->regStatus !=='SAR') <i class="badge bg-aqua" >Case Forwarded for Desk Review</i> @else <a data-id="{{$report->id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar" >Forward For Desk Review</a> @endif
+                                            @if($report->mentoring_invoice->regStatus !=='Initiated') <i class="badge bg-aqua" >Case Forwarded for SAR</i> @else <a data-id="{{$report->mentoring_invoice_id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar" >Forward For SAP</a> @endif
+                                            @if($report->mentoring_invoice->regStatus =='SAR') <a data-id="{{$report->mentoring_invoice_id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar_desk" >Forward For SAR Desk Review</a>  @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -238,6 +239,10 @@
         CKEDITOR.replace('comments');
     });
     $('#form').submit(function (e) {
+
+        for ( instance in CKEDITOR.instances ) {
+            CKEDITOR.instances[instance].updateElement();
+        }
         var mentoring_invoice_id = $('#mentoring_invoice_id').val();
         var report_date = $('#report_date').val();
         var registration_date = $('#registration_date').val();
@@ -297,6 +302,50 @@
 
 
     $('.forward_sar').on('click', function (e) {
+        var id = $(this).data('id');
+
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to SAP?', 'Yes', 'No',
+            function(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("updateInvoiceStatus")}}/'+id,
+                    type:'put',
+                    data: { id:id, 'regStatus':'SAR'},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+            },
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );
+    });
+
+    $('.forward_sar_desk').on('click', function (e) {
         var id = $(this).data('id');
 
         Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to SAP?', 'Yes', 'No',

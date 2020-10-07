@@ -52,6 +52,7 @@ class SARDeskReviewController extends Controller
             ->join('users as u', 'u.id', '=', 's.created_by')
             ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId','c.id as campusId')
             ->where('s.regStatus', 'SARDeskReview')
+            ->orWhere('s.regStatus', 'SAR')
             ->get();
 //        dd($registrations);
 
@@ -87,8 +88,10 @@ class SARDeskReviewController extends Controller
                 where business_school_id=? AND department_id=?',
                 array($request->comments, $request->review,
                      $getBusinessSchool->campus_id, $getBusinessSchool->department_id));
+
             //dd($content->email);
 //            Mail::to($content->email)->queue(new ActivationMail($content));
+
             return response()->json(['success' => 'Status updated Successfully'], 200);
         }catch (Exception $e)
         {

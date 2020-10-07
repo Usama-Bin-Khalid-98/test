@@ -413,7 +413,20 @@ class EligibilityScreeningController extends Controller
 
 
                     ///////////////////// Email to Business School //////////////////////
-                    ///
+                    $data= [];
+                    $mailInfo = [
+                        'to' => 'nbeac@gmail.com',
+                        'to_name' => 'Bilal Ahmad',
+                        'school' => "NBEAC Focal Person",
+                        'from' => "peer@gmail.com",
+                        'from_name' => 'PeerReviewer',
+                    ];
+                    Mail::send('eligibility_screening.email.eligibility_report', $data, function($message) use ($mailInfo) {
+                        //dd($user);
+                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                            ->subject('Eligibility Screening Committee comments - '. $mailInfo['school']);
+                        $message->from($mailInfo['from'],$mailInfo['from_name']);
+                    });
                     ///////////////////// End Email to Business School //////////////////////
 
 

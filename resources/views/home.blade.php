@@ -1194,7 +1194,7 @@
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
                               <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' || $mentorMeeting->regStatus =='Mentoring' )
-                                      <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Mentoring Meeting Calendar</a>
+                                      <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> <i class="fa fa-calendar" data-toggle="tooltip" title="Mentoring Meeting Calendar"></i></a>
                                   @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
                               </td>
                           </tr>
@@ -1271,11 +1271,11 @@
                               <td><i class="badge" data-id="{{@$slip->id}}"  style="background: {{$slip->regStatus == 'Initiated'?'red':''}}{{$slip->regStatus == 'Review'?'brown':''}}{{$slip->regStatus == 'Approved'?'green':''}}" >{{@$slip->regStatus != ''?ucwords($slip->regStatus):'Initiated'}}</i></td>
                               <td>
                                   @if(@$slip->regStatus =='ScheduledPRVisit' || @$slip->regStatus =='PeerReviewVisit' )
-                                      <a href="{{url('showOnCalendar')}}/{{@$slip->id}}" class="btn-xs btn-info"> Peer Reviewer Visit Calendar <i class="fa fa-calendar"></i></a><br>
+                                      <a href="{{url('showOnCalendar')}}/{{@$slip->id}}" class="btn-xs btn-info"> <i data-toggle="tooltip" title="Peer Reviewer Visit Calendar" class="fa fa-calendar"></i></a><br>
                                   @elseif(@$slip->regStatus =='Review')Desk Review In-progress @endif
                                   @hasrole('NbeacFocalPerson|NBEACAdmin')
-                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer">Generate Travel Plan <i class="fa fa-car"></i></a><br>
-                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer">Upload Profile Sheet <i class="fa fa-file-excel-o"></i></a> <br>
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer"> <i data-toggle="tooltip" title="Generate Travel Plan" class="fa fa-car"></i></a><br>
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer"> <i data-toggle="tooltip" title="Upload Profile Sheet" class="fa fa-file-excel-o"></i></a> <br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer">Thank You Email <i class="fa fa-envelope"></i></a>
                                   @endhasrole
                                   @hasrole('BusinessSchool')

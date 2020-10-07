@@ -166,15 +166,16 @@ class HomeController extends Controller
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
                 ->join('departments as d', 'd.id', '=', 's.department_id')
                 ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
-                ->join('mentoring_mentors as mm', 's.id', '=', 'mm.slip_id')
-                ->join('users as u', 'u.id', '=', 'mm.user_id')
-                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as business_school_id')
+                ->leftJoin('mentoring_mentors as mm', 's.id', '=', 'mm.slip_id')
+//                ->join('users as u', 'u.id', '=', 'mm.user_id')
+                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'bs.name as school', 'bs.id as business_school_id')
                 ->where('s.regStatus', 'ScheduledMentoring')
                 ->orWhere('s.regStatus', 'Mentoring')
-                ->where('s.status', 'approved')
-                ->where('mm.user_id', Auth::id())
+//                ->where('s.status', 'approved')
+//                ->where('u.id', Auth::id())
+                ->groupBy('s.id')
                 ->get();
-            //dd($MentoringMeetings);
+//            dd($MentoringMeetings);
             }else {
             $MentoringMeetings = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')

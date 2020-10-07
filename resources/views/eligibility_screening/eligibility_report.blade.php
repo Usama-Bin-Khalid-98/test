@@ -201,11 +201,11 @@
                                         <td>{{@$screening->department}}</td>
                                          <td><a href="{{asset(@$screening->file)}}" >Doc File</a></td>
                                          <td>{!!substr($screening->comments, 0, 100) !!}...</td>
-                                        <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
+                                        <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->eligibility_status != ''?ucwords($screening->eligibility_status):''}}</i></td>
                                         <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' )
 {{--                                                <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Eligibility Screening Calendar</a>--}}
                                             @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
-                                            <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" >Eligibility Report</a>
+                                            <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" ><i data-toggle="tooltip" data-content="left" title="Edit Peer Reviewer Eligibility Report" class="fa fa-pencil-square-o"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
