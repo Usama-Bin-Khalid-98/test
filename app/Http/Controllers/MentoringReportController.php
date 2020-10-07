@@ -52,7 +52,7 @@ class MentoringReportController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            $check = MentoringReport::where(['mentoring_invoice_id' => $request->mentoring_invoice_id])->exists();
+            $check = MentoringReport::where(['mentoring_invoice_id' => $request->mentoring_invoice_id, 'created_by' => Auth::id()])->exists();
             if(!$check) {
                 $imageName = '';
                 if ($request->file('file')) {

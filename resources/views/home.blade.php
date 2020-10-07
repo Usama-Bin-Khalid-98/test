@@ -1046,7 +1046,7 @@
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
                               <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES')
-                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}">Eligibility Screening Calendar</a>
+                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"><i data-toggle="tooltip" title="Eligibility Screening Calendar" class="fa fa-calendar"></i></a>
                                   @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
 
                               </td>
@@ -1118,9 +1118,9 @@
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
                               <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' )
-                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Eligibility Screening Calendar</a>
+                                      <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> <i data-toggle="tooltip" title="Eligibility Screening Calendar" class="fa fa-calendar"></i></a>
                                   @elseif($screening->regStatus =='Review')Desk Review In-progress @endif
-                                  <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" >Eligibility Report</a>
+                                   | <a href="{{url('esReport')}}/{{$screening->id}}" class="btn-xs btn-success report" name="report" id="report" >  <i data-toggle="tooltip" title="Eligibility Screening Report" class="fa fa-files-o"></i></a>
                               </td>
                           </tr>
                       @endforeach
@@ -1194,7 +1194,7 @@
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
                               <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' || $mentorMeeting->regStatus =='Mentoring' )
-                                      <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> Mentoring Meeting Calendar</a>
+                                      <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> <i class="fa fa-calendar" data-toggle="tooltip" title="Mentoring Meeting Calendar"></i></a>
                                   @elseif($mentorMeeting->regStatus =='Review')Desk Review In-progress @endif
                               </td>
                           </tr>
@@ -1271,11 +1271,11 @@
                               <td><i class="badge" data-id="{{@$slip->id}}"  style="background: {{$slip->regStatus == 'Initiated'?'red':''}}{{$slip->regStatus == 'Review'?'brown':''}}{{$slip->regStatus == 'Approved'?'green':''}}" >{{@$slip->regStatus != ''?ucwords($slip->regStatus):'Initiated'}}</i></td>
                               <td>
                                   @if(@$slip->regStatus =='ScheduledPRVisit' || @$slip->regStatus =='PeerReviewVisit' )
-                                      <a href="{{url('showOnCalendar')}}/{{@$slip->id}}" class="btn-xs btn-info"> Peer Reviewer Visit Calendar <i class="fa fa-calendar"></i></a><br>
+                                      <a href="{{url('showOnCalendar')}}/{{@$slip->id}}" class="btn-xs btn-info"> <i data-toggle="tooltip" title="Peer Reviewer Visit Calendar" class="fa fa-calendar"></i></a><br>
                                   @elseif(@$slip->regStatus =='Review')Desk Review In-progress @endif
                                   @hasrole('NbeacFocalPerson|NBEACAdmin')
-                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer">Generate Travel Plan <i class="fa fa-car"></i></a><br>
-                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer">Upload Profile Sheet <i class="fa fa-file-excel-o"></i></a> <br>
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer"> <i data-toggle="tooltip" title="Generate Travel Plan" class="fa fa-car"></i></a><br>
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer"> <i data-toggle="tooltip" title="Upload Profile Sheet" class="fa fa-file-excel-o"></i></a> <br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer">Thank You Email <i class="fa fa-envelope"></i></a>
                                   @endhasrole
                                   @hasrole('BusinessSchool')
@@ -1493,10 +1493,10 @@
 {{--<script src="dist/js/pages/dashboard.js"></script>--}}
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
+{{--<script--}}
+{{--  src="https://code.jquery.com/jquery-3.5.1.js"--}}
+{{--  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="--}}
+{{--  crossorigin="anonymous"></script>--}}
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 <script>

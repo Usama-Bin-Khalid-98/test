@@ -13,7 +13,10 @@ if (!function_exists('human_file_size')) {
 
     function getFirst($model, $where)
     {
+//        DB::enableQueryLog();
         $result = $model::where($where)->get()->first();
+        //dd(DB::getQueryLog());
+//dd($result);
         return $result;
     }
 

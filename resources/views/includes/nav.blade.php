@@ -903,6 +903,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
 
           @hasrole('PeerReviewer')
+            <li class="{{(request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="fa fa-files-o text-yellow"></i>Eligibility Screening Report</a></li>
             <li class="{{(request()->is('PeerReviewerReport')) ? 'active' : '' }}"><a href="{{url('PeerReviewerReport')}}"><i class="fa fa-list text-yellow"></i>Peer Reviewer Registrations Report</a></li>
           @endhasrole
 
@@ -922,14 +923,14 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           <li  class="{{ (request()->is('accreditationACScheduler')) ? 'active' : '' }}"><a href="{{url('accreditationACScheduler')}}"><i class="fa fa-calendar text-green"></i>Accreditation AC Scheduler</a></li>
           @endhasrole
 
+
+          @hasanyrole('NbeacFocalPerson|NBEACAdmin')
+          <li  class="{{ (request()->is('instituteFeedback')) ? 'active' : '' }}"><a href="{{url('instituteFeedback')}}"><i class="fa fa-backward text-yellow"></i>Institutional Feedback Form</a></li>
+          @endhasrole
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')
           <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file text-yellow"></i>Peer Review Report</a></li>
           <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-red"></i>Notifications</a></li>
           @endhasrole
-          @hasanyrole('NbeacFocalPerson|NBEACAdmin')
-          <li  class="{{ (request()->is('instituteFeedback')) ? 'active' : '' }}"><a href="{{url('instituteFeedback')}}"><i class="fa fa-backward text-yellow"></i>Institutional Feedback Form</a></li>
-          @endhasrole
-
           @hasanyrole('AccreditationAwardCommittee')
           <li class="{{ (request()->is('AACommittee')) ? 'active' : '' }}"><a href="{{url('AACommittee')}}"><i class="fa fa-meetup text-red"></i>Accreditation Award Committee</a></li>
           @endhasrole
