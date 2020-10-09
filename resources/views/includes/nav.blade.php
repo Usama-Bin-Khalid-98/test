@@ -858,11 +858,11 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 {{--            <li  class="{{ (request()->is('print')) ? 'active' : '' }}"><a href="{{url('print')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Print SAR</a></li>--}}
           @endhasrole
           @hasrole('NBEACAdmin')
-            <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-circle-o text-yellow"></i>Department Fee</a></li>
+            <li  class="{{ (request()->is('department-fee')) ? 'active' : '' }}"><a href="{{url('department-fee')}}"><i class="fa fa-money text-yellow"></i>Department Fee</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}">
-              <a href="{{url('desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>Registrations Desk Review
+              <a href="{{url('desk-review')}}"><i class="fa fa-search-plus text-blue " ></i>Registrations Desk Review
                   @if(@$RegDesk != 0)
                       <span class="pull-right-container">
                         <i class="badge bg-maroon pull-right">{{@$RegDesk}}</i>
@@ -876,12 +876,12 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report on Registraion</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-circle-o text-blue " ></i>Self Assessment Process Report</a></li>
+          <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-files-o text-blue " ></i>Self Assessment Process Report</a></li>
           @endhasrole
 {{--          @if($isActiveSAR)--}}
           @hasrole('NBEACAdmin|Mentor')
           <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}">
-              <a href="{{url('sar-desk-review')}}"><i class="fa fa-circle-o text-blue " ></i>SAR Desk Review
+              <a href="{{url('sar-desk-review')}}"><i class="fa fa-search text-blue " ></i>SAR Desk Review
                   @if($SarDesk != 0)
                       <span class="pull-right-container">
                         <i class="badge bg-maroon pull-right">{{@$SarDesk}}</i>
@@ -892,15 +892,12 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
 {{--          @endif--}}
           @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-circle-o text-green"></i>Nbeac Criteria</a></li>
+          <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-check-square-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-red"></i>Eligibility Screening</a></li>
           @endhasrole
 
-          @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yellow"></i>NBEAC System Settings</a></li>
-          @endhasrole
 
           @hasrole('PeerReviewer')
             <li class="{{(request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="fa fa-files-o text-yellow"></i>Eligibility Screening Report</a></li>
@@ -929,12 +926,15 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')
           <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file text-yellow"></i>Peer Review Report</a></li>
-          <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-red"></i>Notifications</a></li>
+{{--          <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-red"></i>Notifications</a></li>--}}
           @endhasrole
           @hasanyrole('AccreditationAwardCommittee')
           <li class="{{ (request()->is('AACommittee')) ? 'active' : '' }}"><a href="{{url('AACommittee')}}"><i class="fa fa-meetup text-red"></i>Accreditation Award Committee</a></li>
           @endhasrole
 
+          @hasrole('NBEACAdmin')
+          <li  class="{{ (request()->is('charter_types')) ? 'active' : '' }}"><a href="{{url('config/charter_types')}}"><i class="fa fa-gears text-yellow"></i>NBEAC System Settings</a></li>
+          @endhasrole
 
           </ul>
         </li>
