@@ -24,6 +24,10 @@ class CreateSurveyQuestionnairesTable extends Migration
             $table->foreign('business_school_id')
                 ->references('id')
                 ->on('business_schools');
+            $table->integer('campus_id')->unsigned()->nullable();
+            $table->foreign('campus_id')
+                ->references('id')
+                ->on('campuses');
             $table->integer('department_id')->unsigned()->nullable();
             $table->foreign('department_id')
                 ->references('id')

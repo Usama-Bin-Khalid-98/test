@@ -41,17 +41,31 @@ class SurveyQuestionnaireController extends Controller
             try {
 
                 $business_school_id = $request->all()['business_school_id'];
-                foreach ($request->all() as $questions) {
-                    //dd($questions['id']);
-                    $insert = SurveyQuestionnaire::create([
-                        'question_id' => $questions['id'],
-                        'business_school_id' => $business_school_id,
-                        'isChecked' => $questions['value']
-                    ]);
+                $department_id = $request->all()['department_id'];
+                $campus_id = $request->all()['campus_id'];
+                $check = SurveyQuestionnaire::where(
+                    [
+                        'business_school_id' =>$business_school_id,
+                        'campus_id' =>$campus_id,
+                        'department_id' => $department_id
+                    ])->exists();
+                if($check === false) {
+                    foreach ($request->all() as $questions) {
+                        //dd($questions['id']);
+                        $insert = SurveyQuestionnaire::create([
+                            'question_id' => $questions['id'],
+                            'business_school_id' => $business_school_id,
+                            'campus_id' => $campus_id,
+                            'department_id' => $department_id,
+                            'isChecked' => $questions['value']
+                        ]);
 
-                    if ($insert) {
-                        return response()->json(['success' => 'survey added successfully'], 200);
+                        if ($insert) {
+                            return response()->json(['success' => 'survey added successfully'], 200);
+                        }
                     }
+                }else{
+                    return response()->json(['success' => 'survey already added'], 200);
                 }
             }
             catch (\Exception $e)
