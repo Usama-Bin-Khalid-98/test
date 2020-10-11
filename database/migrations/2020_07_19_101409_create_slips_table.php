@@ -19,7 +19,7 @@ class CreateSlipsTable extends Migration
             $table->integer('business_school_id')->unsigned()->nullable();
             $table->foreign('business_school_id')
                 ->references('id')
-                ->on('business_schools');
+                ->on('campuses');
             $table->integer('department_id')->unsigned()->nullable();
             $table->foreign('department_id')
                 ->references('id')
