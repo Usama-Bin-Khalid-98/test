@@ -12,6 +12,13 @@ class SurveyQuestionnaireSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('survey_questionnaires')->insert(['question_id'=>'1','business_school_id'=>'1','isChecked'=>'yes','status'=>'active']);
+        DB::table('survey_questionnaires')
+            ->insert(['question_id'=>'1',
+                'business_school_id'=>'1',
+                'campus_id'=>'209',
+                'department_id'=>'1',
+                'isChecked'=>'yes',
+                'status'=>'active']
+            );
     }
 }
