@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StrategicPlan;
+use App\Models\Common\Slip;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -53,19 +54,35 @@ class StrategicPlanController extends Controller
         }
         try {
 
-            //dd($request->all());
+            $department_id = Auth::user()->department_id;
+
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
 
         @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
             //dd($period);
-            StrategicPlan::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'plan_period' => $period,
-                'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+            if($slip) {
+                StrategicPlan::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'plan_period' => $period,
+                    'aproval_date' => $request->aproval_date,
+                    'aproving_authority' => $request->aproving_authority,
+                    'isComplete' => 'yes',
+                    'type' => 'SAR',
+                    'created_by' => Auth::user()->id
+                ]);
+            }else {
+                StrategicPlan::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'plan_period' => $period,
+                    'aproval_date' => $request->aproval_date,
+                    'aproving_authority' => $request->aproving_authority,
+                    'isComplete' => 'yes',
+                    'type' => 'REG',
+                    'created_by' => Auth::user()->id
+                ]);
+            }
 
             return response()->json(['success' => 'Strategic Plan added successfully.']);
 
