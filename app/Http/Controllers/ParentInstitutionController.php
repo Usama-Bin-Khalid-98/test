@@ -56,32 +56,26 @@ class ParentInstitutionController extends Controller
             $department_id = Auth::user()->department_id;
 
             $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+
+            if($slip){
+                $type = 'SAR';
+            }else{
+                $type = 'REG';
+            }
                 if($request->file('file')) {
                     $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/parent_institution';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
-
-                    if($slip) {
                         ParentInstitution::create([
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'file' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
-                            'type' => 'SAR',
+                            'type' => $type,
                             'created_by' => Auth::user()->id
                         ]);
-                    }else {
-                        ParentInstitution::create([
-                            'campus_id' => Auth::user()->campus_id,
-                            'department_id' => Auth::user()->department_id,
-                            'file' => $path . '/' . $imageName,
-                            'isComplete' => 'yes',
-                            'type' => 'REG',
-                            'created_by' => Auth::user()->id
-                        ]);
-                    }
 
 
                     return response()->json(['success' => 'Document added successfully.']);

@@ -61,19 +61,10 @@ class BudgetaryInfoController extends Controller
             $department_id = Auth::user()->department_id;
             $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip) {
-                BudgetaryInfo::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'year' => $request->year,
-                    'uni_budget' => $request->uni_budget,
-                    'uni_proposed_budget' => $request->uni_proposed_budget,
-                    'budget_receive' => $request->budget_receive,
-                    'budget_type' => $request->budget_type,
-                    'isComplete' => 'yes',
-                    'type' => 'SAR',
-                    'created_by' => Auth::user()->id
-                ]);
+                $type = 'SAR';
             }else {
+                $type = 'REG';
+            }
                 BudgetaryInfo::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
@@ -83,10 +74,9 @@ class BudgetaryInfoController extends Controller
                     'budget_receive' => $request->budget_receive,
                     'budget_type' => $request->budget_type,
                     'isComplete' => 'yes',
-                    'type' => 'REG',
+                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
-            }
 
             return response()->json(['success' => 'Budgetary Information added successfully.']);
 

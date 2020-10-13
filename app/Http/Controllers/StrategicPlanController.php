@@ -58,9 +58,15 @@ class StrategicPlanController extends Controller
 
             $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
 
+            if($slip){
+                $type = 'SAR';
+            }else{
+                $type = 'REG';
+            }
+
         @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
             //dd($period);
-            if($slip) {
+
                 StrategicPlan::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
@@ -68,21 +74,9 @@ class StrategicPlanController extends Controller
                     'aproval_date' => $request->aproval_date,
                     'aproving_authority' => $request->aproving_authority,
                     'isComplete' => 'yes',
-                    'type' => 'SAR',
+                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
-            }else {
-                StrategicPlan::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'plan_period' => $period,
-                    'aproval_date' => $request->aproval_date,
-                    'aproving_authority' => $request->aproving_authority,
-                    'isComplete' => 'yes',
-                    'type' => 'REG',
-                    'created_by' => Auth::user()->id
-                ]);
-            }
 
             return response()->json(['success' => 'Strategic Plan added successfully.']);
 

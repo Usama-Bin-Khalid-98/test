@@ -56,6 +56,11 @@ class ScopeController extends Controller
             $department_id = Auth::user()->department_id;
 
             $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type='REG';
+            }
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
             if (Scope::where(['campus_id' => auth()->user()->campus_id,'department_id'=> auth()->user()->department_id, 'program_id' => $request->program_id, 'level_id' => $request->level_id] )->exists()) {
                 return response()->json(['error' => 'Record already Exists.'], 422);
@@ -64,21 +69,12 @@ class ScopeController extends Controller
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
-                if($slip) {
                 $campus_id = auth()->user()->campus_id;
                 $department_id = auth()->user()->department_id;
                 $created_id = auth()->user()->id;
-                $request->merge(['campus_id' => $campus_id,'department_id' => $department_id,'created_by'=>$created_id, 'isComplete' =>'yes','type'=>'SAR'] );
+                $request->merge(['campus_id' => $campus_id,'department_id' => $department_id,'created_by'=>$created_id, 'isComplete' =>'yes','type'=>$type] );
                 $create = Scope::create($request->all());
                 return response()->json(['success' => 'Updated successfully.'], 200);
-            }else {
-                    $campus_id = auth()->user()->campus_id;
-                    $department_id = auth()->user()->department_id;
-                    $created_id = auth()->user()->id;
-                    $request->merge(['campus_id' => $campus_id,'department_id' => $department_id,'created_by'=>$created_id, 'isComplete' =>'yes','type'=>'REG'] );
-                    $create = Scope::create($request->all());
-                    return response()->json(['success' => 'Updated successfully.'], 200);
-                }
             }
         }catch (Exception $e)
         {

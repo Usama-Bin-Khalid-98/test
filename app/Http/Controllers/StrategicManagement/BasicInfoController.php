@@ -114,14 +114,17 @@ class BasicInfoController extends Controller
         try {
             $department_id = Auth::user()->department_id;
             $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
             if($validation->fails())
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
 
-                if($slip) {
-
                     $update = BusinessSchool::where('id', $id)
                         ->update(
                             [
@@ -137,35 +140,11 @@ class BasicInfoController extends Controller
                                 'sector' => $request->sector,
                                 'profit_status' => $request->profit_status,
                                 'isCompleted' => 'yes',
-                                'type' => 'SAR',
+                                'type' => $type,
                                 'hierarchical_context' => $request->hierarchical_context,
 
                             ]
                         );
-                }else {
-
-                    $update = BusinessSchool::where('id', $id)
-                        ->update(
-                            [
-                                'contact_person' => $request->contact_person,
-                                'year_estb' => $request->year_estb,
-                                'address' => $request->address,
-                                'web_url' => $request->web_url,
-                                'campus_year_estb' => $request->campus_year_estb,
-                                'date_charter_granted' => $request->date_charter_granted,
-                                'charter_number' => $request->charter_number,
-                                'charter_type_id' => $request->charter_type_id,
-                                'institute_type_id' => $request->institute_type_id,
-                                'sector' => $request->sector,
-                                'profit_status' => $request->profit_status,
-                                'isCompleted' => 'yes',
-                                'type' => 'REG',
-                                'hierarchical_context' => $request->hierarchical_context,
-
-                            ]
-                        );
-
-                }
                 //dd('coning else', $update);
                 $updateUser = User::find(Auth::id())
                           ->update(['designation_id'=> $request->designation_id, 'cao_name' => $request->contact_person]);
