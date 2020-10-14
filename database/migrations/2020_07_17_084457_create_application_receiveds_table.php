@@ -36,6 +36,7 @@ class CreateApplicationReceivedsTable extends Migration
             $table->string('degree_awarding_criteria',100);
             $table->enum('isComplete', ['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('type', ['SAR','REG'])->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

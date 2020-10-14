@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
+use App\Models\Common\Slip;
 use App\Models\Common\Semester;
 use App\Models\Faculty\WorkLoad;
 use App\Models\Common\Designation;
@@ -55,6 +56,14 @@ class WorkLoadController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             WorkLoad::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -67,6 +76,7 @@ class WorkLoadController extends Controller
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'semester_id' => $request->semester,
                 'isCompleted' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

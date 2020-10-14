@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility\BusinessSchoolFacility;
 use Illuminate\Http\Request;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
@@ -61,6 +62,14 @@ class BusinessSchoolFacilityController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             foreach ($request->all() as $key => $facility){
                 //dd();ount]['id']);
                 foreach ($facility as $value){
@@ -71,6 +80,7 @@ class BusinessSchoolFacilityController extends Controller
                     'facility_id' => $value['id'],
                     'remark' => $value['remark'],
                     'isComplete' => 'yes',
+                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
 

@@ -37,6 +37,7 @@ class CreateFacultyTeachingCources extends Migration
             $table->integer('tc_program2');
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');
+            $table->enum('type',['SAR','REG'])->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

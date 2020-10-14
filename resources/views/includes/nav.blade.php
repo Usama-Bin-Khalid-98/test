@@ -559,14 +559,13 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$research==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-
-                    <li  class="{{ (request()->is('oric')) ? 'active' : '' }}"><a href="{{url('oric')}}">5.1 Oric<span class="pull-right-container">
+              {{--SAR Menu--}}
+              @if($isActiveSAR)
+                  <li  class="{{ (request()->is('oric')) ? 'active' : '' }}"><a href="{{url('oric')}}">5.1 Oric<span class="pull-right-container">
                         <span class="text text-{{$oric==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$oric==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-              {{--SAR Menu--}}
-              @if($isActiveSAR)
                     <li  class="{{ (request()->is('research-center')) ? 'active' : '' }}"><a href="{{url('research-center')}}">5.2 Research Center<span class="pull-right-container">
                         <span class="text text-{{$research_center==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$research_center==='C'?'fa-check-square':'fa-minus-square'}}" ></i>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty\FacultyTeachingCources;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use App\Models\Common\Designation;
 use App\LookupFacultyType;
@@ -57,6 +58,14 @@ class FacultyTeachingCourcesController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             FacultyTeachingCources::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -66,6 +75,7 @@ class FacultyTeachingCourcesController extends Controller
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
                 'isCompleted' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

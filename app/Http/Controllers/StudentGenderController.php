@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\StudentGender;
 use App\Models\StrategicManagement\Scope;
+use App\Models\Common\Slip;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,12 @@ class StudentGenderController extends Controller
         try {
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $dept_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
             StudentGender::create([
                 'campus_id' => $uni_id,
                 'department_id' => $dept_id,
@@ -61,6 +68,7 @@ class StudentGenderController extends Controller
                 'male' => $request->male,
                 'female' => $request->female,
                 'isComplete' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 
