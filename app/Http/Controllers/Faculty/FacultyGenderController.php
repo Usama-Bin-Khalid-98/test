@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Models\Faculty\FacultyGender;
 use App\BusinessSchool;
+use App\Models\Common\Slip;
 use App\LookupFacultyType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -68,6 +69,14 @@ class FacultyGenderController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             FacultyGender::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -75,6 +84,7 @@ class FacultyGenderController extends Controller
                 'male' => $request->male,
                 'female' => $request->female,
                 'isCompleted' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 
