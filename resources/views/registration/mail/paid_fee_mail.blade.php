@@ -353,28 +353,26 @@
                                         <p>AOA,</p>
                                         <p></p>
 
-                                        <p>Dear {{@$data['nbeac']->director}},</p>
+                                        <p>Dear {{@$data['school']->user->name}},</p>
                                         <p>HoD & Dean,</p>
-                                        <p>Director of {{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}})</p>
+                                        <p>University : {{@$data['school']->name}}</p>
+                                        <p>Campus : {{@$data['school']->campus->location}}</p>
 
                                         <p>Hope you are doing well,</p>
 
-                                        <p>This email is with reference to registration fee received from {{@$data['school']->name}}, {{@$data['school']->campus->location}} it is acknowledge that we received the registration fee. </p>
-                                        <p>please check the payment if received approve and forward the case to Desk review.</p>
-                                        <p>{{@$data['slip']->cheque_no?'Cheque No:'. $data['slip']->cheque_no:''}} Amount Rs: 50,000/- dated
-                                            {{@$data['slip']->transaction_date}}.</p>
-
-{{--                                        <p>The registration application is under desk review process.  You can check the status of your application on the following link:</p>--}}
+                                        <p>Thank you for submitting your registration fee to nbeac, This is an auto generated email, Soon you will receive an approvement email once the NBEAC admin receive and approve your payment.</p>
+                                        <p>if you have any query feel free to contact us. </p>
+                                        <p>You can check the status of your application on the registration invoice page:</p>
 
                                         <p>Thank You.</p>
 
                                         <p>Best Regards,</p>
-                                        <p>{{@$data['school']->user->name}}</p>
-                                        <p>{{@$data['school']->name}} - Campus: ({{@$data['school']->campus->location}}),</p>
-                                        <i>Address: {{@$data['school']->user->address}}</i><br/>
-                                        <i>Phone (Off): {{@$data['school']->user->contact_no}}</i><br/>
-{{--                                        <i>Fax: {{@$data['school']->fax}}</i><br/>--}}
-                                        <i>Web: <a href="{{@$data['school']->user->web_url}}">{{@$data['school']->user->web_url}}</a></i>
+                                        <p>{{@$data['nbeac']->chairman}}</p>
+                                        <p>{{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}}),</p>
+                                        <i>Address: {{@$data['nbeac']->address}}</i><br/>
+                                        <i>Phone (Off): {{@$data['nbeac']->phone1}} || Cell: {{@$data['nbeac']->phone2}}</i><br/>
+                                        <i>Fax: {{@$data['nbeac']->fax}}</i><br/>
+                                        <i>Web: <a href="{{@$data['nbeac']->website}}"> www.nbeac.org.pk</a></i>
                                     </td>
                                 </tr>
                             </table>
@@ -390,7 +388,7 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="content-block">
-                                <span class="apple-link">{{@$data['school']->name}} (Campus : {{@$data['school']->campus->location}})</span>
+                                <span class="apple-link">{{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}})</span>
                                 <br> Don't like these emails? <a href="http://nbeac.org.pk">Unsubscribe</a>.
                             </td>
                         </tr>

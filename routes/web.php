@@ -209,6 +209,7 @@ Route::get('/email', function() {
          Route::get('registrations', 'StrategicManagement\SlipController@registrations');
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
           Route::Post('MentoringInvoiceStatus', 'MentoringInvoiceController@approvementStatus');
+          Route::resource('basic-info', 'NbeacBasicInfoController');
           Route::prefix('config')->group(function (){
             //        Route::resource('{table}', 'ConfigController');
             //   });

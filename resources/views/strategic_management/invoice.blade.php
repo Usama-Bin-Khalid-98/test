@@ -68,8 +68,8 @@
         <div class="col-sm-4 invoice-col">
           To
           <address>
-              <strong>Member Code: </strong> {{@$getInvoice->business_school->name}}Campus{{@$getInvoice->business_school->campus->name}}<br>
-              <strong>Location:</strong>{{@$getInvoice->business_school->campus->location}}<br>
+              <strong>Member Code: </strong> {{@$getInvoice->campus->business_school->name}} Campus {{@$getInvoice->campus->location}}<br>
+              <strong>Location:</strong>{{@$getInvoice->campus->location}}<br>
               <strong>Phone:</strong> {{@$getInvoice->user->contact_no}}<br>
               <strong>Email:</strong> {{@$getInvoice->user->email}}
           </address>
@@ -78,8 +78,8 @@
         <div class="col-sm-4 invoice-col">
           <b>Invoice #</b>{{@$getInvoice->invoice_no}}<br>
           <br>
-          <b>Payment Due:</b> 2/22/2021<br>
-          <b>Account:</b> 968-34567
+{{--          <b>Payment Due:</b> {{date('Y-m-d') }}<br>--}}
+{{--          <b>Account:</b> 968-34567--}}
         </div>
         <!-- /.col -->
       </div>
@@ -102,8 +102,8 @@
 
             <tr>
               <td>1</td>
-              <td>{{@$getInvoice->business_school->name}}</td>
-              <td>{{@$getInvoice->business_school->campus->location}}</td>
+              <td>{{@$getInvoice->campus->business_school->name}}</td>
+              <td>{{@$getInvoice->campus->location}}</td>
               <td>{{@$getInvoice->department->name}}</td>
               <td>{{@$getInvoice->department->department_fee->amount}}</td>
             </tr>

@@ -59,7 +59,7 @@
                     </span>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('config/course_types')}}" class="text-purple"><b>Cource Types</b> </a>
+                        <a href="{{url('config/course_types')}}" class="text-purple"><b>Course Types</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['CourseType']}}</span>
                     </span>

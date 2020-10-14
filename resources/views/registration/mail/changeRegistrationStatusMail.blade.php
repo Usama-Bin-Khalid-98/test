@@ -10,7 +10,7 @@
 
 <p>Hope you are doing well,</p>
 
-<p>This email is with reference to registration fee received from Newport Institute of Communications & Economics, Karachi it is acknowledge that we received the registration fee <span style="font-weight: bold"> Cheque No: {{@$data['cheque_no']}}, Amount Rs: 50,000/- dated {{@$data['transaction_date']}}. </span> </p>
+<p>This email is with reference to registration fee received from {{@$data['school']}}, Campus {{@$data['campus']}} it is acknowledge that we received the registration fee <span style="font-weight: bold"> Cheque No: {{@$data['cheque_no']}}, Amount Rs: 50,000/- dated {{@$data['transaction_date']}}. </span> </p>
 {{--<p>address: {{$content['address']}}</p>--}}
 
 <p style="color: #0b93d5;">The registration application is under desk review process.  You can check the status of your application on the following link: </p>
@@ -18,10 +18,14 @@
 <p>Thank You.</p>
 
 <p>Best Regards,</p>
-<p style="color: #1d68a7">Muhammad Irfan Khan || Assistant Manager-Accreditation<br>
-National Business Education Accreditation Council (NBEAC),</p>
-<p style="color: grey">201, 2nd Floor, HRD Division, Higher Education Commission, H-8, Islamabad<br>
-Phone (Off): +92-051-90800212 || Cell: +92-333-5126229</p>
+@php
+$nbeac = \App\Models\Config\NbeacBasicInfo::all()->first();
+@endphp
+<p style="color: #1d68a7">{{@$nbeac->director}} || Director<br>
+    {{@$nbeac->name}} ({{@$nbeac->short_name}}),</p>
+<p style="color: grey">{{@$nbeac->address}}<br>
+Phone (Off): {{@$nbeac->phone1}} || Cell: {{@$nbeac->phone2}}</p>
+Fax: {{@$nbeac->fax}}</p>
 
 </body>
 </html>
