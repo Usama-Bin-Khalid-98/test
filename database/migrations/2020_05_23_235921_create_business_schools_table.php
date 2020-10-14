@@ -32,6 +32,7 @@ class CreateBusinessSchoolsTable extends Migration
             $table->enum('status',['active','inactive']);
             $table->enum('isCompleted',['yes','no'])->default('no');
             $table->enum('hierarchical_context',['Affiliated', 'Constituent Part'] )->nullable();
+            $table->enum('type',['SAR', 'REG'] )->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

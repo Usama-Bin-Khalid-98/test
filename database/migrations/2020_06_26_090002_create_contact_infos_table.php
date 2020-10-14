@@ -26,6 +26,7 @@ class CreateContactInfosTable extends Migration
             $table->string('cv', 255);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
+            $table->enum('type',['SAR','REG'])->nullable();
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')

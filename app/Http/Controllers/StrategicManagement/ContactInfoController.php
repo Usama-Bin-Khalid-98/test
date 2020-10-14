@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StrategicManagement;
 
 use App\Models\StrategicManagement\ContactInfo;
+use App\Models\Common\Slip;
 use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -65,7 +66,12 @@ class ContactInfoController extends Controller
             $campus_id = auth()->user()->campus_id;
             $department_id = auth()->user()->department_id;
             $user_id = auth()->user()->id;
-           // dd($check);
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
 
                 if (!empty($request->ds_name)) {
                     $path = '';
@@ -95,6 +101,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->ds_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'updated_by' => auth()->user()->id,
                         ]);
                     } else {
@@ -117,6 +124,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->ds_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'campus_id' => auth()->user()->campus_id,
                             'department_id' => auth()->user()->department_id,
                             'created_by' => auth()->user()->id,
@@ -153,6 +161,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->hs_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'updated_by' => auth()->user()->id,
                         ]);
                     } else {
@@ -175,6 +184,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->hs_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'campus_id' => auth()->user()->campus_id,
                             'department_id' => auth()->user()->department_id,
                             'created_by' => auth()->user()->id,
@@ -209,6 +219,7 @@ class ContactInfoController extends Controller
                                 'job_title' => $request->fp_job_title,
                                 'cv' => $path . '/' . $imageName,
                                 'isComplete' => 'yes',
+                                'type' => $type,
                                 'updated_by' => auth()->user()->id,
                             ]);
                         }
@@ -232,6 +243,7 @@ class ContactInfoController extends Controller
                                 'job_title' => $request->fp_job_title,
                                 'cv' => $path . '/' . $imageName,
                                 'isComplete' => 'yes',
+                                'type' => $type,
                                 'campus_id' => auth()->user()->campus_id,
                                 'department_id' => auth()->user()->department_id,
                                 'created_by' => auth()->user()->id,
@@ -258,6 +270,7 @@ class ContactInfoController extends Controller
                         'job_title' => $request->fp_job_title,
                         'cv' => $path . '/' . $imageName,
                         'isComplete' => 'yes',
+                        'type' => $type,
                         'campus_id' => auth()->user()->campus_id,
                         'department_id' => auth()->user()->department_id,
                         'created_by' => auth()->user()->id,

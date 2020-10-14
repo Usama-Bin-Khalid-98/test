@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StudentEnrolment;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use App\Models\Common\Program;
 use Illuminate\Http\Request;
@@ -57,6 +58,13 @@ class StudentEnrolmentController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip) {
+                $type = 'SAR';
+            }else {
+                $type = 'REG';
+            }
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
             StudentEnrolment::create([
@@ -68,6 +76,7 @@ class StudentEnrolmentController extends Controller
                 'phd_level' => $request->phd_level,
                 'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level,
                 'isComplete' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

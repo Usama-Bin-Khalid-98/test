@@ -86,6 +86,7 @@ Route::get('/email', function() {
                 Route::resource('sources-funding','SourcesFundingController');
                 Route::resource('audit-report','AuditReportController');
                 Route::resource('parent-institution','ParentInstitutionController');
+
             });
 
     //        Route::resource('print','PrintController');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\ProgramPortfolio;
 use App\Models\StrategicManagement\Scope;
+use App\Models\Common\Slip;
 use App\Models\Common\CourseType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -58,6 +59,14 @@ class ProgramPortfolioController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             ProgramPortfolio::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -69,6 +78,7 @@ class ProgramPortfolioController extends Controller
                 'internship_req' => $request->internship_req,
                 'fyp_req' => $request->fyp_req,
                 'isComplete' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Program Portfolio added successfully.']);

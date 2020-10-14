@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StrategicManagement;
 
 use App\Models\Common\Designation;
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\Models\StrategicManagement\Affiliation;
 use Illuminate\Http\Request;
@@ -56,6 +57,14 @@ class AffiliationController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             Affiliation::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -64,6 +73,7 @@ class AffiliationController extends Controller
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id,
                 'isComplete' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
 
             ]);

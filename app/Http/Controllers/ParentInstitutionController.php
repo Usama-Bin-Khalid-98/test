@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\ParentInstitution;
+use App\Models\Common\Slip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -50,25 +51,32 @@ class ParentInstitutionController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-//            dd($fileName);
-                $path = ''; $imageName = '';
+
+
+            $department_id = Auth::user()->department_id;
+
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+
+            if($slip){
+                $type = 'SAR';
+            }else{
+                $type = 'REG';
+            }
                 if($request->file('file')) {
                     $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
                     $path = 'uploads/parent_institution';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
+                        ParentInstitution::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'file' => $path . '/' . $imageName,
+                            'isComplete' => 'yes',
+                            'type' => $type,
+                            'created_by' => Auth::user()->id
+                        ]);
 
-                    //dd($request->all());
-                    // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
-                    ParentInstitution::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'file' => $path.'/'.$imageName, 
-                        'isComplete' => 'yes', 
-                        'created_by' => Auth::user()->id 
-                ]);
 
                     return response()->json(['success' => 'Document added successfully.']);
                 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\BudgetaryInfo;
+use App\Models\Common\Slip;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -57,17 +58,25 @@ class BudgetaryInfoController extends Controller
         }
         try {
 
-            BudgetaryInfo::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'year' => $request->year,
-                'uni_budget' => $request->uni_budget,
-                'uni_proposed_budget' => $request->uni_proposed_budget,
-                'budget_receive' => $request->budget_receive,
-                'budget_type' => $request->budget_type,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip) {
+                $type = 'SAR';
+            }else {
+                $type = 'REG';
+            }
+                BudgetaryInfo::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'year' => $request->year,
+                    'uni_budget' => $request->uni_budget,
+                    'uni_proposed_budget' => $request->uni_proposed_budget,
+                    'budget_receive' => $request->budget_receive,
+                    'budget_type' => $request->budget_type,
+                    'isComplete' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
 
             return response()->json(['success' => 'Budgetary Information added successfully.']);
 
