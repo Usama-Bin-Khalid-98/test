@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Models\Faculty\FacultyStability;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -65,6 +66,14 @@ class FacultyStabilityController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             FacultyStability::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -75,6 +84,7 @@ class FacultyStabilityController extends Controller
                 'terminated' => $request->terminated,
                 'new_induction' => $request->new_induction,
                 'isCompleted' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

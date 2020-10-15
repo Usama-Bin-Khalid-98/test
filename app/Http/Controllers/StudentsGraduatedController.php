@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\StudentsGraduated;
 use App\Models\StrategicManagement\Scope;
+use App\Models\Common\Slip;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,12 @@ class StudentsGraduatedController extends Controller
         try {
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $dept_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
             StudentsGraduated::create([
                 'campus_id' => $uni_id,
                 'department_id' => $dept_id,
@@ -63,6 +70,7 @@ class StudentsGraduatedController extends Controller
                 'grad_std_t_2' => $request->grad_std_tt,
                 'grad_std_t_3' => $request->grad_std_ttt,
                 'isComplete' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

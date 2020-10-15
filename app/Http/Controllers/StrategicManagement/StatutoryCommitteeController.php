@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StrategicManagement;
 
 use App\Models\Common\Designation;
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\Models\StrategicManagement\StatutoryCommittee;
 use App\Http\Controllers\Controller;
@@ -53,6 +54,13 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
           for($i =0; $i<=count(@$request->all()); $i++)
           {
             $path = ''; $fileName = '';
@@ -77,6 +85,7 @@ class StatutoryCommitteeController extends Controller
                       'date_fourth_meeting' => $request->date_fourth_meeting[$i],
                       'file' => $path . '/' . $fileName,
                       'isComplete' => 'yes',
+                      'type' => $type,
                       'created_by' => Auth::user()->id
                   ]);
               }
