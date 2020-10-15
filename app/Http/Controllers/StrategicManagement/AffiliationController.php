@@ -26,8 +26,13 @@ class AffiliationController extends Controller
         $department_id = Auth::user()->department_id;
         $designations = Designation::all();
         $bodies = StatutoryBody::all();
-
-        $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+            }else {
+                $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+            }
         //dd($affiliations);
         return view('strategic_management.affiliations', compact('designations','bodies','affiliations'));
     }
@@ -57,8 +62,9 @@ class AffiliationController extends Controller
         }
         try {
 
+            $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip){
                 $type='SAR';
             }else {

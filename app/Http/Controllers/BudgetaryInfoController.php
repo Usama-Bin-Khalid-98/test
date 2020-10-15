@@ -28,7 +28,13 @@ class BudgetaryInfoController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $budgets  = BudgetaryInfo::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $budgets  = BudgetaryInfo::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $budgets  = BudgetaryInfo::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
 
          return view('strategic_management.budgetary_info', compact('budgets'));
     }
@@ -57,9 +63,9 @@ class BudgetaryInfoController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
+            $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip) {
                 $type = 'SAR';
             }else {

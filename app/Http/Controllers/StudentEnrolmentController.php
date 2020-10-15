@@ -29,7 +29,13 @@ class StudentEnrolmentController extends Controller
         $ms = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('ms_level');
         $phd = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('phd_level');
         $t_students = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('total_students');
-        $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
 
          return view('registration.student_enrolment.enrolment', compact('programs','enrolments','bs','ms','phd','t_students'));
     }
@@ -58,8 +64,9 @@ class StudentEnrolmentController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip) {
                 $type = 'SAR';
             }else {
