@@ -371,23 +371,24 @@ class SlipController extends Controller
                 $mailData['slip']= $data;
 
                 $getNbeacInfo = NbeacBasicInfo::all()->first();
+
                 $mailData['nbeac']= $getNbeacInfo;
 
 //                dd($data['school']);
                 $mailInfo = [
-                    'to' => $getNbeacInfo->email,
-                    'to_name' => $getNbeacInfo->director,
-                    'school' => $school->name,
-                    'from' => $school->user->email,
-                    'from_name' => $school->user->name,
+                    'to' => $getNbeacInfo->email??'test@nbeac.org.pk',
+                    'to_name' => $getNbeacInfo->director??'',
+                    'school' => $school->name??'',
+                    'from' => $school->user->email??'',
+                    'from_name' => $school->user->name??'',
                 ];
 
                 $mailSchoolInfo = [
                     'to' => $school->user->email,
                     'to_name' => $school->user->name,
-                    'school' => $getNbeacInfo->name,
-                    'from' => $getNbeacInfo->email,
-                    'from_name' => $getNbeacInfo->director,
+                    'school' => $getNbeacInfo->name??'',
+                    'from' => $getNbeacInfo->email??'',
+                    'from_name' => $getNbeacInfo->director??'',
                 ];
 
 //                dd($mailData);
