@@ -66,7 +66,7 @@ class ContactInfoController extends Controller
             $campus_id = auth()->user()->campus_id;
             $department_id = auth()->user()->department_id;
             $user_id = auth()->user()->id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip){
                 $type='SAR';
             }else {

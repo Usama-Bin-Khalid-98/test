@@ -24,8 +24,12 @@ class StudentsGraduatedController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-        $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
 
         return view('registration.student_enrolment.students_graduated', compact('programs','students'));
     }
@@ -56,7 +60,7 @@ class StudentsGraduatedController extends Controller
         try {
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $dept_id])->where('regStatus','SAR')->first();
+            $slip = Slip::where(['business_school_id'=>$uni_id,'department_id'=> $dept_id])->where('regStatus','SAR')->first();
             if($slip){
                 $type='SAR';
             }else {
