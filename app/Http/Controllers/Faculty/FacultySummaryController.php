@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Faculty;
 use App\Models\Faculty\FacultySummary;
 use App\Models\Common\Discipline;
 use App\Models\Common\FacultyQualification;
+use App\Models\Common\Slip;
 use App\Models\Common\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,7 +29,13 @@ class FacultySummaryController extends Controller
 
         $number = FacultySummary::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('number_faculty');
 
-        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
 
         return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries','number'));
         //
@@ -60,6 +67,15 @@ class FacultySummaryController extends Controller
         }
         try {
 
+            $campus_id = Auth::user()->campus_id;
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
                 for ($j = 0; $j < count($request->discipline_id); $j++) {
 //                    dd($request->faculty_qualification_id[$j+1][$i]);
@@ -70,6 +86,7 @@ class FacultySummaryController extends Controller
                         'discipline_id' => @$request->discipline_id[$j],
                         'number_faculty' => @$request->number_faculty[$j+1][$i],
                         'isComplete' => 'yes',
+                        'type' => $type,
                         'created_by' => Auth::user()->id
                     ]);
                 }

@@ -27,7 +27,13 @@ class ResearchSummaryController extends Controller
         $department_id = Auth::user()->department_id;
         $publications = PublicationType::where('status', 'active')->get();
         $publication_categories = PublicationCategory::all();
-        $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
        // dd($summaries);
         return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories'));
     }

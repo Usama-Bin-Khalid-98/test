@@ -26,7 +26,13 @@ class FacultyStudentRatioController extends Controller
         $department_id = Auth::user()->department_id;
         $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-        $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
 
          return view('registration.faculty.faculty_student_ratio', compact('programs','ratios'));
     }
