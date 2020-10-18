@@ -5,6 +5,7 @@ namespace App\Http\Controllers\StrategicManagement;
 use App\Models\StrategicManagement\StatutoryBody;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class StatutoryBodyController extends Controller
 {
@@ -37,6 +38,18 @@ class StatutoryBodyController extends Controller
     public function store(Request $request)
     {
         //
+//        dd($request->all());
+        $validator = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validator->fails()){
+            return response()->json(['message ' => $validator->messages()->all()], 422);
+        }
+
+        $insert = StatutoryBody::create(['name' => $request->name]);
+        if($insert)
+        {
+            return response()->json(['success' => 'Statutory body added successfully.', 'last_insert_id'=> $insert->id], 200);
+        }
+
     }
 
     /**
@@ -82,5 +95,17 @@ class StatutoryBodyController extends Controller
     public function destroy(StatutoryBody $statutoryBody)
     {
         //
+    }
+
+    protected function rules() {
+        return [
+            'name' => 'required',
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.',
+        ];
     }
 }

@@ -74,78 +74,46 @@
                         </textarea>
                 </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Attach Doc (Appendix-1C)</label>
-                                    <input type="file" name="file" id="file" >
-                                    <span class="text-red">Max upload file size 2mb.</span>
-                                     @if(@$get->file!=null)
-                                <p><a href="{{url(@$get->file)}}"><i class="fa fa-file-word-o"></i></a> </p>
-                                @endif
-                                </div>
-                            </div>
-
-
-                             <div class="col-md-12">
-                                <div class="form-group pull-right" style="margin-top: 40px">
-                                    <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
-                                </div>
-                            </div>
-                        </form>
-
-                        </div>
-                        <!-- /.box-body -->
-                        <!-- /.box -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="name">Attach Doc (Appendix-1C)</label>
+                        <input type="file" name="file" id="file" >
+                        <span class="text-red">Max upload file size 2mb.</span>
+                         @if(@$get->file!=null)
+                    <p><a href="{{url(@$get->file)}}"><i class="fa fa-file-word-o"></i></a> </p>
+                    @endif
                     </div>
-                    <!-- .box -->
-                    <!-- <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Mission Vision List</h3>
-                        </div>
-                        <!- /.box-header
-                        <div class="box-body">
-                            <table id="datatable" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Mission</th>
-                                    <th>Vision</th>
-                                    <th>Document</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($missions as $contact)
-                                <tr>
-                                    <td>{{$contact->campus->business_school->name}}</td>
-                                    <td>{{$contact->campus->location}}</td>
-                                    <td>{{$contact->mission}}</td>
-                                    <td>{{$contact->vision}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
-                                    <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","mission":"{{$contact->mission}}","vision":"{{$contact->vision}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-                                </tr>
-                                @endforeach
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="name">Mission Approval Date</label>
+                        <input type="date" name="mission_approval" id="mission_approval" >
+                    @endif
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="name">Vision Approval Date</label>
+                        <input type="date" name="vision_approval" id="vision_approval" >
+                    @endif
+                    </div>
+                </div>
 
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Business School Name</th>
-                                    <th>Campus</th>
-                                    <th>Mission</th>
-                                    <th>Vision</th>
-                                    <th>Document</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                     /.box-body 
-                    </div> -->
+
+                <div class="col-md-12">
+                    <div class="form-group pull-right" style="margin-top: 40px">
+                        <label for="sector">&nbsp;&nbsp;</label>
+                        <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <!-- /.box-body -->
+        <!-- /.box -->
+    </div>
+    <!-- .box -->
+
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
@@ -309,7 +277,7 @@
        <?php }else { ?>
 
 $('#form').submit(function (e) {
-             let id = $('#id').val(); 
+             let id = $('#id').val();
             let mission = CKEDITOR.instances.mission.getData();
             let vision = CKEDITOR.instances.vision.getData();
             let file = $('#file').val();
