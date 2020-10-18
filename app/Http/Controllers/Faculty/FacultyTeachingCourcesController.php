@@ -28,12 +28,17 @@ class FacultyTeachingCourcesController extends Controller
         $department_id = Auth::user()->department_id;
          $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
             $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
+        }*/
+
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
+        $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
+        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
+        $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where($where)->get();
 
 
          return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings'));

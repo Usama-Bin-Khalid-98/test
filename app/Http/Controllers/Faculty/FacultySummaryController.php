@@ -29,12 +29,17 @@ class FacultySummaryController extends Controller
 
         $number = FacultySummary::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('number_faculty');
 
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
             $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
+        }*/
+
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
+        $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
+        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
+        $summaries = FacultySummary::with('campus','faculty_qualification','discipline')->where($where)->get();
 
 
         return view('registration.faculty.summary_faculty', compact('qualification','discipline','summaries','number'));
