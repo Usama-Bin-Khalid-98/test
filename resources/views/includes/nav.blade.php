@@ -159,7 +159,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('mentoring-invoices'))?'active':''}} ">
               <a href="#" >
-                  <i class="fa fa-money " style="color: #D81B60"></i><span>Registration</span>
+                 <i class="fa fa-money " style="color: #D81B60"> </i><span>Registration</span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

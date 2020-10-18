@@ -73,6 +73,7 @@ Route::get('/email', function() {
         Route::group(['middleware' => ['role:BusinessSchool']], function () {
         //// Strategic Management
             Route::prefix('strategic')->group(function () {
+                Route::post('add-body-name','StrategicManagement\StatutoryBodyController@store');
                 Route::resource('basicinfo','StrategicManagement\BasicInfoController');
                 Route::resource('invoices','StrategicManagement\SlipController');
                 Route::post('generateInvoice','StrategicManagement\SlipController@generateInvoice');

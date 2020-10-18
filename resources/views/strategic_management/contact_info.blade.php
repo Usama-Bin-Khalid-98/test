@@ -58,9 +58,9 @@
                                 <table  class="table table-bordered table-stripped">
                                     <tr>
                                         <th></th>
-                                        <th>Dean of school</th>
-                                        <th>Head of school (if applicable)</th>
-                                        <th>NBEAC focal person (if different) </th>
+                                        <th>Dean of school </th>
+                                        <th>Head of school (if applicable) - Check if same <input type="checkbox" name="same_ds" id="same_hs"></th>
+                                        <th>NBEAC focal person (if different) - Check if same <input type="checkbox" name="same_fp" id="same_fp"></th>
                                     </tr>
                                     <tr>
                                         <td><strong>Name:</strong></td>
@@ -274,6 +274,57 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('#same_hs').change(function () {
+            if($(this).is(':checked')){
+                let name = $('#ds_name').val();
+                let email = $('#ds_email').val();
+                let ds_job_title = $('#ds_job_title').val();
+                let ds_tell_off = $('#ds_tell_off').val();
+                let ds_tell_cell = $('#ds_tell_cell').val();
+                $('#hs_name').val(name);
+                $('#hs_email').val(email);
+                $('#hs_job_title').val(ds_job_title);
+                $('#hs_tell_off').val(ds_tell_off);
+                $('#hs_tell_cell').val(ds_tell_cell);
+            }else{
+                let check = $(this).is(':checked');
+                console.log(check);
+                if(check == false) {
+                    $('#hs_name').val('');
+                    $('#hs_email').val('');
+                    $('#hs_job_title').val('');
+                    $('#hs_tell_off').val('');
+                    $('#hs_tell_cell').val('');
+                }
+            }
+        })
+
+        $('#same_fp').change(function () {
+            if($(this).is(':checked')){
+                let name = $('#ds_name').val();
+                let email = $('#ds_email').val();
+                let ds_job_title = $('#ds_job_title').val();
+                let ds_tell_off = $('#ds_tell_off').val();
+                let ds_tell_cell = $('#ds_tell_cell').val();
+                $('#fp_name').val(name);
+                $('#fp_email').val(email);
+                $('#fp_job_title').val(ds_job_title);
+                $('#fp_tell_off').val(ds_tell_off);
+                $('#fp_tell_cell').val(ds_tell_cell);
+            }else{
+                let check = $(this).is(':checked');
+                console.log(check);
+                if(check ===false) {
+                    $('#fp_name').val('');
+                    $('#fp_email').val('');
+                    $('#fp_job_title').val('');
+                    $('#fp_tell_off').val('');
+                    $('#fp_tell_cell').val('');
+                }
+            }
+        })
+
         /*Add Scope*/
         $('#form').submit(function (e) {
             let name = $('#ds_name').val();
@@ -288,7 +339,7 @@
             !ds_tell_cell?addClass('ds_tell_cell'):removeClass('ds_tell_cell');
             !ds_cv?addClass('ds_cv'):removeClass('ds_cv');
 
-            if(!name || !ds_tell_off|| !ds_tell_cell || !email || !ds_cv)
+            if(!name || !ds_tell_off|| !ds_tell_cell || !email)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
