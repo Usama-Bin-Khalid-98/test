@@ -39,7 +39,18 @@ class FacultyGenderController extends Controller
 
         $faculty_type = LookupFacultyType::get();
 
-        $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'department_id'=> $dept_id])->get();
+        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $dept_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'department_id'=> $dept_id])->where('type','SAR')->get();
+        }else {
+            $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'department_id'=> $dept_id])->where('type','REG')->get();
+        }*/
+
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $dept_id, 'regStatus' => 'SAR'])->first();
+        $where = ['campus_id'=> $campus_id,'department_id'=> $dept_id];
+        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
+        $genders = FacultyGender::with('campus','lookup_faculty_type')->where($where)->get();
+
 
          return view('registration.faculty.faculty_gender', compact('faculty_type','genders'));
     }

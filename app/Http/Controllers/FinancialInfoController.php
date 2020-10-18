@@ -32,6 +32,7 @@ class FinancialInfoController extends Controller
             $q->where('type', $income_type);
             })
             ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+            ->where('type','REG')
             ->get();
         $income_type ='expense';
         $infos_expense = FinancialInfo::with('income_source')

@@ -29,7 +29,13 @@ class BusinessSchoolFacilityController extends Controller
         $department_id = Auth::user()->department_id;
         $facility_types = Facility::with('facility_type')->get();
 
-        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
 
 
         return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));
