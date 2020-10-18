@@ -20,9 +20,9 @@ class Slip extends Model
     //
     protected $guarded = [];
 
-    public function business_school()
+    public function campus()
     {
-        return $this->belongsTo(BusinessSchool::class)->with('user', 'campus');
+        return $this->belongsTo(Campus::class, 'business_school_id', 'id')->with('user', 'business_school');
     }
 
     public function department()

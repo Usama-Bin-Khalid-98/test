@@ -446,6 +446,7 @@
                             <tr>
                                 <th>Business School Name</th>
                                 <th>Campus</th>
+                                <th>Department</th>
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
                                 <th>Email</th>
@@ -462,6 +463,7 @@
                                 <tr>
                                     <td>{{$user->business_school->name}}</td>
                                     <td>{{$user->campus->location??'Main Campus'}}</td>
+                                    <td>{{$user->department->name}}</td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->contact_no}}</td>
                                     <td>{{$user->email}}</td>
@@ -477,6 +479,7 @@
                             <tr>
                                 <th>Business School Name</th>
                                 <th>Campus</th>
+                                <th>Department</th>
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
                                 <th>Email</th>

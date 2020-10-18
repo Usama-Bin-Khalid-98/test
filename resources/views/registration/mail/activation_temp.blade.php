@@ -378,14 +378,14 @@
                                         <p>Department: {{@$content->department->name}}</p>
                                         <p>Account Type: {{@$content['user_type']}}</p>
                                         {{--<p>address: {{$content['address']}}</p>--}}
-                                        <a href="www.nbeac.org.pk">Login to Online Accreditation Application.</a>
+                                        <a href="http://www.nbeac.org.pk">Login to Online Accreditation Application.</a>
                                         <p>With Kind Regards,</p>
                                         <p>NBEAC</p>
                                         <p>National Business Education Accreditation Council,</p>
-                                        <p></p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</body>
+                                        <p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</p>
                                         <p>Phone (Off) 92 51 9080 0206-07</p>
                                         <p>Fax: +92 51 9080 0208</p>
-                                        <p>Web: <a href="www.nbeac.org.pk"> www.nbeac.org.pk</a></p>
+                                        <p>Web: <a href="http://www.nbeac.org.pk"> www.nbeac.org.pk</a></p>
                                          <p>Best Regards</p>
                                     </td>
                                 </tr>
@@ -403,12 +403,12 @@
                         <tr>
                             <td class="content-block">
                                 <span class="apple-link">National Business Education Accreditation Council (NBEAC)</span>
-                                <br> Don't like these emails? <a href="http://nbeac.pk">Unsubscribe</a>.
+                                <br> Don't like these emails? <a href="http://www.nbeac.org.pk">Unsubscribe</a>.
                             </td>
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                Powered by <a href="http://htmlemail.io">NBEAC</a>.
+                                Powered by <a href="http://www.nbeac.org.pk">NBEAC</a>.
                             </td>
                         </tr>
                     </table>
