@@ -26,6 +26,8 @@ class CreateMissionVisionsTable extends Migration
             $table->text('mission');
             $table->text('vision');
             $table->string('file', 255);
+            $table->string('mission_approval')->nullable();
+            $table->string('vision_approval')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

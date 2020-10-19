@@ -31,6 +31,8 @@ Route::get('/email', function() {
     Route::get('get-campuses', 'CampusController@getCampuses');
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
     Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
+    Route::post('add-discipline', 'DisciplineController@store');
+    Route::post('add-department', 'DepartmentController@store');
 
     Auth::routes(['verify' => true]);
     // Only verified users may enter...

@@ -77,7 +77,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="name">Attach Doc (Appendix-1C)</label>
-                        <input type="file" name="file" id="file" >
+                        <input type="file" name="file" id="file">
                         <span class="text-red">Max upload file size 2mb.</span>
                          @if(@$get->file!=null)
                     <p><a href="{{url(@$get->file)}}"><i class="fa fa-file-word-o"></i></a> </p>
@@ -87,15 +87,13 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="name">Mission Approval Date</label>
-                        <input type="date" name="mission_approval" id="mission_approval" >
-                    @endif
+                        <input type="text" name="mission_approval" id="mission_approval" class="form-control" value="{{@$get->mission_approval}}" >
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="name">Vision Approval Date</label>
-                        <input type="date" name="vision_approval" id="vision_approval" >
-                    @endif
+                        <input type="text" name="vision_approval" id="vision_approval" class="form-control" value="{{@$get->vision_approval}}" >
                     </div>
                 </div>
 
@@ -113,19 +111,13 @@
         <!-- /.box -->
     </div>
     <!-- .box -->
-
-                    <!-- /.box -->
-                </div>
-                <!-- Main content -->
-
-
-            </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.content -->
-
+        <!-- /.box -->
+    </div>
+    <!-- Main content -->
+</div>
+<!-- /.row -->
+<!-- /.row -->
+<!-- /.content -->
 
         </section>
 
@@ -166,7 +158,6 @@
                             </div>
                         </div>
 
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -174,8 +165,6 @@
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -199,6 +188,8 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -218,7 +209,10 @@
 </script>
     <script type="text/javascript">
 
-        $('.select2').select2()
+        $('.select2').select2();
+        $('#mission_approval, #vision_approval').datepicker({
+            autoclose:true
+        })
 
          $.ajaxSetup({
             headers: {
@@ -232,6 +226,8 @@
             let mission = CKEDITOR.instances.mission.getData();
             let vision = CKEDITOR.instances.vision.getData();
             let file = $('#file').val();
+            let mission_approval = $('#mission_approval').val();
+            let vision_approval = $('#vision_approval').val();
 
             !mission?addClass('mission'):removeClass('mission');
             !vision?addClass('vision'):removeClass('vision');
@@ -276,11 +272,13 @@
 
        <?php }else { ?>
 
-$('#form').submit(function (e) {
+        $('#form').submit(function (e) {
              let id = $('#id').val();
             let mission = CKEDITOR.instances.mission.getData();
             let vision = CKEDITOR.instances.vision.getData();
             let file = $('#file').val();
+           let mission_approval = $('#mission_approval').val();
+           let vision_approval = $('#vision_approval').val();
 
              !mission?addClass('mission'):removeClass('mission');
              !vision?addClass('vision'):removeClass('vision');
@@ -298,6 +296,8 @@ $('#form').submit(function (e) {
                     id:id,
                     mission:mission,
                     vision:vision,
+                    mission_approval:mission_approval,
+                    vision_approval:vision_approval,
                     file:file,
                 },
                 beforeSend: function(){

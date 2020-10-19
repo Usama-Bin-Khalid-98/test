@@ -246,7 +246,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">1.8 Approv of Strategic Plan<span class="pull-right-container">
+            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">1.8 Approved Strategic Plan<span class="pull-right-container">
                         <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$plan==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
