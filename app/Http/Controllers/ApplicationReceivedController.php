@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StrategicManagement\ApplicationReceived;
 use App\Models\StrategicManagement\Scope;
 use App\Models\Common\Semester;
+use App\Models\Common\Slip;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +30,12 @@ class ApplicationReceivedController extends Controller
         $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $semesters = Semester::where('status', 'active')->get();
 
-        $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
 
         return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
     }
@@ -60,6 +66,15 @@ class ApplicationReceivedController extends Controller
         }
         try {
 
+            $campus_id = Auth::user()->campus_id;
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             ApplicationReceived::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -71,6 +86,7 @@ class ApplicationReceivedController extends Controller
                 'semester_comm_date' => $request->semester_comm_date,
                 'degree_awarding_criteria'=>$request->degree_req,
                 'isComplete'=>'yes',
+                'type'=>$type,
                 'created_by' => Auth::user()->id
             ]);
 

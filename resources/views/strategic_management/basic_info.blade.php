@@ -42,6 +42,54 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="box collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title text-red">Read Me</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-file-pdf-o"></i></button>
+{{--                                    <ul class="dropdown-menu" role="menu">--}}
+{{--                                        <li><a href="#">Action</a></li>--}}
+{{--                                        <li><a href="#">Another action</a></li>--}}
+{{--                                        <li><a href="#">Something else here</a></li>--}}
+{{--                                        <li class="divider"></li>--}}
+{{--                                        <li><a href="#">Separated link</a></li>--}}
+{{--                                    </ul>--}}
+                                </div>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-success alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-sticky-note"></i>Note</h4>
+                                    <ol type="1">
+
+                                        <li><h5>Generate Invoice</h5>
+                                            <p>Generate invoice in invoices tab, before starting entries in registration forms.</p>
+                                        </li>
+                                        <li><h5>Upload Payment slip</h5>
+                                            <p>When pay the registration fee, upload the payment slip.</p>
+                                        </li>
+
+                                    </ol>
+
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <div class="col-md-12">
 
                     <div class="box box-primary">
                         <div class="box-header">

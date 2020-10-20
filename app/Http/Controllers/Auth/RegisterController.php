@@ -215,7 +215,7 @@ class RegisterController extends Controller
                     'recommend' => $data['rational_recommend'],
                     'user_id' => $data['recommended'],
                     'email' => $data['email'],
-                    'email_verified_at' => '',
+//                    'email_verified_at' => '',
                     'password' => Hash::make($data['password']),
                     'user_type' => $data['account_type'],
                     'status' => 'pending',

@@ -262,6 +262,36 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+
+    <div class="modal fade" id="add-other-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"> Add Name of Statutory Body. </h4>
+                </div>
+                <form role="form"method="post" >
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Name of Statutory Body</label>
+                                <input type="text" name="new_name_body" id="new_name_body" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" name="body_name" id="body_name" class="btn btn-info">add</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- /.modal -->
 
 
@@ -285,6 +315,14 @@
     </script>
     <script type="text/javascript">
 
+        $('#statutory_bodies_id').on('change', function () {
+            let val = $(this).val();
+            console.log('dropdoen val', val);
+            if(val == 7){
+                $('#add-other-modal').modal('show');
+            }
+
+        })
         $('.select2').select2()
 
          $.ajaxSetup({
@@ -342,6 +380,52 @@
         });
 
 
+         $('#body_name').on('click',function () {
+            let name = $('#new_name_body').val();
+            !name?addClass('new_name_body'):removeClass('new_name_body');
+
+            if(!name)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            // Yes button callback
+            $.ajax({
+                url:'{{url("strategic/add-body-name")}}',
+                type:'POST',
+                data: {name: name},
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                    let last_insert_id = response.last_insert_id
+                    if(last_insert_id)
+                    {
+                        console.log('name id', last_insert_id, 'name ', name);
+                        var $option = $("<option selected></option>").val(last_insert_id).text(name);
+
+                        $('#statutory_bodies_id').append($option).trigger('change');
+                    }
+
+                    $('#add-other-modal').modal('hide');
+                    // location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        });
+
+
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
@@ -353,7 +437,7 @@
             $('input[value='+data.status+']').iCheck('check');
         });
 
-$('#updateForm').submit(function (e) {
+        $('#updateForm').submit(function (e) {
             let name = $('#edit_name').val();
             let designation_id = $('#edit_designation_id').val();
             let affiliation = $('#edit_affiliation').val();

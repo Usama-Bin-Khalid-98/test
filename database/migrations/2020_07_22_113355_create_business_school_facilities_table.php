@@ -30,6 +30,7 @@ class CreateBusinessSchoolFacilitiesTable extends Migration
             $table->string('remark',250)->nullable();
             $table->enum('isComplete', ['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->enum('type', ['SAR','REG'])->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

@@ -74,17 +74,35 @@
                                 <div class="timeline-body">
                                         <!-- /.box-header -->
                                         <div class="box-body">
-                                            <div class="col-md-4">
+                                            <div class="col-md-12">
+                                                <div class="form-group @error('account_type') has-error @enderror">
+                                                    <label for="name">Account Type</label>
+                                                    <p><input type="radio" name="account_type" id="BusinessSchool" class="flat-red" value="BusinessSchool" {{ old('account_type') == 'BusinessSchool' ? 'checked' : '' }}><span class="status">Business School</span></p>
+                                                    <p><input type="radio" name="account_type" id="PeerReviewer" class="flat-red" value="PeerReviewer" {{ old('account_type') == 'PeerReviewer' ? 'checked' : '' }}><span class="status">Peer Reviewer</span></p>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" id="questionnaire-dev" style="display: none;">
                                                 <div class="form-group">
-                                                    <label for="name">Contact Person Name</label>
-                                                    <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
-                                                    @error('name')
-                                                        <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
+                                                    <label for="Desk Review">Desk Review Questionnaire</label>
+                                                    <input type="hidden" id="questionnaire" name="questionnaire">
+                                                    <span class="input-group-btn">
+                                                          <button type="button" data-toggle="modal" data-target="#question-modal"  class="btn btn-info btn-flat">
+                                                              click to fill the questionnaire
+                                                          </button>
+                                                        </span>
+                                                    <span class="text-red">Fill the questionnaire before submission.</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('name') has-error @enderror">
+                                                    <label for="name">Contact Person Name</label>
+                                                    <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group @error('designation_id') has-error @enderror">
                                                     <label for="name">Designation</label>
                                                     <select name="" id="" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Designation</option>
@@ -92,60 +110,42 @@
                                                             <option value="{{$designation->id}}" {{old('designation_id')==$designation->id?'selected':''}}>{{$designation->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('designation_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('cnic') has-error @enderror">
                                                     <label for="email">CNIC</label>
                                                     <input type="text" data-inputmask="'mask': '99999-9999999-9'" name="cnic" id="cnic" value="{{old('cnic')}}" class="form-control">
-                                                    @error('cnic')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('contact_no') has-error @enderror">
                                                     <label for="name">Contact No</label>
                                                     <input type="text" data-inputmask="'mask': '0399-99999999'" name="contact_no" id="contact_no" value="{{old('contact_no')}}" class="form-control" maxlength="12">
-                                                    @error('contact_no')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('email') has-error @enderror">
                                                     <label for="email">Email</label>
                                                     <input type="email" name="email" id="email" value="{{old('email')}}" class="form-control">
-                                                    @error('email')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('password') has-error @enderror">
                                                     <label for="email">Password</label>
                                                     <input type="password" name="password" id="password" value="{{old('password')}}" class="form-control">
-                                                    @error('password')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" style="margin-bottom: 0px;">
+                                                <div class="form-group @error('password_confirmation') has-error @enderror" style="margin-bottom: 0px;">
                                                     <label for="email">Confirm Password</label>
                                                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
-                                                    @error('password_confirmation')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('country') has-error @enderror">
                                                     <label for="name">Country</label>
                                                     <select name="country" id="country"  class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Country</option>
@@ -153,42 +153,26 @@
                                                             <option value="{{$country->admin??$country->name->common}}" {{old('country')===$country->name->common?'selected':'' }}>{{$country->admin??$country->name->common}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('country')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" style="margin-bottom: 21px;">
+                                                <div class="form-group @error('city') has-error @enderror" style="margin-bottom: 21px;">
                                                     <label for="name">City</label>
                                                     <select name="city" id="city" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select City</option>
                                                     </select>
-                                                    @error('city')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
+
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
-                                                <div class="form-group">
+                                            <div class="col-md-8">
+                                                <div class="form-group @error('address') has-error @enderror">
                                                     <label for="name">Address</label>
                                                     <textarea name="address" id="address" class="form-control">{{old('address')}}</textarea>
-                                                    @error('address')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
+
                                                 </div>
                                             </div>
-                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="name">Account Type</label>
-                                                    <p><input type="radio" name="account_type" id="BusinessSchool" class="flat-red" value="BusinessSchool" {{ old('account_type') == 'BusinessSchool' ? 'checked' : '' }}><span class="status">Business School</span></p>
-                                                    <p><input type="radio" name="account_type" id="PeerReviewer" class="flat-red" value="PeerReviewer" {{ old('account_type') == 'PeerReviewer' ? 'checked' : '' }}><span class="status">Peer Reviewer</span></p>
-                                                    @error('account_type')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <!-- /.box-body -->
                                 </div>
@@ -207,7 +191,7 @@
                                         <!-- /.box-header -->
                                         <div class="box-body">
                                             <div class="form-row col-md-12">
-                                                <div class="form-group col-md-4" style="margin-bottom: 10px">
+                                                <div class="form-group col-md-8" style="margin-bottom: 10px">
                                                     <label for="name" class="@error('business_school_id')text-red @enderror">Business/Institute</label>
                                                     <div class="input-group">
                                                         <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
@@ -223,16 +207,17 @@
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="name">Cheif Admin Officer</label>
-                                                    <input type="text" name="cao_name" id="cao_name" value="{{old('cao_name')}}" class="form-control">
-                                                    @error('name')
-                                                        <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
+                                                    <div class="form-group @error('campus_id') has-error @enderror" style="margin-bottom: 20px">
+                                                        <label for="campus">Campus</label>
+                                                        <select name="campus_id" id="campus_id" class="form-control select2">
+                                                            <option value="">Select Campus</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('designation_id') has-error @enderror">
                                                     <label for="name">Designation</label>
                                                     <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Designation</option>
@@ -240,61 +225,41 @@
                                                             <option value="{{$designation->id}}" {{old('designation_id')==$designation->id?'selected':''}}>{{$designation->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('designation_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
-                                            </div>
-
-
                                             <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="campus">Campus</label>
-                                                    <select name="campus_id" id="campus_id" class="form-control select2">
-                                                        <option value="">Select Campus</option>
-                                                    </select>
-                                                </div>
-
-
-                                                <div class="form-group col-md-4">
-                                                    <label for="name">Discipline</label>
-                                                    <select name="discipline_id" id="discipline_id" class="form-control select2" style="width: 100%;">
-                                                        <option value="">Select Discipline</option>
-                                                        @foreach($disciplines as $discipline)
-                                                            <option value="{{$discipline->id}}" {{old('discipline_id')==$discipline->id?'selected':''}}>{{$discipline->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('discipline_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <label for="name">Department Name</label>
-                                                    <select name="department_id" id="department_id" class="form-control select2" style="width: 100%;">
-                                                        <option value="">Select Department</option>
-                                                        @foreach($departments as $program)
-                                                            <option value="{{$program->id}}" {{old('department_id')==$program->id?'selected':''}}>{{$program->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('department_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label for="Desk Review">Desk Review Questionnaire</label>
-                                                        <input type="hidden" id="questionnaire" name="questionnaire">
-                                                        <span class="input-group-btn">
-                                                          <button type="button" data-toggle="modal" data-target="#question-modal"  class="btn btn-info btn-flat">
-                                                              click to fill the questionnaire
-                                                          </button>
-                                                        </span>
-                                                        <span class="text-red">Fill the questionnaire before submission.</span>
+                                                <div class="col-md-4">
+                                                    <div class="form-group @error('cao_name') has-error @enderror" style="margin-bottom: 0px">
+                                                        <label for="name">Name of Chief Administrative Office</label>
+                                                        <input type="text" name="cao_name" id="cao_name" value="{{old('cao_name')}}" class="form-control">
                                                     </div>
                                                 </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group @error('discipline_id') has-error @enderror">
+                                                        <label for="name">Discipline</label>
+                                                        <select name="discipline_id" id="discipline_id" class="form-control select2" style="width: 100%;">
+                                                            <option value="">Select Discipline</option>
+                                                            @foreach($disciplines as $discipline)
+                                                                <option value="{{$discipline->id}}" {{old('discipline_id')==$discipline->id?'selected':''}}>{{$discipline->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group @error('department_id') has-error @enderror">
+                                                        <label for="name">Department Name</label>
+                                                        <select name="department_id" id="department_id" class="form-control select2" style="width: 100%;">
+                                                            <option value="">Select Department</option>
+                                                            @foreach($departments as $program)
+                                                                <option value="{{$program->id}}" {{old('department_id')==$program->id?'selected':''}}>{{$program->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-md-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group @error('undertaking') has-error @enderror">
 {{--                                                        <label for="Desk Review">Undertaking : </label>--}}
                                                         <input type="checkbox" id="undertaking" name="undertaking" class="flat-red" {{old('undertaking') === 'on'?'checked':''}}>
                                                         <span class="text-black">
@@ -387,7 +352,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="name">Degree</label>
+                                                    <label for="name">Degree Title</label>
                                                     <select name="degree_id" id="degree_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Degree</option>
                                                         @foreach($degrees as $degree)
@@ -656,6 +621,62 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
+
+            <div class="modal fade" id="discipline_modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Add New Discipline</h4>
+                        </div>
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="discipline_name">Discipline Name</label>
+                                            <input type="discipline_name" id="discipline_name" class="form-control">
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="button" class="btn btn-info" value="Add" id="add_discipline">
+                                    </div>
+                            </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <div class="modal fade" id="department_modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Add New Department</h4>
+                        </div>
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="discipline_name">Department Name</label>
+                                            <input type="department_name" id="department_name" class="form-control">
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="button" class="btn btn-info" value="Add" id="add_department">
+                                    </div>
+                            </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
             <!-- /.modal -->
         </section>
         <!-- /.content -->
@@ -675,13 +696,117 @@
     <script>
         //Initialize Select2 Elements
         $('.select2').select2()
+        $('#country').select2().val('Pakistan').trigger('change');
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
+        $('#discipline_id').on('change', function () {
+            let val = $(this).val();
+            if(val === '5')
+            {
+                $('#discipline_modal').modal('show');
+            }
+        });
 
+        $('#department_id').on('change', function () {
+            let val = $(this).val();
+            if(val === '5')
+            {
+                $('#department_modal').modal('show');
+            }
+        });
+
+        $('#add_discipline').on('click', function () {
+            let discipline_name = $('#discipline_name').val();
+            !discipline_name?addClass('discipline_name'):removeClass('discipline_name');
+            if(!discipline_name){
+                Notiflix.Notify.Failure("Discipline name field is required.");
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{{url('add-discipline')}}",
+                data: {name:discipline_name},
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    let insert_id = response.insert_id;
+                    if(insert_id){
+
+                        let options = $('<option selected></option>').val(insert_id).text(discipline_name);
+                        $('#discipline_id').append(options).trigger('change');
+                    }
+                    $('#discipline_modal').modal('hide');
+                    console.log('response here', response);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+
+        })
+
+        $('#add_department').on('click', function () {
+            let department_name = $('#department_name').val();
+            !department_name?addClass('department_name'):removeClass('department_name');
+            if(!department_name){
+                Notiflix.Notify.Failure("Discipline name field is required.");
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{{url('add-department')}}",
+                data: {name:department_name},
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    let insert_id = response.insert_id;
+                    if(insert_id){
+
+                        let options = $('<option selected></option>').val(insert_id).text(department_name);
+                        $('#department_id').append(options).trigger('change');
+                    }
+                    $('#department_modal').modal('hide');
+                    console.log('response here', response);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+
+        })
         $('input[name=account_type]').on('ifChecked', function(e){
             console.log(' account type ', $(this).val());
             if($(this).val() !== 'BusinessSchool') {
@@ -692,26 +817,35 @@
             let toggle = $(this).val();
 
             (toggle==='BusinessSchool')?$('#business-school-tab').toggle('slow'):$('#business-school-tab').fadeOut('slow');
+            (toggle==='BusinessSchool')?$('#questionnaire-dev').toggle('show'):'';
             (toggle==='PeerReviewer')?$('#peer-review-tab').toggle('slow'):$('#peer-review-tab').fadeOut('slow');
+            (toggle==='PeerReviewer')?$('#questionnaire-dev').toggle('hide'):'';
 
         });
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+
         $("#submit").on('click', function () {
 
             let business_school_id = $('#business_school_id').val();
-            !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
-            if(!business_school_id){
-                Notiflix.Notify.Failure("Please select business school.");
-                return false;
-            }
+            let department_id = $('#department_id').val();
+            let campus_id = $('#campus_id').val();
+            // !business_school_id?addClass('business_school_id'):removeClass('business_school_id');
+            // if(!business_school_id){
+            //     Notiflix.Notify.Failure("Please select business school.");
+            //     return false;
+            // }
+            // if(!department_id){
+            //     Notiflix.Notify.Failure("Please select Department.");
+            //     return false;
+            // }
+            //
+            // if(!campus_id){
+            //     Notiflix.Notify.Failure("Please select Campus.");
+            //     return false;
+            // }
             let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
 
-            let data = {business_school_id:business_school_id};
+            let data = {business_school_id:business_school_id, department_id:department_id, campus_id:campus_id};
             radioVal.forEach(function (index) {
                 if(index.value === 'no')
                 {
@@ -865,6 +999,39 @@
 
 
         });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+                let country= $("#country").val();
+                $.ajax({
+                    type: 'GET',
+                    url: "{{url('get-cities')}}",
+                    data: {
+                        country: country
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        console.log('response here', response);
+                        var data =[];
+                        //$('#city').val(null);
+                        $("#city").empty();
+                        Object.keys(response).forEach(function (index) {
+                            data.push({id:response[index].name, text:response[index].name});
+                        })
+                        $('#city').select2({
+                            data
+                        });
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                });
+        })
     </script>
 
     @if ($errors->any())

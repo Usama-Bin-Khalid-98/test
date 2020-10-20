@@ -70,6 +70,8 @@ class MissionVisionController extends Controller
                         'vision' => $request->vision,
                         'file' => $path.'/'.$imageName,
                         'isComplete' => 'yes',
+                        'mission_approval' => $request->mission_approval,
+                        'vision_approval' => $request->vision_approval,
                         'created_by' => Auth::user()->id
                 ]);
 
@@ -138,6 +140,8 @@ class MissionVisionController extends Controller
                     'mission' => $request->mission,
                     'vision' => $request->vision,
                     'file' => $path.'/'.$imageName,
+                    'mission_approval' => $request->mission_approval,
+                    'vision_approval' => $request->vision_approval,
                     'updated_by' => Auth::user()->id
                     ]
                 );

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\EntryRequirement;
 use App\Models\StrategicManagement\Scope;
+use App\Models\Common\Slip;
 use App\Models\Common\EligibilityCriteria;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,12 @@ class EntryRequirementController extends Controller
         $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $criterias = EligibilityCriteria::where('status', 'active')->get();
 
-        $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
 
          return view('registration.curriculum.entry_req', compact('scopes','criterias','entryRequirements'));
 
@@ -57,6 +63,14 @@ class EntryRequirementController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $campus_id = Auth::user()->campus_id;
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip) {
+                $type = 'SAR';
+            }else {
+                $type = 'REG';
+            }
             $program_id = $request->program_id;
            // dd($program_id);
             for ($i = 0; $i<= count($request->all()); $i++) {
@@ -68,6 +82,7 @@ class EntryRequirementController extends Controller
                     'eligibility_criteria_id' => $request->eligibility_criteria_id[$i],
                     'min_req' => $request->min_req[$i],
                     'isComplete' => 'yes',
+                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
             }

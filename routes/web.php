@@ -31,6 +31,8 @@ Route::get('/email', function() {
     Route::get('get-campuses', 'CampusController@getCampuses');
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
     Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
+    Route::post('add-discipline', 'DisciplineController@store');
+    Route::post('add-department', 'DepartmentController@store');
 
     Auth::routes(['verify' => true]);
     // Only verified users may enter...
@@ -73,6 +75,7 @@ Route::get('/email', function() {
         Route::group(['middleware' => ['role:BusinessSchool']], function () {
         //// Strategic Management
             Route::prefix('strategic')->group(function () {
+                Route::post('add-body-name','StrategicManagement\StatutoryBodyController@store');
                 Route::resource('basicinfo','StrategicManagement\BasicInfoController');
                 Route::resource('invoices','StrategicManagement\SlipController');
                 Route::post('generateInvoice','StrategicManagement\SlipController@generateInvoice');
@@ -86,6 +89,7 @@ Route::get('/email', function() {
                 Route::resource('sources-funding','SourcesFundingController');
                 Route::resource('audit-report','AuditReportController');
                 Route::resource('parent-institution','ParentInstitutionController');
+
             });
 
     //        Route::resource('print','PrintController');
@@ -209,6 +213,7 @@ Route::get('/email', function() {
          Route::get('registrations', 'StrategicManagement\SlipController@registrations');
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
           Route::Post('MentoringInvoiceStatus', 'MentoringInvoiceController@approvementStatus');
+          Route::resource('basic-info', 'NbeacBasicInfoController');
           Route::prefix('config')->group(function (){
             //        Route::resource('{table}', 'ConfigController');
             //   });

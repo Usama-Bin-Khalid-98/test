@@ -31,6 +31,7 @@ class CreateFacultyGender extends Migration
             $table->integer('female');
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');
+            $table->enum('type',['SAR','REG'])->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

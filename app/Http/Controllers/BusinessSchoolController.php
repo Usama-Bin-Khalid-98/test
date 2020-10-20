@@ -42,9 +42,9 @@ class BusinessSchoolController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         //$request->status = 'disabled';
-        $request->merge(['status' => 'disabled']);
+        $request->merge(['status' => 'inactive']);
         $addSchool = BusinessSchool::create($request->all());
-        return response()->json(['success' => 'Your business school name sent for registration.'], 200);
+        return response()->json(['success' => 'Your business school name sent for registration.It will coming in the list when the admin approve it.'], 200);
 
     }
 

@@ -35,7 +35,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CourseTypeSeeder::class);
         $this->call(EligibilityCriteriaSeeder::class);
         $this->call(SemesterSeeder::class);
-        $this->call(StatutoryBodySeeder::class);
         $this->call(FacultyTypeSeeder::class);
         $this->call(QuestionSeeder::class);
         $this->call(IncomeSourceSeeder::class);
@@ -102,5 +101,6 @@ class DatabaseSeeder extends Seeder
         $this->call(InternationalFacultiesSeeder::class);
         $this->call(FacultyExposuresSeeder::class);
         $this->call(FacultyDetailedInfosSeeder::class);
+        $this->call(NbeacBasicInfoSeeder::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility\BusinessSchoolFacility;
 use Illuminate\Http\Request;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use App\Models\Facility\FacilityType;
 use App\Models\Facility\Facility;
@@ -28,7 +29,13 @@ class BusinessSchoolFacilityController extends Controller
         $department_id = Auth::user()->department_id;
         $facility_types = Facility::with('facility_type')->get();
 
-        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
 
 
         return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));
@@ -61,6 +68,14 @@ class BusinessSchoolFacilityController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             foreach ($request->all() as $key => $facility){
                 //dd();ount]['id']);
                 foreach ($facility as $value){
@@ -71,6 +86,7 @@ class BusinessSchoolFacilityController extends Controller
                     'facility_id' => $value['id'],
                     'remark' => $value['remark'],
                     'isComplete' => 'yes',
+                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
 

@@ -10,6 +10,7 @@ use App\Models\Common\PaymentMethod;
 use App\DepartmentFee;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
 use App\Models\PeerReview\SchedulePeerReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,6 +81,7 @@ class SlipController extends Controller
             ->select('s.*', 'c.location as campus','dg.name as designation', 'd.name as department', 'u.name as user', 'u.email as email', 'u.contact_no', 'bs.name as school')
             ->get();
         //dd($invoices);
+
         return view('admin.slip', compact('invoices'));
     }
 
@@ -100,6 +102,7 @@ class SlipController extends Controller
                 'cheque_no'      =>  $request->cheque_no,
                 'transaction_date'      =>  $request->transaction_date
             );
+
 
             Mail::to($request->email)->send(new ChangeResgistrationStatusMail($data));
             return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
@@ -286,8 +289,8 @@ class SlipController extends Controller
     {
         //dd('invoice here ');
         $user_data = Auth::user();
-        $getInvoice = Slip::with('business_school', 'department')->where(['id' => $id])->get()->first();
-        //dd($getInvoice);
+        $getInvoice = Slip::with('campus', 'department')->where(['id' => $id])->get()->first();
+//        dd($getInvoice);
         return view('strategic_management.invoice', compact('getInvoice'));
     }
 
@@ -330,16 +333,18 @@ class SlipController extends Controller
         //
 //        dd($request->all());
         $path = ''; $imageName = '';
-        if(@$request->file('slip')) {
-            try {
-                $school = BusinessSchool::where('id', Auth::user()->business_school_id)->first();
-                //dd($school->name);
-                $filename = $school->name . "-slip-" . time() . '.' . $request->slip->getClientOriginalExtension();
-                $path = 'uploads/schools/slips';
-                $diskName = env('DISK');
-                $disk = Storage::disk($diskName);
-                $request->file('slip')->move($path, $filename);
+        $data = [];
+        $school = BusinessSchool::with('user', 'campus')->where('id', Auth::user()->business_school_id)->first();
 
+            try {
+                if(@$request->file('slip')) {
+                    //dd($school->name);
+                    $filename = $school->name . "-slip-" . time() . '.' . $request->slip->getClientOriginalExtension();
+                    $path = 'uploads/schools/slips';
+                    $diskName = env('DISK');
+                    $disk = Storage::disk($diskName);
+                    $request->file('slip')->move($path, $filename);
+                }
 //                $data = ['business_school_id' => Auth::user()->campus_id];
 //                @$request->invoice_no? $data['invoice_no'] = $request->invoice_no:'';
 //                @$request->department_id? $data['department_id'] = $request->department_id:'';
@@ -348,44 +353,56 @@ class SlipController extends Controller
                 @$request->transaction_date? $data['transaction_date'] = $request->transaction_date:'';
                 @$request->payment_method? $data['payment_method_id'] = $request->payment_method:'';
                 @$request->cheque_no? $data['cheque_no'] = $request->cheque_no:'';
-                @$request->status? $data['status'] = $request->status:'';
+                $data['status'] = 'paid';
                 //dd($data);
                 $updateSlip = Slip::where('id', $request->id)->update($data);
-                if($updateSlip) {
-                    return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
-                }
-                else{
-                    return response()->json(['message' => 'Invoice Slip Updating Failed.'], 422);
-                }
-            }catch (Exception $e)
-            {
-                return response()->json($e->getMessage(), 422);
-            }
-        }
 
 
-        try {
-            //dd($request->all());
-            $updateSlipStatus = Slip::where('id', $request->id)->update([
-//                'department_id' => $request->department_id,
-                'comments' => $request->comments,
-                'transaction_date' => $request->transaction_date,
-                'payment_method_id' => $request->payment_method,
-                'status' => $request->status,
-            ]);
-            if($updateSlipStatus) {
-                $data= [];
+//            //dd($request->all());
+//            $updateSlipStatus = Slip::where('id', $request->id)->update([
+////                'department_id' => $request->department_id,
+//                'comments' => $request->comments,
+//                'transaction_date' => $request->transaction_date,
+//                'payment_method_id' => $request->payment_method,
+//                'status' => 'paid',
+//            ]);
+            if($updateSlip) {
+                $mailData['school']= $school;
+                $mailData['slip']= $data;
+
+                $getNbeacInfo = NbeacBasicInfo::all()->first();
+
+                $mailData['nbeac']= $getNbeacInfo;
+
+//                dd($data['school']);
                 $mailInfo = [
-                    'to' => 'nbeac@gmail.com',
-                    'to_name' => 'Bilal Ahmad',
-                    'school' => "School Name Here",
-                    'from' => "city@gmail.com",
-                    'from_name' => 'Business School focal Person Name',
+                    'to' => $getNbeacInfo->email??'info@nbeac.org.pk',
+                    'to_name' => $getNbeacInfo->director??'',
+                    'school' => $school->name??'',
+                    'from' => $school->user->email??'',
+                    'from_name' => $school->user->name??'',
                 ];
-                Mail::send('registration.mail.acknowledgement_fee_mail', $data, function($message) use ($mailInfo) {
+
+                $mailSchoolInfo = [
+                    'to' => $school->user->email,
+                    'to_name' => $school->user->name,
+                    'school' => $getNbeacInfo->name??'',
+                    'from' => $getNbeacInfo->email??'',
+                    'from_name' => $getNbeacInfo->director??'',
+                ];
+
+//                dd($mailData);
+                Mail::send('registration.mail.paid_fee_mail', ['data' => $mailData], function($message) use ($mailSchoolInfo) {
+                    //dd($user);
+                    $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
+                        ->subject($mailSchoolInfo['school'].' paid registration fee - '. $mailSchoolInfo['school']);
+                    $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
+                });
+
+                Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
                     //dd($user);
                     $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                        ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                        ->subject($mailInfo['school'].' paid registration fee - '. $mailInfo['school']);
                     $message->from($mailInfo['from'],$mailInfo['from_name']);
                 });
 

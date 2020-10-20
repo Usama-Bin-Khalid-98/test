@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StrategicManagement;
 
 use App\Models\StrategicManagement\ContactInfo;
+use App\Models\Common\Slip;
 use App\Models\Common\Designation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -65,7 +66,12 @@ class ContactInfoController extends Controller
             $campus_id = auth()->user()->campus_id;
             $department_id = auth()->user()->department_id;
             $user_id = auth()->user()->id;
-           // dd($check);
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
 
                 if (!empty($request->ds_name)) {
                     $path = '';
@@ -73,7 +79,8 @@ class ContactInfoController extends Controller
                     $where = ['campus_id' => $campus_id,
                         'department_id' => $department_id,
                         'created_by' => $user_id,
-                        'designation_id' => 2];
+                        'designation_id' => 2
+                    ];
                     $existed = ContactInfo::where($where)
                         ->exists();
                     if ($existed) {
@@ -95,6 +102,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->ds_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'updated_by' => auth()->user()->id,
                         ]);
                     } else {
@@ -117,6 +125,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->ds_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'campus_id' => auth()->user()->campus_id,
                             'department_id' => auth()->user()->department_id,
                             'created_by' => auth()->user()->id,
@@ -153,6 +162,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->hs_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'updated_by' => auth()->user()->id,
                         ]);
                     } else {
@@ -175,6 +185,7 @@ class ContactInfoController extends Controller
                             'job_title' => $request->hs_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
+                            'type' => $type,
                             'campus_id' => auth()->user()->campus_id,
                             'department_id' => auth()->user()->department_id,
                             'created_by' => auth()->user()->id,
@@ -184,9 +195,9 @@ class ContactInfoController extends Controller
                     if (!empty($request->fp_name)) {
                         $path = '';
                         $imageName = '';
-                        $where = ['campus_id' => $campus_id,
-                            'department_id' => $department_id,
-                            'created_by' => $user_id,
+                        $where = ['campus_id' => @$campus_id,
+                            'department_id' => @$department_id,
+                            'created_by' => @$user_id,
                             'designation_id' => 3];
                         $existed = ContactInfo::where($where)
                             ->exists();
@@ -202,13 +213,14 @@ class ContactInfoController extends Controller
                             // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
 
                             ContactInfo::where($where)->update([
-                                'name' => $request->fp_name,
-                                'email' => $request->fp_email,
-                                'contact_no' => $request->fp_tell_off,
-                                'school_contact' => $request->fp_tell_cell,
-                                'job_title' => $request->fp_job_title,
-                                'cv' => $path . '/' . $imageName,
+                                'name' => @$request->fp_name,
+                                'email' => @$request->fp_email,
+                                'contact_no' => @$request->fp_tell_off,
+                                'school_contact' => @$request->fp_tell_cell,
+                                'job_title' => @$request->fp_job_title,
+                                'cv' => @$path . '/' . @$imageName,
                                 'isComplete' => 'yes',
+                                'type' => @$type,
                                 'updated_by' => auth()->user()->id,
                             ]);
                         }
@@ -223,45 +235,51 @@ class ContactInfoController extends Controller
                             //dd($request->all());
                             // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
 
-                            ContactInfo::create([
-                                'name' => $request->fp_name,
-                                'email' => $request->fp_email,
-                                'contact_no' => $request->fp_tell_off,
-                                'school_contact' => $request->fp_tell_cell,
-                                'designation_id' => 3,
-                                'job_title' => $request->fp_job_title,
-                                'cv' => $path . '/' . $imageName,
-                                'isComplete' => 'yes',
-                                'campus_id' => auth()->user()->campus_id,
-                                'department_id' => auth()->user()->department_id,
-                                'created_by' => auth()->user()->id,
-                            ]);
+                            if($request->fp_name) {
+                                ContactInfo::create([
+                                    'name' => @$request->fp_name,
+                                    'email' => @$request->fp_email,
+                                    'contact_no' => @$request->fp_tell_off,
+                                    'school_contact' => @$request->fp_tell_cell,
+                                    'designation_id' => 3,
+                                    'job_title' => @$request->fp_job_title,
+                                    'cv' => @$path . '/' . @$imageName,
+                                    'isComplete' => 'yes',
+                                    'type' => @$type,
+                                    'campus_id' => auth()->user()->campus_id,
+                                    'department_id' => auth()->user()->department_id,
+                                    'created_by' => auth()->user()->id,
+                                ]);
+                            }
                         }
                     }
 
-                    if ($request->file('fp_cv')) {
-                        $imageName = auth()->user()->id . "-cv-" . time() . '.' . $request->fp_cv->getClientOriginalExtension();
-                        $path = 'uploads/cv';
-                        $diskName = env('DISK');
-                        $disk = Storage::disk($diskName);
-                        $request->file('fp_cv')->move($path, $imageName);
-                    }
+//                    if ($request->file('fp_cv')) {
+//                        $imageName = auth()->user()->id . "-cv-" . time() . '.' . $request->fp_cv->getClientOriginalExtension();
+//                        $path = 'uploads/cv';
+//                        $diskName = env('DISK');
+//                        $disk = Storage::disk($diskName);
+//                        $request->file('fp_cv')->move($path, $imageName);
+//                    }
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
 
-                    ContactInfo::create([
-                        'name' => $request->fp_name,
-                        'email' => $request->fp_email,
-                        'contact_no' => $request->fp_tell_off,
-                        'school_contact' => $request->fp_tell_cell,
-                        'designation_id' => 2,
-                        'job_title' => $request->fp_job_title,
-                        'cv' => $path . '/' . $imageName,
-                        'isComplete' => 'yes',
-                        'campus_id' => auth()->user()->campus_id,
-                        'department_id' => auth()->user()->department_id,
-                        'created_by' => auth()->user()->id,
-                    ]);
+//                    if($request->fp_name) {
+//                        ContactInfo::create([
+//                            'name' => @$request->fp_name,
+//                            'email' => @$request->fp_email,
+//                            'contact_no' => @$request->fp_tell_off,
+//                            'school_contact' => @$request->fp_tell_cell,
+//                            'designation_id' => 2,
+//                            'job_title' => @$request->fp_job_title,
+//                            'cv' => @$path . '/' . @$imageName,
+//                            'isComplete' => 'yes',
+//                            'type' => @$type,
+//                            'campus_id' => auth()->user()->campus_id,
+//                            'department_id' => auth()->user()->department_id,
+//                            'created_by' => auth()->user()->id,
+//                        ]);
+//                    }
                 }
 
                     return response()->json(['success' => 'Contact Information added successfully.']);

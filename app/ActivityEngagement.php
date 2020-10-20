@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ActivityEngagement extends Model
 {
     use SoftDeletes;
-    
     protected $guarded = [];
 
     public function campus() {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty\FacultyTeachingCources;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use App\Models\Common\Designation;
 use App\LookupFacultyType;
@@ -27,7 +28,18 @@ class FacultyTeachingCourcesController extends Controller
         $department_id = Auth::user()->department_id;
          $designations = Designation::get();
          $faculty_types = LookupFacultyType::get();
-         $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }*/
+
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
+        $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
+        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
+        $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where($where)->get();
+
 
          return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings'));
     }
@@ -57,6 +69,14 @@ class FacultyTeachingCourcesController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             FacultyTeachingCources::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -66,6 +86,7 @@ class FacultyTeachingCourcesController extends Controller
                 'tc_program1' => $request->tc_program1,
                 'tc_program2' => $request->tc_program2,
                 'isCompleted' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

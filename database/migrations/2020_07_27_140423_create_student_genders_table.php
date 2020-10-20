@@ -32,6 +32,7 @@ class CreateStudentGendersTable extends Migration
             $table->string('female', 100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
+            $table->enum('type',['SAR','REG'])->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

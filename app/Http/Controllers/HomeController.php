@@ -51,7 +51,7 @@ class HomeController extends Controller
         $department_id = Auth::user()->department_id;
         //check is registration forms data completed:
         $check = $this->isRegCompleted(['user_id'=> $user_id, 'campus_id'=>$campus_id, 'department_id'=>$department_id]);
-        $memberShips = User::with('business_school')->where('status', 'pending')->get();
+        $memberShips = User::with('business_school', 'department')->where('status', 'pending')->get();
 
         $query = '
         SELECT slips.*, campuses.location as campus,

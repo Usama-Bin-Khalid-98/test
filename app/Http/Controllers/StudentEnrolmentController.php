@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StudentEnrolment;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use App\Models\Common\Program;
 use Illuminate\Http\Request;
@@ -28,7 +29,13 @@ class StudentEnrolmentController extends Controller
         $ms = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('ms_level');
         $phd = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('phd_level');
         $t_students = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('total_students');
-        $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
 
          return view('registration.student_enrolment.enrolment', compact('programs','enrolments','bs','ms','phd','t_students'));
     }
@@ -57,6 +64,14 @@ class StudentEnrolmentController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $campus_id = Auth::user()->campus_id;
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip) {
+                $type = 'SAR';
+            }else {
+                $type = 'REG';
+            }
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
             StudentEnrolment::create([
@@ -68,6 +83,7 @@ class StudentEnrolmentController extends Controller
                 'phd_level' => $request->phd_level,
                 'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level,
                 'isComplete' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

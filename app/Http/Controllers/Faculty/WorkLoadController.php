@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
+use App\Models\Common\Slip;
 use App\Models\Common\Semester;
 use App\Models\Faculty\WorkLoad;
 use App\Models\Common\Designation;
@@ -25,7 +26,18 @@ class WorkLoadController extends Controller
          $designations = Designation::all();
          $semesters = Semester::all();
 
-         $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }*/
+
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
+        $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
+        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
+        $workloads = Workload::with('campus','designation', 'semester')->where($where)->get();
+
 
          return view('registration.faculty.workload', compact('designations','workloads', 'semesters'));
     }
@@ -55,6 +67,14 @@ class WorkLoadController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             WorkLoad::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -67,6 +87,7 @@ class WorkLoadController extends Controller
                 'admin_responsibilities' => $request->admin_responsibilities,
                 'semester_id' => $request->semester,
                 'isCompleted' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

@@ -31,9 +31,9 @@ class RegisterationMail extends Mailable
     {
         /*   return $this->view('supervisor.sendmail');*/
 
-        return $this->from('mail@example.com','walayat khan')
+        return $this->from('info@nbeac.org.pk','Admin')
             ->subject('Account Registration Request mail')
-            ->view('registration.mail')
+            ->view('registration.mail.activation_temp')
             ->with('message', 'message here');
 
 

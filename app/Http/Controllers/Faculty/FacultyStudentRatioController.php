@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Models\Faculty\FacultyStudentRatio;
+use App\Models\Common\Slip;
 use App\BusinessSchool;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
@@ -25,7 +26,13 @@ class FacultyStudentRatioController extends Controller
         $department_id = Auth::user()->department_id;
         $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-        $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
 
          return view('registration.faculty.faculty_student_ratio', compact('programs','ratios'));
     }
@@ -55,6 +62,14 @@ class FacultyStudentRatioController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             FacultyStudentRatio::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -62,6 +77,7 @@ class FacultyStudentRatioController extends Controller
                 'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
                 'isCompleted' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 

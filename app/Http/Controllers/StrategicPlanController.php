@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrategicManagement\StrategicPlan;
+use App\Models\Common\Slip;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,7 +24,12 @@ class StrategicPlanController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
 
-        $plans  = StrategicPlan::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();;
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $plans  = StrategicPlan::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $plans  = StrategicPlan::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
 
          return view('strategic_management.plan', compact('plans'));
     }
@@ -52,20 +58,30 @@ class StrategicPlanController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $campus_id = Auth::user()->campus_id;
+            $department_id = Auth::user()->department_id;
 
-            //dd($request->all());
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+
+            if($slip){
+                $type = 'SAR';
+            }else{
+                $type = 'REG';
+            }
 
         @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
             //dd($period);
-            StrategicPlan::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'plan_period' => $period,
-                'aproval_date' => $request->aproval_date,
-                'aproving_authority' => $request->aproving_authority,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+
+                StrategicPlan::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'plan_period' => $period,
+                    'aproval_date' => $request->aproval_date,
+                    'aproving_authority' => $request->aproving_authority,
+                    'isComplete' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
 
             return response()->json(['success' => 'Strategic Plan added successfully.']);
 

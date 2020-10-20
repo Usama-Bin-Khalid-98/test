@@ -257,18 +257,18 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('Status') }} : </label>
-                                <select name="status" class="form-control select2">
-                                    <option value="">Select Status</option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="paid">Paid</option>
-                                </select>
-                            </div>
-                        </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                <select name="status" class="form-control select2">--}}
+{{--                                    <option value="">Select Status</option>--}}
+{{--                                    <option value="active">Active</option>--}}
+{{--                                    <option value="inactive">Inactive</option>--}}
+{{--                                    <option value="pending">Pending</option>--}}
+{{--                                    <option value="paid">Paid</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Cheque No</label>
@@ -363,19 +363,6 @@
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group" style="margin-bottom: 18px;">
-                                            <label for="type">{{ __('Status') }} : </label>
-                                            <select name="status" id="status" class="form-control select2">
-{{--                                                <option value="">Select Status</option>--}}
-                                                <option value="active">Active</option>
-                                                <option value="inactive">Inactive</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="paid">Paid</option>
-                                                <option value="approved">Approved</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="slip">Bank Deposit Slip</label>
@@ -405,7 +392,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" value="update" name="submit" id="update-button" class="btn btn-info">
+                        <input type="submit" value="Paid" name="submit" id="update-button" class="btn btn-info">
                     </div>
                 </form>
             </div>

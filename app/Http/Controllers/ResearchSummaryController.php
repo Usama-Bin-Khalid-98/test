@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\PublicationCategory;
 use App\Models\Research\ResearchSummary;
+use App\Models\Common\Slip;
 use App\PublicationType;
 use App\BusinessSchool;
 use Illuminate\Http\Request;
@@ -26,7 +27,13 @@ class ResearchSummaryController extends Controller
         $department_id = Auth::user()->department_id;
         $publications = PublicationType::where('status', 'active')->get();
         $publication_categories = PublicationCategory::all();
-        $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        if($slip){
+            $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+        }else {
+            $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+        }
+
        // dd($summaries);
         return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories'));
     }
@@ -55,6 +62,14 @@ class ResearchSummaryController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
             //dd($request->all());
             for($i = 0; $i <= count($request->total_items); $i++)
             {
@@ -74,6 +89,7 @@ class ResearchSummaryController extends Controller
                         'jointly_produced_same' => $request->jointly_produced_same[$i],
                         'jointly_produced_multiple' => $request->jointly_produced_multiple[$i],
                         'isComplete' => 'yes',
+                        'type' => $type,
                         'created_by' => Auth::user()->id
                     ]);
                 }

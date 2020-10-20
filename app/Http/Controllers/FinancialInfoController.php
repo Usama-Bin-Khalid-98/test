@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility\FinancialInfo;
 use App\Models\Facility\IncomeSource;
+use App\Models\Common\Slip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -31,6 +32,7 @@ class FinancialInfoController extends Controller
             $q->where('type', $income_type);
             })
             ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+            ->where('type','REG')
             ->get();
         $income_type ='expense';
         $infos_expense = FinancialInfo::with('income_source')
@@ -71,6 +73,14 @@ class FinancialInfoController extends Controller
         }
         try {
 
+            $department_id = Auth::user()->department_id;
+            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
+
             FinancialInfo::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -82,6 +92,7 @@ class FinancialInfoController extends Controller
                 'year_t_plus_one' => $request->year_t_plus_one,
                 'year_t_plus_two' => $request->year_t_plus_two,
                 'isComplete' => 'yes',
+                'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 
