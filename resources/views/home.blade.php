@@ -463,7 +463,7 @@
                                 <tr>
                                     <td>{{$user->business_school->name}}</td>
                                     <td>{{$user->campus->location??'Main Campus'}}</td>
-                                    <td>{{$user->department->name}}</td>
+                                    <td>{{@$user->department->name}}</td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->contact_no}}</td>
                                     <td>{{$user->email}}</td>

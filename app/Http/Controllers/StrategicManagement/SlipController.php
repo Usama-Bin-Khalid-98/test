@@ -376,7 +376,7 @@ class SlipController extends Controller
 
 //                dd($data['school']);
                 $mailInfo = [
-                    'to' => $getNbeacInfo->email??'test@nbeac.org.pk',
+                    'to' => $getNbeacInfo->email??'info@nbeac.org.pk',
                     'to_name' => $getNbeacInfo->director??'',
                     'school' => $school->name??'',
                     'from' => $school->user->email??'',
