@@ -77,23 +77,23 @@
                                             <div class="col-md-12">
                                                 <div class="form-group @error('account_type') has-error @enderror">
                                                     <label for="name">Account Type</label>
-                                                    <p><input type="radio" name="account_type" id="BusinessSchool" class="flat-red" value="BusinessSchool" {{ old('account_type') == 'BusinessSchool' ? 'checked' : '' }}><span class="status">Business School</span></p>
+                                                    <p><input type="radio" name="account_type" id="BusinessSchool"  class="flat-red" value="BusinessSchool" {{ old('account_type') == 'BusinessSchool' ? 'checked' : '' }}><span class="status">Business School</span></p>
                                                     <p><input type="radio" name="account_type" id="PeerReviewer" class="flat-red" value="PeerReviewer" {{ old('account_type') == 'PeerReviewer' ? 'checked' : '' }}><span class="status">Peer Reviewer</span></p>
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-12" id="questionnaire-dev" style="display: none;">
-                                                <div class="form-group">
-                                                    <label for="Desk Review">Desk Review Questionnaire</label>
-                                                    <input type="hidden" id="questionnaire" name="questionnaire">
-                                                    <span class="input-group-btn">
-                                                          <button type="button" data-toggle="modal" data-target="#question-modal"  class="btn btn-info btn-flat">
-                                                              click to fill the questionnaire
-                                                          </button>
-                                                        </span>
-                                                    <span class="text-red">Fill the questionnaire before submission.</span>
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-md-12" id="questionnaire-dev" style="display: none;">--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label for="Desk Review">Desk Review Questionnaire</label>--}}
+{{--                                                    <input type="hidden" id="questionnaire" name="questionnaire">--}}
+{{--                                                    <span class="input-group-btn">--}}
+{{--                                                          <button type="button"  class="btn btn-info btn-flat">--}}
+{{--                                                              click to fill the questionnaire--}}
+{{--                                                          </button>--}}
+{{--                                                        </span>--}}
+{{--                                                    <span class="text-red">Fill the questionnaire before submission.</span>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="col-md-4">
                                                 <div class="form-group @error('name') has-error @enderror">
                                                     <label for="name">Contact Person Name</label>
@@ -407,18 +407,32 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group" style="margin-bottom: 0px;">
                                                     <label for="name">Length of Service</label>
-                                                    <input type="text" name="service" id="service" class="form-control" value="{{old('service')}}">
+{{--                                                    <input type="text" name="service" id="service" class="form-control" value="{{old('service')}}">--}}
+                                                    <select name="service" id="service" class="form-control select2">
+                                                        <option value="">Select Length of Service</option>
+                                                        @for($i = 1; $i<=40; $i++)
+                                                            <option value="{{$i}}" {{old('service')== $i?'selected':''}} >{{$i}}</option>
+                                                        @endfor
+                                                        <option value="more than 40" {{old('service')==='more than 40'?'selected':''}}>More than 40</option>
+                                                    </select>
                                                     @error('service')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group" style="margin-bottom: 0px;">
                                                     <label for="name">Industry Experience</label>
-                                                    <input type="text" name="industry_exp" id="industry_exp" class="form-control" value="{{old('industry_exp')}}">
+{{--                                                    <input type="text" name="industry_exp" id="industry_exp" class="form-control" value="{{old('industry_exp')}}">--}}
+                                                    <select name="industry_exp" id="industry_exp" class="form-control select2">
+                                                        <option value="">Select Industry Experience</option>
+                                                        @for($i = 1; $i<=40; $i++)
+                                                            <option value="{{$i}}"{{$i==old('industry_exp')?'selected':''}} >{{$i}}</option>
+                                                        @endfor
+                                                        <option value="more than 40" {{old('industry_exp')==='more than 40'?'selected':''}}>More than 40</option>
+                                                    </select>
                                                     @error('industry_exp')
                                                      <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -426,8 +440,15 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="name">Academic experience</label>
-                                                    <input type="text" name="academic_exp" id="academic_exp" class="form-control" value="{{old('academic_exp')}}">
+                                                    <label for="name">Academic Experience</label>
+{{--                                                    <input type="text" name="academic_exp" id="academic_exp" class="form-control" value="{{old('academic_exp')}}">--}}
+                                                    <select name="academic_exp" id="academic_exp" class="form-control select2">
+                                                        <option value="">Select Academic Experience</option>
+                                                        @for($i = 1; $i<=40; $i++)
+                                                            <option value="{{$i}}" {{$i==old('academic_exp')?'selected':''}} >{{$i}}</option>
+                                                        @endfor
+                                                        <option value="more than 40" {{old('academic_exp')==='more than 40'?'selected':''}}>More than 40</option>
+                                                    </select>
                                                     @error('academic_exp')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -460,7 +481,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" style="display: none;">
                                                 <div class="form-group">
                                                     <label for="name">Rationale to recommend</label>
                                                     <input type="text" name="rational_recommend" id="rational_recommend" class="form-control" value="{{old('ratoinal_recommend')}}">
@@ -716,6 +737,11 @@
             }
         });
 
+        $('#BusinessSchool').on('click', function () {
+            console.log('clicked on business sschool', $(this).val());
+            $('#question-modal').modal('show');
+        })
+
         $('#department_id').on('change', function () {
             let val = $(this).val();
             if(val === '5')
@@ -813,9 +839,11 @@
                 $('button[name=submit]').removeAttr('disabled');
             }
 
+
             console.log('change school type', $(this).val());
             let toggle = $(this).val();
 
+            (toggle==='BusinessSchool')?$('#question-modal').modal('show'):$('#question-modal').modal('hide');
             (toggle==='BusinessSchool')?$('#business-school-tab').toggle('slow'):$('#business-school-tab').fadeOut('slow');
             (toggle==='BusinessSchool')?$('#questionnaire-dev').toggle('show'):'';
             (toggle==='PeerReviewer')?$('#peer-review-tab').toggle('slow'):$('#peer-review-tab').fadeOut('slow');
