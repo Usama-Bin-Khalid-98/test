@@ -12,19 +12,20 @@
                             <li>Section 3: Students-----------------------------------------------------------------------------------------------------------7</li>
                             <li>Section 4: Faculty-------------------------------------------------------------------------------------------------------------9</li>
                             <li>Section 5: Research & Development------------------------------------------------------------------------------------11</li>
-                            <li>Checklist of mandatory appendices with registration application---------------------------------------------15</li>
+                            <li>Section 6: Facilities Information------------------------------------------------------------------------------------15</li>
+                            <li>Checklist of mandatory appendices with registration application---------------------------------------------16</li>
                         </ul>
                         </div>
-                    </div> 
+                    </div>
                     <div class="row" style="position: relative;width: 100%">
                         <div style="position: absolute;left: 50px;top:20px">
                             <img  width="100px" src="{{asset('/images/nbeacLogo.jpg')}}">
                         </div>
-                        
+
 
                         <div style="position: absolute;right:50px;">
                             <img class="right" width="100px" src="{{asset('/images/HECLogo.jpg')}}">
                         </div>
-                    
-                    
+
+
                     </div>

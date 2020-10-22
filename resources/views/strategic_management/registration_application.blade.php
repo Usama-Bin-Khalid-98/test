@@ -128,11 +128,11 @@
                             Signature: _______________________________________ Stamp of the organization: ________________________</p>
                             <p>Name of the signatory: _____________________________ Date __________________________________________</p>
                             <p>Position of the signatory __________________________________________________________________________</p>
-                            <p>Name of University/Institute: ______________________________________________________________________</p>
-                            <p>Department/Business School under review: ___________________________________________________________</p>
-                            <p>Postal address: __________________________________________________________________________________</p>
-                            <p>City and country: ________________________________________________________________________________</p>
-                            <p>Telephone: ______________________________________ Fax: __________________________________________</p>
+                            <p>Name of University/Institute: <strong>{{$docHeaderData->campus->business_school->name??''}}</strong></p>
+                            <p>Department/Business School under review: <strong>{{$docHeaderData->department->name??''}}</strong></p>
+                            <p>Postal address: <strong>{{$docHeaderData->campus->user->address??''}}</strong></p>
+                            <p>City and country: <strong>{{$docHeaderData->campus->user->city??''}}, {{$docHeaderData->campus->user->country??''}}</strong></p>
+                            <p>Telephone: <strong>{{$docHeaderData->campus->user->contact_no??''}}</strong></p>
 
 
                         </div>

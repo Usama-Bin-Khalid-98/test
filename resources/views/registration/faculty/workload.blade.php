@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">4.2 Provide information of faculty workload over the last two semesters. Attach faculty workload policy in table 4.2</h3>
+                            <h3 class="box-title">4.2 Provide information of faculty workload over the last two semesters in Table 4.2a and 4.2b. Attach faculty workload policy as Appendix-4A.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -59,66 +59,138 @@
                         <div class="box-body">
 
                            <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Faculty Name</label>
-                                    <input type="text" name="faculty_name" id="faculty_name" class="form-control">
+                               <div class="form-row col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Faculty Name</label>
+                                            <input type="text" name="faculty_name" id="faculty_name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Designation</label>
+                                           <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                                <option selected disabled>Select Designation</option>
+                                                @foreach($designations as $business)
+                                                 <option value="{{$business->id}}">{{$business->name}}</option>
+                                                @endforeach
+                                                </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Number of courses taught in all programs</label>
+                                            <input type="number" name="total_courses" id="total_courses" class="form-control">
+                                        </div>
+                                    </div>
+                                       <div class="col-md-12 center">
+                                           <div class="form-group">
+                                            <h3>Number of students supervised</h3>
+                                           </div>
+                                       </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Phd</label>
+                                            <input type="number" name="phd" id="phd" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Masters</label>
+                                            <input type="number" name="masters" id="masters" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Bachelors</label>
+                                            <input type="number" name="bachleors" id="bachleors" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Administrative responsibility</label>
+                                            <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Semester</label>
+                                            <select name="semester" id="semester" class="form-control select2" style="width: 100%;">
+                                                <option selected disabled>Select Semester</option>
+                                                @foreach($semesters as $semester)
+                                                <option value="{{$semester->id}}">{{ $semester->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                               </div>
+                            <div class="form-row col-md-12">
+                                <h3>Table 4.2b. Faculty workload (t-1)</h3>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Faculty Name</label>
+                                        <input type="text" name="faculty_name" id="faculty_name" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Designation</label>
-                                   <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Designation</option>
-                                        @foreach($designations as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Designation</label>
+                                       <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                            <option selected disabled>Select Designation</option>
+                                            @foreach($designations as $business)
+                                             <option value="{{$business->id}}">{{$business->name}}</option>
+                                            @endforeach
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Number of courses taught in all programs</label>
+                                        <input type="number" name="total_courses" id="total_courses" class="form-control">
+                                    </div>
+                                </div>
+                                   <div class="col-md-12 center">
+                                       <div class="form-group">
+                                        <h3>Number of students supervised</h3>
+                                       </div>
+                                   </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Phd</label>
+                                        <input type="number" name="phd" id="phd" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Masters</label>
+                                        <input type="number" name="masters" id="masters" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Bachelors</label>
+                                        <input type="number" name="bachleors" id="bachleors" class="form-control">
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Administrative responsibility</label>
+                                        <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
+                                    </div>
+                                </div>
+                               <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name">Semester</label>
+                                        <select name="semester" id="semester" class="form-control select2" style="width: 100%;">
+                                            <option selected disabled>Select Semester</option>
+                                            @foreach($semesters as $semester)
+                                            <option value="{{$semester->id}}">{{ $semester->name}}</option>
+                                            @endforeach
                                         </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Number of courses taught in all programs</label>
-                                    <input type="number" name="total_courses" id="total_courses" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Phd</label>
-                                    <input type="number" name="phd" id="phd" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Masters</label>
-                                    <input type="number" name="masters" id="masters" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Bachelors</label>
-                                    <input type="number" name="bachleors" id="bachleors" class="form-control">
-                                </div>
-                            </div>
-
-                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Administrative responsibility</label>
-                                    <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
-                                </div>
-                            </div>
-                           <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Semester</label>
-                                    <select name="semester" id="semester" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Semester</option>
-                                        @foreach($semesters as $semester)
-                                        <option value="{{$semester->id}}">{{ $semester->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -128,14 +200,14 @@
                             </div>
                         </form>
 
-                        </div>
+                        </form>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.2 Faculty workload(t)</h3>
+                            <h3 class="box-title">4.2 Provide information of faculty workload over the last two semesters in Table 4.2a and 4.2b. Attach faculty workload policy as Appendix-4A.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

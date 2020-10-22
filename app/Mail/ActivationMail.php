@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Config\NbeacBasicInfo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -30,7 +31,8 @@ class ActivationMail extends Mailable
      */
     public function build()
     {
-        return $this->from('info@nbeac.org.pk','NBEAC Admin')
+        $getInfo = NbeacBasicInfo::all()->first();
+        return $this->from($getInfo->email,'NBEAC Admin')
             ->subject('Account Registration Request mail')
             ->view('registration.mail.activation_temp')
             ->with('message', 'message here');

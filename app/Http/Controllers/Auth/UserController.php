@@ -14,9 +14,11 @@ use App\Models\Common\Question;
 use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
+use App\Models\Config\NbeacBasicInfo;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
 use Spatie\Permission\Models\Permission;
@@ -91,6 +93,34 @@ class UserController extends Controller
         if ($user)
         {
             //$user->syncRoles($request->role_id);
+            $getNbeacInfo = NbeacBasicInfo::all()->first();
+            if($roleName === 'PeerReviewer'){
+                $userData = [
+                    'to' => $request->email,
+                    'to_name' => $request->name,
+                    'cnic' => $request->cnic,
+                    'contact_no' => $request->contact_no,
+                    'address' => $request->address,
+                    'password' => $request->password,
+                    'status' => 'active',
+                    'user_type' => $roleName,
+                    'from' => $getNbeacInfo->email??'',
+                    'from_name' => $getNbeacInfo->director??'',
+                    'url' => $getNbeacInfo->website??'www.nbeac.org.pk',
+                    'nbeac_name' => $getNbeacInfo->name??'NBEAC',
+                    'nbeac_address' => $getNbeacInfo->address,
+                    'phone1' => $getNbeacInfo->phone1,
+                    'fax' => $getNbeacInfo->fax,
+                ];
+
+//                dd($mailData);
+                Mail::send('registration.mail.peerReviewer_account_temp', ['content' => $userData], function($message) use ($userData) {
+                    //dd($user);
+                    $message->to($userData['to'],$userData['to_name'] )
+                        ->subject('NBEAC user account info');
+                    $message->from($userData['from'],$userData['from_name']??'Admin');
+                });
+            }
             return response()->json(['message'=> 'User created successfully'], 200);
         }
         }
@@ -189,7 +219,7 @@ class UserController extends Controller
         }catch (Exception $e)
         {
             return response()->json($e->getMessage(), 422);
-        }  
+        }
     }
 
 
@@ -217,7 +247,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
-       
+
     }*/
 
 

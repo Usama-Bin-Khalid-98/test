@@ -368,14 +368,19 @@
                                             </tbody>
                                         </table>
 
-                                        <p>Dear Focal person name</p>
-                                        <p> applied for registration email template</p>
+                                        <p>Dear Admin</p>
+                                        <p> A business school name ({{$data['school']->campus->business_school->name}}) has applied for {{$data['school']->department->name}} registration.</p>
 
 {{--                                        <p></p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</body>--}}
-                                        <p>Phone (Off) 92 51 9080 0206-07</p>
-                                        <p>Fax: +92 51 9080 0208</p>
-                                        <p>Web: <a href="www.nbeac.org.pk"> www.school.org.pk</a></p>
-                                         <p>Best Regards</p>
+                                        <p>Thank You.</p>
+
+                                        <p>Best Regards,</p>
+                                        <p>{{@$data['school']->campus->user->name}}</p>
+                                        <p>{{@$data['school']->campus->business_school->name}} - Campus: ({{@$data['school']->campus->location}}),</p>
+                                        <i>Address: {{@$data['school']->campus->user->address}}</i><br/>
+                                        <i>Phone (Off): {{@$data['school']->campus->user->contact_no}}</i><br/>
+                                        {{--                                        <i>Fax: {{@$data['school']->fax}}</i><br/>--}}
+                                        <i>Web: <a href="{{@$data['school']->campus->user->web_url}}">{{@$data['school']->campus->user->web_url}}</a></i>
                                     </td>
                                 </tr>
                             </table>

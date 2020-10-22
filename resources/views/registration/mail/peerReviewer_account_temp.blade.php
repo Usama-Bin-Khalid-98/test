@@ -352,27 +352,38 @@
                                     <td>
                                         <p>AOA,</p>
                                         <p></p>
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                                            <tbody>
+                                            <tr>
+                                                <td align="left">
+                                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+{{--                                                            <td> <a href="http://htmlemail.io" target="_blank">Call To Action</a> </td>--}}
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
 
-                                        <p>Dear {{@$data['school']->user->name}},</p>
-{{--                                        <p>HoD & Dean,</p>--}}
-{{--                                        <p>University : {{@$data['school']->name}}</p>--}}
-{{--                                        <p>Campus : {{@$data['school']->campus->location}}</p>--}}
-
-                                        <p>Hope you are doing well,</p>
-
-                                        <p>Thank you for submitting your registration fee to nbeac, This is an auto generated email, Soon you will receive an Approval email once the NBEAC admin receive and approve your payment.</p>
-                                        <p>if you have any query feel free to contact us. </p>
-                                        <p>You can check the status of your application on the registration invoice page:</p>
-
-                                        <p>Thank You.</p>
-
-                                        <p>Best Regards,</p>
-                                        <p>{{@$data['nbeac']->chairman}}</p>
-                                        <p>{{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}}),</p>
-                                        <i>Address: {{@$data['nbeac']->address}}</i><br/>
-                                        <i>Phone (Off): {{@$data['nbeac']->phone1}} || Cell: {{@$data['nbeac']->phone2}}</i><br/>
-                                        <i>Fax: {{@$data['nbeac']->fax}}</i><br/>
-                                        <i>Web: <a href="{{@$data['nbeac']->website}}"> {{@$data['nbeac']->website}}</a></i>
+                                        <p>Dear {{@$content['to_name']}}</p>
+                                        <p>NBEAC created a Peer Reviewer account for you. the following are the details to use for login:</p>
+                                        <p>Name: {{@$content['to_name']}}</p>
+                                        <p>email: {{@$content['to']}}</p>
+                                        <p>Password: {{@$content['password']}}</p>
+                                        <p>Account Type: {{@$content['user_type']}}</p>
+                                        {{--<p>address: {{$content['address']}}</p>--}}
+                                        <a href="{{$content['url']}}">Login to link.</a>
+                                        <p>With Kind Regards,</p>
+                                        <p>NBEAC</p>
+                                        <p>{{$content['nbeac_name']}}</p>
+                                        <p>{{$content['nbeac_address']}}</p>
+                                        <p>Phone (Off) {{$content['phone1']}}</p>
+                                        <p>Fax: {{$content['fax']}}</p>
+                                        <p>Web: <a href="http://www.nbeac.org.pk"> www.nbeac.org.pk</a></p>
+                                         <p>Best Regards</p>
                                     </td>
                                 </tr>
                             </table>
@@ -388,13 +399,13 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="content-block">
-                                <span class="apple-link">{{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}})</span>
-                                <br> Don't like these emails? <a href="http://nbeac.org.pk">Unsubscribe</a>.
+                                <span class="apple-link">National Business Education Accreditation Council (NBEAC)</span>
+                                <br> Don't like these emails? <a href="http://www.nbeac.org.pk">Unsubscribe</a>.
                             </td>
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                Powered by <a href="http://nbeac.org.pk">NBEAC</a>.
+                                Powered by <a href="http://www.nbeac.org.pk">NBEAC</a>.
                             </td>
                         </tr>
                     </table>
