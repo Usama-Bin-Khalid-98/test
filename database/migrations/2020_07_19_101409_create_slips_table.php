@@ -46,6 +46,7 @@ class CreateSlipsTable extends Migration
             $table->text('comments', 255)->nullable();
             $table->text('AACcomments')->nullable();
             $table->date('pr_visit_date')->nullable();
+            $table->date('registration_date')->nullable();
             $table->string('pr_travel_plan', 255)->nullable();
             $table->string('profile_sheet', 255)->nullable();
             $table->integer('created_by')->unsigned()->nullable();

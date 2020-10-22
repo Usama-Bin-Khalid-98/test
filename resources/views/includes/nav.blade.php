@@ -192,8 +192,9 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </li>
           @endhasrole
 
+          @if($invoices==='C')
           @hasrole('BusinessSchool')
-          <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
+            <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
           <a href="#" >
             <i class="fa fa-users " style="color: #D81B60"></i><span>1: Strategic Management form</span>
              <span class="pull-right-container">
@@ -266,7 +267,9 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                 </ul>
 {{--              @endif--}}
           </li>
-        @endhasrole
+          @endhasrole
+          @endif
+          @if($invoices==='C')
         @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('program-portfolio'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}{{(request()->is('program-objective'))?'active':''}}{{(request()->is('learning-outcome'))?'active':''}}{{(request()->is('managerial-skill'))?'active':''}}" >
           <a href="#">
@@ -363,6 +366,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </ul>
         </li>
           @endhasrole
+          @endif
+          @if($invoices==='C')
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('student-enrolment'))?'active':''}}{{(request()->is('students-graduated'))?'active':''}}{{(request()->is('student-gender'))?'active':''}}{{(request()->is('student-intake'))?'active':''}}{{(request()->is('alumni-participation'))?'active':''}}{{(request()->is('class-size'))?'active':''}}{{(request()->is('alumni-membership'))?'active':''}}{{(request()->is('personal-grooming'))?'active':''}}{{(request()->is('counselling-activity'))?'active':''}}{{(request()->is('extra-activity'))?'active':''}}{{(request()->is('dropout-percentage'))?'active':''}}{{(request()->is('weak-student'))?'active':''}}{{(request()->is('student-participation'))?'active':''}}{{(request()->is('financial-assistance'))?'active':''}}{{(request()->is('student-financial'))?'active':''}}">
               <a href="#">
@@ -455,6 +460,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </ul>
         </li>
           @endhasrole
+          @endif
+          @if($invoices==='C')
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-degree'))?'active':''}}{{(request()->is('faculty-summary'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}{{(request()->is('faculty-membership'))?'active':''}}{{(request()->is('faculty-exposure'))?'active':''}}{{(request()->is('international-faculty'))?'active':''}}{{(request()->is('faculty-participation'))?'active':''}}{{(request()->is('consultancy-project'))?'active':''}}{{(request()->is('faculty-promotion'))?'active':''}}{{(request()->is('faculty-develop'))?'active':''}}{{(request()->is('faculty-workshop'))?'active':''}}{{(request()->is('faculty-detailed-info'))?'active':''}}">
               <a href="#">
@@ -479,7 +486,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$workload==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}">4.3 Visiting Faculty<span class="pull-right-container">
+            <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}">
+                    Visiting Faculty<span class="pull-right-container">
                         <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -553,6 +561,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </ul>
         </li>
           @endhasrole
+          @endif
+          @if($invoices==='C')
           @hasrole('BusinessSchool')
            <li class=" treeview {{(request()->is('research-summary'))?'active':''}}{{(request()->is('conference'))?'active':''}}{{(request()->is('curriculum-role'))?'active':''}}{{(request()->is('faculty-development'))?'active':''}}{{(request()->is('research-output'))?'active':''}}{{(request()->is('oric'))?'active':''}}{{(request()->is('research-center'))?'active':''}}{{(request()->is('research-agenda'))?'active':''}}{{(request()->is('research-funding'))?'active':''}}{{(request()->is('research-project'))?'active':''}} ">
           <a href="#">
@@ -624,6 +634,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </ul>
         </li>
           @endhasrole
+          @endif
+          @if($invoices==='C')
           @hasrole('BusinessSchool')
           <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('financial-risk'))?'active':''}}{{(request()->is('qec-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}}{{(request()->is('support-staff'))?'active':''}} ">
           <a href="#">
@@ -666,7 +678,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </ul>
         </li>
           @endhasrole
-
+          @endif
           <!-- Below is the module included in SAR -->
           @if($isActiveSAR)
           @hasrole('BusinessSchool')

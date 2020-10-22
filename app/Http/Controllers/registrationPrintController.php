@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\BusinessSchool;
 use App\Models\Common\Campus;
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use DB;
@@ -20,6 +21,20 @@ class RegistrationPrintController extends Controller
 
     public function index(Request $req)
     {
+        /////////////////header data ////////
+        $docHeaderData = Slip::with('campus', 'department')
+            ->where(
+                [
+                    'business_school_id'=>Auth::user()->campus_id,
+                    'department_id'=>Auth::user()->department_id
+                ]
+            )->get()->first();
+            //dd($docHeaderData);
+        $programsUnderReview = Scope::with('program')->where(
+            ['campus_id'=>Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])
+            ->get();
+//        dd($programsUnderReview);
+        ///////////////////////////// end header data ///////////
         if(isset($req->cid) && isset($req->bid)){
 
              $bussinessSchool  = DB::select('SELECT * from business_schools where id=? AND type="REG"', array($req->bid));
@@ -109,6 +124,7 @@ class RegistrationPrintController extends Controller
                $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.type="REG" AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id,$req->cid));
         }
         else{
+
             $bussinessSchool  = DB::table('users')
                 ->leftJoin('business_schools', 'users.business_school_id', '=', 'business_schools.id')
                 ->leftJoin('institute_types','business_schools.institute_type_id','=','institute_types.id')
@@ -118,12 +134,11 @@ class RegistrationPrintController extends Controller
                 ->select('business_schools.*','institute_types.name as typeName', 'charter_types.name as charterName', 'designations.name as designationName' )
                 ->get();
 
+//            dd($bussinessSchool);
 
             $userCampus = DB::select('SELECT * from users where id=?', array(Auth::id()));
             //dd($userCampus[0]->campus_id);
             $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
-
-
 
             $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.type="REG" AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(auth()->user()->campus_id));
 
@@ -202,7 +217,7 @@ class RegistrationPrintController extends Controller
                $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.type="REG" AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
             }
 
-        return view('strategic_management.registration_application', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources'));
+        return view('strategic_management.registration_application', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData', 'programsUnderReview'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){

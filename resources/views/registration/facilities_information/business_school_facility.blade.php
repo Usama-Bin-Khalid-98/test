@@ -82,7 +82,7 @@
                                         <input type="radio" data-id="{{$type->id}}" checked value="no" name="isChecked{{$type->id}}"> <span>No</span>
                                     </td> -->
                                     <td>
-                                        <input type="textval" name="remark{{$type->id}}" data-id="{{$type->id}}" class="form-control">
+                                        <input type="textval" name="remark{{$type->id}}" data-id="{{$type->id}}" class="form-control" placeholder="enter value or yes/no">
                                     </td>
                                 </tr>
                                 @endforeach

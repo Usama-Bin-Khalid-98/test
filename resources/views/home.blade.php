@@ -861,6 +861,7 @@
 
                                           <li><h5>Generate Invoice</h5>
                                               <p>Generate invoice in invoices tab, to change the status of invoice click on the the dollor icon and make it paid. The approvement request will be sent to nbeac admin. </p>
+                                              <p>Registration application will be activated once registration Fee invoice will be approved by NBEAC admin</p>
                                           </li>
                                           <li><h5>Fill all the required forms</h5>
                                               <p>All the registration forms are required to submit before apply for registration. fill all the required form from strategic management to Faculty Information. </p>

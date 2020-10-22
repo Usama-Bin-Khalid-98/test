@@ -8,6 +8,7 @@ use App\InstituteType;
 use App\Models\Common\Campus;
 use App\Models\Common\Designation;
 use App\Models\Common\Slip;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class BasicInfoController extends Controller
     public function index()
     {
         try {
+            $user_info = Auth::user();
             // Basic Info
             $school_id = Auth::user()->business_school_id;
             //dd($school_id);
@@ -38,17 +40,22 @@ class BasicInfoController extends Controller
             $institute_type = InstituteType::where('status', 'active')->get();
             $chart_types=CharterType::where('status', 'active')->get();
             $designations = Designation::where('status', 'active')->get();
-
-            $campuses = Campus::get()->where('business_school_id', $school_id);
+            $tyear = BusinessSchoolTyear::where(
+                [
+                    'campus_id'=>$user_info->campus_id,
+                    'department_id'=>$user_info->department_id
+                ])->get()->first();
+//dd($tyear);
+            $campuses = Campus::where('business_school_id', $school_id)->get();
 //            dd($campuses);
-            if ($campuses->count() == 1)
+            if ($campuses->count() <= 0)
             {
-                $campuses = [];
+                $campuses = '';
             }
             //$campuses->first();
             //dd($campuses);
-            $user_info = Auth::user();
-        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types','user_info','designations', 'campuses'));
+
+        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types','user_info','designations', 'campuses', 'tyear'));
         }catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -146,6 +153,30 @@ class BasicInfoController extends Controller
 
                             ]
                         );
+                    $userinfo = Auth::user();
+                    $where = ['campus_id' =>$userinfo->campus_id, 'department_id'=>$userinfo->department_id];
+                    $checkif = BusinessSchoolTyear::where($where)->exists();
+//                    dd($checkif);
+                    if($checkif) {
+                        $updateYear = BusinessSchoolTyear::where($where)->update(
+                            [
+                                'tyear'=>$request->year_t,
+                                'year_t_1' => $request->year_t-1,
+                                'year_t_2' => $request->year_t-2,
+                                'updated_by' => $userinfo->id
+                            ]
+                        );
+                    }else{
+                        $insert = BusinessSchoolTyear::create(
+                            [
+                                'campus_id'=>$userinfo->campus_id,
+                                'department_id'=>$userinfo->department_id,
+                                'created_by' => $userinfo->id,
+                                'tyear' => $request->year_t,
+                                'year_t_1' => $request->year_t-1,
+                                'year_t_2' => $request->year_t-2
+                            ]);
+                    }
                 //dd('coning else', $update);
                 $updateUser = User::find(Auth::id())
                           ->update(['designation_id'=> $request->designation_id, 'cao_name' => $request->contact_person]);
@@ -173,7 +204,7 @@ class BasicInfoController extends Controller
         return [
             'contact_person' => 'required',
 //            'contact_no' => 'required',
-            'year_estb' => 'required|date',
+            'year_estb' => 'required',
             'web_url' => 'required',
             'date_charter_granted' => 'required',
             'charter_number' => 'required',
@@ -183,6 +214,7 @@ class BasicInfoController extends Controller
             'profit_status' => 'required',
             'sector' => 'required',
             'address' => 'required',
+            'year_t' => 'required',
             'designation_id' => 'required',
         ];
     }
