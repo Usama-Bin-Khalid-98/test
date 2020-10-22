@@ -14,6 +14,7 @@ use App\Models\Common\Region;
 use App\Models\Common\ReviewerRole;
 use App\Models\Common\Sector;
 use App\Models\Common\Designation;
+use App\Specialization;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -212,7 +213,7 @@ class RegisterController extends Controller
                     'research_publication' => $data['research'],
                     'nbeac_seminar' => $data['nbeac_seminar'],
                     'date_seminar' => $data['date_seminar'],
-                    'recommend' => $data['rational_recommend'],
+                    /*'recommend' => $data['rational_recommend'],*/
                     'user_id' => $data['recommended'],
                     'email' => $data['email'],
 //                    'email_verified_at' => '',
@@ -246,7 +247,9 @@ class RegisterController extends Controller
         $disciplines = Discipline::where('status', 'active')->get();
         $regions = Region::where('status', 'active')->get();
         $reviewerRoles = ReviewerRole::where('status', 'active')->get();
+        $specializations = Specialization::where('status', 'active')->get();
         $sectors = Sector::where('status', 'active')->get();
+        $sectorsID = Sector::where(['id'=>3])->get()->first();
         $degrees = Degree::where('status', 'active')->get();
         $users = \App\User::where('user_type', 'PeerReviewer');
         $questions = Question::where('status', 'active')->get();
@@ -256,7 +259,7 @@ class RegisterController extends Controller
             'institute_types', 'chart_types',
             'business_school','designations','countries',
             'departments', 'disciplines','regions', 'reviewerRoles',
-            'sectors', 'degrees','users', 'questions')
+            'sectors', 'degrees','users', 'questions','sectorsID','specializations')
         );
     }
 

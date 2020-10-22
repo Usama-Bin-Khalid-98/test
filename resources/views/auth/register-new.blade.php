@@ -331,7 +331,7 @@
                                                 <div class="form-group">
                                                     <label for="name">Sector</label>
                                                     <select name="sector_id" id="sector_id" class="form-control select2" style="width: 100%;">
-                                                        <option value="">Select Sector</option>
+                                                        <option selected disabled>Select Sector</option>
                                                         @foreach($sectors as $sector)
                                                             <option value="{{$sector->id}}" {{old('sector_id')==$sector->id?'selected':''}}>{{$sector->name}}</option>
                                                         @endforeach
@@ -344,7 +344,14 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="email">Highest Qualification</label>
-                                                    <input type="text" name="qualification" id="qualification" value="{{old('qualification')}}" class="form-control">
+                                                    <select name="qualification" id="qualification" class="form-control select2" style="width: 100%;">
+                                                        <option disabled selected >Select Qualification</option>
+                                                        <option value="Post Doctoral">Post Doctoral</option>
+                                                        <option value="Doctoral">Doctoral</option>
+                                                        <option value="Masters">Masters</option>
+                                                        <option value="MBA">MBA</option>
+                                                    </select>
+                                                    {{--<input type="text" name="qualification" id="qualification" value="{{old('qualification')}}" class="form-control">--}}
                                                     @error('qualification')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -353,12 +360,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">Degree Title</label>
-                                                    <select name="degree_id" id="degree_id" class="form-control select2" style="width: 100%;">
+                                                    <input type="text" name="degree_id" id="degree_id" value="{{old('degree_id')}}" class="form-control">
+                                                    {{--<select name="degree_id" id="degree_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Degree</option>
                                                         @foreach($degrees as $degree)
                                                             <option value="{{$degree->id}}" {{old('degree_id')==$degree->id?'selected':''}}>{{$degree->name}}</option>
                                                         @endforeach
-                                                    </select>
+                                                    </select>--}}
                                                     @error('degree_id')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -367,7 +375,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="email">Specialization</label>
-                                                    <input type="text" name="specialization" id="specialization" value="{{old('specialization')}}" class="form-control">
+                                                    <select name="specialization" id="specialization" class="form-control select2">
+                                                        <option selected disabled>Select Specialization</option>
+                                                        @foreach($specializations as $specialization)
+                                                            <option value="{{$specialization->id}}" {{old('specialization')==$specialization->id?'selected':''}}>{{$specialization->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                   {{-- <input type="text" name="specialization" id="specialization" value="{{old('specialization')}}" class="form-control">--}}
                                                     @error('specialization')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -375,8 +389,18 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="name">Year of degree completion</label>
-                                                    <input type="date" name="year_completion" class="form-control" value="{{old('year_completion')}}">
+                                                    <label for="name">Year of Degree Completion</label>
+                                                    <select name="year_completion" id="year_completion" class="form-control select2" style="width: 100%;">
+                                                        <option selected disabled>Select Year</option>
+                                                        <?php
+                                                        $currently_selected = date('Y');
+                                                        $earliest_year = 1960;
+                                                        $latest_year = date('Y');
+                                                        foreach( range( $latest_year, $earliest_year ) as $i){
+                                                        print '<option value="'.$i.'"'.($i === $currently_selected ? ' selected="selected"' : '').'>'.$i.'</option>';
+                                                        } ?>
+                                                    </select>
+                                                   {{-- <input type="date" name="year_completion" class="form-control" value="{{old('year_completion')}}">--}}
                                                     @error('year_completion')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
@@ -384,7 +408,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="name">Institution from where the degree completed</label>
+                                                    <label for="name">Qualified from Institution</label>
 {{--                                                    <input type="text" name="institute" id="institute" class="form-control" value="{{old('institute')}}">--}}
                                                     <select name="institute" id="institute" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Business/Institute</option>
@@ -399,7 +423,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="name">Employed at (institution)</label>
+                                                    <label for="name">Institution Employed at:</label>
                                                     <input type="text" name="employed" id="employed" class="form-control" value="{{old('employed')}}">
                                                     @error('employed')
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
@@ -460,7 +484,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            {{--<div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="name">Rationale to recommend</label>
                                                     <input type="text" name="rational_recommend" id="rational_recommend" class="form-control" value="{{old('ratoinal_recommend')}}">
@@ -468,7 +492,7 @@
                                                     <span class="text-red" role="alert"> {{ $message }} </span>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div>--}}
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -950,6 +974,7 @@
             });
         })
     </script>
+
 
     <script>
         $('#add').on('click', function () {

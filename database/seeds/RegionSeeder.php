@@ -13,11 +13,11 @@ class RegionSeeder extends Seeder
     {
         //Punjab, Sindh, Balochistan, KPK, Federal, Gilgit Baltistan
         DB::table('regions')->insert([
-            ['name' => 'Punjab'],
             ['name' => 'Balochistan'],
-            ['name' => 'KPK'],
             ['name' => 'Federal'],
-            ['name' => 'Gilgit Baltistan']
+            ['name' => 'Gilgit Baltistan'],
+            ['name' => 'KPK'],
+            ['name' => 'Punjab']
         ]);
     }
 }
