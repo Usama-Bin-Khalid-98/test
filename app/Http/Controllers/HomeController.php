@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
 use App\Models\MentoringInvoice;
 use App\Models\PeerReview\InstituteFeedback;
 use App\User;
@@ -272,24 +273,37 @@ AND slips.status="approved" AND slips.regStatus="SAR" ', array());
         //dd($user);
         if($id)
         {
-            DB::enableQueryLog();
+//            DB::enableQueryLog();
             try {
             $user_id = Auth::id();
             $campus_id = Auth::user()->campus_id;
-            $registration_apply = Slip::where(['id' => $id,'business_school_id'=> $campus_id, 'department_id' => $user->department_id])->update(['regStatus' =>'Review']);
+            $registration_apply = Slip::where(
+                ['id' => $id,'business_school_id'=> $campus_id, 'department_id' => $user->department_id])
+                ->update(['regStatus' =>'Review', 'registration_date'=>date('Y-m-d')]);
            //dd(DB::getQueryLog());
+            $getNbeacData = NbeacBasicInfo::all()->first();
+            $businessSchool =Slip::with('campus', 'department')
+                ->where(
+                    [
+                        'business_school_id'=>Auth::user()->campus_id,
+                        'department_id'=>Auth::user()->department_id,
+                    ]
+                )->get()->first();
 
             if($registration_apply)
             {
                 $data= [];
+                $data['nbeac']= $getNbeacData;
+                $data['school']= $businessSchool;
                 $mailInfo = [
-                    'to' => 'nbeac@gmail.com',
-                    'to_name' => 'Bilal Ahmad',
-                    'school' => "School Name Here",
-                    'from' => "city@gmail.com",
-                    'from_name' => 'Business School focal Person Name',
+                    'to' => $getNbeacData->email??'info@nbeac.org.pk',
+                    'to_name' => $getNbeacData->director,
+                    'school' => $businessSchool->campus->business_school->name,
+                    'campus' => $businessSchool->campus->location,
+                    'from' => $businessSchool->campus->user->email,
+                    'from_name' => $businessSchool->campus->user->name,
                 ];
-                Mail::send('registration.mail.reg_apply_temp', $data, function($message) use ($mailInfo) {
+                Mail::send('registration.mail.reg_apply_temp', ['data'=>$data], function($message) use ($mailInfo) {
                     //dd($user);
                     $message->to($mailInfo['to'],$mailInfo['to_name'] )
                         ->subject('Apply For Registration - '. $mailInfo['school']);
