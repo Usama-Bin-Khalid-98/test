@@ -83,6 +83,12 @@
                                     </select>
                                 </div>
                             </div>
+                               <div class="col-md-3 Other" style="display: none;">
+                                   <div class="form-group">
+                                       <label for="name">Other Designation</label>
+                                       <input type="text" name="other" id="other" class="form-control">
+                                   </div>
+                               </div>
                            <div class="col-md-3">
                             <div class="form-group">
                                 <label for="name">Affiliation</label>
@@ -331,8 +337,20 @@
             }
         });
 
+        $(document).on('change',"#designation_id",function(e){
+            var designation = $(this).val();
+            if(designation==13) {
+                $('.Other').show();
+            }else {
+
+                $('.Other').hide();
+            }
+
+        });
+
          $('#form').submit(function (e) {
             let designation_id = $('#designation_id').val();
+            let other = $('#other').val();
             let affiliation = $('#affiliation').val();
             let name = $('#name').val();
             let statutory_bodies_id = $('#statutory_bodies_id').val();
