@@ -93,9 +93,11 @@ class FacultyDegreeController extends Controller
                           ->update(
                               [
                                   'campus_id' => Auth::user()->campus_id,
+                                  'department_id' => Auth::user()->department_id,
                                   'faculty_foreign' => $request->faculty_foreign,
                                   'faculty_domestic' => $request->faculty_domestic,
                                   'faculty_international' => $request->faculty_international,
+                                  'isComplete' => 'yes',
                                   'updated_by' => Auth::user()->id
 
                                   ]

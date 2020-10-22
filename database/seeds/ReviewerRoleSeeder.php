@@ -15,8 +15,7 @@ class ReviewerRoleSeeder extends Seeder
         DB::table('reviewer_roles')->insert([
             ['name' => 'Industry Representative'],
             ['name' => 'Shadow Member'],
-            ['name' => 'NBEAC Representative'],
-            ['name' => 'Mentor']
+            ['name' => 'NBEAC Representative']
         ]);
     }
 }
