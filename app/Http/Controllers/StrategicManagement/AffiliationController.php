@@ -76,7 +76,6 @@ class AffiliationController extends Controller
                 'department_id' => Auth::user()->department_id,
                 'name' => $request->name,
                 'designation_id' => $request->designation_id,
-                'other' => $request->other,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id,
                 'isComplete' => 'yes',
@@ -93,6 +92,7 @@ class AffiliationController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+
 
     /**
      * Display the specified resource.
