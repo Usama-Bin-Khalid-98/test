@@ -29,7 +29,8 @@ class DegreeSeeder extends Seeder
             ['name' => 'BSET'],
             ['name' => 'BMS'],
             ['name' => 'BCom'],
-            ['name' => 'BSPH']
+            ['name' => 'BSPH'],
+            ['name' => 'Other'],
         ]);
     }
 }
