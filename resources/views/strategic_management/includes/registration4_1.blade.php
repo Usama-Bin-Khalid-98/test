@@ -110,47 +110,15 @@
                                     <?php 
                                     }
                                     ?>
-                                    <!-- <tr>
-                                        <td> 18 years education (MS/MPhil/MBA/MPA/M.Com)</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                       
+                                    <tr style="background-color: grey;color: white;">
+                                        <td style="font-weight: bold;">Total</td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td style="font-weight: bold;"></td>
+                                        <td style="font-weight: bold;"></td>
                                     </tr>
-                                       
-                                    <tr>
-                                        <td>16 years education (Bachelors/Masters)</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td>Others (professional/industry experience)</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                       <tr>
-                                        <td>Total</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr> -->
                                    
                                     
                               

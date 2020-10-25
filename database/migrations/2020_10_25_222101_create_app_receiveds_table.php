@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicationReceivedsTable extends Migration
+class CreateAppReceivedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateApplicationReceivedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('application_receiveds', function (Blueprint $table) {
+        Schema::create('app_receiveds', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
@@ -27,12 +27,7 @@ class CreateApplicationReceivedsTable extends Migration
             $table->foreign('program_id')
                 ->references('id')
                 ->on('programs');
-            $table->unsignedBigInteger('semester_id');
-            $table->string('app_received',100);
-            $table->string('admission_offered',100);
-            $table->string('student_intake',100);
-//            $table->string('degree_req',100)->nullable();
-            $table->string('semester_comm_date',100);
+            $table->string('degree_awarding_criteria',100);
             $table->enum('isComplete', ['yes','no'])->default('no');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('type', ['SAR','REG'])->nullable();
@@ -50,11 +45,6 @@ class CreateApplicationReceivedsTable extends Migration
                 ->on('users');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('semester_id')
-                ->references('id')
-                ->on('semesters')
-                ->onDelete('cascade');
         });
     }
 
@@ -65,6 +55,6 @@ class CreateApplicationReceivedsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('application_receiveds');
+        Schema::dropIfExists('app_receiveds');
     }
 }

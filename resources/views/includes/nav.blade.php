@@ -14,6 +14,7 @@ $parent = checkIsCompleted('App\Models\StrategicManagement\ParentInstitution', [
 $portfolio = checkIsCompleted('App\Models\StrategicManagement\ProgramPortfolio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $entry = checkIsCompleted('App\Models\StrategicManagement\EntryRequirement', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $application = checkIsCompleted('App\Models\StrategicManagement\ApplicationReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$app_receivd = checkIsCompleted('App\AppReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $enrolment = checkIsCompleted('App\Models\StrategicManagement\StudentEnrolment', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $graduated = checkIsCompleted('App\StudentsGraduated', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $gender = checkIsCompleted('App\StudentGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -271,7 +272,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endif
           @if($invoices==='C')
         @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}{{(request()->is('program-objective'))?'active':''}}{{(request()->is('learning-outcome'))?'active':''}}{{(request()->is('managerial-skill'))?'active':''}}" >
+        <li class=" treeview {{(request()->is('app-recvd'))?'active':''}}{{(request()->is('entry-requirements'))?'active':''}}{{(request()->is('application-received'))?'active':''}}{{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}{{(request()->is('program-objective'))?'active':''}}{{(request()->is('learning-outcome'))?'active':''}}{{(request()->is('managerial-skill'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i><span>2: Curriculum</span>
              <span class="pull-right-container">
@@ -293,6 +294,11 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
             <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}">2.3 Applications Received<span class="pull-right-container">
                         <span class="text text-{{$application==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+              <li  class="{{ (request()->is('app-recvd')) ? 'active' : '' }}"><a href="{{url('app-recvd')}}">2.4 Application Received<span class="pull-right-container">
+                        <span class="text text-{{$app_receivd==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$app_receivd==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
               @if($isActiveSAR)

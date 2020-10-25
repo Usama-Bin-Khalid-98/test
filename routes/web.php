@@ -102,6 +102,7 @@ Route::get('/email', function() {
             Route::resource('program-portfolio','ProgramPortfolioController');
             Route::resource('entry-requirements','EntryRequirementController');
             Route::resource('application-received','ApplicationReceivedController');
+            Route::resource('app-recvd','AppReceivedController');
             Route::resource('curriculum-review','CurriculumReviewController');
             Route::resource('program-objective','ProgramObjectiveController');
             Route::resource('learning-outcome','LearningOutcomeController');

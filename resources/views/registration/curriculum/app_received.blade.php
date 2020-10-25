@@ -98,12 +98,12 @@
                                     <input name="student_intake" id="student_intake" class="form-control" >
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                             {{--<div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Degree awarding critarea/requirments</label>
                                     <input type="text" name="degree_req" id="degree_req" class="form-control">
                                 </div>
-                            </div>
+                            </div>--}}
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -145,7 +145,6 @@
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
-                                    <th>Degree Awarding Criteria</th>
                                     <th>Semester Commencement Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -162,7 +161,6 @@
                                     <td>{{$portfolio->app_received}}</td>
                                     <td>{{$portfolio->admission_offered}}</td>
                                     <td>{{$portfolio->student_intake}}</td>
-                                    <td>{{$portfolio->degree_awarding_criteria}}</td>
                                     <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                 <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","semester_id":"{{$portfolio->semester_id}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","degree_req":"{{$portfolio->degree_awarding_criteria}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
@@ -179,7 +177,6 @@
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
-                                     <th>Degree Awarding Criteria</th>
                                      <th>Semester Commencement Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -262,12 +259,6 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Degree awarding critarea/requirments</label>
-                                    <input type="text" name="degree_req" id="edit_degree_req" value="{{old('edit_degree_req')}}" class="form-control">
-                                </div>
-                            </div>
 
 
                         <div class="col-md-6">
@@ -336,17 +327,15 @@
             let admission_offered = $('#admission_offered').val();
             let student_intake = $('#student_intake').val();
             let semester_comm_date = $('#semester_comm_date').val();
-            let degree_req =$('#degree_req').val();
 
             !program_id?addClass('program_id'):removeClass('program_id');
             !semester_id?addClass('semester_id'):removeClass('semester_id');
             !app_received?addClass('app_received'):removeClass('app_received');
             !admission_offered?addClass('admission_offered'):removeClass('admission_offered');
             !student_intake?addClass('student_intake'):removeClass('student_intake');
-            !degree_req?addClass('degree_req'):removeClass('degree_req');
             !semester_comm_date?addClass('semester_comm_date'):removeClass('semester_comm_date');
 
-            if(!program_id || !semester_id || !app_received || !admission_offered || !student_intake || !semester_comm_date || !degree_req)
+            if(!program_id || !semester_id || !app_received || !admission_offered || !student_intake || !semester_comm_date)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -404,7 +393,6 @@
             $('#edit_app_received').val(data.app_received);
             $('#edit_admission_offered').val(data.admission_offered);
             $('#edit_student_intake').val(data.student_intake);
-            $('#edit_degree_req').val(data.degree_req);
             $('#edit_semester_comm_date').val(data.semester_comm_date);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
@@ -416,7 +404,6 @@ $('#updateForm').submit(function (e) {
             let app_received = $('#edit_app_received').val();
             let admission_offered = $('#edit_admission_offered').val();
             let student_intake = $('#edit_student_intake').val();
-            let degree_req=$('#edit_degree_req').val();
             let semester_comm_date = $('#edit_semester_comm_date').val();
             let id = $('#edit_id').val();
 
@@ -425,11 +412,10 @@ $('#updateForm').submit(function (e) {
             !semester_id?addClass('edit_semester_id'):removeClass('edit_semester_id');
             !app_received?addClass('edit_app_received'):removeClass('edit_app_received');
             !admission_offered?addClass('edit_admission_offered'):removeClass('edit_admission_offered');
-            !degree_req?addClass('degree_req'):removeClass('degree_req');
             !student_intake?addClass('edit_student_intake'):removeClass('edit_student_intake');
             !semester_comm_date?addClass('edit_semester_comm_date'):removeClass('edit_semester_comm_date');
 
-            if(!program_id || !semester_id || !app_received || !admission_offered || !student_intake || !semester_comm_date ||!degree_req)
+            if(!program_id || !semester_id || !app_received || !admission_offered || !student_intake || !semester_comm_date)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

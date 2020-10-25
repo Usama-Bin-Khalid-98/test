@@ -2,42 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StrategicManagement\ApplicationReceived;
-use App\Models\StrategicManagement\Scope;
-use App\Models\Common\Semester;
-use App\Models\Common\Slip;
+use App\AppReceived;
 use Illuminate\Http\Request;
+use App\Models\StrategicManagement\Scope;
+use App\Models\Common\Slip;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 
-class ApplicationReceivedController extends Controller
-{
 
+class AppReceivedController extends Controller
+{
     public function __construct()
     {
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
 
-
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        $semesters = Semester::where('status', 'active')->get();
 
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
-            $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+            $apps  = AppReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
-            $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+            $apps  = AppReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
 
-        return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
+        return view('registration.curriculum.App_Recvd',compact('scopes','apps'));
     }
 
     /**
@@ -58,7 +55,6 @@ class ApplicationReceivedController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -75,15 +71,11 @@ class ApplicationReceivedController extends Controller
                 $type = 'REG';
             }
 
-            ApplicationReceived::create([
+            AppReceived::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
-                'semester_id' => $request->semester_id,
-                'app_received' => $request->app_received,
-                'admission_offered' => $request->admission_offered,
-                'student_intake' => $request->student_intake,
-                'semester_comm_date' => $request->semester_comm_date,
+                'degree_awarding_criteria'=>$request->degree_req,
                 'isComplete'=>'yes',
                 'type'=>$type,
                 'created_by' => Auth::user()->id
@@ -101,10 +93,10 @@ class ApplicationReceivedController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ApplicationReceived  $applicationReceived
+     * @param  \App\AppReceived  $appReceived
      * @return \Illuminate\Http\Response
      */
-    public function show(ApplicationReceived $applicationReceived)
+    public function show(AppReceived $appReceived)
     {
         //
     }
@@ -112,10 +104,10 @@ class ApplicationReceivedController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\StrategicManagement\ApplicationReceived  $applicationReceived
+     * @param  \App\AppReceived  $appReceived
      * @return \Illuminate\Http\Response
      */
-    public function edit(ApplicationReceived $applicationReceived)
+    public function edit(AppReceived $appReceived)
     {
         //
     }
@@ -124,10 +116,10 @@ class ApplicationReceivedController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\StrategicManagement\ApplicationReceived  $applicationReceived
+     * @param  \App\AppReceived  $appReceived
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ApplicationReceived $applicationReceived)
+    public function update(Request $request, $id)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
@@ -137,13 +129,9 @@ class ApplicationReceivedController extends Controller
 
         try {
 
-            ApplicationReceived::where('id', $applicationReceived->id)->update([
+            AppReceived::where('id', $id)->update([
                 'program_id' => $request->program_id,
-                'semester_id' => $request->semester_id,
-                'app_received' => $request->app_received,
-                'admission_offered' => $request->admission_offered,
-                'student_intake' => $request->student_intake,
-                'semester_comm_date' => $request->semester_comm_date,
+                'degree_awarding_criteria'=>$request->degree_req,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -158,16 +146,16 @@ class ApplicationReceivedController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StrategicManagement\ApplicationReceived  $applicationReceived
+     * @param  \App\AppReceived  $appReceived
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ApplicationReceived $applicationReceived)
+    public function destroy( $id)
     {
         try {
-            ApplicationReceived::where('id', $applicationReceived->id)->update([
-               'deleted_by' => Auth::user()->id
-           ]);
-            ApplicationReceived::destroy($applicationReceived->id);
+            AppReceived::where('id', $id)->update([
+                'deleted_by' => Auth::user()->id
+            ]);
+            AppReceived::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
@@ -178,11 +166,6 @@ class ApplicationReceivedController extends Controller
     protected function rules() {
         return [
             'program_id' => 'required',
-            'semester_id' => 'required',
-            'app_received' => 'required|numeric',
-            'admission_offered' => 'required|numeric',
-            'student_intake' => 'required|numeric',
-            'semester_comm_date' => 'required'
         ];
     }
 
