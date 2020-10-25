@@ -18,8 +18,4 @@ class Semester extends Model
         return $this->hasOne(User::class);
     }
 
-    public function workload()
-    {
-        return $this->hasOne(WorkLoad::class);
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Common;
 
+use App\Models\Faculty\FacultyProgram;
 use App\User;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Database\Eloquent\Model;
@@ -29,5 +30,10 @@ class Program extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function faculty_program()
+    {
+        return $this->hasOne(FacultyProgram::class);
     }
 }

@@ -60,134 +60,122 @@
 
                            <form action="javascript:void(0)" id="form" method="POST">
                                <div class="form-row col-md-12">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="name">Faculty Name</label>
-                                            <input type="text" name="faculty_name" id="faculty_name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="name">Designation</label>
-                                           <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                                <option selected disabled>Select Designation</option>
-                                                @foreach($designations as $business)
-                                                 <option value="{{$business->id}}">{{$business->name}}</option>
-                                                @endforeach
-                                                </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                   <div class="col-md-12">
+                                       <h3 class="page-header">Table 4.2a Faculty workload (t :{{@$getTyear->tyear}} )</h3>
+                                       <input type="hidden" name="year_t" value="{{@$getTyear->tyear}}">
+                                   </div>
+                                   <div class="col-md-3"></div>
+                                   <div class="col-md-3">
+                                       <div class="form-group">
+                                           <label for="name">Faculty Name</label>
+                                           <input type="text" name="faculty_name" id="faculty_name" class="form-control">
+                                       </div>
+                                   </div>
+                                   <div class="col-md-3">
+                                   <div class="form-group">
+                                       <label for="name">Designation</label>
+                                       <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                           <option selected disabled>Select Designation</option>
+                                           @foreach($designations as $business)
+                                               <option value="{{$business->id}}">{{$business->name}}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+                               </div>
+                               <div class="col-md-12">
+                                   <div class="col-md-3"></div>
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Number of courses taught in all programs</label>
                                             <input type="number" name="total_courses" id="total_courses" class="form-control">
                                         </div>
                                     </div>
-                                       <div class="col-md-12 center">
-                                           <div class="form-group">
-                                            <h3>Number of students supervised</h3>
-                                           </div>
+                                   <div class="col-md-3">
+                                       <div class="form-group">
+                                           <label for="name">Administrative responsibility</label>
+                                           <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
                                        </div>
-                                    <div class="col-md-4">
+                                   </div>
+                               </div>
+                               <div class="col-md-12">
+                                   <div class="col-md-3 ">
+                                       <div class="form-group">
+                                        <h3>Number of students supervised</h3>
+                                       </div>
+                                   </div>
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Phd</label>
                                             <input type="number" name="phd" id="phd" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Masters</label>
                                             <input type="number" name="masters" id="masters" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Bachelors</label>
                                             <input type="number" name="bachleors" id="bachleors" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="name">Administrative responsibility</label>
-                                            <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="name">Semester</label>
-                                            <select name="semester" id="semester" class="form-control select2" style="width: 100%;">
-                                                <option selected disabled>Select Semester</option>
-                                                @foreach($semesters as $semester)
-                                                <option value="{{$semester->id}}">{{ $semester->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+
+{{--                                    <div class="col-md-2">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label for="name">Semester</label>--}}
+{{--                                            <select name="semester" id="semester" class="form-control select2" style="width: 100%;">--}}
+{{--                                                <option selected disabled>Select Semester</option>--}}
+{{--                                                @foreach($semesters as $semester)--}}
+{{--                                                <option value="{{$semester->id}}">{{ $semester->name}}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                </div>
                             <div class="form-row col-md-12">
-                                <h3>Table 4.2b. Faculty workload (t-1)</h3>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Faculty Name</label>
-                                        <input type="text" name="faculty_name" id="faculty_name" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Designation</label>
-                                       <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                            <option selected disabled>Select Designation</option>
-                                            @foreach($designations as $business)
-                                             <option value="{{$business->id}}">{{$business->name}}</option>
-                                            @endforeach
-                                            </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
+                                <span class="page-header"></span>
+                                <h3 class="page-header">Table 4.2b. Faculty workload (t-1 ::{{@$getTyear->year_t_1}})</h3>
+                                <input type="hidden" name="year_t_1" value="{{@$getTyear->year_t_1}}">
+                                <div class="col-md-3"></div>
+
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Number of courses taught in all programs</label>
-                                        <input type="number" name="total_courses" id="total_courses" class="form-control">
+                                        <input type="number" name="total_courses_1" id="total_courses_1" class="form-control">
                                     </div>
                                 </div>
-                                   <div class="col-md-12 center">
-                                       <div class="form-group">
-                                        <h3>Number of students supervised</h3>
-                                       </div>
-                                   </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Phd</label>
-                                        <input type="number" name="phd" id="phd" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Masters</label>
-                                        <input type="number" name="masters" id="masters" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Bachelors</label>
-                                        <input type="number" name="bachleors" id="bachleors" class="form-control">
-                                    </div>
-                                </div>
-
-                                 <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Administrative responsibility</label>
-                                        <input type="text" name="admin_responsibilities" id="admin_responsibilities" class="form-control">
+                                        <input type="text" name="admin_responsibilities_1" id="admin_responsibilities_1" class="form-control">
                                     </div>
                                 </div>
-                               <div class="col-md-4">
+                            </div>
+                               <div class="form-row col-md-12">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Semester</label>
-                                        <select name="semester" id="semester" class="form-control select2" style="width: 100%;">
-                                            <option selected disabled>Select Semester</option>
-                                            @foreach($semesters as $semester)
-                                            <option value="{{$semester->id}}">{{ $semester->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <h3>Number of students supervised</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Phd</label>
+                                        <input type="number" name="phd_1" id="phd_1" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Masters</label>
+                                        <input type="number" name="masters_1" id="masters_1" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Bachelors</label>
+                                        <input type="number" name="bachleors_1" id="bachleors_1" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -240,9 +228,9 @@
                                     <td>{{$req->masters}}</td>
                                     <td>{{$req->bachleors}}</td>
                                     <td>{{$req->admin_responsibilities}}</td>
-                                    <td>{{$req->semester->name}}</td>
+                                    <td>{{$req->year_t}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","semester_id":"{{$req->semester->id}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year_t":"{{$req->year_t}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -343,13 +331,8 @@
 
                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Semester</label>
-                                    <select name="semester" id="edit_semester" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Semester</option>
-                                        @foreach($semesters as $semester)
-                                            <option value="{{$semester->id}}">{{ $semester->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="name">Year T</label>
+                                    <input type="text" name="edit_year_t" id="edit_year_t" value="{{old('edit_year_t')}}" class="form-control">
                                 </div>
                             </div>
 
@@ -374,7 +357,33 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-
+    <div class="modal fade" id="designation_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Designation</h4>
+                </div>
+                <form method="post">
+                <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="discipline_name">Designation Name</label>
+                                <input type="designation_name" id="designation_name" class="form-control">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="button" class="btn btn-info" value="Add" id="add_designation">
+                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
@@ -403,6 +412,55 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        $('#designation_id').on('change', function () {
+            let val = $(this).val();
+            if(val === '13')
+            {
+                $('#designation_modal').modal('show');
+            }
+        });
+
+        $('#add_designation').on('click', function () {
+            let designation_name = $('#designation_name').val();
+            !designation_name?addClass('designation_name'):removeClass('designation_name');
+            if(!designation_name){
+                Notiflix.Notify.Failure("Designation name field is required.");
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{{url('add-designation')}}",
+                data: {name:designation_name},
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    let insert_id = response.insert_id;
+                    if(insert_id){
+
+                        let options = $('<option selected></option>').val(insert_id).text(designation_name);
+                        $('#designation_id').append(options).trigger('change');
+                    }
+                    $('#designation_modal').modal('hide');
+                    console.log('response here', response);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+
+        });
 
          $('#form').submit(function (e) {
             let faculty_name = $('#faculty_name').val();
@@ -412,7 +470,6 @@
             let masters = $('#masters').val();
             let bachleors = $('#bachleors').val();
             let admin_responsibilities = $('#admin_responsibilities').val();
-            let semester = $('#semester').val();
 
             !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
             !designation_id?addClass('designation_id'):removeClass('designation_id');
@@ -421,9 +478,25 @@
             !masters?addClass('masters'):removeClass('masters');
             !bachleors?addClass('bachleors'):removeClass('bachleors');
             !admin_responsibilities?addClass('admin_responsibilities'):removeClass('admin_responsibilities');
-            !semester?addClass('semester'):removeClass('semester');
 
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !semester)
+            let total_courses_1 = $('#total_courses_1').val();
+            let phd_1 = $('#phd_1').val();
+            let masters_1 = $('#masters_1').val();
+            let bachleors_1 = $('#bachleors_1').val();
+            let admin_responsibilities_1 = $('#admin_responsibilities_1').val();
+            // let semester_1 = $('#semester_1').val();
+
+            !total_courses_1?addClass('total_courses_1'):removeClass('total_courses_1');
+            !phd_1?addClass('phd_1'):removeClass('phd_1');
+            !masters_1?addClass('masters_1'):removeClass('masters_1');
+            !bachleors_1?addClass('bachleors_1'):removeClass('bachleors_1');
+            !admin_responsibilities_1?addClass('admin_responsibilities_1'):removeClass('admin_responsibilities_1');
+
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters ||
+                !bachleors || !admin_responsibilities
+                // !total_courses_1 || !phd_1 || !masters_1 ||
+                // !bachleors_1 || !admin_responsibilities_1
+                )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -471,7 +544,7 @@
             $('#edit_masters').val(data.masters);
             $('#edit_bachleors').val(data.bachleors);
             $('#edit_admin_responsibilities').val(data.admin_responsibilities);
-            $('#edit_semester').select2().val(data.semester_id).trigger('change');
+            $('#edit_year_t').val(data.year_t);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -484,7 +557,7 @@ $('#updateForm').submit(function (e) {
             let masters = $('#edit_masters').val();
             let bachleors = $('#edit_bachleors').val();
             let admin_responsibilities = $('#edit_admin_responsibilities').val();
-            let semester_id = $('#edit_semester').val();
+            let year_t = $('#edit_year_t').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
@@ -495,9 +568,9 @@ $('#updateForm').submit(function (e) {
             !masters?addClass('edit_masters'):removeClass('edit_masters');
             !bachleors?addClass('edit_bachleors'):removeClass('edit_bachleors');
             !admin_responsibilities?addClass('edit_admin_responsibilities'):removeClass('edit_admin_responsibilities');
-            !semester_id?addClass('edit_semester'):removeClass('edit_semester');
+            !year_t?addClass('edit_year_t'):removeClass('edit_year_t');
 
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !semester_id )
+            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !year_t )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

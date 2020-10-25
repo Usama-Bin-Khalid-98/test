@@ -346,10 +346,10 @@
                                                     <label for="email">Highest Qualification</label>
                                                     <select name="qualification" id="qualification" class="form-control select2" style="width: 100%;">
                                                         <option disabled selected >Select Qualification</option>
-                                                        <option value="Post Doctoral">Post Doctoral</option>
                                                         <option value="Doctoral">Doctoral</option>
                                                         <option value="Masters">Masters</option>
                                                         <option value="MBA">MBA</option>
+                                                        <option value="Post Doctoral">Post Doctoral</option>
                                                     </select>
                                                     {{--<input type="text" name="qualification" id="qualification" value="{{old('qualification')}}" class="form-control">--}}
                                                     @error('qualification')
@@ -703,8 +703,9 @@
                                 <span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title">Add New Department</h4>
                         </div>
+                        <form method="post">
                             <div class="modal-body">
-                                <form method="post">
+
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="discipline_name">Department Name</label>
@@ -820,7 +821,7 @@
             let department_name = $('#department_name').val();
             !department_name?addClass('department_name'):removeClass('department_name');
             if(!department_name){
-                Notiflix.Notify.Failure("Discipline name field is required.");
+                Notiflix.Notify.Failure("Department name is required.");
                 return false;
             }
             $.ajax({

@@ -867,7 +867,7 @@
                                               <p>All the registration forms are required to submit before apply for registration. fill all the required form from strategic management to Faculty Information. </p>
                                           </li>
 
-                                          <li><h5>Apply for registratoin</h5>
+                                          <li><h5>Apply for registration</h5>
                                               <p>Apply for registration. when complete required forms from strategic management to Faculty Information. A registration requiest will be sent to NBEAC Admin. </p>
                                           </li>
                                       </ol>
@@ -971,7 +971,7 @@
                               <td>{{@$invoice_re->department}}</td>
 {{--                              <td><a href="{{@$invoice_re->slip}}">Invoice Slip</a></td>--}}
                               {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                              <td><i class="badge" data-id="{{@$invoice_re->id}}"  style="background: {{$invoice_re->regStatus == 'Initiated'?'red':''}}{{$invoice_re->regStatus == 'Review'?'brown':''}}{{$invoice_re->regStatus == 'Approved'?'green':''}}" >{{@$invoice_re->regStatus != ''?ucwords($invoice_re->regStatus):'Initiated'}}</i></td>
+                              <td><i class="badge" data-id="{{@$invoice_re->id}}"  style="background: {{$invoice_re->regStatus == 'Initiated'?'red':''}}{{$invoice_re->regStatus == 'Review'?'brown':''}}{{$invoice_re->regStatus == 'Approved'?'green':''}}; cursor: default;" >{{@$invoice_re->regStatus != ''?ucwords($invoice_re->regStatus):'Initiated'}}</i></td>
                               <td>@if($invoice_re->regStatus =='Initiated') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department_id}}"> Apply Now </button>  @elseif($invoice_re->regStatus =='Review')Desk Review In-progress @endif</td>
                           </tr>
                       @endforeach

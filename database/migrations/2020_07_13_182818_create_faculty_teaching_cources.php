@@ -33,8 +33,7 @@ class CreateFacultyTeachingCources extends Migration
                 ->references('id')
                 ->on('designations');
             $table->integer('max_cources_allowed');
-            $table->integer('tc_program1');
-            $table->integer('tc_program2');
+//            $table->integer('tc_program2');
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');
             $table->enum('type',['SAR','REG'])->nullable();

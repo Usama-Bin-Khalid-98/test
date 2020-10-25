@@ -73,6 +73,7 @@ Route::get('/email', function() {
         //Route::put('users-roles', 'Auth\UserController\user_roles');
 
         Route::group(['middleware' => ['role:BusinessSchool']], function () {
+            Route::post('add-designation', 'Common\DesignationController@store');
         //// Strategic Management
             Route::prefix('strategic')->group(function () {
                 Route::post('add-body-name','StrategicManagement\StatutoryBodyController@store');

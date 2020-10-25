@@ -22,13 +22,15 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Teaching courses in program 1(F)</td>
-                                        <td>Teaching courses in program 2 (G)</td>
-                                        <td>FTE for program 1=F/E</td>
-                                        <td>FTE for program 2=G/E</td>
+                                        @foreach($facultyTeachingCourses as $req)
+                                            @foreach($req->faculty_program as $program )
+                                                <th> {{$program->program->name}}:</th>
+                                            @endforeach
+                                            @break
+                                        @endforeach
                                     </tr>
                                     @php
-                                    $totalFTE1=$totalFTE2=0;
+                                        $totalFTE1=$totalFTE2=$counter=0;
                                     @endphp
                                     @foreach($facultyTeachingCourses as $data)
                                     <tr>
@@ -37,23 +39,33 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                         <td>{{@$data->desName}}</td>
                                         <td>{{@$data->lookupFacultyType}}</td>
                                         <td>{{$data->   max_cources_allowed}}</td>
-                                        <td>{{$data->tc_program1}}</td>
-                                        <td>{{$data->tc_program2}}</td>
-                                        <td>{{number_format((float)$data->tc_program1/$data->max_cources_allowed, 3, '.', '')}}</td>
-                                        <td>{{number_format((float)$data->tc_program2/$data->max_cources_allowed, 3, '.', '')}}</td>
+                                        @foreach($data->faculty_program as $program )
+                                            <td>
+                                                Courses : {{$program->tc_program}} <br>
+                                                FTE  {{round($program->tc_program/$data->max_cources_allowed, 2)}}
+                                            </td>
+                                        @endforeach
+{{--                                        <td>{{number_format((float)$data->tc_program1/$data->max_cources_allowed, 3, '.', '')}}</td>--}}
+{{--                                        <td>{{number_format((float)$data->tc_program2/$data->max_cources_allowed, 3, '.', '')}}</td>--}}
 
                                         @php
-                                        $totalFTE1+=$data->tc_program1/$data->max_cources_allowed;
-                                        $totalFTE2+=$data->tc_program2/$data->max_cources_allowed;
+                                        foreach ($data->faculty_program as $programRow)
+                                            $totalFTE2+=$programRow->tc_program/$data->max_cources_allowed;
                                         @endphp
-                                    </tr>
                                     @endforeach
-
-                                    <tr>
-                                        <td colspan="7">Total FTE</td>
-                                        <td>{{number_format((float)$totalFTE1, 3, '.', '')}}</td>
-                                        <td>{{number_format((float)$totalFTE2, 3, '.', '')}}</td>
                                     </tr>
+
+{{--                                    <tr>--}}
+{{--                                        <td colspan="5">Total FTE</td>--}}
+{{--                                        <td>{{number_format((float)$totalFTE1, 3, '.', '')}}</td>--}}
+{{--                                        <td>{{number_format((float)$totalFTE2, 3, '.', '')}}</td>--}}
+{{--                                        @foreach($data->faculty_program as $program )--}}
+{{--                                            <td>--}}
+{{--                                                Courses : {{$program->tc_program}} <br>--}}
+{{--                                                {{round($totalFTE2, 2)}}--}}
+{{--                                            </td>--}}
+{{--                                        @endforeach--}}
+{{--                                    </tr>--}}
 
                                    @php
 
