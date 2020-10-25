@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year and Visiting Faculty Equivalent (VFE) of last year in Table 4.3</h3>
+                            <h3 class="box-title">4.3 Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table 4.3a.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -61,15 +61,11 @@
                            <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Faculty type(C)</label>
-                                   <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Faculty Type</option>
-                                        @foreach($faculty_types as $faculty)
-                                         <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
-                                        @endforeach
-                                        </select>
+                                    <label for="name">Faculty Name</label>
+                                   <input type="text" name="name" id="name" class="form-control">
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Designation(B)</label>
@@ -83,23 +79,37 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Maximum teaching Cources Allowed(E)</label>
+                                    <label for="name">Faculty type(C)</label>
+                                   <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Faculty Type</option>
+                                        @foreach($faculty_types as $faculty)
+                                         <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
+                                        @endforeach
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Maximum teaching courses Allowed(E)</label>
                                     <input type="number" name="max_cources_allowed" id="max_cources_allowed" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Teaching cources in program 1(F) </label>
-                                    <input type="number" name="tc_program1" id="tc_program1" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Teaching cources in program 2(G)</label>
-                                    <input type="number" name="tc_program2" id="tc_program2" class="form-control">
-                                </div>
-                            </div>
 
+                            @foreach($getScope as $program)
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="name">Teaching courses in {{$program->program->name}}(F) </label>
+                                        <input type="number" name="tc_program[{{$program->program->id}}]" id="tc_program{{$program->program->id}}" data-id="{{$program->program->id}}" class="form-control programs">
+                                    </div>
+                                </div>
+                            @endforeach
+
+{{--                               <div class="col-md-3">--}}
+{{--                                   <div class="form-group">--}}
+{{--                                       <label for="name">Teaching courses in program 2(G)</label>--}}
+{{--                                       <input type="number" name="tc_program2" id="tc_program2" class="form-control">--}}
+{{--                                   </div>--}}
+{{--                               </div>--}}
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -122,13 +132,17 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
+{{--                                    <th>Business School</th>--}}
+                                    <th>Name</th>
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
-                                    <th>Maximum teaching Cources Allowed</th>
-                                    <th>Teaching cources in program 1</th>
-                                    <th>Teaching cources in program 2</th>
+                                    <th>Maximum teaching Courses Allowed</th>
+                                    @foreach($visitings as $req)
+                                        @foreach($req->faculty_program as $program )
+                                         <th> {{$program->program->name}}:</th>
+                                        @endforeach
+                                        @break
+                                    @endforeach
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -136,13 +150,18 @@
                                 <tbody>
                                 @foreach($visitings as $req)
                                 <tr>
-                                    <td>{{$req->campus->business_school->name}}</td>
-                                    <td>{{$req->campus->location}}</td>
+{{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
+                                    <td>{{$req->name}}</td>
                                     <td>{{$req->lookup_faculty_type->faculty_type}}</td>
                                     <td>{{$req->designation->name}}</td>
                                     <td>{{$req->max_cources_allowed}}</td>
-                                    <td>{{$req->tc_program1}}</td>
-                                    <td>{{$req->tc_program2}}</td>
+
+                                        @foreach($req->faculty_program as $program )
+                                        <td>
+                                            Courses : {{$program->tc_program}} <br>
+                                            FTE  {{round($program->tc_program/$req->max_cources_allowed, 2)}}
+                                        </td>
+                                        @endforeach
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","tc_program1":"{{$req->tc_program1}}","tc_program2":"{{$req->tc_program2}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
@@ -152,13 +171,17 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
+{{--                                    <th>Business School</th>--}}
+                                    <th>Name</th>
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
-                                    <th>Maximum teaching Cources Allowed</th>
-                                    <th>Teaching cources in program 1</th>
-                                    <th>Teaching cources in program 2</th>
+                                    <th>Maximum teaching Courses Allowed</th>
+                                    @foreach($visitings as $req)
+                                        @foreach($req->faculty_program as $program )
+                                            <th> {{$program->program->name}}:</th>
+                                        @endforeach
+                                        @break
+                                    @endforeach
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -240,7 +263,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -286,16 +309,18 @@
             let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
             let designation_id = $('#designation_id').val();
             let max_cources_allowed = $('#max_cources_allowed').val();
-            let tc_program1 = $('#tc_program1').val();
-            let tc_program2 = $('#tc_program2').val();
+
+
+            let tc_program = $('#tc_program').val();
+            // let tc_program2 = $('#tc_program2').val();
 
             !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
             !designation_id?addClass('designation_id'):removeClass('designation_id');
             !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
-            !tc_program1?addClass('tc_program1'):removeClass('tc_program1');
-            !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
+            !tc_program?addClass('tc_program'):removeClass('tc_program');
+            // !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
 
-            if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2)
+            if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -321,7 +346,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

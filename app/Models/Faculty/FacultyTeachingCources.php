@@ -25,4 +25,10 @@ class FacultyTeachingCources extends Model
     public function designation() {
         return $this->belongsTo(Designation::class);
     }
+
+    public function faculty_program()
+    {
+        return $this->hasMany(FacultyProgram::class, 'faculty_teaching_cource_id', 'id')->with('program');
+    }
+
 }

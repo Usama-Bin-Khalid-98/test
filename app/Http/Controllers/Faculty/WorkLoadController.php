@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
 use App\Models\Common\Slip;
-use App\Models\Common\Semester;
 use App\Models\Faculty\WorkLoad;
 use App\Models\Common\Designation;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -24,8 +24,6 @@ class WorkLoadController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
          $designations = Designation::all();
-         $semesters = Semester::all();
-
         /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
@@ -33,13 +31,15 @@ class WorkLoadController extends Controller
             $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }*/
 
+
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
         $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
+        $getTyear = BusinessSchoolTyear::where($where)->get()->first();
         ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
-        $workloads = Workload::with('campus','designation', 'semester')->where($where)->get();
+        $workloads = Workload::with('campus','designation')->where($where)->get();
 
 
-         return view('registration.faculty.workload', compact('designations','workloads', 'semesters'));
+         return view('registration.faculty.workload', compact('designations','workloads', 'getTyear'));
     }
 
     /**
@@ -85,15 +85,31 @@ class WorkLoadController extends Controller
                 'masters' => $request->masters,
                 'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
-                'semester_id' => $request->semester,
+                'year_t' => $request->year_t,
                 'isCompleted' => 'yes',
                 'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
 
+            WorkLoad::create(
+                [
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'faculty_name' => $request->faculty_name,
+                    'designation_id' => $request->designation_id,
+                    'total_courses' => $request->total_courses_1,
+                    'phd' => $request->phd_1,
+                    'masters' => $request->masters_1,
+                    'bachleors' => $request->bachleors_1,
+                    'admin_responsibilities' => $request->admin_responsibilities_1,
+                    'year_t' => $request->year_t_1,
+                    'isCompleted' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]
+            );
+//
             return response()->json(['success' => 'Faculty WorkLoad added successfully.']);
-
-
         }catch (Exception $e)
         {
             return response()->json($e->getMessage(), 422);
@@ -148,7 +164,7 @@ class WorkLoadController extends Controller
                 'masters' => $request->masters,
                 'bachleors' => $request->bachleors,
                 'admin_responsibilities' => $request->admin_responsibilities,
-                'semester_id' => $request->semester,
+                'year_t' => $request->year_t,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -189,7 +205,6 @@ class WorkLoadController extends Controller
             'masters' => 'required',
             'bachleors' => 'required',
             'admin_responsibilities' => 'required',
-            'semester' => 'required'
         ];
     }
 

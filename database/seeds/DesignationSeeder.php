@@ -14,17 +14,18 @@ class DesignationSeeder extends Seeder
         
         DB::table('designations')->insert([
             ['name' => 'Associate Professor'],
-            ['name' => 'Dean of school'],
+            ['name' => 'Assistant Professor'],
+            ['name' => 'Dean of School'],
             ['name' => 'Director'],
             ['name' => 'Head of school'],
             ['name' => 'Lecturer'],
-            ['name' => 'NBEAC focal person'],
+            ['name' => 'NBEAC Focal Person'],
+            ['name' => 'Other'],
             ['name' => 'Principal'],
             ['name' => 'Professor'],
             ['name' => 'Rector'],
-            ['name' => 'Research assistant'],
+            ['name' => 'Research Assistant'],
             ['name' => 'Vice chancellor'],
-            ['name' => 'Other']
         ]);
     }
 }

@@ -482,11 +482,13 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$bsf==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @if($isActiveSAR)
                      <li class="{{ (request()->is('faculty-detailed-info')) ? 'active' : '' }}"><a href="{{url('faculty-detailed-info')}}">4.1b Faculty Detailed Info<span class="pull-right-container">
                         <span class="text text-{{$faculty_detail==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$faculty_detail==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @endif
             <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}">4.2 Faculty Work Load T<span class="pull-right-container">
                         <span class="text text-{{$workload==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$workload==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -498,6 +500,14 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+
+              <li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{url('visiting_faculty')}}">
+                    4.3b Visiting Faculty<span class="pull-right-container">
+                        <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a>
+              </li>
              <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}">4.4 Student Teacher Ratio<span class="pull-right-container">
                         <span class="text text-{{$ratio==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$ratio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
