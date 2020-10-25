@@ -12,9 +12,9 @@ class FacultyTypeSeeder extends Seeder
     public function run()
     {
          DB::table('lookup_faculty_types')->insert([
-            ['faculty_type' => 'Permanent'],
-            ['faculty_type' => 'Visiting'],
-            ['faculty_type' => 'Adjunct']
+             ['faculty_type' => 'Adjunct'],
+             ['faculty_type' => 'Permanent'],
+             ['faculty_type' => 'Visiting']
         ]);
     }
 }
