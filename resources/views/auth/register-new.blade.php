@@ -765,7 +765,7 @@
         $('#BusinessSchool').on('click', function () {
             console.log('clicked on business sschool', $(this).val());
             $('#question-modal').modal('show');
-        })
+        });
 
         $('#department_id').on('change', function () {
             let val = $(this).val();
@@ -815,7 +815,7 @@
                 }
             });
 
-        })
+        });
 
         $('#add_department').on('click', function () {
             let department_name = $('#department_name').val();

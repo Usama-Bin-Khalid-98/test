@@ -294,6 +294,34 @@
     </div>
     <!-- /.modal -->
 
+    <div class="modal fade" id="designation_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Designation</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="discipline_name">Designation Name</label>
+                                <input type="designation_name" id="designation_name" class="form-control">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="button" class="btn btn-info" value="Add" id="add_designation">
+                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
@@ -315,6 +343,14 @@
     </script>
     <script type="text/javascript">
 
+        $('#designation_id').on('change', function () {
+            let val = $(this).val();
+            if(val === '13')
+            {
+                $('#designation_modal').modal('show');
+            }
+        });
+
         $('#statutory_bodies_id').on('change', function () {
             let val = $(this).val();
             console.log('dropdoen val', val);
@@ -322,7 +358,7 @@
                 $('#add-other-modal').modal('show');
             }
 
-        })
+        });
         $('.select2').select2()
 
          $.ajaxSetup({
@@ -330,6 +366,50 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('#add_designation').on('click', function () {
+            let designation_name = $('#designation_name').val();
+            !designation_name?addClass('designation_name'):removeClass('designation_name');
+            if(!designation_name){
+                Notiflix.Notify.Failure("Designation name field is required.");
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{{url('add-designation')}}",
+                data: {name:designation_name},
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    let insert_id = response.insert_id;
+                    if(insert_id){
+
+                        let options = $('<option selected></option>').val(insert_id).text(designation_name);
+                        $('#designation_id').append(options).trigger('change');
+                    }
+                    $('#designation_modal').modal('hide');
+                    console.log('response here', response);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+
+        });
+
+
 
          $('#form').submit(function (e) {
             let designation_id = $('#designation_id').val();

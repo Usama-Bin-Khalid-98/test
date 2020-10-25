@@ -11,7 +11,7 @@ class DesignationSeeder extends Seeder
      */
     public function run()
     {
-        //
+        
         DB::table('designations')->insert([
             ['name' => 'Associate Professor'],
             ['name' => 'Assistant Professor'],
