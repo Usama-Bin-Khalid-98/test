@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Faculty;
 
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\Faculty\FacultyStability;
 use App\Models\Common\Slip;
 use App\BusinessSchool;
@@ -48,8 +49,10 @@ class FacultyStabilityController extends Controller
         ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
         $stabilities = FacultyStability::with('campus')->where($where)->get();
 
+        $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
 
-         return view('registration.faculty.faculty_stability', compact('stabilities'));
+        $years = ['tyear'=> $getYears->tyear, 'year_t_1' =>$getYears->year_t_1, 'year_t_2' =>$getYears->year_t_2];
+         return view('registration.faculty.faculty_stability', compact('stabilities','years'));
     }
 
     /**
@@ -85,20 +88,23 @@ class FacultyStabilityController extends Controller
                 $type = 'REG';
             }
 
-            FacultyStability::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'total_faculty' => $request->total_faculty,
-                'year' => $request->year,
-                'resigned' => $request->resigned,
-                'retired' => $request->retired,
-                'terminated' => $request->terminated,
-                'new_induction' => $request->new_induction,
-                'isCompleted' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
-
+            if($request->year) {
+                foreach ($request->year as $key=>$year) {
+                    FacultyStability::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'total_faculty' => $request->total_faculty[$key],
+                        'year' => $request->year[$key],
+                        'resigned' => $request->resigned[$key],
+                        'retired' => $request->retired[$key],
+                        'terminated' => $request->terminated[$key],
+                        'new_induction' => $request->new_induction[$key],
+                        'isCompleted' => 'yes',
+                        'type' => $type,
+                        'created_by' => Auth::user()->id
+                    ]);
+                }
+            }
             return response()->json(['success' => 'Faculty Stability added successfully.']);
 
 
@@ -175,7 +181,7 @@ class FacultyStabilityController extends Controller
     {
         try {
             FacultyStability::where('id', $facultyStability->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             FacultyStability::destroy($facultyStability->id);
             return response()->json(['success' => 'Record deleted successfully.']);
