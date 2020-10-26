@@ -57,8 +57,6 @@
      okButtonBackground:'#dd4b39',
      titleColor:'#dd4b39'
     });
-    
-    $('.select2').select2();
 
  </script>
  </body>
