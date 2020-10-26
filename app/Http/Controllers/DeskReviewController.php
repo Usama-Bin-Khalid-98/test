@@ -87,10 +87,9 @@ class DeskReviewController extends Controller
 
         $nbeac_criteria = NbeacCriteria::all()->first();
         @$business_school_user = Slip::where(['id' => $id])->get()->first();
-       // dd($business_school_user);
         $campus_id = $business_school_user->business_school_id;
         $department_id = $business_school_user->department_id;
-        //dd($campus_id, ' dep', $department_id);
+//        dd($campus_id, ' dep', $department_id);
 
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
 //      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
@@ -103,7 +102,8 @@ class DeskReviewController extends Controller
             @$program_dates[$accred->id]['date'] = $accred->date_program;
         }
 
-        $mission_vision = MissionVision::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
+        $mission_vision = MissionVision::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+//        dd($mission_vision);
         @$strategic_plan = StrategicPlan::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
         @$application_received = ApplicationReceived::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
         $student_enrolment = StudentEnrolment::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id]);

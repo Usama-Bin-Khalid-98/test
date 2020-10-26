@@ -69,7 +69,7 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
 
                                    @php
 
-                                   View::share('FTE', $totalFTE1+$totalFTE2);
+                                   View::share('VFE', $totalFTE2);
                                    @endphp
 
 
