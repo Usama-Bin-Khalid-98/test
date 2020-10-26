@@ -5,8 +5,6 @@
 </head>
 <p>
 <p style="font-weight: bold">Dear {{@$data['user']}},</p>
-<p style="font-weight: bold">{{@$data['designation']}},</p>
-<p style="font-weight: bold">{{@$data['school']}},{{@$data['campus']}}</p>
 
 <p>Hope you are doing well,</p>
 
