@@ -501,13 +501,13 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                     </span></a></li>
 
-              <li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{url('visiting_faculty')}}">
-                    4.3b Visiting Faculty<span class="pull-right-container">
-                        <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a>
-              </li>
+              <!--<li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{url('visiting_faculty')}}">-->
+              <!--      4.3b Visiting Faculty<span class="pull-right-container">-->
+              <!--          <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">-->
+              <!--              <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>-->
+              <!--          </span>-->
+              <!--      </span></a>-->
+              <!--</li>-->
              <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}">4.4 Student Teacher Ratio<span class="pull-right-container">
                         <span class="text text-{{$ratio==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$ratio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>

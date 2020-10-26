@@ -218,7 +218,7 @@
 
                                             <div class="col-md-4">
                                                 <div class="form-group @error('designation_id') has-error @enderror">
-                                                    <label for="name">Designation</label>
+                                                    <label for="name">Designation of Chief Administrative Officer</label>
                                                     <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Designation</option>
                                                         @foreach($designations as $designation)
@@ -606,7 +606,7 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Questionnaire.</h4>
+                            <h4 class="modal-title">Eligibility Screening Criteria.</h4>
                         </div>
                         <form role="form" method="post">
                             <div class="modal-body">
