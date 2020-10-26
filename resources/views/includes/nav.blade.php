@@ -20,7 +20,9 @@ $graduated = checkIsCompleted('App\StudentsGraduated', ['campus_id' => Auth::use
 $gender = checkIsCompleted('App\StudentGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $bsf = checkIsCompleted('App\Models\Faculty\FacultySummary', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $workload = checkIsCompleted('App\Models\Faculty\WorkLoad', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isCompleted'=>'yes']);
-$visiting = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes']);
+$visiting = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>3]);
+$visiting_perm = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>2]);
+$visiting_adjunct = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>1]);
 $ratio = checkIsCompleted('App\Models\Faculty\FacultyStudentRatio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes']);
 $stability = checkIsCompleted('App\Models\Faculty\FacultyStability', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active', 'isCompleted'=>'yes']);
 $facultygender = checkIsCompleted('App\Models\Faculty\FacultyGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isCompleted'=>'yes']);
@@ -469,7 +471,23 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endif
           @if($invoices==='C')
           @hasrole('BusinessSchool')
-        <li class=" treeview {{(request()->is('work-load'))?'active':''}}{{(request()->is('faculty-degree'))?'active':''}}{{(request()->is('faculty-summary'))?'active':''}}{{(request()->is('faculty-stability'))?'active':''}}{{(request()->is('faculty-gender'))?'active':''}}{{(request()->is('faculty-teaching'))?'active':''}}{{(request()->is('faculty-student-ratio'))?'active':''}}{{(request()->is('faculty-membership'))?'active':''}}{{(request()->is('faculty-exposure'))?'active':''}}{{(request()->is('international-faculty'))?'active':''}}{{(request()->is('faculty-participation'))?'active':''}}{{(request()->is('consultancy-project'))?'active':''}}{{(request()->is('faculty-promotion'))?'active':''}}{{(request()->is('faculty-develop'))?'active':''}}{{(request()->is('faculty-workshop'))?'active':''}}{{(request()->is('faculty-detailed-info'))?'active':''}}">
+        <li class=" treeview {{(request()->is('work-load'))?'active':''}}
+        {{(request()->is('faculty-degree'))?'active':''}}
+        {{(request()->is('visiting_faculty'))?'active':''}}
+        {{(request()->is('faculty-summary'))?'active':''}}
+        {{(request()->is('faculty-stability'))?'active':''}}
+        {{(request()->is('faculty-gender'))?'active':''}}
+        {{(request()->is('faculty-teaching'))?'active':''}}
+        {{(request()->is('faculty-student-ratio'))?'active':''}}
+        {{(request()->is('faculty-membership'))?'active':''}}
+        {{(request()->is('faculty-exposure'))?'active':''}}
+        {{(request()->is('international-faculty'))?'active':''}}
+        {{(request()->is('faculty-participation'))?'active':''}}
+        {{(request()->is('consultancy-project'))?'active':''}}
+        {{(request()->is('faculty-promotion'))?'active':''}}
+        {{(request()->is('faculty-develop'))?'active':''}}
+        {{(request()->is('faculty-workshop'))?'active':''}}
+        {{(request()->is('faculty-detailed-info'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-user-plus text-green"></i><span>4: Faculty</span>
                   <span class="pull-right-container">
@@ -495,19 +513,19 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                     </span></a></li>
             <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}">
-                    4.3 Visiting Faculty<span class="pull-right-container">
-                        <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                    4.3a Regular/Adjunct Faculty <span class="pull-right-container">
+                        <span class="text text-{{$visiting_perm==='C' || $visiting_adjunct==='C' ?'green':'red'}} pull-right">
+                            <i class="fa {{$visiting_perm==='C' || $visiting_adjunct==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
 
-              <!--<li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{url('visiting_faculty')}}">-->
-              <!--      4.3b Visiting Faculty<span class="pull-right-container">-->
-              <!--          <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">-->
-              <!--              <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>-->
-              <!--          </span>-->
-              <!--      </span></a>-->
-              <!--</li>-->
+              <li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{url('visiting_faculty')}}">
+                    4.3b Visiting Faculty<span class="pull-right-container">
+                        <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a>
+              </li>
              <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}">4.4 Student Teacher Ratio<span class="pull-right-container">
                         <span class="text text-{{$ratio==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$ratio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>

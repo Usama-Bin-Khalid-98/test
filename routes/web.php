@@ -135,7 +135,7 @@ Route::get('/email', function() {
             Route::resource('alumni-participation','AlumniParticipationController');
 
             // Faculty
-            Route::get('/visiting_faculty','Faculty\VisitingFacultyController@index')->name('visiting_faculty');
+            Route::resource('/visiting_faculty','Faculty\FacultyTeachingCourcesController');
             Route::resource('faculty-gender','Faculty\FacultyGenderController');
             Route::resource('faculty-stability','Faculty\FacultyStabilityController');
             Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
