@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\StrategicManagement\StudentEnrolment;
 use App\Models\Common\Slip;
 use App\BusinessSchool;
@@ -37,7 +38,9 @@ class StudentEnrolmentController extends Controller
             $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
 
-         return view('registration.student_enrolment.enrolment', compact('programs','enrolments','bs','ms','phd','t_students'));
+        $t_year = BusinessSchoolTyear::where(['campus_id' =>$campus_id, 'department_id' =>$department_id])->get()->first();
+        @$years = ['tyear' => @$t_year->tyear, 'year_t_1'=>@$t_year->year_t_1, 'year_t_2'=>@$t_year->year_t_2];
+         return view('registration.student_enrolment.enrolment', compact('programs','enrolments','bs','ms','phd','t_students', 'years'));
     }
 
     /**
@@ -74,18 +77,23 @@ class StudentEnrolmentController extends Controller
             }
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
-            StudentEnrolment::create([
-                'campus_id' => $uni_id,
-                'department_id' => $dept_id,
-                'year' => $request->year,
-                'bs_level' => $request->bs_level,
-                'ms_level' => $request->ms_level,
-                'phd_level' => $request->phd_level,
-                'total_students' => $request->bs_level+ $request->ms_level+$request->phd_level,
-                'isComplete' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
+
+            if($request->year) {
+                foreach ($request->year as $key=>$year) {
+                    StudentEnrolment::create([
+                        'campus_id' => $uni_id,
+                        'department_id' => $dept_id,
+                        'year' => $request->year[$key],
+                        'bs_level' => $request->bs_level[$key],
+                        'ms_level' => $request->ms_level[$key],
+                        'phd_level' => $request->phd_level[$key],
+                        'total_students' => $request->bs_level[$key] + $request->ms_level[$key] + $request->phd_level[$key],
+                        'isComplete' => 'yes',
+                        'type' => $type,
+                        'created_by' => Auth::user()->id
+                    ]);
+                }
+            }
 
             return response()->json(['success' => 'Student enrolment added successfully.']);
 
