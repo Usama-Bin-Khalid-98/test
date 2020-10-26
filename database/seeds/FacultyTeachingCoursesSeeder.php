@@ -30,8 +30,7 @@ class FacultyTeachingCoursesSeeder extends Seeder
             'status' => 'active',
             ]
         ]);
-
-
     }
 
 }
+// faculty
