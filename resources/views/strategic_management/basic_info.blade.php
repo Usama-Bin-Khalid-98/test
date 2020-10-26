@@ -73,6 +73,7 @@
 
                                         <li><h5>Generate Invoice</h5>
                                             <p>Generate invoice in invoices tab, before starting entries in registration forms.</p>
+                                            <p>Registration application will be activated once registration Fee invoice will be approved by NBEAC admin</p>
                                         </li>
                                         <li><h5>Upload Payment slip</h5>
                                             <p>When pay the registration fee, upload the payment slip.</p>
