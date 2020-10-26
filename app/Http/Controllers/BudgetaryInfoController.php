@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\StrategicManagement\BudgetaryInfo;
 use App\Models\Common\Slip;
 use Illuminate\Http\Request;
@@ -35,8 +36,10 @@ class BudgetaryInfoController extends Controller
             $budgets  = BudgetaryInfo::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
 
+        $t_years = BusinessSchoolTyear::where(['campus_id' =>$campus_id, 'department_id' => $department_id])->get()->first();
 
-         return view('strategic_management.budgetary_info', compact('budgets'));
+        @$tyears = ['tyear' => @$t_years->tyear, 'year_t_1' => @$t_years->year_t_1, 'year_t_2' => @$t_years->year_t_2];
+         return view('strategic_management.budgetary_info', compact('budgets', 'tyears'));
     }
 
     /**
@@ -71,18 +74,22 @@ class BudgetaryInfoController extends Controller
             }else {
                 $type = 'REG';
             }
-                BudgetaryInfo::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'year' => $request->year,
-                    'uni_budget' => $request->uni_budget,
-                    'uni_proposed_budget' => $request->uni_proposed_budget,
-                    'budget_receive' => $request->budget_receive,
-                    'budget_type' => $request->budget_type,
-                    'isComplete' => 'yes',
-                    'type' => $type,
-                    'created_by' => Auth::user()->id
-                ]);
+            if($request->year){
+                foreach ($request->year as $key=>$year) {
+                    BudgetaryInfo::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'year' => $request->year[$key],
+                        'uni_budget' => $request->uni_budget[$key],
+                        'uni_proposed_budget' => $request->uni_proposed_budget[$key],
+                        'budget_receive' => $request->budget_receive[$key],
+                        'budget_type' => $request->budget_type[$key],
+                        'isComplete' => 'yes',
+                        'type' => $type,
+                        'created_by' => Auth::user()->id
+                    ]);
+                }
+            }
 
             return response()->json(['success' => 'Budgetary Information added successfully.']);
 
@@ -159,7 +166,7 @@ class BudgetaryInfoController extends Controller
     {
         try {
             BudgetaryInfo::where('id', $budgetaryInfo->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             BudgetaryInfo::destroy($budgetaryInfo->id);
             return response()->json(['success' => 'Record deleted successfully.']);
