@@ -33,6 +33,7 @@ Route::get('/email', function() {
     Route::post('business-school', 'BusinessSchoolController@store')->name('business-school');
     Route::post('add-discipline', 'DisciplineController@store');
     Route::post('add-department', 'DepartmentController@store');
+    Route::post('add-designation', 'DesignationController@store');
 
     Auth::routes(['verify' => true]);
     // Only verified users may enter...
@@ -73,6 +74,7 @@ Route::get('/email', function() {
         //Route::put('users-roles', 'Auth\UserController\user_roles');
 
         Route::group(['middleware' => ['role:BusinessSchool']], function () {
+            Route::post('add-designation', 'Common\DesignationController@store');
         //// Strategic Management
             Route::prefix('strategic')->group(function () {
                 Route::post('add-body-name','StrategicManagement\StatutoryBodyController@store');
@@ -100,6 +102,7 @@ Route::get('/email', function() {
             Route::resource('program-portfolio','ProgramPortfolioController');
             Route::resource('entry-requirements','EntryRequirementController');
             Route::resource('application-received','ApplicationReceivedController');
+            Route::resource('app-recvd','AppReceivedController');
             Route::resource('curriculum-review','CurriculumReviewController');
             Route::resource('program-objective','ProgramObjectiveController');
             Route::resource('learning-outcome','LearningOutcomeController');

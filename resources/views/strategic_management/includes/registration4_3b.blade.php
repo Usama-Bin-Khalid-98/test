@@ -16,53 +16,60 @@ Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)
 
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-
-                                        <td>Teaching courses in program 1
-(D)
-</td>
-                                        <td>Teaching courses in program 2
- (E)
-</td>
-                                        <td>No. of faculty teaching program 1
-F=∑(D/C)
-</td>
-                                        <td>No. of faculty teaching program 2 G=∑(E/C)</td>
-                                    </tr>
-                                     @php
-                                    $totalFTE1=$totalFTE2=0;
-                                    @endphp
-                                    @foreach($facultyTeachingCourses as $data)
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    @foreach($facultyTeachingCourses4b as $req)
+                                        @foreach($req->faculty_program as $program )
+                                            <th> Teaching courses in {{$program->program->name}}:</th>
+                                        @endforeach
+                                        @break
+                                    @endforeach
+                                </tr>
+                                @php
+                                    $totalFTE1=$totalFTE2=$counter=0;
+                                @endphp
+                                @foreach($facultyTeachingCourses4b as $data)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->name}}</td>
-                                        <td>{{$data->desName}}</td>
-                                        <td>{{$data->   max_cources_allowed}}</td>
-                                        <td>{{$data->tc_program1}}</td>
-                                        <td>{{$data->tc_program2}}</td>
-                                        <td>{{number_format((float)$data->tc_program1/$data->max_cources_allowed, 3, '.', '')}}</td>
-                                        <td>{{number_format((float)$data->tc_program2/$data->max_cources_allowed, 3, '.', '')}}</td>
+                                        <td>{{@$data->name}}</td>
+                                        <td>{{@$data->desName}}</td>
+{{--                                        <td>{{@$data->lookupFacultyType}}</td>--}}
+                                        <td>{{$data->max_cources_allowed}}</td>
+                                        @foreach($data->faculty_program as $program )
+                                            <td>
+                                                Courses : {{$program->tc_program}} <br>
+                                                FTE  {{round($program->tc_program/$data->max_cources_allowed, 2)}}
+                                            </td>
+                                        @endforeach
+                                        {{--                                        <td>{{number_format((float)$data->tc_program1/$data->max_cources_allowed, 3, '.', '')}}</td>--}}
+                                        {{--                                        <td>{{number_format((float)$data->tc_program2/$data->max_cources_allowed, 3, '.', '')}}</td>--}}
 
                                         @php
-                                        $totalFTE1+=$data->tc_program1/$data->max_cources_allowed;
-                                        $totalFTE2+=$data->tc_program2/$data->max_cources_allowed;
+                                            foreach ($data->faculty_program as $programRow)
+                                                $totalFTE2+=$programRow->tc_program/$data->max_cources_allowed;
                                         @endphp
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td colspan="7">Total VFE</td>
-                                        <td>={{number_format((float)($totalFTE1+$totalFTE2)/3, 3, '.', '')}}</td>
-                                        @php
-                                        $VFE=($totalFTE1+$totalFTE2)/3;
-                                        View::share('VFE', ($totalFTE1+$totalFTE2)/3);
-                                        @endphp
+                                        @endforeach
                                     </tr>
 
+{{--                                    <tr>--}}
+{{--                                        <td colspan="5">Total FTE</td>--}}
+{{--                                        --}}{{--                                        <td>{{number_format((float)$totalFTE1, 3, '.', '')}}</td>--}}
+{{--                                        --}}{{--                                        <td>{{number_format((float)$totalFTE2, 3, '.', '')}}</td>--}}
+{{--                                        --}}{{--                                        @foreach($data->faculty_program as $program )--}}
+{{--                                        <td>--}}
+{{--                                            --}}{{--                                                Courses : {{$program->tc_program}} <br>--}}
+{{--                                            {{round($totalFTE2, 2)}}--}}
+{{--                                        </td>--}}
+{{--                                        --}}{{--                                        @endforeach--}}
+{{--                                    </tr>--}}
 
+                                    @php
+
+                                        View::share('FTE', $totalFTE2);
+                                    @endphp
 
 
 

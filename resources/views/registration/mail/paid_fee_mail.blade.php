@@ -354,13 +354,13 @@
                                         <p></p>
 
                                         <p>Dear {{@$data['school']->user->name}},</p>
-                                        <p>HoD & Dean,</p>
-                                        <p>University : {{@$data['school']->name}}</p>
-                                        <p>Campus : {{@$data['school']->campus->location}}</p>
+{{--                                        <p>HoD & Dean,</p>--}}
+{{--                                        <p>University : {{@$data['school']->name}}</p>--}}
+{{--                                        <p>Campus : {{@$data['school']->campus->location}}</p>--}}
 
                                         <p>Hope you are doing well,</p>
 
-                                        <p>Thank you for submitting your registration fee to nbeac, This is an auto generated email, Soon you will receive an approvement email once the NBEAC admin receive and approve your payment.</p>
+                                        <p>Thank you for submitting your registration fee to nbeac, This is an auto generated email, Soon you will receive an Approval email once the NBEAC admin receive and approve your payment.</p>
                                         <p>if you have any query feel free to contact us. </p>
                                         <p>You can check the status of your application on the registration invoice page:</p>
 
@@ -372,7 +372,7 @@
                                         <i>Address: {{@$data['nbeac']->address}}</i><br/>
                                         <i>Phone (Off): {{@$data['nbeac']->phone1}} || Cell: {{@$data['nbeac']->phone2}}</i><br/>
                                         <i>Fax: {{@$data['nbeac']->fax}}</i><br/>
-                                        <i>Web: <a href="{{@$data['nbeac']->website}}"> www.nbeac.org.pk</a></i>
+                                        <i>Web: <a href="{{@$data['nbeac']->website}}"> {{@$data['nbeac']->website}}</a></i>
                                     </td>
                                 </tr>
                             </table>

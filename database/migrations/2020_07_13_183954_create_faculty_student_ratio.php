@@ -27,7 +27,6 @@ class CreateFacultyStudentRatio extends Migration
             $table->foreign('program_id')
                 ->references('id')
                 ->on('programs');
-            $table->string('year',100);
             $table->integer('total_enrollments');
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');

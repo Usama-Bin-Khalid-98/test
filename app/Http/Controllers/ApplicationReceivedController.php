@@ -84,7 +84,6 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
-                'degree_awarding_criteria'=>$request->degree_req,
                 'isComplete'=>'yes',
                 'type'=>$type,
                 'created_by' => Auth::user()->id
@@ -145,7 +144,6 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
-                'degree_awarding_criteria'=>$request->degree_req,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);

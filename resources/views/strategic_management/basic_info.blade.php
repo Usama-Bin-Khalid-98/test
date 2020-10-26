@@ -128,7 +128,7 @@
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="year_estb" value="{{@$basic_info->year_estb}}" class="form-control">
+                                        <input type="text" id="year_estb" value="{{@$basic_info->year_estb}}" autocomplete="off" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +161,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Name of the business school and campus (if relevant)</label>
-                                        <input type="text" disabled id="campus_id" value="{{@$campuses[0]->location}}" class="form-control">
+                                        <input type="text" disabled id="campus_id" value="@foreach ($campuses as $campus ){{$campus->location}}, @endforeach" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -171,7 +171,7 @@
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="campus_year_estb" value="{{@$basic_info->campus_year_estb}}" class="form-control">
+                                        <input type="text" id="campus_year_estb" value="{{@$basic_info->campus_year_estb}}" autocomplete="off" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" class="form-control">
+                                        <input type="text" id="date_charter_granted" value="{{@$basic_info->date_charter_granted}}" autocomplete="off" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -242,17 +242,44 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group" style="margin-bottom: 0px">
                                             <label for="name">Address</label>
                                             <textarea id="address" class="form-control">{{@$basic_info->address}}</textarea>
                                         </div>
                                     </div >
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="sector">{{ __('Sector') }} : </label>
                                         <p><input type="radio" name="sector" class="flat-red" value="Public" {{ @$basic_info->sector == 'public' ? 'checked' : '' }}> Public</p>
                                         <p><input type="radio" name="sector" class="flat-red" value="Private" {{ @$basic_info->sector == 'private' ? 'checked' : '' }}> Private</p>
 
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="page-header"></div>
+                                    <div class="form-group">
+                                        <h3 class="box-title">{{ __('Set year "t", it will remain fixed throughout the application.') }} : </h3>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="sector">{{ __('Year T') }} : </label>
+                                        <p><input type="text" name="year_t" id="year_t" value="{{@$tyear->tyear}}" autocomplete="off" class="form-control" ></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="sector">{{ __('Year T-1') }} : </label>
+                                        <p><input type="text" name="year_t_1" id="year_t_1" value="{{@$tyear->tyear?@$tyear->tyear-1:''}}" readonly class="form-control" ></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="sector">{{ __('Year T-2') }} : </label>
+                                        <p><input type="text" name="year_t_2" id="year_t_2" value="{{@$tyear->tyear?@$tyear->tyear-2:''}}" readonly class="form-control" ></p>
                                     </div>
                                 </div>
 
@@ -293,15 +320,40 @@
         $('#charter_type_id').select2();
         $('#institute_type_id').select2();
         $('#campus_year_estb').datepicker({
-      autoclose: true
+            autoclose: true,
+            autocomplete: false,
+            format:'yyyy',
+            viewMode: "years",
+            minViewMode: "years"
     });
         $('#year_estb').datepicker({
-            autoclose:true
+            autoclose:true,
+            autocomplete: false,
+            format:'yyyy',
+            viewMode: "years",
+            minViewMode: "years"
         });
+        $('#year_t').datepicker({
+            autocomplete:false,
+            autoclose:true,
+            format:'yyyy',
+            viewMode: "years",
+            minViewMode: "years"
+        })
+
+        $('#year_t').on('change', function () {
+            let date_year = $(this).val();
+            console.log('year', date_year)
+            $('#year_t_1').val(date_year-1);
+            $('#year_t_2').val(date_year-2);
+        })
 
         $('#date_charter_granted').datepicker({
-            autoclose:true
+            autoclose:true,
+            autocomplete: false,
+
         });
+
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -324,12 +376,14 @@
             let sector = $('input[name=sector]:checked').val();
             let address = $('#address').val();
             let designation_id = $('#designation_id').val();
+            let year_t = $('#year_t').val();
 
             //console.log(contact_no);
             //validation
              !contact_person?addClass('contact_person'):removeClass('contact_person');
              // !contact_no?addClass('contact_no'):removeClass('contact_no');
              !year_estb?addClass('year_estb'):removeClass('year_estb');
+             !year_t?addClass('year_t'):removeClass('year_t');
              !campus_year_estb?addClass('campus_year_estb'):removeClass('campus_year_estb');
              !web_url?addClass('web_url'):removeClass('web_url');
              !date_charter_granted?addClass('date_charter_granted'):removeClass('date_charter_granted');
@@ -365,7 +419,8 @@
                     profit_status: profit_status,
                     sector: sector,
                     address: address,
-                    designation_id:designation_id
+                    designation_id:designation_id,
+                    year_t:year_t
                 },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');

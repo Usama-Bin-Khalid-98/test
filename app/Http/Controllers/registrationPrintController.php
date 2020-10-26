@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\BusinessSchool;
 use App\Models\Common\Campus;
+use App\Models\Common\Slip;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
+use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use DB;
@@ -20,6 +23,20 @@ class RegistrationPrintController extends Controller
 
     public function index(Request $req)
     {
+        /////////////////header data ////////
+        $docHeaderData = Slip::with('campus', 'department')
+            ->where(
+                [
+                    'business_school_id'=>Auth::user()->campus_id,
+                    'department_id'=>Auth::user()->department_id
+                ]
+            )->get()->first();
+            //dd($docHeaderData);
+        $programsUnderReview = Scope::with('program')->where(
+            ['campus_id'=>Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])
+            ->get();
+//        dd($programsUnderReview);
+        ///////////////////////////// end header data ///////////
         if(isset($req->cid) && isset($req->bid)){
 
              $bussinessSchool  = DB::select('SELECT * from business_schools where id=? AND type="REG"', array($req->bid));
@@ -68,7 +85,7 @@ class RegistrationPrintController extends Controller
              $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND student_enrolments.type="REG" AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($req->cid));
 
 
-             $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName FROM students_graduateds, programs, campuses WHERE students_graduateds.campus_id=campuses.id AND student_graduateds.type="REG" AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id=?', array($req->cid));
+             $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName FROM students_graduateds, programs, campuses WHERE students_graduateds.campus_id=campuses.id AND students_graduateds.type="REG" AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id=?', array($req->cid));
 
 
              $studentsGenders = DB::select('SELECT student_genders.*, programs.name as programName from student_genders, programs, campuses WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG" AND student_genders.program_id=programs.id AND student_genders.campus_id=?', array($req->cid));
@@ -90,12 +107,27 @@ class RegistrationPrintController extends Controller
 
             //dd($currSemester);
             //dd($prevSemester);
-             $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($req->cid, $currSemester));
+            $getYear = BusinessSchoolTyear::where(['campus_id'=>$req->cid])->get()->first();
 
-             $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($req->cid, $prevSemester));
+            $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses WHERE work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND year_t=?', array($req->cid, $getYear->tyear));
 
-             $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.type="REG" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=? AND users.id=?', array($req->cid, auth()->user()->id));
+             $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses WHERE work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND year_t=?', array($req->cid, $getYear->year_t_1));
 
+//             $facultyTeachingCourses = DB::select('
+//                SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType,
+//                designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users
+//                WHERE faculty_teaching_cources.campus_id=campuses.id
+//                AND faculty_teaching_cources.type="REG"
+//                AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
+//                AND faculty_teaching_cources.designation_id=designations.id
+//                AND faculty_teaching_cources.campus_id=? AND users.id=?',
+//                 array($req->cid, auth()->user()->id));
+            $where = ['campus_id'=> $req->cid, 'type' => 'REG'];
+
+            $facultyTeachingCourses = FacultyTeachingCources::
+                with('campus','lookup_faculty_type','designation', 'faculty_program')
+                ->where($where)->get();
+//            dd($facultyTeachingCourses);
              $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName FROM faculty_student_ratio, programs, campuses WHERE faculty_student_ratio.campus_id=campuses.id AND faculty_student_ratio.type="REG" AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.campus_id=?', array( $req->cid));
 
               $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND faculty_stability.type="REG" AND faculty_stability.campus_id=? AND users.id=?', array( $req->cid,auth()->user()->id));
@@ -109,6 +141,7 @@ class RegistrationPrintController extends Controller
                $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.type="REG" AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id,$req->cid));
         }
         else{
+
             $bussinessSchool  = DB::table('users')
                 ->leftJoin('business_schools', 'users.business_school_id', '=', 'business_schools.id')
                 ->leftJoin('institute_types','business_schools.institute_type_id','=','institute_types.id')
@@ -118,12 +151,11 @@ class RegistrationPrintController extends Controller
                 ->select('business_schools.*','institute_types.name as typeName', 'charter_types.name as charterName', 'designations.name as designationName' )
                 ->get();
 
+//            dd($bussinessSchool);
 
             $userCampus = DB::select('SELECT * from users where id=?', array(Auth::id()));
             //dd($userCampus[0]->campus_id);
             $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
-
-
 
             $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.type="REG" AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(auth()->user()->campus_id));
 
@@ -183,11 +215,34 @@ class RegistrationPrintController extends Controller
 
             //dd($currSemester);
             //dd($prevSemester);
-             $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($userCampus[0]->campus_id, $currSemester));
 
-             $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($userCampus[0]->campus_id, $prevSemester));
+            $userInfo = Auth::user();
+            $getYear = BusinessSchoolTyear::where(['campus_id'=> $userInfo->campus_id, 'department_id' => $userInfo->department_id])->get()->first();
+             $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses WHERE work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND year_t=?', array($userCampus[0]->campus_id, @$getYear->tyear));
 
-             $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.type="REG" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=? AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id, auth()->user()->id));
+             $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses WHERE work_loads.type="REG" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND year_t=?', array($userCampus[0]->campus_id, @$getYear->year_t_1));
+
+            // $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*,
+            // lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources,
+            // lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id
+            // AND faculty_teaching_cources.type="REG" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
+            // AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=?
+            // AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id,
+            // auth()->user()->id));
+
+             $where = ['campus_id'=> $userInfo->campus_id, 'type' => 'REG'];
+             $facultyTeachingCourses = FacultyTeachingCources::
+             with('campus','lookup_faculty_type','designation', 'faculty_program')
+                 ->where($where)
+                 ->where('lookup_faculty_type_id', '!=', 2)->get();
+
+//             dd($facultyTeachingCourses);
+             $whereb = ['campus_id'=> $userInfo->campus_id, 'type' => 'REG', 'lookup_faculty_type_id' => '2'];
+             $facultyTeachingCourses4b = FacultyTeachingCources::
+             with('campus','lookup_faculty_type','designation', 'faculty_program')
+                ->where($whereb)->get();
+
+//             dd($facultyTeachingCourses4b);
 
              $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_ratio.campus_id=campuses.id AND faculty_student_ratio.type="REG" AND faculty_student_ratio.program_id=programs.id AND users.department_id=? AND faculty_student_ratio.campus_id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id));
 
@@ -200,9 +255,10 @@ class RegistrationPrintController extends Controller
                $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.type="REG" AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? ORDER BY income_sources.type', array( $userCampus[0]->campus_id, auth()->user()->id));
 
                $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.type="REG" AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
+
             }
 
-        return view('strategic_management.registration_application', compact('bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources'));
+        return view('strategic_management.registration_application', compact('facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData', 'programsUnderReview'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){

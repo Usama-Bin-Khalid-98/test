@@ -93,6 +93,7 @@ class AffiliationController extends Controller
         }
     }
 
+
     /**
      * Display the specified resource.
      *
