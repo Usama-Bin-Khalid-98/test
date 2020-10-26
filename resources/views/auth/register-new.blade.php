@@ -104,7 +104,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group @error('designation_id') has-error @enderror">
                                                     <label for="name">Designation</label>
-                                                    <select name="" id="" class="form-control select2" style="width: 100%;">
+                                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Designation</option>
                                                         @foreach($designations as $designation)
                                                             <option value="{{$designation->id}}" {{old('designation_id')==$designation->id?'selected':''}}>{{$designation->name}}</option>
@@ -219,10 +219,10 @@
                                             <div class="col-md-4">
                                                 <div class="form-group @error('designation_id') has-error @enderror">
                                                     <label for="name">Designation of Chief Administrative Officer</label>
-                                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
+                                                    <select name="chief_designation_id" id="chief_designation_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Designation</option>
                                                         @foreach($designations as $designation)
-                                                            <option value="{{$designation->id}}" {{old('designation_id')==$designation->id?'selected':''}}>{{$designation->name}}</option>
+                                                            <option value="{{$designation->id}}" {{old('chief_designation_id')==$designation->id?'selected':''}}>{{$designation->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -342,7 +342,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group" style="margin-bottom: 0px">
                                                     <label for="email">Highest Qualification</label>
                                                     <select name="qualification" id="qualification" class="form-control select2" style="width: 100%;">
                                                         <option disabled selected >Select Qualification</option>
@@ -358,7 +358,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group" style="margin-bottom: 0px">
                                                     <label for="name">Degree Title</label>
                                                     <input type="text" name="degree_id" id="degree_id" value="{{old('degree_id')}}" class="form-control">
                                                     {{--<select name="degree_id" id="degree_id" class="form-control select2" style="width: 100%;">
@@ -741,12 +741,20 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script>
         //Initialize Select2 Elements
+        $('.select2').select2();
 
         $('#business_school_id').select2({
             sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
         });
-        $('#country').select2().val('Pakistan').trigger('change');
+        $('#institute').select2({
+            sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+        });
+
+        $('#country').select2({
+            sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+        }).val('Pakistan').trigger('change');
         //Flat red color scheme for iCheck
+
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'

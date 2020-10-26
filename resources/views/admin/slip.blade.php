@@ -271,6 +271,11 @@
             let email = $('#email').val();
 
             status? status = 'approved':status = 'paid';
+            if(status == 'paid')
+            {
+                Notiflix.Notify.Failure("Status Can't  be changed to paid, once approved.");
+                return;
+            }
 
             $.ajax({
                 url:'{{url("approvementStatus")}}',
@@ -286,7 +291,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     //console.log('response', response);
-                    location.reload();
+                    // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
