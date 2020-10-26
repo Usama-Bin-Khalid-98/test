@@ -74,7 +74,6 @@ class FacultyStudentRatioController extends Controller
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
-                'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
                 'isCompleted' => 'yes',
                 'type' => $type,
@@ -131,7 +130,6 @@ class FacultyStudentRatioController extends Controller
 
             FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
                 'program_id' => $request->program_id,
-                'year' => $request->year,
                 'total_enrollments' => $request->total_enrollments,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
@@ -167,7 +165,6 @@ class FacultyStudentRatioController extends Controller
     protected function rules() {
         return [
             'program_id' => 'required',
-            'year' => 'required',
             'total_enrollments' => 'required'
         ];
     }

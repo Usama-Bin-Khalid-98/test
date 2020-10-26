@@ -14,7 +14,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Basic Eligibility Criteria (1-6): Fulfilled/Not Fulfilled with Criteria Number
+                Eligibility Screening Criteria
                 <small></small>
             </h1>
             <ol class="breadcrumb">

@@ -21,10 +21,9 @@ Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
                                     @foreach($facultyTeachingCourses4b as $req)
                                         @foreach($req->faculty_program as $program )
-                                            <th> {{$program->program->name}}:</th>
+                                            <th> Teaching courses in {{$program->program->name}}:</th>
                                         @endforeach
                                         @break
                                     @endforeach
@@ -37,8 +36,8 @@ Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{@$data->name}}</td>
                                         <td>{{@$data->desName}}</td>
-                                        <td>{{@$data->lookupFacultyType}}</td>
-                                        <td>{{$data->   max_cources_allowed}}</td>
+{{--                                        <td>{{@$data->lookupFacultyType}}</td>--}}
+                                        <td>{{$data->max_cources_allowed}}</td>
                                         @foreach($data->faculty_program as $program )
                                             <td>
                                                 Courses : {{$program->tc_program}} <br>
@@ -69,7 +68,7 @@ Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)
 
                                     @php
 
-                                        View::share('FTE', $totalFTE1+$totalFTE2);
+                                        View::share('FTE', $totalFTE2);
                                     @endphp
 
 

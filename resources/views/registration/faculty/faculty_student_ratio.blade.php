@@ -69,17 +69,17 @@
                                         </select>
                                 </div>
                             </div>
-                           <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
+{{--                           <div class="col-md-3">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Year</label>--}}
+{{--                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select Year</option>--}}
+{{--                                        <option value="{{ now()->year}}">{{ now()->year}}</option>--}}
+{{--                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>--}}
+{{--                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -99,7 +99,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.4. Student to teacher ratio</h3>
+                            <h3 class="box-title">4.4 student to teacher ratio for last year of each program under review in Table 4.4.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -109,7 +109,7 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
-                                    <th>Year</th>
+{{--                                    <th>Year</th>--}}
                                     <th>Total Enrollments</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -121,7 +121,7 @@
                                     <td>{{$req->campus->business_school->name}}</td>
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->program->name}}</td>
-                                    <td>{{$req->year}}</td>
+{{--                                    <td>{{$req->year}}</td>--}}
                                     <td>{{$req->total_enrollments}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
@@ -134,7 +134,7 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
-                                    <th>Year</th>
+{{--                                    <th>Year</th>--}}
                                     <th>Total Enrollments</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -178,17 +178,17 @@
                                 <input type="hidden" id="edit_id">
                             </div>
 
-                           <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
+{{--                           <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Year</label>--}}
+{{--                                    <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select Year</option>--}}
+{{--                                        <option value="{{ now()->year}}">{{ now()->year}}</option>--}}
+{{--                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>--}}
+{{--                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
 
                         <div class="col-md-6">
@@ -249,15 +249,13 @@
 
          $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
-            let year = $('#year').val();
             let total_enrollments = $('#total_enrollments').val();
 
 
             !program_id?addClass('program_id'):removeClass('program_id');
-            !year?addClass('year'):removeClass('year');
             !total_enrollments?addClass('total_enrollments'):removeClass('total_enrollments');
 
-            if(!program_id || !year || !total_enrollments)
+            if(!program_id || !total_enrollments)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -299,7 +297,6 @@
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_year').select2().val(data.year).trigger('change');
             $('#edit_total_enrollments').val(data.total_enrollments);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
@@ -308,17 +305,15 @@
 
 $('#updateForm').submit(function (e) {
             let program_id = $('#edit_program_id').val();
-            let year = $('#edit_year').val();
             let total_enrollments = $('#edit_total_enrollments').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
-            !year?addClass('edit_year'):removeClass('edit_year');
             !total_enrollments?addClass('edit_total_enrollments'):removeClass('edit_total_enrollments');
 
-            if(!program_id || !year || !total_enrollments )
+            if(!program_id || !total_enrollments )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
