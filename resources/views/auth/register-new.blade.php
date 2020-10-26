@@ -741,7 +741,10 @@
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <script>
         //Initialize Select2 Elements
-        $('.select2').select2()
+
+        $('#business_school_id').select2({
+            sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+        });
         $('#country').select2().val('Pakistan').trigger('change');
         //Flat red color scheme for iCheck
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
