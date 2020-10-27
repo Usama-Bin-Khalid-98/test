@@ -40,7 +40,7 @@
 {{--                           value="Add New"--}}
 {{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                             <button class="btn gradient-bg-color" style="color: white;" onclick="Export2Doc('printIDABC');">Export as .doc <i class="fa fa-file-word-o"></i></button>
-                            <a class="btn btn-primary" href="{{ URL::to('/registrationPrintPdf') }}">Export to PDF</a>
+{{--                            <a class="btn btn-primary" href="{{ URL::to('/registrationPrintPdf') }}">Export to PDF</a>--}}
                 </div>
             </div>
         </section>
