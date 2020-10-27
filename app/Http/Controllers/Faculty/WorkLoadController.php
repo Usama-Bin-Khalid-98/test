@@ -74,40 +74,42 @@ class WorkLoadController extends Controller
             }else {
                 $type = 'REG';
             }
-
-            WorkLoad::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'faculty_name' => $request->faculty_name,
-                'designation_id' => $request->designation_id,
-                'total_courses' => $request->total_courses,
-                'phd' => $request->phd,
-                'masters' => $request->masters,
-                'bachleors' => $request->bachleors,
-                'admin_responsibilities' => $request->admin_responsibilities,
-                'year_t' => $request->year_t,
-                'isCompleted' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
-
-            WorkLoad::create(
-                [
+            if($request->faculty_name) {
+                WorkLoad::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
                     'faculty_name' => $request->faculty_name,
                     'designation_id' => $request->designation_id,
-                    'total_courses' => $request->total_courses_1,
-                    'phd' => $request->phd_1,
-                    'masters' => $request->masters_1,
-                    'bachleors' => $request->bachleors_1,
-                    'admin_responsibilities' => $request->admin_responsibilities_1,
-                    'year_t' => $request->year_t_1,
+                    'total_courses' => $request->total_courses,
+                    'phd' => $request->phd,
+                    'masters' => $request->masters,
+                    'bachleors' => $request->bachleors,
+                    'admin_responsibilities' => $request->admin_responsibilities,
+                    'year_t' => $request->year_t,
                     'isCompleted' => 'yes',
                     'type' => $type,
                     'created_by' => Auth::user()->id
-                ]
-            );
+                ]);
+            }
+            if($request->faculty_name_1) {
+                WorkLoad::create(
+                    [
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'faculty_name' => $request->faculty_name_1,
+                        'designation_id' => $request->designation_id_1,
+                        'total_courses' => $request->total_courses_1,
+                        'phd' => $request->phd_1,
+                        'masters' => $request->masters_1,
+                        'bachleors' => $request->bachleors_1,
+                        'admin_responsibilities' => $request->admin_responsibilities_1,
+                        'year_t' => $request->year_t_1,
+                        'isCompleted' => 'yes',
+                        'type' => $type,
+                        'created_by' => Auth::user()->id
+                    ]
+                );
+            }
 //
             return response()->json(['success' => 'Faculty WorkLoad added successfully.']);
         }catch (Exception $e)
@@ -156,18 +158,20 @@ class WorkLoadController extends Controller
 
         try {
 
-            WorkLoad::where('id', $workLoad->id)->update([
-                'faculty_name' => $request->faculty_name,
-                'designation_id' => $request->designation_id,
-                'total_courses' => $request->total_courses,
-                'phd' => $request->phd,
-                'masters' => $request->masters,
-                'bachleors' => $request->bachleors,
-                'admin_responsibilities' => $request->admin_responsibilities,
-                'year_t' => $request->year_t,
-                'status' => $request->status,
-                'updated_by' => Auth::user()->id
-            ]);
+            if($request->faculty_name) {
+                WorkLoad::where('id', $workLoad->id)->update([
+                    'faculty_name' => $request->faculty_name,
+                    'designation_id' => $request->designation_id,
+                    'total_courses' => $request->total_courses,
+                    'phd' => $request->phd,
+                    'masters' => $request->masters,
+                    'bachleors' => $request->bachleors,
+                    'admin_responsibilities' => $request->admin_responsibilities,
+                    'year_t' => $request->year_t,
+                    'status' => $request->status,
+                    'updated_by' => Auth::user()->id
+                ]);
+            }
             return response()->json(['success' => 'Faculty Workload updated successfully.']);
 
         }catch (Exception $e)
@@ -198,13 +202,13 @@ class WorkLoadController extends Controller
 
     protected function rules() {
         return [
-            'faculty_name' => 'required',
-            'designation_id' => 'required',
-            'total_courses' => 'required',
-            'phd' => 'required',
-            'masters' => 'required',
-            'bachleors' => 'required',
-            'admin_responsibilities' => 'required',
+//            'faculty_name' => 'required',
+//            'designation_id' => 'required',
+//            'total_courses' => 'required',
+//            'phd' => 'required',
+//            'masters' => 'required',
+//            'bachleors' => 'required',
+//            'admin_responsibilities' => 'required',
         ];
     }
 

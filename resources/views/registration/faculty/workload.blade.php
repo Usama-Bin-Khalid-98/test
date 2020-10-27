@@ -140,7 +140,25 @@
                                 <h3 class="page-header">Table 4.2b. Faculty workload (t-1 ::{{@$getTyear->year_t_1}})</h3>
                                 <input type="hidden" name="year_t_1" value="{{@$getTyear->year_t_1}}">
                                 <div class="col-md-3"></div>
-
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Faculty Name</label>
+                                        <input type="text" name="faculty_name_1" id="faculty_name_1" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Designation</label>
+                                        <select name="designation_id_1" id="designation_id_1" class="form-control select2" style="width: 100%;">
+                                            <option selected disabled>Select Designation</option>
+                                            @foreach($designations as $business)
+                                                <option value="{{$business->id}}">{{$business->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-3"></div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Number of courses taught in all programs</label>
@@ -154,7 +172,7 @@
                                     </div>
                                 </div>
                             </div>
-                               <div class="form-row col-md-12">
+                            <div class="form-row col-md-12">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <h3>Number of students supervised</h3>
@@ -186,9 +204,9 @@
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
+                            </div>
                         </form>
 
-                        </form>
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
@@ -471,13 +489,13 @@
             let bachleors = $('#bachleors').val();
             let admin_responsibilities = $('#admin_responsibilities').val();
 
-            !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !total_courses?addClass('total_courses'):removeClass('total_courses');
-            !phd?addClass('phd'):removeClass('phd');
-            !masters?addClass('masters'):removeClass('masters');
-            !bachleors?addClass('bachleors'):removeClass('bachleors');
-            !admin_responsibilities?addClass('admin_responsibilities'):removeClass('admin_responsibilities');
+            // !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
+            // !designation_id?addClass('designation_id'):removeClass('designation_id');
+            // !total_courses?addClass('total_courses'):removeClass('total_courses');
+            // !phd?addClass('phd'):removeClass('phd');
+            // !masters?addClass('masters'):removeClass('masters');
+            // !bachleors?addClass('bachleors'):removeClass('bachleors');
+            // !admin_responsibilities?addClass('admin_responsibilities'):removeClass('admin_responsibilities');
 
             let total_courses_1 = $('#total_courses_1').val();
             let phd_1 = $('#phd_1').val();
@@ -486,21 +504,21 @@
             let admin_responsibilities_1 = $('#admin_responsibilities_1').val();
             // let semester_1 = $('#semester_1').val();
 
-            !total_courses_1?addClass('total_courses_1'):removeClass('total_courses_1');
-            !phd_1?addClass('phd_1'):removeClass('phd_1');
-            !masters_1?addClass('masters_1'):removeClass('masters_1');
-            !bachleors_1?addClass('bachleors_1'):removeClass('bachleors_1');
-            !admin_responsibilities_1?addClass('admin_responsibilities_1'):removeClass('admin_responsibilities_1');
-
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters ||
-                !bachleors || !admin_responsibilities
-                // !total_courses_1 || !phd_1 || !masters_1 ||
-                // !bachleors_1 || !admin_responsibilities_1
-                )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
-            }
+            // !total_courses_1?addClass('total_courses_1'):removeClass('total_courses_1');
+            // !phd_1?addClass('phd_1'):removeClass('phd_1');
+            // !masters_1?addClass('masters_1'):removeClass('masters_1');
+            // !bachleors_1?addClass('bachleors_1'):removeClass('bachleors_1');
+            // !admin_responsibilities_1?addClass('admin_responsibilities_1'):removeClass('admin_responsibilities_1');
+            //
+            // if(!faculty_name || !designation_id || !total_courses || !phd || !masters ||
+            //     !bachleors || !admin_responsibilities
+            //     // !total_courses_1 || !phd_1 || !masters_1 ||
+            //     // !bachleors_1 || !admin_responsibilities_1
+            //     )
+            // {
+            //     Notiflix.Notify.Warning("Fill all the required Fields.");
+            //     return;
+            // }
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
