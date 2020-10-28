@@ -71,8 +71,8 @@ class StudentsGraduatedController extends Controller
                 'department_id' => $dept_id,
                 'program_id' => $request->program_id,
                 'grad_std_t' => $request->grad_std_t,
-                'grad_std_t_2' => $request->grad_std_tt,
-                'grad_std_t_3' => $request->grad_std_ttt,
+                'grad_std_t_1' => $request->grad_std_tt,
+                'grad_std_t_2' => $request->grad_std_ttt,
                 'isComplete' => 'yes',
                 'type' => $type,
                 'created_by' => Auth::user()->id
@@ -128,8 +128,8 @@ class StudentsGraduatedController extends Controller
             StudentsGraduated::where('id', $studentsGraduated->id)->update([
                 'program_id' => $request->program_id,
                 'grad_std_t' => $request->grad_std_t,
-                'grad_std_t_2' => $request->grad_std_t_2,
-                'grad_std_t_3' => $request->grad_std_t_3,
+                'grad_std_t_1' => $request->grad_std_t_2,
+                'grad_std_t_2' => $request->grad_std_t_3,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);

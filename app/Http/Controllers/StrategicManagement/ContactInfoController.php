@@ -25,13 +25,13 @@ class ContactInfoController extends Controller
         $department_id = Auth::user()->department_id;
         $designations = Designation::all();
         $ds_contacts = ContactInfo::with('designation')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 2])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 3])
             ->get()->first();
         $hs_contacts = ContactInfo::with('designation')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 1])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 5])
             ->get()->first();
         $fp_contacts = ContactInfo::with('designation')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 3])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 7])
             ->get()->first();
         ///dd($contacts);
         return view('strategic_management.contact_info', compact('designations', 'ds_contacts', 'hs_contacts', 'fp_contacts'));
@@ -79,7 +79,7 @@ class ContactInfoController extends Controller
                     $where = ['campus_id' => $campus_id,
                         'department_id' => $department_id,
                         'created_by' => $user_id,
-                        'designation_id' => 2
+                        'designation_id' => 3
                     ];
                     $existed = ContactInfo::where($where)
                         ->exists();
@@ -121,7 +121,7 @@ class ContactInfoController extends Controller
                             'email' => $request->ds_email,
                             'contact_no' => $request->ds_tell_off,
                             'school_contact' => $request->ds_tell_cell,
-                            'designation_id' => 2,
+                            'designation_id' => 3,
                             'job_title' => $request->ds_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
@@ -140,7 +140,7 @@ class ContactInfoController extends Controller
                     $where = ['campus_id' => $campus_id,
                         'department_id' => $department_id,
                         'created_by' => $user_id,
-                        'designation_id' => 1];
+                        'designation_id' => 5];
                     $existed = ContactInfo::where($where)
                         ->exists();
                     if ($existed) {
@@ -181,7 +181,7 @@ class ContactInfoController extends Controller
                             'email' => $request->hs_email,
                             'contact_no' => $request->hs_tell_off,
                             'school_contact' => $request->hs_tell_cell,
-                            'designation_id' => 1,
+                            'designation_id' => 5,
                             'job_title' => $request->hs_job_title,
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
@@ -198,7 +198,7 @@ class ContactInfoController extends Controller
                         $where = ['campus_id' => @$campus_id,
                             'department_id' => @$department_id,
                             'created_by' => @$user_id,
-                            'designation_id' => 3];
+                            'designation_id' => 7];
                         $existed = ContactInfo::where($where)
                             ->exists();
                         if ($existed) {
@@ -241,7 +241,7 @@ class ContactInfoController extends Controller
                                     'email' => @$request->fp_email,
                                     'contact_no' => @$request->fp_tell_off,
                                     'school_contact' => @$request->fp_tell_cell,
-                                    'designation_id' => 3,
+                                    'designation_id' => 7,
                                     'job_title' => @$request->fp_job_title,
                                     'cv' => @$path . '/' . @$imageName,
                                     'isComplete' => 'yes',

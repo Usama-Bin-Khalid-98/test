@@ -5,11 +5,11 @@
                                 <thead>
                                     <th >Year <sup>4</sup></th>
                                     <th style="text-align: center;" colspan="3">Enrollment in all study programs</th>
-                                    
-                                    <th>Total annual enrollment<sup>5</sup> 
+
+                                    <th>Total annual enrollment<sup>5</sup>
                                     A+B+C
                                     </th>
-                                    
+
                                 </thead>
                                  <tbody>
                                     <tr>
@@ -24,8 +24,8 @@
 (C)
 </td>
                                         <td></td>
-                                     
-                                     
+
+
                                     </tr>
                                     <?php
                                     $pa=$pb=$pc=$pTotal=0;
@@ -43,24 +43,21 @@
                                         <td>{{$data->ms_level}}</td>
                                          <td>{{$data->phd_level}}</td>
                                         <td>{{$data->total_students}}</td>
-                                        
-                                        
+
+
                                     </tr>
-                                   
+
                                    @endforeach
-                              <tr>
-                                        <td>Total</td>
-                                        <td>{{$pa}}</td>
-                                        <td>{{$pb}}</td>
-                                         <td>{{$pc}}</td>
-                                        <td>{{$pTotal}}</td>
-                                        
-                                        
-                                    </tr>
                                 </tbody>
-                                <tfoot></tfoot>
-                              
-                              
+                                <tfoot>
+                                    <th>Total</th>
+                                    <th>{{$pa}}</th>
+                                    <th>{{$pb}}</th>
+                                    <th>{{$pc}}</th>
+                                    <th>{{$pTotal}}</th>
+                                </tfoot>
+
+
 
                             </table>
                         </div>

@@ -9,39 +9,36 @@
                                     <th>Focal person for NBEAC</th>
                                 </thead>
                                 <tbody>
-                                    <?php 
+                                    <?php
                                         $deanName = $deanJobTitle = $deanTelOff = $deanTelCell = $deanEmail = $headName = $headJobTitle = $headTelOff = $headTelCell = $headEmail = $focalName = $focalJobTitle = $focalTelOff = $focalTelCell = $focalEmail = '';
-                                         
-                                         
                                     ?>
-                                    @foreach($contactInformation as $data)@if($data->designationName=='Dean of school')
+                                    @foreach($contactInformation as $data)
+                                        @if($data->designation_id==3)
                                         <?php
                                             $deanName = $data->name;
-                                            $deanJobTitle = $data->designationName;
-                                            $deanTelOff = $data->school_contact;
-                                            $deanTelCell = $data->contact_no;
+                                            $deanJobTitle = $data->job_title;
+                                            $deanTelOff = $data->contact_no;
+                                            $deanTelCell = $data->school_contact;
                                             $deanEmail = $data->email;
                                         ?>
                                     @endif
 
-                                    @if($data->designationName=='Head of school')
+                                    @if($data->designation_id==5)
                                         <?php
                                             $headName = $data->name;
-                                            $headJobTitle = $data->designationName;
-                                            $headTelOff = $data->school_contact;
+                                            $headJobTitle = $data->job_title;
                                             $headTelCell = $data->contact_no;
+                                            $headTelOff = $data->school_contact;
                                             $headEmail = $data->email;
                                         ?>
                                     @endif
 
-
-
-                                    @if($data->designationName=='NBEAC focal person')
+                                    @if($data->designation_id==7)
                                         <?php
                                             $focalName = $data->name;
-                                            $focalJobTitle = $data->designationName;
-                                            $focalTelOff = $data->school_contact;
+                                            $focalJobTitle = $data->job_title;
                                             $focalTelCell = $data->contact_no;
+                                            $focalTelOff = $data->school_contact;
                                             $focalEmail = $data->email;
                                         ?>
                                     @endif
@@ -77,11 +74,11 @@
                                         <td>{{$headEmail}}</td>
                                         <td>{{$focalEmail}}</td>
                                     </tr>
-                                    
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

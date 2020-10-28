@@ -5,23 +5,23 @@
                                 <thead>
                                     <th>Program(s) under review</th>
                                     <th>Degree awarding criteria/ requirement</th>
-                                    
+
                                 </thead>
                                 <tbody>
-                                    @foreach($applicationsReceived as $data)
+                                    @foreach($app_Received as $data)
                                     <tr>
                                         <td>{{$data->programName}} </td>
                                         <td>{{$data->degree_awarding_criteria}} </td>
-                                     
+
                                     </tr>
                                     @endforeach
-                                    
-                                    
-                              
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>
