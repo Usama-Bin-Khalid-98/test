@@ -127,10 +127,10 @@
                                     <td>{{$enrolement->campus->location}}</td>
                                     <td>{{$enrolement->program->name}}</td>
                                     <td>{{$enrolement->grad_std_t}}</td>
+                                    <td>{{$enrolement->grad_std_t_1}}</td>
                                     <td>{{$enrolement->grad_std_t_2}}</td>
-                                    <td>{{$enrolement->grad_std_t_3}}</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","program_id":"{{$enrolement->program_id}}","grad_std_t":"{{$enrolement->grad_std_t}}","grad_std_t_2":"{{$enrolement->grad_std_t_2}}","grad_std_t_3":"{{$enrolement->grad_std_t_3}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","program_id":"{{$enrolement->program_id}}","grad_std_t":"{{$enrolement->grad_std_t}}","grad_std_t_2":"{{$enrolement->grad_std_t_1}}","grad_std_t_3":"{{$enrolement->grad_std_t_2}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach

@@ -6,6 +6,7 @@ use App\Models\Common\Campus;
 use App\Models\Common\Slip;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\Faculty\FacultyTeachingCources;
+use App\Models\StrategicManagement\ContactInfo;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use DB;
@@ -160,9 +161,11 @@ class RegistrationPrintController extends Controller
             $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.type="REG" AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(auth()->user()->campus_id));
 
 
-            $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND contact_infos.type="REG" AND contact_infos.campus_id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
-
-
+            $contactInformation = DB::select('SELECT contact_infos.*
+                FROM contact_infos
+                WHERE contact_infos.type="REG"
+                AND contact_infos.campus_id=?',
+                array(auth()->user()->campus_id));
             $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="REG" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
 
@@ -189,11 +192,20 @@ class RegistrationPrintController extends Controller
              //dd($entryRequirements);
              $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName, semesters.name as semesterName FROM application_receiveds, programs, semesters, campuses WHERE application_receiveds.program_id=programs.id AND application_receiveds.type="REG" AND application_receiveds.semester_id=semesters.id  AND campuses.id=?', array($userCampus[0]->campus_id));
 
+             $app_Received = DB::select('SELECT app_receiveds.*, programs.name as programName
+            FROM app_receiveds, programs
+            WHERE app_receiveds.program_id=programs.id AND app_receiveds.type="REG"
+            AND campus_id=?', array($userCampus[0]->campus_id));
+
 
              $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.type="REG" AND student_enrolments.year>YEAR(CURDATE())-3', array($userCampus[0]->campus_id));
 
 
-             $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName FROM students_graduateds, programs, campuses WHERE students_graduateds.campus_id=campuses.id AND students_graduateds.type="REG" AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id=?', array($userCampus[0]->campus_id));
+             $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName
+FROM students_graduateds, programs, campuses
+WHERE students_graduateds.campus_id=campuses.id
+AND students_graduateds.type="REG"
+AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id=?', array($userCampus[0]->campus_id));
 
 
              $studentsGenders = DB::select('SELECT student_genders.*, programs.name as programName from student_genders, programs, campuses WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG" AND student_genders.program_id=programs.id AND student_genders.campus_id=?', array($userCampus[0]->campus_id));
@@ -258,7 +270,7 @@ class RegistrationPrintController extends Controller
 
             }
 
-        return view('strategic_management.registration_application', compact('facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData', 'programsUnderReview'));
+        return view('strategic_management.registration_application', compact('app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData', 'programsUnderReview'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){
