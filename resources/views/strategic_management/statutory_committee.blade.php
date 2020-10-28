@@ -93,33 +93,33 @@
                                          <td>
                                             <div class="input-group">
                                             <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
+
                   </div>
-                                            <input type="text" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
                                             <div class="input-group">
                                             <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
+
                   </div>
-                                            <input type="text" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
                                             <div class="input-group">
                                             <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
+
                   </div>
-                                            <input type="text" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
                                             <div class="input-group">
                                             <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
+
                   </div>
-                                            <input type="text" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}"></td>
@@ -360,18 +360,18 @@
 
         //Initialize Select2 Elements
         $('.select2').select2();
-        $('#date_first_meeting').datepicker({
-      autoclose:true
-    });
-        $('#date_second_meeting').datepicker({
-      autoclose:true
-    });
-        $('#date_third_meeting').datepicker({
-      autoclose:true
-    });
-        $('#date_fourth_meeting').datepicker({
-      autoclose:true
-    });
+    //     $('#date_first_meeting').datepicker({
+    //   autoclose:true
+    // });
+    //     $('#date_second_meeting').datepicker({
+    //   autoclose:true
+    // });
+    //     $('#date_third_meeting').datepicker({
+    //   autoclose:true
+    // });
+    //     $('#date_fourth_meeting').datepicker({
+    //   autoclose:true
+    // });
 
         //Flat red color scheme for iCheck
         $('input[type="radio"].flat-red').iCheck({

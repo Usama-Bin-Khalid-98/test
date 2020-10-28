@@ -57,6 +57,7 @@
      okButtonBackground:'#dd4b39',
      titleColor:'#dd4b39'
     });
+
  </script>
  </body>
 </html>

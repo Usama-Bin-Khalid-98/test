@@ -69,6 +69,7 @@ class RegisterController extends Controller
             return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],
                 'designation_id' => 'required',
+                'chief_designation_id' => 'required',
                 'cnic' => 'required',
                 'contact_no' => 'required',
                 'country' => 'required',
@@ -92,6 +93,7 @@ class RegisterController extends Controller
             return Validator::make($data, [
                 'reviewer_role_id' => 'required',
                 'region_id' => 'required',
+                'designation_id' => 'required',
                 'sector_id' => 'required',
                 'qualification' => 'required',
                 'degree_id' => 'required',
@@ -191,7 +193,7 @@ class RegisterController extends Controller
             try {
                 $user = User::create([
                     'name' => $data['name'],
-                    'designation_id' => $data['designation_id'],
+                    'designation_id' => $data['chief_designation_id'],
                     'cnic' => $data['cnic'],
                     'contact_no' => $data['contact_no'],
                     'country' => $data['country'],

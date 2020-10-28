@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Config\NbeacBasicInfo;
 
 class ChangeResgistrationStatusMail extends Mailable
 {
@@ -29,7 +30,8 @@ class ChangeResgistrationStatusMail extends Mailable
      */
     public function build()
     {
-        return $this->from(Auth::user()->email)
+        $getInfo = NbeacBasicInfo::all()->first();
+        return $this->from($getInfo->email,'NBEAC Admin')
             ->subject('FW: Acknowledgement for Registration Fee')
             ->view('registration.mail.changeRegistrationStatusMail')
             ->with('data', $this->data);

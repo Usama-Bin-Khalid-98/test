@@ -76,9 +76,9 @@ class PrintController extends Controller
             $currSemester = "Spring t";
             $prevSemester = "Fall t-1";
         }
-         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($req->cid , $currSemester));
+         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id ', array($req->cid ));
 
-         $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($req->cid, $prevSemester));
+         $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id ', array($req->cid));
 
          $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.type="SAR" AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id  AND faculty_genders.campus_id=? ', array($req->cid));
 

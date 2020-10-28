@@ -66,6 +66,7 @@
                                         @foreach($programs as $program)
                                         <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
                                         @endforeach
+                                        <option>Other</option>
                                         </select>
                                 </div>
                             </div>

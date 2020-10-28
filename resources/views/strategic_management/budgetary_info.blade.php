@@ -57,50 +57,48 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Year</label>
-                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
-                                    </select>
-                                </div>
-                            </div>
 
+                                @foreach(@$tyears as $years)
+                                <div class="form-row col-md-12">
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">University budget</label>
-                                    <input type="text" name="uni_budget" id="uni_budget" class="form-control">
-                                </div>
-                            </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="name">Year</label>
+                                            <input type="text" readonly name="year[]" id="year" class="form-control" value="{{@$years}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="name">University Budget</label>
+                                            <input type="text" name="uni_budget[]" id="uni_budget" class="form-control">
+                                        </div>
+                                    </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Budget proposed by business school</label>
-                                    <input type="text" name="uni_proposed_budget" id="uni_proposed_budget" class="form-control">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name">Budget Proposed by Business School</label>
+                                            <input type="text" name="uni_proposed_budget[]" id="uni_proposed_budget" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name">Budget Received by Business School</label>
+                                            <input type="text" name="budget_receive[]" id="budget_receive" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="name">Budget Type</label>
+                                            <select name="budget_type[]" id="budget_type" class="form-control select2" style="width: 100%;">
+                                                <option selected disabled>Select Budget type</option>
+                                                <option value="Implicit">Implicit</option>
+                                                <option value="Explicit">Explicit</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Budget received by business school</label>
-                                    <input type="text" name="budget_receive" id="budget_receive" class="form-control">
-                                </div>
-                            </div>
+                                @endforeach
 
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Budget type</label>
-                                    <select name="budget_type" id="budget_type" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Budget type</option>
-                                        <option value="Implicit">Implicit</option>
-                                        <option value="Explicit">Explicit</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -231,6 +229,26 @@
                                         <option value="2018">2018</option>
                                         <option value="2019">2019</option>
                                         <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                        <option value="2027">2027</option>
+                                        <option value="2028">2028</option>
+                                        <option value="2029">2029</option>
+                                        <option value="2030">2030</option>
+                                        <option value="2031">2031</option>
+                                        <option value="2032">2032</option>
+                                        <option value="2033">2033</option>
+                                        <option value="2034">2034</option>
+                                        <option value="2035">2035</option>
+                                        <option value="2036">2036</option>
+                                        <option value="2037">2037</option>
+                                        <option value="2038">2038</option>
+                                        <option value="2039">2039</option>
+                                        <option value="2040">2040</option>
                                     </select>
                                 </div>
                                 <input type="hidden" id="edit_id">
@@ -258,7 +276,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Budget Type</label>
-                                    <select name="budget_type" id="edit_budget_type" class="form-control select2" style="width: 100%;">
+                                    <select name="budget_type[]" id="edit_budget_type" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Budget Type</option>
                                         <option value="Implicit">Implicit</option>
                                         <option value="Explicit">Explicit</option>
@@ -308,8 +326,7 @@
     </script>
     <script type="text/javascript">
 
-        $('.select2').select2()
-
+        $('.select2').select2();
          $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

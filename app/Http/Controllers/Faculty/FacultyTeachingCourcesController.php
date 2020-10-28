@@ -29,7 +29,18 @@ class FacultyTeachingCourcesController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
          $designations = Designation::get();
-         $faculty_types = LookupFacultyType::get();
+
+         $getUrl =\Illuminate\Support\Facades\Request::segment(1);
+         if($getUrl =='faculty-teaching')
+         {
+             $faculty_types = LookupFacultyType::where('id', 2)
+                 ->orWhere('id', 1)->get();
+
+         }else{
+             $faculty_types = LookupFacultyType::where('id', 3)->get();
+         }
+
+        //dd($faculty_types);
         /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
@@ -42,8 +53,19 @@ class FacultyTeachingCourcesController extends Controller
         ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
 
         $getScope = Scope::with('program')->where($where)->get();
+        if($getUrl =='faculty-teaching') {
+            $visitings = FacultyTeachingCources::with('campus', 'lookup_faculty_type', 'designation', 'faculty_program')
+                ->where($where)
+                ->where('lookup_faculty_type_id', 1)
+                ->orWhere('lookup_faculty_type_id', 2)
+                ->get();
+        }else{
+            $visitings = FacultyTeachingCources::with('campus', 'lookup_faculty_type', 'designation', 'faculty_program')
+                ->where($where)
+                ->where('lookup_faculty_type_id', 3)
+                ->get();
 
-        $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation', 'faculty_program')->where($where)->get();
+        }
 //       foreach ($visitings as $visit)
 //       {
 //           //dd($visit);
