@@ -75,6 +75,8 @@ class FacultyStudentRatioController extends Controller
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'total_enrollments' => $request->total_enrollments,
+                'total_fte' => $request->total_fte,
+                'total_vfe' => $request->total_vfe,
                 'isCompleted' => 'yes',
                 'type' => $type,
                 'created_by' => Auth::user()->id
@@ -131,6 +133,8 @@ class FacultyStudentRatioController extends Controller
             FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
                 'program_id' => $request->program_id,
                 'total_enrollments' => $request->total_enrollments,
+                'total_fte' => $request->total_fte,
+                'total_vfe' => $request->total_vfe,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -165,7 +169,9 @@ class FacultyStudentRatioController extends Controller
     protected function rules() {
         return [
             'program_id' => 'required',
-            'total_enrollments' => 'required'
+            'total_enrollments' => 'required',
+            'total_fte' => 'required',
+            'total_vfe' => 'required'
         ];
     }
 
