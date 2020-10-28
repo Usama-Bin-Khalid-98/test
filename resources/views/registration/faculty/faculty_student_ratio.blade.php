@@ -87,6 +87,18 @@
                                     <input type="number" name="total_enrollments" id="total_enrollments" class="form-control">
                                 </div>
                             </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Total FTE</label>
+                                        <input type="number" name="total_fte" id="total_fte" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Total VFE</label>
+                                        <input type="number" name="total_vfe" id="total_vfe" class="form-control">
+                                    </div>
+                                </div>
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -111,6 +123,11 @@
                                     <th>Program(s) under review</th>
 {{--                                    <th>Year</th>--}}
                                     <th>Total Enrollments</th>
+                                    <th>Total FTE</th>
+                                    <th>Total VFE</th>
+                                    <th>Student to teacher ratio
+                                        =B/(C+D)
+                                    </th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -121,10 +138,12 @@
                                     <td>{{$req->campus->business_school->name}}</td>
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->program->name}}</td>
-{{--                                    <td>{{$req->year}}</td>--}}
                                     <td>{{$req->total_enrollments}}</td>
+                                    <td>{{$req->total_fte}}</td>
+                                    <td>{{$req->total_vfe}}</td>
+                                    <td>{{ number_format($req->total_enrollments/$req->total_fte + $req->total_vfe, 2) }}%</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","year":"{{$req->year}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","total_enrollments":"{{$req->total_enrollments}}","total_fte":"{{$req->total_fte}}","total_vfe":"{{$req->total_vfe}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -136,6 +155,11 @@
                                     <th>Program(s) under review</th>
 {{--                                    <th>Year</th>--}}
                                     <th>Total Enrollments</th>
+                                    <th>Total FTE</th>
+                                    <th>Total VFE</th>
+                                    <th>Student to teacher ratio
+                                        =B/(C+D)
+                                    </th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -197,6 +221,18 @@
                                     <input type="number" name="total_enrollments" id="edit_total_enrollments" value="{{old('edit_total_enrollments')}}" class="form-control">
                                 </div>
                               </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Total FTE</label>
+                                <input type="number" name="total_fte" id="edit_total_fte" value="{{old('edit_total_fte')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Total VFE</label>
+                                <input type="number" name="total_vfe" id="edit_total_vfe" value="{{old('edit_total_vfe')}}" class="form-control">
+                            </div>
+                        </div>
 
 
                         <div class="col-md-6">
@@ -250,12 +286,16 @@
          $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
             let total_enrollments = $('#total_enrollments').val();
+            let total_fte = $('#total_fte').val();
+            let total_vfe = $('#total_vfe').val();
 
 
             !program_id?addClass('program_id'):removeClass('program_id');
             !total_enrollments?addClass('total_enrollments'):removeClass('total_enrollments');
+            !total_fte?addClass('total_fte'):removeClass('total_fte');
+            !total_vfe?addClass('total_vfe'):removeClass('total_vfe');
 
-            if(!program_id || !total_enrollments)
+            if(!program_id || !total_enrollments || !total_fte || !total_vfe)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -298,6 +338,8 @@
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_total_enrollments').val(data.total_enrollments);
+            $('#edit_total_fte').val(data.total_fte);
+            $('#edit_total_vfe').val(data.total_vfe);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
             $('input[value='+data.isCompleted+']').iCheck('check');
@@ -306,14 +348,18 @@
 $('#updateForm').submit(function (e) {
             let program_id = $('#edit_program_id').val();
             let total_enrollments = $('#edit_total_enrollments').val();
+            let total_fte = $('#edit_total_fte').val();
+            let total_vfe = $('#edit_total_vfe').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
             let isCompleted = $('input[name=edit_isCompleted]:checked').val();
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
             !total_enrollments?addClass('edit_total_enrollments'):removeClass('edit_total_enrollments');
+            !total_fte?addClass('edit_total_fte'):removeClass('edit_total_fte');
+            !total_vfe?addClass('edit_total_vfe'):removeClass('edit_total_vfe');
 
-            if(!program_id || !total_enrollments )
+            if(!program_id || !total_enrollments || !total_fte || !total_vfe)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
