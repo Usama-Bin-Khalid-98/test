@@ -300,7 +300,7 @@
                                         <div class="box-body">
 
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('reviewer_role_id') has-error @enderror">
                                                     <label for="name">Role</label>
                                                     <select name="reviewer_role_id" id="reviewer_role_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Role</option>
@@ -308,13 +308,10 @@
                                                             <option value="{{$role->id}}" {{old('reviewer_role_id')==$role->id?'selected':''}}>{{$role->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('reviewer_role_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('region_id') has-error @enderror">
                                                     <label for="name">Region</label>
                                                     <select name="region_id" id="region_id" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Region</option>
@@ -322,13 +319,10 @@
                                                             <option value="{{$region->id}}" {{old('region_id')==$region->id?'selected':''}}>{{$region->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('region_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4" style="padding-bottom: 10px;">
-                                                <div class="form-group">
+                                                <div class="form-group @error('sector_id') has-error @enderror">
                                                     <label for="name">Sector</label>
                                                     <select name="sector_id" id="sector_id" class="form-control select2" style="width: 100%;">
                                                         <option selected disabled>Select Sector</option>
@@ -336,44 +330,35 @@
                                                             <option value="{{$sector->id}}" {{old('sector_id')==$sector->id?'selected':''}}>{{$sector->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('sector_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" style="margin-bottom: 0px">
+                                                <div class="form-group @error('qualification') has-error @enderror" style="margin-bottom: 0px">
                                                     <label for="email">Highest Qualification</label>
                                                     <select name="qualification" id="qualification" class="form-control select2" style="width: 100%;">
                                                         <option disabled selected >Select Qualification</option>
-                                                        <option value="Doctoral">Doctoral</option>
-                                                        <option value="Masters">Masters</option>
-                                                        <option value="MBA">MBA</option>
-                                                        <option value="Post Doctoral">Post Doctoral</option>
+                                                        <option value="Doctoral" {{old('qualification')=='Doctoral'?'selected':''}}>Doctoral</option>
+                                                        <option value="Masters" {{old('qualification')=='Masters'?'selected':''}}>Masters</option>
+                                                        <option value="MBA" {{old('qualification')=='MBA'?'selected':''}}>MBA</option>
+                                                        <option value="Post Doctoral" {{old('qualification')=='Post Doctor'?'selected':''}}>Post Doctoral</option>
                                                     </select>
                                                     {{--<input type="text" name="qualification" id="qualification" value="{{old('qualification')}}" class="form-control">--}}
-                                                    @error('qualification')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" style="margin-bottom: 0px">
+                                                <div class="form-group @error('degree_title') has-error @enderror" style="margin-bottom: 0px">
                                                     <label for="name">Degree Title</label>
-                                                    <input type="text" name="degree_id" id="degree_id" value="{{old('degree_id')}}" class="form-control">
-                                                    {{--<select name="degree_id" id="degree_id" class="form-control select2" style="width: 100%;">
+                                                    <input type="text" name="degree_title" id="degree_title" value="{{old('degree_title')}}" class="form-control">
+                                                    {{--<select name="degree_title" id="degree_title" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Degree</option>
                                                         @foreach($degrees as $degree)
-                                                            <option value="{{$degree->id}}" {{old('degree_id')==$degree->id?'selected':''}}>{{$degree->name}}</option>
+                                                            <option value="{{$degree->id}}" {{old('degree_title')==$degree->id?'selected':''}}>{{$degree->name}}</option>
                                                         @endforeach
                                                     </select>--}}
-                                                    @error('degree_id')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('specialization') has-error @enderror">
                                                     <label for="email">Specialization</label>
                                                     <select name="specialization" id="specialization" class="form-control select2">
                                                         <option selected disabled>Select Specialization</option>
@@ -382,13 +367,10 @@
                                                         @endforeach
                                                     </select>
                                                    {{-- <input type="text" name="specialization" id="specialization" value="{{old('specialization')}}" class="form-control">--}}
-                                                    @error('specialization')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('year_completion') has-error @enderror">
                                                     <label for="name">Year of Degree Completion</label>
                                                     <select name="year_completion" id="year_completion" class="form-control select2" style="width: 100%;">
                                                         <option selected disabled>Select Year</option>
@@ -401,13 +383,10 @@
                                                         } ?>
                                                     </select>
                                                    {{-- <input type="date" name="year_completion" class="form-control" value="{{old('year_completion')}}">--}}
-                                                    @error('year_completion')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('institute') has-error @enderror">
                                                     <label for="name">Qualified from Institution</label>
 {{--                                                    <input type="text" name="institute" id="institute" class="form-control" value="{{old('institute')}}">--}}
                                                     <select name="institute" id="institute" class="form-control select2" style="width: 100%;">
@@ -416,22 +395,16 @@
                                                             <option value="{{$school->id}}" {{old('institute')==$school->id?'selected':''}}>{{$school->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('institute')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('employed') has-error @enderror">
                                                     <label for="name">Institution Employed at:</label>
                                                     <input type="text" name="employed" id="employed" class="form-control" value="{{old('employed')}}">
-                                                    @error('employed')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" style="margin-bottom: 0px;">
+                                                <div class="form-group @error('service') has-error @enderror" style="margin-bottom: 0px;">
                                                     <label for="name">Length of Service</label>
 {{--                                                    <input type="text" name="service" id="service" class="form-control" value="{{old('service')}}">--}}
                                                     <select name="service" id="service" class="form-control select2">
@@ -441,13 +414,10 @@
                                                         @endfor
                                                         <option value="more than 40" {{old('service')==='more than 40'?'selected':''}}>More than 40</option>
                                                     </select>
-                                                    @error('service')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" style="margin-bottom: 0px;">
+                                                <div class="form-group @error('industry_exp') has-error @enderror" style="margin-bottom: 0px;">
                                                     <label for="name">Industry Experience</label>
 {{--                                                    <input type="text" name="industry_exp" id="industry_exp" class="form-control" value="{{old('industry_exp')}}">--}}
                                                     <select name="industry_exp" id="industry_exp" class="form-control select2">
@@ -457,13 +427,10 @@
                                                         @endfor
                                                         <option value="more than 40" {{old('industry_exp')==='more than 40'?'selected':''}}>More than 40</option>
                                                     </select>
-                                                    @error('industry_exp')
-                                                     <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
+                                                <div class="form-group @error('academic_exp') has-error @enderror">
                                                     <label for="name">Academic Experience</label>
 {{--                                                    <input type="text" name="academic_exp" id="academic_exp" class="form-control" value="{{old('academic_exp')}}">--}}
                                                     <select name="academic_exp" id="academic_exp" class="form-control select2">
@@ -473,9 +440,6 @@
                                                         @endfor
                                                         <option value="more than 40" {{old('academic_exp')==='more than 40'?'selected':''}}>More than 40</option>
                                                     </select>
-                                                    @error('academic_exp')
-                                                    <span class="text-red" role="alert"> {{ $message }} </span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -745,7 +709,7 @@
 
         $('#reviewer_role_id').on('change', function () {
             let role = $(this).val();
-            if (role === '2')
+            if (role === '1')
             {
                 $('#sector_id').select2().val(3).trigger('change');
             }else{
