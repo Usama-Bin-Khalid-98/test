@@ -709,7 +709,7 @@
 
         $('#reviewer_role_id').on('change', function () {
             let role = $(this).val();
-            if (role === '2')
+            if (role === '1')
             {
                 $('#sector_id').select2().val(3).trigger('change');
             }else{
