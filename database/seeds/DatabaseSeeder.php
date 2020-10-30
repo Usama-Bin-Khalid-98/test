@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WorkLoadSeeder::class);
         $this->call(FundingSourcesSeeder::class);
         $this->call(ActivityEngagementSeeder::class);
-        $this->call(FacultyStudentsRatioSeeder::class);
+//        $this->call(FacultyStudentsRatioSeeder::class);
         $this->call(FacultyStabilitySeeder::class);
         $this->call(BusinessSchoolFacilitySeeder::class);
         $this->call(AffiliationSeeder::class);
