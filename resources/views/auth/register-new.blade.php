@@ -327,7 +327,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" style="padding-bottom: 10px;">
                                                 <div class="form-group">
                                                     <label for="name">Sector</label>
                                                     <select name="sector_id" id="sector_id" class="form-control select2" style="width: 100%;">
@@ -743,6 +743,19 @@
         //Initialize Select2 Elements
         $('.select2').select2();
 
+        $('#reviewer_role_id').on('change', function () {
+            let role = $(this).val();
+            if (role === '2')
+            {
+                $('#sector_id').select2().val(3).trigger('change');
+            }else{
+                $('#sector_id').select2({
+                    placeholder:'select sector',
+                    allowClear: true
+                });
+                $('#sector_id').val('').trigger('change');
+            }
+        });
         $('#business_school_id').select2({
             sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
         });
