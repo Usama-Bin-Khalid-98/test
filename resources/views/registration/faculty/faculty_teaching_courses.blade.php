@@ -139,7 +139,7 @@
                                     <th>Maximum teaching Courses Allowed</th>
                                     @foreach($visitings as $req)
                                         @foreach($req->faculty_program as $program )
-                                         <th> {{$program->program->name}}:</th>
+                                         <th style="background-color: grey; color: white;"> {{$program->program->name}}:</th>
                                         @endforeach
                                         @break
                                     @endforeach
@@ -158,8 +158,8 @@
 
                                         @foreach($req->faculty_program as $program )
                                         <td>
-                                            Courses : {{$program->tc_program}} <br>
-                                            FTE  {{round($program->tc_program/$req->max_cources_allowed, 2)}}
+                                            <b>Courses:</b> {{$program->tc_program}} <br>
+                                            <b>Program FTE:</b>   {{round($program->tc_program/$req->max_cources_allowed, 2)}}
                                         </td>
                                         @endforeach
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
@@ -178,7 +178,7 @@
                                     <th>Maximum teaching Courses Allowed</th>
                                     @foreach($visitings as $req)
                                         @foreach($req->faculty_program as $program )
-                                            <th> {{$program->program->name}}:</th>
+                                            <th style="background-color: grey; color: white;"> {{$program->program->name}}:</th>
                                         @endforeach
                                         @break
                                     @endforeach
