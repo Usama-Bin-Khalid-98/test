@@ -63,9 +63,9 @@
                                     <label for="name">Program(s) under review</label>
                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program(s) under review</option>
-                                        @foreach($programs as $program)
-                                         <option value="{{$program->program->id}}">{{$program->program->name}}</option>
-                                        @endforeach
+                                       @foreach($programs as $program)
+                                           <option value="{{$program->program->id}}">{{$program->program->name}}</option>
+                                       @endforeach
                                         </select>
                                 </div>
                             </div>

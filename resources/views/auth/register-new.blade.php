@@ -379,7 +379,7 @@
                                                         $earliest_year = 1960;
                                                         $latest_year = date('Y');
                                                         foreach( range( $latest_year, $earliest_year ) as $i){
-                                                        print '<option value="'.$i.'"'.($i === $currently_selected ? ' selected="selected"' : '').'>'.$i.'</option>';
+                                                        print '<option value="'.$i.'"'.($i === $currently_selected || old('year_completion') == $i ? ' selected="selected"' : '').'>'.$i.'</option>';
                                                         } ?>
                                                     </select>
                                                    {{-- <input type="date" name="year_completion" class="form-control" value="{{old('year_completion')}}">--}}
