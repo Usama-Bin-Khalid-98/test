@@ -17,6 +17,7 @@
 //                                    echo "<pre>";
 //                                    print_r($facultySummary); echo "<pre>";
 //                                    exit;
+                                    $total=$totalPA=$totalMS=$totalCE=$totalO=0;
                                     for ($i=0; $i <count($facultySummary[0]) ; $i++) {
                                                                             ?>
 
@@ -27,16 +28,17 @@
     $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],auth()->user()->campus_id);
    @endphp
    <?php
-   $total=$totalPA=$totalMS=$totalCE=$totalO=0;
+//    dd($facSum);
+   $v_total= 0;
     for($j=0;$j<count($facSum);$j++) {
-        //print_r($facSum[$j]->disciplineName);
-
+        $v_total += $facSum[$j]->number_faculty;
         if($facSum[$j]->disciplineName=='Business Administration'){
+//        echo $j;
             echo $facSum[$j]->number_faculty;
-            $total +=$facSum[0]->number_faculty;
+            $total +=$facSum[$j]->number_faculty;
         }
-
     }
+//    dd($v_total)
    ?>
                                         </td>
                                         <td>
@@ -47,7 +49,7 @@
 
         if($facSum[$k]->disciplineName=='Public Administration'){
             echo $facSum[$k]->number_faculty;
-            $totalPA +=$facSum[0]->number_faculty;
+            $totalPA +=$facSum[$k]->number_faculty;
         }
 
 
@@ -62,7 +64,7 @@
 
         if($facSum[$l]->disciplineName=='Management Sciences'){
             echo $facSum[$l]->number_faculty;
-            $totalMS +=$facSum[0]->number_faculty;
+            $totalMS +=$facSum[$l]->number_faculty;
         }
 
 
@@ -77,7 +79,7 @@
 
         if($facSum[$m]->disciplineName=='Commerce/Economics'){
             echo $facSum[$m]->number_faculty;
-            $totalCE +=$facSum[0]->number_faculty;
+            $totalCE +=$facSum[$m]->number_faculty;
         }
 
 
@@ -92,7 +94,7 @@
 
         if($facSum[$n]->disciplineName=='Other'){
             echo $facSum[$n]->number_faculty;
-            $totalO +=$facSum[0]->number_faculty;
+            $totalO +=$facSum[$n]->number_faculty;
         }
 
 
@@ -101,7 +103,7 @@
                                         </td>
                                         <td><?php
 //                                            dd($total+$totalPA+$totalMS+$totalCE+$totalO);
-                                            echo $total+$totalPA+$totalMS+$totalCE+$totalO;
+                                            echo $v_total;
                                         ?></td>
 
                                     </tr>
@@ -110,12 +112,12 @@
                                     ?>
                                     <tr style="background-color: grey;color: white;">
                                         <td style="font-weight: bold;">Total</td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td style="font-weight: bold;"></td>
-                                        <td style="font-weight: bold;"></td>
+                                        <td style="font-weight: bold;">{{$total}}</td>
+                                        <td style="font-weight: bold;">{{$totalPA}}</td>
+                                        <td style="font-weight: bold;">{{$totalMS}}</td>
+                                        <td style="font-weight: bold;">{{$totalCE}}</td>
+                                        <td style="font-weight: bold;">{{$totalO}}</td>
+                                        <td style="font-weight: bold;">{{$total+$totalPA+$totalMS+$totalCE+$totalO}}</td>
                                     </tr>
 
 

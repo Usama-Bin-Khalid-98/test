@@ -194,7 +194,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Year t-2</label>
+                                <label for="name">Year t-1</label>
                                     <input type="text" name="grad_std_t_2"
                                     id="edit_grad_std_t_2" value="{{old('edit_grad_std_t_2')}}" class="form-control">
                             </div>
@@ -202,7 +202,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Year t-3</label>
+                                <label for="name">Year t-2</label>
                                     <input type="text" name="grad_std_t_3"
                                     id="edit_grad_std_t_3" value="{{old('edit_grad_std_t_3')}}" class="form-control">
                             </div>
