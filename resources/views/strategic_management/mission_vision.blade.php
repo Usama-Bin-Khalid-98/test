@@ -223,6 +223,9 @@
          <?php if(@$get->id==null){ ?>
 
          $('#form').submit(function (e) {
+             for ( instance in CKEDITOR.instances ) {
+                 CKEDITOR.instances[instance].updateElement();
+             }
             let mission = CKEDITOR.instances.mission.getData();
             let vision = CKEDITOR.instances.vision.getData();
             let file = $('#file').val();

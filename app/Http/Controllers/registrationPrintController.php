@@ -275,9 +275,16 @@ AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus){
-        //dd($userCampus);
+//        dd($i,$facultySummary,$userCampus);
 
-            $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=? AND users.id=?', array($facultySummary[$i]->id,$userCampus,auth()->user()->id));
+            $facultySummary12 = DB::select('
+            SELECT faculty_summaries.*, disciplines.name as disciplineName
+            FROM faculty_summaries, disciplines,users
+            WHERE faculty_summaries.discipline_id=disciplines.id
+            AND faculty_summaries.faculty_qualification_id=?
+            AND faculty_summaries.campus_id=?
+            AND users.id=?',
+                array($facultySummary[$i]->id,$userCampus,auth()->user()->id));
             return $facultySummary12;
     }
 

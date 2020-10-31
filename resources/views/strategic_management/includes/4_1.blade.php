@@ -14,14 +14,14 @@
                                         </th>
                                     <th>Others</th>
                                     <th>Total</th>
-                                    
+
                                 </thead>
                                <tbody>
                                     <?php //echo "<pre>";
                                     //print_r($facultySummary[1]); echo "<pre>";
-                                    for ($i=0; $i <count($facultySummary[0]) ; $i++) { 
+                                    for ($i=0; $i <count($facultySummary[0]) ; $i++) {
                                                                             ?>
-                                    
+
                                     <tr>
                                         <td><?php print_r($facultySummary[0][$i]->name);?></td>
                                         <td>
@@ -32,82 +32,82 @@
    $total=0;
     for($j=0;$j<count($facSum);$j++) {
         //print_r($facSum[$j]->disciplineName);
-        
+
         if($facSum[$j]->disciplineName=='Business Administration'){
             echo $facSum[$j]->number_faculty;
             $total +=$facSum[$j]->number_faculty;
         }
 
-        
+
     }
    ?>
                                         </td>
                                         <td>
-                                          <?php 
+                                          <?php
 
     for($j=0;$j<count($facSum);$j++) {
         //print_r($facSum[$j]->disciplineName);
-        
+
         if($facSum[$j]->disciplineName=='Public Administration'){
             echo $facSum[$j]->number_faculty;
             $total +=$facSum[$j]->number_faculty;
         }
 
-        
+
     }
-   ?>  
+   ?>
                                         </td>
                                         <td>
-                                            <?php 
+                                            <?php
 
     for($j=0;$j<count($facSum);$j++) {
         //print_r($facSum[$j]->disciplineName);
-        
+
         if($facSum[$j]->disciplineName=='Management Sciences'){
             echo $facSum[$j]->number_faculty;
             $total +=$facSum[$j]->number_faculty;
         }
 
-        
+
     }
-   ?>    
+   ?>
                                         </td>
                                         <td>
-                                               <?php 
+                                               <?php
 
     for($j=0;$j<count($facSum);$j++) {
         //print_r($facSum[$j]->disciplineName);
-        
+
         if($facSum[$j]->disciplineName=='Commerce/Economics'){
             echo $facSum[$j]->number_faculty;
             $total +=$facSum[$j]->number_faculty;
         }
 
-        
+
     }
-   ?> 
+   ?>
                                         </td>
                                         <td>
-                                              <?php 
+                                              <?php
 
     for($j=0;$j<count($facSum);$j++) {
         //print_r($facSum[$j]->disciplineName);
-        
+
         if($facSum[$j]->disciplineName=='Other'){
             echo $facSum[$j]->number_faculty;
             $total +=$facSum[$j]->number_faculty;
         }
 
-        
+
     }
-   ?>  
+   ?>
                                         </td>
                                         <td><?php
                                             echo $total;
                                         ?></td>
-                                       
+
                                     </tr>
-                                    <?php 
+                                    <?php
                                     }
                                     ?>
                                     <!-- <tr>
@@ -118,9 +118,9 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                       
+
                                     </tr>
-                                       
+
                                     <tr>
                                         <td>16 years education (Bachelors/Masters)</td>
                                         <td></td>
@@ -129,7 +129,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                       
+
                                     </tr>
                                     <tr>
                                         <td>Others (professional/industry experience)</td>
@@ -139,7 +139,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                       
+
                                     </tr>
                                        <tr>
                                         <td>Total</td>
@@ -149,15 +149,15 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                       
+
                                     </tr> -->
-                                   
-                                    
-                              
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>
