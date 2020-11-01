@@ -104,9 +104,9 @@ class DeskReviewController extends Controller
 
         $mission_vision = MissionVision::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
 //        dd($mission_vision);
-        @$strategic_plan = StrategicPlan::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
-        @$application_received = ApplicationReceived::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
-        $student_enrolment = StudentEnrolment::all()->where(['campus_id' => $campus_id, 'department_id' => $department_id]);
+        @$strategic_plan = StrategicPlan::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+        @$application_received = ApplicationReceived::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+        $student_enrolment = StudentEnrolment::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
         $graduated_students = StudentsGraduated::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 
         $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('number_faculty');

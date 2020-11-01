@@ -158,8 +158,8 @@
                                                 @foreach($graduated_students as $graduated)
                                                     <p> Program {{$graduated->program->name}} </p>
                                                     <p> Year t {{$graduated->grad_std_t}} </p>
-                                                    <p> Year t-1 {{$graduated->grad_std_t_2}} </p>
-                                                    <p> Year t-2 {{$graduated->grad_std_t_3}} </p>
+                                                    <p> Year t-1 {{$graduated->grad_std_t_1}} </p>
+                                                    <p> Year t-2 {{$graduated->grad_std_t_2}} </p>
 
                                                 @endforeach
 

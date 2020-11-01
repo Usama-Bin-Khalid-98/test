@@ -71,7 +71,7 @@
                                 <td>{{@$registration->department}}</td>
                                 <td><a href="{{url('deskreview')}}/{{@$registration->id}}">Desk Review</a></td>
                                 {{--<a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                                <td><a href="{{url('registrationPrint?cid=')}}{{@$registration->campus_id}}&bid={{@$registration->business_school_id}}">Registration Print </a></td>
+                                <td><a href="{{url('registrationPrint?cid=')}}{{@$registration->campus_id}}&bid={{@$registration->business_school_id}}&did={{@$registration->department_id}}">Registration Print </a></td>
                                 <td><a class="badge bg-maroon" href="print?cid={{$registration->campus_id}}&bid={{$registration->business_school_id}}">SAR</a></td>
                                 <td><i class="badge" data-id="{{@$registration->id}}"  style="background: {{$registration->regStatus == 'Initiated'?'red':''}}{{$registration->regStatus == 'Review'?'brown':''}}{{$registration->regStatus == 'Approved'?'green':''}}" >{{@$registration->regStatus != ''?ucwords($registration->regStatus):'Initiated'}}</i></td>
                                 <td>
