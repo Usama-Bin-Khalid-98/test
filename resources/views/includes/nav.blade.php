@@ -590,7 +590,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                     </span></a></li>
               @endif
               @hasrole('BusinessSchool')
-              <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}"><i class="fa fa-circle-o text-green"></i>Faculty Degree<span class="pull-right-container">
+              <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}">4.7 Faculty Degree<span class="pull-right-container">
                         <span class="text text-{{$faculty_degree==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$faculty_degree==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>

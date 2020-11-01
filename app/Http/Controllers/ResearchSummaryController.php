@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common\PublicationCategory;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\Research\ResearchSummary;
 use App\Models\Common\Slip;
 use App\PublicationType;
@@ -33,9 +34,13 @@ class ResearchSummaryController extends Controller
         }else {
             $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
+        $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
+        $years['yeart'] = $getYears->tyear;
+        $years['year_t_1'] = $getYears->year_t_1;
+        $years['year_t_2'] = $getYears->year_t_2;
 
-       // dd($summaries);
-        return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories'));
+//        dd($years);
+        return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories', 'years'));
     }
 
     /**
