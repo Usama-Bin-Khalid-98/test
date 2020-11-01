@@ -226,7 +226,7 @@
                                             <!-- <i class="fa fa-check-square permissions" data-toggle="modal" data-target="#permissions-modal" data-row='{"id":{{@$user->id}},"role_id":"{{@$user->roles}}","permissions":"{{@$user->permissions}}"}'> </i> | -->
                                             <i data-row='{"id":"{{$user->id}}","name":"{{$user->name}}","designation_id":"{{$user->designation_id}}","cnic":"{{$user->cnic}}","email":"{{$user->email}}","contact_no":"{{$user->contact_no}}","address":"{{$user->address}}","role_id":"{{@$user->roles[0]->id}}","status":"{{$user->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-edit text-blue edit"></i>
                                              | <i class="fa fa-trash text-info delete" data-id="{{@$user->id}}"></i> | <i data-row='{"Passid":"{{$user->id}}"}' class="fa fa-lock text-info changePassword" data-toggle="modal" data-target="#change-password" data-id="{{@$user->id}}"></i>
-                                            
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -367,7 +367,7 @@
                                                     <label for="name">New Password</label>
                                                     <input type="password" name="new_password" id="new_password" class="form-control">
                                                 </div>
-                                                 
+
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -426,7 +426,7 @@
 
             /.modal-content
         </div>
-         /.modal-dialog 
+         /.modal-dialog
     </div> -->
     <!-- /.modal -->
     <!-- /.modal -->
@@ -656,6 +656,11 @@
                 },
                 error:function(response, exception) {
                     Notiflix.Loading.Remove();
+                    console.log("email message",response.responseJSON.errors.email[0]);
+                    if(response.responseJSON.errors.email[0]) {
+                        Notiflix.Notify.Failure(response.responseJSON.errors.email[0]);
+                        response.responseJSON.errors.email[0]?addClass('email'):removeClass('email');
+                    }
                     $.each(response.responseJSON, function (index, val) {
                         Notiflix.Notify.Failure(val);
                     })

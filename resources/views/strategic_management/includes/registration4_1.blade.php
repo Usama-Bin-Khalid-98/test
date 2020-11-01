@@ -17,6 +17,7 @@
 //                                    echo "<pre>";
 //                                    print_r($facultySummary); echo "<pre>";
 //                                    exit;
+//                                        dd($facultySummary);
                                     $total=$totalPA=$totalMS=$totalCE=$totalO=0;
                                     for ($i=0; $i <count($facultySummary[0]) ; $i++) {
                                                                             ?>
@@ -25,7 +26,13 @@
                                         <td><?php print_r($facultySummary[0][$i]->name);?></td>
                                         <td>
                                             @php
-    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],auth()->user()->campus_id);
+                                            if(\Illuminate\Support\Facades\Auth::user()->user_type=='BusinessSchool')
+                                            {
+                                                $campus_id = auth()->user()->campus_id;
+                                            }else{
+                                                $campus_id =request()->get('cid');
+                                            }
+    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],$campus_id);
    @endphp
    <?php
 //    dd($facSum);
