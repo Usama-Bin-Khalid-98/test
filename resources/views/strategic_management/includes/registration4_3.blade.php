@@ -24,13 +24,13 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                         <td></td>
                                         @foreach($facultyTeachingCourses as $req)
                                             @foreach($req->faculty_program as $program )
-                                                <th> {{$program->program->name}}:</th>
+                                                <th>Teaching courses in  {{$program->program->name}}:</th>
                                             @endforeach
                                             @break
                                         @endforeach
                                     </tr>
                                     @php
-                                        $totalFTE1=$totalFTE2=$counter=0;
+                                        $totalFTE1=$totalFTE2=$counter=$totalPrograms=0;
                                     @endphp
                                     @foreach($facultyTeachingCourses as $data)
                                     <tr>
@@ -38,7 +38,7 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                         <td>{{@$data->name}}</td>
                                         <td>{{@$data->desName}}</td>
                                         <td>{{@$data->lookupFacultyType}}</td>
-                                        <td>{{$data->   max_cources_allowed}}</td>
+                                        <td>{{$data->max_cources_allowed}}</td>
                                         @foreach($data->faculty_program as $program )
                                             <td>
                                                 Courses : {{$program->tc_program}} <br>
@@ -51,21 +51,19 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                         @php
                                         foreach ($data->faculty_program as $programRow)
                                             $totalFTE2+=$programRow->tc_program/$data->max_cources_allowed;
+                                            $totalPrograms+=$data->max_cources_allowed;
                                         @endphp
                                     @endforeach
                                     </tr>
 
-{{--                                    <tr>--}}
-{{--                                        <td colspan="5">Total FTE</td>--}}
-{{--                                        <td>{{number_format((float)$totalFTE1, 3, '.', '')}}</td>--}}
-{{--                                        <td>{{number_format((float)$totalFTE2, 3, '.', '')}}</td>--}}
-{{--                                        @foreach($data->faculty_program as $program )--}}
-{{--                                            <td>--}}
-{{--                                                Courses : {{$program->tc_program}} <br>--}}
-{{--                                                {{round($totalFTE2, 2)}}--}}
-{{--                                            </td>--}}
-{{--                                        @endforeach--}}
-{{--                                    </tr>--}}
+                                    <tr>
+                                        <td colspan="5">Total FTE</td>
+                                        @foreach($data->faculty_program as $program )
+                                            <td>
+                                                {{round($totalFTE2, 2)}}
+                                            </td>
+                                        @endforeach
+                                    </tr>
 
                                    @php
 
