@@ -247,10 +247,12 @@ AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id
              $facultyTeachingCourses = FacultyTeachingCources::
              with('campus','lookup_faculty_type','designation', 'faculty_program')
                  ->where($where)
-                 ->where('lookup_faculty_type_id', '!=', 2)->get();
+                 ->where('lookup_faculty_type_id',  1)
+                 ->orWhere('lookup_faculty_type_id',  2)
+                 ->get();
 
 //             dd($facultyTeachingCourses);
-             $whereb = ['campus_id'=> $userInfo->campus_id, 'type' => 'REG', 'lookup_faculty_type_id' => '2'];
+             $whereb = ['campus_id'=> $userInfo->campus_id, 'type' => 'REG', 'lookup_faculty_type_id' => 3];
              $facultyTeachingCourses4b = FacultyTeachingCources::
              with('campus','lookup_faculty_type','designation', 'faculty_program')
                 ->where($whereb)->get();
