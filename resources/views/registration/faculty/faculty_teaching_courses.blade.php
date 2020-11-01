@@ -96,7 +96,7 @@
                             </div>
 
                             @foreach($getScope as $program)
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Teaching courses in {{$program->program->name}}(F) </label>
                                         <input type="number" name="tc_program[{{$program->program->id}}]" id="tc_program{{$program->program->id}}" data-id="{{$program->program->id}}" class="form-control programs">
@@ -139,7 +139,7 @@
                                     <th>Maximum teaching Courses Allowed</th>
                                     @foreach($visitings as $req)
                                         @foreach($req->faculty_program as $program )
-                                         <th style="background-color: grey; color: white;"> {{$program->program->name}}:</th>
+                                         <th> {{$program->program->name}}:</th>
                                         @endforeach
                                         @break
                                     @endforeach
@@ -148,6 +148,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @php $totalFTE =0; @endphp
                                 @foreach($visitings as $req)
                                 <tr>
 {{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
@@ -158,8 +159,9 @@
 
                                         @foreach($req->faculty_program as $program )
                                         <td>
-                                            <b>Courses:</b> {{$program->tc_program}} <br>
-                                            <b>Program FTE:</b>   {{round($program->tc_program/$req->max_cources_allowed, 2)}}
+                                            Courses: {{$program->tc_program}} <br>
+                                            Program FTE:   {{round($program->tc_program/$req->max_cources_allowed, 2)}}
+                                            @php $totalFTE += $program->tc_program/$req->max_cources_allowed; @endphp
                                         </td>
                                         @endforeach
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
@@ -171,6 +173,21 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    @if(@$visitings[0]->lookup_faculty_type->faculty_type == 'Visiting')
+                                    <th colspan="4" align="center">Total VFE</th>
+                                    <th>Total VFE: {{@round($totalFTE/3, 2)}}</th>
+                                    @else
+                                        <th colspan="4" align="center">Total FTE</th>
+                                        <th>Total FTE: {{@(round($totalFTE, 2))}}</th>
+                                    @endif
+                                    @foreach($visitings as $req)
+                                        @foreach($req->faculty_program as $program )
+                                            <th> </th>
+                                        @endforeach
+                                        @break
+                                    @endforeach
+                                </tr>
+                                <tr>
 {{--                                    <th>Business School</th>--}}
                                     <th>Name</th>
                                     <th>Faculty Type</th>
@@ -178,7 +195,7 @@
                                     <th>Maximum teaching Courses Allowed</th>
                                     @foreach($visitings as $req)
                                         @foreach($req->faculty_program as $program )
-                                            <th style="background-color: grey; color: white;"> {{$program->program->name}}:</th>
+                                            <th> {{$program->program->name}}</th>
                                         @endforeach
                                         @break
                                     @endforeach

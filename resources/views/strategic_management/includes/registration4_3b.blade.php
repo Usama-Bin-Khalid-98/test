@@ -54,17 +54,14 @@ Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)
                                         @endforeach
                                     </tr>
 
-{{--                                    <tr>--}}
-{{--                                        <td colspan="5">Total FTE</td>--}}
-{{--                                        --}}{{--                                        <td>{{number_format((float)$totalFTE1, 3, '.', '')}}</td>--}}
-{{--                                        --}}{{--                                        <td>{{number_format((float)$totalFTE2, 3, '.', '')}}</td>--}}
-{{--                                        --}}{{--                                        @foreach($data->faculty_program as $program )--}}
-{{--                                        <td>--}}
-{{--                                            --}}{{--                                                Courses : {{$program->tc_program}} <br>--}}
-{{--                                            {{round($totalFTE2, 2)}}--}}
-{{--                                        </td>--}}
-{{--                                        --}}{{--                                        @endforeach--}}
-{{--                                    </tr>--}}
+                                    <tr>
+                                        <td colspan="4" align="center">Total FTE</td>
+                                            @foreach($data->faculty_program as $program )
+                                        <td>
+                                            {{round($totalFTE2, 2)/3}}
+                                        </td>
+                                            @endforeach
+                                    </tr>
 
                                     @php
 

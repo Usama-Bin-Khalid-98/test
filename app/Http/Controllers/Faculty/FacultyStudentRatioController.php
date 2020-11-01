@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Faculty;
 use App\Models\Faculty\FacultyStudentRatio;
 use App\Models\Common\Slip;
 use App\BusinessSchool;
+use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,13 +29,57 @@ class FacultyStudentRatioController extends Controller
 
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
-            $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+            $ratios = FacultyStudentRatio::with('campus','program')
+                ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+                ->where('type','SAR')
+                ->where('deleted_at',null)
+                ->get();
         }else {
-            $ratios = FacultyStudentRatio::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+            $ratios = FacultyStudentRatio::with('campus','program')
+                ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+                ->where('type','REG')
+                ->where('deleted_at',null)
+                ->get();
         }
 
 
-         return view('registration.faculty.faculty_student_ratio', compact('programs','ratios'));
+
+        $getFTE = FacultyTeachingCources::with('faculty_program')
+            ->where('lookup_faculty_type_id' , 1)
+            ->where('deleted_at', null)
+            ->orWhere('lookup_faculty_type_id', 2)
+            ->get();
+
+        $totalFTE = 0;
+        if($getFTE){
+            foreach ($getFTE as $val)
+            {
+                foreach ($val->faculty_program as $key => $progs)
+                {
+                    $totalFTE += $progs->tc_program/$val->max_cources_allowed;
+                }
+            }
+            $totalFTE = round($totalFTE, 2);
+        }
+
+        $getVFE = FacultyTeachingCources::with('faculty_program')
+            ->where('lookup_faculty_type_id' , 3)
+            ->where('deleted_at', null)
+            ->get();
+
+        $totalVFE = 0;
+        if($getVFE){
+            foreach ($getVFE as $vfe)
+            {
+                foreach ($vfe->faculty_program as $key => $prog)
+                {
+                    $totalVFE += $prog->tc_program/$vfe->max_cources_allowed;
+                }
+            }
+            $totalVFE = round($totalFTE/3, 2);
+            //dd($totalVFE);
+        }
+         return view('registration.faculty.faculty_student_ratio', compact('programs','ratios', 'totalFTE', 'totalVFE'));
     }
 
     /**
@@ -75,8 +120,6 @@ class FacultyStudentRatioController extends Controller
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'total_enrollments' => $request->total_enrollments,
-                'total_fte' => $request->total_fte,
-                'total_vfe' => $request->total_vfe,
                 'isCompleted' => 'yes',
                 'type' => $type,
                 'created_by' => Auth::user()->id
@@ -133,8 +176,6 @@ class FacultyStudentRatioController extends Controller
             FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
                 'program_id' => $request->program_id,
                 'total_enrollments' => $request->total_enrollments,
-                'total_fte' => $request->total_fte,
-                'total_vfe' => $request->total_vfe,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -170,8 +211,6 @@ class FacultyStudentRatioController extends Controller
         return [
             'program_id' => 'required',
             'total_enrollments' => 'required',
-            'total_fte' => 'required',
-            'total_vfe' => 'required'
         ];
     }
 

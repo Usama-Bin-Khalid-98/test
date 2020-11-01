@@ -57,15 +57,18 @@ class FacultyTeachingCourcesController extends Controller
             $visitings = FacultyTeachingCources::with('campus', 'lookup_faculty_type', 'designation', 'faculty_program')
                 ->where($where)
                 ->where('lookup_faculty_type_id', 1)
+                ->where('deleted_at', null)
                 ->orWhere('lookup_faculty_type_id', 2)
                 ->get();
         }else{
             $visitings = FacultyTeachingCources::with('campus', 'lookup_faculty_type', 'designation', 'faculty_program')
                 ->where($where)
+                ->where('deleted_at', null)
                 ->where('lookup_faculty_type_id', 3)
                 ->get();
 
         }
+//        dd($visitings[0]->faculty_program);
 //       foreach ($visitings as $visit)
 //       {
 //           //dd($visit);

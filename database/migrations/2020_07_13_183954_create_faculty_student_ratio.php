@@ -28,8 +28,8 @@ class CreateFacultyStudentRatio extends Migration
                 ->references('id')
                 ->on('programs');
             $table->integer('total_enrollments');
-            $table->integer('total_fte');
-            $table->integer('total_vfe');
+//            $table->integer('total_fte');
+//            $table->integer('total_vfe');
             $table->enum('status',['active','inactive'])->default('active');
             $table->enum('isCompleted',['yes','no'])->default('no');
             $table->enum('type',['SAR','REG'])->nullable();
