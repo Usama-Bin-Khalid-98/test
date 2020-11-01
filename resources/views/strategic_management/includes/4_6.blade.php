@@ -23,7 +23,7 @@
                                            $facPer[$i] = $facultyGenders[$i]->male;
                                            $facPerm[$i] = $facultyGenders[$i]->female;
                                         }
-                                       else if($facultyGenders[$i]->facultyTypeName=='Adjacent'){
+                                       else if($facultyGenders[$i]->facultyTypeName=='Adjunct'){
                                            $facPer[$i] = $facultyGenders[$i]->male;
                                            $facPerm[$i] = $facultyGenders[$i]->female;
                                         }
@@ -37,9 +37,9 @@
                                         if(isset($facPer[0])) print_r($facPer[0]); ?></td>
                                         <td><?php  if(isset($facPer[1])) print_r($facPer[1]); ?></td>
                                         <td><?php  if(isset($facPer[2])) print_r($facPer[2]); ?></td>
-                                       
-                                       
-                                       
+
+
+
                                     </tr>
 
                                     <tr>
@@ -47,9 +47,9 @@
                                         <td><?php  if(isset($facPer[0])) print_r($facPerm[0]); ?></td>
                                         <td><?php  if(isset($facPer[1])) print_r($facPerm[1]); ?></td>
                                         <td><?php  if(isset($facPer[2])) print_r($facPerm[2]); ?></td>
-                                    
-                                        
-                                        
+
+
+
                                     </tr>
 
 

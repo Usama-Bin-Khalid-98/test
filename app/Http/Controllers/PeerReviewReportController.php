@@ -29,7 +29,7 @@ class PeerReviewReportController extends Controller
             ->join('users as u', 'u.id', '=', 's.created_by')
             ->join('designations as dg', 'dg.id', '=', 'u.designation_id')
             ->select('s.*', 'c.location as campus','c.id as campus_id',
-                'dg.name as designation', 'd.name as department',
+                'dg.name as designation', 'd.name as department','d.id as department_id',
                 'u.name as user', 'u.email as email', 'u.contact_no',
                 'bs.name as school', 'bs.id as business_school_id')
             ->get();
