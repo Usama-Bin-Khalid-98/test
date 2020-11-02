@@ -29,7 +29,7 @@ class CreateFacultyExchangesTable extends Migration
             $table->string('source_country',255);
             $table->string('name_faculty',255);
             $table->string('file',255);
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('status', ['active', 'inactive'])->default('active')z;
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')

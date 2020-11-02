@@ -160,7 +160,8 @@
                                         @foreach($req->faculty_program as $program )
                                         <td>
                                             Courses: {{$program->tc_program}} <br>
-                                            Program FTE:   {{round($program->tc_program/$req->max_cources_allowed, 2)}}
+                                            @if(@$req->lookup_faculty_type->faculty_type == 'Visiting')
+                                            Program VFE: @else Program FTE:  @endif {{round($program->tc_program/$req->max_cources_allowed, 2)}}
                                             @php $totalFTE += $program->tc_program/$req->max_cources_allowed; @endphp
                                         </td>
                                         @endforeach

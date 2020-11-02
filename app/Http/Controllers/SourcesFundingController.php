@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\SourcesFunding;
 use App\Models\StrategicManagement\FundingSources;
 use Illuminate\Http\Request;
@@ -22,10 +23,13 @@ class SourcesFundingController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $amount = SourcesFunding::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('amount');
-        $percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'status' => 'active'])->get()->sum('percent_share');
+        $amount = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('amount');
+        $percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('percent_share');
         $fundings = FundingSources::get();
-        $sources  = SourcesFunding::with('campus','funding_sources')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+
+        $sources  = SourcesFunding::with('campus','funding_sources')
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+            ->get();
 
          return view('strategic_management.sources_funding', compact('fundings','sources','amount','percent_share'));
     }
@@ -136,7 +140,7 @@ class SourcesFundingController extends Controller
     {
         try {
             SourcesFunding::where('id', $sourcesFunding->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             SourcesFunding::destroy($sourcesFunding->id);
             return response()->json(['success' => 'Record deleted successfully.']);

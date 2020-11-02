@@ -1,8 +1,9 @@
 @php
 use \Illuminate\Support\Facades\Auth;
-$invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id, 'status'=>'approved' ]);
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+$invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
 $Mentoringinvoice = checkIsCompleted('App\Models\MentoringInvoice', ['campus_id' => Auth::user()->campus_id, 'status'=>'approved' ]);
-$basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes' ]);
+$basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes']);
 $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes' ]);
 $contact = checkIsCompleted('App\Models\StrategicManagement\ContactInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $committee = checkIsCompleted('App\Models\StrategicManagement\StatutoryCommittee', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -33,67 +34,67 @@ $linkages = checkIsCompleted('App\Models\External_Linkages\Linkages', ['campus_i
 $bodymeeting = checkIsCompleted('App\Models\External_Linkages\BodyMeeting', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $sexchange = checkIsCompleted('App\Models\External_Linkages\StudentExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $fexchange = checkIsCompleted('App\Models\External_Linkages\FacultyExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$obtained = checkIsCompleted('App\Models\External_Linkages\ObtainedInternship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$placement = checkIsCompleted('App\Models\External_Linkages\PlacementActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$admission_office = checkIsCompleted('App\AdmissionOffice', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$credit_transfer = checkIsCompleted('App\CreditTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$student_transfer = checkIsCompleted('App\StudentTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$documentary_evidence = checkIsCompleted('App\DocumentaryEvidence', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$conference = checkIsCompleted('App\Model\Research\Conference', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_development = checkIsCompleted('App\Models\Reasearch\FacultyDevelopment', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$curriculum_role= checkIsCompleted('App\Models\Research\CurriculumRole', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$output = checkIsCompleted('App\Models\Research\ResearchOutput', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$oric = checkIsCompleted('App\Models\Research\Oric', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$research_center = checkIsCompleted('App\Models\Research\ResearchCenter', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$research_agenda = checkIsCompleted('App\Models\Research\ResearchAgenda', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$research_funding = checkIsCompleted('App\Models\Research\ResearchFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$research_project = checkIsCompleted('App\Models\Research\ResearchProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$intake = checkIsCompleted('App\StudentIntake', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$size = checkIsCompleted('App\ClassSize', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$dropout = checkIsCompleted('App\DropoutPercentage', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$financial_assistance = checkIsCompleted('App\FinancialAssistance', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$student_financial = checkIsCompleted('App\StudentFinancial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$weak = checkIsCompleted('App\WeakStudent', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$grooming = checkIsCompleted('App\PersonalGrooming', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$counselling = checkIsCompleted('App\CounsellingActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$student_participation = checkIsCompleted('App\StudentParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$extra = checkIsCompleted('App\ExtraActivities', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$membership = checkIsCompleted('App\AlumniMembership', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$alumni = checkIsCompleted('App\AlumniParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$financialrisk = checkIsCompleted('App\Models\Facility\FinancialRisk', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$support_staff = checkIsCompleted('App\Models\Facility\SupportStaff', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$qecinfo = checkIsCompleted('App\Models\Facility\QecInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$club = checkIsCompleted('App\Models\social_responsibility\StudentClub', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$detail = checkIsCompleted('App\Models\social_responsibility\ProjectDetail', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$env = checkIsCompleted('App\Models\social_responsibility\EnvProtection', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$formal = checkIsCompleted('App\Models\social_responsibility\FormalRelationship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$complaint = checkIsCompleted('App\Models\social_responsibility\ComplaintResolution', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$internal = checkIsCompleted('App\Models\social_responsibility\InternalCommunity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$social = checkIsCompleted('App\Models\social_responsibility\SocialActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$program_delivery = checkIsCompleted('App\Models\Carriculum\ProgramDelivery', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$question_paper = checkIsCompleted('App\Models\Carriculum\QuestionPaper', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$aligned_program = checkIsCompleted('App\Models\Carriculum\AlignedProgram', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$course_detail = checkIsCompleted('App\Models\Carriculum\CourseDetail', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$course_outline = checkIsCompleted('App\Models\Carriculum\CourseOutline', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$plagiarism_case = checkIsCompleted('App\Models\Carriculum\PlagiarismCase', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$cultural_material = checkIsCompleted('App\Models\Carriculum\CulturalMaterial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$managerial_skill = checkIsCompleted('App\Models\Carriculum\ManagerialSkill', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$program_delivery_method = checkIsCompleted('App\Models\Carriculum\ProgramDeliveryMethod', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$evaluation_method = checkIsCompleted('App\Models\Carriculum\EvaluationMethod', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$curriculum_review = checkIsCompleted('App\Models\Carriculum\CurriculumReview', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$program_objective = checkIsCompleted('App\Models\Carriculum\ProgramObjective', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$learning_outcome = checkIsCompleted('App\Models\Carriculum\LearningOutcome', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_membership = checkIsCompleted('App\Models\Faculty\FacultyMembership', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_exposure = checkIsCompleted('App\Models\Faculty\FacultyExposure', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_degree = checkIsCompleted('App\FacultyDegree', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$international_faculty = checkIsCompleted('App\Models\Faculty\InternationalFaculty', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_participation = checkIsCompleted('App\Models\Faculty\FacultyParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$consultancy_project = checkIsCompleted('App\Models\Faculty\FacultyConsultancyProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_promotion = checkIsCompleted('App\Models\Faculty\FacultyPromotion', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_develop = checkIsCompleted('App\Models\Faculty\FacultyDevelop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_workshop = checkIsCompleted('App\Models\Faculty\FacultyWorkshop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$faculty_detail= checkIsCompleted('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+$obtained = isCompletedSAR('App\Models\External_Linkages\ObtainedInternship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$placement = isCompletedSAR('App\Models\External_Linkages\PlacementActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$sources_funding = isCompletedSAR('App\Models\StrategicManagement\SourcesFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$admission_office = isCompletedSAR('App\AdmissionOffice', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$credit_transfer = isCompletedSAR('App\CreditTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$student_transfer = isCompletedSAR('App\StudentTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$documentary_evidence = isCompletedSAR('App\DocumentaryEvidence', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$conference = isCompletedSAR('App\Model\Research\Conference', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_development = isCompletedSAR('App\Models\Reasearch\FacultyDevelopment', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$curriculum_role= isCompletedSAR('App\Models\Research\CurriculumRole', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$output = isCompletedSAR('App\Models\Research\ResearchOutput', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$oric = isCompletedSAR('App\Models\Research\Oric', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_center = isCompletedSAR('App\Models\Research\ResearchCenter', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_agenda = isCompletedSAR('App\Models\Research\ResearchAgenda', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_funding = isCompletedSAR('App\Models\Research\ResearchFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$research_project = isCompletedSAR('App\Models\Research\ResearchProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$intake = isCompletedSAR('App\StudentIntake', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$size = isCompletedSAR('App\ClassSize', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$dropout = isCompletedSAR('App\DropoutPercentage', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$financial_assistance = isCompletedSAR('App\FinancialAssistance', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$student_financial = isCompletedSAR('App\StudentFinancial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$weak = isCompletedSAR('App\WeakStudent', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$grooming = isCompletedSAR('App\PersonalGrooming', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$counselling = isCompletedSAR('App\CounsellingActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$student_participation = isCompletedSAR('App\StudentParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$extra = isCompletedSAR('App\ExtraActivities', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$membership = isCompletedSAR('App\AlumniMembership', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$alumni = isCompletedSAR('App\AlumniParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$financialrisk = isCompletedSAR('App\Models\Facility\FinancialRisk', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$support_staff = isCompletedSAR('App\Models\Facility\SupportStaff', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$qecinfo = isCompletedSAR('App\Models\Facility\QecInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$club = isCompletedSAR('App\Models\social_responsibility\StudentClub', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$detail = isCompletedSAR('App\Models\social_responsibility\ProjectDetail', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$env = isCompletedSAR('App\Models\social_responsibility\EnvProtection', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$formal = isCompletedSAR('App\Models\social_responsibility\FormalRelationship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$complaint = isCompletedSAR('App\Models\social_responsibility\ComplaintResolution', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$internal = isCompletedSAR('App\Models\social_responsibility\InternalCommunity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$social = isCompletedSAR('App\Models\social_responsibility\SocialActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$program_delivery = isCompletedSAR('App\Models\Carriculum\ProgramDelivery', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$question_paper = isCompletedSAR('App\Models\Carriculum\QuestionPaper', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$aligned_program = isCompletedSAR('App\Models\Carriculum\AlignedProgram', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$course_detail = isCompletedSAR('App\Models\Carriculum\CourseDetail', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$course_outline = isCompletedSAR('App\Models\Carriculum\CourseOutline', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$plagiarism_case = isCompletedSAR('App\Models\Carriculum\PlagiarismCase', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$cultural_material = isCompletedSAR('App\Models\Carriculum\CulturalMaterial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$managerial_skill = isCompletedSAR('App\Models\Carriculum\ManagerialSkill', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$program_delivery_method = isCompletedSAR('App\Models\Carriculum\ProgramDeliveryMethod', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$evaluation_method = isCompletedSAR('App\Models\Carriculum\EvaluationMethod', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$curriculum_review = isCompletedSAR('App\Models\Carriculum\CurriculumReview', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$program_objective = isCompletedSAR('App\Models\Carriculum\ProgramObjective', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$learning_outcome = isCompletedSAR('App\Models\Carriculum\LearningOutcome', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_membership = isCompletedSAR('App\Models\Faculty\FacultyMembership', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_exposure = isCompletedSAR('App\Models\Faculty\FacultyExposure', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_degree = isCompletedSAR('App\FacultyDegree', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$international_faculty = isCompletedSAR('App\Models\Faculty\InternationalFaculty', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_participation = isCompletedSAR('App\Models\Faculty\FacultyParticipation', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$consultancy_project = isCompletedSAR('App\Models\Faculty\FacultyConsultancyProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_promotion = isCompletedSAR('App\Models\Faculty\FacultyPromotion', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_develop = isCompletedSAR('App\Models\Faculty\FacultyDevelop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_workshop = isCompletedSAR('App\Models\Faculty\FacultyWorkshop', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$faculty_detail= isCompletedSAR('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
 $RegDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Review']);
@@ -246,11 +247,22 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$budget==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision<span class="pull-right-container">
+                    @if($isActiveSAR)
+                        <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}">1.8 Sources of Funding <span class="pull-right-container">
+                        <span class="text text-{{$sources_funding==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$sources_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                        <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}">1.9 Audit Report</a></li>
+                    @else
+                        <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
+                                <span class="pull-right-container">
                         <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+                    @endif
+
             <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">1.8 Approved Strategic Plan<span class="pull-right-container">
                         <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$plan==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -263,10 +275,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                     </span></a></li>
 
             <!-- Below are the Tables For SAR  -->
-                    @if($isActiveSAR)
-             <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Sources of Funding</a></li>
-            <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Audit Report</a></li>
-                    @endif
+
                 </ul>
 {{--              @endif--}}
           </li>

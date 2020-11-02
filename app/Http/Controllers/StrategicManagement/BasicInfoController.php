@@ -6,6 +6,7 @@ use App\BusinessSchool;
 use App\CharterType;
 use App\InstituteType;
 use App\Models\Common\Campus;
+use App\Models\Common\Department;
 use App\Models\Common\Designation;
 use App\Models\Common\Slip;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
@@ -52,10 +53,11 @@ class BasicInfoController extends Controller
             {
                 $campuses = '';
             }
+            $department = Department::where(['id' => $user_info->department_id])->first();
             //$campuses->first();
             //dd($campuses);
 
-        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types','user_info','designations', 'campuses', 'tyear'));
+        return view('strategic_management.basic_info',compact('basic_info', 'institute_type','chart_types','user_info','designations', 'campuses', 'tyear', 'department'));
         }catch (\Exception $e) {
             return $e->getMessage();
         }

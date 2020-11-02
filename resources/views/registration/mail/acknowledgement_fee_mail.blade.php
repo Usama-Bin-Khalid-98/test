@@ -354,8 +354,8 @@
                                         <p></p>
 
                                         <p>Dear {{@$data['nbeac']->director}},</p>
-                                        <p>HoD & Dean,</p>
-                                        <p>Director of {{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}})</p>
+{{--                                        <p>HoD & Dean,</p>--}}
+{{--                                        <p>Director of {{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}})</p>--}}
 
                                         <p>Hope you are doing well,</p>
 

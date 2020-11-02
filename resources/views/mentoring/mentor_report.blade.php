@@ -37,6 +37,15 @@
                 <!--Registrations list-->
                 <section class="col-lg-12 connectedSortable">
                     <!-- TO DO List -->
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h4><i class="icon fa fa-sticky-note"></i>Note</h4>
+                            <ol type="1">
+                                <li><h5>Peer Reviewer can't submit Report until the Business school admin pay mentoring fee.</h5></li>
+                            </ol>
+
+
+                        </div>
                     <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">Mentoring Report. </h3>
