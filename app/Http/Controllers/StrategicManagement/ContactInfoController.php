@@ -24,14 +24,22 @@ class ContactInfoController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $designations = Designation::all();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus'=>'SAR'])
+            ->first();
+        if($slip){
+            $type='SAR';
+        }else {
+            $type='REG';
+        }
+
         $ds_contacts = ContactInfo::with('designation')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 3])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 3, 'type'=>$type])
             ->get()->first();
         $hs_contacts = ContactInfo::with('designation')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 5])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 5, 'type'=>$type])
             ->get()->first();
         $fp_contacts = ContactInfo::with('designation')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 7])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'designation_id'=> 7, 'type'=>$type])
             ->get()->first();
         ///dd($contacts);
         return view('strategic_management.contact_info', compact('designations', 'ds_contacts', 'hs_contacts', 'fp_contacts'));

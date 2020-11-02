@@ -188,8 +188,8 @@
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
-                                    <td><i class="badge {{$invoice->status ==='approved'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
-                                    <td><i class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
+                                    <td><i style="cursor: default;" class="badge {{$invoice->status ==='approved'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
+                                    <td><i style="cursor: default;" class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
                                     <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" >
                                             <i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
                                                data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
