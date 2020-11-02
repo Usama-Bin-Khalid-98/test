@@ -200,8 +200,8 @@
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
-                                    <td><i class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
-                                    <td><i class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
+                                    <td><i style="cursor: default;" class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
+                                    <td><i style="cursor: default;" class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
 
                                     <td><span data-toggle="tooltip" title="Invoice Payment" >
                                             <i class="fa fa-money text-info my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
