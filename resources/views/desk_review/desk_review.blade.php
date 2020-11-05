@@ -279,7 +279,7 @@
 
                                         <tr>
                                             <td>
-                                                9. Student to Computer ratio is 	 (table 6.2 Laboratories)
+                                                9. Student to Computer ratio is = {{$getStudentComRatio->remark??''}}
                                             </td>
 
                                             <td>{!! $nbeac_criteria->std_comp_ratio !!}</td>
@@ -313,13 +313,17 @@
                             </form>
 
                             <div>
-{{--                                @if(@$desk_rev[0]->isEligible === 'yes' && @$desk_rev[0]->status === 'active' )--}}
+                                @if(!empty($desk_rev[0]->status))
                                     @if(@$desk_reviews[0]->regStatus === 'Pending' || @$desk_reviews[0]->regStatus === 'Review')
-                                        <button data-toggle="tooltip" title="" class="btn btn-success ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{@$desk_reviews[0]->id}}">Forward to Eligibility Screening &nbsp;&nbsp; <i class="fa fa-check-square-o text-white"></i></button>
+                                        <button data-toggle="tooltip" title="" class="btn btn-success ForwardToES"
+                                                data-original-title="Forward to Eligibility Screening" data-id="{{@$desk_reviews[0]->id}}">
+                                            Forward to Eligibility Screening &nbsp;&nbsp; <i class="fa fa-check-square-o text-white"></i>
+                                        </button>
 
 {{--                                @endif--}}
-                                @else(@$desk_reviews->regStatus !== 'Initiated' && @$desk_reviews->regStatus !== 'Pending' && @$desk_reviews->regStatus !== 'Review' )
+                                @elseif(@$desk_reviews->regStatus !== 'Initiated' && @$desk_reviews->regStatus !== 'Pending' && @$desk_reviews->regStatus !== 'Review' )
                                     <i class="badge bg-maroon"> Case Forwarded to Eligibility Screening</i>
+                                @endif
                                 @endif
                             </div>
 

@@ -182,7 +182,7 @@
                                 @foreach($invoices as $invoice)
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
-                                    <td>{{@$invoice->department->department_fee->amount}}</td>
+                                    <td>{{@$invoice->amount}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
                                     <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
@@ -312,24 +312,12 @@
                                         <div class="form-group">
                                             <label for="name">Degree Department</label>
                                             <input type="text" readonly id="edit_department_id" name="department_id" readonly class="form-control">
-
-                                            {{--                                            <select id="edit_department_id" name="department_id" readonly class="form-control select2" style="width: 100%;">--}}
-{{--                                                <option value="">Select Department</option>--}}
-{{--                                                @foreach($departments as $department)--}}
-{{--                                                    <option value="{{$department->id}}" {{$department->id==old('program_id')?'selected':''}}>{{$department->name}}</option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </select>--}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="name">Invoice No</label>
                                             <input type="text" readonly id="update_invoice_no" readonly name="invoice_no" class="form-control">
-{{--                                                <option value="">Select Invoice No</option>--}}
-{{--                                                @foreach($invoices as $invoice)--}}
-{{--                                                    <option value="{{$invoice->id}}">{{$invoice->invoice_no }}</option>--}}
-{{--                                                @endforeach--}}
-{{--                                            </input>--}}
                                         </div>
                                     </div>
 
@@ -392,7 +380,9 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        @if($invoices[0]->status !=='approved')
                         <input type="submit" value="Paid" name="submit" id="update-button" class="btn btn-info">
+                        @endif
                     </div>
                 </form>
             </div>
@@ -563,7 +553,7 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                         location.reload();
+                         // location.reload();
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

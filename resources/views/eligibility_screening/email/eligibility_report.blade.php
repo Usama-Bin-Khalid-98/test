@@ -350,8 +350,6 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>AOA,</p>
-                                        <p></p>
                                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
                                             <tr>
@@ -367,11 +365,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>Dear, </p>
-                                        <p>Email will send accordingly</p>
-                                        i.	Deferred till date and pre-eligibility mentoring
-                                        ii.	Approved to prepare  Self-Assessment Report and pre review mentoring
-                                        iii.	Conditional approval till date
+                                        {!! $letter !!}
 
                                         <p>Best Regards</p>
                                     </td>

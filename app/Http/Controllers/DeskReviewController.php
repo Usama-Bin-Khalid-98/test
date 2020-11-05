@@ -158,6 +158,13 @@ class DeskReviewController extends Controller
         @$desk_reviews = DB::select($query);
 //        dd($desk_reviews);
 
+        $getStudentComRatio = BusinessSchoolFacility::where(
+            ['campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active','facility_id' => 37])
+            ->first();
+//        dd($getStudentComRatio);
+
         $desk_rev= DeskReview::with('campus','department')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 //        dd($desk_rev);
 
@@ -190,7 +197,8 @@ class DeskReviewController extends Controller
             'summaries',
             'nbeac_criteria',
             'desk_reviews',
-            'desk_rev'
+            'desk_rev',
+            'getStudentComRatio'
         ));
     }
     /**

@@ -28,11 +28,6 @@ class Department extends Model
     {
         return $this->hasOne(Program::class);
     }
-    public function department_fee()
-    {
-        return $this->hasOne(DepartmentFee::class);
-    }
-
     public function mentoring_invoice()
     {
         return $this->hasOne(MentoringInvoice::class);

@@ -76,9 +76,16 @@ class PrintController extends Controller
             $currSemester = "Spring t";
             $prevSemester = "Fall t-1";
         }
-         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id ', array($req->cid ));
+         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName
+FROM work_loads, designations, campuses, semesters
+WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id
+AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id ', array($req->cid ));
 
-         $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id ', array($req->cid));
+         $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName
+FROM work_loads, designations, campuses,semesters
+WHERE work_loads.type="SAR"
+AND work_loads.designation_id=designations.id AND work_loads.campus_id=?
+AND campuses.id=work_loads.campus_id ', array($req->cid));
 
          $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.type="SAR" AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id  AND faculty_genders.campus_id=? ', array($req->cid));
 
@@ -110,7 +117,13 @@ class PrintController extends Controller
 
              $researchProjects = DB::select('SELECT research_projects.* FROM research_projects, campuses WHERE research_projects.campus_id=campuses.id AND research_projects.campus_id=?', array($req->cid));
 
-             $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName, publication_categories.name as publicationType FROM publication_categories,research_summaries, publication_types, campuses WHERE research_summaries.campus_id=campuses.id AND publication_categories.id=publication_types.publication_category_id AND research_summaries.publication_type_id=publication_types.id  AND research_summaries.campus_id=? ORDER BY publication_categories.name', array($req->cid));
+             $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName,
+publication_categories.name as publicationType
+FROM publication_categories,research_summaries, publication_types, campuses
+WHERE research_summaries.campus_id=campuses.id AND research_summaries.type="SAR"
+AND publication_categories.id=publication_types.publication_category_id
+AND research_summaries.publication_type_id=publication_types.id
+AND research_summaries.campus_id=? ORDER BY publication_categories.name', array($req->cid));
 
              $topTenResearchOutput = DB::select('SELECT research_outputs.* FROM research_outputs, campuses WHERE research_outputs.campus_id=campuses.id AND research_outputs.campus_id=?', array($req->cid));
 
@@ -128,7 +141,11 @@ class PrintController extends Controller
 
              $qecInformation = DB::select('SELECT qec_infos.*, qec_types.name as qecName FROM qec_infos, qec_types, campuses WHERE qec_infos.campus_id=campuses.id AND qec_infos.qec_type_id=qec_types.id AND qec_infos.campus_id=?', array($req->cid));
 
-             $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.facility_id=facilities.id  AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array($req->cid));
+             $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName,
+facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, campuses
+WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.type ="SAR"
+AND business_school_facilities.facility_id=facilities.id  AND business_school_facilities.campus_id=?
+AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array($req->cid));
 
              $studentsClubs = DB::select('SELECT student_clubs.* FROM student_clubs, campuses WHERE student_clubs.campus_id=campuses.id AND student_clubs.campus_id=?', array($req->cid));
 
@@ -201,7 +218,12 @@ class PrintController extends Controller
 
                $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.type="SAR" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=?  AND users.id=?', array($req->cid, auth()->user()->id));
 
-               $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName FROM faculty_student_ratio, programs, campuses WHERE faculty_student_ratio.campus_id=campuses.id AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.campus_id=?', array( $req->cid));
+               $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
+FROM faculty_student_ratio, programs,  campuses
+WHERE faculty_student_ratio.campus_id=campuses.id
+AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.campus_id=?
+AND faculty_student_ratio.type=?',
+                   array( $req->cid, 'SAR'));
 
                $facultyDetailedInfos = DB::select('SELECT faculty_detailed_infos.*, lookup_faculty_types.faculty_type as facultyType, course_types.name as courseType, degrees.name as degree, designations.name as designation FROM faculty_detailed_infos, lookup_faculty_types, course_types, campuses, degrees, designations , users WHERE faculty_detailed_infos.designation_id=designations.id AND faculty_detailed_infos.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_detailed_infos.course_type_id=course_types.id AND faculty_detailed_infos.degree_id=degrees.id AND faculty_detailed_infos.campus_id=campuses.id AND faculty_detailed_infos.campus_id=? AND users.id=?', array($req->cid, auth()->user()->id));
 
@@ -277,10 +299,16 @@ class PrintController extends Controller
             $prevSemester = "Fall t-1";
         }
 
-         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id AND semesters.name=?', array($userCampus[0]->campus_id, $currSemester));
+         $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName
+FROM work_loads, designations, campuses
+WHERE  work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=?
+AND campuses.id=work_loads.campus_id', array($userCampus[0]->campus_id));
          //dd($facultyWorkLoad);
 
-         $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses,semesters WHERE work_loads.semester_id=semesters.id AND work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  AND semesters.name=?', array($userCampus[0]->campus_id, $prevSemester));
+         $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName
+FROM work_loads, designations, campuses,semesters
+ WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=?
+AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id));
 
          $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses, users WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.type="SAR" AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id AND users.id=? AND faculty_genders.campus_id=? AND users.department_id=?', array(auth()->user()->id, $userCampus[0]->campus_id, $userCampus[0]->department_id));
 
@@ -312,9 +340,17 @@ class PrintController extends Controller
 
              $researchProjects = DB::select('SELECT research_projects.* FROM research_projects, campuses, users WHERE research_projects.campus_id=campuses.id AND research_projects.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
-             $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName, publication_categories.name as publicationType FROM publication_categories,research_summaries, publication_types, campuses, users WHERE research_summaries.campus_id=campuses.id AND publication_categories.id=publication_types.publication_category_id AND research_summaries.publication_type_id=publication_types.id AND users.id=? AND users.department_id=? AND research_summaries.campus_id=? ORDER BY publication_categories.name', array(auth()->user()->id, $userCampus[0]->department_id, $userCampus[0]->campus_id ));
+             $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName,
+publication_categories.name as publicationType FROM publication_categories,
+research_summaries, publication_types, campuses, users
+WHERE research_summaries.campus_id=campuses.id
+AND publication_categories.id=publication_types.publication_category_id AND research_summaries.type="SAR"
+AND research_summaries.publication_type_id=publication_types.id AND users.id=? AND users.department_id=? AND research_summaries.campus_id=? ORDER BY publication_categories.name', array(auth()->user()->id, $userCampus[0]->department_id, $userCampus[0]->campus_id ));
 
-             $topTenResearchOutput = DB::select('SELECT research_outputs.* FROM research_outputs, campuses, users WHERE research_outputs.campus_id=campuses.id AND research_outputs.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
+             $topTenResearchOutput = DB::select('SELECT research_outputs.* FROM research_outputs, campuses, users
+WHERE research_outputs.campus_id=campuses.id
+AND research_outputs.campus_id=?
+AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
              $curriculumRoles = DB::select('SELECT curriculum_roles.* FROM curriculum_roles, campuses, users WHERE curriculum_roles.campus_id=campuses.id AND curriculum_roles.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
@@ -330,7 +366,12 @@ class PrintController extends Controller
 
              $qecInformation = DB::select('SELECT qec_infos.*, qec_types.name as qecName FROM qec_infos, qec_types, campuses, users WHERE qec_infos.campus_id=campuses.id AND qec_infos.qec_type_id=qec_types.id AND qec_infos.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
-             $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
+             $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName,
+facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses
+WHERE business_school_facilities.campus_id=campuses.id
+AND business_school_facilities.facility_id=facilities.id AND business_school_facilities.type ="SAR"
+AND users.id=? AND business_school_facilities.campus_id=?
+AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
 
              $studentsClubs = DB::select('SELECT student_clubs.* FROM student_clubs, campuses, users WHERE student_clubs.campus_id=campuses.id AND student_clubs.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
@@ -402,7 +443,10 @@ class PrintController extends Controller
 
                $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.type="SAR" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=? AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id, auth()->user()->id));
 
-               $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_ratio.campus_id=campuses.id AND faculty_student_ratio.program_id=programs.id AND users.department_id=? AND faculty_student_ratio.campus_id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id));
+               $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
+FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_ratio.campus_id=campuses.id
+ AND faculty_student_ratio.program_id=programs.id AND faculty_student_ratio.type ="SAR" AND users.department_id=?
+ AND faculty_student_ratio.campus_id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id));
 
                $facultyDetailedInfos = DB::select('SELECT faculty_detailed_infos.*, lookup_faculty_types.faculty_type as facultyType, course_types.name as courseType, degrees.name as degree, designations.name as designation FROM faculty_detailed_infos, lookup_faculty_types, course_types, campuses, degrees, designations , users WHERE faculty_detailed_infos.designation_id=designations.id AND faculty_detailed_infos.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_detailed_infos.course_type_id=course_types.id AND faculty_detailed_infos.degree_id=degrees.id AND faculty_detailed_infos.campus_id=campuses.id AND faculty_detailed_infos.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
 
@@ -425,6 +469,8 @@ class PrintController extends Controller
         }
 
 
+
+
         return view('strategic_management.printAll', compact('classSize','studentsFinancial','PoMappings','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','PoPLOMappings','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
     }
 
@@ -442,18 +488,19 @@ class PrintController extends Controller
         //check is registration forms data completed:
         $check = $this->isRegCompleted(['user_id'=> $user_id, 'campus_id'=>$campus_id, 'department_id'=>$department_id]);
         $memberShips = User::with('business_school')->where('status', 'pending')->get();
-        $invoices = Slip::with('business_school', 'department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
+        $invoices = Slip::with('campus', 'department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
         //dd($invoices);
-        $registrations = Slip::with('business_school')
+        $registrations = Slip::with('campus')
             ->where('regStatus','!=','ScheduledMentoring')
             ->get();
         $registration_apply = User::with('business_school')->where(['status' => 'active', 'user_type'=>'business_school', 'id' => $user_id])->get();
         $businessSchools = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID,
-            slips.status as slipStatus FROM business_schools, users, campuses, slips WHERE
+            slips.status as slipStatus, departments.name as department FROM business_schools, users, campuses, slips, departments WHERE
             users.business_school_id=business_schools.id AND
             campuses.business_school_id=business_schools.id AND
             business_schools.status="active" AND
             slips.business_school_id=campuses.id AND
+            slips.department_id=departments.id AND
             slips.status="approved" AND
             users.id=?', array(auth()->user()->id));
 //        dd(auth()->user()->id);

@@ -29,13 +29,15 @@ class ProgramPortfolioController extends Controller
        // dd($scopes);
         $courses = CourseType::where('status', 'active')->get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+       $isSAR = false;
         if($slip){
+            $isSAR = true;
            $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
            $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
         //dd($portfolios[0]->program);
-         return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios'));
+         return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios', 'isSAR'));
     }
 
     /**
@@ -79,8 +81,8 @@ class ProgramPortfolioController extends Controller
                 'course_type_id' => $request->course_type_id,
                 'no_of_course' => $request->no_of_course,
                 'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req,
+                'internship_req' => $request->internship_req??'',
+                'fyp_req' => $request->fyp_req??'',
                 'isComplete' => 'yes',
                 'type' => $type,
                 'created_by' => Auth::user()->id
@@ -179,8 +181,6 @@ class ProgramPortfolioController extends Controller
             'course_type_id' => 'required',
             'no_of_course' => 'required',
             'credit_hours' => 'required',
-            'internship_req' => 'required',
-            'fyp_req' => 'required'
         ];
     }
 

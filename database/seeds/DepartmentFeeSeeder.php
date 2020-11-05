@@ -13,7 +13,6 @@ class DepartmentFeeSeeder extends Seeder
     {
         //
         DB::table('department_fees')->insert([
-            'department_id'=>1,
             'fee_type_id'=>1,
             'amount'=>50000,
             'status'=>'active',

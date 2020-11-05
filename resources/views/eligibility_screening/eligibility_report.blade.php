@@ -2,7 +2,6 @@
 
 @if(Auth::user())
 
-
     @include("includes.head")
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     <!-- Select2 -->
@@ -12,8 +11,6 @@
 
     @include("includes.header")
     @include("includes.nav")
-
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -121,20 +118,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="name">Attach Doc</label>
-                                        <input type="file" name="file" id="file" accept=".doc,.docx,application/msword,.pdf">
-                                        @if(@$registrations_reports[0]->file)<span class="text-red"><a href="{{@$registrations_reports[0]->file}}">Click on link to download the file.</a></span> @else <span class="text-red">Max upload file size 2mb.</span> @endif
+{{--                                <div class="col-md-4">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="name">Attach Doc</label>--}}
+{{--                                        <input type="file" name="file" id="file" accept=".doc,.docx,application/msword,.pdf">--}}
+{{--                                        @if(@$registrations_reports[0]->file)<span class="text-red"><a href="{{@$registrations_reports[0]->file}}">Click on link to download the file.</a></span> @else <span class="text-red">Max upload file size 2mb.</span> @endif--}}
 
-                                    </div>
-                                </div>
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
 
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="comments">Comments</label>
-                                        <textarea name="comments" id="comments" > {{@$registrations_reports[0]->comments}} </textarea>
+                                        <textarea name="comments" id="comments" > {!! @$registrations_reports[0]->comments !!} </textarea>
                                     </div>
                                 </div>
 
@@ -177,16 +174,13 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-
-
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <th>Letter Doc</th>
-                                    <th>Peer Reviewer Comments</th>
+{{--                                    <th>Peer Reviewer Comments</th>--}}
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -199,8 +193,7 @@
                                         <td>{{@$screening->school}}</td>
                                         <td>{{@$screening->campus??'Main Campus'}}</td>
                                         <td>{{@$screening->department}}</td>
-                                         <td><a href="{{asset(@$screening->file)}}" >Doc File</a></td>
-                                         <td>{!!substr($screening->comments, 0, 100) !!}...</td>
+{{--                                         <td>{!!substr($screening->comments, 0, 100) !!}...</td>--}}
                                         <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->eligibility_status != ''?ucwords($screening->eligibility_status):''}}</i></td>
                                         <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' )
 {{--                                                <a href="{{url('esScheduler')}}/{{$screening->id}}" class="btn-xs btn-info apply" name="Schedule" id="schedule" data-id="{{@$screening->id}}" data-row="{{@$screening->department_id}}"> Eligibility Screening Calendar</a>--}}
@@ -216,8 +209,7 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <th>Letter Doc</th>
-                                    <th>Peer Reviewer Comments</th>
+{{--                                    <th>Peer Reviewer Comments</th>--}}
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -242,7 +234,6 @@
 
 
 
-
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("includes.footer")
     <!-- Select2 -->
@@ -262,19 +253,44 @@
 
     $(function () {
         // Replace the <textarea id="editor1"> with a CKEditor
-        CKEDITOR.replace('comments');
+        CKEDITOR.replace('comments',
+            {
+                height: '500px'
+            });
+        CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');
+        // CKEDITOR.instances.comments.setData(row.comments);
     });
 
+    $('#status').on('change', function () {
+        let status = $(this).val();
+        if(status === 'Approved')
+        {
+            CKEDITOR.instances.comments.setData('{!! $approval_letter !!}');
+        }else if(status === 'Deferred'){
+            CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');
+        }else if(status === 'ConditionalApproval' )
+        {
+            CKEDITOR.instances.comments.setData('{!! $conditional_approved !!}');
+        }else{
+            CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');
+        }
+    })
+
+
+
     $('#form').submit(function (e) {
+        for ( instance in CKEDITOR.instances ) {
+            CKEDITOR.instances[instance].updateElement();
+        }
         var slip_id = $('#slip_id').val();
         var comments = CKEDITOR.instances.comments.getData();
-        var file = $('#file').val();
+        // var file = $('#file').val();
 
-        !file?addClass('file'):removeClass('file');
+        // !file?addClass('file'):removeClass('file');
         !comments?addClass('comments'):removeClass('comments');
         !slip_id?addClass('slip_id'):removeClass('slip_id');
 
-        if(!file || !slip_id || !comments)
+        if(!slip_id || !comments)
         {
             Notiflix.Notify.Warning("Fill all the required Fields.");
             return;
@@ -305,7 +321,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
 
-                    location.reload();
+                    // location.reload();
 
                     console.log('response here', response);
                 },

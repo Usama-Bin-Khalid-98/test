@@ -25,7 +25,7 @@ class DepartmentFeeController extends Controller
         $departments = Department::all();
         $fees = FeeType::all();
 
-        $depts = DepartmentFee::with('department','fee_type')->get();
+        $depts = DepartmentFee::with('fee_type')->get();
 
         return view('department_fee.department_fee',compact('departments','fees','depts'));
     }
@@ -56,14 +56,13 @@ class DepartmentFeeController extends Controller
         try {
 
            DepartmentFee::create([
-                'department_id' => $request->department_id,
                 'fee_type_id' => $request->fee_type_id,
                 'amount' => $request->amount,
                 'created_by' => Auth::user()->id
 
             ]);
 
-            return response()->json(['success' => ' Department Fee added successfully.']);
+            return response()->json(['success' => 'Fee added successfully.']);
 
 
         }catch (Exception $e)
@@ -112,13 +111,12 @@ class DepartmentFeeController extends Controller
         try {
 
             DepartmentFee::where('id', $departmentFee->id)->update([
-                'department_id' => $request->department_id,
                 'fee_type_id' => $request->fee_type_id,
                 'amount' => $request->amount,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
-            return response()->json(['success' => 'Department Fee updated successfully.']);
+            return response()->json(['success' => 'Fee updated successfully.']);
 
         }catch (Exception $e)
         {
@@ -149,7 +147,6 @@ class DepartmentFeeController extends Controller
     protected function rules() {
         return [
 
-            'department_id' => 'required',
             'fee_type_id' => 'required',
             'amount' => 'required'
         ];

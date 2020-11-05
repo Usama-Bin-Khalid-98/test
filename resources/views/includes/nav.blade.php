@@ -31,12 +31,13 @@ $research = checkIsCompleted('App\Models\Research\ResearchSummary', ['campus_id'
 $financialinfo = checkIsCompleted('App\Models\Facility\FinancialInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $bsfacility = checkIsCompleted('App\Models\Facility\BusinessSchoolFacility', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $linkages = checkIsCompleted('App\Models\External_Linkages\Linkages', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$bodymeeting = checkIsCompleted('App\Models\External_Linkages\BodyMeeting', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$sexchange = checkIsCompleted('App\Models\External_Linkages\StudentExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$fexchange = checkIsCompleted('App\Models\External_Linkages\FacultyExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$bodymeeting = isCompletedSAR('App\Models\External_Linkages\BodyMeeting', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$sexchange = isCompletedSAR('App\Models\External_Linkages\StudentExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$fexchange = isCompletedSAR('App\Models\External_Linkages\FacultyExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $obtained = isCompletedSAR('App\Models\External_Linkages\ObtainedInternship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $placement = isCompletedSAR('App\Models\External_Linkages\PlacementActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$sources_funding = isCompletedSAR('App\Models\StrategicManagement\SourcesFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$sources_funding = checkIsCompleted('App\Models\StrategicManagement\SourcesFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$audit_report = isCompletedSAR('App\Models\StrategicManagement\AuditReport', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $admission_office = isCompletedSAR('App\AdmissionOffice', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $credit_transfer = isCompletedSAR('App\CreditTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $student_transfer = isCompletedSAR('App\StudentTransfer', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -50,6 +51,7 @@ $research_center = isCompletedSAR('App\Models\Research\ResearchCenter', ['campus
 $research_agenda = isCompletedSAR('App\Models\Research\ResearchAgenda', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_funding = isCompletedSAR('App\Models\Research\ResearchFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_project = isCompletedSAR('App\Models\Research\ResearchProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$program_courses = checkIsCompleted('App\Models\StrategicManagement\ProgramPortfolio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $intake = isCompletedSAR('App\StudentIntake', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $size = isCompletedSAR('App\ClassSize', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $dropout = isCompletedSAR('App\DropoutPercentage', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -253,7 +255,22 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$sources_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-                        <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}"><a href="{{url('strategic/audit-report')}}">1.9 Audit Report</a></li>
+                        <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}">
+                            <a href="{{url('strategic/audit-report')}}">1.9 Audit Report
+                                <span class="pull-right-container">
+                                    <span class="text text-{{$audit_report==='C'?'green':'red'}} pull-right">
+                                        <i class="fa {{$audit_report==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                                    </span>
+                                </span>
+                            </a></li>
+                        <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.10 Mission Vision
+                                <span class="pull-right-container">
+                                    <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
+                                        <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
                     @else
                         <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
                                 <span class="pull-right-container">
@@ -263,12 +280,12 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                     </span></a></li>
                     @endif
 
-            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">1.8 Approved Strategic Plan<span class="pull-right-container">
+            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">@if($isActiveSAR) 1.11 Approved Strategic Plan @else 1.8 Approved Strategic Plan @endif<span class="pull-right-container">
                         <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$plan==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-             <li  class="{{ (request()->is('strategic/parent-institution')) ? 'active' : '' }}"><a href="{{url('strategic/parent-institution')}}">1.9 Organograms<span class="pull-right-container">
+             <li  class="{{ (request()->is('strategic/parent-institution')) ? 'active' : '' }}"><a href="{{url('strategic/parent-institution')}}">@if($isActiveSAR) 1.12 Organograms @else 1.9 Organograms @endif<span class="pull-right-container">
                         <span class="text text-{{$parent==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$parent==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -300,12 +317,19 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$portfolio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-
+              @if($isActiveSAR)
+                  <li  class="{{ (request()->is('program-courses')) ? 'active' : '' }}"><a href="{{url('program-courses')}}">2.2 Program Courses<span class="pull-right-container">
+                        <span class="text text-{{$program_courses==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$program_courses==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+              @else
             <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}">2.2 Entry Requirements<span class="pull-right-container">
                         <span class="text text-{{$entry==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$entry==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+
             <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}">2.3 Applications Received<span class="pull-right-container">
                         <span class="text text-{{$application==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -316,6 +340,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$app_receivd==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @endif
               @if($isActiveSAR)
                     <li  class="{{ (request()->is('curriculum-review')) ? 'active' : '' }}"><a href="{{url('curriculum-review')}}">2.3 Curriculum Review<span class="pull-right-container">
                         <span class="text text-{{$curriculum_review==='C'?'green':'red'}} pull-right">
