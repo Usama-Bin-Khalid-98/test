@@ -29,6 +29,7 @@ class CreateMissionVisionsTable extends Migration
             $table->string('mission_approval')->nullable();
             $table->string('vision_approval')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('type', ['REG', 'SAR'])->default('REG');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')

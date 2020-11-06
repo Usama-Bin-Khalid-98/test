@@ -279,7 +279,7 @@ Route::get('/email', function() {
             Route::get('AACommittee', 'ScheduleAccreditationAwardController@index');
         });
 
-        Route::group(['middleware' => ['role:AccreditationAwardCommittee']], function () {
+        Route::group(['middleware' => ['role:AccreditationAwardCommittee|NbeacFocalPerson']], function () {
             Route::get('AAwardCommitteeDetails/{id}', 'AccreditationMeetingController@show');
             Route::put('submitAACReport', 'AccreditationMeetingController@update');
             Route::put('forwardToCM/{id}', 'StrategicManagement\SlipController@updateInvoiceStatus');

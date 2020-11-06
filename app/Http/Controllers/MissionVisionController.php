@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\Slip;
 use App\Models\StrategicManagement\MissionVision;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,10 +22,14 @@ class MissionVisionController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $get = MissionVision::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
-        $missions = MissionVision::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-        return view('strategic_management.mission_vision',compact('get','missions'));
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus'=>'SAR'])->first();
+        if($slip){
+            $type='SAR';
+        }else {
+            $type = 'REG';
+        }
+        $get = MissionVision::where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=>$type])->get()->first();
+        return view('strategic_management.mission_vision',compact('get'));
     }
 
     /**
@@ -62,7 +67,12 @@ class MissionVisionController extends Controller
 
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
+                    $slip = Slip::where(['business_school_id'=>Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'regStatus'=>'SAR'])->first();
+                    if($slip){
+                        $type='SAR';
+                    }else {
+                        $type = 'REG';
+                    }
                     MissionVision::create([
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
@@ -70,6 +80,7 @@ class MissionVisionController extends Controller
                         'vision' => $request->vision,
                         'file' => $path.'/'.$imageName,
                         'isComplete' => 'yes',
+                        'type' => $type,
                         'mission_approval' => $request->mission_approval,
                         'vision_approval' => $request->vision_approval,
                         'created_by' => Auth::user()->id

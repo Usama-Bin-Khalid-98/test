@@ -32,7 +32,7 @@
                                             }else{
                                                 $campus_id =request()->get('cid');
                                             }
-    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],$campus_id);
+    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],$campus_id, 'REG');
    @endphp
    <?php
 //    dd($facSum);

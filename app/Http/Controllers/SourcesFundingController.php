@@ -7,10 +7,10 @@ use App\Models\StrategicManagement\SourcesFunding;
 use App\Models\StrategicManagement\FundingSources;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 class SourcesFundingController extends Controller
 {
@@ -26,9 +26,14 @@ class SourcesFundingController extends Controller
         $amount = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('amount');
         $percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('percent_share');
         $fundings = FundingSources::get();
-
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus'=>'SAR'])->first();
+        if($slip){
+            $type='SAR';
+        }else {
+            $type = 'REG';
+        }
         $sources  = SourcesFunding::with('campus','funding_sources')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type' => $type])
             ->get();
 
          return view('strategic_management.sources_funding', compact('fundings','sources','amount','percent_share'));
@@ -58,12 +63,22 @@ class SourcesFundingController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            $userInfo = Auth::user();
+            $slip = Slip::where(['business_school_id'=>$userInfo->campus_id,'department_id'=> $userInfo->department_id, 'regStatus'=>'SAR'])->first();
+            if($slip){
+                $type='SAR';
+            }else {
+                $type = 'REG';
+            }
 
             SourcesFunding::create([
-                'campus_id' => Auth::user()->campus_id,
+                'campus_id' => $userInfo->campus_id,
+                'department_id' => $userInfo->department_id,
                 'funding_sources_id' => $request->funding_sources_id,
                 'amount' => $request->amount,
                 'percent_share' => $request->percent_share,
+                'type' => $type,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 

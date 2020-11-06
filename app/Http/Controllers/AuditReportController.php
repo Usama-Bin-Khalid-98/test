@@ -17,14 +17,14 @@ class AuditReportController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        
+
         $reports = AuditReport::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        
+
         return view('strategic_management.audit_report', compact('reports'));
     }
 
@@ -67,8 +67,9 @@ class AuditReportController extends Controller
                     AuditReport::create([
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
-                        'file' => $path.'/'.$imageName, 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Audit Report added successfully.']);
@@ -137,7 +138,7 @@ class AuditReportController extends Controller
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -146,7 +147,7 @@ class AuditReportController extends Controller
            AuditReport::where('id', $auditReport->id)->update([
                'isComplete' => $request->isComplete,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Audit Report updated successfully.']);
 
@@ -166,7 +167,7 @@ class AuditReportController extends Controller
     {
          try {
              AuditReport::where('id', $auditReport->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              AuditReport::destroy($auditReport->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

@@ -20,11 +20,6 @@ class DepartmentFee extends Model
         return $this->belongsTo(Campus::class);
     }
 
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
-
     public function fee_type()
     {
         return $this->belongsTo(FeeType::class);

@@ -30,7 +30,7 @@
         </section><!-- Main content -->
 
 
-        @hasrole('AccreditationAwardCommittee')
+        @hasrole('AccreditationAwardCommittee|NbeacFocalPerson')
         <section class="content">
 
             <div class="row" >
@@ -283,7 +283,7 @@
 
 @endif
 
-@hasrole('AccreditationAwardCommittee')
+@hasrole('AccreditationAwardCommittee|NbeacFocalPerson')
 <script>
     $('.select2').select2();
 

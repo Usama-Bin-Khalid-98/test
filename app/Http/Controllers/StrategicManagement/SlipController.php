@@ -37,7 +37,9 @@ class SlipController extends Controller
         //dd($invoices);
         @$departments = Department::where(['status'=> 'active', 'id'=>Auth::user()->department_id])->get()->first();
         $payment_methods = PaymentMethod::where('status', 'active')->get();
-        $fee_amount = DepartmentFee::with('department','fee_type')->where(['status'=> 'active', 'department_id'=>Auth::user()->department_id])->get()->first();
+//        dd($payment_methods);
+        $fee_amount = DepartmentFee::with('fee_type')->where(['fee_type_id'=>1,'status'=> 'active'])->get()->first();
+//        dd($fee_amount);
         //// generate invoice ///////////
         $latest = Slip::latest()->first();
         $invoice_no ='';
@@ -47,7 +49,6 @@ class SlipController extends Controller
             $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
             $invoice_no = 'NBEAC-HEC/ GU, Karachi:'. sprintf('%05d', $string + 1);
         }
-        //dd($invoice_no);
         return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods','fee_amount'));
     }
 
@@ -266,18 +267,23 @@ class SlipController extends Controller
      */
     public function generateInvoice(Request $request)
     {
-        //dd($request->all());
-        //get fee type
-
         try {
-            Slip::create([
-                'business_school_id' => Auth::user()->campus_id,
-                'invoice_no' => $request->invoice_no,
-                'department_id' => Auth::user()->department_id,
-                'status' => 'pending',
-                'created_by' => Auth::id(),
-            ]);
-            return response()->json(['success' => 'Invoice Slip added successfully.'], 200);
+            $getFee =DepartmentFee::findorfail(1)->first();
+            if($getFee) {
+                Slip::create([
+                    'business_school_id' => Auth::user()->campus_id,
+                    'invoice_no' => $request->invoice_no,
+                    'department_id' => Auth::user()->department_id,
+                    'amount' => $getFee->amount,
+                    'status' => 'pending',
+                    'created_by' => Auth::id(),
+                ]);
+
+                 return response()->json(['success' => 'Invoice Slip added successfully.'], 200);
+            }else{
+                return response()->json(['message' => 'Invalid Fee.'], 422);
+
+            }
         }
         catch (Exception $e)
         {

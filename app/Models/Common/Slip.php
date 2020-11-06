@@ -27,7 +27,7 @@ class Slip extends Model
 
     public function department()
     {
-        return $this->belongsTo(Department::class)->with('department_fee');
+        return $this->belongsTo(Department::class);
     }
 
     public function eligibility_screening()

@@ -105,7 +105,7 @@
               <td>{{@$getInvoice->campus->business_school->name}}</td>
               <td>{{@$getInvoice->campus->location}}</td>
               <td>{{@$getInvoice->department->name}}</td>
-              <td>{{@$getInvoice->department->department_fee->amount}}</td>
+              <td>{{@$getInvoice->amount}}</td>
             </tr>
             </tbody>
           </table>
@@ -125,13 +125,13 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-6">
-          <p class="lead">Amount Due 2/22/2021</p>
+          <p class="lead">Details </p>
 
           <div class="table-responsive">
             <table class="table">
               <tr>
                 <th style="width:50%">Subtotal:</th>
-                <td>{{@$getInvoice->department->department_fee->amount}}</td>
+                <td>{{@$getInvoice->amount}}</td>
               </tr>
               <tr>
                 <th></th>
@@ -140,7 +140,7 @@
 
               <tr>
                 <th>Total:</th>
-                <td>{{@$getInvoice->department->department_fee->amount}}</td>
+                <td>{{@$getInvoice->amount}}</td>
               </tr>
             </table>
           </div>

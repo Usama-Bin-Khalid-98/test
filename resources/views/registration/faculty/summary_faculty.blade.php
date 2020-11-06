@@ -128,15 +128,6 @@
 
                                 </tr>
                                 @endforeach
-                                <tr style="background-color: grey;color: white;">
-                                    <td style="font-weight: bold;">Total</td>
-                                    <td style="font-weight: bold;"></td>
-                                    <td style="font-weight: bold;"></td>
-                                    <td style="font-weight: bold;"></td>
-                                    <td style="font-weight: bold;">{{@$number}}</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -144,7 +135,7 @@
                                     <th>Campus</th>
                                     <th>Faculty Qualification</th>
                                     <th>Discipline</th>
-                                    <th>Number of Faculty</th>
+                                    <th>Total : {{@$number}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

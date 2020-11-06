@@ -621,10 +621,10 @@
                             <thead>
                             <tr>
                                 <th>Business School Name</th>
-                                <th>Campus</th>                              
+                                <th>Campus</th>
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
-                                <th>Website</th>                                
+                                <th>Website</th>
                                 <th>Status</th>
                                 <!-- <th>Action</th> -->
                             </tr>
@@ -639,9 +639,9 @@
                                     <td>{{$school->contact_person}} </td>
                                     <td>{{$school->charter_number}} </td>
                                     <td>{{$school->web_url}} </td>
-                                    
+
                                     <td><a href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a></td>
-                                     
+
                                    <!--  <td><i class="badge  " > </i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
                                 </tr>
@@ -652,10 +652,10 @@
                             <tfoot>
                             <tr>
                                 <th>Business School Name</th>
-                                <th>Campus</th>                              
+                                <th>Campus</th>
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
-                                <th>Website</th>                                
+                                <th>Website</th>
                                 <th>Status</th>
                             </tr>
                             </tfoot>
@@ -700,7 +700,7 @@
                       <tr>
                           <th>Business School Name</th>
                           <th>Campus</th>
-                           
+                          <th>Department</th>
                           <th>Action</th>
                       </tr>
                       </thead>
@@ -711,8 +711,9 @@
                           <tr>
                               <td>{{@$school->name}}</td>
                               <td>{{@$school->campus??'Main Campus'}}</td>
-                              
-                              
+                              <td>{{@$school->department}}</td>
+
+
                               <td><button class="btn-xs btn-info apply" name="NBEACapply" id="NBEACapply" data-id="{{@$school->id}}" data-row="{{@$school->id}}"> Share with NBEAC </button>
                               <button class="btn-xs btn-info apply" name="Mentorapply" id="Mentorapply" data-id="{{@$school->id}}" data-row="{{@$school->id}}"> Share with Mentor </button>  </td>
                           </tr>
@@ -723,7 +724,7 @@
                       <tr>
                           <th>Business School Name</th>
                           <th>Campus</th>
-                          
+                          <th>Department</th>
                           <th>Action</th>
                       </tr>
                       </tfoot>
@@ -744,7 +745,7 @@
   </div>
 
 
- 
+
 <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
 
 <!-- <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script> -->

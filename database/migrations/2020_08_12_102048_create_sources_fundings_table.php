@@ -31,6 +31,7 @@ class CreateSourcesFundingsTable extends Migration
             $table->string('percent_share',255);
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->enum('status',['active','inactive'])->default('active');
+            $table->enum('type',['REG','SAR'])->default('REG');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')

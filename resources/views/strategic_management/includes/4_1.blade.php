@@ -26,9 +26,9 @@
                                         <td><?php print_r($facultySummary[0][$i]->name);?></td>
                                         <td>
                                             @php
-    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],auth()->user()->campus_id);
+    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],auth()->user()->campus_id, 'SAR');
    @endphp
-   <?php 
+   <?php
    $total=0;
     for($j=0;$j<count($facSum);$j++) {
         //print_r($facSum[$j]->disciplineName);

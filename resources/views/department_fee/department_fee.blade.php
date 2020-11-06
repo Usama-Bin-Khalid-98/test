@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Department Fee
+                 Fee Structure
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Department Fee</li>
+                <li class="active">Fee Structure</li>
             </ol>
         </section>
         <section class="content-header">
@@ -43,7 +43,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Department Fee Form</h3>
+                            <h3 class="box-title">Fee Structure</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -58,21 +58,6 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                            <form action="javascript:void(0)" id="form" method="POST">
-
-
-
-
-                          <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Department</label>
-                                    <select name="department_id" id="department_id" class="form-control select2" style="width: 100%;">
-                                        <option selected  disabled >Select Department</option>
-                                        @foreach($departments as $dep)
-                                            <option value="{{$dep->id}}">{{$dep->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -113,7 +98,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Department Fee List</h3>
+                            <h3 class="box-title"> Fee List</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -133,7 +118,6 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Department</th>
                                     <th>Fee Type</th>
                                     <th>Amount</th>
                                     <th>Status</th>
@@ -144,7 +128,6 @@
 
                                 @foreach($depts as $affiliation)
                                 <tr>
-                                    <td>{{$affiliation->department->name}}</td>
                                     <td>{{$affiliation->fee_type->name}}</td>
                                     <td>{{$affiliation->amount}}</td>
                                     <td><i class="badge {{$affiliation->status == 'active'?'bg-green':'bg-red'}}">{{$affiliation->status == 'active'?'Active':'Inactive'}}</i></td>
@@ -155,7 +138,6 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Department</th>
                                     <th>Fee Type</th>
                                     <th>Amount</th>
                                     <th>Status</th>
@@ -182,24 +164,11 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Department Fee </h4>
+                    <h4 class="modal-title">Edit Fee </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Department</label>
-                                    <select name="department_id" id="edit_department_id" class="form-control select2" style="width: 100%;">
-                                        <option selected  disabled >Select Department</option>
-                                        @foreach($departments as $dep)
-                                            <option value="{{$dep->id}}">{{$dep->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <input type="hidden" id="edit_id">
-                            </div>
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Fee Type</label>
@@ -269,16 +238,14 @@
         });
 
          $('#form').submit(function (e) {
-            let department_id = $('#department_id').val();
             let fee_type_id = $('#fee_type_id').val();
             let amount = $('#amount').val();
 
 
-            !department_id?addClass('department_id'):removeClass('department_id');
             !fee_type_id?addClass('fee_type_id'):removeClass('fee_type_id');
             !amount?addClass('amount'):removeClass('amount');
 
-            if(!department_id || !fee_type_id || !amount )
+            if(!fee_type_id || !amount )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -319,7 +286,6 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_department_id').select2().val(data.department_id).trigger('change');
             $('#edit_fee_type_id').select2().val(data.fee_type_id).trigger('change');
             $('#edit_id').val(data.id);
             $('#edit_amount').val(data.amount);
@@ -327,16 +293,15 @@
         });
 
         $('#updateForm').submit(function (e) {
-            let department_id = $('#edit_department_id').val();
             let fee_type_id = $('#edit_fee_type_id').val();
             let id = $('#edit_id').val();
             let amount = $('#edit_amount').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !department_id?addClass('edit_department_id'):removeClass('edit_department_id');
+            !edit_amount?addClass('edit_amount'):removeClass('edit_amount');
             !fee_type_id?addClass('edit_fee_type_id'):removeClass('edit_fee_type_id');
 
-            if(!department_id  || !fee_type_id)
+            if(!edit_amount  || !fee_type_id)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

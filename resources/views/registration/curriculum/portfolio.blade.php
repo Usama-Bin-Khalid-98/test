@@ -110,6 +110,7 @@
                                     <input type="text" name="credit_hours" id="credit_hours" class="form-control">
                                 </div>
                             </div>
+                                @if(@!$isSAR)
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Internship requirements</label>
@@ -130,6 +131,7 @@
 
                                 </div>
                             </div>
+                                @endif
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -158,8 +160,8 @@
                                     <th>Course Type</th>
                                     <th>No of Courses</th>
                                     <th>Credit Hours</th>
-                                    <th>Internship Requirement</th>
-                                    <th>FYP Requirement</th>
+                                    @if(@!$isSAR)<th>Internship Requirement</th>
+                                    <th>FYP Requirement</th>@endif
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -173,8 +175,8 @@
                                     <td>{{$portfolio->course_type->name}}</td>
                                     <td>{{$portfolio->no_of_course}}</td>
                                     <td>{{$portfolio->credit_hours}}</td>
-                                    <td>{{$portfolio->internship_req}}</td>
-                                    <td>{{$portfolio->fyp_req}}</td>
+                                    @if(@!$isSAR)<td>{{$portfolio->internship_req}}</td>
+                                    <td>{{$portfolio->fyp_req}}</td>@endif
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
@@ -188,8 +190,8 @@
                                     <th>Course Type</th>
                                     <th>No of Courses</th>
                                     <th>Credit Hours</th>
-                                    <th>Internship Requirement</th>
-                                    <th>FYP Requirement</th>
+                                    @if(@!$isSAR)<th>Internship Requirement</th>
+                                    <th>FYP Requirement</th>@endif
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -272,7 +274,7 @@
                                     id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
                             </div>
                         </div>
-
+                        @if(@!$isSAR)
                          <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Internship Requirements</label>
@@ -285,7 +287,7 @@
                                     <textarea name="fyp_req" id="edit_fyp_req" value="{{old('edit_fyp_req')}}" class="form-control"></textarea>
                                 </div>
                             </div>
-
+                        @endif
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -341,8 +343,6 @@
             let course_type_id = $('#course_type_id').val();
             let no_of_course = $('#no_of_course').val();
             let credit_hours = $('#credit_hours').val();
-            let internship_req = $('#internship_req').val();
-            let fyp_req = $('#fyp_req').val();
 
             // !program?addClass('program'):removeClass('program');
             !program_id?addClass('program_id'):removeClass('program_id');
@@ -350,10 +350,8 @@
             !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
             !no_of_course?addClass('no_of_course'):removeClass('no_of_course');
             !credit_hours?addClass('credit_hours'):removeClass('credit_hours');
-            !internship_req?addClass('internship_req'):removeClass('internship_req');
-            !fyp_req?addClass('fyp_req'):removeClass('fyp_req');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -423,7 +421,7 @@ $('#updateForm').submit(function (e) {
             !internship_req?addClass('edit_internship_req'):removeClass('edit_internship_req');
             !fyp_req?addClass('edit_fyp_req'):removeClass('edit_fyp_req');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours || !internship_req || !fyp_req)
+            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

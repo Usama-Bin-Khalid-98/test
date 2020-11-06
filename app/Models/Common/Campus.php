@@ -13,7 +13,7 @@ class Campus extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class)->with('designation');
     }
     public function business_school()
     {

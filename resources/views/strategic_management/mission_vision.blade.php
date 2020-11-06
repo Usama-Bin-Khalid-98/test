@@ -87,13 +87,13 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="name">Mission Approval Date</label>
-                        <input type="text" name="mission_approval" id="mission_approval" class="form-control" value="{{@$get->mission_approval}}" >
+                        <input type="text" name="mission_approval" id="mission_approval" class="form-control" autocomplete="off" value="{{@$get->mission_approval}}" >
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="name">Vision Approval Date</label>
-                        <input type="text" name="vision_approval" id="vision_approval" class="form-control" value="{{@$get->vision_approval}}" >
+                        <input type="text" name="vision_approval" id="vision_approval" class="form-control" autocomplete="off" value="{{@$get->vision_approval}}" >
                     </div>
                 </div>
 
