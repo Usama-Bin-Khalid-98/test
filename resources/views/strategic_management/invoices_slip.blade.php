@@ -380,7 +380,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        @if($invoices[0]->status !=='approved')
+                        @if(@$invoices[0]->status !=='approved')
                         <input type="submit" value="Paid" name="submit" id="update-button" class="btn btn-info">
                         @endif
                     </div>

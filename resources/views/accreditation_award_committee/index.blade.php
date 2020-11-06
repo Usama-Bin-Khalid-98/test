@@ -78,7 +78,7 @@
                                     @if(@$slip->regStatus =='AwardCommittee' || @$slip->regStatus =='ScheduledAwardCommittee' )
                                         <a href="{{url('aac-showOnCalendar')}}/{{@$slip->id}}" class="btn-xs btn-info" data-toggle="tooltip" data-content="left" title="Accreditation Award Committee meeting calendar"> <i class="fa fa-calendar"></i></a><br>
                                     @elseif(@$slip->regStatus =='CouncilMeeting')Case Forwarded For CouncilMeeting @endif
-                                    <a href="{{url('AAwardCommitteeDetails')}}/{{$slip->id}}" data-toggle="tooltip" data-content="left" title="Case complete details of AAC" class="btn-xs bg-aqua" style="cursor: pointer"><i class="fa fa-list"></i></a><br>
+                                    @if($slip->regStatus != 'ESScheduler') <a href="{{url('AAwardCommitteeDetails')}}/{{$slip->id}}" data-toggle="tooltip" data-content="left" title="Case complete details of AAC" class="btn-xs bg-aqua" style="cursor: pointer"><i class="fa fa-list"></i></a><br> @endif
                                 </td>
                             </tr>
                         @endforeach
