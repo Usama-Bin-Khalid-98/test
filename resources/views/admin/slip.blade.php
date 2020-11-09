@@ -69,12 +69,15 @@
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
+                                    <th>Amount</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="showRecord">
+                                @php $total_amount = 0;@endphp
                                 @foreach($invoices as $invoice)
+                                    @php $total_amount += $invoice->amount@endphp
                                     <tr>
                                         <td>{{@$invoice->school}}</td>
                                         <td>{{@$invoice->campus??'main campus'}}</td>
@@ -84,6 +87,7 @@
                                         <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                         <td>{{$invoice->transaction_date}}</td>
                                         <td>{{$invoice->comments}}</td>
+                                        <td>{{number_format($invoice->amount)}}</td>
                                         <td><i style="cursor: default;" class="badge {{$invoice->status ==='paid'?'bg-yellow':''}} {{$invoice->status ==='approved'?'bg-green':''}} {{$invoice->status ==='inactive'?'bg-red':''}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
                                         <td>
                                             <span data-toggle="tooltip" title="Invoice Slip Details" >
@@ -103,6 +107,7 @@
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
+                                    <th style="color: mediumpurple">Total: {{@number_format($total_amount)}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

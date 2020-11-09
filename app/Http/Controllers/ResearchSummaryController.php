@@ -35,9 +35,9 @@ class ResearchSummaryController extends Controller
             $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
         $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
-        $years['yeart'] = $getYears->tyear;
-        $years['year_t_1'] = $getYears->year_t_1;
-        $years['year_t_2'] = $getYears->year_t_2;
+        $years['yeart'] = @$getYears->tyear;
+        $years['year_t_1'] = @$getYears->year_t_1;
+        $years['year_t_2'] = @$getYears->year_t_2;
 
 //        dd($years);
         return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories', 'years'));

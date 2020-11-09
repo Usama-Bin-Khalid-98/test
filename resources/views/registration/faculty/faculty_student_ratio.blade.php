@@ -141,7 +141,7 @@
                                     <td>{{$req->total_enrollments}}</td>
                                     <td>{{$totalFTE}}</td>
                                     <td>{{$totalVFE}}</td>
-                                    <td>{{(round($req->total_enrollments/($totalFTE+$totalVFE), 2))}}%</td>
+                                    <td>{{$totalFTE+$totalVFE!=0 ?(round($req->total_enrollments/($totalFTE+$totalVFE), 2)):0}}%</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","total_enrollments":"{{$req->total_enrollments}}","total_fte":"{{$req->total_fte}}","total_vfe":"{{$req->total_vfe}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 

@@ -60,12 +60,15 @@
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
+                                    <th>Amount</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="showRecord">
+                                @php $total_amount = 0; @endphp
                                 @foreach($invoices as $invoice)
+                                    @php $total_amount+= $invoice->amount; @endphp
                                 <tr>
                                     <td>{{@$invoice->campus->business_school->name}}</td>
                                     <td>{{@$invoice->campus->location}}</td>
@@ -81,6 +84,7 @@
                                     <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
+                                    <td>{{$invoice->amount}}</td>
                                     <td><i style="cursor: default;" class="badge {{$invoice->status ==='approved'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
                                     <td><span data-toggle="tooltip" title="Invoice Payment" >
                                             <i class="fa fa-money text-info my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
@@ -100,6 +104,7 @@
                                     <th>Slip</th>
                                     <th>Transaction Date </th>
                                     <th>Details</th>
+                                    <th>{{@$total_amount}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
