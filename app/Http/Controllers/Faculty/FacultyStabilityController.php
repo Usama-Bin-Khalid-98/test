@@ -51,7 +51,7 @@ class FacultyStabilityController extends Controller
 
         $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
 
-        $years = ['tyear'=> $getYears->tyear, 'year_t_1' =>$getYears->year_t_1, 'year_t_2' =>$getYears->year_t_2];
+        $years = ['tyear'=> @$getYears->tyear, 'year_t_1' => @$getYears->year_t_1, 'year_t_2' => @$getYears->year_t_2];
          return view('registration.faculty.faculty_stability', compact('stabilities','years'));
     }
 

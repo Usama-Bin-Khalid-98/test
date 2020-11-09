@@ -24,21 +24,40 @@
                 <li class="active"> Program Portfolio </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
+{{--        <section class="content-header">--}}
+{{--            <div class="col-md-12 new-button">--}}
+{{--                <div class="pull-right">--}}
+{{--                    <button class="btn gradient-bg-color"--}}
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+{{--                           style="color: white;"--}}
+{{--                           value="Add New"--}}
+{{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
 
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
+    <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-sticky-note"></i>Note</h4>
+                        <ol type="1">
+                            <li>
+                                <h5>Entry required for All programs.</h5>
+                                <p>You can't submit your registration application, if data not entered for all the programs separately.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+
             <div class="row">
                 <div class="col-md-12">
 
@@ -59,16 +78,6 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-{{--                                <div class="col-md-4">--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="name">Program</label>--}}
-{{--                                   <select name="program" id="program" class="form-control select2" style="width: 100%;">--}}
-{{--                                        <option selected disabled>Select</option>--}}
-{{--                                         <option value="Program 1">Program 1</option>--}}
-{{--                                         <option value="Program 2">Program 2</option>--}}
-{{--                                        </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Program(s) under review</label>
@@ -242,8 +251,8 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">Total Semesters</label>
-                                    <input type="text" name="total_semesters" id="edit_total_semesters" value="{{old('edit_total_semesters')}}" class="form-control">
+                                <label for="name">Total Semesters</label>
+                                <input type="text" name="total_semesters" id="edit_total_semesters" value="{{old('edit_total_semesters')}}" class="form-control">
 
                             </div>
                         </div>
