@@ -5,6 +5,7 @@ use App\BusinessSchool;
 use App\Models\Common\Campus;
 use App\Models\Common\Slip;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
+use App\Models\Faculty\FacultyStudentRatio;
 use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\StrategicManagement\ContactInfo;
 use App\Models\StrategicManagement\Scope;
@@ -329,8 +330,55 @@ WHERE business_school_facilities.campus_id=campuses.id AND business_school_facil
 AND business_school_facilities.facility_id=facilities.id AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
 
             }
+        $ratios = FacultyStudentRatio::with('campus','program')
+            ->where(['campus_id'=> $userCampus[0]->campus_id,'department_id'=> $userCampus[0]->department_id])
+            ->where('type','REG')
+            ->where('deleted_at',null)
+            ->get();
+        $getFTE = FacultyTeachingCources::with('faculty_program')
+        ->where('lookup_faculty_type_id' , 1)
+        ->where('deleted_at', null)
+        ->orWhere('lookup_faculty_type_id', 2)
+        ->get();
 
-        return view('strategic_management.registration_application', compact('app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans', 'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents','studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses','studentTeachersRatio','facultyStability','facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData', 'programsUnderReview','mission'));
+        $totalFTE = 0;
+        if($getFTE){
+        foreach ($getFTE as $val)
+        {
+        foreach ($val->faculty_program as $key => $progs)
+        {
+        $totalFTE += $progs->tc_program/$val->max_cources_allowed;
+        }
+        }
+        $totalFTE = round($totalFTE, 2);
+        }
+
+        $getVFE = FacultyTeachingCources::with('faculty_program')
+            ->where('lookup_faculty_type_id' , 3)
+            ->where('deleted_at', null)
+            ->get();
+
+        $totalVFE = 0;
+        if($getVFE){
+            foreach ($getVFE as $vfe)
+            {
+                foreach ($vfe->faculty_program as $key => $prog)
+                {
+                    $totalVFE += $prog->tc_program/$vfe->max_cources_allowed;
+                }
+            }
+            $totalVFE = round($totalFTE/3, 2);
+            //dd($totalVFE);
+        }
+
+        return view('strategic_management.registration_application', compact(
+            'app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation',
+            'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans',
+            'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents',
+            'studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses',
+            'studentTeachersRatio','facultyStability',
+            'facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData',
+            'programsUnderReview','mission','ratios', 'totalFTE', 'totalVFE'));
     }
 
      public static function getfacultySummary($i, $facultySummary, $userCampus, $type){

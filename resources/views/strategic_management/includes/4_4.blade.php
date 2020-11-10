@@ -2,7 +2,7 @@
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
                                 <caption style="text-align: center;color: red">
-Table 4.4a FTE for the permanent, regular and adjunct faculty in program(s) 
+Table 4.4a FTE for the permanent, regular and adjunct faculty in program(s)
 </caption>
                                 <thead>
                                     <th >No </th>
@@ -12,8 +12,8 @@ Table 4.4a FTE for the permanent, regular and adjunct faculty in program(s)
                                     <th>Maximum teaching courses allowed(E)</th>
                                     <th style="text-align: center;" colspan="4">Program(s) under Review</th>
 
-                                    
-                                    
+
+
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -64,8 +64,8 @@ Table 4.4a FTE for the permanent, regular and adjunct faculty in program(s)
 
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

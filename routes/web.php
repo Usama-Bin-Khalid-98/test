@@ -57,6 +57,7 @@ Route::get('/email', function() {
             // Permissions resource route.
             // Route::resource('permissions', 'Auth\PermissionController');
             Route::resource('desk-review', 'DeskReviewController');
+            Route::get('desk-review-edit/{id}', 'DeskReviewController@edit');
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
             Route::resource('nbeac-criteria', 'NbeacCriteriaController');
