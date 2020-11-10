@@ -69,7 +69,7 @@
                                     <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                                    <input type="text" name="plan_period" id="plan_period" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                    <input type="text" name="plan_period" id="plan_period" autocomplete="off" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                     <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                                    <input type="text" name="plan_period_to" id="plan_period_to" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                    <input type="text" name="plan_period_to" id="plan_period_to" autocomplete="off" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                                     <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                                    <input type="text" name="aproval_date" id="aproval_date" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                    <input type="text" name="aproval_date" id="aproval_date" autocomplete="off" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -194,14 +194,14 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Period of Strategic Plan</label>
-                                    <input type="date" name="plan_period" id="edit_plan_period" value="{{old('edit_plan_period')}}" class="form-control">
+                                    <input type="text" name="plan_period" id="edit_plan_period" value="{{old('edit_plan_period')}}" class="form-control">
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Date of approval</label>
-                                    <input type="date" name="aproval_date" id="edit_aproval_date" value="{{old('edit_aproval_date')}}" class="form-control">
+                                    <input type="text" name="aproval_date" id="edit_aproval_date" value="{{old('edit_aproval_date')}}" class="form-control">
                                 </div>
                               </div>
 
@@ -257,16 +257,20 @@
 
         $('.select2').select2();
         $('#plan_period').datepicker({
-      autoclose:true
+            format: 'yyyy-mm-dd',
+            autoclose:true
     });
 
         $('#plan_period_to').datepicker({
-      autoclose:true
+            format: 'yyyy-mm-dd',
+            autoclose:true
     });
 
         $('#aproval_date').datepicker({
-      autoclose:true
-    });
+            format: 'yyyy-mm-dd',
+            autoclose:true
+
+        });
 
          $.ajaxSetup({
             headers: {

@@ -70,11 +70,18 @@ class StrategicPlanController extends Controller
             }
 
         @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
+        @$period_date = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y.%m');
             //dd($period);
+            if($period_date<3)
+            {
+                return response()->json(['message'=> 'Strategic Plan should be greater then 3 years.'], 422);
+            }
 
                 StrategicPlan::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
+                    'plan_period_from' => $request->plan_period,
+                    'plan_period_to' => $request->plan_period_to,
                     'plan_period' => $period,
                     'aproval_date' => $request->aproval_date,
                     'aproving_authority' => $request->aproving_authority,
