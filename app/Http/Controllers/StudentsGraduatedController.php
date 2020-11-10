@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\StudentsGraduated;
 use App\Models\StrategicManagement\Scope;
 use App\Models\Common\Slip;
@@ -30,7 +31,10 @@ class StudentsGraduatedController extends Controller
         }else {
             $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
-
+        $getYears = BusinessSchoolTyear::where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
+        $programs->tyear =@$getYears->tyear??'';
+        $programs->year_t_1 =@$getYears->year_t_1??'';
+        $programs->year_t_2 =@$getYears->year_t_2??'';
         return view('registration.student_enrolment.students_graduated', compact('programs','students'));
     }
 

@@ -23,25 +23,57 @@
             </ol>
         </section>
         <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-                            {{--                           data-toggle="modal" data-target="#add-modal"--}}
-                            style="color: white;"
-                            value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
+{{--            <div class="col-md-12 new-button">--}}
+{{--                <div class="pull-right">--}}
+{{--                    <button class="btn gradient-bg-color"--}}
+{{--                            --}}{{--                           data-toggle="modal" data-target="#add-modal"--}}
+{{--                            style="color: white;"--}}
+{{--                            value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </section>
-
+@php $checkGrade=$checkUnderGrade = true; @endphp
         {{--Dean section --}}
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 >Applied for:</h3>
-                            <h3 >Application Received:</h3>
-                            <h3 >Basic Eligibility Criteria (1-6): Fulfilled/Not Fulfilled with Criteria Number</h3>
+                            <h5><strong>Applied for:</strong>@foreach(@$scopes as $scope) {{@$scope->program->name}}  @if(!$loop->last) , @endif @endforeach</h5>
+                            <h5><strong>Application Received Date:</strong> {{@$desk_reviews[0]->registration_date}} </h5>
+{{--                            <h5><strong>Basic Eligibility Criteria (1-6):</strong> Fulfilled/Not Fulfilled with Criteria Number</h5>--}}
+
+                            @foreach($program_dates as $programs)
+                                @if($programs['level_id'] == 1 && $programs['date_difference'] < 3.5)
+                                    @php $checkGrade = false; @endphp
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger alert-dismissible">
+                                            Graduated program commencement from started date must be greater then 3.5 years.
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
+
+                            @foreach($program_dates as $programs)
+                                @if($programs['level_id'] == 2 && $programs['date_difference'] < 5.5)
+                                    @php $checkUnderGrade = false;  @endphp
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger alert-dismissible">
+                                            Under-Graduated program commencement from started date must be greater then 5.5 years.
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
+
+                            @if($strategic_plan['date_diff'] < 3)
+                            <div class="col-md-6">
+                                <div class="alert alert-danger alert-dismissible">
+                                    Strategic Plan should exist for 03-05 years
+                                </div>
+                            </div>
+                            @endif
+
+
                             {{--                            <div class="box-tools pull-right">--}}
                             {{--                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>--}}
                             {{--                                </button>--}}
@@ -83,8 +115,8 @@
                                             </td>
                                             @hasrole('NBEACAdmin')
                                             <td>
-                                                <input type="radio" name="eligibility_program" value="yes"> yes
-                                                <input type="radio" name="eligibility_program" value="no"> no
+                                                <input type="radio" name="eligibility_program" {{$checkGrade?'checked="checked"':''}} value="yes"> yes
+                                                <input type="radio" name="eligibility_program" {{!$checkGrade?'checked="checked"':''}} value="no"> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -107,7 +139,7 @@
                                             @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_mission" value="yes"> yes
-                                                <input type="radio" name="eligibility_mission" value="no"> no
+                                                <input type="radio" name="eligibility_mission" value="no" checked> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -115,15 +147,18 @@
                                         <tr>
                                             <td>
                                                 <p>3. Strategic Plan (Question 1.8)</p>
-                                                <p>Approval Date {{@$strategic_plan->aproval_date}}  Difference( {{@$strategic_date_diff}} )</p>
+                                                <p>Strategic Plan from date: {{$strategic_plan->plan_period_from}}</p>
+                                                <p>Strategic Plan to date: {{$strategic_plan->plan_period_to}}</p>
+                                                <p>Approval Date {{@$strategic_plan->aproval_date}}</p>
+                                                <p>Duration {{@$strategic_plan['date_diff']}} years</p>
                                             </td>
                                             <td>
                                                 {!! @$nbeac_criteria->strategic_plan !!}
                                             </td>
                                             @hasrole('NBEACAdmin')
                                             <td>
-                                                <input type="radio" name="eligibility_plan" value="yes"> yes
-                                                <input type="radio" name="eligibility_plan" value="no"> no
+                                                <input type="radio" name="eligibility_plan" {{$strategic_plan['date_diff'] > 3?'checked':''}} value="yes"> yes
+                                                <input type="radio" name="eligibility_plan" value="no" {{$strategic_plan['date_diff'] < 3?'checked':''}}> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -145,6 +180,7 @@
                                         <tr>
                                             <td>
                                                 <strong> 5.	Student enrollment</strong>
+                                                @php  $grade=$under_grade= false; @endphp
                                                 <p>
                                                     <strong> a)	Total Annual Enrollment Table (3.1)</strong></p>
                                                 @foreach(@$student_enrolment as $enrollment)
@@ -153,15 +189,16 @@
                                                     <p> Year {{$enrollment->year}}   Doctoral programs {{$enrollment->ms_level}}</p>
                                                 @endforeach
 
-                                                <p><strong> )	Graduated Students</strong></p>
+                                                <p><strong> Graduated Students</strong></p>
 
                                                 @foreach($graduated_students as $graduated)
-                                                    <p> Program {{$graduated->program->name}} </p>
-                                                    <p> Year t {{$graduated->grad_std_t}} </p>
-                                                    <p> Year t-1 {{$graduated->grad_std_t_1}} </p>
-                                                    <p> Year t-2 {{$graduated->grad_std_t_2}} </p>
+                                                    <p class="{{$graduated->grad_std_t < 15 ?'text-red':''}}"> Program {{$graduated->program->name}}, Year {{$graduated_students?$graduated_students->tyear:''}} ({{$graduated->grad_std_t}}),
+                                                        Year {{$graduated_students?$graduated_students->year_t_1:''}} ({{$graduated->grad_std_t_1}}) ,
+                                                        Year {{$graduated_students?$graduated_students->year_t_2:''}} ({{$graduated->grad_std_t_2}}) </p>
+                                                    @php $graduated->grad_std_t>=20?$grade=true:$grade=false @endphp
 
                                                 @endforeach
+{{--                                                @php if($graduated_students[0])@endphp--}}
 
                                                 <strong> b)	Faculty Portfolio (Section 4)</strong>
 

@@ -43,7 +43,7 @@
                 <form>
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.2.  Provide scope of accreditation in Table 1.2.</h3>
+                            <h3 class="box-title">1.2. Provide scope of accreditation in Table 1.2.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -142,7 +142,7 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                           
+
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -305,7 +305,7 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                        setTimeout(() => location.reload(), 1000);
+                        // setTimeout(() => location.reload(), 1000);
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

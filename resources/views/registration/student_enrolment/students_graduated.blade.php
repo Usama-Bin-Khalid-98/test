@@ -72,19 +72,19 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t</label>
+                                    <label for="name">Year {{$programs->tyear??''}}</label>
                                     <input type="text" name="grad_std_t" id="grad_std_t"  class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t-1</label>
+                                    <label for="name">Year {{$programs->year_t_1??''}}</label>
                                     <input type="text" name="grad_std_tt" id="grad_std_tt" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Year t-2</label>
+                                    <label for="name">Year {{$programs->year_t_2??''}}</label>
                                     <input type="text" name="grad_std_ttt" id="grad_std_ttt" class="form-control">
                                 </div>
                             </div>
@@ -113,9 +113,9 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
-                                    <th>Year t</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t-2</th>
+                                    <th>Year {{$programs->tyear??''}}</th>
+                                    <th>Year {{$programs->year_t_1??''}}</th>
+                                    <th>Year {{$programs->year_t_2??''}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -141,9 +141,9 @@
                                     <th>Business School</th>
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
-                                    <th>Year t</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t-2</th>
+                                    <th>Year {{$programs->tyear??''}}</th>
+                                    <th>Year {{$programs->year_t_1??''}}</th>
+                                    <th>Year {{$programs->year_t_2??''}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

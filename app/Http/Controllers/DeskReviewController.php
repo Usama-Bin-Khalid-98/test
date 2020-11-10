@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\EligibilityStatus;
 use App\Models\Common\Slip;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\DeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
@@ -51,6 +52,7 @@ class DeskReviewController extends Controller
             ->join('users as u', 'u.id', '=', 's.created_by')
             ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId')
 //            ->where('s.reg')
+            ->where('s.regStatus', '!=', 'initiated')
             ->get();
         //dd($desk_reviews);
 
@@ -89,25 +91,43 @@ class DeskReviewController extends Controller
         @$business_school_user = Slip::where(['id' => $id])->get()->first();
         $campus_id = $business_school_user->business_school_id;
         $department_id = $business_school_user->department_id;
+        $scopes = Scope::with('program')->where(
+            [
+                'status'=> 'active',
+                'campus_id' => $campus_id,
+                'department_id' => $department_id
+            ])->get();
 //        dd($campus_id, ' dep', $department_id);
 
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
 //      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
-        //dd($accreditation);
+//        dd($accreditation);
         $program_dates = [];
         foreach ($accreditation as $accred)
         {
             @$program_dates[$accred->id]['date_diff'] = $this->dateDifference($accred->date_program, date('Y-m-d'), '%y Year %m Month');
+            @$program_dates[$accred->id]['date_difference'] = $this->dateDifference($accred->date_program, date('Y-m-d'), '%y.%m');
             @$program_dates[$accred->id]['program'] = $accred->program->name;
+            @$program_dates[$accred->id]['program_id'] = $accred->program_id;
+            @$program_dates[$accred->id]['level_id'] = $accred->level_id;
             @$program_dates[$accred->id]['date'] = $accred->date_program;
         }
 
         $mission_vision = MissionVision::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
-//        dd($mission_vision);
         @$strategic_plan = StrategicPlan::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+
+        @$strategic_plan['date_diff'] = $this->dateDifference($strategic_plan->plan_period_from, $strategic_plan->plan_period_to, '%y.%m');
+
         @$application_received = ApplicationReceived::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
         $student_enrolment = StudentEnrolment::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
         $graduated_students = StudentsGraduated::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
+
+        $getYears = BusinessSchoolTyear::where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
+        $graduated_students->tyear =@$getYears->tyear??'';
+        $graduated_students->year_t_1 =@$getYears->year_t_1??'';
+        $graduated_students->year_t_2 =@$getYears->year_t_2??'';
+//        dd($graduated_students);
+
 
         $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('number_faculty');
         $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
@@ -198,7 +218,8 @@ class DeskReviewController extends Controller
             'nbeac_criteria',
             'desk_reviews',
             'desk_rev',
-            'getStudentComRatio'
+            'getStudentComRatio',
+            'scopes'
         ));
     }
     /**
