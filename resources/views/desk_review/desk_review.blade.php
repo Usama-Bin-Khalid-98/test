@@ -39,6 +39,9 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
+                            <h5><strong>University Name :</strong> {{$desk_reviews[0]->school}}</h5>
+                            <h5><strong>Campus :</strong> {{$desk_reviews[0]->campus}}</h5>
+                            <h5><strong>Business School:</strong> {{$desk_reviews[0]->department}}</h5>
                             <h5><strong>Applied for:</strong>@foreach(@$scopes as $scope) {{@$scope->program->name}}  @if(!$loop->last) , @endif @endforeach</h5>
                             <h5><strong>Application Received Date:</strong> {{@$desk_reviews[0]->registration_date}} </h5>
 {{--                            <h5><strong>Basic Eligibility Criteria (1-6):</strong> Fulfilled/Not Fulfilled with Criteria Number</h5>--}}
@@ -139,7 +142,7 @@
                                             @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_mission" value="yes"> yes
-                                                <input type="radio" name="eligibility_mission" value="no" checked> no
+                                                <input type="radio" name="eligibility_mission" checked value="no" checked> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -166,13 +169,17 @@
                                         <tr>
                                             <td>
                                                 <p>4. Student Intake(Table 2.3)</p>
-                                                <p>Student Intake {{@$application_received->student_intake}}</p>
+                                                Student Intake
+                                                    @foreach($application_received as $applications)
+                                                    <p> {{$applications->program->name}}- {{$applications->semester->name}} : {{$applications->student_intake}} </p>
+                                                    @endforeach
+
                                             </td>
                                             <td> {!! @$nbeac_criteria->student_intake !!} </td>
                                             @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_student" value="yes"> yes
-                                                <input type="radio" name="eligibility_student" value="no"> no
+                                                <input type="radio" name="eligibility_student" checked value="no"> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -184,9 +191,9 @@
                                                 <p>
                                                     <strong> a)	Total Annual Enrollment Table (3.1)</strong></p>
                                                 @foreach(@$student_enrolment as $enrollment)
-                                                    <p> Year {{$enrollment->year}}	16 years programs {{$enrollment->bs_level}}</p>
-                                                    <p> Year {{$enrollment->year}}	18 years programs {{$enrollment->ms_level}}</p>
-                                                    <p> Year {{$enrollment->year}}   Doctoral programs {{$enrollment->ms_level}}</p>
+                                                    <p> Year {{$enrollment->year}}	16 years programs : {{$enrollment->bs_level}}</p>
+                                                    <p> Year {{$enrollment->year}}	18 years programs : {{$enrollment->ms_level}}</p>
+                                                    <p> Year {{$enrollment->year}}   Doctoral programs:  {{$enrollment->ms_level}}</p>
                                                 @endforeach
 
                                                 <p><strong> Graduated Students</strong></p>
@@ -202,21 +209,22 @@
 
                                                 <strong> b)	Faculty Portfolio (Section 4)</strong>
 
-                                                <p> <strong>c)</strong>	Total Fulltime Faculty = {{@$faculty_summary}}</p>
-                                                <p> <strong>d)</strong>	Full professors {{@$getFullProfessors}}</p>
-                                                <p> <strong>e)</strong>	Associate professors {{@$AssociateProfessors}}</p>
-                                                <p> <strong>f)</strong>	Assistant professors {{@$AssistantProfessors}}</p>
-                                                <p> <strong>g)</strong>	Lecturers {{@$lecturers}}</p>
-                                                <p> <strong>h)</strong>	Other {{@$other}}</p>
-                                                <p> <strong>i)</strong>	% of female permanent / regular faculty {{@$female_faculty}}</p>
-                                                <p> <strong>j)</strong>	% holding a doctoral degree {{@$faculty_summary_doc}}</p>
-                                                <p> <strong>k)</strong>	Total number of permanent faculty {{@$permanent_faculty}}</p>
-                                                <p> <strong>l)</strong>	Total number of adjunct faculty {{@$adjunct_faculty}}</p>
-                                                <p> <strong>m)</strong>	Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s))</p>
+                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Fulltime Faculty: {{@$faculty_summary}}</p>
+                                                <p class="{{$getFullProfessors<1?'text-red':''}}" > <strong>d)</strong>	Professors: {{@$getFullProfessors}}</p>
+                                                <p class="{{$AssociateProfessors<1?'text-red':''}}"> <strong>e)</strong> Associate professors: {{@$AssociateProfessors}}</p>
+                                                <p class="{{$AssistantProfessors<3?'text-red':''}}"> <strong>f)</strong> Assistant professors: {{@$AssistantProfessors}}</p>
+                                                <p> <strong>g)</strong>	Lecturers: {{@$lecturers}}</p>
+                                                <p> <strong>h)</strong>	Other: {{@$other}}</p>
+                                                <p class="{{$female_faculty<20?'text-red':''}}"> <strong>i)</strong>% of female permanent / regular faculty: {{@$female_faculty}}</p>
+                                                <p class="{{($faculty_summary_doc/$faculty_summary)*100<20?'text-red':''}}"> <strong>j)</strong> % holding a doctoral degree: {{@$faculty_summary_doc}}</p>
+                                                <p> <strong>k)</strong>	Total number of permanent faculty: {{@$permanent_faculty}}</p>
+                                                <p> <strong>l)</strong>	Total number of adjunct faculty: {{@$adjunct_faculty}}</p>
+                                                <p> <strong>m)</strong>
+                                                    Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)) = </p>
                                                 <p> <strong>n)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s))</p>
                                                 <p> <strong>o)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4)</p>
-                                                <p> BBA (program1) =</p>
-                                                <p> MBA (program2) =</p>
+                                                <p> BBA (program1) = </p>
+                                                <p> MBA (program2) = </p>
                                                 <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction) = {{@$total_induction}}</p>
                                                 <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = {{@$faculty_resigned + @$faculty_terminated + @$faculty_retired}}</p>
                                                 <p> <strong>r)</strong>	FT:PT (as per table 4.3 a 4.3 b)=</p>
@@ -234,13 +242,18 @@
                                             @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_enrollment" value="yes"> yes
-                                                <input type="radio" name="eligibility_enrollment" value="no"> no
+                                                <input type="radio" name="eligibility_enrollment" checked value="no"> no
                                             </td>
                                             @endhasrole
                                         </tr>
                                         <tr>
                                             <td>
-                                                6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) = {{@$total_courses}}
+                                                6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) = {{@$total_courses}} <br>
+                                                <p class="{{$total_courses_prof<4?'text-red':''}}">i.	Professor: {{@$total_courses_prof}} </p>
+                                                <p class="{{$total_courses_assoc<4?'text-red':''}}">ii.	Associate Professor: {{@$total_courses_assoc}} </p>
+                                                <p class="{{$total_courses_assis<6?'text-red':''}}">iii.	Assistant Professor: {{@$total_courses_assis}} </p>
+                                                <p class="{{$total_courses_lec<6?'text-red':''}}">iv.	Lecturer: {{@$total_courses_lec}}</p>
+
                                             </td>
                                             <td>
                                                 {!! @$nbeac_criteria->course_load !!}
@@ -248,45 +261,60 @@
                                             @hasrole('NBEACAdmin')
 
                                             <td>
-                                                <input type="radio" name="eligibility_load" value="yes"> yes
-                                                <input type="radio" name="eligibility_load" value="no"> no
+                                                <input type="radio" name="eligibility_load" {{$total_courses_prof >=4 && $total_courses_assoc >=4 && $total_courses_assis >=6 && $total_courses_lec >=6?'checked':''}} value="yes"> yes
+                                                <input type="radio" name="eligibility_load" {{$total_courses_prof<4 || $total_courses_assoc<4 || $total_courses_assis<6 || $total_courses_lec<6?'checked':''}} value="no"> no
                                             </td>
                                             @endhasrole
                                         </tr>
-
                                         <tr>
                                             <td>
                                                 7. Research Output last three years (Table 5.1 summary of research output)<br><br>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <table  class="table table-bordered table-stripped">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>Year</th>
-                                                                <th>Total Items</th>
-                                                                <th>Contributing Core Faculty</th>
-                                                                <th>Jointly Produced Other</th>
-                                                                <th>Jointly Produced Same</th>
-                                                                <th>Jointly Produced Multiple</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            @foreach($summaries as $summary)
-                                                                <tr>
-                                                                    <td>{{$summary->year}}</td>
-                                                                    <td>{{$summary->total_items}}</td>
-                                                                    <td>{{$summary->contributing_core_faculty}}</td>
-                                                                    <td>{{$summary->jointly_produced_other}}</td>
-                                                                    <td>{{$summary->jointly_produced_same}}</td>
-                                                                    <td>{{$summary->jointly_produced_multiple}}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                <p>Academic Research \</p>
+                                                <ul style="list-style-type: lower-alpha">
+                                                    <li>Impact factor journals = {{@$summaries['impact_factor']}}</li>
+                                                    <li>HEC category W = {{@$summaries['category_w']}}</li>
+                                                    <li>HEC category X = {{@$summaries['category_x']}}</li>
+                                                    <li>HEC category Y = {{@$summaries['category_y']}}</li>
+                                                    <li>ABS or ABDC listing = {{@$summaries['abs']}}</li>
+                                                    <li>Other listings (Table 5.1-total number of items) = {{@$summaries['other_list']}}</li>
+                                                    <li>Conference paper national:   (Table 5.1) = {{@$summaries['conf_paper']}}</li>
+                                                    <li>Conference paper international:  (table 5.1) = {{@$summaries['conf_paper_inter']}}</li>
+                                                    <li>Published case studies:  (table 5.1) = {{@$summaries['case_studies']}}</li>
+{{--                                                    <li>Consultancy projects:  (table 5.1) = {{@$summaries['']}}</li>--}}
+                                                </ul>
 
-                                                    </div>
 
-                                                </div>
+
+                                                {{--                                                <div class="row">--}}
+{{--                                                    <div class="col-md-12">--}}
+{{--                                                        <table  class="table table-bordered table-stripped">--}}
+{{--                                                            <thead>--}}
+{{--                                                            <tr>--}}
+{{--                                                                <th>Year</th>--}}
+{{--                                                                <th>Total Items</th>--}}
+{{--                                                                <th>Contributing Core Faculty</th>--}}
+{{--                                                                <th>Jointly Produced Other</th>--}}
+{{--                                                                <th>Jointly Produced Same</th>--}}
+{{--                                                                <th>Jointly Produced Multiple</th>--}}
+{{--                                                            </tr>--}}
+{{--                                                            </thead>--}}
+{{--                                                            <tbody>--}}
+{{--                                                            @foreach($summaries as $summary)--}}
+{{--                                                                <tr>--}}
+{{--                                                                    <td>{{$summary->year}}</td>--}}
+{{--                                                                    <td>{{$summary->total_items}}</td>--}}
+{{--                                                                    <td>{{$summary->contributing_core_faculty}}</td>--}}
+{{--                                                                    <td>{{$summary->jointly_produced_other}}</td>--}}
+{{--                                                                    <td>{{$summary->jointly_produced_same}}</td>--}}
+{{--                                                                    <td>{{$summary->jointly_produced_multiple}}</td>--}}
+{{--                                                                </tr>--}}
+{{--                                                            @endforeach--}}
+{{--                                                            </tbody>--}}
+{{--                                                        </table>--}}
+
+{{--                                                    </div>--}}
+
+{{--                                                </div>--}}
                                             </td>
                                             <td>
                                                 {!! @$nbeac_criteria->research_output !!}
@@ -294,7 +322,7 @@
                                             @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_output" value="yes"> yes
-                                                <input type="radio" name="eligibility_output" value="no"> no
+                                                <input type="radio" name="eligibility_output" checked value="no"> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -309,7 +337,7 @@
                                             @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_bandwidth" value="yes"> yes
-                                                <input type="radio" name="eligibility_bandwidth" value="no"> no
+                                                <input type="radio" name="eligibility_bandwidth" checked value="no"> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -323,7 +351,7 @@
                                             @hasrole('NBEACAdmin')
                                             <td>
                                                 <input type="radio" name="eligibility_ratio" value="yes"> yes
-                                                <input type="radio" name="eligibility_ratio" value="no"> no
+                                                <input type="radio" name="eligibility_ratio" checked value="no"> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -381,7 +409,7 @@
 
                                     <th>Business School</th>
                                     <th>Department</th>
-                                    <th>Nbeac Criteria</th>
+                                    <th>Comments</th>
                                     <th>isEligible</th>
                                     @hasrole('NBEACAdmin')<th>Status</th>@endhasrole
                                     @hasrole('NBEACAdmin')<th>Action</th>@endhasrole
@@ -394,13 +422,15 @@
                                 <tr>
                                     <td>{{@$review->campus->business_school->name}}</td>
                                     <td>{{@$review->department->name}}</td>
-                                    <td>{{@$review->nbeac_criteria}}</td>
+                                    <td>{{@$review->comments}}</td>
                                     <td><i class="badge {{@$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{@$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
                                     @hasrole('NBEACAdmin')<td><i class="badge {{@$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
-                                    @hasrole('NBEACAdmin')<td>
-{{--                                        @if($review->isEligible === 'yes' && $review->status === 'active' )<span data-toggle="tooltip" title="" class="badge bg-yellow ForwardToES" data-original-title="Forward to Eligibility Screening" data-id="{{$review->id}}"><i class="fa fa-check-square-o text-white"></i></span>|@endif--}}
-                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i> |
-                                        <i data-row='{"id":{{@$review->id}},"nbeac_criteria":"{{@$review->nbeac_criteria}}","isEligible":"{{@$review->isEligible}}","status":"{{@$review->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>@endhasrole
+                                    @hasrole('NBEACAdmin')
+                                    <td>
+                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i>|
+                                        <i data-id='{"id":{{$review->id}}}' class="fa fa-pencil text-blue edit"></i>
+                                    </td>
+                                    @endhasrole
                                 </tr>
                                 @endforeach
                                 @endif
@@ -432,52 +462,6 @@
 
 
     </div>
-
-    <div class="modal fade" id="edit-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Desk Review. </h4>
-                </div>
-                <form role="form" id="updateForm" >
-                    <div class="modal-body">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Nbeac Criteria</label>
-                                <input type="text" readonly name="nbeac_criteria" id="edit_nbeac_criteria" value="{{old('edit_nbeac-criteria')}}" class="form-control">
-                            </div>
-                            <input type="hidden" id="edit_id">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('isEligible') }} : </label>
-                                <p><input type="radio" name="isEligible" class="flat-red" value="yes" > Yes
-                                    <input type="radio" name="isEligible" class="flat-red" value="no">No</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('Status') }} : </label>
-                                <p>
-                                    <input type="radio" name="status" class="flat-red" value="active" > Active
-                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" name="update" value="update" class="btn btn-info">
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 
 
     <!-- /.modal -->
@@ -589,52 +573,43 @@
 
         $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
-            let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_nbeac_criteria').val(data.nbeac_criteria);
-            $('#edit_id').val(data.id);
-            $('input[value='+data.isEligible+']').iCheck('check');
-            $('input[value='+data.status+']').iCheck('check');
-        });
+            let data = JSON.parse(JSON.stringify($(this).data('id')));
+            console.log('json data', data.id);
+            // $('#edit_nbeac_criteria').val(data.nbeac_criteria);
+            let id = data.id;
 
-        $('#updateForm').submit(function (e) {
-            let id = $('#edit_id').val();
-            let isEligible = $('input[name=edit_isEligible]:checked').val();
-            let status = $('input[name=edit_status]:checked').val();
-
-
-            e.preventDefault();
-            var formData = new FormData(this);
-            //var formData = $("#updateForm").serialize()
-            formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("desk-review")}}/'+id,
-                type:'POST',
-                // dataType:"JSON",
-                data: formData,
-                cache:false,
-                contentType:false,
-                processData:false,
+                url:'{{url('desk-review-edit')}}/'+id,
+                type:'get',
+                data:{id:id},
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
                     Notiflix.Loading.Remove();
-                    if(response.success){
-                        Notiflix.Notify.Success(response.success);
+                    if(response){
+                        $.each(response, function (key, val) {
+                            let nbeac_criteria = val.nbeac_criteria;
+                            // console.log('is eligible', val.isEligible);
+                            if(nbeac_criteria && val.isEligible == 'yes')
+                            {
+                                console.log('check', nbeac_criteria);
+                                // $('input[type="radio"],input[name=value],input[value="yes"]:checked');
+                                $('input:radio[name="' + nbeac_criteria + '"][value="yes"]').attr('checked', 'checked');
+                            // console.log('val', value);
+                            }
+                            // else{
+                            //     $('input:radio[name="' + nbeac_criteria + '"][value="no"]').attr('checked', 'checked');
+                            // }
+                        })
+                        // console.log('success', response)
+
                     }
-                    //console.log('response', response);
-                    location.reload();
-                },
-                error:function(response, exception){
-                    Notiflix.Loading.Remove();
-                    $.each(response.responseJSON, function (index, val) {
-                        Notiflix.Notify.Failure(val);
-                    })
                 }
             })
+            // $('input[value='+data.isEligible+']').iCheck('check');
+            // $('input[value='+data.status+']').iCheck('check');
         });
-
 
         $('.delete').on('click', function (e) {
             let id =  $(this).data('id');
