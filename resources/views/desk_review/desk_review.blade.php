@@ -380,7 +380,7 @@
                             <div>
                                 @if(!empty($desk_rev[0]->status))
                                     @if(@$desk_reviews[0]->regStatus === 'Pending' || @$desk_reviews[0]->regStatus === 'Review')
-                                        <button data-toggle="tooltip" title="" class="btn btn-success ForwardToES"
+                                        <button data-toggle="tooltip" title="" class="btn btn-success ForwardToES" data-row="{{@$desk_reviews[0]->isEligible}}"
                                                 data-original-title="Forward to Eligibility Screening" data-id="{{@$desk_reviews[0]->id}}">
                                             Forward to Eligibility Screening &nbsp;&nbsp; <i class="fa fa-check-square-o text-white"></i>
                                         </button>
@@ -424,11 +424,11 @@
                                     <td>{{@$review->department->name}}</td>
                                     <td>{{@$review->comments}}</td>
                                     <td><i class="badge {{@$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{@$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
-                                    @hasrole('NBEACAdmin')<td><i class="badge {{@$review->status == 'active'?'bg-green':'bg-red'}}">{{$review->status == 'active'?'Active':'Inactive'}}</i></td>@endhasrole
+                                    @hasrole('NBEACAdmin')<td><i class="badge {{@$review->regStatus == 'Review'?'bg-green':'bg-red'}}">{{$review->regStatus?$review->regStatus:'Inactive'}}</i></td>@endhasrole
                                     @hasrole('NBEACAdmin')
                                     <td>
                                         <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i>|
-                                        <i data-id='{"id":{{$review->id}}}' class="fa fa-pencil text-blue edit"></i>
+                                        <i data-id='{"id":{{$review->id}}}' data-row='{"comments":"{{$review->comments}}"}' class="fa fa-pencil text-blue edit"></i>
                                     </td>
                                     @endhasrole
                                 </tr>
@@ -574,9 +574,11 @@
         $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
             let data = JSON.parse(JSON.stringify($(this).data('id')));
-            console.log('json data', data.id);
+            let data_row = JSON.parse(JSON.stringify($(this).data('row')));
+            console.log('json data', data_row);
             // $('#edit_nbeac_criteria').val(data.nbeac_criteria);
             let id = data.id;
+            $('#comments').val(data_row.comments);
 
             $.ajax({
                 url:'{{url('desk-review-edit')}}/'+id,
@@ -590,7 +592,6 @@
                     if(response){
                         $.each(response, function (key, val) {
                             let nbeac_criteria = val.nbeac_criteria;
-                            // console.log('is eligible', val.isEligible);
                             if(nbeac_criteria && val.isEligible == 'yes')
                             {
                                 console.log('check', nbeac_criteria);
@@ -648,16 +649,20 @@
         })
 
         $('.ForwardToES').on('click', function (e) {
-            var id = $(this).data('id');
+            let id = $(this).data('id');
+            let status = $(this).data('row');
+            if(status === 'no'){
+                Notiflix.Notify.Failure('Business School is not Eligible.')
+                return;
+            }
 
-            console.log('working here');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to forward the case to Eligibility Screening?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
                         url:'{{url("deskreviewStatus")}}',
                         type:'post',
-                        data: { id:id},
+                        data: {id:id},
                         beforeSend: function(){
                             Notiflix.Loading.Pulse('Processing...');
                         },

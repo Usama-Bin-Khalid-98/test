@@ -236,7 +236,7 @@
 
                         @foreach($registrations as $user)
                         <tr>
-                            <td>{{$user->business_school->name}}</td>
+                            <td>{{$user->campus->business_school->name}}</td>
                             <td>{{$user->campus->location??'Main Campus'}}</td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->contact_no}}</td>
