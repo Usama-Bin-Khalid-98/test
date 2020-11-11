@@ -34,7 +34,7 @@ class DashboardController extends Controller
         //
         // get Registrations data
         $registrations = User::with('business_school')->where('status', 'pending')->get();
-        $invoices = Slip::with('business_school', 'department')->get();
+        $invoices = Slip::with('campus', 'department')->get();
 //       dd($invoices);
         return view('admin.index', compact('registrations','invoices'));
     }
@@ -66,7 +66,7 @@ class DashboardController extends Controller
     }
 
 
-    
+
     /**
      * Show the form for creating a new resource.
      *

@@ -42,8 +42,8 @@ class RegistrationPrintController extends Controller
                         'department_id'=>$req->did
                     ]
                 )->get()->first();
-
-             $bussinessSchool  = DB::select('SELECT * from business_schools where id=? AND type="REG"', array($req->bid));
+//dd($req->did);
+             $bussinessSchool  = DB::select('SELECT * from business_schools where id=?', array($req->bid));
 
 
             $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
