@@ -100,7 +100,7 @@ class EligibilityScreeningController extends Controller
                 ->join('departments as d', 'd.id', '=', 's.department_id')
                 ->join('eligibility_reports as er', 'er.slip_id', '=', 's.id')
                 ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
-                    'er.status as eligibility_status', 'er.comments', 'er.file')
+                    'er.status as eligibility_status','er.id as report_id', 'er.comments', 'er.file')
                 ->where('s.regStatus', 'ScheduledES')
                 ->orWhere('s.regStatus', 'ScheduledPR')
                 ->orWhere('s.regStatus', 'Mentoring')
@@ -163,8 +163,8 @@ class EligibilityScreeningController extends Controller
             '<li>Several deficiencies have been observed in the profile of dean including the publication criteria, experience etc.</li>'.
             '<li>Following documents should be provided with the registration application in 9th ESC Meeting:'.
             '<ol>'.
-            '<li>CV of HoD and associate professor</li>'.
-            '<li>R&amp; D data for period of 2017 to 2019.</li>'.
+//            '<li>CV of HoD and associate professor</li>'.
+//            '<li>R&amp; D data for period of 2017 to 2019.</li>'.
             '</ol>'.
             '</li>'.
             '</ol>'.
@@ -388,43 +388,6 @@ class EligibilityScreeningController extends Controller
                         $update_slip = Slip::find($request->slip_id)->update(['regStatus' => 'Mentoring']);
                     }
 
-
-                    $getnbeacInfo = NbeacBasicInfo::first();
-                    $getPrograms = Scope::with('program')->where(
-                        [
-                            'campus_id' => $slipInfo->business_school_id,
-                            'department_id' => $slipInfo->department_id
-                        ])->get();
-
-                    $count = $getPrograms->count();
-                    $programs = '';
-                    foreach ($getPrograms as $key => $scope) {
-                        $programs .= $scope->program->name;
-                        if($key !== $count-1)
-                            $programs.=', ';
-                    }
-
-                    ///////////////////// Email to Business School //////////////////////
-                    $data= ['letter'=> $request->comments];
-                    $mailInfo = [
-                        'to' => $slipInfo->campus->user->email,
-                        'to_name' => $slipInfo->campus->user->name,
-                        'school' => $slipInfo->campus->business_school->name,
-                        'from' => $getnbeacInfo->email,
-                        'from_name' => $getnbeacInfo->name,
-                    ];
-//                    dd($mailInfo);
-                    Mail::send('eligibility_screening.email.eligibility_report', $data, function($message) use ($mailInfo) {
-                        //dd($user);
-                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                            ->subject('Eligibility Screening Committee comments - '. $mailInfo['school']);
-                        $message->from($mailInfo['from'],$mailInfo['from_name']);
-                    });
-
-                    return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
-                    ///////////////////// End Email to Business School //////////////////////
-
-
                     return response()->json(['success' => 'report added successfully.'], 200);
                 }
             }else{
@@ -439,6 +402,76 @@ class EligibilityScreeningController extends Controller
 
     }
 
+    public function esReportToSchool(Request $request)
+    {
+//        dd($request->all());
+
+            $getnbeacInfo = NbeacBasicInfo::first();
+
+            @$slip_id = EligibilityReport::find($request->id)->slip_id;
+            if($slip_id) {
+
+                $docInfo = Slip::with('campus', 'department')->find($slip_id);
+//                dd($slipInfo->business_school_id);
+
+                $getPrograms = Scope::with('program')->where(
+                    [
+                        'campus_id' => $docInfo->business_school_id,
+                        'department_id' => $docInfo->department_id
+                    ])->get();
+
+                $count = $getPrograms->count();
+                $programs = '';
+                foreach ($getPrograms as $key => $scope) {
+                    $programs .= $scope->program->name;
+                    if ($key !== $count - 1)
+                        $programs .= ', ';
+                }
+
+/////////////////// Email to Business School //////////////////////
+                $header = '<table cellspacing="0" style="border-collapse:collapse; width:80%">' .
+                    '<tbody>' .
+                    '<tr>' .
+                    '<td style="background-color:white; height:16px; vertical-align:top; width:80%">' .
+                    '<p><strong>Mr/Ms.  ' . @$docInfo->campus->user->name . '</strong><br />' .
+                    '<strong>' . @$docInfo->campus->user->designation->name . ',&nbsp; ' . @$docInfo->department->name . '</strong><br />' .
+                    '<strong>' . @$docInfo->campus->business_school->name . '</strong></p>' .
+                    '</td>' .
+                    '<td style="background-color:white; height:16px; vertical-align:top; width:50%">' .
+//            '    <p><strong>Ref. No: </strong><strong>KASBIT /NBEAC-ESC/15/3</strong><br />'.
+                    '<strong>Dated: </strong><strong>' . date('Y-m-d') . '</strong></p>' .
+                    '</td>' .
+                    '</tr>' .
+                    '</tbody>' .
+                    '</table>';
+
+                $footer = '<p>Yours Sincerely,</p>' .
+                    '<p>&nbsp;</p>' .
+                    '<p>' . $getnbeacInfo->director . '</p>' .
+                    '<p>Senior Program Manager (NBEAC)</p>';
+///
+                $data = ['letter' => $header.$request->comments.$footer];
+                $slipInfo = $docInfo;
+                $mailInfo = [
+                    'to' => $slipInfo->campus->user->email,
+                    'to_name' => $slipInfo->campus->user->name,
+                    'school' => $slipInfo->campus->business_school->name,
+                    'from' => $getnbeacInfo->email,
+                    'from_name' => $getnbeacInfo->name,
+                ];
+//                    dd($mailInfo);
+                Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'], $mailInfo['to_name'])
+                        ->subject('Eligibility Screening Committee comments - ' . $mailInfo['school']);
+                    $message->from($mailInfo['from'], $mailInfo['from_name']);
+                });
+            }
+
+        return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
+        /////////////////// End Email to Business School //////////////////////
+    }
+
     /**
      * Display the specified resource.
      *
@@ -451,8 +484,26 @@ class EligibilityScreeningController extends Controller
         $eligibilityScreening = EligibilityScreening::all();
         return response()->json($eligibilityScreening);
     }
+    public function getReport()
+    {
 
-    /**
+        $userInfo = Auth::user();
+        $registrations_reports = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('eligibility_reports as er', 'er.slip_id', '=', 's.id')
+            ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
+                'er.status as eligibility_status', 'er.id as report_id', 'er.comments', 'er.file')
+//                ->where('s.regStatus', 'Mentoring')
+//            ->where('s.business_school_id', $userInfo->campus_id)
+//            ->where('s.department_id', $userInfo->department_id)
+            ->get();
+
+        return view('eligibility_screening.scheduler_eligibility_report', compact('registrations_reports'));
+    }
+
+        /**
      * Display the specified resource.
      *
      * @param  \App\Models\EligibilityScreening\EligibilityScreening  $eligibilityScreening
