@@ -936,6 +936,10 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
 
           @endhasrole
+
+          @hasrole('ESScheduler')
+            <li  class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+          @endhasrole
           @hasrole('NBEACAdmin')
 
           <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}">
