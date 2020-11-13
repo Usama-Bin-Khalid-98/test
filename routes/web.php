@@ -244,7 +244,6 @@ Route::get('/email', function() {
             Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
             Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
             Route::patch('PeerReviewerReport/{id}', 'EligibilityScreeningController@update');
-            Route::get('eligibility-screening','EligibilityScreeningController@getReport');
 
         });
 
@@ -329,8 +328,9 @@ Route::get('/email', function() {
             Route::put('peerReviewStatus', 'InstituteFeedbackController@peerReviewStatus');
 
         });
-        Route::group(['middleware' => ['role:ESScheduler']], function () {
+        Route::group(['middleware' => ['role:ESScheduler|NBEACAdmin']], function () {
             Route::post('esReportToBusinessSchool', 'EligibilityScreeningController@esReportToSchool');
+            Route::get('eligibility-screening','EligibilityScreeningController@getReport');
 
         });
     });

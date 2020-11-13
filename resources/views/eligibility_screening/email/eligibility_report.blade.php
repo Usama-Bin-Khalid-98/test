@@ -389,7 +389,7 @@
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                Powered by <a href="http://htmlemail.io">NBEAC</a>.
+                                Powered by <a href="">NBEAC</a>.
                             </td>
                         </tr>
                     </table>
