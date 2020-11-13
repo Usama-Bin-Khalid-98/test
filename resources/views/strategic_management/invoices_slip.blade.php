@@ -179,7 +179,11 @@
                                 </tr>
                                 </thead>
                                 <tbody id="showRecord">
+                                @php $totalAmount = 0; @endphp
                                 @foreach($invoices as $invoice)
+                                    @php
+                                        $totalAmount+= $invoice->amount;
+                                    @endphp
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
                                     <td>{{@$invoice->amount}}</td>
@@ -200,7 +204,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Department</th>
-                                    <th>Fee amount</th>
+                                    <th style="color: rebeccapurple">Total: {{@$totalAmount}}</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
                                     <th>Slip</th>
@@ -553,7 +557,7 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                         // location.reload();
+                         location.reload();
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

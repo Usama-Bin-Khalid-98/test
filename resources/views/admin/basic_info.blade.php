@@ -75,8 +75,6 @@
                                             <p>This info will be used through out the app in prints/emails etc.</p>
                                         </li>
                                     </ol>
-
-
                                 </div>
                                 </div>
                             </div>

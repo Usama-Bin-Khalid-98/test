@@ -42,8 +42,6 @@ class FacultyStudentRatioController extends Controller
                 ->get();
         }
 
-
-
         $getFTE = FacultyTeachingCources::with('faculty_program')
             ->where('lookup_faculty_type_id' , 1)
             ->where('deleted_at', null)

@@ -114,7 +114,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="sample">Download Sample</label>
-                                        <a href=""><span href="" class="badge bg-green">Download</span></a>
+                                        <a href="{{url('uploads/mentoring_reports/sample/Sample-Mentor-Report-01-08-2019.pdf')}}" download=""><span class="badge bg-green">Download</span></a>
                                     </div>
                                 </div>
 
@@ -131,15 +131,11 @@
                                         <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                     </div>
                                 </div>
-
                             </form>
-
                             <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                         </div>
-
                     </div>
                     <!-- /.box -->
-
                 </section>
                 <!-- right col -->
 
@@ -209,7 +205,6 @@
 
                             <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                         </div>
-
                     </div>
                     <!-- /.box -->
 
@@ -296,7 +291,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
 
-                   location.reload();
+                   // location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception){

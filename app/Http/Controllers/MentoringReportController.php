@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
 use App\Models\Mentoring\MentoringReport;
 use App\Models\MentoringInvoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -53,6 +56,7 @@ class MentoringReportController extends Controller
         }
         try {
             $check = MentoringReport::where(['mentoring_invoice_id' => $request->mentoring_invoice_id, 'created_by' => Auth::id()])->exists();
+
             if(!$check) {
                 $imageName = '';
                 if ($request->file('file')) {
@@ -74,14 +78,57 @@ class MentoringReportController extends Controller
                         'sar_date' => $request->sar_date,
                     ]
                 );
-                if ($insert) {
-//                    if ($request->status === 'Approved'){
-//                        $update_slip = MentoringInvoice::find($request->mentoring_invoice_id)->update(['regStatus' => 'Mentoring']);
-//                    }
+                if ($insert->id)
+                {
+                    $getMentorInvoice = MentoringReport::with('mentoring_invoice')->where('id', $insert->id)->first();
 
-
+                    $docInfo = Slip::with('campus', 'department')->where(
+                            [
+                                'business_school_id'=> $getMentorInvoice->mentoring_invoice->campus_id,
+                                'department_id'=> $getMentorInvoice->mentoring_invoice->department_id
+                            ])->first();
+                    $getnbeacInfo = NbeacBasicInfo::first();
+//                    dd($docInfo);
                     ///////////////////// Email to Business School / NBEAC Admin //////////////////////
-                    ///
+                    /////////////////// Email to Business School //////////////////////
+                    $header = '<table cellspacing="0" style="border-collapse:collapse; width:100%">' .
+                        '<tbody>' .
+                        '<tr>' .
+                        '<td style="background-color:white; height:16px; vertical-align:top; width:100%">' .
+                        '<p><strong>Mr/Ms.  ' . @$docInfo->campus->user->name . '</strong><br />' .
+                        '<strong>'.'&nbsp;' . @$docInfo->department->name . '</strong><br />' .
+                        '<strong>' . @$docInfo->campus->business_school->name . '</strong></p>' .
+                        '</td>' .
+//                        '<td style="background-color:white; height:16px; vertical-align:top; width:50%">' .
+//            '    <p><strong>Ref. No: </strong><strong>KASBIT /NBEAC-ESC/15/3</strong><br />'.
+//                        '<strong>Dated: </strong><strong>' . date('Y-m-d') . '</strong></p>' .
+//                        '</td>' .
+                        '</tr>' .
+                        '</tbody>' .
+                        '</table>';
+
+                    $footer = '<p>Yours Sincerely,</p>' .
+                        '<p>&nbsp;</p>' .
+                        '<p>' . $getnbeacInfo->director . '</p>' .
+                        '<p>National Business Education Accreditation Council (NBEAC)</p>';
+///
+                    $data = ['letter' => $header.$request->comments.$footer];
+                    $slipInfo = $docInfo;
+                    $mailInfo = [
+                        'to' => $slipInfo->campus->user->email,
+                        'to_name' => $slipInfo->campus->user->name,
+                        'school' => $slipInfo->campus->business_school->name,
+                        'from' => $getnbeacInfo->email,
+                        'from_name' => $getnbeacInfo->name,
+                    ];
+//                    dd($mailInfo);
+                    Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                        //dd($user);
+                        $message->to($mailInfo['to'], $mailInfo['to_name'])
+                            ->subject('Mentoring Report of - ' . $mailInfo['school']);
+                        $message->from($mailInfo['from'], $mailInfo['from_name']);
+                    });
+
                     ///////////////////// End Email to Business School //////////////////////
 
 

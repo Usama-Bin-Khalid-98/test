@@ -28,8 +28,7 @@
             </ol>
         </section><!-- Main content -->
 
-
-        @hasrole('BusinessSchool')
+        @hasrole('ESScheduler|NBEACAdmin')
         <section class="content">
 
             <div class="row" >
@@ -66,7 +65,6 @@
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
                                 @foreach($registrations_reports as $screening)
                                     <tr>
@@ -77,7 +75,6 @@
                                          <td>{!!substr($screening->comments, 0, 100) !!}...</td>
                                         <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
                                         <td><i class="fa fa-list details" data-id="{{str_replace(array("\r\n", "\r", "\n"), "", $screening->comments)}}" data-toggle="modal" data-row='{"id":"{{$screening->report_id}}","school":"{{$screening->school}}","campus":"{{$screening->campus}}","department":"{{$screening->department}}","file":"{{$screening->file}}"}' data-target="#detail-modal"></i> </td>
-
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -90,6 +87,7 @@
                                     <th>Peer Reviewer Comments</th>
                                     <th>Status</th>
                                     <th>Action</th>
+
                                 </tr>
                                 </tfoot>
                             </table>
@@ -105,45 +103,42 @@
             </div>
             <!-- /.row (main row) -->
         </section>
-
-        <div class="modal fade" id="detail-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Eligibility Report Details. </h4>
-                    </div>
-                    <form role="form" id="updateForm" enctype="multipart/form-data">
-                        <div class="modal-body">
-                            <div class="modal-header">
-                                <p>University Name: <span id="uni-name"></span></p>
-                                <input type="hidden" id="report">
-                                <p>Campus: <span id="campus-name"></span></p>
-                                <p>Department: <span id="department-name"></span></p>
-                                {{--                            <p>University Name: <span id="uni-name"></span></p>--}}
-                            </div>
-                            <h4>Peer Reviewer Report</h4>
-                            <p id="comments"></p>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-
         @endhasrole
 
         <!-- /.content -->
     </div>
 
+    <div class="modal fade" id="detail-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Eligibility Report Details. </h4>
+                </div>
+                <form role="form" id="updateForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="modal-header">
+                            <p>University Name: <span id="uni-name"></span></p>
+                            <input type="hidden" id="report">
+                            <p>Campus: <span id="campus-name"></span></p>
+                            <p>Department: <span id="department-name"></span></p>
+{{--                            <p>University Name: <span id="uni-name"></span></p>--}}
+                        </div>
+                        <h4>Peer Reviewer Report</h4>
+                       <textarea id="comments"></textarea>
 
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="FRtoBusinessSchool" class="btn btn-info">Email To BS Admin</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("includes.footer")
@@ -158,7 +153,20 @@
 
 @endif
 
+@hasrole('ESScheduler|NBEACAdmin')
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    $('.select2').select2();
+    CKEDITOR.replace('comments',
+        {
+            height: '500px'
+        });
+
+
     $('.details').on('click', function () {
         let data = JSON.parse(JSON.stringify($(this).data('row')));
         let comment = JSON.parse(JSON.stringify($(this).data('id')));
@@ -169,74 +177,32 @@
         $('#department-name').text(data.department);
         console.log('data', comment);
         // $('#show-comments').html(comments);
-        $('#comments').html(comment);
+    CKEDITOR.instances.comments.setData(comment);
     })
-</script>
 
-@hasrole('PeerReviewer')
-<script>
-    $('.select2').select2();
+    $('#FRtoBusinessSchool').on('click', function () {
+        let comments = CKEDITOR.instances.comments.getData();
+        let id = $('#report').val();
+        // console.log('commemts here ',comments);
+        // return
+        $.ajax({
+            url:'{{url('esReportToBusinessSchool')}}',
+            type:'POST',
+            data:{id:id, comments:comments},
+            beforeSend:function() {
+                // Notiflix.loading.Pulse('Processing...');
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            success: function (response) {
+                Notiflix.Loading.Remove();
 
-    $(function () {
-        // Replace the <textarea id="editor1"> with a CKEditor
-        CKEDITOR.replace('comments');
-    });
-
-    $('#form').submit(function (e) {
-        var slip_id = $('#slip_id').val();
-        var comments = CKEDITOR.instances.comments.getData();
-        var file = $('#file').val();
-
-        !file?addClass('file'):removeClass('file');
-        !comments?addClass('comments'):removeClass('comments');
-        !slip_id?addClass('slip_id'):removeClass('slip_id');
-
-        if(!file || !slip_id || !comments)
-        {
-            Notiflix.Notify.Warning("Fill all the required Fields.");
-            return;
-        }
-        e.preventDefault();
-        let formData = new FormData(this)
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
-            // Yes button callback
-            $.ajax({
-                url:'{{url("PeerReviewerReport")}}',
-                type:'POST',
-                data: formData,
-                cache:false,
-                contentType:false,
-                processData:false,
-                beforeSend: function(){
-                    Notiflix.Loading.Pulse('Processing...');
-                },
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                success: function (response) {
-                    Notiflix.Loading.Remove();
-                    console.log("success resp ",response.success);
-                    if(response.success){
-                        Notiflix.Notify.Success(response.success);
-                    }
-
-                    location.reload();
-
-                    console.log('response here', response);
-                },
-                error:function(response, exception){
-                    Notiflix.Loading.Remove();
-                    $.each(response.responseJSON, function (index, val) {
-                        Notiflix.Notify.Failure(val);
-                    })
-
-                }
-            })
-    });
-
-
+                console.log('response here', response)
+            },
+            error: function () {
+                Notiflix.Notify.Failure('Something went wrong.')
+            }
+        })
+    })
 </script>
 
 @endhasrole

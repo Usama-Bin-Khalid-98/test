@@ -12,19 +12,29 @@ $budget = checkIsCompleted('App\Models\StrategicManagement\BudgetaryInfo', ['cam
 $mission = checkIsCompleted('App\Models\StrategicManagement\MissionVision', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $plan = checkIsCompleted('App\Models\StrategicManagement\StrategicPlan', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $parent = checkIsCompleted('App\Models\StrategicManagement\ParentInstitution', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$portfolio = checkIsCompleted('App\Models\StrategicManagement\ProgramPortfolio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$entry = checkIsCompleted('App\Models\StrategicManagement\EntryRequirement', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$application = checkIsCompleted('App\Models\StrategicManagement\ApplicationReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$app_receivd = checkIsCompleted('App\AppReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$portfolio = checkIsCompletedAllProg(
+    'App\Models\StrategicManagement\ProgramPortfolio',
+    ['campus_id' => Auth::user()->campus_id,
+    'department_id' => Auth::user()->department_id,
+    'status'=>'active','isComplete'=>'yes']
+    );
+$entry = checkIsCompletedAllProg(
+    'App\Models\StrategicManagement\EntryRequirement',
+    ['campus_id' => Auth::user()->campus_id,
+    'department_id' => Auth::user()->department_id,
+    'status'=>'active','isComplete'=>'yes']
+    );
+$application = checkIsCompletedAllProg('App\Models\StrategicManagement\ApplicationReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$app_receivd = checkIsCompletedAllProg('App\AppReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $enrolment = checkIsCompleted('App\Models\StrategicManagement\StudentEnrolment', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$graduated = checkIsCompleted('App\StudentsGraduated', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$gender = checkIsCompleted('App\StudentGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$graduated = checkIsCompletedAllProg('App\StudentsGraduated', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$gender = checkIsCompletedAllProg('App\StudentGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $bsf = checkIsCompleted('App\Models\Faculty\FacultySummary', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $workload = checkIsCompleted('App\Models\Faculty\WorkLoad', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isCompleted'=>'yes']);
 $visiting = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>3]);
 $visiting_perm = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>2]);
 $visiting_adjunct = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>1]);
-$ratio = checkIsCompleted('App\Models\Faculty\FacultyStudentRatio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes']);
+$ratio = checkIsCompletedAllProg('App\Models\Faculty\FacultyStudentRatio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes']);
 $stability = checkIsCompleted('App\Models\Faculty\FacultyStability', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active', 'isCompleted'=>'yes']);
 $facultygender = checkIsCompleted('App\Models\Faculty\FacultyGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isCompleted'=>'yes']);
 $research = checkIsCompleted('App\Models\Research\ResearchSummary', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -316,30 +326,35 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         <span class="text text-{{$portfolio==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$portfolio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a></li>
+                    </span></a>
+            </li>
               @if($isActiveSAR)
                   <li  class="{{ (request()->is('program-courses')) ? 'active' : '' }}"><a href="{{url('program-courses')}}">2.2 Program Courses<span class="pull-right-container">
                         <span class="text text-{{$program_courses==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$program_courses==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a></li>
+                    </span></a>
+                  </li>
               @else
             <li  class="{{ (request()->is('entry-requirements')) ? 'active' : '' }}"><a href="{{url('entry-requirements')}}">2.2 Entry Requirements<span class="pull-right-container">
-                        <span class="text text-{{$entry==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$entry==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a></li>
+                <span class="text text-{{$entry==='C'?'green':'red'}} pull-right">
+                    <i class="fa {{$entry==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                </span>
+            </span></a>
+            </li>
 
             <li  class="{{ (request()->is('application-received')) ? 'active' : '' }}"><a href="{{url('application-received')}}">2.3 Applications Received<span class="pull-right-container">
                         <span class="text text-{{$application==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$application==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a></li>
+                    </span></a>
+            </li>
               <li  class="{{ (request()->is('app-recvd')) ? 'active' : '' }}"><a href="{{url('app-recvd')}}">2.4 Application Received<span class="pull-right-container">
                         <span class="text text-{{$app_receivd==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$app_receivd==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a></li>
+                    </span></a>
+              </li>
               @endif
               @if($isActiveSAR)
                     <li  class="{{ (request()->is('curriculum-review')) ? 'active' : '' }}"><a href="{{url('curriculum-review')}}">2.3 Curriculum Review<span class="pull-right-container">
@@ -921,6 +936,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
 
           @endhasrole
+
+
           @hasrole('NBEACAdmin')
 
           <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}">
@@ -982,10 +999,9 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-check-square-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
-          @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-red"></i>Eligibility Screening</a></li>
+          @hasrole('ESScheduler|NBEACAdmin')
+          <li  class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
           @endhasrole
-
 
           @hasrole('PeerReviewer')
             <li class="{{(request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="fa fa-files-o text-yellow"></i>Eligibility Screening Report</a></li>

@@ -216,6 +216,7 @@ class MentoringInvoiceController extends Controller
             ->where('status', 'paid')
             ->orWhere('status', 'approved')
             ->get();
+//        dd($invoices);
         return view('mentoring.mentoring_invoices', compact('invoices'));
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mentoring\ScheduleMentorMeeting;
 use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
 use App\Models\MentoringMeeting;
 use App\Models\MentoringMentor;
 use App\User;
@@ -11,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
@@ -167,12 +169,53 @@ class ScheduleMentorMeetingController extends Controller
                     ]);
                     if ($insert) {
 
+                        $updateSlip = Slip::find($request->registrations)->update(['regStatus'=>'ScheduledMentoring']);
+
+//                        dd($updateSlip);
+                        $slipInfo = Slip::find($request->registrations);
+                        $getnbeacInfo = NbeacBasicInfo::first();
+                        $mailInfo = [
+                            'to' => $slipInfo->campus->user->email,
+                            'to_name' => $slipInfo->campus->user->name,
+                            'school' => $slipInfo->campus->business_school->name,
+                            'from' => $getnbeacInfo->email,
+                            'from_name' => $getnbeacInfo->name,
+                        ];
+
                         foreach ($request->user_id as $mentor)
                         {
                             $ESReviewers = MentoringMentor::create(['slip_id' => $request->registrations, 'user_id'=>$mentor, 'created_by'=>Auth::id()]);
                             //echo $reviewer;
+                            $getMentor = User::find($mentor);
+                            $letter = '<p>AOA, </p>'.
+                                '<p>Dear '. $slipInfo->campus->user->name.'</p>'.
+                                '<p><strong>The case of '.@$slipInfo->campus->business_school->name.' '.'.</strong> campus '.$slipInfo->campus->location.' department '.$slipInfo->department->name.' '.
+                                'has been assigned to you. please check mentoring calender and add your availability dates.';
+
+                            $data = ['letter' => $letter];
+//                    dd($mailInfo);
+                            Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                                //dd($user);
+                                $message->to($mailInfo['to'], $mailInfo['to_name'])
+                                    ->subject('Mentoring Schedule of ' . $mailInfo['school']);
+                                $message->from($mailInfo['from'], $mailInfo['from_name']);
+                            });
+
                         }
-                        $updateSlip = Slip::find($request->registrations)->update(['regStatus'=>'ScheduledMentoring']);
+
+                        $letter = '<p>AOA, </p>'.
+                            '<p>Dear '. $slipInfo->campus->user->name.'</p>'.
+                        '<p><strong>Mentoring for '.@$slipInfo->campus->business_school->name.' '.'.</strong> campus '.$slipInfo->campus->location.' department '.$slipInfo->department->name.' '.
+                            ' has been scheduled. generate mentoring invoice and select your availability dates in mentoring calendar';
+
+                        $data = ['letter' => $letter];
+//                    dd($mailInfo);
+                        Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                            //dd($user);
+                            $message->to($mailInfo['to'], $mailInfo['to_name'])
+                                ->subject('Mentoring Schedule of ' . $mailInfo['school']);
+                            $message->from($mailInfo['from'], $mailInfo['from_name']);
+                        });
                         return response()->json(['success' => 'Notification sent Successfully'], 200);
                     }
                 }

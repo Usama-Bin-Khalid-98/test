@@ -100,7 +100,7 @@ class EligibilityScreeningController extends Controller
                 ->join('departments as d', 'd.id', '=', 's.department_id')
                 ->join('eligibility_reports as er', 'er.slip_id', '=', 's.id')
                 ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
-                    'er.status as eligibility_status', 'er.comments', 'er.file')
+                    'er.status as eligibility_status','er.id as report_id', 'er.comments', 'er.file')
                 ->where('s.regStatus', 'ScheduledES')
                 ->orWhere('s.regStatus', 'ScheduledPR')
                 ->orWhere('s.regStatus', 'Mentoring')
@@ -150,10 +150,11 @@ class EligibilityScreeningController extends Controller
             '<p>&nbsp;</p>'.
             '<p>'.$getnbeacInfo->director.'</p>'.
             '<p>Senior Program Manager (NBEAC)</p>';
-        $deferred_letter = $header.
-            '<p><strong>Subject: '.@$docInfo->campus->business_school->name.'- Accreditation of '.$programs.'. </strong></p>'.
-            '<p>Dear '.@$docInfo->campus->user->name.',</p>'.
-            '<p>Reference to the registration application received for accreditation on August 9, 2019, this is to inform you that the Initial Eligibility Screening (IES) is completed by the Eligibility Screening Committee (ESC).</p>'.
+
+        $deferred_letter =
+//            '<p><strong>Subject: '.@$docInfo->campus->business_school->name.'- Accreditation of '.$programs.'. </strong></p>'.
+//            '<p>Dear '.@$docInfo->campus->user->name.',</p>'.
+//            '<p>Reference to the registration application received for accreditation on August 9, 2019, this is to inform you that the Initial Eligibility Screening (IES) is completed by the Eligibility Screening Committee (ESC).</p>'.
             '<ol>'.
             '<li><strong>The case of KASBIT, Karachi has been deferred till the 09th ESC meeting to be held in Jan 2020.&nbsp;&nbsp; </strong></li>'.
             '<li>The University must avail mentorship to accomplish the following areas of improvement/recommendations:</li>'.
@@ -162,38 +163,38 @@ class EligibilityScreeningController extends Controller
             '<li>Several deficiencies have been observed in the profile of dean including the publication criteria, experience etc.</li>'.
             '<li>Following documents should be provided with the registration application in 9th ESC Meeting:'.
             '<ol>'.
-            '<li>CV of HoD and associate professor</li>'.
-            '<li>R&amp; D data for period of 2017 to 2019.</li>'.
+//            '<li>CV of HoD and associate professor</li>'.
+//            '<li>R&amp; D data for period of 2017 to 2019.</li>'.
             '</ol>'.
             '</li>'.
             '</ol>'.
             '<ol>'.
             '<li>Based on the above recommendations, it is decided that University should reapply after availing mentorship and fulfilling the major deficiencies, preferably for the 9th Eligibility Screening Committee Meeting. Deadline to submit the registration application is December 30th, 2019.</li>'.
             '<li>It is mandatory that the University seeks guidance through the process of pre- eligibility mentor visit (Section III of NBEAC Accreditation Process Manual). We can provide you expert opinion/ assistance through our mentors, who will facilitate you during the accreditation process. Therefore, kindly contact Ms. Sania Tufail at (92) 51 90800206, email: stufail@hec.gov.pk for further information and assistance.</li>'.
-            '</ol>'. $footer;
+            '</ol>';
 
-        $approval_letter = $header.
-            '<p><strong>Subject: '.@$docInfo->campus->business_school->name.' &ndash; Accreditation of '.$programs.' </strong></p>'.
+        $approval_letter =
+//            '<p><strong>Subject: '.@$docInfo->campus->business_school->name.' &ndash; Accreditation of '.$programs.' </strong></p>'.
 
-            '<p>&nbsp;</p>'.
-
-            '<p>Dear '.@$docInfo->campus->user->name.'</p>'.
-
-            '<p>Reference to the registration application received for accreditation dated August 23, 2019, this is to inform you that the Initial Eligibility Screening (IES) is completed by the Eligibility Screening Committee (ESC) in the 8th ESC Meeting held on Nov 28, 2019.</p>'.
+//            '<p>&nbsp;</p>'.
+//
+//            '<p>Dear '.@$docInfo->campus->user->name.'</p>'.
+//
+//            '<p>Reference to the registration application received for accreditation dated August 23, 2019, this is to inform you that the Initial Eligibility Screening (IES) is completed by the Eligibility Screening Committee (ESC) in the 8th ESC Meeting held on Nov 28, 2019.</p>'.
 
             '<ol>'.
                 '<li><strong>The case of '.@$docInfo->campus->business_school->name.' has qualified to enter the next stage of NBEAC accreditation process i.e. Self- Assessment Process.</strong></li>'.
                 '<li>Please note, that Dean is not from the management sciences field however, there are some resource limitations in public sector institutions. Therefore, ESC considers the process to continue as the University is having HoD with relevant qualification.</li>'.
                 '<li>It is requested to send us the completed Self-Assessment Proformae for BBA Hons. Program within 12 weeks. The due date for SAR submission is March 02, 2020. The Self-Assessment Proformae can be downloaded from: <a href="http://www.nbeac.org.pk/index.php/accreditation-2/policies-and-procedures">http://www.nbeac.org.pk/index.php/accreditation-2/policies-and-procedures</a>. It is recommended that the university refers to the NBEAC Accreditation Process Manual <a href="http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf">http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</a> for details regarding the important aspects and requirements for NBEAC accreditation.</li>'.
                 '<li>It is mandatory that the business school must seek the guidance through a process of pre-review mentorship (Section III of NBEAC Accreditation Process Manual). We can provide you expert opinion/ assistance through our mentors, who will facilitate you during the accreditation process. Therefore, kindly contact Ms. Sania Tufail at (92) 51 90800206, email: stufail@hec.gov.pk for further information and assistance.</li>'.
-            '</ol>'.$footer;
+            '</ol>';
 
-        $conditional_approved = $header.
-'<p><strong>Subject: '.@$docInfo->campus->business_school->name.'- Accreditation of '.$programs.'.</strong></p>'.
+        $conditional_approved =
+//'<p><strong>Subject: '.@$docInfo->campus->business_school->name.'- Accreditation of '.$programs.'.</strong></p>'.
 
-'<p>&nbsp;Dear '.@$docInfo->campus->user->name.',</p>'.
+//'<p>&nbsp;Dear '.@$docInfo->campus->user->name.',</p>'.
 
-'<p>Reference to the registration application received for accreditation dated May 16, 2019, this is to inform you that the Initial Eligibility Screening (IES) is completed by the Eligibility Screening Committee (ESC) in the 8th ESC Meeting held on Nov 28, 2019.</p>'.
+//'<p>Reference to the registration application received for accreditation dated May 16, 2019, this is to inform you that the Initial Eligibility Screening (IES) is completed by the Eligibility Screening Committee (ESC) in the 8th ESC Meeting held on Nov 28, 2019.</p>'.
 
 '<ol>'.
 	'<li><strong>The case of '.@$docInfo->campus->business_school->name.' shall be reconsidered once the business school updates the current situation of the department w.r.t the mentor&rsquo;s recommendations along with the accomplishment of following recommendations:</strong></li>'.
@@ -204,8 +205,8 @@ class EligibilityScreeningController extends Controller
 	'</ol>'.
 	'</li>'.
 	'<li>Based on the above observations, it is decided that the mentor shall review the progress report and provide the go-ahead to proceed further.</li>'.
-	'<li>It is recommended that the university refers to the NBEAC Accreditation Process Manual <a href="http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf">http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</a> for details regarding the important aspects and requirements for NBEAC accreditation.</li>'.
-'</ol>'.$footer;
+//	'<li>It is recommended that the university refers to the NBEAC Accreditation Process Manual <a href="http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf">http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</a> for details regarding the important aspects and requirements for NBEAC accreditation.</li>'.
+'</ol>';
 
 //        dd($registrations_reports);
         return view('eligibility_screening.eligibility_report', compact('registrations','deferred_letter','approval_letter','conditional_approved', 'registrations_reports'));
@@ -301,6 +302,7 @@ class EligibilityScreeningController extends Controller
                     $start = Carbon::parse(trim($dateArray[0]));
                     $end = Carbon::parse(trim($dateArray[1]));
                     //
+
                     $insert = EligibilityScreening::create([
                         'campus_id' => $getSchoolInfo->business_school_id,
                         'department_id' => $getSchoolInfo->department_id,
@@ -386,43 +388,6 @@ class EligibilityScreeningController extends Controller
                         $update_slip = Slip::find($request->slip_id)->update(['regStatus' => 'Mentoring']);
                     }
 
-
-                    $getnbeacInfo = NbeacBasicInfo::first();
-                    $getPrograms = Scope::with('program')->where(
-                        [
-                            'campus_id' => $slipInfo->business_school_id,
-                            'department_id' => $slipInfo->department_id
-                        ])->get();
-
-                    $count = $getPrograms->count();
-                    $programs = '';
-                    foreach ($getPrograms as $key => $scope) {
-                        $programs .= $scope->program->name;
-                        if($key !== $count-1)
-                            $programs.=', ';
-                    }
-
-                    ///////////////////// Email to Business School //////////////////////
-                    $data= ['letter'=> $request->comments];
-                    $mailInfo = [
-                        'to' => $slipInfo->campus->user->email,
-                        'to_name' => $slipInfo->campus->user->name,
-                        'school' => $slipInfo->campus->business_school->name,
-                        'from' => $getnbeacInfo->email,
-                        'from_name' => $getnbeacInfo->name,
-                    ];
-//                    dd($mailInfo);
-                    Mail::send('eligibility_screening.email.eligibility_report', $data, function($message) use ($mailInfo) {
-                        //dd($user);
-                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                            ->subject('Eligibility Screening Committee comments - '. $mailInfo['school']);
-                        $message->from($mailInfo['from'],$mailInfo['from_name']);
-                    });
-
-                    return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
-                    ///////////////////// End Email to Business School //////////////////////
-
-
                     return response()->json(['success' => 'report added successfully.'], 200);
                 }
             }else{
@@ -437,6 +402,76 @@ class EligibilityScreeningController extends Controller
 
     }
 
+    public function esReportToSchool(Request $request)
+    {
+//        dd($request->all());
+
+            $getnbeacInfo = NbeacBasicInfo::first();
+
+            @$slip_id = EligibilityReport::find($request->id)->slip_id;
+            if($slip_id) {
+
+                $docInfo = Slip::with('campus', 'department')->find($slip_id);
+//                dd($slipInfo->business_school_id);
+
+                $getPrograms = Scope::with('program')->where(
+                    [
+                        'campus_id' => $docInfo->business_school_id,
+                        'department_id' => $docInfo->department_id
+                    ])->get();
+
+                $count = $getPrograms->count();
+                $programs = '';
+                foreach ($getPrograms as $key => $scope) {
+                    $programs .= $scope->program->name;
+                    if ($key !== $count - 1)
+                        $programs .= ', ';
+                }
+
+/////////////////// Email to Business School //////////////////////
+                $header = '<table cellspacing="0" style="border-collapse:collapse; width:80%">' .
+                    '<tbody>' .
+                    '<tr>' .
+                    '<td style="background-color:white; height:16px; vertical-align:top; width:80%">' .
+                    '<p><strong>Mr/Ms.  ' . @$docInfo->campus->user->name . '</strong><br />' .
+                    '<strong>' . @$docInfo->campus->user->designation->name . ',&nbsp; ' . @$docInfo->department->name . '</strong><br />' .
+                    '<strong>' . @$docInfo->campus->business_school->name . '</strong></p>' .
+                    '</td>' .
+                    '<td style="background-color:white; height:16px; vertical-align:top; width:50%">' .
+//            '    <p><strong>Ref. No: </strong><strong>KASBIT /NBEAC-ESC/15/3</strong><br />'.
+                    '<strong>Dated: </strong><strong>' . date('Y-m-d') . '</strong></p>' .
+                    '</td>' .
+                    '</tr>' .
+                    '</tbody>' .
+                    '</table>';
+
+                $footer = '<p>Yours Sincerely,</p>' .
+                    '<p>&nbsp;</p>' .
+                    '<p>' . $getnbeacInfo->director . '</p>' .
+                    '<p>Senior Program Manager (NBEAC)</p>';
+///
+                $data = ['letter' => $header.$request->comments.$footer];
+                $slipInfo = $docInfo;
+                $mailInfo = [
+                    'to' => $slipInfo->campus->user->email,
+                    'to_name' => $slipInfo->campus->user->name,
+                    'school' => $slipInfo->campus->business_school->name,
+                    'from' => $getnbeacInfo->email,
+                    'from_name' => $getnbeacInfo->name,
+                ];
+//                    dd($mailInfo);
+                Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'], $mailInfo['to_name'])
+                        ->subject('Eligibility Screening Committee comments - ' . $mailInfo['school']);
+                    $message->from($mailInfo['from'], $mailInfo['from_name']);
+                });
+            }
+
+        return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
+        /////////////////// End Email to Business School //////////////////////
+    }
+
     /**
      * Display the specified resource.
      *
@@ -449,8 +484,26 @@ class EligibilityScreeningController extends Controller
         $eligibilityScreening = EligibilityScreening::all();
         return response()->json($eligibilityScreening);
     }
+    public function getReport()
+    {
 
-    /**
+        $userInfo = Auth::user();
+        $registrations_reports = DB::table('slips as s')
+            ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+            ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+            ->join('departments as d', 'd.id', '=', 's.department_id')
+            ->join('eligibility_reports as er', 'er.slip_id', '=', 's.id')
+            ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
+                'er.status as eligibility_status', 'er.id as report_id', 'er.comments', 'er.file')
+//                ->where('s.regStatus', 'Mentoring')
+//            ->where('s.business_school_id', $userInfo->campus_id)
+//            ->where('s.department_id', $userInfo->department_id)
+            ->get();
+
+        return view('eligibility_screening.scheduler_eligibility_report', compact('registrations_reports'));
+    }
+
+        /**
      * Display the specified resource.
      *
      * @param  \App\Models\EligibilityScreening\EligibilityScreening  $eligibilityScreening

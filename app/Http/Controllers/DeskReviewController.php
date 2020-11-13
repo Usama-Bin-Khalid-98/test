@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\EligibilityStatus;
 use App\Models\Common\Slip;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\DeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
@@ -51,6 +52,7 @@ class DeskReviewController extends Controller
             ->join('users as u', 'u.id', '=', 's.created_by')
             ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId')
 //            ->where('s.reg')
+            ->where('s.regStatus', '!=', 'initiated')
             ->get();
         //dd($desk_reviews);
 
@@ -89,25 +91,46 @@ class DeskReviewController extends Controller
         @$business_school_user = Slip::where(['id' => $id])->get()->first();
         $campus_id = $business_school_user->business_school_id;
         $department_id = $business_school_user->department_id;
+        $scopes = Scope::with('program')->where(
+            [
+                'status'=> 'active',
+                'campus_id' => $campus_id,
+                'department_id' => $department_id
+            ])->get();
 //        dd($campus_id, ' dep', $department_id);
 
         $accreditation=  Scope::with('program')->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
 //      $accreditation=  Scope::where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])->get();
-        //dd($accreditation);
+//        dd($accreditation);
         $program_dates = [];
         foreach ($accreditation as $accred)
         {
             @$program_dates[$accred->id]['date_diff'] = $this->dateDifference($accred->date_program, date('Y-m-d'), '%y Year %m Month');
+            @$program_dates[$accred->id]['date_difference'] = $this->dateDifference($accred->date_program, date('Y-m-d'), '%y.%m');
             @$program_dates[$accred->id]['program'] = $accred->program->name;
+            @$program_dates[$accred->id]['program_id'] = $accred->program_id;
+            @$program_dates[$accred->id]['level_id'] = $accred->level_id;
             @$program_dates[$accred->id]['date'] = $accred->date_program;
         }
 
         $mission_vision = MissionVision::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
-//        dd($mission_vision);
         @$strategic_plan = StrategicPlan::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
-        @$application_received = ApplicationReceived::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+
+        @$strategic_plan['date_diff'] = $this->dateDifference($strategic_plan->plan_period_from, $strategic_plan->plan_period_to, '%y.%m');
+
+        @$application_received = ApplicationReceived::with('program', 'semester')
+            ->where(['campus_id' => $campus_id, 'department_id' => $department_id])
+            ->get();
+//dd($application_received);
         $student_enrolment = StudentEnrolment::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
         $graduated_students = StudentsGraduated::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
+
+        $getYears = BusinessSchoolTyear::where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
+        $graduated_students->tyear =@$getYears->tyear??'';
+        $graduated_students->year_t_1 =@$getYears->year_t_1??'';
+        $graduated_students->year_t_2 =@$getYears->year_t_2??'';
+//        dd($graduated_students);
+
 
         $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('number_faculty');
         $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
@@ -126,14 +149,131 @@ class DeskReviewController extends Controller
         $faculty_resigned = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('resigned');
         $faculty_retired = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('retired');
 
-        $total_courses = WorkLoad::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('total_courses');
+        $total_courses = WorkLoad::where(
+            [
+                'campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'
+            ]
+        )->get()->sum('total_courses');
 
+        $total_courses_prof = WorkLoad::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'designation_id'=> 10
+            ]
+        )->get()->sum('total_courses');
+
+        $total_courses_assoc = WorkLoad::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'designation_id'=> 1
+            ]
+        )->get()->sum('total_courses');
+
+        $total_courses_assis = WorkLoad::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'designation_id'=> 2
+            ]
+        )->get()->sum('total_courses');
+
+         $total_courses_lec = WorkLoad::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'designation_id'=> 6
+            ]
+        )->get()->sum('total_courses');
+
+//        dd($total_courses_lec);
         $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
         $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
 
-        $summaries = ResearchSummary::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get();
+        $summaries =[];
+        $summaries['impact_factor'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 1
+            ]
+        )->first()->total_items;
 
-        //dd($female_faculty);
+        $summaries['category_w'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 2
+            ]
+        )->first()->total_items;
+
+        $summaries['category_x'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 3
+            ]
+        )->first()->total_items;
+        $summaries['category_y'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 4
+            ]
+        )->first()->total_items;
+
+        $summaries['abs'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 5
+            ]
+        )->first()->total_items;
+        $summaries['other_list'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 5
+            ]
+        )->first()->total_items;
+        $summaries['conf_paper'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 6
+            ]
+        )->first()->total_items;
+
+        $summaries['conf_paper_inter'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 7
+            ]
+        )->first()->total_items;
+        $summaries['case_studies'] = ResearchSummary::where(
+            [
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'status' => 'active',
+                'publication_type_id'=> 10
+            ]
+        )->first()->total_items;
+
+//        dd($summaries);
 
         //dd($graduated_students);
         $strategic_date_diff = $this->dateDifference(@$strategic_plan->aproval_date, date('Y-m-d'), '%y Year %m Month');
@@ -165,8 +305,9 @@ class DeskReviewController extends Controller
             ->first();
 //        dd($getStudentComRatio);
 
-        $desk_rev= DeskReview::with('campus','department')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
-//        dd($desk_rev);
+        $desk_rev= Slip::with('campus','department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
+//        dd($desk_reviews);
+        $desk_reviews_report = DeskReview::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 
         return view('desk_review.desk_review', compact(
             'program_dates',
@@ -197,8 +338,14 @@ class DeskReviewController extends Controller
             'summaries',
             'nbeac_criteria',
             'desk_reviews',
+            'desk_reviews_report',
             'desk_rev',
-            'getStudentComRatio'
+            'getStudentComRatio',
+            'scopes',
+            'total_courses_prof',
+            'total_courses_assis',
+            'total_courses_assoc',
+            'total_courses_lec',
         ));
     }
     /**
@@ -295,6 +442,8 @@ class DeskReviewController extends Controller
      */
     public function edit(DeskReview $deskReview)
     {
+//        dd($deskReview->all());
+        return response()->json($deskReview->all(), 200);
         //
     }
 

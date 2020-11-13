@@ -95,7 +95,8 @@ class HomeController extends Controller
             ->join('departments as d', 'd.id', '=', 's.department_id')
             ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
             ->join('users as u', 'u.id', '=', 's.created_by')
-            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school')
+            ->select('s.*', 'c.location as campus', 'd.name as department',
+                'd.id as department_id', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as school_id')
             ->where('s.regStatus', 'Eligibility')
             ->orWhere('s.regStatus', 'ScheduledES')
             ->get();
@@ -135,7 +136,8 @@ class HomeController extends Controller
             ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
             ->join('e_s_reviewers as es', 'es.slip_id', '=', 's.id')
             ->join('users as u', 'u.id', '=', 'es.user_id')
-            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school')
+            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email',
+                'u.contact_no', 'bs.name as school', 'bs.id as school_id')
 //            ->where('s.regStatus', 'ScheduledES')
             ->where('es.user_id', Auth::id())
             ->where('s.regStatus','!=', 'Initiated')

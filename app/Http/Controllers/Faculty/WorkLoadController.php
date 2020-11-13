@@ -167,7 +167,7 @@ class WorkLoadController extends Controller
                     'masters' => $request->masters,
                     'bachleors' => $request->bachleors,
                     'admin_responsibilities' => $request->admin_responsibilities,
-                    'year_t' => $request->year_t,
+                    'year_t' => $request->edit_year_t,
                     'status' => $request->status,
                     'updated_by' => Auth::user()->id
                 ]);

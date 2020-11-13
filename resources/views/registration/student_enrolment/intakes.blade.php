@@ -24,17 +24,17 @@
                 <li class="active"> Students Intakes </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
+{{--        <section class="content-header">--}}
+{{--            <div class="col-md-12 new-button">--}}
+{{--                <div class="pull-right">--}}
+{{--                    <button class="btn gradient-bg-color"--}}
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+{{--                           style="color: white;"--}}
+{{--                           value="Add New"--}}
+{{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
@@ -91,7 +91,7 @@
                                     <input type="text" name="phd_level" id="phd_level" class="form-control">
                                 </div>
                             </div>
-                        
+
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">

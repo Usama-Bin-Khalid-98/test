@@ -62,6 +62,14 @@ class ScopeController extends Controller
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
 
+            $dateDifference = $this->dateDifference($request->date_program, date('Y-m-d'), '%y.%m');
+            if($request->level_id == 1 && $dateDifference < 3.5){
+                return response()->json(['error' => 'Graduated should be greater then 3.5 years.'], 422);
+            }
+            elseif($request->level_id == 2 && $dateDifference < 5.5){
+                return response()->json(['error' => 'Under-graduated should be greater then 5.5 years.'], 422);
+            }
+           // dd($dateDifference);
             $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip){
                 $type='SAR';
@@ -81,14 +89,30 @@ class ScopeController extends Controller
                 $campus_id = auth()->user()->campus_id;
                 $department_id = auth()->user()->department_id;
                 $created_id = auth()->user()->id;
-                $request->merge(['campus_id' => $campus_id,'department_id' => $department_id,'created_by'=>$created_id, 'isComplete' =>'yes','type'=>$type] );
+                $request->merge(
+                    [
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'created_by'=>$created_id,
+                    'isComplete' =>'yes',
+                    'type'=>$type] );
                 $create = Scope::create($request->all());
-                return response()->json(['success' => 'Updated successfully.'], 200);
+                return response()->json(['success' => 'Added successfully.'], 200);
             }
         }catch (Exception $e)
         {
             return response()->json($e->getMessage(), 400);
         }
+    }
+
+    function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' )
+    {
+//        dd($date_1,$date_2);
+        $datetime1 = date_create($date_1);
+        $datetime2 = date_create($date_2);
+        $interval = date_diff($datetime1, $datetime2);
+        return $interval->format($differenceFormat);
+
     }
 
     /**

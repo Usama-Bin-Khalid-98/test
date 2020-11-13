@@ -844,7 +844,7 @@
                 });
                 myCalendar.render();
                 $('#add-modal').modal('hide');
-                location.reload();
+                // location.reload();
                 console.log('response here', response);
             },
             error:function(response, exception){

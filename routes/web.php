@@ -57,6 +57,7 @@ Route::get('/email', function() {
             // Permissions resource route.
             // Route::resource('permissions', 'Auth\PermissionController');
             Route::resource('desk-review', 'DeskReviewController');
+            Route::get('desk-review-edit/{id}', 'DeskReviewController@edit');
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
             Route::resource('nbeac-criteria', 'NbeacCriteriaController');
@@ -243,6 +244,7 @@ Route::get('/email', function() {
             Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
             Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
             Route::patch('PeerReviewerReport/{id}', 'EligibilityScreeningController@update');
+
         });
 
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {
@@ -324,6 +326,11 @@ Route::get('/email', function() {
             Route::get('instituteFeedback', 'InstituteFeedbackController@index');
             Route::get('instituteFeedback/{id}', 'InstituteFeedbackController@edit');
             Route::put('peerReviewStatus', 'InstituteFeedbackController@peerReviewStatus');
+
+        });
+        Route::group(['middleware' => ['role:ESScheduler|NBEACAdmin']], function () {
+            Route::post('esReportToBusinessSchool', 'EligibilityScreeningController@esReportToSchool');
+            Route::get('eligibility-screening','EligibilityScreeningController@getReport');
 
         });
     });

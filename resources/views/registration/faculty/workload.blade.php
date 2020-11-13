@@ -229,7 +229,7 @@
                                     <th>Masters</th>
                                     <th>Bachelors</th>
                                     <th>Administrative Responsibility</th>
-                                    <th>Semester</th>
+                                    <th>Year</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -265,7 +265,7 @@
                                     <th>Masters</th>
                                     <th>Bachelors</th>
                                     <th>Administrative Responsibility</th>
-                                    <th>Semester</th>
+                                    <th>Year</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
