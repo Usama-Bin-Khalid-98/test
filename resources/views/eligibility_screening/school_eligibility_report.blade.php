@@ -63,6 +63,7 @@
                                     <th>Letter Doc</th>
                                     <th>Peer Reviewer Comments</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
 
@@ -75,6 +76,8 @@
                                          <td><a href="{{asset(@$screening->file)}}" >Doc File</a></td>
                                          <td>{!!substr($screening->comments, 0, 100) !!}...</td>
                                         <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
+                                        <td><i class="fa fa-list details" data-id="{{str_replace(array("\r\n", "\r", "\n"), "", $screening->comments)}}" data-toggle="modal" data-row='{"id":"{{$screening->report_id}}","school":"{{$screening->school}}","campus":"{{$screening->campus}}","department":"{{$screening->department}}","file":"{{$screening->file}}"}' data-target="#detail-modal"></i> </td>
+
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -86,6 +89,7 @@
                                     <th>Letter Doc</th>
                                     <th>Peer Reviewer Comments</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -101,6 +105,38 @@
             </div>
             <!-- /.row (main row) -->
         </section>
+
+        <div class="modal fade" id="detail-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Eligibility Report Details. </h4>
+                    </div>
+                    <form role="form" id="updateForm" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="modal-header">
+                                <p>University Name: <span id="uni-name"></span></p>
+                                <input type="hidden" id="report">
+                                <p>Campus: <span id="campus-name"></span></p>
+                                <p>Department: <span id="department-name"></span></p>
+                                {{--                            <p>University Name: <span id="uni-name"></span></p>--}}
+                            </div>
+                            <h4>Peer Reviewer Report</h4>
+                            <p id="comments"></p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
         @endhasrole
 
         <!-- /.content -->
@@ -122,6 +158,21 @@
 
 @endif
 
+<script>
+    $('.details').on('click', function () {
+        let data = JSON.parse(JSON.stringify($(this).data('row')));
+        let comment = JSON.parse(JSON.stringify($(this).data('id')));
+        $('#uni-name').text(data.id);
+        $('#uni-name').text(data.school);
+        $('#campus-name').text(data.campus);
+        $('#report').val(data.id);
+        $('#department-name').text(data.department);
+        console.log('data', comment);
+        // $('#show-comments').html(comments);
+        $('#comments').html(comment);
+    })
+</script>
+
 @hasrole('PeerReviewer')
 <script>
     $('.select2').select2();
@@ -130,6 +181,7 @@
         // Replace the <textarea id="editor1"> with a CKEditor
         CKEDITOR.replace('comments');
     });
+
     $('#form').submit(function (e) {
         var slip_id = $('#slip_id').val();
         var comments = CKEDITOR.instances.comments.getData();

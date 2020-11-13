@@ -937,9 +937,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 
           @endhasrole
 
-          @hasrole('ESScheduler')
-            <li  class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
-          @endhasrole
+
           @hasrole('NBEACAdmin')
 
           <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}">
@@ -1001,10 +999,9 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-check-square-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
-          @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('admin')}}"><i class="fa fa-laptop text-red"></i>Eligibility Screening</a></li>
+          @hasrole('ESScheduler|NBEACAdmin')
+          <li  class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
           @endhasrole
-
 
           @hasrole('PeerReviewer')
             <li class="{{(request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="fa fa-files-o text-yellow"></i>Eligibility Screening Report</a></li>

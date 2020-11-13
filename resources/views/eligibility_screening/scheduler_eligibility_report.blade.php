@@ -28,7 +28,7 @@
             </ol>
         </section><!-- Main content -->
 
-        @hasrole('ESScheduler')
+        @hasrole('ESScheduler|NBEACAdmin')
         <section class="content">
 
             <div class="row" >
@@ -108,7 +108,6 @@
         <!-- /.content -->
     </div>
 
-
     <div class="modal fade" id="detail-modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -141,9 +140,6 @@
         <!-- /.modal-dialog -->
     </div>
 
-
-
-
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("includes.footer")
     <!-- Select2 -->
@@ -157,7 +153,7 @@
 
 @endif
 
-@hasrole('ESScheduler')
+@hasrole('ESScheduler|NBEACAdmin')
 <script>
     $.ajaxSetup({
         headers: {

@@ -24,7 +24,7 @@ class SchoolEligibilityReportController extends Controller
             ->join('departments as d', 'd.id', '=', 's.department_id')
             ->join('eligibility_reports as er', 'er.slip_id', '=', 's.id')
             ->select('s.*', 'c.location as campus', 'bs.name as school', 'd.name as department',
-                'er.status as eligibility_status', 'er.comments', 'er.file')
+                'er.status as eligibility_status', 'er.comments', 'er.file', 'er.id as report_id')
 //                ->where('s.regStatus', 'Mentoring')
             ->where('s.business_school_id', $userInfo->campus_id)
             ->where('s.department_id', $userInfo->department_id)
