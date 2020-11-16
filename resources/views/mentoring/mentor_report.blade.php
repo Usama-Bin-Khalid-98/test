@@ -183,8 +183,9 @@
                                          <td>{!!substr($report->comments, 0, 100) !!}...</td>
 {{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$report->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
                                         <td>
-                                            @if($report->mentoring_invoice->regStatus !=='Initiated') <i class="badge bg-aqua" >Case Forwarded for SAR</i> @else <a data-id="{{$report->mentoring_invoice_id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar" >Forward For SAP</a> @endif
-                                            @if($report->mentoring_invoice->regStatus =='SAR') <a data-id="{{$report->mentoring_invoice_id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar_desk" >Forward For SAR Desk Review</a>  @endif
+                                            @if($report->mentoring_invoice->regStatus !=='Initiated')
+                                                <i class="badge bg-aqua" >Case Forwarded for SAR</i> <br> @else <a data-id="{{$report->mentoring_invoice_id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar" >Forward For SAP</a> @endif
+                                            @if($report->mentoring_invoice->regStatus =='SAR') <a data-id="{{$report->mentoring_invoice_id}}" style="cursor: pointer;" class="btn-xs btn-success forward_sar_desk" >Forward For SAR Desk Review</a>  <br>@endif
                                         </td>
                                     </tr>
                                 @endforeach

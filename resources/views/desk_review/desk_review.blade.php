@@ -44,7 +44,7 @@
                             <h5><strong>Business School:</strong> {{$desk_reviews[0]->department}}</h5>
                             <h5><strong>Applied for:</strong>@foreach(@$scopes as $scope) {{@$scope->program->name}}  @if(!$loop->last) , @endif @endforeach</h5>
                             <h5><strong>Application Received Date:</strong> {{@$desk_reviews[0]->registration_date}} </h5>
-{{--                            <h5><strong>Basic Eligibility Criteria (1-6):</strong> Fulfilled/Not Fulfilled with Criteria Number</h5>--}}
+                            <p><a href="{{url('registrationPrint?cid=')}}{{@$desk_reviews[0]->business_school_id}}&bid={{$desk_reviews[0]->school_id}}&did={{$desk_reviews[0]->department_id}}"> <span class="badge bg-blue pull-right" >Registration Print</span> </a></p>
 
                             @foreach($program_dates as $programs)
                                 @if($programs['level_id'] == 1 && $programs['date_difference'] < 3.5)

@@ -930,12 +930,6 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
           @endhasrole
           @endif
-          @hasrole('BusinessSchool')
-            <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
-{{--          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>--}}
-          <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
-
-          @endhasrole
 
 
           @hasrole('NBEACAdmin')
@@ -997,10 +991,20 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
 {{--          @endif--}}
           @hasrole('NBEACAdmin')
-          <li  class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-check-square-o text-green"></i>Nbeac Criteria</a></li>
+          <li class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-check-square-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
           @hasrole('ESScheduler|NBEACAdmin')
-          <li  class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+          <li class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+          @endhasrole
+          @hasrole('BusinessSchool|NBEACAdmin')
+          <li class="{{ (request()->is('mentoring-report')) ? 'active' : '' }}"><a href="{{url('mentoring-report')}}"><i class="fa fa-folder-open" style="color: #FF631BD8" ></i>Mentoring Report</a></li>
+          @endhasrole
+
+          @hasrole('BusinessSchool')
+          <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+          {{--          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>--}}
+          <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
+
           @endhasrole
 
           @hasrole('PeerReviewer')
@@ -1010,7 +1014,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 
           @if(@$isFiveRegistrations >= 1)
           @hasanyrole('ESScheduler')
-          <li  class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-calendar text-yellow"></i>Eligibility Screening Scheduler</a></li>
+          <li class="{{ (request()->is('esScheduler-all')) ? 'active' : '' }}"><a href="{{url('esScheduler-all')}}"><i class="fa fa-calendar text-yellow"></i>Eligibility Screening Scheduler</a></li>
           @endhasrole
           @endif
 

@@ -288,7 +288,7 @@ class DeskReviewController extends Controller
         departments.name as department,
         users.name as user,
         users.email, users.contact_no,
-        business_schools.name as school
+        business_schools.name as school, business_schools.id as school_id
         FROM slips, campuses, departments, business_schools, users
         WHERE slips.business_school_id=campuses.id
         AND departments.id=slips.department_id
