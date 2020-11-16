@@ -291,7 +291,10 @@ Route::get('/email', function() {
 
         Route::group(['middleware' => ['role:Mentor|BusinessSchool']], function () {
             Route::post('mentorsAvailability', 'ScheduleMentorMeetingController@mentorsAvailability');
+        });
 
+        Route::group(['middleware' => ['role:BusinessSchool|NBEACAdmin']], function () {
+            Route::get('mentoring-report', 'MentoringReportController@getReports');
         });
 
         Route::group(['middleware' => ['role:Mentor|ESScheduler|BusinessSchool']], function () {
