@@ -174,7 +174,7 @@ class HomeController extends Controller
                 ->orWhere('s.regStatus', 'Mentoring')
 //                ->where('s.status', 'approved')
 //                ->where('u.id', Auth::id())
-                ->groupBy('s.id')
+                // ->groupBy('s.id')
                 ->get();
 //            dd($MentoringMeetings);
             }else {
