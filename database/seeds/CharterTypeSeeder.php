@@ -20,7 +20,7 @@ class CharterTypeSeeder extends Seeder
            'Gilgit Baltistan',
            'International',
            'Khyber Pakhthunkhwa',
-           'Panjab',
+           'Punjab',
            'Sindh'
        ];
 
