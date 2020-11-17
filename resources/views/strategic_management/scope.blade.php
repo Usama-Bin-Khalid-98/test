@@ -64,8 +64,12 @@
                                     <select id="program_id" class="form-control select2" style="width: 100%;">
                                         <option disabled selected >Select Program</option>
                                         @foreach($programs as $program)
-                                        <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
-                                        @endforeach
+                                        @if($isSAR)
+                                                <option value="{{$program->program->id}}" {{$program->program->id==old('program_id')?'selected':''}}>{{$program->program->name}}</option>
+                                            @else
+                                            <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
+                                        @endif
+                                                @endforeach
                                         <option>Other</option>
                                         </select>
                                 </div>

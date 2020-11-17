@@ -24,7 +24,7 @@ class SourcesFundingController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $amount = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('amount');
-        $percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('percent_share');
+        @$percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('percent_share')??0;
         $fundings = FundingSources::get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus'=>'SAR'])->first();
         if($slip){
