@@ -29,14 +29,22 @@ class ScopeController extends Controller
         $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
         $levels = Level::where('status', 'active')->get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        $isSAR = false;
         if($slip){
-            $scopes = Scope::with('level', 'program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+            $scopes = Scope::with('level', 'program')
+                ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+                ->where('type','SAR')
+                ->get();
+            $programs = Scope::with('program')
+                ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+                ->get();
+            $isSAR = true;
         }else {
             $scopes = Scope::with('level', 'program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
 
         //dd($programs);
-        return view('strategic_management.scope', compact('programs', 'levels', 'scopes'));
+        return view('strategic_management.scope', compact('programs', 'levels', 'scopes', 'isSAR'));
     }
 
     /**
