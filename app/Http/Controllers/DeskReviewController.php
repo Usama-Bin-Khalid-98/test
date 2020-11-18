@@ -345,7 +345,7 @@ class DeskReviewController extends Controller
             'total_courses_prof',
             'total_courses_assis',
             'total_courses_assoc',
-            'total_courses_lec',
+            'total_courses_lec'
         ));
     }
     /**
