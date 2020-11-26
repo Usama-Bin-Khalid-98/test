@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMentoringMeetingsTable extends Migration
+class CreateSummarizePoliciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateMentoringMeetingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mentoring_meetings', function (Blueprint $table) {
+        Schema::create('summarize_policies', function (Blueprint $table) {
             $table->id();
-            $table->integer('campus_id')->unsigned()->nullable();
+            $table->integer('campus_id')->unsigned();
             $table->foreign('campus_id')
                 ->references('id')
                 ->on('campuses');
@@ -23,18 +23,9 @@ class CreateMentoringMeetingsTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->integer('slip_id')->unsigned()->nullable();
-            $table->foreign('slip_id')
-                ->references('id')
-                ->on('slips');
-            $table->string('title', 255);
-            $table->dateTime('start');
-            $table->dateTime('end');
-            $table->string('allDay', 100)->nullable();
-            $table->string('url', 255)->nullable();
-            $table->string('backgroundColor', 20)->nullable();
-            $table->string('borderColor', 20)->nullable();
-            $table->enum('status', ['active','inactive'])->default('active');
+            $table->text('summary');
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
@@ -48,7 +39,6 @@ class CreateMentoringMeetingsTable extends Migration
                 ->references('id')
                 ->on('users');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -59,6 +49,6 @@ class CreateMentoringMeetingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mentoring_meetings');
+        Schema::dropIfExists('summarize_policies');
     }
 }

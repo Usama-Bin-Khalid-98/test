@@ -1,6 +1,6 @@
 
 <div class="box-body table-responsive">
-                            <table   class="table table-bordered table-striped ">
+                            <table   class="table table-bordered table-striped " style="width: 100%">
                                 <caption style="text-align: center;color: red">Table 1.8. Approval of strategic plan</caption>
                                 <thead>
                                     <th>Period of the strategic plan</th>
@@ -15,11 +15,11 @@
                                         <td>{{$data->aproving_authority}}</td>
                                     </tr>
                                     @endforeach
-                              
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

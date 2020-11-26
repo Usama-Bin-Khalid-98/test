@@ -195,7 +195,7 @@ class MentoringInvoiceController extends Controller
             @$request->file('slip') ? $data['slip'] = $path . '/' . $filename : '';
             @$request->payment_method ? $data['payment_method_id'] = $request->payment_method : '';
             @$request->cheque_no ? $data['cheque_no'] = $request->cheque_no : '';
-            @$request->status ? $data['status'] = $request->status : '';
+            $data['status'] = 'paid';
             @$request->comments ? $data['comments'] = $request->comments : '';
             @$request->transaction_date ? $data['transaction_date'] = $request->transaction_date : '';
             $update = MentoringInvoice::find($request->id)->update($data);
@@ -226,8 +226,9 @@ class MentoringInvoiceController extends Controller
      * @param  \App\Models\MentoringInvoice  $mentoringInvoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MentoringInvoice $mentoringInvoice)
+    public function destroy($mentoringInvoice)
     {
-        //
+//        dd($mentoringInvoice);
+        return response()->json(MentoringInvoice::destroy($mentoringInvoice), 200);
     }
 }

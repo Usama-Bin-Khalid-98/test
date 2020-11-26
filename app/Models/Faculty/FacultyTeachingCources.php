@@ -2,6 +2,7 @@
 
 namespace App\Models\Faculty;
 
+use App\Models\Common\Department;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Common\Campus;
 use App\Models\Common\Designation;
@@ -24,6 +25,9 @@ class FacultyTeachingCources extends Model
 
     public function designation() {
         return $this->belongsTo(Designation::class);
+    }
+    public function department() {
+        return $this->belongsTo(Department::class);
     }
 
     public function faculty_program()

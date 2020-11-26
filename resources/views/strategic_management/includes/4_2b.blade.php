@@ -1,31 +1,28 @@
 
 <div class="box-body table-responsive">
-                            <table   class="table table-bordered table-striped ">
+                            <table   class="table table-bordered table-striped " style="width: 100%">
                                 <caption style="text-align: center;color: red">
 Table 4.2b. Faculty workload (t-1)
 </caption>
                                 <thead>
-                                    <th>No </th>
+                                    <th>No</th>
                                     <th>Name</th>
                                     <th>Designation</th>
                                     <th>Number of courses taught in all programs</th>
-                                    <th style="text-align: center;" colspan="3">Number of students supervised</th>
-                                    
+                                    <th colspan="3">Number of students supervised</th>
+
                                     <th>Administrative responsibility</th>
-                                    
+
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td> </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td colspan="4"></td>
                                         <td>PhD</td>
                                         <td>Masters</td>
                                         <td>Bachelors</td>
                                         <td></td>
-                                     
-                                     
+
+
                                     </tr><?php  ?>
                                     @foreach($facultyWorkLoadb as $data)
                                     <tr>
@@ -37,19 +34,19 @@ Table 4.2b. Faculty workload (t-1)
                                         <td>{{$data->masters}}</td>
                                         <td>{{$data->bachleors}}</td>
                                         <td>{{$data->admin_responsibilities}}</td>
-                                     
-                                     
+
+
                                     </tr>
                                     @endforeach
-                                     
-                                   
-                                   
-                                    
-                              
+
+
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

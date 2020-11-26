@@ -127,7 +127,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
+    @hasrole('ESScheduler')
     <div class="modal fade" id="add-modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -196,7 +196,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-
+    @endhasrole
     <div class="modal fade" id="peerReviewer-modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -207,6 +207,7 @@
                 </div>
                 <form role="form" id="updateForm" enctype="multipart/form-data">
                     <div class="modal-body">
+                        <div class="col-md-12">
                         <div class="form-group">
                             <label>Select dates on which you are available.</label>
                             <div class="input-group">
@@ -218,6 +219,21 @@
                             </div>
                             <!-- /.input group -->
                         </div>
+                        </div>
+                        @hasrole('BusinessSchool')
+                        <div class="col-md-12">
+                        <div class="form-group">
+                                <label>Select Mentors</label>
+                            <div class="input-group col-md-12">
+                                <select class="form-control select2" name="mentors" id="mentors" multiple="multiple" data-placeholder="Select a Mentor" style="width: 100%;">
+                                    @foreach(@$mentors as $mentor)
+                                        <option value="{{@$mentor->id}}" @foreach($MeetingMentors as $select)  {{$select->user_id == $mentor->id ? 'selected':''}} @endforeach >{{@$mentor->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        </div>
+                        @endhasrole
                         <!-- /.form group -->
 
                     </div>
@@ -416,12 +432,21 @@
     $('#add_availability').on('click', function () {
 
         let dates = $('#multiDatesPicker').val();
+        let mentors = $('#mentors').val();
         let mentorsmeeting_id = $('#mentorsmeeting_id').val();
         console.log('working on datepicker.....', dates);
+
+        !dates?addClass('multiDatesPicker'):removeClass('multiDatesPicker');
+        !mentors?addClass('mentors'):removeClass('mentors');
+
+        if(!mentors || !mentorsmeeting_id || !dates){
+            Notiflix.Notify.Failure('Select all required fields.');
+            return false;
+        }
         $.ajax({
             url:"{{url('mentorsAvailability')}}",
             type:"POST",
-            data: {dates:dates, mentorsmeeting_id:mentorsmeeting_id},
+            data: {dates:dates, mentorsmeeting_id:mentorsmeeting_id, mentors:mentors},
             beforeSend: function(){
                 Notiflix.Loading.Pulse('Processing...');
             },
@@ -432,7 +457,7 @@
                 console.log('response data here...', data);
                 //return false;
                 $('#peerReviewer-modal').modal('hide');
-                window.reload();
+                // window.reload();
 
             },
             error:function(response, exception){
@@ -495,9 +520,13 @@
                 meridiem: true
              },
 
-             customButtons: {
+
+              customButtons: {
                 addEventButton: {
-                    text: 'add Meeting...',
+                    @hasrole('ESScheduler')
+                    text: 'Add Meeting...',
+                    @endhasrole
+
                     click: function() {
                         $('#add-modal').modal('show');
                        // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
@@ -513,7 +542,8 @@
                         // } else {
                         //     alert('Invalid date.');
                         // }
-                    }
+                    },
+
                 }
             }
         });

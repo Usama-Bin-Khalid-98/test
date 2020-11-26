@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Common\Slip;
+use App\Models\StrategicManagement\SummarizePolicy;
 use App\User;
 use App\BusinessSchool;
 use App\Models\Common\Campus;
@@ -48,7 +49,7 @@ class PrintController extends Controller
          $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
 
           $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND financial_infos.type="SAR" AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( $req->cid));
-
+          $summary_policy = SummarizePolicy::where(['campus_id' => $req->cid, 'status'=> 'active'])->first();
 
          $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.type="SAR" AND strategic_plans.campus_id=?', array($req->cid));
 
@@ -270,7 +271,7 @@ AND faculty_student_ratio.type=?',
          $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
           $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND financial_infos.type="SAR" AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( auth()->user()->campus_id));
-
+            $summary_policy = SummarizePolicy::where(['campus_id' => auth()->user()->campus_id, 'status'=> 'active', 'department_id'=> auth()->user()->department_id])->first();
 
          $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.type="SAR" AND strategic_plans.campus_id=?', array(auth()->user()->campus_id));
 
@@ -471,7 +472,7 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
 
 
 
-        return view('strategic_management.printAll', compact('classSize','studentsFinancial','PoMappings','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','PoPLOMappings','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
+        return view('strategic_management.printAll', compact('classSize','summary_policy','studentsFinancial','PoMappings','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','PoPLOMappings','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
     }
 
 

@@ -1,6 +1,6 @@
 
 <div class="box-body table-responsive">
-                            <table   class="table table-bordered table-striped ">
+                            <table   class="table table-bordered table-striped" style="width: 100%">
                                 <caption style="text-align: center;color: red">Table 1.2. Scope of accreditation</caption>
                                 <thead>
                                     <th>Degree Program</th>
@@ -15,11 +15,11 @@
                                         <td>{{$data->date_program}}</td>
                                     </tr>
                                    @endforeach
-                              
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

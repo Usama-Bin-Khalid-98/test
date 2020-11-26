@@ -54,12 +54,13 @@ class FacultyTeachingCourcesController extends Controller
 
         $getScope = Scope::with('program')->where($where)->get();
         if($getUrl =='faculty-teaching') {
-            $visitings = FacultyTeachingCources::with('campus', 'lookup_faculty_type', 'designation', 'faculty_program')
-                ->where($where)
+            $visitings = FacultyTeachingCources::with('campus','department', 'lookup_faculty_type', 'designation', 'faculty_program')
                 ->where('lookup_faculty_type_id', 1)
-                ->where('deleted_at', null)
                 ->orWhere('lookup_faculty_type_id', 2)
+                ->where($where)
                 ->get();
+//            dd($visitings);
+
         }else{
             $visitings = FacultyTeachingCources::with('campus', 'lookup_faculty_type', 'designation', 'faculty_program')
                 ->where($where)
@@ -78,7 +79,6 @@ class FacultyTeachingCourcesController extends Controller
 //           }
 //       }
 //
-//        dd($visitings);
 
 
          return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings', 'getScope'));

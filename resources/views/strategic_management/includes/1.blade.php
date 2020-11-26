@@ -9,10 +9,12 @@
                     @include('strategic_management.includes.1_4')
                     <br><p class="left">1.5.	Provide details in Table 1.5 about the names, designations and affiliations of all external members (academic/corporate/international) in each of the statutory bodies listed in Table 1.4.</p>
                     @include('strategic_management.includes.1_5')
-                    <br><p class="left">1.6.	Summarize policy of the business school to ensure administrative, academic financial autonomy to a reasonable extent. </p>
+                    <br><p class="left">1.6. Summarize policy of the business school to ensure administrative, academic financial autonomy to a reasonable extent. </p>
+                     <p class="left">{{ strip_tags(@$summary_policy->summary) }}</p>
+                    <br>
                     <p class="left">1.7.	Provide budgetary information of the business school in Table 1.6 (note that year t refers to the fiscal year in which the accreditation assessment visit is taking place)</p>
                     @include('strategic_management.includes.1_6')
-                    <br><p class="left">1.8.	Provide information on funding sources of the business school in Table 1.7. </p>
+                    <br><p class="left">1.8.	Provide information on funding sources of the business school in Table 1.8. </p>
                     @include('strategic_management.includes.1_7')
                     <br><p class="left">1.9.	Provide the latest audit report of the business school as Appendix -1C.</p>
                     <p class="left">1.10.	State the vision and mission of the university and of the business school. Describe the process of formation and approval of the vision and mission statements. Attach relevant pages of the official documents as Appendix-1D.</p>

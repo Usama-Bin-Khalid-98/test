@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;color: red">Table 1.7. Sources of funding</caption>
+                                <caption style="text-align: center;color: red">Table 1.8. Sources of funding</caption>
                                 <thead>
                                     <th>Sources of funding
                                         (A)
@@ -15,7 +15,7 @@
                                 <tbody>
                                     <?php
                                         $amount = $percentShare = 0;
-                                         
+
                                     ?>
                                     @foreach($sourceOfFunding as $data)
 

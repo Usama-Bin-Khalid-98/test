@@ -46,6 +46,7 @@ $sexchange = isCompletedSAR('App\Models\External_Linkages\StudentExchange', ['ca
 $fexchange = isCompletedSAR('App\Models\External_Linkages\FacultyExchange', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $obtained = isCompletedSAR('App\Models\External_Linkages\ObtainedInternship', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $placement = isCompletedSAR('App\Models\External_Linkages\PlacementActivity', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$summary_policy = isCompletedSAR('App\Models\StrategicManagement\SummarizePolicy', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $sources_funding = checkIsCompleted('App\Models\StrategicManagement\SourcesFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $audit_report = isCompletedSAR('App\Models\StrategicManagement\AuditReport', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $admission_office = isCompletedSAR('App\AdmissionOffice', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -210,7 +211,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 
           @if($invoices==='C')
           @hasrole('BusinessSchool')
-            <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
+            <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/summarize-policy'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
           <a href="{{url('strategic/basicinfo')}}" >
             <i class="fa fa-users " style="color: #D81B60"></i><span>1: Strategic Management</span>
              <span class="pull-right-container">
@@ -254,33 +255,44 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$affiliation==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}"><a href="{{url('strategic/budgetary-info')}}">1.6 Budgetary Information<span class="pull-right-container">
-                        <span class="text text-{{$budget==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$budget==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a></li>
                     @if($isActiveSAR)
-                        <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}">1.8 Sources of Funding <span class="pull-right-container">
-                        <span class="text text-{{$sources_funding==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$sources_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
+                        <li  class="{{ (request()->is('strategic/summarize-policy')) ? 'active' : '' }}">
+                            <a href="{{url('strategic/summarize-policy')}}">1.6 Summarize Policy <span class="pull-right-container">
+                            <span class="text text-{{$summary_policy==='C'?'green':'red'}} pull-right">
+                                <i class="fa {{$summary_policy==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                            </span>
                     </span></a></li>
-                        <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}">
-                            <a href="{{url('strategic/audit-report')}}">1.9 Audit Report
-                                <span class="pull-right-container">
-                                    <span class="text text-{{$audit_report==='C'?'green':'red'}} pull-right">
-                                        <i class="fa {{$audit_report==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                                    </span>
+            <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}">
+                <a href="{{url('strategic/budgetary-info')}}">{{$isActiveSAR? '1.7' : '1.6'}} Budgetary Information<span class="pull-right-container">
+                <span class="text text-{{$budget==='C'?'green':'red'}} pull-right">
+                    <i class="fa {{$budget==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                </span>
+                </span>
+                </a>
+            </li>
+
+
+                    <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}">1.8 Sources of Funding <span class="pull-right-container">
+                    <span class="text text-{{$sources_funding==='C'?'green':'red'}} pull-right">
+                        <i class="fa {{$sources_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                    </span></span></a>
+                    </li>
+                    <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}">
+                        <a href="{{url('strategic/audit-report')}}">1.9 Audit Report
+                            <span class="pull-right-container">
+                                <span class="text text-{{$audit_report==='C'?'green':'red'}} pull-right">
+                                    <i class="fa {{$audit_report==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                                 </span>
-                            </a></li>
-                        <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.10 Mission Vision
-                                <span class="pull-right-container">
-                                    <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
-                                        <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                                    </span>
+                            </span>
+                        </a></li>
+                    <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.10 Mission Vision
+                            <span class="pull-right-container">
+                                <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
+                                    <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                                 </span>
-                            </a>
-                        </li>
+                            </span>
+                        </a>
+                    </li>
                     @else
                         <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
                                 <span class="pull-right-container">
@@ -329,7 +341,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                     </span></a>
             </li>
               @if($isActiveSAR)
-                  <li  class="{{ (request()->is('program-courses')) ? 'active' : '' }}"><a href="{{url('program-courses')}}">2.2 Program Courses<span class="pull-right-container">
+                  <li  class="{{ (request()->is('program-portfolio')) ? 'active' : '' }}"><a href="{{url('program-portfolio')}}">2.2 Program Courses<span class="pull-right-container">
                         <span class="text text-{{$program_courses==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$program_courses==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -443,6 +455,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$enrolment==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @if(!$isActiveSAR)
             <li  class="{{ (request()->is('students-graduated')) ? 'active' : '' }}"><a href="{{url('students-graduated')}}">3.2 Students Graduated<span class="pull-right-container">
                         <span class="text text-{{$graduated==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$graduated==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -453,6 +466,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$gender==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+              @endif
 
             <!-- Below are the Tables For SAR  -->
               @if($isActiveSAR)
@@ -922,8 +936,6 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endif
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('registration-apply')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
-
-{{--             <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>--}}
           @endhasrole
           @if($isActiveSAR)
           @hasrole('BusinessSchool')
@@ -934,7 +946,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 
           @hasrole('NBEACAdmin')
 
-          <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}">
+          <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}">
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations / Invoices</span>
                   <span class="pull-right-container">
@@ -996,16 +1008,28 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasrole('ESScheduler|NBEACAdmin')
           <li class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
           @endhasrole
+
           @hasrole('BusinessSchool|NBEACAdmin')
-          <li class="{{ (request()->is('mentoring-report')) ? 'active' : '' }}"><a href="{{url('mentoring-report')}}"><i class="fa fa-folder-open" style="color: #FF631BD8" ></i>Mentoring Report</a></li>
-          @endhasrole
+          <li class=" treeview {{(request()->is('mentoring-report'))?'active':''}}{{(request()->is('peer-review-report'))?'active':''}}{{(request()->is('eligibility-screening-report'))?'active':''}}">
+              <a href="#">
+                  <i class="fa fa-folder-open text-blue"></i><span>Reports</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+          <li class="{{ (request()->is('mentoring-report')) ? 'active' : '' }}"><a href="{{url('mentoring-report')}}"><i class="fa fa-file" style="color: #FF631BD8" ></i>Mentoring Report</a></li>
+                  @hasrole('BusinessSchool')
+                  <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+                  {{--          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>--}}
+                  <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
 
-          @hasrole('BusinessSchool')
-          <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
-          {{--          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>--}}
-          <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
+                  @endhasrole
+              </ul>
+          </li>
+                  @endhasrole
 
-          @endhasrole
+
 
           @hasrole('PeerReviewer')
             <li class="{{(request()->is('home')) ? 'active' : '' }}"><a href="{{url('home')}}"><i class="fa fa-files-o text-yellow"></i>Eligibility Screening Report</a></li>
