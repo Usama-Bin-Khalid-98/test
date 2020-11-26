@@ -92,6 +92,7 @@ Route::get('/email', function() {
                 Route::resource('sources-funding','SourcesFundingController');
                 Route::resource('audit-report','AuditReportController');
                 Route::resource('parent-institution','ParentInstitutionController');
+                Route::resource('summarize-policy', 'SummarizePolicyController');
 
             });
 
@@ -260,7 +261,8 @@ Route::get('/email', function() {
             Route::get('mentoringInvoice/{id}','MentoringInvoiceController@invoice');
             Route::post('generateMentoringInvoice','MentoringInvoiceController@generateInvoice');
             Route::put('updateMentoringInvoice/{id}','MentoringInvoiceController@update');
-
+            Route::delete('mentoring-invoice/{id}', 'MentoringInvoiceController@destroy');
+            Route::get('mentoring-selection', 'MentoringInvoiceController@mentoring_selection');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {

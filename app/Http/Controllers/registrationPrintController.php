@@ -287,16 +287,16 @@ AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facilit
             // AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id,
             // auth()->user()->id));
 
-             $where = ['campus_id'=> $userInfo->campus_id, 'type' => 'REG'];
+             $where = ['campus_id'=> $userInfo->campus_id,'department_id'=>$userInfo->department_id, 'type' => 'REG'];
              $facultyTeachingCourses = FacultyTeachingCources::
              with('campus','lookup_faculty_type','designation', 'faculty_program')
-                 ->where($where)
                  ->where('lookup_faculty_type_id',  1)
                  ->orWhere('lookup_faculty_type_id',  2)
+                 ->where($where)
                  ->get();
 
 //             dd($facultyTeachingCourses);
-             $whereb = ['campus_id'=> $userInfo->campus_id, 'type' => 'REG', 'lookup_faculty_type_id' => 3];
+             $whereb = ['campus_id'=> $userInfo->campus_id,'department_id'=>$userInfo->department_id, 'type' => 'REG', 'lookup_faculty_type_id' => 3];
              $facultyTeachingCourses4b = FacultyTeachingCources::
              with('campus','lookup_faculty_type','designation', 'faculty_program')
                 ->where($whereb)->get();

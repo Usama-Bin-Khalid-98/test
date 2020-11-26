@@ -36,4 +36,5 @@ class MentoringInvoice extends Model
     {
         return $this->hasOne(MentoringReport::class);
     }
+ 
 }

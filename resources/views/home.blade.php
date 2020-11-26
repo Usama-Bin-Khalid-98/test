@@ -778,7 +778,7 @@
                                           </li>
 
                                           <li><h5>Apply for registration</h5>
-                                              <p>Apply for registration. when complete required forms from strategic management to Faculty Information. A registration requiest will be sent to NBEAC Admin. </p>
+                                              <p>Apply for registration. when complete required forms from strategic management to Facility Information. A registration request will be sent to NBEAC Admin. </p>
                                           </li>
                                       </ol>
 
@@ -1163,7 +1163,7 @@
 
       @hasrole('Mentor|ESScheduler|BusinessSchool')
       <!--Invoices list-->
-      @if(!empty($MentoringMeetings[0]->school))
+{{--      @if(!empty($MentoringMeetings[0]->school))--}}
       <section class="col-lg-12 connectedSortable">
           <!-- TO DO List -->
           <div class="box box-primary">
@@ -1197,12 +1197,12 @@
                       <tbody>
                       @foreach($MentoringMeetings as $mentorMeeting)
                           <tr>
-                              <td>{{@$mentorMeeting->school}}</td>
-                              <td>{{@$mentorMeeting->campus??'Main Campus'}}</td>
-                              <td>{{@$mentorMeeting->department}}</td>
+                              <td>{{@$mentorMeeting->campus->business_school->name}}</td>
+                              <td>{{@$mentorMeeting->campus->location??'Main Campus'}}</td>
+                              <td>{{@$mentorMeeting->department->name}}</td>
                               <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
 {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus_id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus->id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
                               <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' || $mentorMeeting->regStatus =='Mentoring' )
@@ -1234,7 +1234,7 @@
           <!-- /.box -->
 
       </section>
-      @endif
+{{--      @endif--}}
       <!-- right col -->
         @endhasrole
 

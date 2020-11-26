@@ -154,7 +154,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Scope of Accreditation.</h3>
+                            <h3 class="box-title">Mentoring Invoices.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -240,7 +240,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Scope of accreditation. </h4>
+                    <h4 class="modal-title">Edit invoice. </h4>
                 </div>
                 <form action="javascript:void(0)" role="form" id="update" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -299,7 +299,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" value="update" class="btn btn-info">
+                        <input type="submit" value="paid" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -379,18 +379,18 @@
                                             <input type="text" id="cheque_no" name="cheque_no" value="{{old('cheque_no')}}" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group" style="margin-bottom: 18px;">
-                                            <label for="type">{{ __('Status') }} : </label>
-                                            <select name="status" id="status" class="form-control select2">
+{{--                                    <div class="col-md-6">--}}
+{{--                                        <div class="form-group" style="margin-bottom: 18px;">--}}
+{{--                                            <label for="type">{{ __('Status') }} : </label>--}}
+{{--                                            <select name="status" id="status" class="form-control select2">--}}
 {{--                                                <option value="">Select Status</option>--}}
 {{--                                                <option value="active">Active</option>--}}
 {{--                                                <option value="inactive">Inactive</option>--}}
-                                                <option value="pending">Pending</option>
-                                                <option value="paid">Paid</option>
-                                            </select>
-                                        </div>
-                                    </div>
+{{--                                                <option value="pending">Pending</option>--}}
+{{--                                                <option value="paid">Paid</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="date">Mentoring Fee</label>
@@ -428,7 +428,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" value="update" name="submit" id="update-button" class="btn btn-info">
+                        <input type="submit" value="Paid" name="submit" id="update-button" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -524,7 +524,7 @@
             $('#transaction_date').val(data.transaction_date);
             $('#update_invoice_no').val(data.invoice_no);
             $('#payment_method').select2().val(data.payment_method_id).trigger('change');
-            $('#status').select2().val(data.status).trigger('change');
+            // $('#status').select2().val(data.status).trigger('change');
             $('#cheque_no').val(data.cheque_no);
             $('#comments').val(data.comments);
         })
@@ -633,7 +633,7 @@
             console.log('type ', typeof data);
             // Initialize Select2
             $('#edit_invoice_id').select2().val(data.program_id).trigger('change');
-            $('#status').select2().val(data.status).trigger('change');
+            // $('#status').select2().val(data.status).trigger('change');
             $('#edit_transaction_date').val(data.date);
             $('#id').val(data.id);
             $('#old_name').text(data.slip);
@@ -644,7 +644,7 @@
             let program_id = $('#edit_program_id').val();
             let edit_transaction_date = $('#edit_transaction_date').val();
             let slip = $('#edit_slip').val();
-            let status = $('#status').val();
+            let status = 'paid';
             let id = $('#id').val();
 
             !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
@@ -694,9 +694,9 @@
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("strategic/invoices")}}/'+id,
+                        url:'{{url("mentoring-invoice")}}/'+id,
                         type:'DELETE',
-                        data: { id:id},
+                        // data: { id:id},
                         beforeSend: function(){
                             Notiflix.Loading.Pulse('Processing...');
                         },

@@ -39,6 +39,22 @@
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h4><i class="icon fa fa-sticky-note"></i>Note</h4>
+                            <ol type="1">
+                                <li>
+                                    <h5>Entry required for All programs.</h5>
+                                    <p>You can't submit your registration application, if data not entered for all the programs separately.</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
 

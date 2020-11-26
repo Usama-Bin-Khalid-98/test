@@ -54,9 +54,9 @@
             display: block;
             margin: 0 auto !important;
             /* makes it centered */
-            max-width: 580px;
-            padding: 10px;
-            width: 580px;
+            max-width: 100%;
+            padding: 5px;
+            width: 100%;
         }
 
         /* This should also be a block element, so that it will fill 100% of the .container */
@@ -64,8 +64,8 @@
             box-sizing: border-box;
             display: block;
             margin: 0 auto;
-            max-width: 580px;
-            padding: 10px;
+            max-width: 80%;
+            padding: 5px;
         }
 
         /* -------------------------------------

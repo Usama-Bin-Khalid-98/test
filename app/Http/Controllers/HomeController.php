@@ -165,19 +165,27 @@ class HomeController extends Controller
 
         if(Auth::user()->user_type=='Mentor') {
 //            dd('mentors ');
-            $MentoringMeetings = DB::table('slips as s')
-                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
-                ->join('departments as d', 'd.id', '=', 's.department_id')
-                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
-                ->leftJoin('mentoring_mentors as mm', 's.id', '=', 'mm.slip_id')
-//                ->join('users as u', 'u.id', '=', 'mm.user_id')
-                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'bs.name as school', 'bs.id as business_school_id')
-                ->where('s.regStatus', 'ScheduledMentoring')
-                ->orWhere('s.regStatus', 'Mentoring')
-//                ->where('s.status', 'approved')
-//                ->where('u.id', Auth::id())
-                ->groupBy('s.id')
-                ->get();
+//            $MentoringMeetings = DB::table('slips as s')
+//                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
+//                ->join('departments as d', 'd.id', '=', 's.department_id')
+//                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
+//                ->leftJoin('mentoring_mentors as mm', 's.id', '=', 'mm.slip_id')
+////                ->join('users as u', 'u.id', '=', 'mm.user_id')
+//                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'bs.name as school', 'bs.id as business_school_id')
+//                ->where('s.regStatus', 'ScheduledMentoring')
+//                ->orWhere('s.regStatus', 'Mentoring')
+////                ->where('s.status', 'approved')
+////                ->where('u.id', Auth::id())
+//                ->groupBy('s.id')
+//                ->get();
+
+                $MentoringMeetings = Slip::with('campus', 'department')
+//                    ->whereHas('mentoring_mentor', function ($q) {
+//                        $q->where('user_id', Auth::id());
+//                    })
+                    ->where('regStatus', 'ScheduledMentoring')
+                    ->orWhere('regStatus', 'Mentoring')
+                    ->get();
 //            dd($MentoringMeetings);
             }else {
             $MentoringMeetings = DB::table('slips as s')

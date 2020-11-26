@@ -186,27 +186,12 @@ class ScheduleMentorMeetingController extends Controller
                         {
                             $ESReviewers = MentoringMentor::create(['slip_id' => $request->registrations, 'user_id'=>$mentor, 'created_by'=>Auth::id()]);
                             //echo $reviewer;
-                            $getMentor = User::find($mentor);
-                            $letter = '<p>AOA, </p>'.
-                                '<p>Dear '. $slipInfo->campus->user->name.'</p>'.
-                                '<p><strong>The case of '.@$slipInfo->campus->business_school->name.' '.'.</strong> campus '.$slipInfo->campus->location.' department '.$slipInfo->department->name.' '.
-                                'has been assigned to you. please check mentoring calender and add your availability dates.';
-
-                            $data = ['letter' => $letter];
-//                    dd($mailInfo);
-                            Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
-                                //dd($user);
-                                $message->to($mailInfo['to'], $mailInfo['to_name'])
-                                    ->subject('Mentoring Schedule of ' . $mailInfo['school']);
-                                $message->from($mailInfo['from'], $mailInfo['from_name']);
-                            });
-
                         }
 
                         $letter = '<p>AOA, </p>'.
                             '<p>Dear '. $slipInfo->campus->user->name.'</p>'.
                         '<p><strong>Mentoring for '.@$slipInfo->campus->business_school->name.' '.'.</strong> campus '.$slipInfo->campus->location.' department '.$slipInfo->department->name.' '.
-                            ' has been scheduled. generate mentoring invoice and select your availability dates in mentoring calendar';
+                            ' has been scheduled. generate mentoring invoice and select your availability dates and mentors in mentoring calendar';
 
                         $data = ['letter' => $letter];
 //                    dd($mailInfo);
@@ -336,7 +321,44 @@ class ScheduleMentorMeetingController extends Controller
                         ]);
                     }
                 }
-                return response()->json(['success' => 'Your availability dates added Successfully'], 200);
+
+                if($request->mentors) {
+                    $slip_id = $getEvent->slip_id;
+                    $delete_old_mentors = MentoringMentor::where('slip_id', $slip_id)->delete();
+                    $slipInfo = Slip::with('campus', 'department')->find($slip_id)->first();
+                    if($delete_old_mentors) {
+                        foreach ($request->mentors as $mentor) {
+                            $getMentor = User::find($mentor);
+                            $letter = '<p>AOA, </p>'.
+                                '<p>Dear '. $getMentor->name.' </p>'.
+                                '<p><strong>The case of '.@$slipInfo->campus->business_school->name.' '.'.</strong> campus '.$slipInfo->campus->location.' department '.$slipInfo->department->name.' '.
+                                'has been assigned to you. please check mentoring calender and add your availability dates.';
+
+                            $data = ['letter' => $letter];
+                            $getnbeacInfo = NbeacBasicInfo::first();
+                            $mailInfo = [
+                                'to' => $slipInfo->campus->user->email,
+                                'to_name' => $slipInfo->campus->user->name,
+                                'school' => $slipInfo->campus->business_school->name,
+                                'from' => $getnbeacInfo->email,
+                                'from_name' => $getnbeacInfo->name,
+                            ];
+//                    dd($mailInfo);
+                            Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                                //dd($user);
+                                $message->to($mailInfo['to'], $mailInfo['to_name'])
+                                    ->subject('Mentoring Schedule of ' . $mailInfo['school']);
+                                $message->from($mailInfo['from'], $mailInfo['from_name']);
+                            });
+                            $insert_new = MentoringMentor::create(['slip_id' => $slip_id, 'user_id' => $mentor, 'created_by' => Auth::id()]);
+
+                        }
+                    }
+                }
+
+
+
+                return response()->json(['success' => 'Your availability dates and mentors added Successfully'], 200);
 //                dd($request->all());
             }catch (Exception $e)
             {

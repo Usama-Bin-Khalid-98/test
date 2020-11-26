@@ -3,6 +3,7 @@
 namespace App\Models\Common;
 
 use App\DepartmentFee;
+use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\MentoringInvoice;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -31,5 +32,8 @@ class Department extends Model
     public function mentoring_invoice()
     {
         return $this->hasOne(MentoringInvoice::class);
+    }
+    public function faculty_teaching_cources() {
+        return $this->hasOne(FacultyTeachingCources::class);
     }
 }

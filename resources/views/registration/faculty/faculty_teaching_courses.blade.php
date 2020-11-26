@@ -15,12 +15,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Visiting Faculty
+                Regular/Adjunct Faculty
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active">Visiting Faculty</li>
+                <li class="active">Regular/Adjunct Faculty</li>
             </ol>
         </section>
         <section class="content-header">

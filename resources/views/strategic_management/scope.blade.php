@@ -309,7 +309,7 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                        // setTimeout(() => location.reload(), 1000);
+                        setTimeout(() => location.reload(), 1000);
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

@@ -22,7 +22,7 @@
     }
 </style>
 <div class="box-body table-responsive">
-                            <table   class="table table-bordered table-striped ">
+                            <table   class="table table-bordered table-striped " style="width: 100%">
                                 <caption style="text-align: center;color: red">
 Table 6.1. Financial information of the business school
 </caption>
@@ -61,9 +61,9 @@ Table 6.1. Financial information of the business school
                                         <td>{{$data->year_t_plus_two}}</td>
                                     </tr><?php
                                       }?>
-                                      
+
                                       @endforeach
-                                      <tr> 
+                                      <tr>
                                         <td></td>
                                           <td><b>TOTAL REVENUE (A)</b></td>
                                           <td><b><?php echo $iyt_3; ?></b></td>
@@ -72,7 +72,7 @@ Table 6.1. Financial information of the business school
                                           <td><b><?php echo $iyt; ?></b></td>
                                           <td><b><?php echo $iyt_p1; ?></b></td>
                                           <td><b><?php echo $iyt_p2; ?></b></td>
-                                         
+
                                       </tr>
                                       @foreach($financialInfos as $data)
                                       <?php
@@ -96,7 +96,7 @@ Table 6.1. Financial information of the business school
                                       }
                                       ?>
                                     @endforeach
-                                   <tr> 
+                                   <tr>
                                         <td></td>
                                           <td><b>TOTAL EXPENSES  (B)</b></td>
                                           <td><b><?php echo $eyt_3; ?></b></td>
@@ -105,29 +105,29 @@ Table 6.1. Financial information of the business school
                                           <td><b><?php echo $eyt; ?></b></td>
                                           <td><b><?php echo $eyt_p1; ?></b></td>
                                           <td><b><?php echo $eyt_p2; ?></b></td>
-                                         
+
                                       </tr>
 
                                        <tr style="border: 1px solid black">
                                         <td></td>
                                         <td >ANNUAL BALANCE (A–B)</td>
-                                        <td><?php echo $iyt_3-$eyt_3;?></td> 
+                                        <td><?php echo $iyt_3-$eyt_3;?></td>
                                         <td><?php echo $iyt_2-$eyt_2;?></td>
-                                        <td><?php echo $iyt_1-$eyt_1;?></td> 
+                                        <td><?php echo $iyt_1-$eyt_1;?></td>
                                         <td><?php echo $iyt-$eyt;?></td>
                                         <td><?php echo $iyt_p1-$eyt_p1;?></td>
-                                        <td><?php echo $iyt_p2-$eyt_p2;?></td> 
-                                                                        
+                                        <td><?php echo $iyt_p2-$eyt_p2;?></td>
+
 
                                     </tr>
-                                   
 
-                                    
-                                  
-                                   
-                                   
-                                    
-                              
+
+
+
+
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
 

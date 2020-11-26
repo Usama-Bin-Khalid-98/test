@@ -209,7 +209,7 @@
 
                                                 <strong> b)	Faculty Portfolio (Section 4)</strong>
 
-                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Fulltime Faculty: {{@$faculty_summary}}</p>
+                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Full time Faculty: {{@$faculty_summary}}</p>
                                                 <p class="{{$getFullProfessors<1?'text-red':''}}" > <strong>d)</strong>	Professors: {{@$getFullProfessors}}</p>
                                                 <p class="{{$AssociateProfessors<1?'text-red':''}}"> <strong>e)</strong> Associate professors: {{@$AssociateProfessors}}</p>
                                                 <p class="{{$AssistantProfessors<3?'text-red':''}}"> <strong>f)</strong> Assistant professors: {{@$AssistantProfessors}}</p>
@@ -223,8 +223,8 @@
                                                     Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)) = </p>
                                                 <p> <strong>n)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s))</p>
                                                 <p> <strong>o)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4)</p>
-                                                <p> BBA (program1) = </p>
-                                                <p> MBA (program2) = </p>
+{{--                                                <p> BBA (program1) = </p>--}}
+{{--                                                <p> MBA (program2) = </p>--}}
                                                 <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction) = {{@$total_induction}}</p>
                                                 <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = {{@$faculty_resigned + @$faculty_terminated + @$faculty_retired}}</p>
                                                 <p> <strong>r)</strong>	FT:PT (as per table 4.3 a 4.3 b)=</p>
@@ -422,13 +422,13 @@
                                 <tr>
                                     <td>{{@$review->campus->business_school->name}}</td>
                                     <td>{{@$review->department->name}}</td>
-                                    <td>{{@$review->comments}}</td>
+                                    <td>{!! @$review->desk_review_comments !!}</td>
                                     <td><i class="badge {{@$review->isEligible == 'yes'?'bg-green':'bg-red'}}">{{@$review->isEligible == 'yes'?'Yes':'No'}}</i></td>
                                     @hasrole('NBEACAdmin')<td><i class="badge {{@$review->regStatus == 'Review'?'bg-green':'bg-red'}}">{{$review->regStatus?$review->regStatus:'Inactive'}}</i></td>@endhasrole
                                     @hasrole('NBEACAdmin')
                                     <td>
                                         <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i>|
-                                        <i data-id='{"id":{{$review->id}}}' data-row='{"comments":"{{$review->comments}}"}' class="fa fa-pencil text-blue edit"></i>
+                                        <i data-id='{"id":{{$review->id}}}' class="fa fa-pencil text-blue edit"></i>
                                     </td>
                                     @endhasrole
                                 </tr>
@@ -481,11 +481,13 @@
         $(function () {
             $('#datatable').DataTable()
         })
+
     </script>
     <script type="text/javascript">
 
         $('.select2').select2()
 
+        CKEDITOR.replace('comments');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -493,6 +495,9 @@
         });
 
         $('#add').on('click', function (e) {
+            for ( instance in CKEDITOR.instances ) {
+                CKEDITOR.instances[instance].updateElement();
+            }
             // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
             //console.log('submit button clicked', $('input:radio:checked'));
             //return;
@@ -521,7 +526,8 @@
             let eligibility_output = $('input[name="eligibility_output"]:checked').val();
             let eligibility_bandwidth = $('input[name="eligibility_bandwidth"]:checked').val();
             let eligibility_ratio = $('input[name="eligibility_ratio"]:checked').val();
-            let comments = $('#comments').val();
+            var comments = CKEDITOR.instances.comments.getData();
+
             console.log('eligibility_program values.........', eligibility_program);
             // let check = $('input[type="radio"]:checked');
             // console.log('check here',  check);
@@ -574,11 +580,12 @@
         $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
             let data = JSON.parse(JSON.stringify($(this).data('id')));
-            let data_row = JSON.parse(JSON.stringify($(this).data('row')));
-            console.log('json data', data_row);
+            // let data_row = JSON.parse(JSON.stringify($(this).data('row')));
+            // console.log('json data', data_row);
             // $('#edit_nbeac_criteria').val(data.nbeac_criteria);
             let id = data.id;
-            $('#comments').val(data_row.comments);
+            // $('#comments').val(data_row.comments);
+            CKEDITOR.instances.comments.setData('{!! @$desk_rev[0]->desk_review_comments !!}');
 
             $.ajax({
                 url:'{{url('desk-review-edit')}}/'+id,
