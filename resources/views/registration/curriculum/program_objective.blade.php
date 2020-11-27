@@ -59,7 +59,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Programs under review</label>
                                     <select name="program_id" id="program_id" class="form-control select2">
@@ -70,12 +70,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                                @for($i=1; $i<=5; $i++)
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                   <label for="name">Program objective</label>
-                                    <input type="text" name="po" id="po"  class="form-control">
+                                   <label for="name">PO {{$i}}</label>
+                                    <input type="text" name="po[]" id="po"  class="form-control">
                                 </div>
                             </div>
+                                @endfor
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -99,6 +101,7 @@
                                 <thead>
                                 <tr>
                                     <th>Program under review</th>
+                                    <th>POs</th>
                                     <th>Program objectives</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -108,16 +111,18 @@
                                  @foreach($summaries as $portfolio)
                                 <tr>
                                     <td>{{$portfolio->program->name}}</td>
+                                    <td>{{$portfolio->po_name}}</td>
                                     <td>{{$portfolio->po}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"program_id":"{{$portfolio->program_id}}","po":"{{$portfolio->po}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
-                                    
+
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>Program under review</th>
+                                    <th>POs</th>
                                     <th>Program objective</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -155,7 +160,7 @@
                                     </select>
                                 </div>
                             </div>
-                       
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                    <label for="name">Program objective</label>
@@ -163,7 +168,7 @@
                                 </div>
                                   <input type="hidden" id="edit_id">
                             </div>
-                    
+
 
                         <div class="col-md-6">
                             <div class="form-group">

@@ -53,16 +53,18 @@ class LearningOutcomeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-           LearningOutcome::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'program_id' => $request->program_id,
-                'plo' => $request->plo,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
-
+            foreach ($request->plo as $key => $plo) {
+                $counter = $key+1;
+                LearningOutcome::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'plo_name' => 'PLO'.$counter,
+                    'plo' => $plo,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
+                ]);
+            }
             return response()->json(['success' => 'Record added successfully.']);
 
 
@@ -135,7 +137,7 @@ class LearningOutcomeController extends Controller
     {
         try {
         LearningOutcome::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
         LearningOutcome::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);
