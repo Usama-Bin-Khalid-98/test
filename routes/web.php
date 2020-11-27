@@ -118,6 +118,10 @@ Route::get('/email', function() {
             Route::resource('program-delivery-method','ProgramDeliveryMethodController');
             Route::resource('evaluation-method','EvaluationMethodController');
             Route::resource('plagiarism-case','PlagiarismCaseController');
+            /////2.6
+            Route::resource('mapping-pos', 'MappingPosController');
+            Route::resource('checklist-document', 'ChecklistDocumentController');
+
 
             // Students
             Route::resource('student-enrolment','StudentEnrolmentController');

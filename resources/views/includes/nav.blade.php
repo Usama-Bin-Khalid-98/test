@@ -89,6 +89,7 @@ $program_delivery = isCompletedSAR('App\Models\Carriculum\ProgramDelivery', ['ca
 $question_paper = isCompletedSAR('App\Models\Carriculum\QuestionPaper', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $aligned_program = isCompletedSAR('App\Models\Carriculum\AlignedProgram', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $course_detail = isCompletedSAR('App\Models\Carriculum\CourseDetail', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$checklist_document = isCompletedSAR('App\Models\Carriculum\ChecklistDocument', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $course_outline = isCompletedSAR('App\Models\Carriculum\CourseOutline', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $plagiarism_case = isCompletedSAR('App\Models\Carriculum\PlagiarismCase', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $cultural_material = isCompletedSAR('App\Models\Carriculum\CulturalMaterial', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -98,6 +99,7 @@ $evaluation_method = isCompletedSAR('App\Models\Carriculum\EvaluationMethod', ['
 $curriculum_review = isCompletedSAR('App\Models\Carriculum\CurriculumReview', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $program_objective = isCompletedSAR('App\Models\Carriculum\ProgramObjective', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $learning_outcome = isCompletedSAR('App\Models\Carriculum\LearningOutcome', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$mapping_pos = isCompletedSAR('App\Models\Carriculum\MappingPos', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_membership = isCompletedSAR('App\Models\Faculty\FacultyMembership', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_exposure = isCompletedSAR('App\Models\Faculty\FacultyExposure', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $faculty_degree = isCompletedSAR('App\FacultyDegree', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -326,6 +328,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
         {{(request()->is('program-portfolio'))?'active':''}}
         {{(request()->is('entry-requirements'))?'active':''}}
         {{(request()->is('application-received'))?'active':''}}
+        {{(request()->is('checklist-document'))?'active':''}}
+        {{(request()->is('mapping-pos'))?'active':''}}
         {{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}{{(request()->is('program-objective'))?'active':''}}{{(request()->is('learning-outcome'))?'active':''}}{{(request()->is('managerial-skill'))?'active':''}}" >
           <a href="#">
             <i class="fa fa-file text-orange"></i><span>2: Curriculum</span>
@@ -384,6 +388,12 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$learning_outcome==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+
+                  <li  class="{{ (request()->is('mapping-pos')) ? 'active' : '' }}"><a href="{{url('mapping-pos')}}">2.6 Mapping POS/PLO's<span class="pull-right-container">
+                        <span class="text text-{{$mapping_pos==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$mapping_pos==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
                     <li  class="{{ (request()->is('aligned-program')) ? 'active' : '' }}"><a href="{{url('aligned-program')}}">2.7 Aligned Programs<span class="pull-right-container">
                         <span class="text text-{{$aligned_program==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$aligned_program==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
@@ -394,14 +404,20 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$course_outline==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-                    <li  class="{{ (request()->is('course-detail')) ? 'active' : '' }}"><a href="{{url('course-detail')}}">2.9 Course Detail<span class="pull-right-container">
+                  <li  class="{{ (request()->is('course-detail')) ? 'active' : '' }}"><a href="{{url('course-detail')}}">2.9 Course Detail<span class="pull-right-container">
                         <span class="text text-{{$course_detail==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$course_detail==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-                    <li  class="{{ (request()->is('cultural-material')) ? 'active' : '' }}"><a href="{{url('cultural-material')}}">2.10 Cultural Material<span class="pull-right-container">
+                  <li  class="{{ (request()->is('cultural-material')) ? 'active' : '' }}"><a href="{{url('cultural-material')}}">2.10 Cultural Material<span class="pull-right-container">
                         <span class="text text-{{$cultural_material==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$cultural_material==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+
+                  <li  class="{{ (request()->is('checklist-document')) ? 'active' : '' }}"><a href="{{url('checklist-document')}}">2.11 Docuemnt Checklist<span class="pull-right-container">
+                        <span class="text text-{{$checklist_document==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$checklist_document==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
                     <li  class="{{ (request()->is('managerial-skill')) ? 'active' : '' }}"><a href="{{url('managerial-skill')}}">2.12 Managerial Skill<span class="pull-right-container">
@@ -409,12 +425,12 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$managerial_skill==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-                    <li  class="{{ (request()->is('program-delivery-method')) ? 'active' : '' }}"><a href="{{url('program-delivery-method')}}">2.13 Program Delivery Method<span class="pull-right-container">
+                  <li  class="{{ (request()->is('program-delivery-method')) ? 'active' : '' }}"><a href="{{url('program-delivery-method')}}">2.13 Program Delivery Method<span class="pull-right-container">
                         <span class="text text-{{$program_delivery_method==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$program_delivery_method==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-                    <li  class="{{ (request()->is('evaluation-method')) ? 'active' : '' }}"><a href="{{url('evaluation-method')}}">2.14 Evaluation Method<span class="pull-right-container">
+                  <li  class="{{ (request()->is('evaluation-method')) ? 'active' : '' }}"><a href="{{url('evaluation-method')}}">2.14 Evaluation Method<span class="pull-right-container">
                         <span class="text text-{{$evaluation_method==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$evaluation_method==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -673,11 +689,15 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}">5.1 Research Summary<span class="pull-right-container">
+              @if(!$isActiveSAR)
+
+              <li  class="{{ (request()->is('research-summary')) ? 'active' : '' }}"><a href="{{url('research-summary')}}">5.1 Research Summary<span class="pull-right-container">
                         <span class="text text-{{$research==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$research==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
-                    </span></a></li>
+                    </span></a>
+            </li>
+              @endif
               {{--SAR Menu--}}
               @if($isActiveSAR)
                   <li  class="{{ (request()->is('oric')) ? 'active' : '' }}"><a href="{{url('oric')}}">5.1 Oric<span class="pull-right-container">
@@ -736,50 +756,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
         </li>
           @endhasrole
           @endif
-          @if($invoices==='C')
-          @hasrole('BusinessSchool')
-          <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('financial-risk'))?'active':''}}{{(request()->is('qec-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}}{{(request()->is('support-staff'))?'active':''}} ">
-          <a href="#">
-            <i class="fa fa-users text-orange" ></i><span>6: Facilities Information</span>
-             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}">6.1 Financial Info<span class="pull-right-container">
-                        <span class="text text-{{$financialinfo==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$financialinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a></li>
-             <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}">6.2 Business School Facility<span class="pull-right-container">
-                        <span class="text text-{{$bsfacility==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$bsfacility==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a>
-             </li>
-              @if($isActiveSAR)
-            <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}">7.2 Financial Risk<span class="pull-right-container">
-                        <span class="text text-{{$financialrisk==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$financialrisk==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a></li>
-            <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}">7.3 Support Staff<span class="pull-right-container">
-                        <span class="text text-{{$support_staff==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$support_staff==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a></li>
-            <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}">7.4 Qec Info<span class="pull-right-container">
-                        <span class="text text-{{$qecinfo==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$qecinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a>
-            </li>
-              @endif
 
-          </ul>
-        </li>
-          @endhasrole
-          @endif
           <!-- Below is the module included in SAR -->
           @if($isActiveSAR)
           @hasrole('BusinessSchool')
@@ -829,6 +806,57 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </ul>
         </li>
           @endhasrole
+          @endif
+
+          @if($invoices==='C')
+              @hasrole('BusinessSchool')
+              <li class=" treeview {{(request()->is('financial-info'))?'active':''}}{{(request()->is('financial-risk'))?'active':''}}{{(request()->is('qec-info'))?'active':''}}{{(request()->is('business-school-facility'))?'active':''}}{{(request()->is('support-staff'))?'active':''}} ">
+                  <a href="#">
+                      <i class="fa fa-users text-orange" ></i><span>{{$isActiveSAR?7:6}} Facilities Information</span>
+                      <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                  </a>
+                  <ul class="treeview-menu">
+                      <li  class="{{ (request()->is('financial-info')) ? 'active' : '' }}"><a href="{{url('financial-info')}}">{{$isActiveSAR?'7.1':'6.1'}} Financial Info<span class="pull-right-container">
+                        <span class="text text-{{$financialinfo==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$financialinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+
+                      @if($isActiveSAR)
+                          <li  class="{{ (request()->is('financial-risk')) ? 'active' : '' }}"><a href="{{url('financial-risk')}}">7.2 Financial Risk<span class="pull-right-container">
+                        <span class="text text-{{$financialrisk==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$financialrisk==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                          <li  class="{{ (request()->is('support-staff')) ? 'active' : '' }}"><a href="{{url('support-staff')}}">7.3 Support Staff<span class="pull-right-container">
+                        <span class="text text-{{$support_staff==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$support_staff==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
+                          <li  class="{{ (request()->is('qec-info')) ? 'active' : '' }}"><a href="{{url('qec-info')}}">7.4 Qec Info<span class="pull-right-container">
+                        <span class="text text-{{$qecinfo==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$qecinfo==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a>
+                          </li>
+                      @endif
+
+                      <li  class="{{ (request()->is('business-school-facility')) ? 'active' : '' }}"><a href="{{url('business-school-facility')}}">{{$isActiveSAR?'7.5':'6.2'}} Business School Facility<span class="pull-right-container">
+                        <span class="text text-{{$bsfacility==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$bsfacility==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a>
+                      </li>
+
+                  </ul>
+              </li>
+              @endhasrole
+          @endif
+
+
+          @if($isActiveSAR)
           @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('placement-office'))?'active':''}}{{(request()->is('linkages'))?'active':''}}{{(request()->is('body-meeting'))?'active':''}}{{(request()->is('student-exchange'))?'active':''}}{{(request()->is('faculty-exchange'))?'active':''}}{{(request()->is('obtained-internship'))?'active':''}}{{(request()->is('placement-activity'))?'active':''}}">
           <a href="#">
@@ -926,6 +954,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
           <!-- ///////////////////////////////////////////////////////////////////////////// -->
           @endif
+
           @hasrole('BusinessSchool')
             <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>
           @endhasrole

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use Auth;
+use function GuzzleHttp\Psr7\str;
 
 class ProgramObjectiveController extends Controller
 {
@@ -54,15 +55,23 @@ class ProgramObjectiveController extends Controller
         }
         try {
 
-            ProgramObjective::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'program_id' => $request->program_id,
-                'po' => $request->po,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+//            dd($request->all());
 
+            foreach ($request->po as $key=> $po) {
+
+//                dd($key);
+//                $counter = $key+1;
+//                dd($counter);
+                ProgramObjective::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'po_name' => "PO". ($key+1),
+                    'po' => $po,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
+                ]);
+            }
             return response()->json(['success' => 'Record added successfully.']);
 
 
@@ -135,7 +144,7 @@ class ProgramObjectiveController extends Controller
     {
         try {
             ProgramObjective::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             ProgramObjective::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);

@@ -528,6 +528,8 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
             //dd($registration_apply);
             $result = DB::update('update slips set isEligibleNBEAC=?, created_by=?, regStatus=? where id=?', array('yes',$user_id,'SAP',$id));
             //dd($result);
+
+
             return response()->json(['success' => 'Successfully Shared with NBEAC']);
 
             }catch (Exception $e)
