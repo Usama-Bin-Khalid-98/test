@@ -32,8 +32,6 @@ class MappingPosController extends Controller
         $getPOs = ProgramObjective::with('program')->where($where)->get();
             $mappings = MappingPos::where($where)->get();
 
-//            dd($mappings);
-//        dd($mappings[1]->program_id, $mappings[0]->learning_outcome_id , $mappings[1]->program_objective_id);
         return view('registration.curriculum.mapping_pos', compact('programs', 'getPLOs', 'getPOs', 'mappings'));
 
     }

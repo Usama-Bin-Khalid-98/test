@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carriculum\ChecklistDocument;
+use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 

@@ -267,6 +267,7 @@ Route::get('/email', function() {
             Route::put('updateMentoringInvoice/{id}','MentoringInvoiceController@update');
             Route::delete('mentoring-invoice/{id}', 'MentoringInvoiceController@destroy');
             Route::get('mentoring-selection', 'MentoringInvoiceController@mentoring_selection');
+            Route::resource('accreditation-invoices', 'SarInvoiceController');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {

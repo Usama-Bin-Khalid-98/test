@@ -2,7 +2,8 @@
 use \Illuminate\Support\Facades\Auth;
 $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
 $invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
-$Mentoringinvoice = checkIsCompleted('App\Models\MentoringInvoice', ['campus_id' => Auth::user()->campus_id, 'status'=>'approved' ]);
+$Mentoringinvoice = checkIsCompleted('App\Models\MentoringInvoice', ['campus_id' => Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
+$AccreditationInvoice = isCompletedSAR('App\Models\Sar\SarInvoice', ['campus_id' => Auth::user()->campus_id, 'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
 $basic_info = checkIsCompleted('App\BusinessSchool', ['id' => Auth::user()->business_school_id, 'status'=>'active','isCompleted'=>'yes']);
 $scope = checkIsCompleted('App\Models\StrategicManagement\Scope', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes' ]);
 $contact = checkIsCompleted('App\Models\StrategicManagement\ContactInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -177,7 +178,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
             </li>
           @endhasrole
           @hasrole('BusinessSchool')
-          <li class=" treeview {{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('mentoring-invoices'))?'active':''}} ">
+          <li class=" treeview {{(request()->is('strategic/invoices'))?'active':''}} {{(request()->is('accreditation-invoices'))?'active':''}} {{(request()->is('mentoring-invoices'))?'active':''}} ">
               <a href="#" >
                  <i class="fa fa-money " style="color: #D81B60"> </i><span>Registration</span>
                   <span class="pull-right-container">
@@ -202,6 +203,16 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                   <span class="pull-right-container">
                         <span class="text text-{{$Mentoringinvoice==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$Mentoringinvoice==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                  </span>
+              </a>
+          </li>
+          <li class="{{ (request()->is('accreditation-invoices')) ? 'active' : '' }} ">
+              <a href="{{url('accreditation-invoices')}}">
+                  <i class="fa fa-file-text-o" style="color: #D81B60"></i>Accreditation Invoices
+                  <span class="pull-right-container">
+                        <span class="text text-{{$AccreditationInvoice==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$AccreditationInvoice==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                   </span>
               </a>
@@ -975,7 +986,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 
           @hasrole('NBEACAdmin')
 
-          <li class=" treeview {{request()->is('registrations')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}">
+          <li class=" treeview {{request()->is('registrations')?'active':''}} {{request()->is('accreditation-invoices')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}">
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations / Invoices</span>
                   <span class="pull-right-container">
@@ -987,6 +998,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-registered text-green"></i>Registrations</a></li>
                   <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-money text-green"></i>Invoices List</a></li>
                   <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-money text-green"></i>Mentoring Invoices List</a></li>
+                  <li  class="{{ (request()->is('accreditation-invoices')) ? 'active' : '' }}"><a href="{{url('accreditation-invoices')}}"><i class="fa fa-money text-green"></i>Accreditation Invoices List</a></li>
               </ul>
           </li>
 
@@ -1013,7 +1025,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           </li>
           @endhasrole
           @hasanyrole('Mentor')
-          <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report on Registraion</a></li>
+          <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report on Registration</a></li>
           @endhasrole
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-files-o text-blue " ></i>Self Assessment Process Report</a></li>
