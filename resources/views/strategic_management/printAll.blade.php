@@ -13,7 +13,7 @@
     @include("../includes.header")
     <style type="text/css">
         table, th, td, thead{
-            border: 0.5px solid black !important; 
+            border: 0.5px solid black !important;
             border-collapse: collapse !important;
         }
     </style>
@@ -48,37 +48,41 @@
             <div class="row">
                 <div class="col-md-12">
 
-                   
+
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Print</h3>
                         </div>
                     <br><br><br><br>
-                    <p class="left_25">Name of University: ________________________________________________________</p>
-                    <p class="left_25">Name of Business School: ___________________________________________________</p>
-                    <p class="left_25">Program(s) for Review:  ______________________________________________________</p>
-                    <p class="left_25">Submission dates:  __________________________________________________________</p>
+                        <div style="text-align: center; font-size: 14px;">
+                            <p style="text-align: justify; margin-left: 10%;">
+                                Name of University: <span style="font-size: 12px;">{{$docHeaderData->campus->business_school->name??''}}</span>
+                                <br>Name of Business School: <span style="font-size: 12px;">{{$docHeaderData->department->name??''}}</span>
+                                <br>Program(s) for Review: <span style="font-size: 12px;"> @foreach($programsUnderReview as $program) {{$program->program->name}}, @endforeach</span>
+                                <br>Submission date:  <span style="font-size: 12px;">{{$docHeaderData->registration_date??''}}</span>
+                            </p>
+                        </div>
                     <br /><br />
                     <span class="center" ><h1><b>Self</b></h1></spans>
                     <div class="center"><h1><b>Assessment</b></h1></div>
                     <span class="center"><h1><b>Report</b></h1></spans>
                         <div class="center"><h1><b>(SAR)</b></h1></div>
                     <h5 style="text-align: center;height: 200px;">NBEAC</h5><br><hr>
-                    <p>The SAR is to be completed by the business school seeking accreditation from the  
+                    <p>The SAR is to be completed by the business school seeking accreditation from the
                     National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan
                     </p>
-                                        
+
                     <div class="row" style="page-break-after: always;">
-                         
-                        
+
+
                             <img  src="{{asset('/images/nbeacLogo.jpg')}}" width="100px">
-                         
-                        
+
+
                             <img src="{{asset('/images/HECLogo.jpg')}}" width="100px">
-                         
-                    
-                    
+
+
+
                     </div>
 
 
@@ -103,25 +107,25 @@
                             <li>9. Admission and Examination Policy----------------------------------------------------------------------------------29</li>
                         </ul>
                         </div>
-                    
+
                     <div class="row " style="position: relative;width: 100%">
                         <div style="position: absolute;left: 50px;top:20px">
-                         <img  width="100px" src="{{asset('/images/nbeacLogo.jpg')}}"> 
+                         <img  width="100px" src="{{asset('/images/nbeacLogo.jpg')}}">
                      </div>
                      <div class=" " style="position: absolute;right:50px;">
-                         <img class="right" width="100px" src="{{asset('/images/HECLogo.jpg')}}"> 
+                         <img class="right" width="100px" src="{{asset('/images/HECLogo.jpg')}}">
                     </div>
-                    
+
                     </div>
 
 
                     <br><br><br><br><br>
-                    
+
 
                     <h1>Perface</h1><br>
                     <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10">
                             <p class="justify">This document guides accreditation applicants in the provision of information based on which NBEAC may make an accreditation decision. Information is sought for nine standards listed below together with their weights in the total accreditation score in parentheses.  The more complete the data provided, the more accurate the assessment.</p>
                             <ol>
@@ -141,8 +145,8 @@
                             </p>
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div><br><br><br>
 
 
@@ -152,7 +156,7 @@
                         </div><br><br>
                         <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10">
                             <p class="left">1.  To ensure that the SAR is prepared in accordance with the relevant guidelines, please consult  Section IV of the NBEAC Accreditation Process Manual<a style="color: blue" href="https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf"> https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</a> before starting.</p>
                             <p class="left">2.  Please do not change the original text and structure of the SAR. However, where some illustrative data is shown in colored font, you are expected to replace it with actual data.</p>
@@ -170,8 +174,8 @@
                             </p>
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div>
                     </div><br><br><br><br><br>
 
@@ -183,7 +187,7 @@
                         </div><br><br>
                         <div class="row" style="page-break-after: always;">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10"><p class="left">I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below. </p>
                             <p class="left">1.  I confirm the accuracy of the information provided in the Self-Assessment Report (SAR). </p>
                             <p class="left">2.  I confirm that my institution will pay the NBEAC an accreditation fee as defined in the NBEAC Fee Schedule <a style="color: blue" href="https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2"> https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2</a> together with this application form. </p>
@@ -202,11 +206,11 @@
                             <p>City and country: ________________________________________________________________________________</p>
                             <p>Telephone: ______________________________________ Fax: __________________________________________</p>
 
-                            
+
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div>
                     </div><br><br><br><br><br>
                         <!-- /.box-header -->
@@ -248,7 +252,7 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Strategic Plan. </h4>
                 </div>
-               
+
             </div>
             <!-- /.modal-content -->
         </div>
@@ -256,7 +260,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

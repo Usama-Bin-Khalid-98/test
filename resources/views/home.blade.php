@@ -1111,6 +1111,7 @@
                           <th>Department</th>
                           <th>Desk Review</th>
                           <th>Registration Print</th>
+                          <th>SAR Print</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -1123,8 +1124,8 @@
                               <td>{{@$screening->campus??'Main Campus'}}</td>
                               <td>{{@$screening->department}}</td>
                               <td><a href="{{url('deskreview')}}/{{@$screening->id}}">Desk Review</a></td>
-{{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
                               <td><a href="{{url('registrationPrint?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->school_id}}&did={{$screening->department_id}}">Registration Print </a></td>
+                              <td><a href="{{url('print?cid=')}}{{@$screening->business_school_id}}&bid={{$screening->school_id}}&did={{$screening->department_id}}">SAR Print</a></td>
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
                               <td>@if($screening->regStatus =='Eligibility' || $screening->regStatus =='ScheduledES' )
@@ -1143,6 +1144,7 @@
                           <th>Department</th>
                           <th>Desk Review</th>
                           <th>Registration Print</th>
+                          <th>SAR Print</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
