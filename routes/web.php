@@ -92,6 +92,7 @@ Route::get('/email', function() {
                 Route::resource('sources-funding','SourcesFundingController');
                 Route::resource('audit-report','AuditReportController');
                 Route::resource('parent-institution','ParentInstitutionController');
+                Route::resource('summarize-policy', 'SummarizePolicyController');
 
             });
 
@@ -117,6 +118,10 @@ Route::get('/email', function() {
             Route::resource('program-delivery-method','ProgramDeliveryMethodController');
             Route::resource('evaluation-method','EvaluationMethodController');
             Route::resource('plagiarism-case','PlagiarismCaseController');
+            /////2.6
+            Route::resource('mapping-pos', 'MappingPosController');
+            Route::resource('checklist-document', 'ChecklistDocumentController');
+
 
             // Students
             Route::resource('student-enrolment','StudentEnrolmentController');
@@ -260,7 +265,11 @@ Route::get('/email', function() {
             Route::get('mentoringInvoice/{id}','MentoringInvoiceController@invoice');
             Route::post('generateMentoringInvoice','MentoringInvoiceController@generateInvoice');
             Route::put('updateMentoringInvoice/{id}','MentoringInvoiceController@update');
-
+            Route::delete('mentoring-invoice/{id}', 'MentoringInvoiceController@destroy');
+            Route::get('mentoring-selection', 'MentoringInvoiceController@mentoring_selection');
+            Route::resource('accreditation-invoices', 'SarInvoiceController');
+            Route::get('accreditation-invoices-list', 'SarInvoiceController@invoicesList');
+            Route::post('accreditation-invoice-Status', 'SarInvoiceController@update_status');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {

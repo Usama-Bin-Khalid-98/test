@@ -1,12 +1,12 @@
 
 <div class="box-body table-responsive">
-                            <table   class="table table-bordered table-striped ">
+                            <table   class="table table-bordered table-striped " style="width: 100%">
                                 <caption style="text-align: center;color: red">Table 1.4. Business school’s statutory committees</caption>
                                 <thead>
                                     <th>Body name</th>
                                     <th>Name and designation of Chairperson</th>
                                     <th colspan="4" >Dates of last four meetings</th>
-                                    
+
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -27,11 +27,11 @@
                                         <td>{{$data->date_fourth_meeting}}</td>
                                     </tr>
                                    @endforeach
-                              
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

@@ -15,6 +15,7 @@
         table, th, td, thead{
             border: 0.5px solid black !important;
             border-collapse: collapse !important;
+            width: 100%;
         }
     </style>
     @include("../includes.nav")
@@ -40,7 +41,7 @@
 {{--                           value="Add New"--}}
 {{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                             <button class="btn gradient-bg-color" style="color: white;" onclick="Export2Doc('printIDABC');">Export as .doc <i class="fa fa-file-word-o"></i></button>
-{{--                            <a class="btn btn-primary" href="{{ URL::to('/registrationPrintPdf') }}">Export to PDF</a>--}}
+                            <button class="btn btn-primary" id="printDev">Print</button>
                 </div>
             </div>
         </section>
@@ -427,6 +428,19 @@ $('#updateForm').submit(function (e) {
             document.body.removeChild(downloadLink);
         }
 
+        $('#printDev').on('click', function () {
+            var divToPrint=document.getElementById('printIDABC');
+
+            var newWin=window.open('','Print-Window');
+
+            newWin.document.open();
+
+            newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+            newWin.document.close();
+
+            setTimeout(function(){newWin.close();},10);
+        });
 
     </script>
 

@@ -1,6 +1,6 @@
 
 <div class="box-body table-responsive">
-                            <table   class="table table-bordered table-striped ">
+                            <table   class="table table-bordered table-striped " style="width: 100%">
                                 <caption style="text-align: center;color: red">Table 4.4. Student to teacher ratio</caption>
                                 <thead>
                                     <th>Program(s) under review</th>

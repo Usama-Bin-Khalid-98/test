@@ -1,8 +1,8 @@
 <div class="box-body table-responsive ">
-                            <table id=""  class="table table-bordered table-striped">
+                            <table id=""  class="table table-bordered table-striped" >
                                 <caption style="text-align: center;color: red">Table 1.1. Basic information of business school</caption>
                                 <thead>
-                                    
+
                                     <tr>
                                         <th>a)  Name of the university/parent institution</th>
                                         <th><?php if(isset($bussinessSchool[0]->name))
@@ -11,7 +11,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                               
+
                                 <tr class="left">
                                     <td>b)  Year of  establishment (university/parent institution)</td>
                                     <td><?php if(isset($bussinessSchool[0]->year_estb))
@@ -98,7 +98,7 @@
                                 </tr>
                                 <tr class="left">
                                     <td>p)  Number of other campuses (if any)</td>
-                                    <td><?php 
+                                    <td><?php
                                     ?>{{count($campuses)}}</td>
                                 </tr>
                                 <tr class="left">
@@ -108,11 +108,11 @@
                                         @endforeach
                                     </td>
                                 </tr>
-                              
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

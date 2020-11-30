@@ -292,7 +292,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
 
-                   // location.reload();
+                   location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception){

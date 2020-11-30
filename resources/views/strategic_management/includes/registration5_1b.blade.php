@@ -22,7 +22,7 @@
     }
 </style>
 <div class="box-body table-responsive">
-                            <table   class="table table-bordered table-striped ">
+                            <table   class="table table-bordered table-striped " style="width: 100%">
                                 <caption style="text-align: center;color: red">
 Table 5.1. Summary of research output
 </caption>
@@ -30,12 +30,12 @@ Table 5.1. Summary of research output
                                     <th class="" style="text-align: center;">Publication<br> category</th>
                                     <th>Publication type</th>
                                     <th>Year</th>
-                                    <th>Total number of items</th>                                    
+                                    <th>Total number of items</th>
                                     <th >Number of contributing core faculty members</th>
                                     <th>Number of items jointly produced in collaboration with other institutions</th>
                                     <th>Number of items jointly produced by more than 3 authors</th>
-                                     
-                                    
+
+
                                 </thead>
                                 <tbody>
                                     @foreach($researchOutput as $data)
@@ -49,13 +49,13 @@ Table 5.1. Summary of research output
                                         <td>{{$data->jointly_produced_multiple}}</td>
                                     </tr>
                                     @endforeach
-                                   
-                                    
-                              
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

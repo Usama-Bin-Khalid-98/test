@@ -1,6 +1,6 @@
 <h1 style="color: #0b97c4;">National Business Education Accreditation Council</h1>
 
-<p>Dear   Altaf ur Rehman</p>
+<p>Dear Altaf ur Rehman</p>
 <p>National College of Business Administration & Economics, Lahore</p>
 
 <p>Programs(Applied For) : BBA(Hons), MBA(1.5), MBA(2.5), MBA(3.5), EMBA</p>

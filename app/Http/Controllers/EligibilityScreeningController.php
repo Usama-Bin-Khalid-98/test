@@ -362,7 +362,7 @@ class EligibilityScreeningController extends Controller
         }
         try {
             $check = EligibilityReport::where(['slip_id' => $request->slip_id])->exists();
-            $slipInfo = Slip::with('campus')->where(['id' => $request->slip_id])->get()->first();
+            $slipInfo = Slip::with('campus', 'department')->where(['id' => $request->slip_id])->get()->first();
             if(!$check) {
                 $imageName = '';
                 $path = '';
@@ -386,6 +386,44 @@ class EligibilityScreeningController extends Controller
                 if ($insert) {
                     if ($request->status === 'Approved'){
                         $update_slip = Slip::find($request->slip_id)->update(['regStatus' => 'Mentoring']);
+///////// Email to Business School //////////////////////
+                        $header = '<table cellspacing="0" style="border-collapse:collapse; width:80%">' .
+                            '<tbody>' .
+                            '<tr>' .
+                            '<td style="background-color:white; height:16px; vertical-align:top; width:80%">' .
+                            '<p><strong>Mr/Ms.  ' . @$slipInfo->campus->user->name . '</strong><br />' .
+                            '<strong>' . @$slipInfo->campus->user->designation->name . ',&nbsp; ' . @$slipInfo->department->name . '</strong><br />' .
+                            '<strong>' . @$slipInfo->campus->business_school->name . '</strong></p>' .
+                            '</td>' .
+                            '<td style="background-color:white; height:16px; vertical-align:top; width:50%">' .
+                            '<p> Ref. No: '.@$slipInfo->invoice_no.'<br />'.
+                            '<strong>Dated: </strong><strong>' . date('Y-m-d') . '</strong></p>' .
+                            '</td>' .
+                            '</tr>' .
+                            '</tbody>' .
+                            '</table>';
+                        $getnbeacInfo = NbeacBasicInfo::first();
+                        $footer = '<p>Yours Sincerely,</p>' .
+                            '<p>&nbsp;</p>' .
+                            '<p>' . $getnbeacInfo->director . '</p>' .
+                            '<p>Senior Program Manager (NBEAC)</p>';
+///
+                        $data = ['letter' => $header.$request->comments.$footer];
+                        $slipInfo = $slipInfo;
+                        $mailInfo = [
+                            'to' => $slipInfo->campus->user->email,
+                            'to_name' => $slipInfo->campus->user->name,
+                            'school' => $slipInfo->campus->business_school->name,
+                            'from' => $getnbeacInfo->email,
+                            'from_name' => $getnbeacInfo->name,
+                        ];
+//                    dd($mailInfo);
+                        Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                            //dd($user);
+                            $message->to($mailInfo['to'], $mailInfo['to_name'])
+                                ->subject('Eligibility Screening Committee comments - ' . $mailInfo['school']);
+                            $message->from($mailInfo['from'], $mailInfo['from_name']);
+                        });
                     }
 
                     return response()->json(['success' => 'report added successfully.'], 200);
@@ -438,7 +476,7 @@ class EligibilityScreeningController extends Controller
                     '<strong>' . @$docInfo->campus->business_school->name . '</strong></p>' .
                     '</td>' .
                     '<td style="background-color:white; height:16px; vertical-align:top; width:50%">' .
-//            '    <p><strong>Ref. No: </strong><strong>KASBIT /NBEAC-ESC/15/3</strong><br />'.
+                    '<p> Ref. No: '.@$docInfo->invoice_no.'<br />'.
                     '<strong>Dated: </strong><strong>' . date('Y-m-d') . '</strong></p>' .
                     '</td>' .
                     '</tr>' .
@@ -522,7 +560,7 @@ class EligibilityScreeningController extends Controller
                 'status'=>'approved'
                 ]
             )->get();
-       // dd($eligibilityScreening);
+//        dd($eligibilityScreening);
 //        $events = [];
 //        $index = 0;
 //        foreach ($eligibilityScreening as $event){

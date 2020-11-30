@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Common\EligibilityStatus;
 use App\Models\Common\Slip;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
+use App\Models\Config\NbeacBasicInfo;
 use App\Models\DeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
@@ -67,7 +68,7 @@ class DeskReviewController extends Controller
             if($validation->fails()){
                 return response()->json($validation->messages()->all(), 422);
             }
-            $slips = DB::update('update slips set comments=?, regStatus=? where id=?', array($request->comments, $request->review, $request->id));
+            $slips = DB::update('update slips set desk_review_comments=?, regStatus=? where id=?', array($request->comments, $request->review, $request->id));
             dd($slips);
             //dd($content->email);
             Mail::to($content->email)->queue(new ActivationMail($content));
@@ -135,14 +136,68 @@ class DeskReviewController extends Controller
         $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('number_faculty');
         $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
 
-        $getFullProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>8])->get()->count();
-        $AssociateProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>9])->get()->count();
-        $AssistantProfessors = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>10])->get()->count();
-        $lecturers = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>11])->get()->count();
-        $permanent_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'lookup_faculty_type_id'=>1])->get()->count();
-        $adjunct_faculty = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'lookup_faculty_type_id'=>3])->get()->count();
-        $other = FacultyTeachingCources::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'designation_id'=>13])->get()->count();
-        $female_faculty = FacultyGender::where(['status' => 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'lookup_faculty_type_id'=>1])->get()->count();
+        $getFullProfessors = FacultyTeachingCources::where(
+            ['status' => 'active',
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'designation_id'=>10])
+            ->count();
+        $AssociateProfessors = FacultyTeachingCources::
+            where(
+                [
+                    'status' => 'active',
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'designation_id'=>1])
+            ->count();
+        $AssistantProfessors = FacultyTeachingCources::
+            where(
+                [
+                    'status' => 'active',
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'designation_id'=>2])
+            ->count();
+        $lecturers = FacultyTeachingCources::
+            where(
+                [
+                    'status' => 'active',
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'designation_id'=>6])
+            ->count();
+        $permanent_faculty = FacultyTeachingCources::
+            where(
+                [
+                    'status' => 'active',
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'lookup_faculty_type_id'=>2])
+            ->count();
+        $adjunct_faculty = FacultyTeachingCources::
+            where(
+                [
+                    'status' => 'active',
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'lookup_faculty_type_id'=>1])
+            ->count();
+        $other = FacultyTeachingCources::
+            where(
+                [
+                    'status' => 'active',
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'designation_id'=>8])
+            ->count();
+        $female_faculty = FacultyGender::
+            where(
+                [
+                    'status' => 'active',
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'lookup_faculty_type_id'=>2])
+            ->count();
         $faculty_degree = FacultyDegree::get()->first();
         $total_induction = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('new_induction');
         $faculty_terminated = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('terminated');
@@ -256,22 +311,24 @@ class DeskReviewController extends Controller
             ]
         )->first()->total_items;
 
-        $summaries['conf_paper_inter'] = ResearchSummary::where(
+        $conf_paper_inter = ResearchSummary::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
                 'publication_type_id'=> 7
             ]
-        )->first()->total_items;
-        $summaries['case_studies'] = ResearchSummary::where(
+        )->first();
+        $conf_paper_inter!==null?$summaries['conf_paper_inter'] = $conf_paper_inter->total_items:$summaries['conf_paper_inter']='';
+        $case_studies = ResearchSummary::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
                 'publication_type_id'=> 10
             ]
-        )->first()->total_items;
+        )->first();
+        $case_studies!==null?$summaries['case_studies'] = $case_studies->total_items:$summaries['case_studies']='';
 
 //        dd($summaries);
 
@@ -305,7 +362,11 @@ class DeskReviewController extends Controller
             ->first();
 //        dd($getStudentComRatio);
 
-        $desk_rev= Slip::with('campus','department')->where(['business_school_id' => $campus_id, 'department_id' => $department_id])->get();
+        $desk_rev= Slip::
+        with('campus','department')
+            ->where(['business_school_id' => $campus_id, 'department_id' => $department_id ])
+            ->whereNotNull('isEligible')
+            ->get();
 //        dd($desk_reviews);
         $desk_reviews_report = DeskReview::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 
@@ -381,7 +442,7 @@ class DeskReviewController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            $getUserData = Slip::where(['id' => $request->id])->get()->first();
+            $getUserData = Slip::with('campus', 'department')->where(['id' => $request->id])->get()->first();
             foreach ($request->all() as $key=>$isEligible){
                 if($key !=='comments' && $key !=='id') {
                     DeskReview::create([
@@ -407,14 +468,54 @@ class DeskReviewController extends Controller
             {
                 $isEligible = 'yes';
             }
-            Slip::where(['business_school_id' => $getUserData->business_school_id,
+            $slip = Slip::where(['business_school_id' => $getUserData->business_school_id,
                 'department_id' => $getUserData->department_id])
                 ->update([
                 'isEligible' => $isEligible,
-                'comments' => $request->comments
+                'desk_review_comments' => $request->comments
 //                'regStatus' => 'Eligibility'
                 ]
             );
+
+            /////////////////// Email to Business School //////////////////////
+            $header = '<table style="border-collapse:collapse; width:100%">' .
+                '<tbody>' .
+                '<tr>' .
+                '<td style="background-color:white; height:16px; vertical-align:top; width:65%">' .
+                '<p>Mr/Ms.  ' . @$getUserData->campus->user->name . '<br />' .
+                '' . @$getUserData->campus->user->designation->name . ',&nbsp; ' . @$getUserData->department->name . '<br />' .
+                '' . @$getUserData->campus->business_school->name . '</p>' .
+                '</td>' .
+                '<td style="background-color:white; height:16px; vertical-align:top; width:35%">' .
+            '    <p> Ref. No:  '.@$getUserData->invoice_no.'<br />'.
+                'Dated:' . date('Y-m-d') . '</p>' .
+                '</td>' .
+                '</tr>' .
+                '</tbody>' .
+                '</table>';
+            $getnbeacInfo = NbeacBasicInfo::first();
+
+            $footer = '<p>Yours Sincerely,</p>' .
+                '<p>&nbsp;</p>' .
+                '<p>' . $getnbeacInfo->director . '</p>' .
+                '<p>Senior Program Manager (NBEAC)</p>';
+///
+            $data = ['letter' => $header.$request->comments.$footer];
+            $slipInfo = $getUserData;
+            $mailInfo = [
+                'to' => $slipInfo->campus->user->email,
+                'to_name' => $slipInfo->campus->user->name,
+                'school' => $slipInfo->campus->business_school->name,
+                'from' => $getnbeacInfo->email,
+                'from_name' => $getnbeacInfo->name,
+            ];
+//                    dd($mailInfo);
+            Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                //dd($user);
+                $message->to($mailInfo['to'], $mailInfo['to_name'])
+                    ->subject('Registration Desk Review Comments - ' . $mailInfo['school']);
+                $message->from($mailInfo['from'], $mailInfo['from_name']);
+            });
 
             return response()->json(['success' => 'Desk Review added successfully.'], 200);
         }catch (Exception $e)

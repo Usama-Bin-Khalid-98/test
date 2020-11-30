@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(SurveyQuestionnaireSeeder::class);
 //        $this->call(WorkLoadSeeder::class);
         $this->call(FundingSourcesSeeder::class);
-//        $this->call(ActivityEngagementSeeder::class);
+        $this->call(ActivityEngagementSeeder::class);
 //        $this->call(FacultyStudentsRatioSeeder::class);
 //        $this->call(FacultyStabilitySeeder::class);
 //        $this->call(BusinessSchoolFacilitySeeder::class);
@@ -87,10 +87,10 @@ class DatabaseSeeder extends Seeder
 //        $this->call(MappingPO_PLOSeeder::class);
 //        $this->call(CulturalMaterialSeeder::class);
 //        $this->call(ManagerialSkillsSeeder::class);
-//        $this->call(TeachingMethodsSeeder::class);
+        $this->call(TeachingMethodsSeeder::class);
 //        $this->call(DeliveryMethodsSeeder::class);
-//        $this->call(EvaluationItemsSeeder::class);
-//        $this->call(EvaluationMethodsSeeder::class);
+        $this->call(EvaluationItemsSeeder::class);
+        $this->call(EvaluationMethodsSeeder::class);
 //        $this->call(PlagiarismCasesSeeder::class);
 //        $this->call(FacultySummarySeeder::class);
 //        $this->call(FacultyTeachingCoursesSeeder::class);

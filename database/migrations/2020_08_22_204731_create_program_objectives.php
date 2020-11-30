@@ -27,7 +27,7 @@ class CreateProgramObjectives extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->string('po',100);
+            $table->text('po');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

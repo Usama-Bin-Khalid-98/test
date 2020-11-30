@@ -1,6 +1,6 @@
 
 <div class="box-body table-responsive">
-                         <table class="table table-bordered table-striped">
+                         <table class="table table-bordered table-striped" style="width: 100%">
                             <caption style="text-align: center;color: red">Table 2.1. Programs portfolio</caption>
                               <thead>
                                 <tr>
@@ -18,12 +18,12 @@
                                 <?php //echo "<pre>";
                                   //print_r(count($programsPortfolio));
                                 //echo "</pre>";
-                                
+
                                 //print_r($programsPortfolio[1]->id);
-                                for ($i=0; $i < count($programsPortfolio); $i++) { 
-                                 
+                                for ($i=0; $i < count($programsPortfolio); $i++) {
+
                                 ?>
-                              
+
                                     <tr>
                                       <td style="text-align: center;" ><?php echo $programsPortfolio[$i]->programName;?></td>
                                       <td ><?php echo $programsPortfolio[$i]->total_semesters;?></td>
@@ -32,10 +32,10 @@
                                       <td><?php echo $programsPortfolio[$i]->credit_hours;?></td>
                                       <td><?php echo $programsPortfolio[$i]->internship_req;?></td>
                                       <td><?php echo $programsPortfolio[$i]->fyp_req;?></td>
-                                      
+
                                     </tr>
-                                   
-                               
+
+
                                 <?php } ?>
                                <!--  <tr>
                                     <tr>
@@ -44,7 +44,7 @@
                                       <td>Core</td>
                                       <td></td>
                                       <td></td>
-                                      
+
                                     </tr>
                                     <tr>
                                       <td>Elective </td>
@@ -65,5 +65,5 @@
 
                               </tbody>
 </table>
-                          
+
                         </div>

@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\FacultyDegree;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 class FacultyDegreeController extends Controller
 {
@@ -17,12 +17,14 @@ class FacultyDegreeController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         try {
-
-            $faculty_degree = FacultyDegree::get()->first();
+            $userInfo = Auth::user();
+            $faculty_degree = FacultyDegree::
+                where(['campus_id'=>$userInfo->campus_id, 'department_id'=> $userInfo->department_id])
+                ->first();
 
         return view('faculty_degree.index',compact('faculty_degree'));
         }catch (\Exception $e) {
@@ -48,7 +50,34 @@ class FacultyDegreeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request);
+        try {
+            $validation= Validator::make($request->all(), $this->rules(), $this->messages());
+            if($validation->fails())
+            {
+                return response()->json($validation->messages()->all(), 422);
+            }else {
+
+                $update = FacultyDegree::
+                    create(
+                        [
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'faculty_foreign' => $request->faculty_foreign,
+                            'faculty_domestic' => $request->faculty_domestic,
+                            'faculty_international' => $request->faculty_international,
+                            'isComplete' => 'yes',
+                            'created_by' => Auth::user()->id
+
+                        ]
+                    );
+
+                return response()->json(['success' => ' Faculty Degree added successfully.']);
+            }
+        }catch (Exception $e)
+        {
+            return $e->getMessage();
+        }
     }
 
     /**

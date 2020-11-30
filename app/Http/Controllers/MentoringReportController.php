@@ -6,6 +6,7 @@ use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\Mentoring\MentoringReport;
 use App\Models\MentoringInvoice;
+use App\Models\MentoringMentor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -25,7 +26,19 @@ class MentoringReportController extends Controller
         //
         $mentor_reports = MentoringReport::with('mentoring_invoice')->where('created_by', Auth::id())->get();
 //        dd($mentor_reports);
-        $registrations = MentoringInvoice::with('department', 'campus')->get();
+        $getMentor = MentoringMentor::where('user_id', Auth::id())->get();
+        $slips = [];
+        $registrations = [];
+        foreach ($getMentor as $key => $mentor){
+            @$invoices = Slip::find(@$mentor->slip_id);
+            @$slips[$key] = ['campus_id'=>@$invoices->campus->id, 'department_id'=> @$invoices->department_id];
+        }
+
+        foreach ($slips as $key => $slip)
+        {
+            $registrations_mentors = MentoringInvoice::with('department', 'campus')->where($slip)->first();
+            $registrations[$key] = $registrations_mentors;
+        }
 //        dd($registrations);
         return  view('mentoring.mentor_report', compact('mentor_reports', 'registrations'));
     }

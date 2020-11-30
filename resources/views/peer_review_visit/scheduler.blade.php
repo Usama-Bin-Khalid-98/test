@@ -150,7 +150,7 @@
                             <!-- /.input group -->
                         </div>
                         <div class="form-group">
-                            <label>NBEAC Focal Person:</label>
+                            <label>Propose Peer Review Team :</label>
                             <select class="form-control select2" name="user_id" id="user_id" multiple="multiple" data-placeholder="Select a registration" style="width: 100%;">
                                 @foreach(@$NbeacFocalPerson as $person)
                                     <option value="{{@$person->id}}">{{@$person->name}}</option>

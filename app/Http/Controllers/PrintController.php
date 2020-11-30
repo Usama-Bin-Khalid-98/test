@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
+use App\Models\MentoringMentor;
+use App\Models\StrategicManagement\SummarizePolicy;
 use App\User;
 use App\BusinessSchool;
 use App\Models\Common\Campus;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -29,9 +33,21 @@ class PrintController extends Controller
     }
     public function index(Request $req)
     {
+
         if(isset($req->cid) && isset($req->bid)){
             $bussinessSchool  = DB::select('SELECT business_schools.*, campuses.location as campus, campuses.id as campusID FROM business_schools, campuses WHERE campuses.business_school_id=business_schools.id AND business_schools.id=? AND campuses.id=?', array($req->bid, $req->cid));
 
+            /////////////////header data ////////
+            $docHeaderData = Slip::with('campus', 'department')
+                ->where(
+                    [
+                        'business_school_id'=>$req->cid,
+                        'department_id'=>$req->did
+                    ]
+                )->get()->first();
+            $programsUnderReview = Scope::with('program')->where(
+                ['campus_id'=>$req->cid, 'department_id' => $req->did])
+                ->get();
         $campuses = Campus::where('business_school_id', $req->bid)->get();
         $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
 
@@ -48,7 +64,7 @@ class PrintController extends Controller
          $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
 
           $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND financial_infos.type="SAR" AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( $req->cid));
-
+          $summary_policy = SummarizePolicy::where(['campus_id' => $req->cid, 'status'=> 'active'])->first();
 
          $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.type="SAR" AND strategic_plans.campus_id=?', array($req->cid));
 
@@ -254,6 +270,17 @@ AND faculty_student_ratio.type=?',
             ->select('business_schools.*','institute_types.name as typeName', 'charter_types.name as charterName', 'designations.name as designationName' )
             ->get();
 
+            $programsUnderReview = Scope::with('program')->where(
+                ['campus_id'=>auth()->user()->campus_id, 'department_id' => auth()->user()->department_id])
+                ->get();
+            $docHeaderData = Slip::with('campus', 'department')
+                ->where(
+                    [
+                        'business_school_id'=>auth()->user()->campus_id,
+                        'department_id'=>auth()->user()->department_id
+                    ]
+                )->get()->first();
+
         $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
         $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
 
@@ -270,7 +297,7 @@ AND faculty_student_ratio.type=?',
          $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
           $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND financial_infos.type="SAR" AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( auth()->user()->campus_id));
-
+            $summary_policy = SummarizePolicy::where(['campus_id' => auth()->user()->campus_id, 'status'=> 'active', 'department_id'=> auth()->user()->department_id])->first();
 
          $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.type="SAR" AND strategic_plans.campus_id=?', array(auth()->user()->campus_id));
 
@@ -471,7 +498,7 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
 
 
 
-        return view('strategic_management.printAll', compact('classSize','studentsFinancial','PoMappings','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','PoPLOMappings','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
+        return view('strategic_management.printAll', compact('programsUnderReview','docHeaderData','classSize','summary_policy','studentsFinancial','PoMappings','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','PoPLOMappings','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake'));
     }
 
 
@@ -527,6 +554,37 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
             //dd($registration_apply);
             $result = DB::update('update slips set isEligibleNBEAC=?, created_by=?, regStatus=? where id=?', array('yes',$user_id,'SAP',$id));
             //dd($result);
+
+                $slipInfo = Slip::with('campus', 'department')
+                    ->where(['business_school_id' => $campus_id, 'department_id' => Auth::user()->department_id])
+                    ->first();
+                /////////////////// send email to NBEAC Admin //////////////////////
+                $getnbeacInfo = NbeacBasicInfo::first();
+
+//                dd($slipInfo);
+                $comments = 'The business school ( '. $slipInfo->campus->business_school->name. ' '. $slipInfo->campus->location. ' department '.$slipInfo->department->name.' ) '
+                    . ' has been submitted SAR for review.';
+                $footer = '<p>Yours Sincerely,</p>' .
+                    '<p>&nbsp;</p>' .
+                    '<p>' . $slipInfo->campus->user->name . '</p>';
+///
+                $data = ['letter' => $comments.$footer];
+                $slipInfo = $slipInfo;
+                $mailInfo = [
+                    'to' => $getnbeacInfo->email,
+                    'to_name' =>$getnbeacInfo->name ,
+                    'school' => $slipInfo->campus->business_school->name,
+                    'from' => $slipInfo->campus->user->email,
+                    'from_name' => $slipInfo->campus->user->name,
+                ];
+//                    dd($mailInfo);
+                Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'], $mailInfo['to_name'])
+                        ->subject('SAR submitted by business school - ' . $mailInfo['school']);
+                    $message->from($mailInfo['from'], $mailInfo['from_name']);
+                });
+
             return response()->json(['success' => 'Successfully Shared with NBEAC']);
 
             }catch (Exception $e)
@@ -547,6 +605,38 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
             $campus_id = Auth::user()->campus_id;
             $result = DB::update('update slips set isEligibleMentor=?, created_by=? where id=?', array('yes',$user_id,$id));
             //dd($result);
+
+                $slipInfoSchool = Slip::with('campus', 'department')
+                    ->where(['business_school_id' => $campus_id, 'department_id' => Auth::user()->department_id])
+                    ->first();
+//dd($slipInfoSchool);
+                $slipInfo = MentoringMentor::with('user')->where(['slip_id' => $slipInfoSchool->id])->first();
+                /////////////////// send email to NBEAC Admin //////////////////////
+                $getnbeacInfo = NbeacBasicInfo::first();
+
+                $header = 'AOA <br/>'. $slipInfo->user->name;
+                $comments = 'The business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) '
+                    . ' has been submitted SAR for review.';
+                $footer = '<p>Yours Sincerely,</p>' .
+                    '<p>&nbsp;</p>' .
+                    '<p>' . $slipInfoSchool->campus->user->name . '</p>';
+///
+                $data = ['letter' => $header. '<br/>'.$comments.$footer];
+                $slipInfo = $slipInfo;
+                $mailInfo = [
+                    'to' => $slipInfo->user->email,
+                    'to_name' =>$slipInfo->user->name ,
+                    'school' => $slipInfoSchool->campus->business_school->name,
+                    'from' => $slipInfoSchool->campus->user->email,
+                    'from_name' => $slipInfoSchool->campus->user->name,
+                ];
+//                    dd($mailInfo);
+                Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                    //dd($user);
+                    $message->to($mailInfo['to'], $mailInfo['to_name'])
+                        ->subject('SAR submitted by business school - ' . $mailInfo['school']);
+                    $message->from($mailInfo['from'], $mailInfo['from_name']);
+                });
             return response()->json(['success' => 'Successfully Shared with Mentor']);
 
             }catch (Exception $e)
