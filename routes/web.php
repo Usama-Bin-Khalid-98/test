@@ -268,6 +268,8 @@ Route::get('/email', function() {
             Route::delete('mentoring-invoice/{id}', 'MentoringInvoiceController@destroy');
             Route::get('mentoring-selection', 'MentoringInvoiceController@mentoring_selection');
             Route::resource('accreditation-invoices', 'SarInvoiceController');
+            Route::get('accreditation-invoices-list', 'SarInvoiceController@invoicesList');
+            Route::post('accreditation-invoice-Status', 'SarInvoiceController@update_status');
         });
 
         Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {

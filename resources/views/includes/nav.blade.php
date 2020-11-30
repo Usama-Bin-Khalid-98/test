@@ -986,7 +986,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 
           @hasrole('NBEACAdmin')
 
-          <li class=" treeview {{request()->is('registrations')?'active':''}} {{request()->is('accreditation-invoices')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}">
+          <li class=" treeview {{request()->is('registrations')?'active':''}} {{request()->is('accreditation-invoices-list')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}">
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations / Invoices</span>
                   <span class="pull-right-container">
@@ -998,7 +998,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                   <li  class="{{ (request()->is('registrations')) ? 'active' : '' }}"><a href="{{url('registrations')}}"><i class="fa fa-registered text-green"></i>Registrations</a></li>
                   <li  class="{{ (request()->is('invoicesList')) ? 'active' : '' }}"><a href="{{url('invoicesList')}}"><i class="fa fa-money text-green"></i>Invoices List</a></li>
                   <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-money text-green"></i>Mentoring Invoices List</a></li>
-                  <li  class="{{ (request()->is('accreditation-invoices')) ? 'active' : '' }}"><a href="{{url('accreditation-invoices')}}"><i class="fa fa-money text-green"></i>Accreditation Invoices List</a></li>
+                  <li  class="{{ (request()->is('accreditation-invoices-list')) ? 'active' : '' }}"><a href="{{url('accreditation-invoices-list')}}"><i class="fa fa-money text-green"></i>Accreditation Invoices List</a></li>
               </ul>
           </li>
 

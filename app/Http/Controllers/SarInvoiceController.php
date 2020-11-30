@@ -180,9 +180,8 @@ class SarInvoiceController extends Controller
                     'to_name' => $school->user->name,
                     'school' => $getNbeacInfo->name??'',
                     'from' => $getNbeacInfo->email??'',
-                    'from_name' => $getNbeacInfo->director??'',
+                    'from_name' => $getNbeacInfo->director??''
                 ];
-
 //                dd($mailData);
                 Mail::send('registration.mail.paid_fee_mail', ['data' => $mailData], function($message) use ($mailSchoolInfo) {
                     //dd($user);
@@ -206,6 +205,51 @@ class SarInvoiceController extends Controller
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
 
         }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+
+    public function invoicesList()
+    {
+        $getInvoices = SarInvoice::with('campus', 'department')->get();
+        return view('sar.slip', compact('getInvoices'));
+    }
+
+    public function update_status(Request $request){
+//        dd($request->all());
+
+        try {
+            SarInvoice::find($request->id)->update([
+                'status' => $request->status,
+                'updated_by' => Auth::id(),
+            ]);
+
+
+            $school = SarInvoice::with('campus', 'department')->first();
+            $getNbeacInfo = NbeacBasicInfo::all()->first();
+
+            $mailData['nbeac']= $getNbeacInfo;
+
+            $mailSchoolInfo = [
+                'to' => $school->campus->user->email,
+                'to_name' => $school->campus->user->name,
+                'school' => $getNbeacInfo->name??'',
+                'from' => $getNbeacInfo->email??'',
+                'from_name' => $getNbeacInfo->director??''
+            ];
+
+//            Mail::to($request->email)->send(new ChangeResgistrationStatusMail($data));
+            Mail::send('sar.email.paid_fee_mail', ['data' => $mailData], function($message) use ($mailSchoolInfo) {
+                //dd($user);
+                $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
+                    ->subject($mailSchoolInfo['school'].'Approval of Accreditation Fee - '. $mailSchoolInfo['school']);
+                $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
+            });
+            return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
+        }
+        catch (Exception $e)
         {
             return response()->json($e->getMessage(), 422);
         }
