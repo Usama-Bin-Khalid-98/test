@@ -159,10 +159,21 @@ class SchedulePeerReviewController extends Controller
 
 
                             $mentorInfo = User::find($mentor)->first();
+                            $slipInfoSchool = Slip::with('campus', 'user')->where(['slip_id'=>$request->registrations])->first();
 
                             $getNbeacInfo = NbeacBasicInfo::all()->first();
 
                             $mailData['nbeac']= $getNbeacInfo;
+
+                           //////// email
+                            $header = 'AOA <br/>'. $mentorInfo->name;
+                                            $comments = 'The business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) '
+                                                . ' has been submitted SAR for review.';
+                                            $footer = '<p>Yours Sincerely,</p>' .
+                                                '<p>&nbsp;</p>' .
+                                                '<p>' . $slipInfoSchool->campus->user->name . '</p>';
+                            ///
+                                            $data = ['letter' => $header. '<br/>'.$comments.$footer];
 
                             $mailInfo = [
                                 'to' => $mentorInfo->email??'',
