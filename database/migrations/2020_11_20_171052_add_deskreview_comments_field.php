@@ -15,7 +15,7 @@ class AddDeskreviewCommentsField extends Migration
     {
         Schema::table('slips', function (Blueprint $table) {
             //
-            $table->text('desk_review_comments')->after('comments');
+            $table->text('desk_review_comments')->nullable()->after('comments');
         });
     }
 
@@ -27,7 +27,7 @@ class AddDeskreviewCommentsField extends Migration
     public function down()
     {
         Schema::table('slips', function (Blueprint $table) {
-            $table->dropColumn('desk_review_comments')->after('comments');
+            $table->dropColumn('desk_review_comments')->nullable()->after('comments');
 
             //
         });
