@@ -227,6 +227,7 @@ class HomeController extends Controller
                 ->where('s.regStatus', 'ScheduledPRVisit')
                 ->orWhere('s.regStatus', 'PeerReviewVisit')
                 ->where('s.status', 'approved')
+                ->where(['s.business_school_id'=>Auth::user()->campus_id, 's.department_id'=>Auth::user()->department_id])
                 ->get();
         }
 //        dd($PeerReviewVisit);

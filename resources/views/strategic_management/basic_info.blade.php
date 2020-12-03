@@ -162,7 +162,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Name of the business school and campus (if relevant)</label>
-                                        <input type="text" disabled id="campus_id" value="{{@$department->name}}, Campuses ( @foreach ($campuses as $campus ){{$campus->location}}, @endforeach )" class="form-control">
+                                        <input type="text" disabled id="campus_id" value="{{@$department->name}}, Campuses ( @foreach ($campuses as $campus ){{$campus->location}} @endforeach )" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
