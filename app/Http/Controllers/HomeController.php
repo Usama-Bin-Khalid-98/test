@@ -201,7 +201,7 @@ class HomeController extends Controller
                 ->get();
         }
 
-        if(Auth::user()->user_type=='NbeacFocalPerson') {
+        if(Auth::user()->user_type=='NbeacFocalPerson' || Auth::user()->user_type== 'NBEACAdmin') {
 //            dd('mentors ');
             $PeerReviewVisit = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -227,7 +227,7 @@ class HomeController extends Controller
                 ->where('s.regStatus', 'ScheduledPRVisit')
                 ->orWhere('s.regStatus', 'PeerReviewVisit')
                 ->where('s.status', 'approved')
-                ->where(['s.business_school_id'=>Auth::user()->campus_id, 's.department_id'=>Auth::user()->department_id])
+                ->where(['s.business_school_id'=>Auth::user()->campus_id, 's.department_id'=>Auth::user()->department_id, 's.created_by' =>Auth::id()])
                 ->get();
         }
 //        dd($PeerReviewVisit);
