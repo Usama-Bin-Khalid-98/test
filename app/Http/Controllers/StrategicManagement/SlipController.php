@@ -363,6 +363,7 @@ class SlipController extends Controller
                 @$request->payment_method? $data['payment_method_id'] = $request->payment_method:'';
                 @$request->cheque_no? $data['cheque_no'] = $request->cheque_no:'';
                 $data['status'] = 'paid';
+                $data['regStatus'] = 'Pending';
                 //dd($data);
                 $updateSlip = Slip::where('id', $request->id)->update($data);
 

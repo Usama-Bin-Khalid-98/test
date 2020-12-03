@@ -47,7 +47,7 @@ class BasicInfoController extends Controller
                     'department_id'=>$user_info->department_id
                 ])->get()->first();
 //dd($tyear);
-            $campuses = Campus::where('business_school_id', $school_id)->get();
+            $campuses = Campus::where(['business_school_id'=> $school_id, 'id'=>$user_info->campus_id])->get();
 //            dd($campuses);
             if ($campuses->count() <= 0)
             {
