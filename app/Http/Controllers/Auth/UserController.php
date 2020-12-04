@@ -35,7 +35,7 @@ class UserController extends Controller
         //dd($users->roles[0]->name);
 //        $designations = Designation::all();
         $permissions = Permission::all();
-        $roles = Role::all();
+        $roles = Role::where('id', '!=', 1)->get();
         $designations=Designation::where('status', 'active')->get();
 
         //dd($users);

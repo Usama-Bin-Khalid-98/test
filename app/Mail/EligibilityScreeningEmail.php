@@ -30,8 +30,8 @@ class EligibilityScreeningEmail extends Mailable
      */
     public function build()
     {
-        return $this->from(Auth::user()->email)
-            ->subject('FW: Shortfalls and Recommendations after Screening of Datasheet')
+        return $this->from($this->data['from_email'])
+            ->subject(' Registration desk review has been completed')
             ->view('registration.mail.eligibilityScreeningEmail')
             ->with('data', $this->data);
     }
