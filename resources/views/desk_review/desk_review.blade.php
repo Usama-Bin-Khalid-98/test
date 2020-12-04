@@ -44,7 +44,7 @@
                             <h5><strong>Business School:</strong> {{$desk_reviews[0]->department}}</h5>
                             <h5><strong>Applied for:</strong>@foreach(@$scopes as $scope) {{@$scope->program->name}}  @if(!$loop->last) , @endif @endforeach</h5>
                             <h5><strong>Application Received Date:</strong> {{@$desk_reviews[0]->registration_date}} </h5>
-                            <p><a href="{{url('registrationPrint?cid=')}}{{@$desk_reviews[0]->business_school_id}}&bid={{$desk_reviews[0]->school_id}}&did={{$desk_reviews[0]->department_id}}"> <span class="badge bg-blue pull-right" >Registration Print</span> </a></p>
+                            <p><a href="{{url('registrationPrint?cid=')}}{{@$desk_reviews[0]->business_school_id}}&bid={{$desk_reviews[0]->school_id}}&did={{$desk_reviews[0]->department_id}}"> <span class="badge bg-red pull-right" >Registration Print</span> </a></p>
 
                             @foreach($program_dates as $programs)
                                 @if($programs['level_id'] == 1 && $programs['date_difference'] < 3.5)
@@ -150,8 +150,8 @@
                                         <tr>
                                             <td>
                                                 <p>3. Strategic Plan (Question 1.8)</p>
-                                                <p>Strategic Plan from date: {{$strategic_plan->plan_period_from}}</p>
-                                                <p>Strategic Plan to date: {{$strategic_plan->plan_period_to}}</p>
+                                                <p>Strategic Plan from date: {{@$strategic_plan->plan_period_from}}</p>
+                                                <p>Strategic Plan to date: {{@$strategic_plan->plan_period_to}}</p>
                                                 <p>Approval Date {{@$strategic_plan->aproval_date}}</p>
                                                 <p>Duration {{@$strategic_plan['date_diff']}} years</p>
                                             </td>
@@ -160,8 +160,8 @@
                                             </td>
                                             @hasrole('NBEACAdmin')
                                             <td>
-                                                <input type="radio" name="eligibility_plan" {{$strategic_plan['date_diff'] > 3?'checked':''}} value="yes"> yes
-                                                <input type="radio" name="eligibility_plan" value="no" {{$strategic_plan['date_diff'] < 3?'checked':''}}> no
+                                                <input type="radio" name="eligibility_plan" {{@$strategic_plan['date_diff'] > 3?'checked':''}} value="yes"> yes
+                                                <input type="radio" name="eligibility_plan" value="no" {{@$strategic_plan['date_diff'] < 3?'checked':''}}> no
                                             </td>
                                             @endhasrole
                                         </tr>
@@ -170,8 +170,8 @@
                                             <td>
                                                 <p>4. Student Intake(Table 2.3)</p>
                                                 Student Intake
-                                                    @foreach($application_received as $applications)
-                                                    <p> {{$applications->program->name}}- {{$applications->semester->name}} : {{$applications->student_intake}} </p>
+                                                    @foreach(@$application_received as $applications)
+                                                    <p> {{@$applications->program->name}}- {{@$applications->semester->name}} : {{@$applications->student_intake}} </p>
                                                     @endforeach
 
                                             </td>
@@ -531,12 +531,60 @@
             console.log('eligibility_program values.........', eligibility_program);
             // let check = $('input[type="radio"]:checked');
             // console.log('check here',  check);
-            //  if(!check)
-            //  {
-            //      Notiflix.Notify.Warning("Fill all the required Fields.");
-            //      return;
-            //  }
-            //return;
+            // check.each(function (index, val) {
+            //     console.log('value here', val.val())
+            // })
+             if(eligibility_program == 'no' || eligibility_mission == 'no' ||
+                 eligibility_plan == 'no' ||
+            eligibility_student == 'no' ||
+            eligibility_enrollment == 'no' ||
+            eligibility_load == 'no' ||
+            eligibility_output == 'no' ||
+            eligibility_bandwidth == 'no' ||
+            eligibility_ratio == 'no' )
+             {
+                 Notiflix.Notify.Failure("Business School is not eligible.");
+                 $.ajax({
+                     url:'{{url("desk-review-not-eligible")}}',
+                     type:'POST',
+                     data: {
+                         // eligibility_program:eligibility_program,
+                         // eligibility_mission:eligibility_mission,
+                         // eligibility_plan:eligibility_plan,
+                         // eligibility_student:eligibility_student,
+                         // eligibility_enrollment:eligibility_enrollment,
+                         // eligibility_load:eligibility_load,
+                         // eligibility_output:eligibility_output,
+                         // eligibility_bandwidth:eligibility_bandwidth,
+                         // eligibility_ratio:eligibility_ratio,
+                         comments:comments,
+                         id: {{Request::segment(2)}}
+                     },
+                     // cache:false,
+                     // contentType:false,
+                     // processData:false,
+                     beforeSend: function(){
+                         Notiflix.Loading.Pulse('Processing...');
+                     },
+                     // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                     success: function (response) {
+                         Notiflix.Loading.Remove();
+                         if(response.success){
+                             Notiflix.Notify.Success(response.success);
+                         }
+                         console.log('response', response);
+                         // location.reload();
+                     },
+                     error:function(response, exception){
+                         Notiflix.Loading.Remove();
+                         $.each(response.responseJSON, function (index, val) {
+                             Notiflix.Notify.Failure(val);
+                         })
+                     }
+                 })
+                 return;
+             }
+            // return;
             $.ajax({
                 url:'{{url("desk-review")}}',
                 type:'POST',
