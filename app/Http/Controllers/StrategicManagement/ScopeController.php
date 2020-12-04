@@ -30,7 +30,7 @@ class ScopeController extends Controller
             ])->get()->first()->department_id;
         //dd(DB::getQueryLog());
         //dd($department_id);
-        $programs = Program::where(['status' => 'active', 'department_id' =>$department_id])->get();
+        $programs = Program::where(['status' => 'active'])->get();
         $levels = Level::where('status', 'active')->get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         $isSAR = false;
