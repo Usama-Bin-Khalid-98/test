@@ -134,6 +134,11 @@ class DeskReviewController extends Controller
 
 
         $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('number_faculty');
+//        dd($faculty_summary);
+        @$faculty_summary==0?$faculty_summary = 1:$faculty_summary;
+
+//        dd($faculty_summary);
+//        dd($faculty_summary);
         $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1])->get()->count();
 
         $getFullProfessors = FacultyTeachingCources::where(
@@ -258,7 +263,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'publication_type_id'=> 1
             ]
-        )->first()->total_items;
+        )->first()->total_items??'';
 
         $summaries['category_w'] = ResearchSummary::where(
             [
@@ -267,7 +272,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'publication_type_id'=> 2
             ]
-        )->first()->total_items;
+        )->first()->total_items??'';
 
         $summaries['category_x'] = ResearchSummary::where(
             [
@@ -276,7 +281,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'publication_type_id'=> 3
             ]
-        )->first()->total_items;
+        )->first()->total_items??'';
         $summaries['category_y'] = ResearchSummary::where(
             [
                 'campus_id' => $campus_id,
@@ -284,7 +289,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'publication_type_id'=> 4
             ]
-        )->first()->total_items;
+        )->first()->total_items??'';
 
         $summaries['abs'] = ResearchSummary::where(
             [
@@ -293,7 +298,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'publication_type_id'=> 5
             ]
-        )->first()->total_items;
+        )->first()->total_items??'';
         $summaries['other_list'] = ResearchSummary::where(
             [
                 'campus_id' => $campus_id,
@@ -301,7 +306,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'publication_type_id'=> 5
             ]
-        )->first()->total_items;
+        )->first()->total_items??'';
         $summaries['conf_paper'] = ResearchSummary::where(
             [
                 'campus_id' => $campus_id,
@@ -309,7 +314,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'publication_type_id'=> 6
             ]
-        )->first()->total_items;
+        )->first()->total_items??'';
 
         $conf_paper_inter = ResearchSummary::where(
             [
@@ -524,6 +529,49 @@ class DeskReviewController extends Controller
         }
     }
 
+
+    public function not_eligible(Request $request){
+        $getUserData = Slip::with('campus', 'department')->where(['id' => $request->id])->first();
+
+        /////////////////// Email to Business School //////////////////////
+        $header = '<table style="border-collapse:collapse; width:100%">' .
+            '<tbody>' .
+            '<tr>' .
+            '<td style="background-color:white; height:16px; vertical-align:top; width:65%">' .
+            '<p>Mr/Ms.  ' . @$getUserData->campus->user->name . '<br />' .
+//            '' . @$getUserData->campus->user->designation->name . ',&nbsp; ' . @$getUserData->department->name . '<br />' .
+//            '' . @$getUserData->campus->business_school->name . '</p>' .
+            '</td>' .
+            '<td style="background-color:white; height:16px; vertical-align:top; width:35%">' .
+            '    <p> Ref. No:  '.@$getUserData->invoice_no.'<br />'.
+            'Dated:' . date('Y-m-d') . '</p>' .
+            '</td>' .
+            '</tr>' .
+            '</tbody>' .
+            '</table></br>';
+        $getnbeacInfo = NbeacBasicInfo::first();
+
+        $footer = '<p>Yours Sincerely,</p>' .
+            '<p>&nbsp;</p>' .
+            '<p>' . $getnbeacInfo->director . '</p>';
+///
+        $data = ['letter' => $header.$request->comments.'</br>'.$footer];
+        $slipInfo = $getUserData;
+        $mailInfo = [
+            'to' => $slipInfo->campus->user->email,
+            'to_name' => $slipInfo->campus->user->name,
+            'school' => $slipInfo->campus->business_school->name,
+            'from' => $getnbeacInfo->email,
+            'from_name' => $getnbeacInfo->name,
+        ];
+//                    dd($mailInfo);
+        Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+            //dd($user);
+            $message->to($mailInfo['to'], $mailInfo['to_name'])
+                ->subject('Registration Desk Review Comments - ' . $mailInfo['school']);
+            $message->from($mailInfo['from'], $mailInfo['from_name']);
+        });
+    }
     /**
      * Display the specified resource.
      *
@@ -591,12 +639,20 @@ class DeskReviewController extends Controller
        // dd($request->all());
         try {
             $update = Slip::find($request->id)->update(['regStatus' => 'Eligibility']);
+            $getNbeacInfo = NbeacBasicInfo::first();
+            $slipInfo = Slip::with('campus', 'department')->where( 'id', $request->id)->first();
             if($update!=null)
             {
                 $data = array(
-                    'name'      => 'Safiullah'
+                    'name'      => $slipInfo->campus->user->name,
+                    'from_name'=> $getNbeacInfo->director,
+                    'from_email'=> $getNbeacInfo->email,
+                    'department' => $slipInfo->department->name,
+                    'campus'=> $slipInfo->campus->location,
+                    'invoice' => $slipInfo->invoice_no,
+                    'business_school'=> $slipInfo->campus->business_school->name
                 );
-                Mail::to('yoursafi509@gmail.com')->send(new EligibilityScreeningEmail($data));
+                Mail::to($slipInfo->campus->user->email)->send(new EligibilityScreeningEmail($data));
                 return response()->json(['success' => 'Case forwarded to eligibility screening']);
             }
         }catch (\Exception $e)
