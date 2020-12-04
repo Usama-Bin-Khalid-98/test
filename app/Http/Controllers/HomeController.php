@@ -224,9 +224,9 @@ class HomeController extends Controller
                 ->join('users as u', 'u.id', '=', 's.created_by')
 //                ->join('mentoring_mentors as mm', 'u.id', '=', 'mm.user_id')
                 ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as business_school_id')
+                ->where(['s.business_school_id'=>Auth::user()->campus_id, 's.department_id'=>Auth::user()->department_id, 's.created_by' =>Auth::id()])
                 ->where('s.regStatus', 'ScheduledPRVisit')
                 ->orWhere('s.regStatus', 'PeerReviewVisit')
-                ->where(['s.business_school_id'=>Auth::user()->campus_id, 's.department_id'=>Auth::user()->department_id, 's.created_by' =>Auth::id()])
                 ->where('s.status', 'approved')
                 ->get();
         }
