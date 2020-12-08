@@ -378,7 +378,7 @@ class EligibilityScreeningController extends Controller
                         'slip_id' => $request->slip_id,
                         'comments' => $request->comments,
                         'status' => $request->status,
-                        'file' => $path.$imageName,
+//                        'file' => $path.$imageName,
                         'created_by' => Auth::id(),
                         'es_meeting_date' => $request->es_meeting_date
                     ]
