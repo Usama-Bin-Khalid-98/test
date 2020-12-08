@@ -606,13 +606,14 @@ class EligibilityScreeningController extends Controller
         try {
 
                 $imageName = '';
-                if ($request->file('file')) {
-                    $imageName = $request->status . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
-                    $path = 'uploads/eligibility_reports/';
-                    $diskName = env('DISK');
-                    $disk = Storage::disk($diskName);
-                    $request->file('file')->move($path, $imageName);
-                }
+                $path = '';
+//                if ($request->file('file')) {
+//                    $imageName = $request->status . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+//                    $path = 'uploads/eligibility_reports/';
+//                    $diskName = env('DISK');
+//                    $disk = Storage::disk($diskName);
+//                    $request->file('file')->move($path, $imageName);
+//                }
                 $insert = EligibilityReport::find($request->report_id)->update(
                     [
                         'comments' => $request->comments,
