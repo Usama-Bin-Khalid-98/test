@@ -631,6 +631,7 @@ class EligibilityScreeningController extends Controller
 
                     ///////////////////// Email to Business School //////////////////////
                     $data= [];
+                    $getnbeacInfo = NbeacBasicInfo::all();
                     $mailInfo = [
                         'to' => 'nbeac@gmail.com',
                         'to_name' => 'Bilal Ahmad',
@@ -638,6 +639,31 @@ class EligibilityScreeningController extends Controller
                         'from' => "peer@gmail.com",
                         'from_name' => 'PeerReviewer',
                     ];
+                    $docInfo = Slip::with('campus', 'department')->find($request->slip_id);
+
+                    $header = '<table cellspacing="0" style="border-collapse:collapse; width:80%">' .
+                        '<tbody>' .
+                        '<tr>' .
+                        '<td style="background-color:white; height:16px; vertical-align:top; width:80%">' .
+                        '<p><strong>Mr/Ms.  ' . @$docInfo->campus->user->name . '</strong><br />' .
+                        '<strong>' . @$docInfo->campus->user->designation->name . ',&nbsp; ' . @$docInfo->department->name . '</strong><br />' .
+                        '<strong>' . @$docInfo->campus->business_school->name . '</strong></p>' .
+                        '</td>' .
+                        '<td style="background-color:white; height:16px; vertical-align:top; width:50%">' .
+                        '<p> Ref. No: '.@$docInfo->invoice_no.'<br />'.
+                        '<strong>Dated: </strong><strong>' . date('Y-m-d') . '</strong></p>' .
+                        '</td>' .
+                        '</tr>' .
+                        '</tbody>' .
+                        '</table>';
+
+                    $footer = '<p>Yours Sincerely,</p>' .
+                        '<p>&nbsp;</p>' .
+                        '<p>' . $getnbeacInfo->director . '</p>' .
+                        '<p>(NBEAC)</p>';
+///
+                    $data = ['letter' => $header.$request->comments.$footer];
+
                     Mail::send('eligibility_screening.email.eligibility_report', $data, function($message) use ($mailInfo) {
                         //dd($user);
                         $message->to($mailInfo['to'],$mailInfo['to_name'] )
