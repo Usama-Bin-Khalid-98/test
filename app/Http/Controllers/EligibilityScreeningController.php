@@ -631,7 +631,7 @@ class EligibilityScreeningController extends Controller
 
                     ///////////////////// Email to Business School //////////////////////
                     $data= [];
-                    $getnbeacInfo = NbeacBasicInfo::all();
+                    $getnbeacInfo = NbeacBasicInfo::first();
                     $mailInfo = [
                         'to' => 'nbeac@gmail.com',
                         'to_name' => 'Bilal Ahmad',
