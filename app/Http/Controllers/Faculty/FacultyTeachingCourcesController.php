@@ -28,9 +28,10 @@ class FacultyTeachingCourcesController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-         $designations = Designation::get();
+        $designations = Designation::whereIn('id', [1,2,6,10])->get();
 
-         $getUrl =\Illuminate\Support\Facades\Request::segment(1);
+
+        $getUrl =\Illuminate\Support\Facades\Request::segment(1);
          if($getUrl =='faculty-teaching')
          {
              $faculty_types = LookupFacultyType::where('id', 2)
@@ -54,10 +55,15 @@ class FacultyTeachingCourcesController extends Controller
 
         $getScope = Scope::with('program')->where($where)->get();
         if($getUrl =='faculty-teaching') {
-            $visitings = FacultyTeachingCources::with('campus','department', 'lookup_faculty_type', 'designation', 'faculty_program')
-                ->where('lookup_faculty_type_id', 1)
-                ->orWhere('lookup_faculty_type_id', 2)
+            $visitings = FacultyTeachingCources::with(['campus','department',
+                'lookup_faculty_type'=> function($query) {
+                $query->where('id', 1);
+                $query->orWhere('id', 2);
+            }, 'designation', 'faculty_program'])
+//                ->where('lookup_faculty_type_id', 1)
+//                ->orWhere('lookup_faculty_type_id', 2)
                 ->where($where)
+                ->where('deleted_at', null)
                 ->get();
 //            dd($visitings);
 

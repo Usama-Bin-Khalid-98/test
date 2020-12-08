@@ -103,6 +103,12 @@
                                 </div>
                             </div>
 
+                              <div class="col-md-3">
+                                  <div class="form-group">
+                                      <label for="upload file">Upload file (appendix 1-D)</label>
+                                      <input type="file" name="file" id="file">
+                                  </div>
+                              </div>
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -131,6 +137,7 @@
                                     <th>Date of Approval</th>
                                     <th>Approving Authority</th>
                                     <th>Status</th>
+                                    <th>file</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -142,6 +149,7 @@
                                     <td>{{$plan->plan_period}}</td>
                                     <td>{{$plan->aproval_date}}</td>
                                     <td>{{$plan->aproving_authority}}</td>
+                                    <td><a href="{{$plan->file}}" download="{{$plan->file}}"><i class="fa fa-file-word-o"></i> </a></td>
                                     <td><i class="badge {{$plan->status == 'active'?'bg-green':'bg-red'}}">{{$plan->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "plan_period":"{{$plan->plan_period}}", "aproval_date":"{{$plan->aproval_date}}", "aproving_authority":"{{$plan->aproving_authority}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
@@ -156,6 +164,7 @@
                                     <th>Period of the strategic plan</th>
                                     <th>Date of Approval</th>
                                     <th>Approving Authority</th>
+                                    <th>file</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

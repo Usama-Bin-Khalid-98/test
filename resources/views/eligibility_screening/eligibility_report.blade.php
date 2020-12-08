@@ -341,11 +341,11 @@
         var comments = CKEDITOR.instances.comments.getData();
         var file = $('#file').val();
 
-        !file?addClass('file'):removeClass('file');
+        // !file?addClass('file'):removeClass('file');
         !comments?addClass('comments'):removeClass('comments');
         !slip_id?addClass('slip_id'):removeClass('slip_id');
 
-        if(!file || !slip_id || !comments || !report_id)
+        if(!slip_id || !comments || !report_id)
         {
             Notiflix.Notify.Warning("Fill all the required Fields.");
             return;

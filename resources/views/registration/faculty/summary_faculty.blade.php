@@ -76,7 +76,7 @@
                                         <input type="hidden" name="faculty_qualification_id[]" value="{{@$degree->id}}">
                                         </td>
                                         @foreach($discipline as $program)
-                                            <td><input type="number" min="0" name="number_faculty[{{@$program->id}}][]" placeholder="no of Faculty" class="form-control"></td>
+                                            <td><input type="number" min="0" name="number_faculty[{{@$program->id}}][]" placeholder="no of Faculty"  value="0" class="form-control"></td>
                                         @endforeach
                                         <td><input type="number" readonly name="total[]" value="" class="form-control"></td>
                                     </tr>
@@ -244,11 +244,13 @@
                 var total = 0;
 
                 columns.find('input[name*="total"]').val('');
+                console.table(columns);
                 jQuery.each(columns, function() {
-                    let value = parseInt($('input:eq(0)', this).val());
+                    let value = $('input:eq(0)', this).val();
                     console.log('clue here....', value);
-                    value ?total += value || 0: 0;
+                    value ?total += parseInt(value) || 0: 0;
                 });
+                console.log('total here', total);
                 columns.find('input[name*="total"]').val(total);
             });
         })

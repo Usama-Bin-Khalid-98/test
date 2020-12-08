@@ -61,7 +61,8 @@ class StrategicPlanController extends Controller
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
 
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])
+                ->where('regStatus','SAR')->first();
 
             if($slip){
                 $type = 'SAR';
@@ -77,22 +78,34 @@ class StrategicPlanController extends Controller
                 return response()->json(['message'=> 'Strategic Plan should be greater then 3 years.'], 422);
             }
 
-                StrategicPlan::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'plan_period_from' => $request->plan_period,
-                    'plan_period_to' => $request->plan_period_to,
-                    'plan_period' => $period,
-                    'aproval_date' => $request->aproval_date,
-                    'aproving_authority' => $request->aproving_authority,
-                    'isComplete' => 'yes',
-                    'type' => $type,
-                    'created_by' => Auth::user()->id
-                ]);
+                /// upload file here
+            ///
+            $imageName = '';
+            $path = '';
+            if($request->file('file')){
+                $imageName= 'plan-'.time().'doc.'. $request->file->getClientOriginalExtension();
+                $path= 'uploads/strategic_plan/';
+                $diskName = env('DESK');
+                $disk = Storage::disk($diskName);
+                $request->file('file')->move($path, $imageName);
+                // file upload end
+
+            }
+            StrategicPlan::create([
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'plan_period_from' => $request->plan_period,
+                'plan_period_to' => $request->plan_period_to,
+                'plan_period' => $period,
+                'aproval_date' => $request->aproval_date,
+                'aproving_authority' => $request->aproving_authority,
+                'isComplete' => 'yes',
+                'type' => $type,
+                'file'=> $path.$imageName,
+                'created_by' => Auth::user()->id
+            ]);
 
             return response()->json(['success' => 'Strategic Plan added successfully.']);
-
-
         }catch (Exception $e)
         {
             return response()->json($e->getMessage(), 422);
