@@ -632,14 +632,14 @@ class EligibilityScreeningController extends Controller
                     ///////////////////// Email to Business School //////////////////////
                     $data= [];
                     $getnbeacInfo = NbeacBasicInfo::first();
-                    $mailInfo = [
-                        'to' => 'nbeac@gmail.com',
-                        'to_name' => 'Bilal Ahmad',
-                        'school' => "NBEAC Focal Person",
-                        'from' => "peer@gmail.com",
-                        'from_name' => 'PeerReviewer',
-                    ];
                     $docInfo = Slip::with('campus', 'department')->find($request->slip_id);
+                    $mailInfo = [
+                        'to' => $docInfo->campus->user->email,
+                        'to_name' => $docInfo->campus->user->name,
+                        'school' => $docInfo->campus->business_school->name,
+                        'from' => $getnbeacInfo->email,
+                        'from_name' => $getnbeacInfo->director,
+                    ];
 
                     $header = '<table cellspacing="0" style="border-collapse:collapse; width:80%">' .
                         '<tbody>' .
