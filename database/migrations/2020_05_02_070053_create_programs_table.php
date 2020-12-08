@@ -16,10 +16,10 @@ class CreateProgramsTable extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',100);
-            $table->integer('department_id')->unsigned();
-            $table->foreign('department_id')
+            $table->integer('discipline_id')->unsigned();
+            $table->foreign('discipline_id')
                 ->references('id')
-                ->on('departments');
+                ->on('disciplines');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->softDeletes();
             $table->timestamps();

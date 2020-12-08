@@ -275,21 +275,32 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                                 <i class="fa {{$summary_policy==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                             </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}">
-                <a href="{{url('strategic/budgetary-info')}}">{{$isActiveSAR? '1.7' : '1.6'}} Budgetary Information<span class="pull-right-container">
-                <span class="text text-{{$budget==='C'?'green':'red'}} pull-right">
-                    <i class="fa {{$budget==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                </span>
-                </span>
-                </a>
-            </li>
+                   @endif
+
+                    <li  class="{{ (request()->is('strategic/budgetary-info')) ? 'active' : '' }}">
+                        <a href="{{url('strategic/budgetary-info')}}">{{$isActiveSAR? '1.7' : '1.6'}} Budgetary Information<span class="pull-right-container">
+                        <span class="text text-{{$budget==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$budget==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                        </span>
+                        </a>
+                    </li>
+                        <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
+                                <span class="pull-right-container">
+                        <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a></li>
 
 
+                    @if($isActiveSAR)
                     <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}">1.8 Sources of Funding <span class="pull-right-container">
                     <span class="text text-{{$sources_funding==='C'?'green':'red'}} pull-right">
                         <i class="fa {{$sources_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                     </span></span></a>
                     </li>
+                    @endif
+
                     <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}">
                         <a href="{{url('strategic/audit-report')}}">1.9 Audit Report
                             <span class="pull-right-container">
@@ -298,6 +309,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                                 </span>
                             </span>
                         </a></li>
+                    @if($isActiveSAR)
                     <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.10 Mission Vision
                             <span class="pull-right-container">
                                 <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
@@ -306,14 +318,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             </span>
                         </a>
                     </li>
-                    @else
-                        <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
-                                <span class="pull-right-container">
-                        <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
-                        </span>
-                    </span></a></li>
-                    @endif
+
 
             <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">@if($isActiveSAR) 1.11 Approved Strategic Plan @else 1.8 Approved Strategic Plan @endif<span class="pull-right-container">
                         <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
@@ -325,7 +330,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$parent==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-
+            @endif
             <!-- Below are the Tables For SAR  -->
 
                 </ul>
