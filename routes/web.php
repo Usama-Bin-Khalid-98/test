@@ -253,7 +253,7 @@ Route::get('/email', function() {
 
         });
 
-        Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin']], function () {
+        Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin|Mentor']], function () {
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::get('PeerReviewerAvailability', 'SchedulePeerReviewController@peerAvailability');
 
