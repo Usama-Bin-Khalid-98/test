@@ -298,6 +298,7 @@ class ScheduleMentorMeetingController extends Controller
         if ($validation->fails()) {
             return response()->json($validation->messages()->all(), 422);
         } else {
+
             try {
                 $dates = explode(',', $request->dates);
                 $getEvent = MentoringMeeting::where('id', $request->mentorsmeeting_id)->get()->first();
@@ -312,13 +313,16 @@ class ScheduleMentorMeetingController extends Controller
                         'availability_dates' => date('Y-m-d', strtotime($date_val))])->exists();
                     // dd($check);
                     if(!$check) {
-                        ScheduleMentorMeeting::create([
+                       $mentorsData = [
 //                            'campus_id' => $getEvent->campus_id,
 //                            'department_id' => $getEvent->department_id,
                             'slip_id' => $getEvent->slip_id,
                             'user_id' => Auth::id(),
                             'availability_dates' => date('Y-m-d', strtotime($date_val))
-                        ]);
+                        ];
+                        Auth::user()->user_type==='ESScheduler'? $mentorsData['status'] = 'active':
+
+                        ScheduleMentorMeeting::create($mentorsData);
                     }
                 }
 
@@ -327,6 +331,7 @@ class ScheduleMentorMeetingController extends Controller
                     $delete_old_mentors = MentoringMentor::where('slip_id', $slip_id)->delete();
                     $slipInfo = Slip::with('campus', 'department')->find($slip_id)->first();
                     if($delete_old_mentors) {
+//                        dd($request->mentors);
                         foreach ($request->mentors as $mentor) {
                             $getMentor = User::find($mentor);
                             $letter = '<p>AOA, </p>'.
@@ -350,7 +355,7 @@ class ScheduleMentorMeetingController extends Controller
                                     ->subject('Mentoring Schedule of ' . $mailInfo['school']);
                                 $message->from($mailInfo['from'], $mailInfo['from_name']);
                             });
-                            $insert_new = MentoringMentor::create(['slip_id' => $slip_id, 'user_id' => $mentor, 'created_by' => Auth::id()]);
+                            $insert_new = MentoringMentor::create(['slip_id' => $slip_id, 'user_id' => $mentor, 'status'=> 'active', 'created_by' => Auth::id()]);
 
                         }
                     }
