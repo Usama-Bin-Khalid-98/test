@@ -604,7 +604,7 @@ class EligibilityScreeningController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
+//dd($request->all());
                 $imageName = '';
                 $path = '';
 //                if ($request->file('file')) {
@@ -664,12 +664,12 @@ class EligibilityScreeningController extends Controller
 ///
                     $data = ['letter' => $header.$request->comments.$footer];
 
-                    Mail::send('eligibility_screening.email.eligibility_report', $data, function($message) use ($mailInfo) {
-                        //dd($user);
-                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                            ->subject('Eligibility Screening Committee comments - '. $mailInfo['school']);
-                        $message->from($mailInfo['from'],$mailInfo['from_name']);
-                    });
+//                    Mail::send('eligibility_screening.email.eligibility_report', $data, function($message) use ($mailInfo) {
+//                        //dd($user);
+//                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
+//                            ->subject('Eligibility Screening Committee comments - '. $mailInfo['school']);
+//                        $message->from($mailInfo['from'],$mailInfo['from_name']);
+//                    });
                     ///////////////////// End Email to Business School //////////////////////
 
 

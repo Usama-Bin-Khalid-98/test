@@ -145,7 +145,7 @@ class HomeController extends Controller
             ->where('s.regStatus','!=', 'Review')
             ->where('s.regStatus','!=', 'Eligibility')
             ->get();
-
+//dd($eligibility_screening);
 //        $mentoringQuery = "
 //        SELECT slips.*, campuses.location as campus,
 //        departments.name as department,
@@ -185,7 +185,6 @@ class HomeController extends Controller
 //                    })
                     ->where('regStatus', 'ScheduledMentoring')
                     ->orWhere('regStatus', 'Mentoring')
-                    ->where('created_by', Auth::id())
                     ->get();
 //            dd($MentoringMeetings);
             }else {
@@ -205,6 +204,7 @@ class HomeController extends Controller
 //                    ->whereHas('mentoring_mentor', function ($q) {
 //                        $q->where('user_id', Auth::id());
 //                    })
+                ->where(['created_by'=> Auth::id()])
                 ->where('regStatus', 'ScheduledMentoring')
                 ->orWhere('regStatus', 'Mentoring')
                 ->get();
@@ -213,32 +213,25 @@ class HomeController extends Controller
 
         if(Auth::user()->user_type=='NbeacFocalPerson' || Auth::user()->user_type== 'NBEACAdmin') {
 //            dd('mentors ');
-            $PeerReviewVisit = DB::table('slips as s')
-                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
-                ->join('departments as d', 'd.id', '=', 's.department_id')
-                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
-                ->join('peer_review_reviewers as mm', 's.id', '=', 'mm.slip_id')
-                ->join('users as u', 'u.id', '=', 'mm.user_id')
-                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as business_school_id')
-                ->where('s.regStatus', 'ScheduledPRVisit')
-                ->orWhere('s.regStatus', 'PeerReviewVisit')
-                ->where('s.status', 'approved')
-//                ->where('mm.user_id', Auth::id())
+
+            $PeerReviewVisit = Slip::with('campus', 'department')
+                ->where('regStatus', 'ScheduledPRVisit')
+                ->orWhere('regStatus', 'PeerReviewVisit')
+                ->where('status', 'approved')
                 ->get();
+
 //            dd($PeerReviewVisit);
             }else {
-            $PeerReviewVisit = DB::table('slips as s')
-                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
-                ->join('departments as d', 'd.id', '=', 's.department_id')
-                ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
-                ->join('users as u', 'u.id', '=', 's.created_by')
-//                ->join('mentoring_mentors as mm', 'u.id', '=', 'mm.user_id')
-                ->select('s.*', 'c.location as campus','c.id as campus_id', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as business_school_id')
-                ->where(['s.business_school_id'=>Auth::user()->campus_id, 's.department_id'=>Auth::user()->department_id, 's.created_by' =>Auth::id()])
-                ->where('s.regStatus', 'ScheduledPRVisit')
-                ->orWhere('s.regStatus', 'PeerReviewVisit')
-                ->where('s.status', 'approved')
+
+            $PeerReviewVisit = Slip::with('campus', 'department')
+                ->where(['business_school_id'=>Auth::user()->campus_id,
+                    'department_id'=>Auth::user()->department_id])
+                ->where('regStatus', 'ScheduledPRVisit')
+                ->orWhere('regStatus', 'PeerReviewVisit')
+                ->where('status', 'approved')
                 ->get();
+
+
         }
 //        dd($PeerReviewVisit);
 

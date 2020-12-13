@@ -704,7 +704,7 @@
                                     <td>{{$school->charter_number}} </td>
                                     <td>{{$school->web_url}} </td>
 
-                                    <td><a class="btn btn-info" href="print?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print SAR</a><a class="btn btn-primary" href="registrationPrint?cid=<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print Registration</a></td>
+                                    <td><a class="btn btn-info" href="print?cid={{$school->campusID}}&bid={{$school->id}}">Print SAR</a><a class="btn btn-primary" href="registrationPrint?cid={{$school->campusID}}&bid={{$school->id}}">Print Registration</a></td>
 
                                    <!--  <td><i class="badge  " > </i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
@@ -1233,7 +1233,6 @@
                   <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
               </div>
               <!-- /.box-body -->
-
           </div>
           <!-- /.box -->
 
@@ -1279,13 +1278,13 @@
                       <tbody>
                       @foreach(@$PeerReviewVisit as $slip)
                           <tr>
-                              <td>{{@$slip->school}}</td>
-                              <td>{{@$slip->campus??'Main Campus'}}</td>
-                              <td>{{@$slip->department}}</td>
+                              <td>{{@$slip->campus->business_school->name}}</td>
+                              <td>{{@$slip->campus->location??'Main Campus'}}</td>
+                              <td>{{@$slip->department->name}}</td>
                               <td><a href="{{url('deskreview')}}/{{@$slip->id}}">Desk Review</a></td>
                               {{--<a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                              <td><a href="{{url('registrationPrint?cid=')}}{{@$slip->campus_id}}&bid={{@$slip->business_school_id}}">Registration Print </a></td>
-                              <td><a class="badge bg-maroon" href="print?cid={{$slip->campus_id}}&bid={{$slip->business_school_id}}">SAR</a></td>
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$slip->campus->id}}&bid={{@$slip->campus->business_school->id}}&did={{@$slip->department_id}}">Registration Print </a></td>
+                              <td><a class="badge bg-maroon" href="print?cid={{$slip->campus->id}}&bid={{$slip->campus->business_school->id}}&did={{@$slip->department_id}}">SAR</a></td>
                               <td><i class="badge" data-id="{{@$slip->id}}"  style="background: {{$slip->regStatus == 'Initiated'?'red':''}}{{$slip->regStatus == 'Review'?'brown':''}}{{$slip->regStatus == 'Approved'?'green':''}}" >{{@$slip->regStatus != ''?ucwords($slip->regStatus):'Initiated'}}</i></td>
                               <td>
                                   @if(@$slip->regStatus =='ScheduledPRVisit' || @$slip->regStatus =='PeerReviewVisit' )
@@ -1325,7 +1324,6 @@
 
           </div>
           <!-- /.box -->
-
       </section>
   @endif
       <!-- right col -->
@@ -1482,7 +1480,7 @@
           </div>
           <!-- /.modal-dialog -->
       </div>
-
+  </div>
 
       <!-- /.content -->
   </div>
