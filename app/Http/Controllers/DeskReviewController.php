@@ -252,8 +252,8 @@ class DeskReviewController extends Controller
         )->get()->sum('total_courses');
 
 //        dd($total_courses_lec);
-        $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 26])->get()->first();
-        $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 28])->get()->first();
+        $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 35])->get()->first();
+        $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 32])->get()->first();
 
         $summaries =[];
         $summaries['impact_factor'] = ResearchSummary::where(
@@ -487,7 +487,7 @@ class DeskReviewController extends Controller
                 '<tbody>' .
                 '<tr>' .
                 '<td style="background-color:white; height:16px; vertical-align:top; width:65%">' .
-                '<p>Mr/Ms.  ' . @$getUserData->campus->user->name . '<br />' .
+                '<p>AOA, Mr/Ms.  ' . @$getUserData->campus->user->name . '<br />' .
                 '' . @$getUserData->campus->user->designation->name . ',&nbsp; ' . @$getUserData->department->name . '<br />' .
                 '' . @$getUserData->campus->business_school->name . '</p>' .
                 '</td>' .

@@ -132,6 +132,7 @@
                                     <div class="form-group">
                                         <label for="comments">Comments</label>
                                         <textarea name="comments" id="comments" > {!! @$registrations_reports[0]->comments !!} </textarea>
+
                                     </div>
                                 </div>
 
@@ -257,23 +258,23 @@
             {
                 height: '500px'
             });
-        CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');
+        {{--CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');--}}
         // CKEDITOR.instances.comments.setData(row.comments);
     });
 
     $('#status').on('change', function () {
         let status = $(this).val();
-        if(status === 'Approved')
-        {
-            CKEDITOR.instances.comments.setData('{!! $approval_letter !!}');
-        }else if(status === 'Deferred'){
-            CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');
-        }else if(status === 'ConditionalApproval' )
-        {
-            CKEDITOR.instances.comments.setData('{!! $conditional_approved !!}');
-        }else{
-            CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');
-        }
+        {{--if(status === 'Approved')--}}
+        {{--{--}}
+        {{--    CKEDITOR.instances.comments.setData('{!! $approval_letter !!}');--}}
+        {{--}else if(status === 'Deferred'){--}}
+        {{--    CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');--}}
+        {{--}else if(status === 'ConditionalApproval' )--}}
+        {{--{--}}
+        {{--    CKEDITOR.instances.comments.setData('{!! $conditional_approved !!}');--}}
+        {{--}else{--}}
+        {{--    CKEDITOR.instances.comments.setData('{!! $deferred_letter !!}');--}}
+        {{--}--}}
     })
 
 
@@ -336,6 +337,9 @@
     });
 
     $('#update').submit(function (e) {
+        for ( instance in CKEDITOR.instances ) {
+            CKEDITOR.instances[instance].updateElement();
+        }
         var slip_id = $('#slip_id').val();
         var report_id = $('#report_id').val();
         var comments = CKEDITOR.instances.comments.getData();
