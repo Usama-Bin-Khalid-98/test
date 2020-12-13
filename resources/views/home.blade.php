@@ -698,13 +698,13 @@
 
                             @foreach($businessSchools as $school)
                                 <tr>
-                                    <td width="25%">{{$school->name}}</td>
-                                    <td width="15%">{{$school->campus}} </td>
-                                    <td>{{$school->contact_person}} </td>
-                                    <td>{{$school->charter_number}} </td>
-                                    <td>{{$school->web_url}} </td>
+                                    <td width="25%">{{$school->campus->business_school->name}}</td>
+                                    <td width="15%">{{$school->campus->location}} </td>
+                                    <td>{{$school->campus->user->name}} </td>
+                                    <td>{{$school->campus->user->contact_no}} </td>
+                                    <td>{{$school->campus->business_school->web_url}} </td>
 
-                                    <td><a class="btn btn-info" href="print?cid={{$school->campusID}}&bid={{$school->id}}">Print SAR</a><a class="btn btn-primary" href="registrationPrint?cid={{$school->campusID}}&bid={{$school->id}}">Print Registration</a></td>
+                                    <td><a class="btn btn-info" href="print?cid={{$school->business_school_id}}&bid={{$school->campus->business_school->id}}">Print SAR</a><a class="btn btn-primary" href="registrationPrint?cid={{$school->business_school_id}}&bid={{$school->campus->business_school->id}}">Print Registration</a></td>
 
                                    <!--  <td><i class="badge  " > </i></td>
                                     <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
@@ -1199,6 +1199,25 @@
                       </thead>
 
                       <tbody>
+                      @hasrole('Mentor')
+                      @foreach($MentoringMeetings as $mentorMeeting)
+                          <tr>
+                              <td>{{@$mentorMeeting->slip->campus->business_school->name}}</td>
+                              <td>{{@$mentorMeeting->slip->campus->location??'Main Campus'}}</td>
+                              <td>{{@$mentorMeeting->slip->department->name}}</td>
+                              <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->slip->id}}">Desk Review</a></td>
+                              {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
+                              <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->slip->campus->id}}&bid={{@$mentorMeeting->slip->business_school_id}}">Registration Print </a></td>
+                              {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                              <td><i class="badge" data-id="{{@$mentorMeeting->slip->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->slip->regStatus != ''?ucwords($mentorMeeting->slip->regStatus):'Initiated'}}</i></td>
+                              <td>@if($mentorMeeting->slip->regStatus =='ScheduledMentoring' || $mentorMeeting->slip->regStatus =='ScheduledES' || $mentorMeeting->slip->regStatus =='Mentoring' )
+                                      <a href="{{url('meetingsList')}}/{{$mentorMeeting->slip->id}}" class="btn-xs btn-info"> <i class="fa fa-calendar" data-toggle="tooltip" title="Mentoring Meeting Calendar"></i></a>
+                                  @elseif($mentorMeeting->slip->regStatus =='Review')Desk Review In-progress @endif
+                              </td>
+                          </tr>
+                      @endforeach
+                      @endhasrole
+                      @hasrole('ESScheduler|BusinessSchool')
                       @foreach($MentoringMeetings as $mentorMeeting)
                           <tr>
                               <td>{{@$mentorMeeting->campus->business_school->name}}</td>
@@ -1216,6 +1235,7 @@
                           </tr>
                       @endforeach
 
+                      @endhasrole
                       </tbody>
                       <tfoot>
                       <tr>

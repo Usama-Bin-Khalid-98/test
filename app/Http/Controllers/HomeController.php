@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\MentoringInvoice;
+use App\Models\MentoringMentor;
 use App\Models\PeerReview\InstituteFeedback;
 use App\User;
 use Illuminate\Http\Request;
@@ -162,7 +163,7 @@ class HomeController extends Controller
          //Auth::user()->user_type=='Mentor'? $mentoringQuery .= "AND mentoring_mentors.user_id= ".Auth::id():'';
 
         //$MentoringMeetings = DB::select($mentoringQuery);
-
+        $MentoringMeetings = [];
         if(Auth::user()->user_type=='Mentor') {
 //            dd('mentors ');
 //            $MentoringMeetings = DB::table('slips as s')
@@ -179,15 +180,20 @@ class HomeController extends Controller
 //                ->groupBy('s.id')
 //                ->get();
 
-                $MentoringMeetings = Slip::with('campus', 'department')
+                $MentoringMeetings = MentoringMentor::with(['slip' ])
+                  ->where(['user_id'=> Auth::id(), 'status'=> 'active'])
+                    ->get();
+            }
+        else if(Auth::user()->user_type=='ESScheduler'){
+            $MentoringMeetings = Slip::with('campus', 'department')
 //                    ->whereHas('mentoring_mentor', function ($q) {
 //                        $q->where('user_id', Auth::id());
 //                    })
-                    ->where('regStatus', 'ScheduledMentoring')
-                    ->orWhere('regStatus', 'Mentoring')
-                    ->get();
-//            dd($MentoringMeetings);
-            }else {
+                ->where('regStatus', 'ScheduledMentoring')
+                ->orWhere('regStatus', 'Mentoring')
+                ->get();
+        }
+        else if(Auth::user()->user_type== 'BusinessSchool'){
 //            $MentoringMeetings = DB::table('slips as s')
 //                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
 //                ->join('departments as d', 'd.id', '=', 's.department_id')
@@ -210,6 +216,8 @@ class HomeController extends Controller
                 ->get();
 
         }
+
+
 
         if(Auth::user()->user_type=='NbeacFocalPerson' || Auth::user()->user_type== 'NBEACAdmin') {
 //            dd('mentors ');
@@ -235,14 +243,17 @@ class HomeController extends Controller
         }
 //        dd($PeerReviewVisit);
 
-        $businessSchools = DB::select('
-SELECT business_schools.*, campuses.location as campus, campuses.id as campusID,slips.id as slip_id, slips.status as slipStatus
-FROM business_schools, users, campuses, slips
-WHERE users.business_school_id=business_schools.id
-AND campuses.business_school_id=business_schools.id
-AND business_schools.status="active"
-AND slips.business_school_id=campuses.id
-AND slips.status="approved" AND slips.regStatus="SAR" ', array());
+//        $businessSchools = DB::select('
+//SELECT business_schools.*, campuses.location as campus, campuses.id as campusID,slips.id as slip_id, slips.status as slipStatus
+//FROM business_schools, users, campuses, slips
+//WHERE users.business_school_id=business_schools.id
+//AND campuses.business_school_id=business_schools.id
+//AND business_schools.status="active"
+////AND slips.business_school_id=campuses.id
+//AND slips.status="approved" AND slips.regStatus="SAR" ');
+
+        $businessSchools = Slip::with('campus', 'department')
+            ->where(['status' =>'approved', 'regStatus'=>'SAR'])->get();
 
         $travel_plan = Slip::where('id', @$PeerReviewVisit[0]->id)->get()->first();
         $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();

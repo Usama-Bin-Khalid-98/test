@@ -765,7 +765,9 @@
     //         multidate: true
     //     });
         $('#multiDatesPicker').datepicker({
-            multidate: true
+            multidate: true,
+            minDate:new Date()
+
         });
     });
 </script>
