@@ -219,7 +219,9 @@ class HomeController extends Controller
 
 
 
-        if(Auth::user()->user_type=='NbeacFocalPerson' || Auth::user()->user_type== 'NBEACAdmin') {
+        if(Auth::user()->user_type=='NbeacFocalPerson' ||
+            Auth::user()->user_type== 'NBEACAdmin'||
+             Auth::user()->user_type== 'ESScheduler') {
 //            dd('mentors ');
 
             $PeerReviewVisit = Slip::with('campus', 'department')
@@ -228,9 +230,19 @@ class HomeController extends Controller
                 ->where('status', 'approved')
                 ->get();
 
-//            dd($PeerReviewVisit);
-            }else {
+            }
+            else if(Auth::user()->user_type === 'Mentor' || Auth::user()->user_type === 'PeerReviewer'){
+                $PeerReviewVisit = Slip::with(['campus', 'department','peer_review_reviewer' => function($q) {
+                    $q->where(['user_id'=>Auth::id()]);
+                }])
+                    ->where('regStatus', 'ScheduledPRVisit')
+                    ->orWhere('regStatus', 'PeerReviewVisit')
+                    ->where('status', 'approved')
+                    ->get();
 
+//                            dd($PeerReviewVisit);
+
+            }else {
             $PeerReviewVisit = Slip::with('campus', 'department')
                 ->where(['business_school_id'=>Auth::user()->campus_id,
                     'department_id'=>Auth::user()->department_id])
@@ -238,9 +250,9 @@ class HomeController extends Controller
                 ->orWhere('regStatus', 'PeerReviewVisit')
                 ->where('status', 'approved')
                 ->get();
-
-
         }
+
+
 //        dd($PeerReviewVisit);
 
 //        $businessSchools = DB::select('

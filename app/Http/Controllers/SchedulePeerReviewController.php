@@ -159,7 +159,7 @@ class SchedulePeerReviewController extends Controller
 
 
                             $mentorInfo = User::find($mentor)->first();
-                            $slipInfoSchool = Slip::with('campus', 'user')->where(['slip_id'=>$request->registrations])->first();
+                            $slipInfoSchool = Slip::with('campus')->where(['id'=>$request->registrations])->first();
 
                             $getNbeacInfo = NbeacBasicInfo::all()->first();
 
@@ -173,7 +173,7 @@ class SchedulePeerReviewController extends Controller
                                                 '<p>&nbsp;</p>' .
                                                 '<p>' . $slipInfoSchool->campus->user->name . '</p>';
                             ///
-                                            $data = ['letter' => $header. '<br/>'.$comments.$footer];
+                            $data = ['letter' => $header. '<br/>'.$comments.$footer];
 
                             $mailInfo = [
                                 'to' => $mentorInfo->email??'',
@@ -183,31 +183,41 @@ class SchedulePeerReviewController extends Controller
                                 'from_name' => $getNbeacInfo->director??'',
                             ];
 
-                            Mail::send('peer_review_visit.email.email', ['letter' => $mailData], function($message) use ($mailInfo) {
-                                //dd($user);
-                                $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                                    ->subject($mailInfo['school'].' Peer Review Visit Scheduled');
-                                $message->from($mailInfo['from'],$mailInfo['from_name']);
-                            });
+//                            Mail::send('peer_review_visit.email.email', ['letter' => $mailData], function($message) use ($mailInfo) {
+//                                //dd($user);
+//                                $message->to($mailInfo['to'],$mailInfo['to_name'] )
+//                                    ->subject($mailInfo['school'].' Peer Review Visit Scheduled');
+//                                $message->from($mailInfo['from'],$mailInfo['from_name']);
+//                            });
                         }
                         $updateSlip = Slip::find($request->registrations)->update(['regStatus'=>'ScheduledPRVisit']);
 
                         //////////////// Send and email to NBEAC for Reviewers Approval/////
                         /// ////////////////  email here          /// //////////
                         ///
+                        //////// email
+                        $header_nbeac_email = 'AOA <br/>'. $mentorInfo->name;
+                        $comments_nbeac_email = 'The business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) '
+                            . ' Schedule Peer Review Visit. please review and select the Peer Reviewers .';
+                        $footer_nbeac_email = '<p>Yours Sincerely,</p>' .
+                            '<p>&nbsp;</p>' .
+                            '<p>' . $slipInfoSchool->campus->user->name . '</p>';
+                        ///
+                        $data_nbeac_email = ['letter' => $header_nbeac_email. '<br/>'.$comments_nbeac_email.'<br/>'.$footer_nbeac_email];
+
                         $mailSchoolInfo = [
-                            'to' => $school->user->email,
-                            'to_name' => $school->user->name,
+                            'to' => $getNbeacInfo->email,
+                            'to_name' => $getNbeacInfo->director,
                             'school' => $getNbeacInfo->name??'',
-                            'from' => $getNbeacInfo->email??'',
-                            'from_name' => $getNbeacInfo->director??'',
+                            'from' => Auth::user()->email??'',
+                            'from_name' => Auth::user()->name??'',
                         ];
 
-                        Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
+                        Mail::send('peer_review_visit.email.email',  $data_nbeac_email, function($message) use ($mailSchoolInfo) {
                             //dd($user);
-                            $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                                ->subject($mailInfo['school'].' paid accreditation fee - '. $mailInfo['school']);
-                            $message->from($mailInfo['from'],$mailInfo['from_name']);
+                            $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
+                                ->subject('Schedule Peer Review Visit of '. $mailSchoolInfo['school']);
+                            $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
                         });
 
                         //////////////// Send and email to NBEAC for Reviewers Approval/////

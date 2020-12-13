@@ -1261,9 +1261,9 @@
       <!-- right col -->
         @endhasrole
 
-      @hasrole('NbeacFocalPerson|ESScheduler|BusinessSchool')
+      @hasrole('NbeacFocalPerson|ESScheduler|BusinessSchool|Mentor|PeerReviewer')
       <!--Invoices list-->
-      @if(!empty($PeerReviewVisit[0]->school))
+      @if(!empty(@$PeerReviewVisit[0]->campus->business_school->name))
       <section class="col-lg-12 connectedSortable">
           <!-- TO DO List -->
           <div class="box box-primary">
