@@ -276,13 +276,17 @@ Route::get('/email', function() {
         Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {
             Route::resource('MentoringScheduler', 'ScheduleMentorMeetingController');
             Route::get('MentorScheduler/{id?}', 'ScheduleMentorMeetingController@MentorScheduler');
-            Route::resource('PeerReviewScheduler', 'SchedulePeerReviewController');
             Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');
             Route::post('changePeerReviewConfirmStatus', 'SchedulePeerReviewController@changeConfirmStatus');
-            Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
-            Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
         });
 
+        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor|PeerReviewer']], function () {
+            Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
+            Route::resource('PeerReviewScheduler', 'SchedulePeerReviewController');
+            Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
+
+
+        });
         Route::group(['middleware' => ['role:ESScheduler|NbeacFocalPerson|AccreditationAwardCommittee']], function () {
             Route::resource('accreditationACScheduler', 'ScheduleAccreditationAwardController');
             Route::get('aac-showOnCalendar/{id?}', 'ScheduleAccreditationAwardController@accreditation_award_committee');

@@ -1051,12 +1051,12 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasrole('NBEACAdmin')
           <li class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-check-square-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
-          @hasrole('ESScheduler|NBEACAdmin')
+          @hasrole('ESScheduler')
           <li class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
           @endhasrole
 
           @hasrole('BusinessSchool|NBEACAdmin')
-          <li class=" treeview {{(request()->is('mentoring-report'))?'active':''}}{{(request()->is('peer-review-report'))?'active':''}}{{(request()->is('eligibility-screening-report'))?'active':''}}">
+          <li class=" treeview {{(request()->is('mentoring-report'))?'active':''}}{{(request()->is('peerReviewReport'))?'active':''}}{{(request()->is('peer-review-report'))?'active':''}}{{(request()->is('eligibility-screening-report'))?'active':''}}">
               <a href="#">
                   <i class="fa fa-folder-open text-blue"></i><span>Reports</span>
                   <span class="pull-right-container">
@@ -1064,13 +1064,17 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
             </span>
               </a>
               <ul class="treeview-menu">
-          <li class="{{ (request()->is('mentoring-report')) ? 'active' : '' }}"><a href="{{url('mentoring-report')}}"><i class="fa fa-file" style="color: #FF631BD8" ></i>Mentoring Report</a></li>
+                  @hasrole('NBEACAdmin')
+                  <li class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
+                  <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file text-yellow"></i>Peer Review Report</a></li>
+                  @endhasrole
+                  <li class="{{ (request()->is('mentoring-report')) ? 'active' : '' }}"><a href="{{url('mentoring-report')}}"><i class="fa fa-file" style="color: #FF631BD8" ></i>Mentoring Report</a></li>
                   @hasrole('BusinessSchool')
                   <li  class="{{ (request()->is('eligibility-screening-report')) ? 'active' : '' }}"><a href="{{url('eligibility-screening-report')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
                   {{--          <li  class="{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}"><a href="{{url('mentoringInvoices')}}"><i class="fa fa-file-o text-green"></i>Mentoring Invoices List</a></li>--}}
                   <li  class="{{ (request()->is('peer-review-report')) ? 'active' : '' }}"><a href="{{url('peer-review-report')}}"><i class="fa fa-file-o text-green"></i>Peer Review Report</a></li>
-
                   @endhasrole
+
               </ul>
           </li>
                   @endhasrole
@@ -1102,7 +1106,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasanyrole('NbeacFocalPerson|NBEACAdmin')
           <li  class="{{ (request()->is('instituteFeedback')) ? 'active' : '' }}"><a href="{{url('instituteFeedback')}}"><i class="fa fa-backward text-purple"></i>Institutional Feedback Form</a></li>
           @endhasrole
-          @hasanyrole('NbeacFocalPerson|NBEACAdmin')
+          @hasanyrole('NbeacFocalPerson')
           <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file text-yellow"></i>Peer Review Report</a></li>
 {{--          <li  class="{{ (request()->is('notifications')) ? 'active' : '' }}"><a href="{{url('notifications')}}"><i class="fa fa-sticky-note text-red"></i>Notifications</a></li>--}}
           @endhasrole

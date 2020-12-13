@@ -12,6 +12,7 @@ use App\Models\EligibilityScreening\ReviewerAvailability;
 use App\Models\MentoringMeeting;
 use App\Models\MentoringMentor;
 use App\Models\PeerReview\PeerReviewReport;
+use App\Models\PeerReview\PeerReviewReviewer;
 use App\Models\PeerReview\SchedulePeerReview;
 use Illuminate\Database\Eloquent\Model;
 
@@ -76,5 +77,9 @@ class Slip extends Model
     public function accreditation_reviewer()
     {
         return $this->hasOne(AccreditationReviewer::class);
+    }
+
+    public function peer_review_reviewer(){
+        return $this->hasOne(PeerReviewReviewer::class);
     }
 }

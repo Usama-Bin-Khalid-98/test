@@ -38,7 +38,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                @hasrole('ESScheduler|BusinessSchool|NbeacFocalPerson')
+                @hasrole('ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor|PeerReviewer')
                 @if(@$userDates)
                     @foreach(@$userDates as $index => $reviewerDates)
                     <div class="col-md-3">
@@ -259,7 +259,7 @@
 
     var myCalendar;
 </script>
-@hasrole('NbeacFocalPerson')
+@hasrole('NbeacFocalPerson|Mentor|PeerReviewer')
 <script>
     $.ajaxSetup({
         headers: {
@@ -474,6 +474,20 @@
                     "endDate": info.endStr
                 })
             },
+
+             eventClick: function(info) {
+                 $('#add-modal').modal('show');
+                 console.log('Event: complete details' + info.event.id);
+                 $('#mentorsmeeting_id').val(info.event.id);
+                 console.log('Event: complete campus_id' + info.event.campus_id);
+                 console.log('Event: complete title' + info.event.title);
+                 console.log('Event: complete start' + info.event.start);
+                 // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                 // alert('View: ' + info.view.type);
+
+                 // change the border color just for fun
+                 info.el.style.borderColor = 'red';
+             },
         @hasrole('BusinessSchool') eventClick: function(info) {
                  $('#peerReviewer-modal').modal('show');
                  console.log('Event: complete details' + info.event.id);
