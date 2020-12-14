@@ -323,11 +323,17 @@ class SlipController extends Controller
     public function edit($slip)
     {
         //
-        $slips = Slip::where('id', $slip)->get()->first();
-        $confirm_date = SchedulePeerReview::where(['slip_id'=> $slip, 'is_confirm' => 'yes'])->get()->first();
-        $slips['confirm_date'] = $confirm_date->availability_dates;
+        try {
+            $slips = Slip::where('id', $slip)->get()->first();
+            $confirm_date = SchedulePeerReview::where(['slip_id' => $slip, 'is_confirm' => 'yes'])->get()->first();
+            $slips['confirm_date'] = $confirm_date->availability_dates;
 //        dd($slips);
-        return response()->json($slips, 200);
+            return response()->json($slips, 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json('No data available', 422);
+        }
     }
 
     /**

@@ -1261,7 +1261,7 @@
       <!-- right col -->
         @endhasrole
 
-      @hasrole('NbeacFocalPerson|ESScheduler|BusinessSchool|Mentor|PeerReviewer')
+      @hasrole('NbeacFocalPerson|ESScheduler|BusinessSchool|Mentor|PeerReviewer|NBEACAdmin')
       <!--Invoices list-->
       @if(!empty(@$PeerReviewVisit[0]->campus->business_school->name))
       <section class="col-lg-12 connectedSortable">
@@ -1595,7 +1595,10 @@
             error:function(response, exception){
                 Notiflix.Loading.Remove();
                 $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure("Something went wrong, please check, is the event date confirm?");
                     Notiflix.Notify.Failure(val);
+
+                    return false;
                 })
 
             }

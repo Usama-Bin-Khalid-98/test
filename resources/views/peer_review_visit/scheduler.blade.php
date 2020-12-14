@@ -38,7 +38,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                @hasrole('ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor|PeerReviewer')
+                @hasrole('ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor|PeerReviewer|NBEACAdmin')
                 @if(@$userDates)
                     @foreach(@$userDates as $index => $reviewerDates)
                     <div class="col-md-3">
@@ -259,7 +259,7 @@
 
     var myCalendar;
 </script>
-@hasrole('NbeacFocalPerson|Mentor|PeerReviewer')
+@hasrole('NbeacFocalPerson|Mentor|PeerReviewer|NBEACAdmin')
 <script>
     $.ajaxSetup({
         headers: {
@@ -305,6 +305,7 @@
                     "endDate": info.endStr
                 })
             },
+            @hasrole('ESScheduler|NBEACAdmin|NbeacFocalPerson')
             eventClick: function(info) {
                 $('#peerReviewer-modal').modal('show');
                 console.log('Event: complete details' + info.event.id);
@@ -318,7 +319,7 @@
                 // change the border color just for fun
                 info.el.style.borderColor = 'red';
             },
-            editable: true,
+            editable: true,@endhasrole
             droppable: true, // this allows things to be dropped onto the calendar
             drop: function(info) {
                 // is the "remove after drop" checkbox checked?
@@ -502,6 +503,8 @@
                  info.el.style.borderColor = 'red';
              },
              editable: true,@endhasrole
+                 @hasrole('ESScheduler|NBEACAdmin|NbeacFocalPerson')
+
              droppable: true, // this allows things to be dropped onto the calendar
              eventTimeFormat: { // like '14:30:00'
                 hour: '2-digit',
@@ -530,6 +533,7 @@
                     }
                 }
             }
+            @endhasrole
         });
 
         myCalendar.render();
