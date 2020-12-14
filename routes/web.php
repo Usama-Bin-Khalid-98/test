@@ -280,7 +280,7 @@ Route::get('/email', function() {
             Route::post('changePeerReviewConfirmStatus', 'SchedulePeerReviewController@changeConfirmStatus');
         });
 
-        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor|PeerReviewer']], function () {
+        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor|PeerReviewer|NBEACAdmin']], function () {
             Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
             Route::resource('PeerReviewScheduler', 'SchedulePeerReviewController');
             Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
