@@ -59,7 +59,7 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <!--<th>Peer Reviewer Comments</th>-->
+                                    <th>PDF</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -70,7 +70,7 @@
                                         <td>{{@$screening->school}}</td>
                                         <td>{{@$screening->campus??'Main Campus'}}</td>
                                         <td>{{@$screening->department}}</td>
-                                         <!--<td>{!!@substr($screening->comments, 0, 100) !!}...</td>-->
+                                         <td> @if($screening->file)<a href="{{url($screening->file)}}" download> <i class="fa fa-file-pdf-o"></i> Letter </a>@endif</td>
                                         <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
                                         <td><span title="Eligibility Comments" data-toggle="tooltip"> <i class="fa fa-list details" data-id="{{str_replace(array("\r\n", "\r", "\n"), "", $screening->comments)}}" data-toggle="modal" data-row='{"id":"{{$screening->report_id}}","school":"{{$screening->school}}","campus":"{{$screening->campus}}","department":"{{$screening->department}}","file":"{{$screening->file}}"}' data-target="#detail-modal"></i> </span></td>
                                     </tr>
@@ -81,7 +81,7 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <!--<th>Peer Reviewer Comments</th>-->
+                                    <th>PDF</th>
                                     <th>Status</th>
                                     <th>Action</th>
 
@@ -128,7 +128,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="FRtoBusinessSchool" class="btn btn-info">Email To BS Admin</button>
+                        <button type="button" class="btn btn-success FRtoBusinessSchool" data-id='email'>Email To BS Admin & generate pdf</button>
+                        <button type="button" class="btn btn-info FRtoBusinessSchool" data-id="pdf">Generate pdf</button>
                     </div>
                 </form>
             </div>
@@ -177,22 +178,23 @@
     CKEDITOR.instances.comments.setData(comment);
     })
 
-    $('#FRtoBusinessSchool').on('click', function () {
+    $('.FRtoBusinessSchool').on('click', function () {
         let comments = CKEDITOR.instances.comments.getData();
         let id = $('#report').val();
+        let type = $(this).data('id');
         // console.log('commemts here ',comments);
         // return
         $.ajax({
             url:'{{url('esReportToBusinessSchool')}}',
             type:'POST',
-            data:{id:id, comments:comments},
+            data:{id:id, comments:comments,type:type},
             beforeSend:function() {
                 // Notiflix.loading.Pulse('Processing...');
                 Notiflix.Loading.Pulse('Processing...');
             },
             success: function (response) {
                 Notiflix.Loading.Remove();
-
+                $('#detail-modal').modal('hide');
                 console.log('response here', response)
             },
             error: function () {
