@@ -10,6 +10,8 @@ use App\Models\EligibilityScreening\ESReviewer;
 use App\Models\EligibilityScreening\ReviewerAvailability;
 use App\Models\StrategicManagement\Scope;
 use App\User;
+//use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -442,12 +444,15 @@ class EligibilityScreeningController extends Controller
 
     public function esReportToSchool(Request $request)
     {
+
+        $getnbeacInfo = NbeacBasicInfo::first();
+        @$slip_id = EligibilityReport::find($request->id)->slip_id;
+
 //        dd($request->all());
 
-            $getnbeacInfo = NbeacBasicInfo::first();
-
-            @$slip_id = EligibilityReport::find($request->id)->slip_id;
             if($slip_id) {
+
+
 
                 $docInfo = Slip::with('campus', 'department')->find($slip_id);
 //                dd($slipInfo->business_school_id);
@@ -467,43 +472,79 @@ class EligibilityScreeningController extends Controller
                 }
 
 /////////////////// Email to Business School //////////////////////
-                $header = '<table cellspacing="0" style="border-collapse:collapse; width:80%">' .
+                $header = '<table cellspacing="0" border="0" style="border-collapse:collapse; width:100%">' .
                     '<tbody>' .
                     '<tr>' .
-                    '<td style="background-color:white; height:16px; vertical-align:top; width:80%">' .
+                    '<td style="background-color:white; height:16px; vertical-align:top; width:60%">' .
                     '<p><strong>Mr/Ms.  ' . @$docInfo->campus->user->name . '</strong><br />' .
                     '<strong>' . @$docInfo->campus->user->designation->name . ',&nbsp; ' . @$docInfo->department->name . '</strong><br />' .
                     '<strong>' . @$docInfo->campus->business_school->name . '</strong></p>' .
                     '</td>' .
-                    '<td style="background-color:white; height:16px; vertical-align:top; width:50%">' .
+                    '<td style="background-color:white; height:16px; vertical-align:top; width:40%">' .
                     '<p> Ref. No: '.@$docInfo->invoice_no.'<br />'.
                     '<strong>Dated: </strong><strong>' . date('Y-m-d') . '</strong></p>' .
                     '</td>' .
                     '</tr>' .
                     '</tbody>' .
-                    '</table>';
+                    '</table>'.
+                    '<p><strong>Subject:</strong>  '.$docInfo->campus->business_school->name.' - Accreditation of '.$programs.' </p>'.
+                    '<p>Dear Professor '.@$docInfo->campus->user->name.'</p>';
 
                 $footer = '<p>Yours Sincerely,</p>' .
                     '<p>&nbsp;</p>' .
                     '<p>' . $getnbeacInfo->director . '</p>' .
                     '<p>Senior Program Manager (NBEAC)</p>';
 ///
-                $data = ['letter' => $header.$request->comments.$footer];
+
                 $slipInfo = $docInfo;
-                $mailInfo = [
-                    'to' => $slipInfo->campus->user->email,
-                    'to_name' => $slipInfo->campus->user->name,
-                    'school' => $slipInfo->campus->business_school->name,
-                    'from' => $getnbeacInfo->email,
-                    'from_name' => $getnbeacInfo->name,
-                ];
-//                    dd($mailInfo);
-                Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
-                    //dd($user);
-                    $message->to($mailInfo['to'], $mailInfo['to_name'])
-                        ->subject('Eligibility Screening Committee comments - ' . $mailInfo['school']);
-                    $message->from($mailInfo['from'], $mailInfo['from_name']);
-                });
+                $data = ['letter' => $header.$request->comments.$footer];
+
+                if($request->type == 'pdf')
+                {
+                    /////////// Generate PDF ////////////////
+                    $pdf = PDF::loadView('eligibility_screening.pdf.index', $data)->setPaper('a4', 'portrait');;
+                    $pdf->setOptions(['isPhpEnabled' => true, 'isRemoteEnabled' =>true]);
+                    $filename = str_replace(' ' ,'-','pdf-'.$slipInfo->campus->business_school->name.'-report');
+                    $file_path = str_replace(' ' ,'-','pdf/'.$slipInfo->campus->business_school->name.'/'.$docInfo->campus->location.'/'.$docInfo->department->name.'/');
+
+                    $createDirectory = createDirecrtory(['file_name' =>$filename, 'path'=>$file_path] );
+                    $updateEligibilitReport = EligibilityReport::find($request->id)->update(['file'=>$file_path.$filename.'.pdf']);
+                    $pdf->save($file_path.$filename.'.pdf');
+                    return $pdf->download($file_path.'.pdf');
+                }
+                else {
+                    $mailInfo = [
+                        'to' => $slipInfo->campus->user->email,
+                        'to_name' => $slipInfo->campus->user->name,
+                        'school' => $slipInfo->campus->business_school->name,
+                        'from' => $getnbeacInfo->email,
+                        'from_name' => $getnbeacInfo->name,
+                    ];
+
+
+                    //                    dd($mailInfo);
+                    Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailInfo) {
+                        //dd($user);
+                        $message->to($mailInfo['to'], $mailInfo['to_name'])
+                            ->subject('Eligibility Screening Committee comments - ' . $mailInfo['school']);
+                        $message->from($mailInfo['from'], $mailInfo['from_name']);
+                    });
+
+                    /////////// Generate PDF ////////////////
+                    ///
+                    $pdf = PDF::loadView('eligibility_screening.pdf.index', $data)->setPaper('a4', 'portrait');;
+                    $pdf->setOptions(['isPhpEnabled' => true, 'isRemoteEnabled' => true]);
+                    $filename = str_replace(' ', '-', 'pdf-' . $slipInfo->campus->business_school->name . '-report');
+                    $file_path = str_replace(' ', '-', 'pdf/' . $slipInfo->campus->business_school->name . '/' . $docInfo->campus->location . '/' . $docInfo->department->name . '/');
+
+                    $createDirectory = createDirecrtory(['file_name' => $filename, 'path' => $file_path]);
+
+                    //                $remmove_old = unlink()
+                    //                dd('done');
+                    $updateEligibilitReport = EligibilityReport::find($request->id)->update(['file' => $file_path . $filename . '.pdf']);
+                    $pdf->save($file_path . $filename . '.pdf');
+                    //                return $pdf->download($file_path.'.pdf');
+                }
             }
 
         return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
