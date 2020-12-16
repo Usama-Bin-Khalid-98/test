@@ -59,7 +59,7 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <th>Peer Reviewer Comments</th>
+                                    <!--<th>Peer Reviewer Comments</th>-->
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -70,9 +70,9 @@
                                         <td>{{@$screening->school}}</td>
                                         <td>{{@$screening->campus??'Main Campus'}}</td>
                                         <td>{{@$screening->department}}</td>
-                                         <td>{!!substr($screening->comments, 0, 100) !!}...</td>
+                                         <!--<td>{!!@substr($screening->comments, 0, 100) !!}...</td>-->
                                         <td><i class="badge" data-id="{{@$screening->id}}"  style="background: {{$screening->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$screening->regStatus != ''?ucwords($screening->regStatus):'Initiated'}}</i></td>
-                                        <td><i class="fa fa-list details" title="Comments" data-toggle="tooltip" data-id="{{str_replace(array("\r\n", "\r", "\n"), "", $screening->comments)}}" data-toggle="modal" data-row='{"id":"{{$screening->report_id}}","school":"{{$screening->school}}","campus":"{{$screening->campus}}","department":"{{$screening->department}}","file":"{{$screening->file}}"}' data-target="#detail-modal"></i> </td>
+                                        <td><i class="fa fa-list details" title="Eligibility Comments" data-toggle="tooltip" data-id="{{str_replace(array("\r\n", "\r", "\n"), "", $screening->comments)}}" data-toggle="modal" data-row='{"id":"{{$screening->report_id}}","school":"{{$screening->school}}","campus":"{{$screening->campus}}","department":"{{$screening->department}}","file":"{{$screening->file}}"}' data-target="#detail-modal"></i> </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -81,7 +81,7 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Department</th>
-                                    <th>Peer Reviewer Comments</th>
+                                    <!--<th>Peer Reviewer Comments</th>-->
                                     <th>Status</th>
                                     <th>Action</th>
 
