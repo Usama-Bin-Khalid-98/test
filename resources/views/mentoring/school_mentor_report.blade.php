@@ -90,7 +90,7 @@
                                         <td>{{@$report->mentoring_report->campus->location??'Main Campus'}}</td>
                                         <td>{{@$report->department->name}}</td>
                                          <td><a href="{{asset(@$report->file)}}" >Doc File</a></td>
-                                         <td>{!!substr($report->mentoring_report->comments, 0, 100) !!}...</td>
+                                         <td>{!!substr(@$report->mentoring_report->comments, 0, 100) !!}...</td>
 {{--                                        <td><i class="badge" data-id="{{@$report->id}}"  style="background: {{$report->regStatus == 'Initiated'?'red':''}}{{$screening->regStatus == 'Review'?'brown':''}}{{$screening->regStatus == 'Approved'?'green':''}}" >{{@$report->regStatus != ''?ucwords($report->regStatus):'Initiated'}}</i></td>--}}
                                         <td>
                                             <i class="fa fa-list" data-toggle="modal" data-target="#detail-modal"></i>
