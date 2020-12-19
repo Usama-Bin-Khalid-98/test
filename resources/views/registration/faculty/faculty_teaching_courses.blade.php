@@ -1,6 +1,4 @@
 @section('pageTitle', 'Visiting Faculty ')
-
-
 @if(Auth::user())
 
     @include("../includes.head")
@@ -35,7 +33,6 @@
             </div>
         </section>
 
-        {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
             <div class="row">
@@ -122,7 +119,8 @@
                         <!-- /.box-body -->
                         <!-- /.box -->
                     </div>
-                    <!-- .box -->
+           <!-- .box -->
+           
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">4.3(a) FTE for the permanent, regular and adjunct faculty in program(s)</h3>
@@ -137,9 +135,10 @@
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
                                     <th>Maximum teaching Courses Allowed</th>
-                                    @foreach($visitings as $req)
-                                        @foreach($req->faculty_program as $program )
-                                         <th> {{$program->program->name}}:</th>
+                                    
+                                    @foreach(@$visitings as $req)
+                                        @foreach(@$req->faculty_program as $program )
+                                         <th> {{@$program->program->name}}:</th>
                                         @endforeach
                                         @break
                                     @endforeach
@@ -148,18 +147,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php $totalFTE =0; @endphp
-                                @foreach($visitings as $req)
+                                    
+                                @php 
+                                $totalFTE =0; @endphp
+                                
+                                @foreach(@$visitings as $req)
                                 <tr>
 {{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
-                                    <td>{{$req->name}}</td>
-                                    <td>{{$req->lookup_faculty_type->faculty_type}}</td>
-                                    <td>{{$req->designation->name}}</td>
-                                    <td>{{$req->max_cources_allowed}}</td>
+                                    <td>{{@$req->name}}</td>
+                                    <td>{{@$req->lookup_faculty_type->faculty_type}}</td>
+                                    <td>{{@$req->designation->name}}</td>
+                                    <td>{{@$req->max_cources_allowed}}</td>
 
-                                        @foreach($req->faculty_program as $program )
+                                        @foreach(@$req->faculty_program as $program )
                                         <td>
-                                            Courses: {{$program->tc_program}} <br>
+                                            Courses: {{@$program->tc_program}} <br>
                                             @if(@$req->lookup_faculty_type->faculty_type == 'Visiting')
                                             Program VFE: @else Program FTE:  @endif {{round($program->tc_program/$req->max_cources_allowed, 2)}}
                                             @php $totalFTE += $program->tc_program/$req->max_cources_allowed; @endphp
@@ -176,13 +178,13 @@
                                 <tr>
                                     @if(@$visitings[0]->lookup_faculty_type->faculty_type == 'Visiting')
                                     <th colspan="4" align="center">Total VFE</th>
-                                    <th>Total VFE: {{@round($totalFTE/3, 2)}}</th>
+                                    <th>Total VFE: {{round($totalFTE/3, 2)}}</th>
                                     @else
                                         <th colspan="4" align="center">Total FTE</th>
-                                        <th>Total FTE: {{@(round($totalFTE, 2))}}</th>
+                                        <th>Total FTE: {{(round($totalFTE, 2))}}</th>
                                     @endif
-                                    @foreach($visitings as $req)
-                                        @foreach($req->faculty_program as $program )
+                                    @foreach(@$visitings as $req)
+                                        @foreach(@$req->faculty_program as $program )
                                             <th> </th>
                                         @endforeach
                                         @break
@@ -194,9 +196,9 @@
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
                                     <th>Maximum teaching Courses Allowed</th>
-                                    @foreach($visitings as $req)
-                                        @foreach($req->faculty_program as $program )
-                                            <th> {{$program->program->name}}</th>
+                                    @foreach(@$visitings as $req)
+                                        @foreach(@$req->faculty_program as $program )
+                                            <th> {{@$program->program->name}}</th>
                                         @endforeach
                                         @break
                                     @endforeach

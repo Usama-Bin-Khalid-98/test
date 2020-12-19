@@ -29,8 +29,8 @@ class FacultyTeachingCourcesController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $designations = Designation::whereIn('id', [1,2,6,10])->get();
-
-
+        $visitings;
+        $faculty_types;
         $getUrl =\Illuminate\Support\Facades\Request::segment(1);
          if($getUrl =='faculty-teaching')
          {
@@ -41,6 +41,7 @@ class FacultyTeachingCourcesController extends Controller
              $faculty_types = LookupFacultyType::where('id', 3)->get();
          }
 
+       
         //dd($faculty_types);
         /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
@@ -48,13 +49,15 @@ class FacultyTeachingCourcesController extends Controller
         }else {
             $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }*/
-
+        
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
         $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
-        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
-
+        $slip?$where['type'] = 'SAR':$where['type'] = 'REG';
+        
         $getScope = Scope::with('program')->where($where)->get();
+        
         if($getUrl =='faculty-teaching') {
+           
             $visitings = FacultyTeachingCources::with(['campus','department',
                 'lookup_faculty_type'=> function($query) {
                 $query->where('id', 1);
@@ -84,8 +87,7 @@ class FacultyTeachingCourcesController extends Controller
 //               dd($program->tc_program, 'program',$program->program->name);
 //           }
 //       }
-//
-
+// dd('working here');
 
          return view('registration.faculty.faculty_teaching_courses', compact('designations','faculty_types','visitings', 'getScope'));
     }
