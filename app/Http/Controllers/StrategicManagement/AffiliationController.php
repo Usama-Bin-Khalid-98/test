@@ -26,7 +26,7 @@ class AffiliationController extends Controller
         $department_id = Auth::user()->department_id;
         $designations = Designation::all();
         $bodies = StatutoryBody::all();
-        
+
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip){
                 $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
@@ -80,6 +80,18 @@ class AffiliationController extends Controller
                 'statutory_bodies_id' => $request->statutory_bodies_id,
                 'isComplete' => 'yes',
                 'type' => $type,
+                'created_by' => Auth::user()->id
+
+            ]);
+            Affiliation::create([
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'name' => $request->name,
+                'designation_id' => $request->designation_id,
+                'affiliation' => $request->affiliation,
+                'statutory_bodies_id' => $request->statutory_bodies_id,
+                'isComplete' => 'yes',
+                'type' => 'SAR',
                 'created_by' => Auth::user()->id
 
             ]);
@@ -157,11 +169,20 @@ class AffiliationController extends Controller
      */
     public function destroy(Affiliation $affiliation)
     {
+//        dd($affiliation);
         try {
             Affiliation::where('id', $affiliation->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             Affiliation::destroy($affiliation->id);
+            Affiliation::where([
+                "name" => $affiliation->name,
+                "campus_id" => $affiliation->campus_id,
+                "department_id" => $affiliation->department_id,
+                "affiliation" => $affiliation->affiliation,
+                "designation_id" => $affiliation->designation_id,
+                "statutory_bodies_id" => $affiliation->statutory_bodies_id,
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

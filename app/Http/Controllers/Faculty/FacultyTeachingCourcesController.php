@@ -147,6 +147,29 @@ class FacultyTeachingCourcesController extends Controller
                 );
             }
 
+            $insert =  FacultyTeachingCources::create([
+                    'name' => $request->name,
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
+                    'designation_id' => $request->designation_id,
+                    'max_cources_allowed' => $request->max_cources_allowed,
+                    'isCompleted' => 'yes',
+                    'type' => 'SAR',
+                    'created_by' => Auth::user()->id
+                ]);
+
+            foreach ($request->tc_program as $key=>$program) {
+                $insertTcProgram = FacultyProgram::create(
+                    [
+                        'faculty_teaching_cource_id' => $insert->id,
+                        'program_id' => $key,
+                        'tc_program' => $program,
+                        'created_by'=> Auth::id()
+                    ]
+                );
+            }
+
             return response()->json(['success' => 'Visiting Faculty added successfully.']);
 
 
@@ -220,11 +243,22 @@ class FacultyTeachingCourcesController extends Controller
      */
     public function destroy(FacultyTeachingCources $facultyTeaching)
     {
+//        dd($facultyTeaching);
          try {
               FacultyTeachingCources::where('id', $facultyTeaching->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             FacultyTeachingCources::destroy($facultyTeaching->id);
+            FacultyTeachingCources::where([
+                "campus_id" => $facultyTeaching->campus_id,
+                "department_id" => $facultyTeaching->department_id,
+                "lookup_faculty_type_id" => $facultyTeaching->lookup_faculty_type_id,
+                "designation_id" => $facultyTeaching->designation_id,
+                "max_cources_allowed" => $facultyTeaching->max_cources_allowed,
+                "isCompleted" => "yes",
+                "created_by" => $facultyTeaching->created_by
+            ])->delete();
+
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

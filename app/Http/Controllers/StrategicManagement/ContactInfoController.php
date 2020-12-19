@@ -79,6 +79,7 @@ class ContactInfoController extends Controller
                 $type='SAR';
             }else {
                 $type = 'REG';
+
             }
 
                 if (!empty($request->ds_name)) {
@@ -134,6 +135,20 @@ class ContactInfoController extends Controller
                             'cv' => $path . '/' . $imageName,
                             'isComplete' => 'yes',
                             'type' => $type,
+                            'campus_id' => auth()->user()->campus_id,
+                            'department_id' => auth()->user()->department_id,
+                            'created_by' => auth()->user()->id,
+                        ]);
+                        ContactInfo::create([
+                            'name' => $request->ds_name,
+                            'email' => $request->ds_email,
+                            'contact_no' => $request->ds_tell_off,
+                            'school_contact' => $request->ds_tell_cell,
+                            'designation_id' => 3,
+                            'job_title' => $request->ds_job_title,
+                            'cv' => $path . '/' . $imageName,
+                            'isComplete' => 'yes',
+                            'type' => 'SAR',
                             'campus_id' => auth()->user()->campus_id,
                             'department_id' => auth()->user()->department_id,
                             'created_by' => auth()->user()->id,
@@ -198,6 +213,20 @@ class ContactInfoController extends Controller
                             'department_id' => auth()->user()->department_id,
                             'created_by' => auth()->user()->id,
                         ]);
+                        ContactInfo::create([
+                            'name' => $request->hs_name,
+                            'email' => $request->hs_email,
+                            'contact_no' => $request->hs_tell_off,
+                            'school_contact' => $request->hs_tell_cell,
+                            'designation_id' => 5,
+                            'job_title' => $request->hs_job_title,
+                            'cv' => $path . '/' . $imageName,
+                            'isComplete' => 'yes',
+                            'type' => 'SAR',
+                            'campus_id' => auth()->user()->campus_id,
+                            'department_id' => auth()->user()->department_id,
+                            'created_by' => auth()->user()->id,
+                        ]);
                     }
 
                     if (!empty($request->fp_name)) {
@@ -254,6 +283,20 @@ class ContactInfoController extends Controller
                                     'cv' => @$path . '/' . @$imageName,
                                     'isComplete' => 'yes',
                                     'type' => @$type,
+                                    'campus_id' => auth()->user()->campus_id,
+                                    'department_id' => auth()->user()->department_id,
+                                    'created_by' => auth()->user()->id,
+                                ]);
+                                ContactInfo::create([
+                                    'name' => @$request->fp_name,
+                                    'email' => @$request->fp_email,
+                                    'contact_no' => @$request->fp_tell_off,
+                                    'school_contact' => @$request->fp_tell_cell,
+                                    'designation_id' => 7,
+                                    'job_title' => @$request->fp_job_title,
+                                    'cv' => @$path . '/' . @$imageName,
+                                    'isComplete' => 'yes',
+                                    'type' => 'SAR',
                                     'campus_id' => auth()->user()->campus_id,
                                     'department_id' => auth()->user()->department_id,
                                     'created_by' => auth()->user()->id,

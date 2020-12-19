@@ -7,7 +7,9 @@ use App\Models\Config\NbeacBasicInfo;
 use App\Models\MentoringInvoice;
 use App\Models\MentoringMentor;
 use App\Models\PeerReview\InstituteFeedback;
+use App\Models\PeerReview\PeerReviewReviewer;
 use App\User;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -185,13 +187,15 @@ class HomeController extends Controller
                     ->get();
             }
         else if(Auth::user()->user_type=='ESScheduler'){
-            $MentoringMeetings = Slip::with('campus', 'department')
+            $MentoringMeetings = Slip::with('campus', 'department','mentoring_mentor')
 //                    ->whereHas('mentoring_mentor', function ($q) {
 //                        $q->where('user_id', Auth::id());
 //                    })
                 ->where('regStatus', 'ScheduledMentoring')
                 ->orWhere('regStatus', 'Mentoring')
                 ->get();
+
+//            dd($MentoringMeetings);
         }
         else if(Auth::user()->user_type== 'BusinessSchool'){
 //            $MentoringMeetings = DB::table('slips as s')
@@ -284,12 +288,14 @@ class HomeController extends Controller
         $fem_count = FacultyGender::where(['status' => 'active'])->get()->sum('female');
         $mentoring_slip_count = MentoringInvoice::where(['status' => 'active'])->get()->count();
 //        dd($mentoring_slip_count);
+        $PeerReviewers = PeerReviewReviewer::with('user')->get();
 
 
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
             'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks',
-            'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips', 'mentoring_slip_count'));
+            'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips',
+            'mentoring_slip_count', 'PeerReviewers'));
     }
 
     /**
@@ -300,6 +306,23 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function getPeerReviewers(Request $request) {
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+            if($validation->fails()){
+                return response()->json($validation->messages()->all(), 422);
+            }
+
+
+
+    }
+
+    protected function rules(){
+        return ['slip_id'=> 'required'];
+    }
+
+    protected  function messages(){
+        return [ 'required' => 'The :field can not be empty.'];
+    }
     protected function isRegCompleted()
     {
 

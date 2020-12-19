@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.dataTables.min.css" />
 <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+<link rel="stylesheet" href="{{url('bower_components/select2/dist/css/select2.min.css')}}">
 
 @include("includes.header")
 @include("includes.nav")
@@ -1192,6 +1193,7 @@
                           <th>Campus</th>
                           <th>Department</th>
                           <th>Desk Review</th>
+                          @hasrole('ESScheduler')<th>Mentors</th>@endhasrole
                           <th>Registration Print</th>
                           <th>Status</th>
                           <th>Action</th>
@@ -1224,7 +1226,8 @@
                               <td>{{@$mentorMeeting->campus->location??'Main Campus'}}</td>
                               <td>{{@$mentorMeeting->department->name}}</td>
                               <td><a href="{{url('deskreview')}}/{{@$mentorMeeting->id}}">Desk Review</a></td>
-{{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
+                              @hasrole('ESScheduler')<td> {!! getMentors($mentorMeeting->id) !!}</td>@endhasrole
+                              {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
                               <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus->id}}&bid={{@$mentorMeeting->business_school_id}}">Registration Print </a></td>
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
@@ -1243,6 +1246,7 @@
                           <th>Campus</th>
                           <th>Department</th>
                           <th>Desk Review</th>
+                          @hasrole('ESScheduler')<th>Mentors</th>@endhasrole
                           <th>Registration Print</th>
                           <th>Status</th>
                           <th>Action</th>
@@ -1311,6 +1315,7 @@
                                       <a href="{{url('showOnCalendar')}}/{{@$slip->id}}" class="btn-xs btn-info"> <i data-toggle="tooltip" title="Peer Reviewer Visit Calendar" class="fa fa-calendar"></i></a><br>
                                   @elseif(@$slip->regStatus =='Review')Desk Review In-progress @endif
                                   @hasrole('NbeacFocalPerson|NBEACAdmin')
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#consultativeCommittee-modal" class="btn-xs bg-red-active consultativeCommittee" style="cursor: pointer"> <i data-toggle="tooltip" title="Consultative committee" class="fa fa-users"></i></a><br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer"> <i data-toggle="tooltip" title="Generate Travel Plan" class="fa fa-car"></i></a><br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer"> <i data-toggle="tooltip" title="Upload Profile Sheet" class="fa fa-file-excel-o"></i></a> <br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer">Thank You Email <i class="fa fa-envelope"></i></a>
@@ -1349,6 +1354,46 @@
       <!-- right col -->
         @endhasrole
 
+
+      <div class="modal fade" id="consultativeCommittee-modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Select proposed peer reviewers for peer review visit. </h4>
+                  </div>
+                  <form role="form" id="consultative-form" enctype="multipart/form-data" >
+                      <div class="modal-body">
+                          <div class="col-md-12">
+                                  <label for="name">proposed peer reviewers</label>
+                                  <div class="input-group col-md-12">
+                                      <select class="form-control select2" name="user_id" id="user_id" multiple="multiple" data-placeholder="Select a Reviewers" style="width: 100%;">
+                                          @foreach(@$PeerReviewers as $person)
+                                              <option value="{{@$person->user->id}}">{{@$person->user->name}}</option>
+                                          @endforeach
+                                      </select>
+                                  </div>
+                          </div>
+
+                          <div class="col-md-12" style="padding-bottom: 20px;">
+                          <input type="hidden" id="slip_id_peer" name="slip_id">
+
+                          </div>
+
+                          <!-- /.form group -->
+
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <input type="submit" name="submit" id="submit_reviewers" class="btn btn-info" value="submit">
+                      </div>
+                  </form>
+              </div>
+              <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+      </div>
 
       <div class="modal fade" id="TravelPlane-modal">
           <div class="modal-dialog">
@@ -1516,6 +1561,9 @@
 <script type="text/javascript">window.location.replace('login');</script>
 
  @endif
+
+<script src="{{url('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+
 <!-- Morris.js charts -->
 {{--<script src="bower_components/raphael/raphael.min.js"></script>--}}
 {{--<script src="bower_components/morris.js/morris.min.js"></script>--}}
@@ -1553,7 +1601,9 @@
     $('#datatable7').DataTable();
     $('#datatable8').DataTable();
     $('#datatable9').DataTable();
-} );
+        $('.select2').select2();
+
+    } );
 
     $.ajaxSetup({
         headers: {
@@ -1561,6 +1611,49 @@
         }
     })
 
+    $('#consultativeCommittee-modal').on('show.bs.modal', function () {
+        console.log('model displayed');
+        let id = $(this).data('id');
+        $('#feedback_slip_id').val(id);
+
+        $.ajax({
+            url:'{{url("instituteFeedback")}}/'+id,
+            type:'get',
+            // data: { get:'get'},
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                let data = JSON.parse(JSON.stringify(response));
+                console.log("success resp ",data);
+                console.log('pr date value',data.pr_visit_date);
+                $('#confirm_date').text(data.confirm_date);
+                $('#fileName').attr('href',data.pr_travel_plan);
+
+                $("#visit_date").datepicker("setDate", data.pr_visit_date);
+
+                // $('#visit_date').val(data.pr_visit_date);
+                // if(response.success){
+                //     Notiflix.Notify.Success(response.success);
+                // }
+
+                // location.reload();
+
+                console.log('response here', response);
+            },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                // $.each(response.responseJSON, function (index, val) {
+                //     Notiflix.Notify.Failure(val);
+                // })
+
+            }
+        })
+
+
+    })
     $('.TravelPlane').on('click', function () {
         let id = $(this).data('id');
         $('#slip_id').val(id);

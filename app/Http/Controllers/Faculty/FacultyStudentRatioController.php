@@ -124,6 +124,16 @@ class FacultyStudentRatioController extends Controller
                 'created_by' => Auth::user()->id
             ]);
 
+            FacultyStudentRatio::create([
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'program_id' => $request->program_id,
+                'total_enrollments' => $request->total_enrollments,
+                'isCompleted' => 'yes',
+                'type' => 'SAR',
+                'created_by' => Auth::user()->id
+            ]);
+
             return response()->json(['success' => 'Faculty Student Ratio added successfully.']);
 
 
@@ -194,11 +204,19 @@ class FacultyStudentRatioController extends Controller
      */
     public function destroy(FacultyStudentRatio $facultyStudentRatio)
     {
+//        dd($facultyStudentRatio);
         try {
             FacultyStudentRatio::where('id', $facultyStudentRatio->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             FacultyStudentRatio::destroy($facultyStudentRatio->id);
+            FacultyStudentRatio::where([
+                "campus_id" => $facultyStudentRatio->campus_id,
+                "department_id" => $facultyStudentRatio->department_id,
+                "program_id" => $facultyStudentRatio->program_id,
+                "total_enrollments" => $facultyStudentRatio->total_enrollments,
+                "isCompleted" => "yes"
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

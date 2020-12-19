@@ -82,34 +82,56 @@ class ScopeController extends Controller
                 return response()->json(['error' => 'Under-graduated should be greater then 5.5 years.'], 422);
             }
            // dd($dateDifference);
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type='REG';
-            }
+
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
-            if (Scope::where(['campus_id' => auth()->user()->campus_id,'department_id'=> auth()->user()->department_id,
-                'program_id' => $request->program_id, 'level_id' => $request->level_id, 'type'=> $type] )
-                ->exists()) {
-                return response()->json(['error' => 'Record already Exists.'], 422);
-            }
             if($validation->fails())
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
+                $slip = Slip::where(['business_school_id' => $campus_id, 'department_id' => $department_id])->where('regStatus', 'SAR')->first();
                 $campus_id = auth()->user()->campus_id;
                 $department_id = auth()->user()->department_id;
                 $created_id = auth()->user()->id;
-                $request->merge(
-                    [
-                    'campus_id' => $campus_id,
-                    'department_id' => $department_id,
-                    'created_by'=>$created_id,
-                    'isComplete' =>'yes',
-                    'type'=>$type] );
-                $create = Scope::create($request->all());
-                return response()->json(['success' => 'Added successfully.'], 200);
+
+                if ($slip) {
+                    $type = 'SAR';
+                    if (Scope::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id,
+                        'program_id' => $request->program_id, 'level_id' => $request->level_id, 'type' => $type])
+                        ->exists()) {
+                        return response()->json(['error' => 'Record already Exists.'], 422);
+                    }
+                    $request->merge(
+                        [
+                            'campus_id' => $campus_id,
+                            'department_id' => $department_id,
+                            'created_by' => $created_id,
+                            'isComplete' => 'yes',
+                            'type' => $type]);
+                    $create = Scope::create($request->all());
+
+                } else {
+                    $type = 'REG';
+                    if (Scope::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id,
+                        'program_id' => $request->program_id, 'level_id' => $request->level_id, 'type' => $type])
+                        ->exists()) {
+                        return response()->json(['error' => 'Record already Exists.'], 422);
+                    }
+                    $request->merge(
+                        [
+                            'campus_id' => $campus_id,
+                            'department_id' => $department_id,
+                            'created_by' => $created_id,
+                            'isComplete' => 'yes',
+                            'type' => $type]);
+                    $create = Scope::create($request->all());
+
+                    $request->merge(['type'=> 'SAR']);
+//                    dd($request);
+                    $createsar = Scope::create($request->all());
+
+
+                    return response()->json(['success' => 'Added successfully.'], 200);
+                }
             }
         }catch (Exception $e)
         {
@@ -161,6 +183,7 @@ class ScopeController extends Controller
     public function update(Request $request, Scope $scope)
     {
         //
+
         try {
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
             if($validation->fails())
@@ -187,12 +210,19 @@ class ScopeController extends Controller
      */
     public function destroy(Scope $scope)
     {
-        //dd($scope);
+//        dd($scope);
         try {
             Scope::where('id', $scope->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
              Scope::destroy($scope->id);
+             Scope::where(["campus_id" => $scope->campus_id,
+                "department_id" => $scope->department_id,
+                "program_id" => $scope->program_id,
+                "level_id" => $scope->level_id,
+                "date_program" => $scope->date_program,
+                "isComplete" => "yes",
+                "created_by" =>$scope->created_by])->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

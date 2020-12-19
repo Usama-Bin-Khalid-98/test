@@ -87,6 +87,20 @@ class ProgramPortfolioController extends Controller
                 'type' => $type,
                 'created_by' => Auth::user()->id
             ]);
+            ProgramPortfolio::create([
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'program_id' => $request->program_id,
+                'total_semesters' => $request->total_semesters,
+                'course_type_id' => $request->course_type_id,
+                'no_of_course' => $request->no_of_course,
+                'credit_hours' => $request->credit_hours,
+                'internship_req' => $request->internship_req??'',
+                'fyp_req' => $request->fyp_req??'',
+                'isComplete' => 'yes',
+                'type' => 'SAR',
+                'created_by' => Auth::user()->id
+            ]);
             return response()->json(['success' => 'Program Portfolio added successfully.']);
 
 
@@ -162,11 +176,24 @@ class ProgramPortfolioController extends Controller
      */
     public function destroy(ProgramPortfolio $programPortfolio)
     {
+//        dd($programPortfolio);
         try {
             ProgramPortfolio::where('id', $programPortfolio->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             ProgramPortfolio::destroy($programPortfolio->id);
+            ProgramPortfolio::where([
+                "campus_id" => $programPortfolio->campus_id,
+                "department_id" => $programPortfolio->department_id,
+                "program_id" => $programPortfolio->program_id,
+                "total_semesters" => $programPortfolio->total_semesters,
+                "course_type_id" => $programPortfolio->course_type_id,
+                "no_of_course" => $programPortfolio->no_of_course,
+                "credit_hours" => $programPortfolio->credit_hours,
+                "internship_req" => $programPortfolio->internship_req,
+                "fyp_req" => $programPortfolio->fyp_req,
+                "created_by" => $programPortfolio->created_by,
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

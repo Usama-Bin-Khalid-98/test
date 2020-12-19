@@ -104,6 +104,19 @@ class StrategicPlanController extends Controller
                 'file'=> $path.$imageName,
                 'created_by' => Auth::user()->id
             ]);
+            StrategicPlan::create([
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'plan_period_from' => $request->plan_period,
+                'plan_period_to' => $request->plan_period_to,
+                'plan_period' => $period,
+                'aproval_date' => $request->aproval_date,
+                'aproving_authority' => $request->aproving_authority,
+                'isComplete' => 'yes',
+                'type' => 'SAR',
+                'file'=> $path.$imageName,
+                'created_by' => Auth::user()->id
+            ]);
 
             return response()->json(['success' => 'Strategic Plan added successfully.']);
         }catch (Exception $e)
@@ -183,11 +196,21 @@ class StrategicPlanController extends Controller
      */
     public function destroy(StrategicPlan $strategicPlan)
     {
+//        dd($strategicPlan);
         try {
             StrategicPlan::where('id', $strategicPlan->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             StrategicPlan::destroy($strategicPlan->id);
+            StrategicPlan::where([
+                "campus_id" => $strategicPlan->campus_id,
+                "department_id" => $strategicPlan->department_id,
+                "plan_period_from" => $strategicPlan->plan_period_from,
+                "plan_period_to" => $strategicPlan->plan_period_to,
+                "plan_period" => $strategicPlan->plan_period,
+                "aproval_date" => $strategicPlan->aproval_date,
+                "aproving_authority" => $strategicPlan->aproving_authority,
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

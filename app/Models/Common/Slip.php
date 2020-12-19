@@ -46,7 +46,7 @@ class Slip extends Model
 
     public function mentoring_mentor()
     {
-        return $this->hasOne(MentoringMentor::class);
+        return $this->hasOne(MentoringMentor::class)->with('user');
     }
 
     public function mentoring_meeting()

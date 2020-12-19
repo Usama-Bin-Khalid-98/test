@@ -326,7 +326,10 @@
             // Initialize Select2
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_level_id').select2().val(data.level_id).trigger('change');
-            $('#edit_date_program').val(data.date_program);
+            // $('#edit_date_program').val(data.date_program);
+
+            $('#edit_date_program').datepicker("setDate", new Date(18,12,2020) );
+
             $('#id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });

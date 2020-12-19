@@ -69,9 +69,9 @@
                                         </select>
                                 </div>
                             </div>
-                           
 
-                          
+
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Male</label>
@@ -162,7 +162,7 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                        
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Faculty Type</label>
@@ -175,7 +175,7 @@
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
-                           
+
 
 
                         <div class="col-md-6">
@@ -201,7 +201,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -215,7 +215,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -370,8 +370,8 @@ $('#updateForm').submit(function (e) {
                             if(response.success){
                                 Notiflix.Notify.Success(response.success);
                             }
-                            location.reload();
-                            // console.log('response here', response);
+                            // location.reload();
+                            console.log('response here', response);
                         },
                         error:function(response, exception){
                             Notiflix.Loading.Remove();

@@ -60,6 +60,7 @@ class EligibilityScreeningController extends Controller
 
     public function esReport($id=null)
     {
+        $reviewer_availabilities = '';
         if($id) {
             $registrations = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -83,6 +84,8 @@ class EligibilityScreeningController extends Controller
 //                ->where('s.regStatus', 'Mentoring')
                 ->where('s.id', $id)
                 ->get();
+
+            $reviewer_availabilities = ReviewerAvailability::where(['slip_id'=>$id])->first();
 
 
         }else {
@@ -210,8 +213,8 @@ class EligibilityScreeningController extends Controller
 //	'<li>It is recommended that the university refers to the NBEAC Accreditation Process Manual <a href="http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf">http://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</a> for details regarding the important aspects and requirements for NBEAC accreditation.</li>'.
 '</ol>';
 
-//        dd($registrations_reports);
-        return view('eligibility_screening.eligibility_report', compact('registrations','deferred_letter','approval_letter','conditional_approved', 'registrations_reports'));
+//        dd($reviewer_availabilities);
+        return view('eligibility_screening.eligibility_report', compact('reviewer_availabilities','registrations','deferred_letter','approval_letter','conditional_approved', 'registrations_reports'));
     }
     /**
      * Display a listing of the resource.
@@ -538,12 +541,8 @@ class EligibilityScreeningController extends Controller
                     $file_path = str_replace(' ', '-', 'pdf/' . $slipInfo->campus->business_school->name . '/' . $docInfo->campus->location . '/' . $docInfo->department->name . '/');
 
                     $createDirectory = createDirecrtory(['file_name' => $filename, 'path' => $file_path]);
-
-                    //                $remmove_old = unlink()
-                    //                dd('done');
                     $updateEligibilitReport = EligibilityReport::find($request->id)->update(['file' => $file_path . $filename . '.pdf']);
                     $pdf->save($file_path . $filename . '.pdf');
-                    //                return $pdf->download($file_path.'.pdf');
                 }
             }
 

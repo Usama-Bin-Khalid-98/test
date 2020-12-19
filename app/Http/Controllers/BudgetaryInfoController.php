@@ -88,6 +88,18 @@ class BudgetaryInfoController extends Controller
                         'type' => $type,
                         'created_by' => Auth::user()->id
                     ]);
+                    BudgetaryInfo::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'year' => $request->year[$key],
+                        'uni_budget' => $request->uni_budget[$key],
+                        'uni_proposed_budget' => $request->uni_proposed_budget[$key],
+                        'budget_receive' => $request->budget_receive[$key],
+                        'budget_type' => $request->budget_type[$key],
+                        'isComplete' => 'yes',
+                        'type' => 'SAR',
+                        'created_by' => Auth::user()->id
+                    ]);
                 }
             }
 
@@ -164,11 +176,21 @@ class BudgetaryInfoController extends Controller
      */
     public function destroy(BudgetaryInfo $budgetaryInfo)
     {
+//        dd($budgetaryInfo);
         try {
             BudgetaryInfo::where('id', $budgetaryInfo->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             BudgetaryInfo::destroy($budgetaryInfo->id);
+            BudgetaryInfo::where([
+                "campus_id" => $budgetaryInfo->campus_id,
+                "department_id" => $budgetaryInfo->department_id,
+                "year" => $budgetaryInfo->year,
+                "uni_budget" => $budgetaryInfo->uni_budget,
+                "uni_proposed_budget" => $budgetaryInfo->uni_proposed_budget,
+                "budget_receive" => $budgetaryInfo->budget_receive,
+                "budget_type" => $budgetaryInfo->budget_type
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

@@ -354,9 +354,9 @@
                                         <p></p>
 
                                         <p>Dear {{@$data['school']->campus->user->name}},</p>
-                                        {{--                                        <p>HoD & Dean,</p>--}}
-                                        {{--                                        <p>University : {{@$data['school']->name}}</p>--}}
-                                        {{--                                        <p>Campus : {{@$data['school']->campus->location}}</p>--}}
+{{--                                        <p>HoD & Dean,</p>--}}
+                                        <p>University : {{@$data['school']->name}}</p>
+                                        <p>Campus : {{@$data['school']->campus->location}}</p>
 
                                         <p>Hope you are doing well,</p>
 

@@ -94,6 +94,21 @@ class StatutoryCommitteeController extends Controller
                       'type' => $type,
                       'created_by' => Auth::user()->id
                   ]);
+                  StatutoryCommittee::create([
+                      'campus_id' => Auth::user()->campus_id,
+                      'department_id' => Auth::user()->department_id,
+                      'statutory_body_id' => $request->statutory_body_id[$i],
+                      'name' => $request->name[$i],
+                      'designation_id' => $request->designation_id[$i],
+                      'date_first_meeting' => $request->date_first_meeting[$i],
+                      'date_second_meeting' => $request->date_second_meeting[$i],
+                      'date_third_meeting' => $request->date_third_meeting[$i],
+                      'date_fourth_meeting' => $request->date_fourth_meeting[$i],
+                      'file' => $path . '/' . $fileName,
+                      'isComplete' => 'yes',
+                      'type' => 'SAR',
+                      'created_by' => Auth::user()->id
+                  ]);
               }
             //}
             }
@@ -187,12 +202,23 @@ class StatutoryCommitteeController extends Controller
      */
     public function destroy(StatutoryCommittee $statutoryCommittee)
     {
-        //
+//        dd($statutoryCommittee);
         try {
             StatutoryCommittee::where('id', $statutoryCommittee->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             StatutoryCommittee::destroy($statutoryCommittee->id);
+            StatutoryCommittee::where([
+                "campus_id" => $statutoryCommittee->campus_id,
+                "department_id" => $statutoryCommittee->department_id,
+                "statutory_body_id" => $statutoryCommittee->statutory_body_id,
+                "name" => $statutoryCommittee->name,
+                "designation_id" => $statutoryCommittee->designation_id,
+                "date_first_meeting" => $statutoryCommittee->date_first_meeting,
+                "date_second_meeting" => $statutoryCommittee->date_second_meeting,
+                "date_third_meeting" => $statutoryCommittee->date_third_meeting,
+                "date_fourth_meeting" => $statutoryCommittee->date_fourth_meeting,
+            ])->delete();
             return response()->json(['success'=> 'Record deleted successfully']);
         }catch (Exception $e) {
             return response()->json($e->getMessage(), 422);

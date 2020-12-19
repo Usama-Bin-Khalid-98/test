@@ -86,6 +86,19 @@ class MissionVisionController extends Controller
                         'created_by' => Auth::user()->id
                 ]);
 
+                    MissionVision::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'mission' => $request->mission,
+                        'vision' => $request->vision,
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'type' => 'SAR',
+                        'mission_approval' => $request->mission_approval,
+                        'vision_approval' => $request->vision_approval,
+                        'created_by' => Auth::user()->id
+                ]);
+
                     return response()->json(['success' => 'Mission Vision added successfully.']);
                 }
 
