@@ -92,6 +92,18 @@ class StudentEnrolmentController extends Controller
                         'type' => $type,
                         'created_by' => Auth::user()->id
                     ]);
+                    StudentEnrolment::create([
+                        'campus_id' => $uni_id,
+                        'department_id' => $dept_id,
+                        'year' => $request->year[$key],
+                        'bs_level' => $request->bs_level[$key],
+                        'ms_level' => $request->ms_level[$key],
+                        'phd_level' => $request->phd_level[$key],
+                        'total_students' => $request->bs_level[$key] + $request->ms_level[$key] + $request->phd_level[$key],
+                        'isComplete' => 'yes',
+                        'type' => 'SAR',
+                        'created_by' => Auth::user()->id
+                    ]);
                 }
             }
 
@@ -172,6 +184,15 @@ class StudentEnrolmentController extends Controller
                'deleted_by' => Auth::user()->id
            ]);
             StudentEnrolment::destroy($studentEnrolment->id);
+            StudentEnrolment::where([
+                "campus_id" => $studentEnrolment->campus_id,
+                "department_id" => $studentEnrolment->department_id,
+                "year" => $studentEnrolment->year,
+                "bs_level" => $studentEnrolment->bs_level,
+                "ms_level" => $studentEnrolment->ms_level,
+                "phd_level" => $studentEnrolment->phd_level,
+                "total_students" => $studentEnrolment->total_students,
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

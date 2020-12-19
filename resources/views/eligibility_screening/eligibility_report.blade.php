@@ -142,7 +142,11 @@
                                         @if(@$registrations_reports[0]->comments)
                                             <input type="submit" name="update" id="update" value="Update" class="btn btn-info">
                                         @else
+                                            @if(@$reviewer_availabilities->is_confirm == 'yes')
                                             <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
+                                            @else
+                                                <p class="alert alert-danger">Meeting date not confirmed yet, contact scheduler admin.</p>
+                                                @endif
                                         @endif
                                     </div>
                                 </div>
@@ -285,15 +289,21 @@
         }
         var slip_id = $('#slip_id').val();
         var comments = CKEDITOR.instances.comments.getData();
-        // var file = $('#file').val();
+        var es_meeting_date = $('#es_meeting_date').val();
 
         // !file?addClass('file'):removeClass('file');
         !comments?addClass('comments'):removeClass('comments');
         !slip_id?addClass('slip_id'):removeClass('slip_id');
+        !es_meeting_date?addClass('es_meeting_date'):removeClass('es_meeting_date');
 
         if(!slip_id || !comments)
         {
-            Notiflix.Notify.Warning("Fill all the required Fields.");
+            Notiflix.Notify.Failure("Fill all the required Fields.");
+            return;
+        }
+        if(!es_meeting_date)
+        {
+            Notiflix.Notify.Failure("Date field is required.");
             return;
         }
         e.preventDefault();

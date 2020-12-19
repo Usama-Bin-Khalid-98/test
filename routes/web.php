@@ -347,7 +347,10 @@ Route::get('/email', function() {
         });
         Route::group(['middleware' => ['role:ESScheduler|NBEACAdmin']], function () {
             Route::post('esReportToBusinessSchool', 'EligibilityScreeningController@esReportToSchool');
-            Route::get('eligibility-screening','EligibilityScreeningController@getReport');
-
         });
+
+        Route::group(['middleware' => ['role:ESScheduler|NBEACAdmin|Mentor']], function () {
+            Route::get('eligibility-screening','EligibilityScreeningController@getReport');
+        });
+
     });

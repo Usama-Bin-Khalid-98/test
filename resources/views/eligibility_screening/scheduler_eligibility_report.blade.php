@@ -28,7 +28,7 @@
             </ol>
         </section><!-- Main content -->
 
-        @hasrole('ESScheduler|NBEACAdmin')
+        @hasrole('ESScheduler|NBEACAdmin|Mentor')
         <section class="content">
 
             <div class="row" >
@@ -61,7 +61,7 @@
                                     <th>Department</th>
                                     <th>PDF</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                   <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -106,7 +106,7 @@
     </div>
 
     <div class="modal fade" id="detail-modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 900px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -123,13 +123,14 @@
 {{--                            <p>University Name: <span id="uni-name"></span></p>--}}
                         </div>
                         <h4>Peer Reviewer Report</h4>
-                       <textarea id="comments"></textarea>
+                        @hasrole('ESScheduler|NBEACAdmin')<textarea id="comments"></textarea>@endhasrole
+                        @hasrole('Mentor') <p id="show-comments"></p>@endhasrole
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success FRtoBusinessSchool" data-id='email'>Email To BS Admin & generate pdf</button>
-                        <button type="button" class="btn btn-info FRtoBusinessSchool" data-id="pdf">Generate pdf</button>
+                        @hasrole('ESScheduler|NBEACAdmin')<button type="button" class="btn btn-success FRtoBusinessSchool" data-id='email'>Email To BS Admin & generate pdf</button>
+                        <button type="button" class="btn btn-info FRtoBusinessSchool" data-id="pdf">Generate pdf</button>@endhasrole
                     </div>
                 </form>
             </div>
@@ -151,20 +152,7 @@
 
 @endif
 
-@hasrole('ESScheduler|NBEACAdmin')
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
-    $('.select2').select2();
-    CKEDITOR.replace('comments',
-        {
-            height: '500px'
-        });
-
-
     $('.details').on('click', function () {
         let data = JSON.parse(JSON.stringify($(this).data('row')));
         let comment = JSON.parse(JSON.stringify($(this).data('id')));
@@ -174,9 +162,27 @@
         $('#report').val(data.id);
         $('#department-name').text(data.department);
         console.log('data', comment);
-        // $('#show-comments').html(comments);
-    CKEDITOR.instances.comments.setData(comment);
+        @hasrole('ESScheduler|NBEACAdmin')
+        CKEDITOR.instances.comments.setData(comment);
+        @endhasrole
+        @hasrole('Mentor')
+        $('#show-comments').html(comment);
+        @endhasrole
+    });
+    $('.select2').select2();
+    CKEDITOR.replace('comments',
+        {
+            height: '500px'
+        });
+</script>
+@hasrole('ESScheduler|NBEACAdmin')
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     })
+
 
     $('.FRtoBusinessSchool').on('click', function () {
         let comments = CKEDITOR.instances.comments.getData();

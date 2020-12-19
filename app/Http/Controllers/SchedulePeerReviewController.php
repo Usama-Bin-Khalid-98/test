@@ -154,7 +154,12 @@ class SchedulePeerReviewController extends Controller
 
                         foreach ($request->user_id as $mentor)
                         {
-                            $ESReviewers = PeerReviewReviewer::create(['slip_id' => $request->registrations, 'user_id'=>$mentor, 'created_by'=>Auth::id()]);
+                            $ESReviewers = PeerReviewReviewer::create(
+                                [
+                                    'slip_id' => $request->registrations,
+                                    'user_id'=>$mentor, 'created_by'=>Auth::id(),
+                                    'status' => 'no'
+                                ]);
                             //echo $reviewer;
 
 
@@ -166,22 +171,22 @@ class SchedulePeerReviewController extends Controller
                             $mailData['nbeac']= $getNbeacInfo;
 
                            //////// email
-                            $header = 'AOA <br/>'. $mentorInfo->name;
-                                            $comments = 'The business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) '
-                                                . ' has been submitted SAR for review.';
-                                            $footer = '<p>Yours Sincerely,</p>' .
-                                                '<p>&nbsp;</p>' .
-                                                '<p>' . $slipInfoSchool->campus->user->name . '</p>';
-                            ///
-                            $data = ['letter' => $header. '<br/>'.$comments.$footer];
-
-                            $mailInfo = [
-                                'to' => $mentorInfo->email??'',
-                                'to_name' => $mentorInfo->name??'',
-                                'school' => $getSchoolInfo->business_school->name??'',
-                                'from' => $getNbeacInfo->email??'info@nbeac.org.pk',
-                                'from_name' => $getNbeacInfo->director??'',
-                            ];
+//                            $header = 'AOA <br/>'. $mentorInfo->name;
+//                                            $comments = 'The business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) '
+//                                                . ' has been submitted SAR for review.';
+//                                            $footer = '<p>Yours Sincerely,</p>' .
+//                                                '<p>&nbsp;</p>' .
+//                                                '<p>' . $slipInfoSchool->campus->user->name . '</p>';
+//                            ///
+//                            $data = ['letter' => $header. '<br/>'.$comments.$footer];
+//
+//                            $mailInfo = [
+//                                'to' => $mentorInfo->email??'',
+//                                'to_name' => $mentorInfo->name??'',
+//                                'school' => $getSchoolInfo->business_school->name??'',
+//                                'from' => $getNbeacInfo->email??'info@nbeac.org.pk',
+//                                'from_name' => $getNbeacInfo->director??'',
+//                            ];
 
 //                            Mail::send('peer_review_visit.email.email', ['letter' => $mailData], function($message) use ($mailInfo) {
 //                                //dd($user);
@@ -198,7 +203,7 @@ class SchedulePeerReviewController extends Controller
                         //////// email
                         $header_nbeac_email = 'AOA <br/>'. $mentorInfo->name;
                         $comments_nbeac_email = 'The business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) '
-                            . ' Schedule Peer Review Visit. please review and select the Peer Reviewers .';
+                            . ' Schedule Peer Review Visit. please review and select the Peer Reviewers.';
                         $footer_nbeac_email = '<p>Yours Sincerely,</p>' .
                             '<p>&nbsp;</p>' .
                             '<p>' . $slipInfoSchool->campus->user->name . '</p>';

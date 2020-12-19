@@ -94,6 +94,16 @@ class FacultySummaryController extends Controller
                         'type' => $type,
                         'created_by' => Auth::user()->id
                     ]);
+                    FacultySummary::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+                        'discipline_id' => @$request->discipline_id[$j],
+                        'number_faculty' => @$request->number_faculty[$j+1][$i],
+                        'isComplete' => 'yes',
+                        'type' => 'SAR',
+                        'created_by' => Auth::user()->id
+                    ]);
                 }
             }
             return response()->json(['success' => 'Faculty Summary added successfully.']);
@@ -160,16 +170,26 @@ class FacultySummaryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param App\Models\Faculty\FacultySummary $FacultySummary
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(FacultySummary $FacultySummary)
     {
+//        dd($FacultySummary);
         try {
-            FacultySummary::where('id', $id)->update([
+            FacultySummary::where('id', $FacultySummary->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
-            FacultySummary::destroy($id);
+            FacultySummary::destroy($FacultySummary->id);
+            FacultySummary::where([
+                "campus_id" => $FacultySummary->campus_id,
+                "department_id" => $FacultySummary->department_id,
+                "faculty_qualification_id" => $FacultySummary->faculty_qualification_id,
+                "discipline_id" => $FacultySummary->discipline_id,
+                "number_faculty" => $FacultySummary->number_faculty,
+                "isComplete" => "yes",
+                "created_by" => $FacultySummary->created_by
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

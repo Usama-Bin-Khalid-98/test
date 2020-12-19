@@ -285,13 +285,22 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                         </a>
                     </li>
-                        <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
+                    <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
                                 <span class="pull-right-container">
                         <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
 
+                    @if(!$isActiveSAR)
+                    <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}">
+                        <a href="{{url('strategic/strategic-plan')}}"> 1.8 Approved Strategic Plan <span class="pull-right-container">
+                        <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$plan==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                    </span></a>
+                    </li>
+                    @endif
 
                     @if($isActiveSAR)
                     <li  class="{{ (request()->is('strategic/sources-funding')) ? 'active' : '' }}"><a href="{{url('strategic/sources-funding')}}">1.8 Sources of Funding <span class="pull-right-container">
@@ -320,7 +329,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                     </li>
 
 
-            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}">@if($isActiveSAR) 1.11 Approved Strategic Plan @else 1.8 Approved Strategic Plan @endif<span class="pull-right-container">
+            <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}"><a href="{{url('strategic/strategic-plan')}}"> 1.11 Approved Strategic Plan <span class="pull-right-container">
                         <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$plan==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -1051,7 +1060,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasrole('NBEACAdmin')
           <li class="{{ (request()->is('nbeac-criteria')) ? 'active' : '' }}"><a href="{{url('nbeac-criteria')}}"><i class="fa fa-check-square-o text-green"></i>Nbeac Criteria</a></li>
           @endhasrole
-          @hasrole('ESScheduler')
+          @hasrole('ESScheduler|Mentor')
           <li class="{{ (request()->is('eligibility-screening')) ? 'active' : '' }}"><a href="{{url('eligibility-screening')}}"><i class="fa fa-file" style="color: #D81B60" ></i>Eligibility Screening Report</a></li>
           @endhasrole
 

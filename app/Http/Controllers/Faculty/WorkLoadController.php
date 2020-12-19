@@ -90,6 +90,21 @@ class WorkLoadController extends Controller
                     'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
+                WorkLoad::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'faculty_name' => $request->faculty_name,
+                    'designation_id' => $request->designation_id,
+                    'total_courses' => $request->total_courses,
+                    'phd' => $request->phd,
+                    'masters' => $request->masters,
+                    'bachleors' => $request->bachleors,
+                    'admin_responsibilities' => $request->admin_responsibilities,
+                    'year_t' => $request->year_t,
+                    'isCompleted' => 'yes',
+                    'type' => 'SAR',
+                    'created_by' => Auth::user()->id
+                ]);
             }
             if($request->faculty_name_1) {
                 WorkLoad::create(
@@ -188,11 +203,27 @@ class WorkLoadController extends Controller
      */
     public function destroy(WorkLoad $workLoad)
     {
+//        dd($workLoad);
         try {
             Workload::where('id', $workLoad->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             WorkLoad::destroy($workLoad->id);
+            WorkLoad::where(
+                [
+                    "campus_id" => $workLoad->campus_id,
+                    "department_id" => $workLoad->department_id,
+                    "faculty_name" => $workLoad->faculty_name,
+                    "designation_id" => $workLoad->designation_id,
+                    "total_courses" => $workLoad->total_courses,
+                    "phd" => $workLoad->phd,
+                    "masters" => $workLoad->masters,
+                    "bachleors" => $workLoad->bachleors,
+                    "year_t" => $workLoad->year_t,
+                    "isCompleted" => "yes",
+                    "created_by" => $workLoad->created_by
+                ]
+            )->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {

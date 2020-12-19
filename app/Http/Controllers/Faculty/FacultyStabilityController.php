@@ -103,6 +103,19 @@ class FacultyStabilityController extends Controller
                         'type' => $type,
                         'created_by' => Auth::user()->id
                     ]);
+                    FacultyStability::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'total_faculty' => $request->total_faculty[$key],
+                        'year' => $request->year[$key],
+                        'resigned' => $request->resigned[$key],
+                        'retired' => $request->retired[$key],
+                        'terminated' => $request->terminated[$key],
+                        'new_induction' => $request->new_induction[$key],
+                        'isCompleted' => 'yes',
+                        'type' => 'SAR',
+                        'created_by' => Auth::user()->id
+                    ]);
                 }
             }
             return response()->json(['success' => 'Faculty Stability added successfully.']);
@@ -179,11 +192,23 @@ class FacultyStabilityController extends Controller
      */
     public function destroy(FacultyStability $facultyStability)
     {
+//        dd($facultyStability);
         try {
             FacultyStability::where('id', $facultyStability->id)->update([
                'deleted_by' => Auth::user()->id
            ]);
             FacultyStability::destroy($facultyStability->id);
+            FacultyStability::where([
+                "campus_id" => $facultyStability->campus_id,
+                "department_id" => $facultyStability->department_id,
+                "total_faculty" => $facultyStability->total_faculty,
+                "year" => $facultyStability->year,
+                "resigned" => $facultyStability->resigned,
+                "retired" => $facultyStability->retired,
+                "terminated" => $facultyStability->terminated,
+                "new_induction" => $facultyStability->new_induction,
+                "isCompleted" => "yes"
+            ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
         }catch (Exception $e)
         {
