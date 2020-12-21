@@ -223,6 +223,7 @@ Route::get('/email', function() {
          Route::get('registrations', 'StrategicManagement\SlipController@registrations');
           Route::Post('approvementStatus', 'StrategicManagement\SlipController@approvementStatus');
           Route::Post('MentoringInvoiceStatus', 'MentoringInvoiceController@approvementStatus');
+          Route::get('consultativeCommittee/{id}', 'HomeController@getConsultants');
           Route::resource('basic-info', 'NbeacBasicInfoController');
           Route::prefix('config')->group(function (){
             //        Route::resource('{table}', 'ConfigController');
@@ -337,6 +338,7 @@ Route::get('/email', function() {
             Route::post('travelPlan', 'StrategicManagement\SlipController@travelPlan');
             Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
             Route::get('getIeligibility-screeningnvoice/{id}', 'StrategicManagement\SlipController@edit');
+            Route::post('approvedConsultativeComitt','SchedulePeerReviewController@approvedConsultative');
 
         });
         Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
