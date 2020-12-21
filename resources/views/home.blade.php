@@ -1370,14 +1370,14 @@
                                   <div class="input-group col-md-12">
                                       <select class="form-control select2" name="user_id" id="user_id" multiple="multiple" data-placeholder="Select a Reviewers" style="width: 100%;">
                                           @foreach(@$PeerReviewers as $person)
-                                              <option value="{{@$person->user->id}}">{{@$person->user->name}}</option>
+                                              <option value="{{@$person->id}}">{{@$person->name}}</option>
                                           @endforeach
                                       </select>
                                   </div>
                           </div>
 
                           <div class="col-md-12" style="padding-bottom: 20px;">
-                          <input type="hidden" id="slip_id_peer" name="slip_id">
+                          <input type="hidden" id="slip_id_consult" name="slip_id">
 
                           </div>
 
@@ -1386,7 +1386,7 @@
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <input type="submit" name="submit" id="submit_reviewers" class="btn btn-info" value="submit">
+                          <input type="button" name="submit" id="submit_consultative_committee" class="btn btn-info" value="submit">
                       </div>
                   </form>
               </div>
@@ -1611,13 +1611,13 @@
         }
     })
 
-    $('#consultativeCommittee-modal').on('show.bs.modal', function () {
+    $('.consultativeCommittee').on('click', function () {
         console.log('model displayed');
         let id = $(this).data('id');
-        $('#feedback_slip_id').val(id);
+        $('#slip_id_consult').val(id);
 
         $.ajax({
-            url:'{{url("instituteFeedback")}}/'+id,
+            url:'{{url("consultativeCommittee")}}/'+id,
             type:'get',
             // data: { get:'get'},
             beforeSend: function(){
@@ -1628,20 +1628,12 @@
                 Notiflix.Loading.Remove();
                 let data = JSON.parse(JSON.stringify(response));
                 console.log("success resp ",data);
-                console.log('pr date value',data.pr_visit_date);
-                $('#confirm_date').text(data.confirm_date);
-                $('#fileName').attr('href',data.pr_travel_plan);
-
-                $("#visit_date").datepicker("setDate", data.pr_visit_date);
-
-                // $('#visit_date').val(data.pr_visit_date);
-                // if(response.success){
-                //     Notiflix.Notify.Success(response.success);
-                // }
-
-                // location.reload();
-
-                console.log('response here', response);
+                let reviewers = [];
+                $.each(data, function (index, val) {
+                    reviewers[index]= index;
+                })
+                console.log('reviewrs list ', reviewers);
+                $('#user_id').val(reviewers).change();
             },
             error:function(response, exception){
                 Notiflix.Loading.Remove();
@@ -1935,6 +1927,47 @@
                     url:'{{url("admin")}}/'+id,
                     type:'PATCH',
                     data: { id:id},
+                    beforeSend: function(){
+                        Notiflix.Loading.Pulse('Processing...');
+                    },
+                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                    success: function (response) {
+                        Notiflix.Loading.Remove();
+                        console.log("success resp ",response.success);
+                        if(response.success){
+                            Notiflix.Notify.Success(response.success);
+                        }
+
+                        location.reload();
+
+                        console.log('response here', response);
+                    },
+                    error:function(response, exception){
+                        Notiflix.Loading.Remove();
+                        $.each(response.responseJSON, function (index, val) {
+                            Notiflix.Notify.Failure(val);
+                        })
+
+                    }
+                })
+            },
+            function(){ // No button callback
+                // alert('If you say so...');
+            } );
+    });
+
+    $('#submit_consultative_committee').on('click', function (e) {
+        var id = $('#slip_id_consult').val();
+
+        let users = $('#user_id').val();
+
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to submit?', 'Yes', 'No',
+            function(){
+                // Yes button callback
+                $.ajax({
+                    url:'{{url("approvedConsultativeComitt")}}',
+                    type:'Post',
+                    data: { id:id, user_id:users},
                     beforeSend: function(){
                         Notiflix.Loading.Pulse('Processing...');
                     },

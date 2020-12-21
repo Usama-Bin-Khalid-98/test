@@ -9,10 +9,10 @@ use App\Models\MentoringMentor;
 use App\Models\PeerReview\InstituteFeedback;
 use App\Models\PeerReview\PeerReviewReviewer;
 use App\User;
-use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -288,7 +288,7 @@ class HomeController extends Controller
         $fem_count = FacultyGender::where(['status' => 'active'])->get()->sum('female');
         $mentoring_slip_count = MentoringInvoice::where(['status' => 'active'])->get()->count();
 //        dd($mentoring_slip_count);
-        $PeerReviewers = PeerReviewReviewer::with('user')->get();
+        $PeerReviewers = User::where(['user_type'=> 'Mentor'])->orWhere(['user_type'=> 'PeerReviewer'])->get();
 
 
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',
@@ -311,11 +311,24 @@ class HomeController extends Controller
             if($validation->fails()){
                 return response()->json($validation->messages()->all(), 422);
             }
+    }
 
+    public function getConsultants($id) {
+        $validation = Validator::make(['slip_id'=>$id], $this->rules(), $this->messages());
+        if($validation->fails()){
+            return response()->json($validation->messages()->all(), 422);
+        }
+        $getReviewers = PeerReviewReviewer::with('user')->where(['slip_id'=> $id])->get();
+        $users = [];
+        foreach ($getReviewers as $reviewer)
+        {
+            $users[$reviewer->user->id] = $reviewer->user->name;
+        }
+
+        return response()->json($users, 200);
 
 
     }
-
     protected function rules(){
         return ['slip_id'=> 'required'];
     }

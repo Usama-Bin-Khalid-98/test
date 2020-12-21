@@ -238,6 +238,101 @@ class SchedulePeerReviewController extends Controller
 
     }
 
+    public function approvedConsultative(Request $request) {
+
+            try {
+
+                    if ($request->id) {
+                        $slipInfoSchool = Slip::with('campus')->where(['id'=>$request->id])->first();
+                        $getNbeacInfo = NbeacBasicInfo::all()->first();
+
+                        foreach ($request->user_id as $mentor)
+                        {
+                            $check = PeerReviewReviewer::where(
+                                ['slip_id' => $request->id,
+                                'user_id'=>$mentor])->exists();
+                            if($check)
+                            {
+                            $ESReviewers = PeerReviewReviewer::where(['slip_id'=>$request->id, 'user_id'=> $mentor])->update(
+                                [
+                                    'status' => 'yes'
+                                ]);
+                            }else{
+                                $createPeer = PeerReviewReviewer::create(
+                                    [
+                                        'slip_id'=>$request->id, 'user_id'=> $mentor, 'status'=>'yes','created_by'=> Auth::id()
+                                    ]);
+                            }
+
+                            $mentorInfo = User::find($mentor)->first();
+
+
+                            $mailData['nbeac']= $getNbeacInfo;
+
+                            //////// email
+                            $header = 'AOA <br/>'. $mentorInfo->name;
+                                $comments = 'The Consultative Committee selected you for the peer review visit of business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) ';
+                                $footer = '<p>Yours Sincerely,</p>' .
+                                    '<p>&nbsp;</p>' .
+                                    '<p>' . $slipInfoSchool->campus->user->name . '</p>';
+                            ///
+                            $data = ['letter' => $header. '<br/>'.$comments.$footer];
+
+                            $mailInfo = [
+                                'to' => $mentorInfo->email??'',
+                                'to_name' => $mentorInfo->name??'',
+                                'school' => $slipInfoSchool->business_school->name??'',
+                                'from' => $getNbeacInfo->email??'info@nbeac.org.pk',
+                                'from_name' => $getNbeacInfo->director??'',
+                            ];
+
+                            Mail::send('peer_review_visit.email.email', $data, function($message) use ($mailInfo) {
+                                //dd($user);
+                                $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                                    ->subject($mailInfo['school'].' Peer Review Visit Scheduled');
+                                $message->from($mailInfo['from'],$mailInfo['from_name']);
+                            });
+                        }
+//                        $updateSlip = Slip::find($request->id)->update(['regStatus'=>'ScheduledPRVisit']);
+                        //////////////// Send and email to NBEAC for Reviewers Approval/////
+                        /// ////////////////  email here          /// //////////
+                        ///
+                        //////// email
+                        $header_nbeac_email = 'AOA <br/>'. $slipInfoSchool->campus->user->name;
+                        $comments_nbeac_email = 'The business school ( '. $slipInfoSchool->campus->business_school->name. ' '. $slipInfoSchool->campus->location. ' department '.$slipInfoSchool->department->name.' ) '
+                            . ' Scheduled a Peer Review Visit. please review and select your availability date.';
+                        $footer_nbeac_email = '<p>Yours Sincerely,</p>' .
+                            '<p>&nbsp;</p>' .
+                            '<p>' . $getNbeacInfo->director . '</p>';
+                        ///
+                        $data_nbeac_email = ['letter' => $header_nbeac_email. '<br/>'.$comments_nbeac_email.'<br/>'.$footer_nbeac_email];
+
+                        $mailSchoolInfo = [
+                            'to' => $slipInfoSchool->campus->user->email,
+                            'to_name' => $slipInfoSchool->campus->user->name,
+                            'school' => $slipInfoSchool->campus->business_school->name??'',
+                            'from' => $getNbeacInfo->email??'',
+                            'from_name' => $getNbeacInfo->director??'',
+                        ];
+
+                        Mail::send('peer_review_visit.email.email',  $data_nbeac_email, function($message) use ($mailSchoolInfo) {
+                            //dd($user);
+                            $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
+                                ->subject('Schedule Peer Review Visit of '. $mailSchoolInfo['school']);
+                            $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
+                        });
+
+                        //////////////// Send and email to NBEAC for Reviewers Approval/////
+                        return response()->json(['success' => 'Notification sent Successfully'], 200);
+                    }
+
+                return response()->json(['message' => 'Record already Exists'], 422);
+            }catch (Exception $e)
+            {
+                return response()->json(['message' =>$e->getMessage()], 422);
+            }
+    }
+
     /**
      * Display the specified resource.
      *
