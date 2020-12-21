@@ -214,9 +214,9 @@ class HomeController extends Controller
 //                    ->whereHas('mentoring_mentor', function ($q) {
 //                        $q->where('user_id', Auth::id());
 //                    })
-                ->where(['created_by'=> Auth::id()])
                 ->where('regStatus', 'ScheduledMentoring')
                 ->orWhere('regStatus', 'Mentoring')
+                ->where(['created_by'=> Auth::id()])
                 ->get();
 
         }
