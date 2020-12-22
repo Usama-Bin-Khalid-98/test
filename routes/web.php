@@ -339,6 +339,8 @@ Route::get('/email', function() {
             Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
             Route::get('getIeligibility-screeningnvoice/{id}', 'StrategicManagement\SlipController@edit');
             Route::post('approvedConsultativeComitt','SchedulePeerReviewController@approvedConsultative');
+            /////getInvoice
+            Route::get('getInvoice/{id}', 'HomeController@getInvoice');
 
         });
         Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {

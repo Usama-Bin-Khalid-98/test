@@ -13,7 +13,7 @@ class PeerReviewReviewer extends Model
 
     public function slip()
     {
-        return $this->belongsTo(Slip::class);
+        return $this->belongsTo(Slip::class)->with('campus');
     }
 
     public function user()

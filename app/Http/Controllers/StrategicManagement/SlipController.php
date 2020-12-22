@@ -11,6 +11,7 @@ use App\DepartmentFee;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
+use App\Models\PeerReview\PeerReviewReviewer;
 use App\Models\PeerReview\SchedulePeerReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -145,6 +146,54 @@ class SlipController extends Controller
                 if($update)
                 {
                     ////////////////////////////////// email here //////////////
+                    $getPeerMentors = PeerReviewReviewer::with('slip')->where(['slip_id'=>$request->slip_id])->get();
+//                    dd($getPeerMentors);
+
+                    $getNbeacData = NbeacBasicInfo::first();
+                    foreach ($getPeerMentors as $docInfo)
+                    {
+                        $header = '<table cellspacing="0" style="border-collapse:collapse; width:80%">'.
+                            '<tbody>'.
+                            '<tr>'.
+                            '<td style="background-color:white; height:16px; vertical-align:top; width:80%">'.
+                            '<p><strong>Mr/Ms.  '.@$docInfo->slip->campus->user->name.'</strong><br />'.
+                            '<strong>'.@$docInfo->slip->campus->user->designation->name.',&nbsp; '.@$docInfo->slip->department->name.'</strong><br />'.
+                            '<strong>'.@$docInfo->slip->campus->business_school->name.'</strong></p>'.
+                            '</td>'.
+                            '<td style="background-color:white; height:16px; vertical-align:top; width:50%">'.
+//            '    <p><strong>Ref. No: </strong><strong>KASBIT /NBEAC-ESC/15/3</strong><br />'.
+                            '<strong>Dated: </strong><strong>'.date('Y-m-d').'</strong></p>'.
+                            '</td>'.
+                            '</tr>'.
+                            '</tbody>'.
+                            '</table>';
+
+                        $content = '<p>NBEAC generated travel plan for '.$docInfo->slip->campus->business_school->name.' campus '.$docInfo->slip->campus->location.'</p>'.
+                        ' on date '.$request->visit_date;
+
+                        $footer = '<p>Yours Sincerely,</p>'.
+                            '<p>&nbsp;</p>'.
+                            '<p>'.$getNbeacData->director.'</p>'.
+                            '<p>NBEAC</p>';
+
+                        $emailData = ['letter'=> $header. $content. $footer];
+
+                        $mailInfo = [
+                            'to' => $docInfo->slip->campus->user->email,
+                            'to_name' => $docInfo->slip->campus->user->name,
+                            'school' => $docInfo->slip->campus->business_school->name,
+                            'campus' => $docInfo->slip->campus->location,
+                            'from' => $getNbeacData->email??'info@nbeac.org.pk',
+                            'from_name' => $getNbeacData->director,
+                        ];
+                        Mail::send('eligibility_screening.email.eligibility_report', $emailData, function($message) use ($mailInfo) {
+                            //dd($user);
+                            $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                                ->subject('Travel Plan - '. $mailInfo['school']);
+                            $message->from($mailInfo['from'],$mailInfo['from_name']);
+                        });
+
+                    }
 
                     ////////////////////////////////// end email //////////////
                     return response()->json(['success' => 'Travel plan added successfully.'], 200);

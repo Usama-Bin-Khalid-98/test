@@ -1318,7 +1318,7 @@
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#consultativeCommittee-modal" class="btn-xs bg-red-active consultativeCommittee" style="cursor: pointer"> <i data-toggle="tooltip" title="Consultative committee" class="fa fa-users"></i></a><br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer"> <i data-toggle="tooltip" title="Generate Travel Plan" class="fa fa-car"></i></a><br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer"> <i data-toggle="tooltip" title="Upload Profile Sheet" class="fa fa-file-excel-o"></i></a> <br>
-                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer">Thank You Email <i class="fa fa-envelope"></i></a>
+                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer"> <i class="fa fa-envelope" data-toggle="tooltip" title="Thank You Email"></i></a>
                                   @endhasrole
                                   @hasrole('BusinessSchool')
                                       <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#feedback-modal" class="btn-xs btn-primary feedback" style="cursor: pointer">Institutional Feedback Form<i class="fa fa-backward"></i></a> <br>
@@ -1401,7 +1401,7 @@
                   <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title">Generate Travel Plane to the focal person and peers. </h4>
+                      <h4 class="modal-title">Generate Travel Plan to the focal person and peers. </h4>
                   </div>
                   <form role="form" id="visit-form" enctype="multipart/form-data" >
                       <div class="modal-body">
@@ -1808,7 +1808,7 @@
                             Notiflix.Notify.Success(response.success);
                         }
 
-                        location.reload();
+                        // location.reload();
 
                         console.log('response here', response);
                     },
