@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
+use App\Models\EligibilityScreening\ReviewerAvailability;
 use App\Models\MentoringInvoice;
 use App\Models\MentoringMentor;
 use App\Models\PeerReview\InstituteFeedback;
 use App\Models\PeerReview\PeerReviewReviewer;
+use App\Models\PeerReview\SchedulePeerReview;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -221,7 +223,7 @@ class HomeController extends Controller
 
         }
 
-
+        $PeerReviewVisit=[];
 
         if(Auth::user()->user_type=='NbeacFocalPerson' ||
             Auth::user()->user_type== 'NBEACAdmin'||
@@ -251,7 +253,7 @@ class HomeController extends Controller
                 ->where(['business_school_id'=>Auth::user()->campus_id,
                     'department_id'=>Auth::user()->department_id])
                 ->where('regStatus', 'ScheduledPRVisit')
-                ->orWhere('regStatus', 'PeerReviewVisit')
+//                ->orWhere('regStatus', 'PeerReviewVisit')
                 ->where('status', 'approved')
                 ->get();
         }
@@ -327,6 +329,12 @@ class HomeController extends Controller
 
         return response()->json($users, 200);
 
+
+    }
+
+    public function getInvoice($id) {
+        $getInvoice = Slip::where(['id' => $id])->first();
+         return response()->json($getInvoice, 200);
 
     }
     protected function rules(){
