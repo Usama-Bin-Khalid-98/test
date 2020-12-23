@@ -1596,7 +1596,9 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span></button>
                       <h4 class="modal-title">Generate a thank you email to peers and Business school after visit. </h4>
+                      <h5 id="thank_bs_name"></h5>
                   </div>
+
                   <form role="form" id="Thankyouform" enctype="multipart/form-data" >
                       <div class="modal-body">
                           <input type="hidden" id="thankyou_slip_id" name="slip_id">
