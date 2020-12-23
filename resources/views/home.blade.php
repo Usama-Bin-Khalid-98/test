@@ -1320,6 +1320,9 @@
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer"> <i data-toggle="tooltip" title="Upload Profile Sheet" class="fa fa-file-excel-o"></i></a> <br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer"> <i class="fa fa-envelope" data-toggle="tooltip" title="Thank You Email"></i></a>
                                   @endhasrole
+                                  @hasrole('Mentor|PeerReviewer')
+                                    <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlaneMentor-modal" class="btn-xs bg-aqua TravelPlaneMentor" style="cursor: pointer"> <i data-toggle="tooltip" title="Travel Plan" class="fa fa-car"></i></a><br>
+                                  @endhasrole
                                   @hasrole('BusinessSchool')
                                       <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#feedback-modal" class="btn-xs btn-primary feedback" style="cursor: pointer">Institutional Feedback Form<i class="fa fa-backward"></i></a> <br>
                                   @endhasrole
@@ -1452,6 +1455,52 @@
           <!-- /.modal-dialog -->
       </div>
 
+      <div class="modal fade" id="TravelPlaneMentor-modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Travel Plan to the focal person and peers. </h4>
+                  </div>
+                  <form role="form" id="visit-form" enctype="multipart/form-data" >
+                      <div class="modal-body">
+                          <div class="col-md-12">
+                             <h4>Visit Confirm Data is : <span id="Mentvisit_date"></span></h4>
+                          </div>
+
+                          <div class="col-md-12">
+                          <div class="form-group">
+                              <label>Business School </label>
+                             <p style="margin-top: 10px" id="bsSchool"></p>
+                          </div>
+                          </div>
+                          <div class="col-md-6">
+                          <div class="form-group">
+                              <label>Invoice No </label>
+                             <p style="margin-top: 10px" id="invoice_no"></p>
+                          </div>
+                          </div>
+                          <div class="col-md-6">
+                          <div class="form-group">
+                              <label>Travel Plan Doc </label>
+                              <a href="#" class="badge bg-maroon" id="DocfileName">Download Travel Plan File</a>
+
+                          </div>
+                          </div>
+
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+{{--                          <input type="submit" name="submit" id="submit" class="btn btn-info" value="submit">--}}
+                      </div>
+                  </form>
+              </div>
+              <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+      </div>
+
        <div class="modal fade" id="feedback-modal">
           <div class="modal-dialog">
               <div class="modal-content">
@@ -1516,22 +1565,18 @@
                                   <input type="file" name="file" id="sheet">
                               </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-6" id="downloadProfileSheet" style="display: none;">
                               <div class="form-group" style="margin-top: 24px">
-                                  @if(!empty(@$travel_plan->profile_sheet))
-                                      <a href="#" class="badge bg-maroon" id="profile_sheet">Download Profile sheet.</a>
-                                  @endif
+                                  <a href="#" class="badge bg-maroon" id="profile_sheet">Download Profile sheet.</a>
                               </div>
                           </div>
 
-                          @if(!empty(@$travel_plan->profile_sheet))
-                          <div class="col-md-12">
+                          <div class="col-md-12" id="profileSheetStatus" style="display: none;">
                           <div class="form-group">
                               <label>Status </label>
-                             <span class="badge bg-green" style="margin-top: 10px">Profile sheet already uploaded</span>
+                             <span class="badge bg-green" style="margin-top: 10px" id="profileSheetStatusp">Profile sheet already uploaded</span>
                           </div>
                           </div>
-                          @endif
                           <!-- /.form group -->
 
                       </div>
@@ -1543,9 +1588,34 @@
               </div>
               <!-- /.modal-content -->
           </div>
+      </div>
+      <div class="modal fade" id="thankyou-modal">
+          <div class="modal-dialog" style="width: 90%;">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Generate a thank you email to peers and Business school after visit. </h4>
+                  </div>
+                  <form role="form" id="Thankyouform" enctype="multipart/form-data" >
+                      <div class="modal-body">
+                          <input type="hidden" id="thankyou_slip_id" name="slip_id">
+
+                          <textarea id="comments" name="thankyouEmail"></textarea>
+                          <!-- /.form group -->
+
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <input type="submit" name="submit" class="btn btn-info" value="Send">
+                      </div>
+                  </form>
+              </div>
+              <!-- /.modal-content -->
+          </div>
           <!-- /.modal-dialog -->
       </div>
-  </div>
+
 
       <!-- /.content -->
   </div>
@@ -1589,6 +1659,68 @@
         autoclose:true,
         format:'yyyy-mm-dd'
     });
+
+    $(function () {
+        CKEDITOR.replace('comments');
+    })
+
+    $('.thankyou').on('click', function () {
+        $('#thankyou_slip_id').val($(this).data('id'));
+    })
+    $('#Thankyouform').submit(function (e) {
+        for ( instance in CKEDITOR.instances ) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+        var comments = CKEDITOR.instances.comments.getData();
+        // var file = $('#file').val();
+
+        // !file?addClass('file'):removeClass('file');
+        !comments?addClass('comments'):removeClass('comments');
+
+        if(!comments)
+        {
+            Notiflix.Notify.Warning("Fill all the required Fields.");
+            return;
+        }
+        e.preventDefault();
+        let formData = new FormData(this)
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+        // Yes button callback
+        $.ajax({
+            url:'{{url("ThankyouMsg")}}',
+            type:'POST',
+            data: formData,
+            cache:false,
+            contentType:false,
+            processData:false,
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                console.log("success resp ",response.success);
+                if(response.success){
+                    Notiflix.Notify.Success(response.success);
+                }
+
+                // location.reload();
+                console.log('response here', response);
+            },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
+
+            }
+        })
+    });
+
 </script>
 <script>
     $(document).ready( function () {
@@ -1610,6 +1742,8 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
+
+
 
     $('.consultativeCommittee').on('click', function () {
         console.log('model displayed');
@@ -1646,7 +1780,7 @@
 
 
     })
-    $('.TravelPlane').on('click', function () {
+    $('.TravelPlane, .TravelPlaneMentor').on('click', function () {
         let id = $(this).data('id');
         $('#slip_id').val(id);
 
@@ -1665,8 +1799,14 @@
                 console.log('pr date value',data.pr_visit_date);
                 $('#confirm_date').text(data.confirm_date);
                 $('#fileName').attr('href',data.pr_travel_plan);
-
                 $("#visit_date").datepicker("setDate", data.pr_visit_date);
+
+                $("#Mentvisit_date").text(data.pr_visit_date);
+                $('#DocfileName').attr('href',data.pr_travel_plan);
+                $('#bsSchool').text(data.campus.business_school.name+' campus: '+ data.campus.location);
+                $('#invoice_no').text(data.invoice_no);
+                // $('#invoice_no').text(data.invoice_no);
+
 
                 // $('#visit_date').val(data.pr_visit_date);
                 // if(response.success){
@@ -1752,9 +1892,12 @@
                 let data = JSON.parse(JSON.stringify(response));
                 console.log("success resp ",data);
                 console.log('pr date value',data.pr_visit_date);
-                $('#profile_sheet').attr('href',data.profile_sheet);
+                $('#profile_sheet').attr('href',data.profile_sheet);w
 
-                // $('#visit_date').val(data.pr_visit_date);
+                $('#profileSheetStatus').css('display', 'block');
+                $('#downloadProfileSheet').css('display', 'block');
+                $('#profile_sheet').text(data.profile_sheet!=''? 'Profile Sheet already Uploaded.':'Not Uploaded yet');
+                $('#profileSheetStatusp').attr('href',data.profile_sheet);
                 // if(response.success){
                 //     Notiflix.Notify.Success(response.success);
                 // }

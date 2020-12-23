@@ -285,6 +285,7 @@ Route::get('/email', function() {
             Route::get('showOnCalendar/{id?}', 'SchedulePeerReviewController@index');
             Route::resource('PeerReviewScheduler', 'SchedulePeerReviewController');
             Route::post('businessSchoolAvailability', 'SchedulePeerReviewController@businessSchoolAvailability');
+            Route::get('getInvoice/{id}', 'HomeController@getInvoice');
 
 
         });
@@ -339,8 +340,7 @@ Route::get('/email', function() {
             Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
             Route::get('getIeligibility-screeningnvoice/{id}', 'StrategicManagement\SlipController@edit');
             Route::post('approvedConsultativeComitt','SchedulePeerReviewController@approvedConsultative');
-            /////getInvoice
-            Route::get('getInvoice/{id}', 'HomeController@getInvoice');
+            Route::post('ThankyouMsg', 'PeerReviewReportController@ThankyouMsg');
 
         });
         Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {

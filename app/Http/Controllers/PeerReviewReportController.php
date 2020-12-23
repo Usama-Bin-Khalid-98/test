@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
 use App\Models\PeerReview\PeerReviewReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -141,6 +142,37 @@ class PeerReviewReportController extends Controller
         }
     }
 
+    public function ThankyouMsg(Request $request)
+    {
+//        dd($request->all());
+
+        try {
+            /////////////////////////// Send Email To ///////////////////
+            $getNbeacInfo = NbeacBasicInfo::first();
+
+            $mailInfo = [
+                'to' => 'school@gmail.com',
+                'to_name' => 'Habib Ahmad',
+                'school' => "School Name Here",
+                'from' => $getNbeacInfo->email,
+                'from_name' => $getNbeacInfo->director,
+            ];
+
+            $data= [];
+
+            Mail::send('email_templates.accreditation_update_report', $data, function($message) use ($mailInfo) {
+                //dd($user);
+                $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                    ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                $message->from($mailInfo['from'],$mailInfo['from_name']);
+            });
+        return response()->json(['success' => 'Report updated successfully.'], 200);
+        }catch (Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+    }
+
     public function updateSlipStatus(Request $request)
     {
 //        dd($request->all());
@@ -222,9 +254,9 @@ class PeerReviewReportController extends Controller
                     'bs.name as school', 'bs.id as business_school_id',
                     'prr.report_date', 'prr.file', 'prr.id as prr_id', 'prr.comments as prr_comments')
 //                ->where('s.id', $id)
-                ->where('s.business_school_id', $user->campus_id)
-                ->orWhere('s.department_id', $user->department_id)
+                ->where(['s.business_school_id'=> $user->campus_id, 's.department_id'=> $user->department_id])
                 ->get();
+//            dd($registrations);
 //        }
         return view('peer_review_report.bspr_report', compact('registrations'));
     }

@@ -274,6 +274,7 @@ class HomeController extends Controller
             ->where(['status' =>'approved', 'regStatus'=>'SAR'])->get();
 
         $travel_plan = Slip::where('id', @$PeerReviewVisit[0]->id)->get()->first();
+//        dd($travel_plan);
         $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();
 
 //        dd($travel_plan->pr_travel_plan);
@@ -333,7 +334,7 @@ class HomeController extends Controller
     }
 
     public function getInvoice($id) {
-        $getInvoice = Slip::where(['id' => $id])->first();
+        $getInvoice = Slip::with('campus', 'department')->where(['id' => $id])->first();
          return response()->json($getInvoice, 200);
 
     }
