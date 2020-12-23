@@ -150,22 +150,33 @@ class PeerReviewReportController extends Controller
             /////////////////////////// Send Email To ///////////////////
             $getNbeacInfo = NbeacBasicInfo::first();
 
+            /////////////////////// Email to Bs School ////////////////////
+            $getBSInfo = Slip::with('campus', 'department')->find($request->slip_id)->first();
+
+            $content = 'Dear Mr. '.$getBSInfo->campus->user->name.',' .
+                $getBSInfo->campus->business_school->name.','. $getBSInfo->campus->location.
+                'Let me take this opportunity on behalf of entire peer review team, I would like to express our deepest thanks and gratitude to you and your team members for the warm welcome, cooperation and hospitality which you extended to us during the accreditation visit. All the arrangements were very well coordinated and organized, which made the PRT visit and stay highly productive and comfortable. Pass our regards to Vice Chancellor, Executive Director, Associate Deans, all directors, registrar and whole team.' .
+                'I believe that RSL, '.$getBSInfo->campus->business_school->name. ' campus '.$getBSInfo->campus->location.'will benefit from the constructive discussion with the peer review team. NBEAC is a platform to develop & promote liaison and collaborationamongst the business schools to learn from each other and facilitate the Business Schools. Business schools are requested to publicize the accreditation category only after receiving the approved notification/letter from NBEAC.' .
+                'Please note that the interim peer review report will be shared with business school for feedbackon any factual errors. The detailed peer review report and accreditation decision will be shared soon with you. ' .
+                'Thank you once again.';
             $mailInfo = [
-                'to' => 'school@gmail.com',
-                'to_name' => 'Habib Ahmad',
-                'school' => "School Name Here",
+                'to' => $getBSInfo->campus->user->email,
+                'to_name' => $getBSInfo->campus->user->name,
+                'school' =>$getBSInfo->campus->business_school->name. ' campus '.$getBSInfo->campus->location ,
                 'from' => $getNbeacInfo->email,
                 'from_name' => $getNbeacInfo->director,
             ];
 
-            $data= [];
+            $data= ['letter'=>  $content];
 
-            Mail::send('email_templates.accreditation_update_report', $data, function($message) use ($mailInfo) {
+            Mail::send('peer_review_report.thankyou_email', $data, function($message) use ($mailInfo) {
                 //dd($user);
                 $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                    ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
+                    ->subject('Thank you - '. $mailInfo['school']);
                 $message->from($mailInfo['from'],$mailInfo['from_name']);
             });
+
+
         return response()->json(['success' => 'Report updated successfully.'], 200);
         }catch (Exception $e)
         {
