@@ -191,13 +191,13 @@
                                     <td>{{@$invoice->department->name}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
                                     <td>
-                                        <a href="{{url('mentoringInvoice/'.$invoice->id)}}">
+                                        <a href="{{url('mentoringInvoice/'.$invoice->id)}}" >
                                             <span data-toggle="tooltip" title="Print invoice slip" class=" badge bg-yellow InvoicePrint" > Invoice </span>
                                         </a>
                                     </td>
 {{--                                    <td>Invoice</a></td>--}}
                                     <td>{{@$invoice->amount}}</td>
-                                    <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
+                                    <td><a href="{{$invoice->slip}}" download >Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
                                     <td><i style="cursor: default;" class="badge {{$invoice->status ==='paid'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>

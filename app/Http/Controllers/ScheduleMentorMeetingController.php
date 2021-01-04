@@ -301,8 +301,8 @@ class ScheduleMentorMeetingController extends Controller
 
             try {
                 $dates = explode(',', $request->dates);
-                $getEvent = MentoringMeeting::where('id', $request->mentorsmeeting_id)->get()->first();
-                // dd($getEvent);
+                $getEvent = MentoringMeeting::where('id', $request->mentorsmeeting_id)->first();
+//                 dd($getEvent);
                 foreach ($dates as $date_val)
                 {
                     $check= ScheduleMentorMeeting::where([
@@ -329,7 +329,7 @@ class ScheduleMentorMeetingController extends Controller
                 if($request->mentors) {
                     $slip_id = $getEvent->slip_id;
                     $delete_old_mentors = MentoringMentor::where('slip_id', $slip_id)->delete();
-                    $slipInfo = Slip::with('campus', 'department')->find($slip_id)->first();
+                    $slipInfo = Slip::with('campus', 'department')->where('id',$slip_id)->first();
                     if($delete_old_mentors) {
 //                        dd($request->mentors);
                         foreach ($request->mentors as $mentor) {

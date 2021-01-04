@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mentoring\ScheduleMentorMeeting;
 use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\Mentoring\MentoringReport;
@@ -27,6 +28,7 @@ class MentoringReportController extends Controller
         $mentor_reports = MentoringReport::with('mentoring_invoice')->where('created_by', Auth::id())->get();
 //        dd($mentor_reports);
         $getMentor = MentoringMentor::where('user_id', Auth::id())->get();
+
         $slips = [];
         $registrations = [];
         foreach ($getMentor as $key => $mentor){
@@ -85,6 +87,13 @@ class MentoringReportController extends Controller
         }
         try {
             $check = MentoringReport::where(['mentoring_invoice_id' => $request->mentoring_invoice_id, 'created_by' => Auth::id()])->exists();
+            $getInvoice =MentoringInvoice::where(['id'=> $request->mentoring_invoice_id])->first();
+            $getSlip = Slip::where(['department_id'=>$getInvoice->department_id, 'business_school_id'=> $getInvoice->campus_id])->first();
+            $checkConfirmDate = ScheduleMentorMeeting::where(['slip_id' => $getSlip->id])->first();
+            if($checkConfirmDate->is_confirm === 'no')
+            {
+                return response()->json(['message'=> 'You can\'t submit report before confirmation of meeting date. '], 422);
+            }
 
             if(!$check) {
                 $imageName = '';

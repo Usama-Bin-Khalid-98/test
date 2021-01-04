@@ -185,7 +185,7 @@ class MentoringInvoiceController extends Controller
             $path = '';
             $imageName = '';
             if (@$request->file('slip')) {
-                $filename = $request->invoice_no . "-slip-" . time() . '.' . $request->slip->getClientOriginalExtension();
+                $filename = "slip-" . time() . '.' . $request->slip->getClientOriginalExtension();
                 $path = 'uploads/schools/mentoring/slips';
                 $diskName = env('DISK');
                 $disk = Storage::disk($diskName);
