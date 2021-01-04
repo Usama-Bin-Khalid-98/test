@@ -300,7 +300,6 @@
                     $.each(response.responseJSON, function (index, val) {
                         Notiflix.Notify.Failure(val);
                     })
-
                 }
             })
     });
