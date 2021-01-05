@@ -326,6 +326,7 @@ class ScheduleMentorMeetingController extends Controller
                     }
                 }
 
+
                 if($request->mentors) {
                     $slip_id = $getEvent->slip_id;
                     $delete_old_mentors = MentoringMentor::where('slip_id', $slip_id)->delete();
@@ -342,8 +343,8 @@ class ScheduleMentorMeetingController extends Controller
                             $data = ['letter' => $letter];
                             $getnbeacInfo = NbeacBasicInfo::first();
                             $mailInfo = [
-                                'to' => $slipInfo->campus->user->email,
-                                'to_name' => $slipInfo->campus->user->name,
+                                'to' => $getMentor->email,
+                                'to_name' => $getMentor->name,
                                 'school' => $slipInfo->campus->business_school->name,
                                 'from' => $getnbeacInfo->email,
                                 'from_name' => $getnbeacInfo->name,
@@ -360,6 +361,28 @@ class ScheduleMentorMeetingController extends Controller
                         }
                     }
                 }
+
+                //////////// Send email to school //////////////////////
+                $mailToSchool = [
+                    'to' => $slipInfo->campus->user->email,
+                    'to_name' => $slipInfo->campus->user->name,
+                    'school' => $slipInfo->campus->business_school->name,
+                    'from' => $getnbeacInfo->email,
+                    'from_name' => $getnbeacInfo->name,
+                ];
+
+                $letter = '<p>AOA, </p>'.
+                    '<p>Dear '. $slipInfo->campus->user->name.' </p>'.
+                    '<p><strong>The case of '.@$slipInfo->campus->business_school->name.' '.'.</strong> campus '.$slipInfo->campus->location.' department '.$slipInfo->department->name.' '.
+                    'has been forwarded to mentors for mentoring. please generate the mentoring invoice and pay the mentoring fee to proceed your case.';
+
+                $data = ['letter' => $letter];
+                Mail::send('eligibility_screening.email.eligibility_report', $data, function ($message) use ($mailToSchool) {
+                    //dd($user);
+                    $message->to($mailToSchool['to'], $mailToSchool['to_name'])
+                        ->subject('Mentoring Schedule of ' . $mailToSchool['school']);
+                    $message->from($mailToSchool['from'], $mailToSchool['from_name']);
+                });
 
 
 
