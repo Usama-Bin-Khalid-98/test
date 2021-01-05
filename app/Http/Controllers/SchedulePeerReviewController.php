@@ -35,7 +35,7 @@ class SchedulePeerReviewController extends Controller
         AND campuses.business_school_id=business_schools.id
         AND users.id = slips.created_by
         AND slips.status = 'approved' AND slips.regStatus = 'PeerReviewVisit'";
-//        $id ? $query .= ' AND slips.id = ' . $id : '';
+        Auth::user()->user_type==='BusinessSchool' ? $query .= ' AND slips.department_id = ' . Auth::user()->department_id. ' AND slips.business_school_id = '. Auth::user()->campus_id : '';
         $registrations = DB::select($query, array());
 
         $NbeacFocalPerson = User::where(['user_type'=>'Mentor'])
