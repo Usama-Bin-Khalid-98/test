@@ -75,13 +75,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Amount in million rupees</label>
-                                    <input type="text" name="amount" id="amount" class="form-control">
+                                    <input type="number" name="amount" id="amount" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Percent Share</label>
-                                    <input type="text" name="percent_share" id="percent_share" class="form-control">
+                                    <input type="number" name="percent_share" id="percent_share" class="form-control">
                                 </div>
                             </div>
 

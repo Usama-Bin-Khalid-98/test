@@ -25,8 +25,8 @@ class CreateCurriculumReview extends Migration
                 ->on('departments');
             $table->string('review_meeting',100);
             $table->string('date',50);
-            $table->string('composition',100);
-            $table->string('reviewer_names',100);
+            $table->string('composition',255);
+//            $table->string('reviewer_names',100);
             $table->integer('designation_id')->unsigned()->nullable();
             $table->foreign('designation_id')
                 ->references('id')

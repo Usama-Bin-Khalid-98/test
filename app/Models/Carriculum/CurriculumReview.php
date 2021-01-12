@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CurriculumReview extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = [];
 
     public function campus() {
@@ -24,5 +24,10 @@ class CurriculumReview extends Model
 
     public function affiliations() {
         return $this->belongsTo(Affiliation::class);
+    }
+
+    public function curriculum_reviewer()
+    {
+        return $this->hasMany(CurriculumReviewer::class)->with('user');
     }
 }

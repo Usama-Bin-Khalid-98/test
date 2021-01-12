@@ -89,9 +89,14 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom: 17px">
                                    <label for="name">Reviewer names</label>
-                                    <input type="text" name="reviewer_names" id="reviewer_names" value="" class="form-control">
+                            <select name="reviewer_names[]" id="reviewer_names" data-placeholder="Select a Reviewers" class="form-control select2" multiple="multiple" >
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+{{--                                    <input type="text" name="reviewer_names" id="reviewer_names" value="" class="form-control">--}}
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -110,7 +115,7 @@
                                     <label for="name">Affiliation</label>
                                     <select name="affiliations_id" id="affiliations_id" class="form-control select2">
                                         <option selected disabled>Select Affiliation</option>
-                                        @foreach($qualification as $degree)
+                                        @foreach($affiliation as $degree)
                                         <option value="{{$degree->id}}">{{$degree->affiliation}}</option>
                                         @endforeach
 
@@ -150,15 +155,19 @@
                                 </thead>
                                 <tbody>
                                  @foreach($summaries as $portfolio)
+{{--                                     @php dd($portfolio) @endphp--}}
                                 <tr>
                                     <td>{{$portfolio->review_meeting}}</td>
                                     <td>{{$portfolio->date}}</td>
                                     <td>{{$portfolio->composition}}</td>
-                                    <td>{{$portfolio->reviewer_names}}</td>
+                                    <td>@if($portfolio->curriculum_reviewer)
+                                            @foreach($portfolio->curriculum_reviewer as $reviewers) {{$reviewers->user->name}},
+                                            @endforeach @endif
+                                    </td>
                                     <td>{{$portfolio->designation->name}}-{{$portfolio->affiliations->affiliation}} </td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"review_meeting":"{{$portfolio->review_meeting}}","date":"{{$portfolio->date}}","composition":"{{$portfolio->composition}}","reviewer_names":"{{$portfolio->reviewer_names}}","designation_id":"{{$portfolio->designation_id}}","affiliations_id":"{{$portfolio->affiliations_id}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
-                                    
+
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -226,7 +235,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                    <label for="name">Reviewer names</label>
-                                    <input type="text" name="reviewer_names" id="edit_reviewer_names" value="{{old('edit_reviewer_names')}}"class="form-control">
+                                    <select name="reviewer_names" id="edit_reviewer_names" data-placeholder="Select a Reviewers" class="form-control select2" multiple="multiple" >
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+{{--                                    <input type="text" name="reviewer_names" id="edit_reviewer_names" value="{{old('edit_reviewer_names')}}"class="form-control">--}}
                                 </div>
                             </div>
                         <div class="col-md-6">
@@ -245,14 +259,14 @@
                                     <label for="name">Affiliation</label>
                                     <select name="affiliations_id" id="edit_affiliations_id" class="form-control select2">
                                         <option selected disabled>Select Affiliation</option>
-                                        @foreach($qualification as $degree)
+                                        @foreach($affiliation as $degree)
                                         <option value="{{$degree->id}}">{{$degree->affiliation}}</option>
                                         @endforeach
 
                                     </select>
                                 </div>
                             </div>
-                    
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -351,7 +365,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -364,7 +378,7 @@
 
 $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
-            
+
             $('#edit_review_meeting').select2().val(data.review_meeting).trigger('change');
             $('#edit_date').val(data.date).datepicker('getDate');
             $('#edit_composition').val(data.composition);

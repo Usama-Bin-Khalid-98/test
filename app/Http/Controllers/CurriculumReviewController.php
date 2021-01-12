@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carriculum\CurriculumReview;
+use App\Models\Carriculum\CurriculumReviewer;
 use App\Models\Common\Designation;
 use App\Models\StrategicManagement\Affiliation;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -23,12 +25,13 @@ class CurriculumReviewController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $qualification = Affiliation::where('status', 'active')->get();
+        $affiliation = Affiliation::where('status', 'active')->get();
         $discipline = Designation::where('status', 'active')->get();
+        $users = User::where('user_type', 'PeerReviewer')->orWhere('user_type','Mentor')->get();
 
-        $summaries = CurriculumReview::with('campus','affiliations','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-        return view('registration.curriculum.curriculum_review', compact('qualification','discipline','summaries'));
+        $summaries = CurriculumReview::with('campus','affiliations','designation', 'curriculum_reviewer')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+//dd($summaries);
+        return view('registration.curriculum.curriculum_review', compact('users','affiliation','discipline','summaries'));
     }
 
     /**
@@ -55,19 +58,27 @@ class CurriculumReviewController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            CurriculumReview::create([
+           $add_record=  CurriculumReview::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'review_meeting' => $request->review_meeting,
                 'date' => $request->date,
                 'composition' => $request->composition,
-                'reviewer_names' => $request->reviewer_names,
+//                'reviewer_names' => $request->reviewer_names,
                 'designation_id' => $request->designation_id,
                 'affiliations_id' => $request->affiliations_id,
                 'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
+
+
+            if($request->reviewer_names)
+            {
+                foreach ($request->reviewer_names as $reviewer_name)
+                {
+                    CurriculumReviewer::create(['curriculum_review_id'=> $add_record->id, 'user_id'=> $reviewer_name]);
+                }
+            }
 
             return response()->json(['success' => 'Record added successfully.']);
 
@@ -145,7 +156,7 @@ class CurriculumReviewController extends Controller
     {
          try {
             CurriculumReview::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             CurriculumReview::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);
