@@ -285,14 +285,15 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                         </a>
                     </li>
-                    <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
+
+
+                    @if(!$isActiveSAR)
+                        <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.7 Mission Vision
                                 <span class="pull-right-container">
                         <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$mission==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-
-                    @if(!$isActiveSAR)
                     <li  class="{{ (request()->is('strategic/strategic-plan')) ? 'active' : '' }}">
                         <a href="{{url('strategic/strategic-plan')}}"> 1.8 Approved Strategic Plan <span class="pull-right-container">
                         <span class="text text-{{$plan==='C'?'green':'red'}} pull-right">
