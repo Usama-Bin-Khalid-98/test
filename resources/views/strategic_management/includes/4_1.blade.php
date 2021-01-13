@@ -19,18 +19,18 @@
                                <tbody>
                                     <?php //echo "<pre>";
                                     //print_r($facultySummary[1]); echo "<pre>";
-                                    for ($i=0; $i <count($facultySummary[0]) ; $i++) {
+                                    for ($i=0; $i <count(@$facultySummary[0]) ; $i++) {
                                                                             ?>
 
                                     <tr>
                                         <td><?php print_r($facultySummary[0][$i]->name);?></td>
                                         <td>
                                             @php
-    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],auth()->user()->campus_id, 'SAR');
+    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,@$facultySummary[0],auth()->user()->campus_id, 'SAR');
    @endphp
    <?php
    $total=0;
-    for($j=0;$j<count($facSum);$j++) {
+    for($j=0;$j<count(@$facSum);$j++) {
         //print_r($facSum[$j]->disciplineName);
 
         if($facSum[$j]->disciplineName=='Business Administration'){

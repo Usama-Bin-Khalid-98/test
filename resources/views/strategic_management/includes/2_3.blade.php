@@ -15,16 +15,19 @@
                                         <td>{{"Meeting "}}{{$loop->index+1}}</td>
                                         <td>{{$data->date}}</td>
                                         <td>{{$data->composition}}</td>
-                                        <td>{{$data->reviewer_names}}</td>
+                                        <td>@if($portfolio->curriculum_reviewer)
+                                                @foreach($portfolio->curriculum_reviewer as $reviewers) {{$reviewers->user->name}},
+                                                @endforeach @endif
+                                        </td>
                                         <td>{{$data->designation}}{{": "}}{{$data->affiliation}}</td>
                                     </tr>
                                      @endforeach
-                                    
-                              
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>

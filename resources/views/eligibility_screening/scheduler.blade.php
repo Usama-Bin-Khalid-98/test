@@ -144,7 +144,7 @@
                         </div>
                         <div class="form-group">
                             <label>Reviewers:</label>
-                            <select class="form-control select2" name="reviewers" id="reviewers" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
+                            <select class="form-control saa    " name="reviewers" id="reviewers" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
                                 @foreach(@$reviewers_all as $reviewer)
                                     <option value="{{@$reviewer->id}}">{{@$reviewer->name}}</option>
                                 @endforeach
