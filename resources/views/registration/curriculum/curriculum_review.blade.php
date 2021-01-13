@@ -102,8 +102,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                    <select name="designation_id" id="designation_id" class="form-control select2">
-                                        <option selected disabled>Select Designation</option>
+                                    <select name="designation_id" id="designation_id" class="form-control select2" multiple="multiple" data-placeholder="Select Designation">
+{{--                                        <option selected disabled>Select Designation</option>--}}
                                         @foreach($discipline as $program)
                                             <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach

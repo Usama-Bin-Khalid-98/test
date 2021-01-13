@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Carriculum\CurriculumReview;
 use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\MentoringMentor;
@@ -212,7 +213,16 @@ AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name',
 
                $programCourses = DB::select('SELECT program_courses.*, programs.name as program, course_types.name as courseTypeName FROM program_courses, programs, course_types, campuses WHERE program_courses.program_id=programs.id AND program_courses.course_type_id=course_types.id AND program_courses.campus_id=campuses.id AND program_courses.campus_id=?  ORDER BY course_types.name', array($req->cid));
 
-               $curriculumReviews = DB::select('SELECT curriculum_reviews.*, designations.name as designation, affiliations.name as affiliation FROM curriculum_reviews, campuses, designations, affiliations WHERE curriculum_reviews.campus_id=campuses.id AND curriculum_reviews.designation_id=designations.id AND curriculum_reviews.affiliations_id=affiliations.id AND curriculum_reviews.campus_id=?', array($req->cid));
+//               $curriculumReviews = DB::select('
+//                SELECT curriculum_reviews.*, designations.name as designation, affiliations.name as affiliation
+//                FROM curriculum_reviews, campuses, designations, affiliations
+//                WHERE curriculum_reviews.campus_id=campuses.id
+//                AND curriculum_reviews.designation_id=designations.id
+//                AND curriculum_reviews.affiliations_id=affiliations.id
+//                AND curriculum_reviews.campus_id=?', array($req->cid));
+
+               $curriculumReviews = CurriculumReview::with('campus','affiliations','designation', 'curriculum_reviewer')
+                   ->where(['campus_id'=> $req->cid, 'department_id'=> $req->did]);
 
                $programObjectives = DB::select('SELECT program_objectives.*, programs.name as program FROM program_objectives, programs, campuses, users WHERE program_objectives.program_id=programs.id AND program_objectives.campus_id=campuses.id AND program_objectives.campus_id=? AND users.id=? ', array($req->cid,auth()->user()->id ));
 
