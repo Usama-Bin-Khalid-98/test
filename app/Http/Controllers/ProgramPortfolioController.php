@@ -67,40 +67,56 @@ class ProgramPortfolioController extends Controller
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
             $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+//            dd($request->all());
             if($slip){
                 $type='SAR';
+                ProgramPortfolio::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'course_type_id' => $request->course_type_id,
+                    'credit_hours' => $request->credit_hours,
+                    'internship_req' => $request->internship_req??'',
+                    'fyp_req' => $request->fyp_req??'',
+                    'isComplete' => 'yes',
+                    'type' => 'SAR',
+                    'created_by' => Auth::user()->id
+                ]);
             }else {
                 $type = 'REG';
+                ProgramPortfolio::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'total_semesters' => $request->total_semesters,
+                    'course_type_id' => $request->course_type_id,
+                    'no_of_course' => $request->no_of_course,
+                    'credit_hours' => $request->credit_hours,
+                    'internship_req' => $request->internship_req??'',
+                    'fyp_req' => $request->fyp_req??'',
+                    'isComplete' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
+
+                ProgramPortfolio::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'total_semesters' => $request->total_semesters??'',
+                    'course_type_id' => $request->course_type_id,
+                    'no_of_course' => $request->no_of_course??'',
+                    'credit_hours' => $request->credit_hours,
+                    'internship_req' => $request->internship_req??'',
+                    'fyp_req' => $request->fyp_req??'',
+                    'isComplete' => 'yes',
+                    'type' => 'SAR',
+                    'created_by' => Auth::user()->id
+                ]);
             }
 
-            ProgramPortfolio::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'program_id' => $request->program_id,
-                'total_semesters' => $request->total_semesters,
-                'course_type_id' => $request->course_type_id,
-                'no_of_course' => $request->no_of_course,
-                'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req??'',
-                'fyp_req' => $request->fyp_req??'',
-                'isComplete' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
-            ProgramPortfolio::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'program_id' => $request->program_id,
-                'total_semesters' => $request->total_semesters,
-                'course_type_id' => $request->course_type_id,
-                'no_of_course' => $request->no_of_course,
-                'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req??'',
-                'fyp_req' => $request->fyp_req??'',
-                'isComplete' => 'yes',
-                'type' => 'SAR',
-                'created_by' => Auth::user()->id
-            ]);
+
+
             return response()->json(['success' => 'Program Portfolio added successfully.']);
 
 
@@ -204,9 +220,9 @@ class ProgramPortfolioController extends Controller
     protected function rules() {
         return [
             'program_id' => 'required',
-            'total_semesters' => 'required',
+//            'total_semesters' => 'required',
             'course_type_id' => 'required',
-            'no_of_course' => 'required',
+//            'no_of_course' => 'required',
             'credit_hours' => 'required',
         ];
     }
