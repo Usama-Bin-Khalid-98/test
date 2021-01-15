@@ -28,9 +28,9 @@ class CreateProgramPortfoliosTable extends Migration
             $table->foreign('program_id')
                 ->references('id')
                 ->on('programs');
-            $table->string('total_semesters',100);
+            $table->string('total_semesters',100)->nullable();;
             $table->unsignedBigInteger('course_type_id');
-            $table->string('no_of_course',100);
+            $table->string('no_of_course',100)->nullable();;
             $table->string('credit_hours',100);
             $table->string('internship_req',100)->nullable();
             $table->string('fyp_req',100)->nullable();

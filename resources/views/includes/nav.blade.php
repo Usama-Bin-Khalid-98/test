@@ -371,7 +371,13 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                     </span></a>
             </li>
               @if($isActiveSAR)
-                  <li  class="{{ (request()->is('program-portfolio')) ? 'active' : '' }}"><a href="{{url('program-portfolio')}}">2.2 Program Courses<span class="pull-right-container">
+{{--                  <li  class="{{ (request()->is('program-portfolio')) ? 'active' : '' }}"><a href="{{url('program-portfolio')}}">2.2 Program Courses<span class="pull-right-container">--}}
+{{--                        <span class="text text-{{$program_courses==='C'?'green':'red'}} pull-right">--}}
+{{--                            <i class="fa {{$program_courses==='C'?'fa-check-square':'fa-minus-square'}}" ></i>--}}
+{{--                        </span>--}}
+{{--                    </span></a>--}}
+{{--                  </li>--}}
+                  <li  class="{{ (request()->is('program-courses')) ? 'active' : '' }}"><a href="{{url('program-courses')}}">2.2 Program Courses<span class="pull-right-container">
                         <span class="text text-{{$program_courses==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$program_courses==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>

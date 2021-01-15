@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Program Portfolio
+                @if(@!$isSAR)Program Portfolio @else Program Courses @endif
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Program Portfolio </li>
+                <li class="active"> @if(@!$isSAR)Program Portfolio @else Program Courses @endif</li>
             </ol>
         </section>
 {{--        <section class="content-header">--}}
@@ -63,7 +63,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">2.1.Provide the portfolio of the program(s) under review in Table 2.1.</h3>
+                            <h3 class="box-title">@if(@!$isSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -89,12 +89,14 @@
                                         </select>
                                 </div>
                             </div>
+                                @if(@!$isSAR)
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Number of semesters</label>
                                     <input type="text" name="total_semesters" id="total_semesters" class="form-control">
                                 </div>
                             </div>
+                                @endif
                             <div class="col-md-4">
                                 <div class="form-group" style="margin-bottom: 16px;">
                                     <label for="name">Course category</label>
@@ -106,26 +108,28 @@
                                         </select>
                                 </div>
                             </div>
-
+                                @if(@!$isSAR)
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">No of courses of program under review</label>
                                     <input type="text" name="no_of_course" id="no_of_course" class="form-control">
                                 </div>
                             </div>
+                                @endif
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Credit hours</label>
                                     <input type="text" name="credit_hours" id="credit_hours" class="form-control">
                                 </div>
                             </div>
-                                @if(@!$isSAR)
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Internship requirements</label>
+                                    <label for="name">@if(@!$isSAR)Internship requirements @else Prerequisite if any @endif</label>
                                     <textarea name="internship_req" id="internship_req" class="form-control"></textarea>
                                 </div>
                             </div>
+                                @if(@!$isSAR)
                             <div class="col-md-4">
                                 <div class="form-group">
 
@@ -156,7 +160,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 2.1. Programs portfolio</h3>
+                            <h3 class="box-title">@if(@!$isSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -165,9 +169,9 @@
                                 <tr>
 {{--                                    <th>Program</th>--}}
                                     <th>Program(s) under review</th>
-                                    <th>Total Semesters</th>
+                                    @if(@!$isSAR) <th>Total Semesters</th> @endif
                                     <th>Course Type</th>
-                                    <th>No of Courses</th>
+                                    @if(@!$isSAR)<th>No of Courses</th>@endif
                                     <th>Credit Hours</th>
                                     @if(@!$isSAR)<th>Internship Requirement</th>
                                     <th>FYP Requirement</th>@endif
@@ -180,9 +184,9 @@
                                 <tr>
 {{--                                    <td>{{$portfolio->program}}</td>--}}
                                     <td>{{@$portfolio->program->name}}</td>
-                                    <td>{{$portfolio->total_semesters}}</td>
+                                   @if(@!$isSAR) <td>{{$portfolio->total_semesters}}</td>@endif
                                     <td>{{$portfolio->course_type->name}}</td>
-                                    <td>{{$portfolio->no_of_course}}</td>
+                                    @if(@!$isSAR)<td>{{$portfolio->no_of_course}}</td>@endif
                                     <td>{{$portfolio->credit_hours}}</td>
                                     @if(@!$isSAR)<td>{{$portfolio->internship_req}}</td>
                                     <td>{{$portfolio->fyp_req}}</td>@endif
@@ -195,9 +199,9 @@
                                 <tr>
 {{--                                    <th>Program</th>--}}
                                     <th>Program(s) under review</th>
-                                    <th>Total Semesters</th>
+                                    @if(@!$isSAR) <th>Total Semesters</th> @endif
                                     <th>Course Type</th>
-                                    <th>No of Courses</th>
+                                    @if(@!$isSAR)<th>No of Courses</th>@endif
                                     <th>Credit Hours</th>
                                     @if(@!$isSAR)<th>Internship Requirement</th>
                                     <th>FYP Requirement</th>@endif
@@ -348,19 +352,19 @@
              $('#form').submit(function (e) {
             // let program = $('#program').val();
             let program_id = $('#program_id').val();
-            let total_semesters = $('#total_semesters').val();
+            @if(!$isSAR) let total_semesters = $('#total_semesters').val(); @endif
             let course_type_id = $('#course_type_id').val();
-            let no_of_course = $('#no_of_course').val();
+            @if(!$isSAR) let no_of_course = $('#no_of_course').val(); @endif
             let credit_hours = $('#credit_hours').val();
 
             // !program?addClass('program'):removeClass('program');
             !program_id?addClass('program_id'):removeClass('program_id');
-            !total_semesters?addClass('total_semesters'):removeClass('total_semesters');
+                 @if(!$isSAR)!total_semesters?addClass('total_semesters'):removeClass('total_semesters');@endif
             !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
-            !no_of_course?addClass('no_of_course'):removeClass('no_of_course');
+                 @if(!$isSAR)!no_of_course?addClass('no_of_course'):removeClass('no_of_course');@endif
             !credit_hours?addClass('credit_hours'):removeClass('credit_hours');
 
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours)
+            if(!program_id || !course_type_id || !credit_hours)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
