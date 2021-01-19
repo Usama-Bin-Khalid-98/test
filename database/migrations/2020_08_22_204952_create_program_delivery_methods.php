@@ -27,8 +27,8 @@ class CreateProgramDeliveryMethods extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->string('course_code',100);
-            $table->string('course_title',50);
+            $table->string('course_code',255)->nullable();
+            $table->string('course_title',100);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

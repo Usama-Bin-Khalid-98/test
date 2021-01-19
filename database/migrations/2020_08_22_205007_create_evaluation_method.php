@@ -30,6 +30,7 @@ class CreateEvaluationMethod extends Migration
             $table->string('frequency',100);
             $table->string('range',50);
             $table->enum('status', ['active','inactive'])->default('active');
+            $table->string('file', '255')->nullable();
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')

@@ -104,22 +104,27 @@
                                     <label for="name">Designation</label>
                                     <select name="designation_id" id="designation_id" class="form-control select2" multiple="multiple" data-placeholder="Select Designation">
 {{--                                        <option selected disabled>Select Designation</option>--}}
-                                        @foreach($discipline as $program)
+                                        @foreach($designations as $program)
                                             <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 form-row">
                                 <div class="form-group">
+                                <div class="input-group">
                                     <label for="name">Affiliation</label>
-                                    <select name="affiliations_id" id="affiliations_id" class="form-control select2">
+                                    <select name="affiliations_id" id="affiliations_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Affiliation</option>
                                         @foreach($affiliation as $degree)
                                         <option value="{{$degree->id}}">{{$degree->affiliation}}</option>
                                         @endforeach
 
                                     </select>
+                                    <span class="input-group-btn">
+                                        <button type="button" data-toggle="modal" data-target="#add-modal"  class="btn btn-info btn-flat" style="margin-top: 21px;"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                </div>
                                 </div>
                             </div>
 
@@ -193,6 +198,63 @@
         </section>
     </div>
 
+    <div class="modal fade" id="add-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">The names, designations and affiliations of all external (academic and corporate), national or international members in each of the statutory bodies mentioned above in Table 1.4.</h4>
+                </div>
+                <form action="javascript:void(0)" id="add_affiliation" method="POST">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name of member</label>
+                            <input type="text" name="name" id="name" class="form-control" value="{{old('name')}}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group" style="margin-bottom: 17px;">
+                            <label for="name">Designation</label>
+                            <select name="designation_id" id="designation_add_id" class="form-control select2" style="width: 100%;">
+                                <option selected  disabled >Select Designation</option>
+                                @foreach($designations as $designation)
+                                    <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Affiliation</label>
+                            <input type="text" name="affiliation" id="affiliation" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name of statutory body </label>
+                            <select name="statutory_bodies_id" id="statutory_bodies_id" class="form-control select2" style="width: 100%;">
+                                <option selected disabled >Select Body Name</option>
+                                @foreach($bodies as $body)
+                                    <option value="{{$body->id}}">{{$body->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-info" value="Submit" id="add">
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
      <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -248,7 +310,7 @@
                                     <label for="name">Designation</label>
                                     <select name="designation_id" id="edit_designation_id" class="form-control select2">
                                         <option selected disabled>Select Designation</option>
-                                        @foreach($discipline as $program)
+                                        @foreach($designations as $program)
                                             <option value="{{$program->id}}">{{$program->name}}</option>
                                         @endforeach
                                     </select>
@@ -365,7 +427,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    // location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -376,7 +438,56 @@
             })
         });
 
-$('.edit').on('click', function () {
+        $('#add_affiliation').submit(function (e) {
+            let designation_id = $('#designation_add_id').val();
+            let affiliation = $('#affiliation').val();
+            let name = $('#name').val();
+            let statutory_bodies_id = $('#statutory_bodies_id').val();
+
+            !name?addClass('name'):removeClass('name');
+            !designation_id?addClass('designation_id'):removeClass('designation_id');
+            !affiliation?addClass('affiliation'):removeClass('affiliation');
+            // !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
+
+            if(!designation_id || !affiliation || !name)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            // Yes button callback
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url:'{{url("strategic/affiliations")}}',
+                type:'POST',
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        });
+
+
+        $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
 
             $('#edit_review_meeting').select2().val(data.review_meeting).trigger('change');
