@@ -74,9 +74,9 @@
                                                 {{@$body->name}}
                                                 <input type="hidden" name="teaching_methods_id[]" id="teaching_methods_id_{{@$body->id}}" value="{{@$body->id}}">
                                             </td>
-                                         <td><input type="textval" name="course_code[]"  class="form-control"></td>
-                                         <td><input type="textval" name="course_title[]"  class="form-control"></td>
-                                         
+                                         <td><input type="text" name="course_code[]"  class="form-control"></td>
+                                         <td><input type="text" name="course_title[]"  class="form-control"></td>
+
                                      </tr>
                                          @endforeach
                                      </tbody>
@@ -310,7 +310,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    //location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

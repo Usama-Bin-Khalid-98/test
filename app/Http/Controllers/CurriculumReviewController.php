@@ -6,6 +6,7 @@ use App\Models\Carriculum\CurriculumReview;
 use App\Models\Carriculum\CurriculumReviewer;
 use App\Models\Common\Designation;
 use App\Models\StrategicManagement\Affiliation;
+use App\Models\StrategicManagement\StatutoryBody;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,13 +26,12 @@ class CurriculumReviewController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $affiliation = Affiliation::where('status', 'active')->get();
-        $discipline = Designation::where('status', 'active')->get();
-        $users = User::where('user_type', 'PeerReviewer')->orWhere('user_type','Mentor')->get();
-
+        $affiliation = Affiliation::where(['status'=> 'active', 'campus_id'=> $campus_id, 'department_id'=> $department_id])->get();
+        $designations = Designation::where('status', 'active')->get();
+        $users = User::where('user_type', 'PeerReviewer')->get();
+        $bodies = StatutoryBody::all();
         $summaries = CurriculumReview::with('campus','affiliations','designation', 'curriculum_reviewer')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-//dd($summaries);
-        return view('registration.curriculum.curriculum_review', compact('users','affiliation','discipline','summaries'));
+        return view('registration.curriculum.curriculum_review', compact('bodies','users','affiliation','designations','summaries'));
     }
 
     /**

@@ -44,6 +44,8 @@ class ProgramDeliveryMethodController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
+
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -51,10 +53,9 @@ class ProgramDeliveryMethodController extends Controller
         }
         try {
             //$data = $request;
-//            dd($request->file('file1'));
           for($i =0; $i<=count(@$request->all()); $i++)
           {
-              if(@$request->teaching_methods_id[$i]) {
+              if(@$request->teaching_methods_id[$i] && @$request->course_title[$i] !=null) {
                   ProgramDeliveryMethod::create([
                       'teaching_methods_id' => $request->teaching_methods_id[$i],
                       'campus_id' => Auth::user()->campus_id,
@@ -65,7 +66,7 @@ class ProgramDeliveryMethodController extends Controller
                       'created_by' => Auth::user()->id
                   ]);
               }
-            
+
             }
                 return response()->json(['success' => 'Record added successfully.']);
 
@@ -139,7 +140,7 @@ class ProgramDeliveryMethodController extends Controller
     {
         try {
              ProgramDeliveryMethod::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              ProgramDeliveryMethod::destroy($id);
                 return response()->json(['success' => 'Record deleted successfully.']);

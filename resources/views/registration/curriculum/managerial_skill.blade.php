@@ -63,13 +63,19 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
+                                <div class="form-input">
                                     <label for="name">Main managerial skill</label>
-                                    <select  type="text" name="skill" id="skill" class="form-control select2">
-                                        <option selected disabled>--Select--</option>
-                                        <option value='Team work'>Team work</option>
-                                        <option value='Leadership skill'>Leadership skill</option>
-                                        <option value='Other skill'>Other skill</option>
-                                    </select>
+                                    <input type="text" name="skill" id="skill" class="form-control">
+{{--                                    <select  type="text" name="skill" id="skill" class="form-control select2">--}}
+{{--                                        <option selected disabled>--Select--</option>--}}
+{{--                                        <option value='Team work'>Team work</option>--}}
+{{--                                        <option value='Leadership skill'>Leadership skill</option>--}}
+{{--                                        <option value='Other skill'>Other skill</option>--}}
+{{--                                    </select>--}}
+{{--                                    <span class="input-group-btn">--}}
+{{--                                        <button type="button" data-toggle="modal" data-target="#add-modal"  class="btn btn-info btn-flat" style="margin-top: 21px;"><i class="fa fa-plus"></i></button>--}}
+{{--                                    </span>--}}
+                                </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -119,7 +125,7 @@
                                 @endforeach
                                 </tbody>
                                 <tfoot>
-                                <tr> 
+                                <tr>
                                     <th>Main managerial skill</th>
                                     <th>Course title</th>
                                     <th>Status</th>
@@ -226,7 +232,7 @@
             let skill = $('#skill').val();
             let course_title = $('#course_title').val();
 
-            
+
             !skill?addClass('skill'):removeClass('skill');
             !course_title?addClass('course_title'):removeClass('course_title');
 
