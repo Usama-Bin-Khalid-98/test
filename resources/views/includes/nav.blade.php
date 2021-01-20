@@ -352,6 +352,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
         @hasrole('BusinessSchool')
         <li class=" treeview {{(request()->is('app-recvd'))?'active':''}}
         {{(request()->is('program-portfolio'))?'active':''}}
+        {{ (request()->is('program-courses')) ? 'active' : '' }}
         {{(request()->is('entry-requirements'))?'active':''}}
         {{(request()->is('application-received'))?'active':''}}
         {{(request()->is('checklist-document'))?'active':''}}

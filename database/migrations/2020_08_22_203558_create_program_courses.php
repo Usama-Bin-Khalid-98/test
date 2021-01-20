@@ -15,10 +15,8 @@ class CreateProgramCourses extends Migration
     {
         Schema::create('program_courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('program_id')->unsigned();
-            $table->foreign('program_id')
-                ->references('id')
-                ->on('programs');
+            $table->string('title')->nullable();
+            $table->string('code')->nullable();
             $table->integer('campus_id')->unsigned()->nullable();
             $table->foreign('campus_id')
                 ->references('id')
@@ -31,7 +29,7 @@ class CreateProgramCourses extends Migration
             $table->foreign('course_type_id')
                 ->references('id')
                 ->on('course_types');
-            
+
             $table->string('credit_hours',100);
             $table->integer('pre_req_id')->unsigned();
             $table->foreign('pre_req_id')
