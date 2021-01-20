@@ -23,7 +23,7 @@
                                     @if($data->courseTypeName=="Core")
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->title +' '+$data->code}}</td>
+                                        <td>{{$data->title}} {{$data->code}}</td>
                                         <td>{{$data->credit_hours}}</td>
                                         <td>{{$data->prerequisite}}</td>
 
@@ -44,7 +44,7 @@
                                     @if($data->courseTypeName=="Elective")
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->title +' '+$data->code}}</td>
+                                        <td>{{$data->title }} {{$data->code}}</td>
                                         <td>{{$data->credit_hours}}</td>
                                         <td>{{$data->prerequisite}}</td>
 
