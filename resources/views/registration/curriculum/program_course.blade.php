@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                @if(@!$isSAR)Program Portfolio @else Program Courses @endif
+                Program Courses
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> @if(@!$isSAR)Program Portfolio @else Program Courses @endif</li>
+                <li class="active"> Program Courses </li>
             </ol>
         </section>
 {{--        <section class="content-header">--}}
@@ -63,7 +63,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">@if(@!$isSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title"> 2.2.	Provide information on individual courses of each program under review in Table 2.2.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -78,26 +78,26 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program(s) under review</label>
-                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Program(s) under review</option>
-                                        @foreach($scopes as $scope)
-                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
-                                        @endforeach
-                                        </select>
+                                    <label for="name">Course Title</label>
+                                    <input type="text" name="title" id="title" class="form-control">
+{{--                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">--}}
+{{--                                        <option selected disabled>Select Program(s) under review</option>--}}
+{{--                                        @foreach($scopes as $scope)--}}
+{{--                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                        </select>--}}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Course Code</label>
+                                    <input type="text" name="code" id="code" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">Number of semesters</label>
-                                    <input type="text" name="total_semesters" id="total_semesters" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group" style="margin-bottom: 16px;">
                                     <label for="name">Course category</label>
                                    <select name="course_type_id" id="course_type_id" class="form-control select2" style="width: 100%;">
@@ -109,43 +109,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name">No of courses of program under review</label>
-                                    <input type="text" name="no_of_course" id="no_of_course" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Credit hours</label>
                                     <input type="text" name="credit_hours" id="credit_hours" class="form-control">
                                 </div>
                             </div>
-                                @if(@!$isSAR)
-                            <div class="col-md-4">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Internship requirements</label>
-                                    <textarea name="internship_req" id="internship_req" class="form-control"></textarea>
+                                    <label for="name">Prerequisite if any </label>
+                                    <textarea name="prerequisite" id="prerequisite" class="form-control"></textarea>
                                 </div>
                             </div>
-                                @endif
-                                @if(@!$isSAR)
-                            <div class="col-md-4">
-                                <div class="form-group">
-
-                                    <label for="name">Final year project/ viva/ thesis/ comprehensive</label>
-                                    <select name="fyp_req" id="fyp_req" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select</option>
-                                         <option value="final year project ">Final year project </option>
-                                          <option value="viva">Viva</option>
-                                           <option value="thesis">Thesis</option>
-                                            <option value="comprehensive">Comprehensive</option>
-                                        </select>
-
-                                </div>
-                            </div>
-                                @endif
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -161,7 +137,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">@if(@!$isSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title">2.2.	Provide information on individual courses of each program under review in Table 2.2.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -169,13 +145,11 @@
                                 <thead>
                                 <tr>
 {{--                                    <th>Program</th>--}}
-                                    <th>Program(s) under review</th>
-                                   <th>Total Semesters</th>
+                                    <th>Course Title</th>
+                                    <th>Course Code</th>
                                     <th>Course Type</th>
-                                    <th>No of Courses</th>
                                     <th>Credit Hours</th>
-                                    @if(@!$isSAR)<th>Internship Requirement</th>
-                                    <th>FYP Requirement</th>@endif
+                                    <th>Prerequisite if any</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -184,28 +158,24 @@
                                  @foreach($portfolios as $portfolio)
                                 <tr>
 {{--                                    <td>{{$portfolio->program}}</td>--}}
-                                    <td>{{@$portfolio->program->name}}</td>
-                                  <td>{{$portfolio->total_semesters}}</td>
+                                    <td>{{@$portfolio->title}}</td>
+                                    <td>{{@$portfolio->code}}</td>
                                     <td>{{$portfolio->course_type->name}}</td>
-                                   <td>{{$portfolio->no_of_course}}</td>
                                     <td>{{$portfolio->credit_hours}}</td>
-                                    @if(@!$isSAR)<td>{{$portfolio->internship_req}}</td>
-                                    <td>{{$portfolio->fyp_req}}</td>@endif
+                                    <td>{{$portfolio->prerequisite}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","title":{{$portfolio->title}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"prerequisite":"{{$portfolio->prerequisite}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
 {{--                                    <th>Program</th>--}}
-                                    <th>Program(s) under review</th>
-                                    <th>Total Semesters</th>
+                                    <th>Course Title</th>
+                                    <th>Course Code</th>
                                     <th>Course Type</th>
-                                    <th>No of Courses</th>
                                     <th>Credit Hours</th>
-                                    @if(@!$isSAR)<th>Internship Requirement</th>
-                                    <th>FYP Requirement</th>@endif
+                                    <th>Prerequisite if any</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -288,20 +258,7 @@
                                     id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
                             </div>
                         </div>
-                        @if(@!$isSAR)
-                         <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Internship Requirements</label>
-                                    <textarea name="internship_req" id="edit_internship_req" value="{{old('edit_internship_req')}}" class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">FYP Requirements</label>
-                                    <textarea name="fyp_req" id="edit_fyp_req" value="{{old('edit_fyp_req')}}" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        @endif
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -352,20 +309,17 @@
 
              $('#form').submit(function (e) {
             // let program = $('#program').val();
-            let program_id = $('#program_id').val();
-            @if(!$isSAR) let total_semesters = $('#total_semesters').val(); @endif
+            let title = $('#title').val();
+            let code = $('#code').val();
             let course_type_id = $('#course_type_id').val();
-            @if(!$isSAR) let no_of_course = $('#no_of_course').val(); @endif
             let credit_hours = $('#credit_hours').val();
 
             // !program?addClass('program'):removeClass('program');
-            !program_id?addClass('program_id'):removeClass('program_id');
-                 @if(!$isSAR)!total_semesters?addClass('total_semesters'):removeClass('total_semesters');@endif
+            !title?addClass('program_id'):removeClass('program_id');
             !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
-                 @if(!$isSAR)!no_of_course?addClass('no_of_course'):removeClass('no_of_course');@endif
             !credit_hours?addClass('credit_hours'):removeClass('credit_hours');
 
-            if(!program_id || !course_type_id || !credit_hours)
+            if(!title || !code || !course_type_id || !credit_hours )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -375,7 +329,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("program-portfolio")}}',
+                url:'{{url("program-courses")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -410,7 +364,7 @@ $('.edit').on('click', function () {
             $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
             $('#edit_no_of_course').val(data.no_of_course);
             $('#edit_credit_hours').val(data.credit_hours);
-            $('#edit_internship_req').val(data.internship_req);
+            $('#edit_prerequisite').val(data.prerequisite);
             $('#edit_fyp_req').val(data.fyp_req);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
@@ -422,7 +376,7 @@ $('#updateForm').submit(function (e) {
             let course_type_id = $('#edit_course_type_id').val();
             let no_of_course = $('#edit_no_of_course').val();
             let credit_hours = $('#edit_credit_hours').val();
-            let internship_req = $('#edit_internship_req').val();
+            let prerequisite = $('#edit_prerequisite').val();
             let fyp_req = $('#edit_fyp_req').val();
             let id = $('#edit_id').val();
 
@@ -432,7 +386,7 @@ $('#updateForm').submit(function (e) {
             !course_type_id?addClass('edit_course_type_id'):removeClass('edit_course_type_id');
             !no_of_course?addClass('edit_no_of_course'):removeClass('edit_no_of_course');
             !credit_hours?addClass('edit_credit_hours'):removeClass('edit_credit_hours');
-            !internship_req?addClass('edit_internship_req'):removeClass('edit_internship_req');
+            !prerequisite?addClass('edit_prerequisite'):removeClass('edit_prerequisite');
             !fyp_req?addClass('edit_fyp_req'):removeClass('edit_fyp_req');
 
             if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours)
