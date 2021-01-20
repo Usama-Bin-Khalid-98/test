@@ -7,51 +7,51 @@
                                     <th>Course code and title</th>
                                     <th>Credit hours</th>
                                     <th>Prerequisite if any</th>
-                                    
+
                                 </thead>
                                 <tbody>
-                                    
+
                                     <tr>
                                         <td></td>
                                         <td><b>Core course</b></td>
                                         <td></td>
                                         <td></td>
-                                        
+
                                     </tr>
                                     @foreach($programCourses as $data)
 
                                     @if($data->courseTypeName=="Core")
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->program}}</td>
+                                        <td>{{$data->title +' '+$data->code}}</td>
                                         <td>{{$data->credit_hours}}</td>
-                                        <td>{{$data->pre_req_id}}</td>
-                                        
+                                        <td>{{$data->prerequisite}}</td>
+
                                     </tr>
                                     @endif
                                     @endforeach
-                                   
+
 
                                     <tr>
                                         <td></td>
                                         <td><b>Support course</b></td>
                                         <td></td>
                                         <td></td>
-                                        
+
                                     </tr>
                                     @foreach($programCourses as $data)
 
                                     @if($data->courseTypeName=="Elective")
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->program}}</td>
+                                        <td>{{$data->title +' '+$data->code}}</td>
                                         <td>{{$data->credit_hours}}</td>
-                                        <td>{{$data->pre_req_id}}</td>
-                                        
+                                        <td>{{$data->prerequisite}}</td>
+
                                     </tr>
                                     @endif
                                     @endforeach
-                                    
+
 
 
                                      <tr>
@@ -59,27 +59,27 @@
                                         <td><b>Electives</b></td>
                                         <td></td>
                                         <td></td>
-                                        
+
                                     </tr>
                                      @foreach($programCourses as $data)
 
                                     @if($data->courseTypeName=="Support")
                                     <tr>
-                                        <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->program}}</td>
-                                        <td>{{$data->credit_hours}}</td>
-                                        <td>{{$data->pre_req_id}}</td>
-                                        
+                                        <td>{{@$loop->index+1}}</td>
+                                        <td>{{@$data->title }} {{$data->code}}</td>
+                                        <td>{{@$data->credit_hours}}</td>
+                                        <td>{{@$data->prerequisite}}</td>
+
                                     </tr>
                                     @endif
                                     @endforeach
-                                   
-                                    
-                              
+
+
+
                                 </tbody>
                                 <tfoot></tfoot>
-                              
-                              
+
+
 
                             </table>
                         </div>
