@@ -10,7 +10,7 @@ use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\StrategicManagement\ContactInfo;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PDF;

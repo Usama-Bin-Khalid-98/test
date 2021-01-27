@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use Carbon\Carbon;
 

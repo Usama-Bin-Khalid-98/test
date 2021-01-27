@@ -24,7 +24,7 @@ use App\BusinessSchool;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Common\Program;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {

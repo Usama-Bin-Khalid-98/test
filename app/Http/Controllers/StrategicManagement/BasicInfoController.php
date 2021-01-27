@@ -4,7 +4,7 @@ namespace App\Http\Controllers\StrategicManagement;
 
 use App\BusinessSchool;
 use App\CharterType;
-use App\InstituteType;
+use App\Models\StrategicManagement\InstituteType;
 use App\Models\Common\Campus;
 use App\Models\Common\Department;
 use App\Models\Common\Designation;
@@ -28,7 +28,7 @@ class BasicInfoController extends Controller
     /**
      * Display a listing of the resource.
      *
-//     * @return \Illuminate\Http\Response
+    * @return \Illuminate\Http\Response
      */
     public function index()
     {

@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EligibilityScreeningEmail;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Mail\ActivationMail;
 
 class DeskReviewController extends Controller

@@ -217,7 +217,7 @@
                                         <label for="name">Institute Type</label>
                                         <select id="institute_type_id" class="form-control select2" style="width: 100%;">
                                             <option value="">Select Institute Type</option>
-                                            @foreach(@$institute_type as $school)
+                                            @foreach($institute_type as $school)
                                                 <option value="{{@$school->id}}" {{@$basic_info->institute_type_id==@$school->id?'selected':''}}>{{@$school->name }}</option>
                                             @endforeach
                                         </select>
