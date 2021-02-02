@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\EligibilityScreening\ReviewerAvailability;
@@ -23,7 +22,6 @@ use App\Models\Common\Department;
 use App\BusinessSchool;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Common\Program;
-
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller

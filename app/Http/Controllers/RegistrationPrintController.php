@@ -130,11 +130,11 @@ class RegistrationPrintController extends Controller
             $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName
 FROM work_loads, designations, campuses WHERE work_loads.type="REG"
 AND work_loads.designation_id=designations.id
-AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id  ', array($req->cid, $getYear->tyear));
+AND work_loads.campus_id=? AND work_loads.year_t=? AND campuses.id=work_loads.campus_id  ', array($req->cid, $getYear->tyear));
 
              $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName
 FROM work_loads, designations, campuses WHERE work_loads.type="REG" AND work_loads.designation_id=designations.id
-AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id ', array($req->cid, $getYear->year_t_1));
+AND work_loads.campus_id=? AND work_loads.year_t=? AND campuses.id=work_loads.campus_id ', array($req->cid, $getYear->year_t_1));
 
 //             $facultyTeachingCourses = DB::select('
 //                SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType,
