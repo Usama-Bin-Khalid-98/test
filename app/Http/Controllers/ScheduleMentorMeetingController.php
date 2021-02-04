@@ -83,8 +83,9 @@ class ScheduleMentorMeetingController extends Controller
             $dates[$count] = $availability_date->availability_dates;
             $count++;
         }
+        $maxSelectedDate= '';
         $count_val = array_count_values($dates);
-        $maxSelectedDate = $this->doublemax($count_val);
+        if ($count_val) $maxSelectedDate = $this->doublemax($count_val);
         return view('mentoring.scheduler', compact('registrations', 'mentors','MentorsDates', 'userDates', 'MeetingMentors', 'maxSelectedDate'));
     }
 
@@ -327,10 +328,13 @@ class ScheduleMentorMeetingController extends Controller
                 }
 
 
-                if($request->mentors) {
                     $slip_id = $getEvent->slip_id;
-                    $delete_old_mentors = MentoringMentor::where('slip_id', $slip_id)->delete();
+//                    dd($slip_id);
                     $slipInfo = Slip::with('campus', 'department')->where('id',$slip_id)->first();
+                $getnbeacInfo = NbeacBasicInfo::first();
+
+                if($request->mentors) {
+                    $delete_old_mentors = MentoringMentor::where('slip_id', $slip_id)->delete();
                     if($delete_old_mentors) {
 //                        dd($request->mentors);
                         foreach ($request->mentors as $mentor) {
@@ -341,7 +345,6 @@ class ScheduleMentorMeetingController extends Controller
                                 'has been assigned to you. please check mentoring calender and add your availability dates.';
 
                             $data = ['letter' => $letter];
-                            $getnbeacInfo = NbeacBasicInfo::first();
                             $mailInfo = [
                                 'to' => $getMentor->email,
                                 'to_name' => $getMentor->name,
