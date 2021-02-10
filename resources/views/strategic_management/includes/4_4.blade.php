@@ -36,9 +36,9 @@ Table 4.4a FTE for the permanent, regular and adjunct faculty in program(s)
                                         <td>{{@$data->name}}</td>
                                         <td>{{@$data->desName}}</td>
                                         <td>{{@$data->lookupFacultyType}}</td>
-                                        <td>{{$data->   max_cources_allowed}}</td>
-                                        <td>{{$data->tc_program1}}</td>
-                                        <td>{{$data->tc_program2}}</td>
+                                        <td>{{@$data->   max_cources_allowed}}</td>
+                                        <td>{{@$data->tc_program1}}</td>
+                                        <td>{{@$data->tc_program2}}</td>
                                         <td>{{number_format((float)$data->tc_program1/$data->max_cources_allowed, 3, '.', '')}}</td>
                                         <td>{{number_format((float)$data->tc_program2/$data->max_cources_allowed, 3, '.', '')}}</td>
 

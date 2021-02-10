@@ -59,31 +59,41 @@
                         <form action="javascript:void(0)" id="form" method="POST">
 
                         <div class="box-body">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Name of faculty</label>
                                     <input type="text" name="faculty_name" id="faculty_name" class="form-control">
                                 </div>
                             </div>
-                            
 
-                            <div class="col-md-4">
+
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Membership organization</label>
                                     <input type="text" name="organization" id="organization" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Valid since(year)</label>
-                                    <input type="text" name="from" id="from" class="form-control">
+                                    <select name="from" id="from" class="form-control select2">
+                                        <option value="">select year from</option>
+                                        @for($year = date('Y'); $year > 1950; $year--)
+                                        <option value="{{$year}}">{{$year}}</option>
+                                        @endfor
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Valid till(year)</label>
-                                    <input type="text" name="to" id="to" class="form-control">
+                                    <select name="to" id="to" class="form-control select2">
+                                        <option value="">select year to</option>
+                                        @for($year = date('Y'); $year > 1950; $year--)
+                                            <option value="{{$year}}">{{$year}}</option>
+                                            @endfor
+                                    </select>
                                 </div>
                             </div>
                              <div class="col-md-12">
@@ -168,7 +178,7 @@
                                 </div>
                                  <input type="hidden" name="id" id="edit_id">
                             </div>
-                            
+
 
                             <div class="col-md-6">
                                 <div class="form-group">

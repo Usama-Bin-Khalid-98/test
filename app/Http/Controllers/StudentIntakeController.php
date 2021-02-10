@@ -73,7 +73,8 @@ class StudentIntakeController extends Controller
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
                 'total_intake' => $request->bs_level+ $request->ms_level+$request->phd_level,
-                'created_by' => Auth::user()->id
+                'created_by' => Auth::user()->id,
+                'isComplete' => 'yes'
             ]);
 
             return response()->json(['success' => 'Student Intakes added successfully.']);

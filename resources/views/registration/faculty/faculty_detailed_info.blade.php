@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-3">
                                 <div class="form-group">
@@ -119,13 +119,17 @@
                                     <input type="text" name="awarding_institute" id="awarding_institute" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Country</label>
-                                    <input type="text" name="country" id="country" class="form-control">
+                                <div class="col-md-3">
+                                    <div class="form-group @error('country') has-error @enderror">
+                                        <label for="name">Country</label>
+                                        <select name="country" id="country"  class="form-control select2" style="width: 100%;">
+                                            <option value="">Select Country</option>
+                                            @foreach($countries as $country)
+                                                <option value="{{$country->admin??$country->name->common}}" {{old('country')===$country->name->common?'selected':'' }}>{{$country->admin??$country->name->common}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                                
                             </div>
 
                             <div class="row">
@@ -340,7 +344,7 @@
                                 </div>
                             </div>
 
-                          
+
 
 
                         <div class="col-md-6">

@@ -59,6 +59,7 @@ class ClassSizeController extends Controller
                 'semesters_id' => $request->semesters_id,
                 'program_a' => $request->program_a,
                 'program_b' => $request->program_b,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -135,7 +136,7 @@ class ClassSizeController extends Controller
     {
         try {
         ClassSize::where('id', $classSize->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
         ClassSize::destroy($classSize->id);
             return response()->json(['success' => 'Record deleted successfully.']);

@@ -23,11 +23,11 @@ class CreateResearchProjectsTable extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->string('title',100);
+            $table->string('title',255);
             $table->text('start_date');
             $table->text('end_date');
-            $table->string('investigator',100);
-            $table->string('funding_agency',100);
+            $table->string('investigator',150);
+            $table->string('funding_agency',150);
             $table->string('amount',100);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
