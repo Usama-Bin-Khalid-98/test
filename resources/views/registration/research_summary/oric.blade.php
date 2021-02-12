@@ -63,6 +63,7 @@
                                     <td>a) Year of establishment</td>
                                     <td>
                                         <input type="textval" id="year_establishment" name="year_establishment" value="{{@$oric->year_establishment}}"  class="form-control">
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -115,6 +116,13 @@
 
     <script type="text/javascript">
 
+        $('#year_establishment').datepicker({
+            autocomplete:false,
+            autoclose:true,
+            format:'yyyy',
+            viewMode: "years",
+            minViewMode: "years"
+        })
         // add required to input fields
         // $('input').prop('required', true);
         //Initialize Select2 Elements

@@ -64,9 +64,10 @@
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $tyear->tyear}}">{{ $tyear->tyear}}</option>
+                                        <option value="{{ $tyear->year_t_1}}">{{ $tyear->year_t_1}}</option>
+                                        <option value="{{ $tyear->year_t_2}}">{{ $tyear->year_t_2}}</option>
+
                                     </select>
                                 </div>
                             </div>
@@ -187,9 +188,9 @@
                                     <label for="name">Year</label>
                                     <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $tyear->tyear}}">{{ $tyear->tyear}}</option>
+                                        <option value="{{ $tyear->year_t_1}}">{{ $tyear->year_t_1}}</option>
+                                        <option value="{{ $tyear->year_t_2}}">{{ $tyear->year_t_2}}</option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="id" id="edit_id">
@@ -275,7 +276,6 @@
     <script type="text/javascript">
 
         $('.select2').select2()
-
          $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

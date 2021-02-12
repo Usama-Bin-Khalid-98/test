@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DropoutPercentage;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use Illuminate\Http\Request;
 use App\Models\StrategicManagement\Scope;
 use App\Http\Controllers\Controller;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use DB;
 
 class DropoutPercentageController extends Controller
 {
@@ -23,11 +23,16 @@ class DropoutPercentageController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
+        $tyear = BusinessSchoolTyear::where(
+            [
+                'campus_id'=>$campus_id,
+                'department_id'=>$department_id
+            ])->get()->first();
         $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         $students = DropoutPercentage::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-        return view('registration.student_enrolment.dropout_percentage', compact('programs','students'));
+        return view('registration.student_enrolment.dropout_percentage', compact('programs','students', 'tyear'));
     }
 
     /**

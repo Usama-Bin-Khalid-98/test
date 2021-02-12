@@ -75,9 +75,9 @@
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $tyear->tyear}}">{{ $tyear->tyear}}</option>
+                                        <option value="{{ $tyear->year_t_1}}">{{ $tyear->year_t_1}}</option>
+                                        <option value="{{ $tyear->year_t_2}}">{{ $tyear->year_t_2}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -163,7 +163,7 @@
                                     <td>{{$enrolement->need}}</td>
                                     <td>{{$enrolement->other}}</td>
                                     <td>{{$enrolement->total}}</td>
-                                    <td style="background-color: #D3D3D3">{{ number_format($enrolement->pass + $enrolement->total /$enrolement->tution, 2) }}%</td>
+                                    <td style="background-color: #D3D3D3">{{ number_format($enrolement->pass + $enrolement->total/$enrolement->tution*100, 2) }}%</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","program_id":"{{$enrolement->program_id}}","year":"{{$enrolement->year}}","enrolment":"{{$enrolement->enrolment}}","tution":"{{$enrolement->tution}}","merit":"{{$enrolement->merit}}","need":"{{$enrolement->need}}","other":"{{$enrolement->other}}","total":"{{$enrolement->total}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
@@ -225,9 +225,9 @@
                                     <label for="name">Batch</label>
                                     <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $tyear->tyear}}">{{ $tyear->tyear}}</option>
+                                        <option value="{{ $tyear->year_t_1}}">{{ $tyear->year_t_1}}</option>
+                                        <option value="{{ $tyear->year_t_2}}">{{ $tyear->year_t_2}}</option>
                                     </select>
                                 </div>
                             </div>

@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
-use DB;
 
 class BusinessSchoolFacilityController extends Controller
 {

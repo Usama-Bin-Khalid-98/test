@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use Carbon\Carbon;
 
@@ -224,7 +224,12 @@ AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name',
                $curriculumReviews = CurriculumReview::with('campus','affiliations','designation', 'curriculum_reviewer')
                    ->where(['campus_id'=> $req->cid, 'department_id'=> $req->did]);
 
-               $programObjectives = DB::select('SELECT program_objectives.*, programs.name as program FROM program_objectives, programs, campuses, users WHERE program_objectives.program_id=programs.id AND program_objectives.campus_id=campuses.id AND program_objectives.campus_id=? AND users.id=? ', array($req->cid,auth()->user()->id ));
+               $programObjectives = DB::select('SELECT po.*, programs.name as program
+FROM program_objectives po, programs p, campuses c, users u
+WHERE po.program_id=p.id
+  AND po.campus_id=c.id
+  AND po.campus_id=?
+  AND u.id=? ', array($req->cid,auth()->user()->id ));
 
                $programLearningOutcomes = DB::select('SELECT learning_outcomes.*, programs.name as program FROM learning_outcomes, programs, campuses, users WHERE learning_outcomes.program_id=programs.id AND learning_outcomes.campus_id=campuses.id AND learning_outcomes.campus_id=? AND users.id=? ', array($req->cid,auth()->user()->id ));
 
@@ -242,7 +247,14 @@ AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name',
 
                $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id  AND faculty_stability.type="SAR" AND faculty_stability.campus_id=? AND users.id=?', array($req->cid,auth()->user()->id));
 
-               $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.type="SAR" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=?  AND users.id=?', array($req->cid, auth()->user()->id));
+               $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName
+FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users
+WHERE faculty_teaching_cources.campus_id=campuses.id
+  AND faculty_teaching_cources.type="SAR"
+  AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
+  AND faculty_teaching_cources.designation_id=designations.id
+  AND faculty_teaching_cources.campus_id=?
+  AND users.id=?', array($req->cid, auth()->user()->id));
 
                $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs,  campuses
@@ -505,7 +517,13 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
 
                 $facultyExposures = DB::select('SELECT faculty_exposures.* FROM faculty_exposures, campuses, users WHERE faculty_exposures.campus_id=campuses.id AND faculty_exposures.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
 
-               $PoPLOMappings = DB::select('SELECT po_plo_mappings.*, program_objectives.po as po, learning_outcomes.plo as plo FROM po_plo_mappings, program_objectives, learning_outcomes, campuses, users WHERE po_plo_mappings.po_id=program_objectives.id AND po_plo_mappings.plo_id=learning_outcomes.id AND po_plo_mappings.campus_id=campuses.id AND po_plo_mappings.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
+               $PoPLOMappings = DB::select('SELECT po_plo_mappings.*, program_objectives.po_name as po, learning_outcomes.plo as plo
+FROM po_plo_mappings, program_objectives, learning_outcomes, campuses, users
+WHERE po_plo_mappings.po_id=program_objectives.id
+  AND po_plo_mappings.plo_id=learning_outcomes.id
+  AND po_plo_mappings.campus_id=campuses.id
+  AND po_plo_mappings.campus_id=?
+  AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));
 
                $PoMappings = DB::select('SELECT * FROM program_objectives', array());
 

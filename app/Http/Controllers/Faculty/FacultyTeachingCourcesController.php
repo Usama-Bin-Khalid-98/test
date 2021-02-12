@@ -41,7 +41,7 @@ class FacultyTeachingCourcesController extends Controller
              $faculty_types = LookupFacultyType::where('id', 3)->get();
          }
 
-       
+
         //dd($faculty_types);
         /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
@@ -49,15 +49,14 @@ class FacultyTeachingCourcesController extends Controller
         }else {
             $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }*/
-        
+
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
         $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
         $slip?$where['type'] = 'SAR':$where['type'] = 'REG';
-        
         $getScope = Scope::with('program')->where($where)->get();
-        
+
         if($getUrl =='faculty-teaching') {
-           
+
             $visitings = FacultyTeachingCources::with(['campus','department',
                 'lookup_faculty_type'=> function($query) {
                 $query->where('id', 1);
@@ -76,7 +75,6 @@ class FacultyTeachingCourcesController extends Controller
                 ->where('deleted_at', null)
                 ->where('lookup_faculty_type_id', 3)
                 ->get();
-
         }
 //        dd($visitings[0]->faculty_program);
 //       foreach ($visitings as $visit)
@@ -212,6 +210,7 @@ class FacultyTeachingCourcesController extends Controller
      */
     public function update(Request $request, FacultyTeachingCources $facultyTeaching)
     {
+//        dd($facultyTeaching);
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -220,13 +219,15 @@ class FacultyTeachingCourcesController extends Controller
 
         try {
 
+//            dd($request->all());
             FacultyTeachingCources::where('id', $facultyTeaching->id)->update([
+                'name' => $request->name,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'designation_id' => $request->designation_id,
                 'max_cources_allowed' => $request->max_cources_allowed,
-                'tc_program1' => $request->tc_program1,
-                'tc_program2' => $request->tc_program2,
-                'status' => $request->status,
+//                'tc_program1' => $request->tc_program1,
+//                'tc_program2' => $request->tc_program2,
+//                'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Visiting Faculty updated successfully.']);

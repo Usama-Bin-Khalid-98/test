@@ -77,35 +77,48 @@ class FacultySummaryController extends Controller
             $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip){
                 $type='SAR';
+                for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
+                    for ($j = 0; $j < count($request->discipline_id); $j++) {
+                        FacultySummary::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+                            'discipline_id' => @$request->discipline_id[$j],
+                            'number_faculty' => @$request->number_faculty[$j+1][$i],
+                            'isComplete' => 'yes',
+                            'type' => $type,
+                            'created_by' => Auth::user()->id
+                        ]);
+                    }
+                }
             }else {
                 $type = 'REG';
-            }
-
-            for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
-                for ($j = 0; $j < count($request->discipline_id); $j++) {
-//                    dd($request->faculty_qualification_id[$j+1][$i]);
-                    FacultySummary::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                        'discipline_id' => @$request->discipline_id[$j],
-                        'number_faculty' => @$request->number_faculty[$j+1][$i],
-                        'isComplete' => 'yes',
-                        'type' => $type,
-                        'created_by' => Auth::user()->id
-                    ]);
-                    FacultySummary::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                        'discipline_id' => @$request->discipline_id[$j],
-                        'number_faculty' => @$request->number_faculty[$j+1][$i],
-                        'isComplete' => 'yes',
-                        'type' => 'SAR',
-                        'created_by' => Auth::user()->id
-                    ]);
+                for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
+                    for ($j = 0; $j < count($request->discipline_id); $j++) {
+                        FacultySummary::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+                            'discipline_id' => @$request->discipline_id[$j],
+                            'number_faculty' => @$request->number_faculty[$j+1][$i],
+                            'isComplete' => 'yes',
+                            'type' => $type,
+                            'created_by' => Auth::user()->id
+                        ]);
+                        FacultySummary::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+                            'discipline_id' => @$request->discipline_id[$j],
+                            'number_faculty' => @$request->number_faculty[$j+1][$i],
+                            'isComplete' => 'yes',
+                            'type' => 'SAR',
+                            'created_by' => Auth::user()->id
+                        ]);
+                    }
                 }
             }
+
             return response()->json(['success' => 'Faculty Summary added successfully.']);
         }catch (Exception $e)
         {

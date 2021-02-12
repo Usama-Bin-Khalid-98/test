@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\StudentIntake;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,15 +20,23 @@ class StudentIntakeController extends Controller
     }
     public function index()
     {
+
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
+        $tyear = BusinessSchoolTyear::where(
+            [
+                'campus_id'=>$campus_id,
+                'department_id'=>$department_id
+            ])->get()->first();
+
+//        dd($tyear);
         $bs = StudentIntake::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('bs_level');
         $ms = StudentIntake::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('ms_level');
         $phd = StudentIntake::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('phd_level');
         $t_intake = StudentIntake::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('total_intake');
         $intakes = StudentIntake::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-         return view('registration.student_enrolment.intakes', compact('intakes','bs','ms','phd','t_intake'));
+         return view('registration.student_enrolment.intakes', compact('intakes','bs','ms','phd','t_intake','tyear'));
     }
 
     /**
@@ -64,7 +73,8 @@ class StudentIntakeController extends Controller
                 'ms_level' => $request->ms_level,
                 'phd_level' => $request->phd_level,
                 'total_intake' => $request->bs_level+ $request->ms_level+$request->phd_level,
-                'created_by' => Auth::user()->id
+                'created_by' => Auth::user()->id,
+                'isComplete' => 'yes'
             ]);
 
             return response()->json(['success' => 'Student Intakes added successfully.']);

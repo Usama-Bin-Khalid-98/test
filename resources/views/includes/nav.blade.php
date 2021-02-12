@@ -28,6 +28,7 @@ $entry = checkIsCompletedAllProg(
 $application = checkIsCompletedAllProg('App\Models\StrategicManagement\ApplicationReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $app_receivd = checkIsCompletedAllProg('App\AppReceived', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $enrolment = checkIsCompleted('App\Models\StrategicManagement\StudentEnrolment', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$student_intake = checkIsCompleted('App\StudentIntake', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $graduated = checkIsCompletedAllProg('App\StudentsGraduated', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $gender = checkIsCompletedAllProg('App\StudentGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $bsf = checkIsCompleted('App\Models\Faculty\FacultySummary', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
@@ -520,8 +521,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
             <!-- Below are the Tables For SAR  -->
               @if($isActiveSAR)
             <li  class="{{ (request()->is('student-intake')) ? 'active' : '' }}"><a href="{{url('student-intake')}}">3.2 Students Intakes<span class="pull-right-container">
-                        <span class="text text-{{$intake==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$intake==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        <span class="text text-{{$student_intake==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$student_intake==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
            <li  class="{{ (request()->is('class-size')) ? 'active' : '' }}"><a href="{{url('class-size')}}">3.3 Class Size<span class="pull-right-container">
@@ -701,6 +702,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                     </span></a></li>
               @endif
+              @if(!$isActiveSAR)
               @hasrole('BusinessSchool')
               <li  class="{{ (request()->is('faculty-degree')) ? 'active' : '' }}"><a href="{{url('faculty-degree')}}">4.7 Faculty Degree<span class="pull-right-container">
                         <span class="text text-{{$faculty_degree==='C'?'green':'red'}} pull-right">
@@ -708,6 +710,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                     </span></a></li>
               @endhasrole
+                  @endif
           </ul>
         </li>
           @endhasrole

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\StudentFinancial;
 use Illuminate\Http\Request;
 use App\Models\StrategicManagement\Scope;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
-use DB;
 
 class StudentFinancialController extends Controller
 {
@@ -26,8 +26,12 @@ class StudentFinancialController extends Controller
         $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         $students = StudentFinancial::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-        return view('registration.student_enrolment.student_financial', compact('programs','students'));
+        $tyear = BusinessSchoolTyear::where(
+            [
+                'campus_id'=>$campus_id,
+                'department_id'=>$department_id
+            ])->get()->first();
+        return view('registration.student_enrolment.student_financial', compact('programs','students', 'tyear'));
     }
 
     /**

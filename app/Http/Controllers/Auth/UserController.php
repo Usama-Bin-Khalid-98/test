@@ -25,7 +25,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\MatchOldPassword;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {

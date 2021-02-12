@@ -54,7 +54,6 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-
                            <form action="javascript:void(0)" id="form" method="POST">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -120,7 +119,7 @@
                         <!-- /.box -->
                     </div>
            <!-- .box -->
-           
+
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">4.3(a) FTE for the permanent, regular and adjunct faculty in program(s)</h3>
@@ -135,7 +134,7 @@
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
                                     <th>Maximum teaching Courses Allowed</th>
-                                    
+
                                     @foreach(@$visitings as $req)
                                         @foreach(@$req->faculty_program as $program )
                                          <th> {{@$program->program->name}}:</th>
@@ -147,10 +146,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                @php 
+
+                                @php
                                 $totalFTE =0; @endphp
-                                
+
                                 @foreach(@$visitings as $req)
                                 <tr>
 {{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
@@ -168,7 +167,8 @@
                                         </td>
                                         @endforeach
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","tc_program1":"{{$req->tc_program1}}","tc_program2":"{{$req->tc_program2}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> |
+                                   <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","name":"{{$req->name}}","tc_program{{$req->id}}":"{{$req->faculty_program[0]->tc_program}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -215,87 +215,90 @@
                 <!-- Main content -->
             </div>
         </section>
-
-    </div>
-
-   <div class="modal fade" id="edit-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit visiting Faculty. </h4>
-                </div>
-                <form role="form" id="updateForm" >
-                    <div class="modal-body">
-
+        <div class="modal fade" id="edit-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Edit Regular/Adjunct Faculty </h4>
+                    </div>
+                        <div class="modal-body">
+                    <form role="form" id="updateForm" >
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Faculty Type</label>
-                                   <select name="lookup_faculty_type_id" id="edit_lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
+                                    <label for="name">Faculty Name</label>
+                                    <input type="text" name="name" id="edit_name" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-bottom:25px;">
+                                    <label for="name">Designation(B)</label>
+                                    <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Faculty type(C)</label>
+                                    <select name="lookup_faculty_type_id" id="edit_lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Faculty Type</option>
                                         @foreach($faculty_types as $faculty)
-                                         <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
+                                            <option value="{{$faculty->id}}">{{$faculty->faculty_type}}</option>
                                         @endforeach
-                                        </select>
+                                    </select>
                                 </div>
-                                <input type="hidden" id="edit_id">
                             </div>
-
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Designation</label>
-                                   <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Designation</option>
-                                        @foreach($designations as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
+                                    <label for="name">Maximum teaching courses Allowed(E)</label>
+                                    <input type="number" name="max_cources_allowed" id="edit_max_cources_allowed" class="form-control">
+                                    <input type="hidden" name="edit_id" id="edit_id">
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Max Cources allowed</label>
-                                    <input type="number" name="max_cources_allowed" id="edit_max_cources_allowed" value="{{old('edit_max_cources_allowed')}}" class="form-control">
+                            @foreach($getScope as $program)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Teaching courses in {{$program->program->name}}(F) </label>
+                                        <input type="number" name="tc_program[{{$program->program->id}}]" id="edit_tc_program" data-id="{{$program->program->id}}" class="form-control programs">
+                                    </div>
                                 </div>
-                              </div>
+                            @endforeach
 
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Program1</label>
-                                    <input type="number" name="tc_program1" id="edit_tc_program1" value="{{old('edit_tc_program1')}}" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">program2</label>
-                                    <input type="number" name="tc_program2" id="edit_tc_program2" value="{{old('edit_tc_program2')}}" class="form-control">
-                                </div>
-                              </div>
+                            {{--                               <div class="col-md-3">--}}
+                            {{--                                   <div class="form-group">--}}
+                            {{--                                       <label for="name">Teaching courses in program 2(G)</label>--}}
+                            {{--                                       <input type="number" name="tc_program2" id="tc_program2" class="form-control">--}}
+                            {{--                                   </div>--}}
+                            {{--                               </div>--}}
 
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="type">{{ __('Status') }} : </label>
-                                <p><input type="radio" name="status" class="flat-red" value="active" > Active
-                                    <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
+                            <div class="form-group" >
+
+                                <button type="button" class="btn btn-default float-right" data-dismiss="modal" style="margin-top: 100px">Close</button>
+                                <input type="submit" name="update" value="update" class="btn btn-info float-right" style="margin-top: 100px">
+
                             </div>
+
+                    </form>
                         </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" name="update" value="update" class="btn btn-info">
-                    </div>
-                </form>
+                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal -->
+
+
     </div>
-    <!-- /.modal -->
+
+
 
     <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
@@ -381,43 +384,46 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
+             console.log(data);
             $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
             $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_max_cources_allowed').val(data.max_cources_allowed);
-            $('#edit_tc_program1').val(data.tc_program1);
-            $('#edit_tc_program2').val(data.tc_program2);
+            let tc_program_name = "tc_program"+""+data.id;
+            console.log(('tc program name', data.tc_program1));
+            $('#edit_tc_program').val(data.tc_program1);
+            // $('#edit_tc_program2').val(data.tc_program2);
+            $('#edit_name').val(data.name);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
             $('input[value='+data.isCompleted+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
-            let designation_id = $('#edit_designation_id').val();
-            let max_cources_allowed = $('#edit_max_cources_allowed').val();
-            let tc_program1 = $('#edit_tc_program1').val();
-            let tc_program2 = $('#edit_tc_program2').val();
-            let id = $('#edit_id').val();
+    let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
+    let designation_id = $('#edit_designation_id').val();
+    let max_cources_allowed = $('#edit_max_cources_allowed').val();
 
-            let status = $('input[name=edit_status]:checked').val();
-            let isCompleted= $('input[name=edit_isCompleted]:checked').val();
-            !lookup_faculty_type_id?addClass('edit_lookup_faculty_type_id'):removeClass('edit_lookup_faculty_type_id');
-            !designation_id?addClass('edit_designation_id'):removeClass('edit_lookup_faculty_designation_id');
-            !max_cources_allowed?addClass('edit_max_cources_allowed'):removeClass('edit_max_cources_allowed');
-            !tc_program1?addClass('edit_tc_program1'):removeClass('edit_tc_program1');
-            !tc_program2?addClass('edit_tc_program2'):removeClass('edit_tc_program2');
 
-            if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed || !tc_program1 || !tc_program2 )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
+    let tc_program = $('#edit_tc_program').val();
+    // let tc_program2 = $('#tc_program2').val();
+
+    !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
+    !designation_id?addClass('designation_id'):removeClass('designation_id');
+    !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
+    !tc_program?addClass('tc_program'):removeClass('tc_program');
+    // !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
+
+    if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed )
+    {
+        Notiflix.Notify.Warning("Fill all the required Fields.");
+        return;
+    }
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("faculty-teaching")}}/'+id,
+                url:'{{url("faculty-teaching")}}/'+$('#edit_id').val(),
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,

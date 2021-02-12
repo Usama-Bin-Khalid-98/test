@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
+use PragmaRX\Countries\Package\Countries;
 
 class FacultyDetailedInfoController extends Controller
 {
@@ -23,6 +24,7 @@ class FacultyDetailedInfoController extends Controller
     }
     public function index()
     {
+        $countries = Countries::all();
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
          $designations = Designation::all();
@@ -32,7 +34,7 @@ class FacultyDetailedInfoController extends Controller
 
          $workloads = FacultyDetailedInfo::with('campus','designation','degree','lookup_faculty_type','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
-         return view('registration.faculty.faculty_detailed_info', compact('designations','faculty_types','degrees','courses','workloads'));
+         return view('registration.faculty.faculty_detailed_info', compact('countries','designations','faculty_types','degrees','courses','workloads'));
     }
 
     /**
@@ -161,7 +163,7 @@ class FacultyDetailedInfoController extends Controller
     {
          try {
         FacultyDetailedInfo::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
         FacultyDetailedInfo::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);

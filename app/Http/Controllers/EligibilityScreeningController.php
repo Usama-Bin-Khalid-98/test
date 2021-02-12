@@ -45,7 +45,7 @@ class EligibilityScreeningController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }else {
             try {
-                $update = ReviewerAvailability::where(['slip_id' => $request->slip_id, 'availability_dates' =>$request->dateVal])->update(['is_confirm' => $request->confirm]);
+                $update = ReviewerAvailability::where(['slip_id' => $request->slip_id])->update(['is_confirm' => $request->confirm]);
                 if($update){
                     return response()->json($validation->messages()->all(), 200);
                 }
@@ -86,7 +86,6 @@ class EligibilityScreeningController extends Controller
                 ->get();
 
             $reviewer_availabilities = ReviewerAvailability::where(['slip_id'=>$id])->first();
-
 
         }else {
             $registrations = DB::table('slips as s')
@@ -243,6 +242,7 @@ class EligibilityScreeningController extends Controller
 //        dd($reviewers);
         $reviewersDates = ReviewerAvailability::with('slip', 'user')->where('slip_id', $id)->get()->groupBy('user_id');
         $userDates = [];
+        $maxSelectedDate='';
 //         dd($reviewersDates);
         $count = 0;
         if ($reviewersDates){
@@ -269,12 +269,12 @@ class EligibilityScreeningController extends Controller
             $count++;
         }
         $count_val = array_count_values($dates);
-        $maxSelectedDate = $this->doublemax($count_val);
+        if($count_val)  $maxSelectedDate = $this->doublemax($count_val);
         return view('eligibility_screening.scheduler', compact('registrations', 'reviewers','userDates', 'availability','maxSelectedDate', 'reviewers_all'));
     }
 
     public function doublemax($mylist){
-        @$maxvalue=max($mylist);
+        @$maxvalue=max(@$mylist);
         foreach ($mylist as $key=>$value) {
             if($value==$maxvalue)$maxindex=$key;
         }

@@ -15,7 +15,7 @@ use App\Models\PeerReview\PeerReviewReviewer;
 use App\Models\PeerReview\SchedulePeerReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;

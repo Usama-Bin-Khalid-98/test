@@ -75,9 +75,9 @@
                                     <label for="name">Batch</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $tyear->tyear}}">{{ $tyear->tyear}}</option>
+                                        <option value="{{ $tyear->year_t_1}}">{{ $tyear->year_t_1}}</option>
+                                        <option value="{{ $tyear->year_t_2}}">{{ $tyear->year_t_2}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -156,8 +156,8 @@
                                     <td>{{$enrolement->other_reason}}</td>
                                     <td>{{$enrolement->pass}}</td>
                                     <td>{{$enrolement->pending}}</td>
-                                    <td style="background-color: #D3D3D3">{{ number_format($enrolement->pass + $enrolement->pending /$enrolement->intake*100, 2) }}%</td>
-                                    <td style="background-color: #D3D3D3">{{ number_format($enrolement->academic_reason/$enrolement->intake*100, 2) }}%</td>
+                                    <td style="background-color: #D3D3D3">{{ number_format(($enrolement->pass + $enrolement->pending) /$enrolement->intake*100, 2) }}%</td>
+                                    <td style="background-color: #D3D3D3">{{ number_format(($enrolement->academic_reason/$enrolement->intake)*100, 2) }}%</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","program_id":"{{$enrolement->program_id}}","year":"{{$enrolement->year}}","intake":"{{$enrolement->intake}}","academic_reason":"{{$enrolement->academic_reason}}","other_reason":"{{$enrolement->other_reason}}","pass":"{{$enrolement->pass}}","pending":"{{$enrolement->pending}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
@@ -219,9 +219,9 @@
                                     <label for="name">Batch</label>
                                     <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $tyear->tyear}}">{{ $tyear->tyear}}</option>
+                                        <option value="{{ $tyear->year_t_1}}">{{ $tyear->year_t_1}}</option>
+                                        <option value="{{ $tyear->year_t_2}}">{{ $tyear->year_t_2}}</option>
                                     </select>
                                 </div>
                             </div>

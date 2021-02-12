@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\BusinessSchool;
 use App\CharterType;
 use App\Http\Controllers\Controller;
-use App\InstituteType;
+use App\Models\StrategicManagement\InstituteType;
 use App\Models\Common\Degree;
 use App\Models\Common\Department;
 use App\Models\Common\Discipline;
@@ -241,7 +241,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $countries = Countries::all();
-        $institute_types=InstituteType::where('status', 'active')->get();
+        // $institute_types= InstituteType::where('status', 'active')->get();
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
         $designations=Designation::where('status', 'active')->get();
@@ -258,7 +258,7 @@ class RegisterController extends Controller
         //dd($users);
 
         return view('auth.register-new', compact(
-            'institute_types', 'chart_types',
+             'chart_types',
             'business_school','designations','countries',
             'departments', 'disciplines','regions', 'reviewerRoles',
             'sectors', 'degrees','users', 'questions','sectorsID','specializations')
