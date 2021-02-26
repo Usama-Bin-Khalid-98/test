@@ -211,7 +211,13 @@ AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name',
 
                $alumniParticipation = DB::select('SELECT alumni_participations.*, activity_engagements.name as activity FROM alumni_participations, activity_engagements, campuses WHERE alumni_participations.campus_id=campuses.id AND alumni_participations.activity_engagements_id=activity_engagements.id AND alumni_participations.campus_id=? ', array($req->cid));
 
-               $programCourses = DB::select('SELECT program_courses.*, programs.name as program, course_types.name as courseTypeName FROM program_courses, programs, course_types, campuses WHERE program_courses.program_id=programs.id AND program_courses.course_type_id=course_types.id AND program_courses.campus_id=campuses.id AND program_courses.campus_id=?  ORDER BY course_types.name', array($req->cid));
+               @$programCourses = DB::select('SELECT program_courses.*, programs.name as program, course_types.name as courseTypeName
+FROM program_courses, programs, course_types, campuses
+WHERE
+  program_courses.course_type_id=course_types.id
+  AND program_courses.campus_id=campuses.id
+  AND program_courses.campus_id=?
+ORDER BY course_types.name', array($req->cid));
 
 //               $curriculumReviews = DB::select('
 //                SELECT curriculum_reviews.*, designations.name as designation, affiliations.name as affiliation

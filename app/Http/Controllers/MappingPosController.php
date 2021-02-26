@@ -31,7 +31,7 @@ class MappingPosController extends Controller
                 ->get();
         $getPOs = ProgramObjective::with('program')->where($where)->get();
             $mappings = MappingPos::where($where)->get();
-
+//dd($mappings);
         return view('registration.curriculum.mapping_pos', compact('programs', 'getPLOs', 'getPOs', 'mappings'));
 
     }
@@ -54,31 +54,31 @@ class MappingPosController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
         $userInfo = Auth::user();
         foreach ($request->plo_po as $plo_po_key=>$plo_po)
         {
             $program_id = $plo_po_key;
             foreach ($plo_po as $plo_key=> $plo)
             {
+//dd($plo_key);
                 $plo_id = $plo_key;
-                foreach ($plo_po as $po_key=> $po)
-                {
-//                    dd($po[$po_key]);
-                    foreach ($po as $p) {
+//                foreach ($plo as $po_key=> $po)
+//                {
+//                    dd($po);
+////                    dd($po[$po_key]);
+//                    foreach ($po as $p) {
                         $insertMapping = MappingPos::create(
                             [
                                 'campus_id' => $userInfo->campus_id,
                                 'department_id' => $userInfo->department_id,
                                 'program_id' => $program_id,
                                 'learning_outcome_id' => $plo_id,
-                                'program_objective_id' => $po_key,
-                                'isChecked' => $p
+//                                'program_objective_id' => $po_key,
+                                'isChecked' => $plo
                             ]);
-                    }
+//                    }
 
-                }
+//                }
 
             }
         }

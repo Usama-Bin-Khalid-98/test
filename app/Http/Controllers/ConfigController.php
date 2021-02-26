@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CharterType;
-use App\InstituteType;
+use App\Models\StrategicManagement\InstituteType;
 use App\TeachingMethod;
 use App\EvaluationItem;
 use App\Models\Common\CourseType;
