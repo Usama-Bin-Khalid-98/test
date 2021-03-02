@@ -21,9 +21,9 @@ class CourseOutlineController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        
+
         $reports = CourseOutline::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        
+
         return view('registration.curriculum.course_outline', compact('reports'));
     }
 
@@ -45,17 +45,17 @@ class CourseOutlineController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
-        if($validation->fails())
-        {
-            return response()->json($validation->messages()->all(), 422);
-        }
+//        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+//        if($validation->fails())
+//        {
+//            return response()->json($validation->messages()->all(), 422);
+//        }
         try {
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
-                    $path = 'uploads/course_outline';
+                    $path = 'uploads/course_outline/';
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
@@ -66,9 +66,9 @@ class CourseOutlineController extends Controller
                     CourseOutline::create([
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
-                        'file' => $path.'/'.$imageName, 
-                        'isComplete' => 'yes', 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => ' Record added successfully.']);
@@ -135,7 +135,7 @@ class CourseOutlineController extends Controller
                     [
                     'file' => $path.'/'.$imageName,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -143,7 +143,7 @@ class CourseOutlineController extends Controller
             }
           CourseOutline::where('id', $courseOutline->id)->update([
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Record updated successfully.']);
 
@@ -163,7 +163,7 @@ class CourseOutlineController extends Controller
     {
         try {
              CourseOutline::where('id', $courseOutline->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              CourseOutline::destroy($courseOutline->id);
                 return response()->json(['success' => 'Record deleted successfully.']);
