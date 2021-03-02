@@ -84,7 +84,7 @@ class StrategicPlanController extends Controller
             $path = '';
             if($request->file('file')){
                 $imageName= 'plan-'.time().'doc.'. $request->file->getClientOriginalExtension();
-                $path= 'uploads/strategic_plan';
+                $path= 'uploads/strategic_plan/';
                 $diskName = env('DESK');
                 $disk = Storage::disk($diskName);
                 $request->file('file')->move($path, $imageName);
