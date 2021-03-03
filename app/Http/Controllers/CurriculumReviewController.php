@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carriculum\CurriculumReview;
-use App\Models\Carriculum\CurriculumReviewer;
 use App\Models\Common\Designation;
 use App\Models\StrategicManagement\Affiliation;
 use App\Models\StrategicManagement\StatutoryBody;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class CurriculumReviewController extends Controller
@@ -30,7 +27,7 @@ class CurriculumReviewController extends Controller
         $designations = Designation::where('status', 'active')->get();
         $users = User::where('user_type', 'PeerReviewer')->get();
         $bodies = StatutoryBody::all();
-        $summaries = CurriculumReview::with('campus','affiliations','designation', 'curriculum_reviewer')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $summaries = CurriculumReview::with('campus','affiliations','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         return view('registration.curriculum.curriculum_review', compact('bodies','users','affiliation','designations','summaries'));
     }
 
@@ -64,21 +61,12 @@ class CurriculumReviewController extends Controller
                 'review_meeting' => $request->review_meeting,
                 'date' => $request->date,
                 'composition' => $request->composition,
-//                'reviewer_names' => $request->reviewer_names,
+                'reviewer_names' => $request->reviewer_names,
                 'designation_id' => $request->designation_id,
                 'affiliations_id' => $request->affiliations_id,
                 'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
-
-
-            if($request->reviewer_names)
-            {
-                foreach ($request->reviewer_names as $reviewer_name)
-                {
-                    CurriculumReviewer::create(['curriculum_review_id'=> $add_record->id, 'user_id'=> $reviewer_name]);
-                }
-            }
 
             return response()->json(['success' => 'Record added successfully.']);
 

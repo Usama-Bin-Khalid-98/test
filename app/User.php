@@ -4,7 +4,6 @@ namespace App;
 
 use App\Mentoring\ScheduleMentorMeeting;
 use App\Models\AccreditationAC\AccreditationReviewer;
-use App\Models\Carriculum\CurriculumReviewer;
 use App\Models\Common\Campus;
 use App\Models\Common\Department;
 use App\Models\Common\Designation;
@@ -95,9 +94,5 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(AccreditationReviewer::class);
     }
 
-    public function curriculum_reviewer()
-    {
-        return $this->hasOne(CurriculumReviewer::class);
-    }
 }
 
