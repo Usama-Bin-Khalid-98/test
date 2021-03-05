@@ -194,7 +194,7 @@ class FacultyExchangeController extends Controller
             'faculty_name' => 'required',
             'source_country' => 'required',
             'name_faculty' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -205,7 +205,7 @@ class FacultyExchangeController extends Controller
             'faculty_name' => 'required',
             'source_country' => 'required',
             'name_faculty' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

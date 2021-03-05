@@ -195,7 +195,7 @@ class PlagiarismCaseController extends Controller
             'degree' => 'required',
             'nature' => 'required',
             'penalty' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 
@@ -206,7 +206,7 @@ class PlagiarismCaseController extends Controller
             'degree' => 'required',
             'nature' => 'required',
             'penalty' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 

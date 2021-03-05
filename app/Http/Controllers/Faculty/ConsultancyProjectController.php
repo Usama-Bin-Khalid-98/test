@@ -197,7 +197,7 @@ class ConsultancyProjectController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'all_participants' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -209,7 +209,7 @@ class ConsultancyProjectController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'all_participants' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

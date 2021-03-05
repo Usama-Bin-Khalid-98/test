@@ -195,7 +195,7 @@ class StudentExchangeController extends Controller
             'student_name' => 'required',
             'source_country' => 'required',
             'name_student' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -206,7 +206,7 @@ class StudentExchangeController extends Controller
             'student_name' => 'required',
             'source_country' => 'required',
             'name_student' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

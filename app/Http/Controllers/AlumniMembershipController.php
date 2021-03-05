@@ -192,7 +192,7 @@ class AlumniMembershipController extends Controller
             'reg_members' => 'required',
             'membership_percentage' => 'required',
             'maj_industries' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx,ppt,pptx'
         ];
     }
 
@@ -202,7 +202,7 @@ class AlumniMembershipController extends Controller
             'reg_members' => 'required',
             'membership_percentage' => 'required',
             'maj_industries' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx,ppt,pptx'
         ];
     }
 

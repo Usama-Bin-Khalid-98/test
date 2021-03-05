@@ -184,7 +184,7 @@ class EnvProtectionController extends Controller
         return [
             'date' => 'required',
             'activity_desc' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:pdf,docx'
         ];
     }
 
@@ -192,7 +192,7 @@ class EnvProtectionController extends Controller
         return [
             'date' => 'required',
             'activity_desc' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:pdf,docx'
         ];
     }
 

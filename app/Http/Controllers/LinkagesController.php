@@ -198,7 +198,7 @@ class LinkagesController extends Controller
             'signing_date' => 'required',
             'last_activity_date' => 'required',
             'last_activity_title' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -211,7 +211,7 @@ class LinkagesController extends Controller
             'signing_date' => 'required',
             'last_activity_date' => 'required',
             'last_activity_title' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

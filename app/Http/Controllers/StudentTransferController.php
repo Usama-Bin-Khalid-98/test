@@ -175,13 +175,13 @@ class StudentTransferController extends Controller
 
     protected function rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
     protected function update_rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
