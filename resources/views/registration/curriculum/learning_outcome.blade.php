@@ -65,7 +65,7 @@
                                     <select name="program_id" id="program_id" class="form-control select2">
                                         <option selected disabled>--Select--</option>
                                         @foreach($scopes as $pro)
-                                        <option value="{{$pro->program->id}}">{{$pro->program->name}}</option>
+                                        <option value="{{$pro->program->id}}">{{$pro->program->name}} ({{$pro->level->name}})</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -251,7 +251,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    // location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

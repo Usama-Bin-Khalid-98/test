@@ -88,4 +88,10 @@
             return $result;
         }
     }
+    if(!function_exists('isChecked')){
+        function isChecked($where){
+           return  \App\Models\Carriculum\MappingPos::where($where)->first()->isChecked;
+//            dd($result);
+        }
+    }
 ?>
