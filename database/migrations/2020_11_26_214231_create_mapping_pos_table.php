@@ -38,6 +38,7 @@ class CreateMappingPosTable extends Migration
             $table->enum('isChecked',['off','on'])->default('off');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
+            $table->integer('col');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')
                 ->references('id')
