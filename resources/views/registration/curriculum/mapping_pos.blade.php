@@ -59,15 +59,16 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
-{{--                                @foreach(@$programs as $program)--}}
+                                @foreach(@$po_plos as $key => $program)
                                 <div class="row">
                                     <div class="container">
-                                    <h2>{{@$program->program->name}}</h2>
+                                    <h2>{{@$program['name']}}</h2>
+
                                     </div>
 
                                     <table class="table table-bordered table-responsive">
                                         <tr>
-                                            <th></th>
+                                            <th>PLO/PO's</th>
                                             <th>PLO1</th>
                                             <th>PLO2</th>
                                             <th>PLO3</th>
@@ -75,51 +76,30 @@
                                             <th>PLO5</th>
                                         </tr>
 
-                                        <tr>
-                                            <th>PO1</th>
-                                            <td><input type="checkbox" name="plo_po[0]" {{(@$mappings[0]->learning_outcome_id == 0 && @$mappings[0]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[1]" {{(@$mappings[1]->learning_outcome_id == 1 && @$mappings[1]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[2]" {{(@$mappings[2]->learning_outcome_id == 2 && @$mappings[2]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[3]" {{(@$mappings[3]->learning_outcome_id == 3 && @$mappings[3]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[4]" {{(@$mappings[4]->learning_outcome_id == 4 && @$mappings[4]->isChecked == 'on')?'checked':''}}></td>
-                                        </tr>
+                                    @foreach($program['pos'] as $po)
 
                                         <tr>
-                                            <th>PO2</th>
-                                            <td><input type="checkbox" name="plo_po[5]]" {{(@$mappings[5]->learning_outcome_id == 5 && @$mappings[5]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[6]]" {{(@$mappings[6]->learning_outcome_id == 6 && @$mappings[6]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[7]]" {{(@$mappings[7]->learning_outcome_id == 7 && @$mappings[7]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[8]]" {{(@$mappings[8]->learning_outcome_id == 8 && @$mappings[8]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[9]]" {{(@$mappings[9]->learning_outcome_id == 9 && @$mappings[9]->isChecked == 'on')?'checked':''}}></td>
+                                            <th>PO{{$loop->iteration}}</th>
+{{--                                            @php dd($po['campus_id'])@endphp--}}
+                                            <input type="hidden" name="campus_id" value="{{$po['campus_id']}}">
+                                            <input type="hidden" name="department_id" value="{{$po['department_id']}}">
+
+                                            {{--                                            @php dd($po['plos'])@endphp--}}
+{{--                                            @foreach($po['plos'] as  $plos)--}}
+                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][1]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][1]"
+                                                    {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>1])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][2]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][2]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>2])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][3]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][3]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>3])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][4]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][4]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>4])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][5]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][5]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>5])?'checked':''}}></th>
+
+{{--                                            @endforeach--}}
                                         </tr>
-                                        <tr>
-                                            <th>PO3</th>
-                                            <td><input type="checkbox" name="plo_po[10]" {{(@$mappings[10]->learning_outcome_id == 10 && @$mappings[10]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[11]" {{(@$mappings[11]->learning_outcome_id == 11 && @$mappings[11]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[12]" {{(@$mappings[12]->learning_outcome_id == 12 && @$mappings[12]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[13]" {{(@$mappings[13]->learning_outcome_id == 13 && @$mappings[13]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[14]" {{(@$mappings[14]->learning_outcome_id == 14 && @$mappings[14]->isChecked == 'on')?'checked':''}}></td>
-                                        </tr>
-                                        <tr>
-                                            <th>PO4</th>
-                                            <td><input type="checkbox" name="plo_po[15]" {{(@$mappings[15]->learning_outcome_id == 15  && @$mappings[15]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[16]" {{(@$mappings[16]->learning_outcome_id == 16  && @$mappings[16]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[17]" {{(@$mappings[17]->learning_outcome_id == 17  && @$mappings[17]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[18]" {{(@$mappings[18]->learning_outcome_id == 18  && @$mappings[18]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[19]" {{(@$mappings[19]->learning_outcome_id == 19  && @$mappings[19]->isChecked == 'on')?'checked':''}}></td>
-                                        </tr>
-                                        <tr>
-                                            <th>PO5
-                                            <td><input type="checkbox" name="plo_po[20]" {{(@$mappings[20]->learning_outcome_id == 20  && @$mappings[20]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[21]" {{(@$mappings[21]->learning_outcome_id == 21  && @$mappings[21]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[22]" {{(@$mappings[22]->learning_outcome_id == 22  && @$mappings[22]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[23]" {{(@$mappings[23]->learning_outcome_id == 23  && @$mappings[23]->isChecked == 'on')?'checked':''}}></td>
-                                            <td><input type="checkbox" name="plo_po[24]" {{(@$mappings[24]->learning_outcome_id == 24  && @$mappings[24]->isChecked == 'on')?'checked':''}}></td>
-                                        </tr>
+                                        @endforeach
 
                                     </table>
                                 </div>
-{{--                                @endforeach--}}
+                                @endforeach
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px;">
@@ -286,7 +266,7 @@ $('.delete').on('click', function (e) {
                 },
                 function(){ // No button callback
                     // alert('If you say so...');
-                } );
+                 } );
 
         })
 

@@ -15,7 +15,7 @@ class Program extends Model
     protected $guarded = [];
 
     public function scope() {
-        return $this->hasOne(Scope::class);
+        return $this->hasOne(Scope::class)->with('level');
     }
     public function slip()
     {
