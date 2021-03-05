@@ -26,8 +26,5 @@ class CurriculumReview extends Model
         return $this->belongsTo(Affiliation::class);
     }
 
-    public function curriculum_reviewer()
-    {
-        return $this->hasMany(CurriculumReviewer::class)->with('user');
-    }
+
 }

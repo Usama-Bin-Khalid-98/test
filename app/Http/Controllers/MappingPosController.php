@@ -24,15 +24,34 @@ class MappingPosController extends Controller
             'department_id'=> $userInfo->department_id,
             'status'=> 'active'];
 
-        $programs = Scope::with('program')->where($where)->where(['type'=> 'SAR'])->get();
-        $getPLOs = LearningOutcome::with('program')
+        $programs = Scope::with('program','level')->where($where)->where(['type'=> 'SAR'])->get();
+        $po_plos = [];
+        foreach($programs as $program)
+        {
+            $getPLOs = LearningOutcome::with('program')
                 ->where($where)
-//                ->where('program_id', $program->program->id)
+                ->where('program_id', $program->program->id)
                 ->get();
-        $getPOs = ProgramObjective::with('program')->where($where)->get();
+
+            $getPOs = ProgramObjective::with('program')->where($where)
+                ->where('program_id', $program->program->id)
+                ->get();
+            $po_plos[$program->program->id]['name'] = $program->program->name;
+            foreach ($getPOs as $pokey=>$po){
+                $po_plos[$program->program->id]['pos'][$po->id]['id'] = $po->id;
+                $po_plos[$program->program->id]['pos'][$po->id]['campus_id'] = $po->campus_id;
+                $po_plos[$program->program->id]['pos'][$po->id]['department_id'] = $po->department_id;
+                foreach ($getPLOs as $key => $plo)
+                {
+                    $po_plos[$program->program->id]['pos'][$po->id]['plos']= $getPLOs[$pokey]->id;
+                }
+            }
+
+        }
+//        dd($po_plos);
             $mappings = MappingPos::where($where)->get();
-//dd($mappings);
-        return view('registration.curriculum.mapping_pos', compact('programs', 'getPLOs', 'getPOs', 'mappings'));
+//        dd($mappings);
+        return view('registration.curriculum.mapping_pos', compact('programs', 'po_plos', 'mappings'));
 
     }
 
@@ -55,31 +74,25 @@ class MappingPosController extends Controller
     public function store(Request $request)
     {
         $userInfo = Auth::user();
-        foreach ($request->plo_po as $plo_po_key=>$plo_po)
+        foreach ($request->plo_po as $program_id=>$map)
         {
-            $program_id = $plo_po_key;
-            foreach ($plo_po as $plo_key=> $plo)
+            foreach ($map as $po_key=> $po)
             {
-//dd($plo_key);
-                $plo_id = $plo_key;
-//                foreach ($plo as $po_key=> $po)
-//                {
-//                    dd($po);
-////                    dd($po[$po_key]);
-//                    foreach ($po as $p) {
-                        $insertMapping = MappingPos::create(
+                foreach ($po as $plo_id => $p) {
+                    foreach ($p as $keycol=>$checked) {
+                        MappingPos::updateOrCreate(
                             [
-                                'campus_id' => $userInfo->campus_id,
-                                'department_id' => $userInfo->department_id,
+                                'campus_id' => $request['campus_id'],
+                                'department_id' => $request['department_id'],
                                 'program_id' => $program_id,
                                 'learning_outcome_id' => $plo_id,
-//                                'program_objective_id' => $po_key,
-                                'isChecked' => $plo
+                                'program_objective_id' => $po_key,
+                                'col' => $keycol,
+                                'isChecked' => $checked,
+                                'isComplete' => 'yes',
                             ]);
-//                    }
-
-//                }
-
+                    }
+                }
             }
         }
     }

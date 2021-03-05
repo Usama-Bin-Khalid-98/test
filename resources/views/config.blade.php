@@ -267,9 +267,9 @@
                             <table id="datatable1" class="table table-bordered table-striped">
                                  <thead>
                                 <tr>
-                                    @if(request()->is('config/programs'))
-                                    <th>Department</th>
-                                    @endif
+{{--                                    @if(request()->is('config/programs'))--}}
+{{--                                    <th>Department</th>--}}
+{{--                                    @endif--}}
                                     @if(request()->is('config/publication_types'))
                                     <th>Publication Category</th>
                                     @endif
@@ -281,9 +281,9 @@
                                 <tbody>
                                @foreach($TableRows as $row)
                                 <tr>
-                                    @if(request()->is('config/programs'))
-                                        <td>{{$row->department->name}}</td>
-                                    @endif
+{{--                                    @if(request()->is('config/programs'))--}}
+{{--                                        <td>{{@$row->department->name}}</td>--}}
+{{--                                    @endif--}}
 
                                     @if(request()->is('config/publication_types'))
                                     <td>{{$row->publication_category->name}}</td>
@@ -298,9 +298,9 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    @if(request()->is('config/programs'))
-                                        <th>Department</th>
-                                    @endif
+{{--                                    @if(request()->is('config/programs'))--}}
+{{--                                        <th>Department</th>--}}
+{{--                                    @endif--}}
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>Action</th>

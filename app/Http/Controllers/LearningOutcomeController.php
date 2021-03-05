@@ -22,7 +22,7 @@ class LearningOutcomeController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $scopes = Scope::with('program', 'level')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=>'SAR'])->get();
 
         $summaries = LearningOutcome::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
