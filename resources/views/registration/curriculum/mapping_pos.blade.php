@@ -75,7 +75,7 @@
                                             <th>PLO4</th>
                                             <th>PLO5</th>
                                         </tr>
-
+                                    @if(@$program['pos'])
                                     @foreach(@$program['pos'] as $po)
 
                                         <tr>
@@ -88,15 +88,15 @@
 {{--                                            @foreach($po['plos'] as  $plos)--}}
                                             <th><input type="checkbox" name="plo_po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][1]" id="po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][1]"
                                                     {{@isChecked(['program_id'=>@$key,'campus_id'=>@$po['campus_id'],'department_id'=>@$po['department_id'],'program_objective_id'=> @$po['id'],'learning_outcome_id'=> @$po['plos'], 'col'=>1])?'checked':''}}></th>
-                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][2]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][2]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>2])?'checked':''}}></th>
-                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][3]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][3]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>3])?'checked':''}}></th>
-                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][4]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][4]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>4])?'checked':''}}></th>
-                                            <th><input type="checkbox" name="plo_po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][5]" id="po[{{$key}}][{{$po['id']}}][{{$po['plos']}}][5]" {{@isChecked(['program_id'=>$key,'campus_id'=>$po['campus_id'],'department_id'=>$po['department_id'],'program_objective_id'=> $po['id'],'learning_outcome_id'=> $po['plos'], 'col'=>5])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][2]" id="po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][2]" {{@isChecked(['program_id'=>@$key,'campus_id'=>@$po['campus_id'],'department_id'=>@$po['department_id'],'program_objective_id'=> @$po['id'],'learning_outcome_id'=> @$po['plos'], 'col'=>2])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][3]" id="po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][3]" {{@isChecked(['program_id'=>@$key,'campus_id'=>@$po['campus_id'],'department_id'=>@$po['department_id'],'program_objective_id'=> @$po['id'],'learning_outcome_id'=> @$po['plos'], 'col'=>3])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][4]" id="po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][4]" {{@isChecked(['program_id'=>@$key,'campus_id'=>@$po['campus_id'],'department_id'=>@$po['department_id'],'program_objective_id'=> @$po['id'],'learning_outcome_id'=> @$po['plos'], 'col'=>4])?'checked':''}}></th>
+                                            <th><input type="checkbox" name="plo_po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][5]" id="po[{{@$key}}][{{@$po['id']}}][{{@$po['plos']}}][5]" {{@isChecked(['program_id'=>@$key,'campus_id'=>@$po['campus_id'],'department_id'=>@$po['department_id'],'program_objective_id'=> @$po['id'],'learning_outcome_id'=> @$po['plos'], 'col'=>5])?'checked':''}}></th>
 
 {{--                                            @endforeach--}}
                                         </tr>
                                         @endforeach
-
+@endif
                                     </table>
                                 </div>
                                 @endforeach
