@@ -178,7 +178,7 @@ class AdmissionOfficeController extends Controller
             'system_handling' => 'required',
             'head' => 'required',
             'qualification' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -188,7 +188,7 @@ class AdmissionOfficeController extends Controller
             'system_handling' => 'required',
             'head' => 'required',
             'qualification' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

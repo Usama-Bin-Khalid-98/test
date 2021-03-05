@@ -45,11 +45,11 @@ class CourseOutlineController extends Controller
      */
     public function store(Request $request)
     {
-//        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
-//        if($validation->fails())
-//        {
-//            return response()->json($validation->messages()->all(), 422);
-//        }
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
         try {
 //            dd($fileName);
                 $path = ''; $imageName = '';
@@ -175,13 +175,13 @@ class CourseOutlineController extends Controller
 
     protected function rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 
     protected function update_rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+           'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 

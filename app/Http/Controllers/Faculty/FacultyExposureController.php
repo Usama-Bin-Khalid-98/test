@@ -191,7 +191,7 @@ class FacultyExposureController extends Controller
             'activity' => 'required',
             'date' => 'required',
             'duration' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -201,7 +201,7 @@ class FacultyExposureController extends Controller
             'activity' => 'required',
             'date' => 'required',
             'duration' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

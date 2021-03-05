@@ -192,7 +192,7 @@ class ComplaintResolutionController extends Controller
             'complaint_desc' => 'required',
             'arbitrating_authority' => 'required',
             'solution' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -202,7 +202,7 @@ class ComplaintResolutionController extends Controller
             'complaint_desc' => 'required',
             'arbitrating_authority' => 'required',
             'solution' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

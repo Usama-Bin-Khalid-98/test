@@ -222,7 +222,8 @@ class StrategicPlanController extends Controller
         return [
             'plan_period' => 'required',
             'aproval_date' => 'required',
-            'aproving_authority' => 'required'
+            'aproving_authority' => 'required',
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 

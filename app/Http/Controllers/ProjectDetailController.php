@@ -183,7 +183,7 @@ class ProjectDetailController extends Controller
         return [
             'date' => 'required',
             'activity_title' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -191,7 +191,7 @@ class ProjectDetailController extends Controller
         return [
             'date' => 'required',
             'activity_title' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

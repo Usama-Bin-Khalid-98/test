@@ -185,7 +185,7 @@ class QecInfoController extends Controller
         return [
             'qec_type_id' => 'required',
             'level' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -193,7 +193,7 @@ class QecInfoController extends Controller
         return [
             'qec_type_id' => 'required',
             'level' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

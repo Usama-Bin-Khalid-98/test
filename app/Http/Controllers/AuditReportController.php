@@ -179,13 +179,13 @@ class AuditReportController extends Controller
 
     protected function rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'required|file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 
     protected function update_rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'required|file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 

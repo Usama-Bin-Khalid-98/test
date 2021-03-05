@@ -198,7 +198,7 @@ class EvaluationMethodController extends Controller
         return [
             'frequency' => 'required',
             'range' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 
@@ -207,7 +207,7 @@ class EvaluationMethodController extends Controller
             'evaluation_items_id' => 'required',
             'frequency' => 'required',
             'range' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 

@@ -184,7 +184,7 @@ class InternalCommunityController extends Controller
         return [
             'welfare_program_id' => 'required',
             'no_of_individual_covered' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 
@@ -192,7 +192,7 @@ class InternalCommunityController extends Controller
         return [
             'welfare_program_id' => 'required',
             'no_of_individual_covered' => 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx'
         ];
     }
 

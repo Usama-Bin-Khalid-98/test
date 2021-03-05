@@ -175,13 +175,14 @@ class FacultyDevelopController extends Controller
 
      protected function rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+         'file.*' => 'mimes:pdf,doc,docx,ppt,pptx'
+
         ];
     }
 
     protected function update_rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,doc,docx,ppt,pptx'
         ];
     }
 

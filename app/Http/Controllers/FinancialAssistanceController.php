@@ -179,14 +179,14 @@ class FinancialAssistanceController extends Controller
     protected function rules() {
         return [
             'summary'=> 'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx,ppt,pptx'
         ];
     }
 
     protected function update_rules() {
         return [
             'summary'=>'required',
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'mimes:pdf,docx,ppt,pptx'
         ];
     }
 

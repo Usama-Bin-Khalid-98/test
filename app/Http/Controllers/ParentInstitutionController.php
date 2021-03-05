@@ -188,13 +188,13 @@ class ParentInstitutionController extends Controller
 
     protected function rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 
     protected function update_rules() {
         return [
-            'file' => 'mimes:pdf,docx'
+            'file.*' => 'file|mimes:ppt,pptx,doc,docx,pdf'
         ];
     }
 
