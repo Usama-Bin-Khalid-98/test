@@ -67,8 +67,9 @@ class ProjectDetailController extends Controller
                         'department_id' => Auth::user()->department_id,
                         'date' => $request->date,
                         'activity_title' => $request->activity_title,
-                        'file' => $path.'/'.$imageName, 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Project Detail added successfully.']);
@@ -138,7 +139,7 @@ class ProjectDetailController extends Controller
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -149,7 +150,7 @@ class ProjectDetailController extends Controller
                'activity_title' => $request->activity_title,
                'isComplete' => $request->isComplete,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Project Detail updated successfully.']);
 
@@ -169,7 +170,7 @@ class ProjectDetailController extends Controller
     {
         try {
              ProjectDetail::where('id', $projectDetail->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              ProjectDetail::destroy($projectDetail->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

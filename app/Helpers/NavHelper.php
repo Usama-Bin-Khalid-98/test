@@ -6,7 +6,7 @@
     //        dd($where);
     //        DB::enableQueryLog();
 
-            if ($model != 'App\Models\Common\Slip' && $model != 'App\Models\MentoringInvoice' && $model != 'App\BusinessSchool' && $model != 'App\StudentIntake') {
+            if ($model != 'App\Models\Common\Slip' && $model != 'App\Models\External_Linkages\Linkages' && $model != 'App\Models\MentoringInvoice' && $model != 'App\BusinessSchool' && $model != 'App\StudentIntake') {
                 $whereIs = ['business_school_id' => $where['campus_id'], 'department_id' => $where['department_id'], 'regStatus' => 'SAR'];
                 $isActiveSAR = getFirst('App\Models\Common\Slip', $whereIs);
     //            dd($isActiveSAR);

@@ -48,6 +48,7 @@ class PlacementOfficeController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {

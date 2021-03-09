@@ -58,7 +58,8 @@ class ExtraActivitiesController extends Controller
                 'date' => $request->date,
                 'activity_title' => $request->activity_title,
                 'budget_allocation' => $request->budget_allocation,
-                'created_by' => Auth::user()->id
+                'isComplete' => 'yes',
+                'created_by' => Auth::user()->id,
             ]);
 
             return response()->json(['success' => 'Extra Activities added successfully.']);
@@ -134,7 +135,7 @@ class ExtraActivitiesController extends Controller
     {
          try {
         ExtraActivities::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
         ExtraActivities::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);

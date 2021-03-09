@@ -59,6 +59,7 @@ class AlumniParticipationController extends Controller
                 'activity_engagements_id' => $request->activity_engagements_id,
                 'alumni_participated' => $request->alumni_participated,
                 'major_input' => $request->major_input,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -135,7 +136,7 @@ class AlumniParticipationController extends Controller
     {
         try {
         AlumniParticipation::where('id', $alumniParticipation->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
         AlumniParticipation::destroy($alumniParticipation->id);
             return response()->json(['success' => 'Record deleted successfully.']);

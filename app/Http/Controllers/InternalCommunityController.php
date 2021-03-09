@@ -24,7 +24,7 @@ class InternalCommunityController extends Controller
         $department_id= Auth::user()->department_id;
         $wps =  WelfareProgram::all();
         $communities = InternalCommunity::with('campus','welfare_program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        
+
         return view('social_responsibility.internal_community', compact('wps','communities'));
     }
 
@@ -69,8 +69,9 @@ class InternalCommunityController extends Controller
                         'department_id' => Auth::user()->department_id,
                         'welfare_program_id' => $request->welfare_program_id,
                         'no_of_individual_covered' => $request->no_of_individual_covered,
-                        'file' => $path.'/'.$imageName, 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Internal Community Welfare Program added successfully.']);
@@ -139,7 +140,7 @@ class InternalCommunityController extends Controller
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -150,7 +151,7 @@ class InternalCommunityController extends Controller
                'no_of_individual_covered' => $request->no_of_individual_covered,
                'isComplete' => $request->isComplete,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Internal Community WP updated successfully.']);
 
@@ -170,7 +171,7 @@ class InternalCommunityController extends Controller
     {
          try {
              InternalCommunity::where('id', $internalCommunity->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              InternalCommunity::destroy($internalCommunity->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

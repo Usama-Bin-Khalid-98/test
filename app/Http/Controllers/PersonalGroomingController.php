@@ -59,6 +59,7 @@ class PersonalGroomingController extends Controller
                 'activity_title' => $request->activity_title,
                 'grooming_skill' => $request->grooming_skill,
                 'total_participants' => $request->total_participants,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -136,7 +137,7 @@ class PersonalGroomingController extends Controller
     {
          try {
         PersonalGrooming::where('id', $personalGrooming->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
         PersonalGrooming::destroy($personalGrooming->id);
             return response()->json(['success' => 'Record deleted successfully.']);

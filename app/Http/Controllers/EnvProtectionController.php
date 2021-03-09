@@ -17,7 +17,7 @@ class EnvProtectionController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
@@ -68,8 +68,9 @@ class EnvProtectionController extends Controller
                         'department_id' => Auth::user()->department_id,
                         'date' => $request->date,
                         'activity_desc' => $request->activity_desc,
-                        'file' => $path.'/'.$imageName, 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Environmental Protection added successfully.']);
@@ -139,7 +140,7 @@ class EnvProtectionController extends Controller
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -150,7 +151,7 @@ class EnvProtectionController extends Controller
                'activity_desc' => $request->activity_desc,
                'isComplete' => $request->isComplete,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Environmental Protection updated successfully.']);
 
@@ -170,7 +171,7 @@ class EnvProtectionController extends Controller
     {
         try {
              EnvProtection::where('id', $envProtection->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              EnvProtection::destroy($envProtection->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

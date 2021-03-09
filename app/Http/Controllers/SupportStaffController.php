@@ -61,6 +61,7 @@ class SupportStaffController extends Controller
                 'staff_category_id' => $request->staff_category_id,
                 'total_staff' => $request->total_staff,
                 'supervisor_qualification' => $request->supervisor_qualification,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -137,7 +138,7 @@ class SupportStaffController extends Controller
     {
          try {
             SupportStaff::where('id', $supportStaff->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             SupportStaff::destroy($supportStaff->id);
             return response()->json(['success' => 'Record deleted successfully.']);
