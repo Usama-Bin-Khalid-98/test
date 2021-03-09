@@ -59,6 +59,7 @@ class CounsellingActivityController extends Controller
                 'counselling_hours' => $request->counselling_hours,
                 'counselling_activity' => $request->counselling_activity,
                 'students_covered' => $request->students_covered,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -136,7 +137,7 @@ class CounsellingActivityController extends Controller
     {
          try {
         CounsellingActivity::where('id', $counsellingActivity->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
         CounsellingActivity::destroy($counsellingActivity->id);
             return response()->json(['success' => 'Record deleted successfully.']);

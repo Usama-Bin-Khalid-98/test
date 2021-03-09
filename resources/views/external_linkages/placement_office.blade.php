@@ -154,7 +154,6 @@
         <?php if(@$placement_office->id==null){ ?>
 
         $('#update').on('click', function (e) {
-
             let hierarchical_position = $('input[name=hierarchical_position]:checked').val();
             let year_establishment = $('#year_establishment').val();
             let head = $('#head').val();
@@ -172,7 +171,6 @@
              !total_staff?addClass('total_staff'):removeClass('total_staff');
              !printers?addClass('printers'):removeClass('printers');
              !photocopiers?addClass('photocopiers'):removeClass('photocopiers');
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -182,7 +180,6 @@
                 type: 'POST',
                 url: "{{url('placement-office')}}",
                 data: {
-                    id: id,
                     hierarchical_position: hierarchical_position,
                     year_establishment: year_establishment,
                     head: head,

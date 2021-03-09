@@ -24,7 +24,7 @@ class QecInfoController extends Controller
         $department_id = Auth::user()->department_id;
          $wps =  QecType::all();
         $qecs = QecInfo::with('campus','qec_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        
+
         return view('registration.facilities_information.qec_info', compact('wps','qecs'));
     }
 
@@ -69,8 +69,9 @@ class QecInfoController extends Controller
                         'department_id' => Auth::user()->department_id,
                         'qec_type_id' => $request->qec_type_id,
                         'level' => $request->level,
-                        'file' => $path.'/'.$imageName, 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Qec Info added successfully.']);
@@ -140,7 +141,7 @@ class QecInfoController extends Controller
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -151,7 +152,7 @@ class QecInfoController extends Controller
                'level' => $request->level,
                'isComplete' => $request->isComplete,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Qec Info updated successfully.']);
 
@@ -171,7 +172,7 @@ class QecInfoController extends Controller
     {
          try {
              QecInfo::where('id', $qecInfo->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              QecInfo::destroy($qecInfo->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

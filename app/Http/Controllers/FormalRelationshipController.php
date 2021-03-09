@@ -18,7 +18,7 @@ class FormalRelationshipController extends Controller
         $this->middleware('auth');
     }
 
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
@@ -61,6 +61,7 @@ class FormalRelationshipController extends Controller
                 'signing_mou_date' => $request->signing_mou_date,
                 'last_activity_date' => $request->last_activity_date,
                 'last_activity_desc' => $request->last_activity_desc,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -139,7 +140,7 @@ class FormalRelationshipController extends Controller
     {
         try {
             FormalRelationship::where('id', $formalRelationship->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
            FormalRelationship::destroy($formalRelationship->id);
             return response()->json(['success' => 'Record deleted successfully.']);

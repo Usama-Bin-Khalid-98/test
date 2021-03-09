@@ -17,7 +17,7 @@ class ComplaintResolutionController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
@@ -70,8 +70,9 @@ class ComplaintResolutionController extends Controller
                         'complaint_desc' => $request->complaint_desc,
                         'arbitrating_authority' => $request->arbitrating_authority,
                         'solution' => $request->solution,
-                        'file' => $path.'/'.$imageName, 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Complaint Resolution added successfully.']);
@@ -143,7 +144,7 @@ class ComplaintResolutionController extends Controller
                     'file' => $path.'/'.$imageName,
                     'isComplete' => $request->isComplete,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -156,7 +157,7 @@ class ComplaintResolutionController extends Controller
                'solution' => $request->solution,
                'isComplete' => $request->isComplete,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Complaint Resolution updated successfully.']);
 
@@ -176,7 +177,7 @@ class ComplaintResolutionController extends Controller
     {
         try {
              ComplaintResolution::where('id', $complaintResolution->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              ComplaintResolution::destroy($complaintResolution->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

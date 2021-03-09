@@ -58,6 +58,7 @@ class StudentClubController extends Controller
                 'total_members' => $request->total_members,
                 'no_of_members' => $request->no_of_members,
                 'purpose' => $request->purpose,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -135,7 +136,7 @@ class StudentClubController extends Controller
     {
         try {
             StudentClub::where('id', $studentClub->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
            StudentClub::destroy($studentClub->id);
             return response()->json(['success' => 'Record deleted successfully.']);

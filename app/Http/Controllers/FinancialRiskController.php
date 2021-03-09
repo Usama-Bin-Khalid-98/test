@@ -17,11 +17,11 @@ class FinancialRiskController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
-        $department_id = Auth::user()->department_id;   
+        $department_id = Auth::user()->department_id;
         $risks = FinancialRisk::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         ///dd($contacts);
         return view('registration.facilities_information.financial_risk', compact('risks'));
@@ -58,6 +58,7 @@ class FinancialRiskController extends Controller
                 'risk_identified' => $request->risk_identified,
                 'stakeholder_involved' => $request->stakeholder_involved,
                 'remedial_measure' => $request->remedial_measure,
+                'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
 
@@ -134,7 +135,7 @@ class FinancialRiskController extends Controller
     {
          try {
             FinancialRisk::where('id', $financialRisk->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             FinancialRisk::destroy($financialRisk->id);
             return response()->json(['success' => 'Record deleted successfully.']);
