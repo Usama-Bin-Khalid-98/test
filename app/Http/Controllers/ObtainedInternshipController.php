@@ -21,9 +21,9 @@ class ObtainedInternshipController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        
+
         $reports = ObtainedInternship::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-        
+
         return view('external_linkages.obtained_internships', compact('reports'));
     }
 
@@ -45,6 +45,7 @@ class ObtainedInternshipController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
          $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
@@ -66,9 +67,10 @@ class ObtainedInternshipController extends Controller
                     ObtainedInternship::create([
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
-                        'file' => $path.'/'.$imageName, 
-                        'isComplete' => 'yes', 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'details'=> $request->details,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Obtained Internship added successfully.']);
@@ -134,7 +136,7 @@ class ObtainedInternshipController extends Controller
                     [
                     'file' => $path.'/'.$imageName,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -142,7 +144,7 @@ class ObtainedInternshipController extends Controller
             }
            ObtainedInternship::where('id', $obtainedInternship->id)->update([
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Obtained Internship updated successfully.']);
 
@@ -162,7 +164,7 @@ class ObtainedInternshipController extends Controller
     {
         try {
              ObtainedInternship::where('id', $obtainedInternship->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              ObtainedInternship::destroy($obtainedInternship->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

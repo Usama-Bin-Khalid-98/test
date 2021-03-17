@@ -23,8 +23,8 @@ class CreateManagerialSkills extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->string('skill',100);
-            $table->string('course_title',50);
+            $table->string('skill',255);
+            $table->string('course_title',255);
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

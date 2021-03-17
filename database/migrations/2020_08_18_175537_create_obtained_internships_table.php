@@ -24,6 +24,7 @@ class CreateObtainedInternshipsTable extends Migration
                 ->references('id')
                 ->on('departments');
             $table->string('file',255);
+            $table->text('details');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('isComplete', ['yes', 'no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();

@@ -60,7 +60,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                           
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Attach Doc</label>
@@ -68,6 +68,14 @@
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Details</label>
+                                    <textarea rows="10" name="details" id="details" ></textarea>
+                                </div>
+                            </div>
+
+
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -94,6 +102,7 @@
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Document</th>
+                                    <th>Details</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -104,17 +113,19 @@
                                     <td>{{$contact->campus->business_school->name}}</td>
                                     <td>{{$contact->campus->location}}</td>
                                     <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td>{!!$contact->details !!}</td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{str_replace(array("\r\n", "\r", "\n"), "",$contact->details)}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                                 
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>Business School Name</th>
                                     <th>Campus</th>
                                     <th>Document</th>
+                                    <th>Details</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -149,7 +160,7 @@
                     <h4 class="modal-title">Edit Obtained Internships </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body"> 
+                    <div class="modal-body">
 
                               <div class="col-md-6">
                             <div class="form-group">
@@ -159,6 +170,12 @@
                                 <span class="text-blue" id="file-name"></span>
                             </div>
                             <input type="hidden" id="edit_id">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Details</label>
+                                <textarea rows="10" name="edit_details" id="edit_details" ></textarea>
+                            </div>
                         </div>
 
 
@@ -170,7 +187,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -184,7 +201,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -201,6 +218,8 @@
         });
         $(function () {
             $('#datatable').DataTable()
+            CKEDITOR.replace('details');
+            CKEDITOR.replace('edit_details');
         })
     </script>
     <script type="text/javascript">
@@ -214,6 +233,10 @@
         });
 
          $('#form').submit(function (e) {
+             for ( instance in CKEDITOR.instances ) {
+                 CKEDITOR.instances[instance].updateElement();
+             }
+             let details = CKEDITOR.instances.details.getData();
             let file = $('#file').val();
 
             !file?addClass('file'):removeClass('file');
@@ -244,7 +267,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -257,11 +280,15 @@
 
 
          $('.edit').on('click', function () {
+
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
+            //  let details = JSON.parse(JSON.stringify($(this).data('id')));
+            //  console.log(details);
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
-            $('input[value='+data.status+']').iCheck('check');
+
+             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
@@ -269,7 +296,7 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
 
-            
+
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
