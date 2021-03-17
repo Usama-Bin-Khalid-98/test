@@ -65,11 +65,16 @@
                                     <input type="text" name="name" id="name" class="form-control">
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Type</label>
-                                    <input type="text"  name="type" id="type" class="form-control">
+                                    <select name="type" id="type" class="form-control select2">
+                                        @foreach($academyTypes as $type)
+                                        <option value="{{$type->name}}">{{$type->name}}</option>
+                                        @endforeach
+                                    </select>
+{{--                                    <input type="text"  name="type" id="type" class="form-control">--}}
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -81,7 +86,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Level</label>
-                                    <input type="text"  name="level" id="level" class="form-control">
+                                    <select name="level" id="level" class="form-control select2">
+                                        @foreach($academyLevels as $level)
+                                            <option value="{{$level->name}}">{{$level->name}}</option>
+                                        @endforeach
+                                    </select>
+{{--                                    <input type="text"  name="level" id="level" class="form-control">--}}
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -220,13 +230,18 @@
                                     id="edit_name" value="{{old('edit_name')}}" class="form-control">
                             </div>
                         </div>
-                       
+
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Type</label>
-                                    <input type="text" name="type"
-                                    id="edit_type" value="{{old('edit_type')}}" class="form-control">
+{{--                                    <input type="text" name="type"--}}
+{{--                                    id="edit_type" value="{{old('edit_type')}}" class="form-control">--}}
+                                <select name="type" id="edit_type" class="form-control select2">
+                                    @foreach($academyTypes as $type)
+                                        <option value="{{$type->name}}" {{old('edit_type') == $type->name? 'selected':''}}>{{$type->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                              <input type="hidden" name="id" id="edit_id">
                         </div>
@@ -240,8 +255,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Level</label>
-                                    <input type="text" name="level"
-                                    id="edit_level" value="{{old('edit_level')}}" class="form-control">
+{{--                                    <input type="text" name="level"--}}
+{{--                                    id="edit_level" value="{{old('edit_level')}}" class="form-control">--}}
+                                <select name="level" id="edit_level" class="form-control select2">
+                                    @foreach($academyLevels as $level)
+                                        <option value="{{$level->name}}" {{old('edit_level') == $level->name? 'selected':''}}>{{$level->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -380,7 +400,7 @@
                 return;
             }
             // Yes button callback
-            e.preventDefault();
+            // e.preventDefault();
             var formData = new FormData(this);
 
             $.ajax({
@@ -415,7 +435,7 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-           
+
             $('#edit_name').val(data.name);
             $('#edit_type').val(data.type);
             $('#edit_location').val(data.location);

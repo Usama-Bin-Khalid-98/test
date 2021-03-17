@@ -66,7 +66,7 @@
                                     <input type="text" name="title" id="title" class="form-control">
                                 </div>
                             </div>
-                            
+
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -107,10 +107,10 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Funding amount (PKR)</label>
-                                    <input type="number" name="amount" id="amount" class="form-control">
+                                    <input type="text" name="amount" id="amount" class="form-control">
                                 </div>
                             </div>
-                        
+
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">

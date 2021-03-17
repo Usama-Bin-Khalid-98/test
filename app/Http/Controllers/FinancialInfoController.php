@@ -74,8 +74,9 @@ class FinancialInfoController extends Controller
         try {
 
             $department_id = Auth::user()->department_id;
-            $campus_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $campus_id = Auth::user()->campus_id;
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first()->regStatus;
+//            dd($slip);
             if($slip){
                 $type='SAR';
             }else {

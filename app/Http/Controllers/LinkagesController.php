@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\AcademyLevel;
+use App\Models\Common\AcademyType;
 use App\Models\External_Linkages\Linkages;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,8 +24,9 @@ class LinkagesController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $genders = Linkages::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-        return view('external_linkages.linkages', compact('genders'));
+        $academyLevels = AcademyLevel::all();
+        $academyTypes = AcademyType::all();
+        return view('external_linkages.linkages', compact('genders', 'academyLevels', 'academyTypes'));
     }
 
     /**
@@ -179,7 +182,7 @@ class LinkagesController extends Controller
     {
         try {
         Linkages::where('id', $id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             Linkages::destroy($id);
             return response()->json(['success' => 'Record deleted successfully.']);
