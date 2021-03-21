@@ -43,11 +43,11 @@ class PrintController extends Controller
                 ->where(
                     [
                         'business_school_id'=>$req->cid,
-                        'department_id'=>$req->did
+                        'department_id'=>@$req->did
                     ]
                 )->get()->first();
             $programsUnderReview = Scope::with('program')->where(
-                ['campus_id'=>$req->cid, 'department_id' => $req->did])
+                ['campus_id'=>$req->cid, 'department_id' => @$req->did])
                 ->get();
         $campuses = Campus::where('business_school_id', $req->bid)->get();
         $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
@@ -230,7 +230,7 @@ ORDER BY course_types.name', array($req->cid));
                $curriculumReviews = CurriculumReview::with('campus','affiliations','designation', 'curriculum_reviewer')
                    ->where(['campus_id'=> $req->cid, 'department_id'=> $req->did]);
 
-               $programObjectives = DB::select('SELECT po.*, programs.name as program
+               $programObjectives = DB::select('SELECT po.*, p.name as program
 FROM program_objectives po, programs p, campuses c, users u
 WHERE po.program_id=p.id
   AND po.campus_id=c.id
