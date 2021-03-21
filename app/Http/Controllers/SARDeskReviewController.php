@@ -50,7 +50,7 @@ class SARDeskReviewController extends Controller
             ->join('departments as d', 'd.id', '=', 's.department_id')
             ->join('business_schools as bs', 'bs.id', '=', 'c.business_school_id')
             ->join('users as u', 'u.id', '=', 's.created_by')
-            ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId','c.id as campusId')
+            ->select('s.*', 'c.location as campus', 'd.name as department','d.id as department_id', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId','c.id as campusId')
             ->where('s.regStatus', 'SARDeskReview')
             ->orWhere('s.regStatus', 'SAR')
             ->get();
