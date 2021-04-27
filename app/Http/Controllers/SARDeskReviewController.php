@@ -2,9 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\AdmissionOffice;
+use App\AlumniMembership;
+use App\CreditTransfer;
+use App\DocumentaryEvidence;
+use App\FinancialAssistance;
+use App\Models\Carriculum\CourseOutline;
+use App\Models\Carriculum\EvaluationMethod;
+use App\Models\Carriculum\PlagiarismCase;
+use App\Models\Carriculum\ProgramDelivery;
+use App\Models\Carriculum\QuestionPaper;
 use App\Models\Common\EligibilityStatus;
 use App\Models\Common\Slip;
+use App\Models\External_Linkages\FacultyExchange;
+use App\Models\External_Linkages\Linkages;
+use App\Models\External_Linkages\ObtainedInternship;
+use App\Models\External_Linkages\StudentExchange;
+use App\Models\facility\QecInfo;
+use App\Models\Faculty\FacultyConsultancyProject;
+use App\Models\Faculty\FacultyDevelop;
+use App\Models\Faculty\FacultyExposure;
+use App\Models\Faculty\FacultyPromotion;
 use App\Models\MentoringInvoice;
+use App\Models\Research\ResearchAgenda;
 use App\Models\SARDeskReview;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultySummary;
@@ -14,14 +34,24 @@ use App\Models\Faculty\FacultyStability;
 use App\Models\Faculty\WorkLoad;
 use App\Models\Facility\BusinessSchoolFacility;
 use App\Models\Research\ResearchSummary;
+use App\Models\social_responsibility\ComplaintResolution;
+use App\Models\social_responsibility\EnvProtection;
+use App\Models\social_responsibility\InternalCommunity;
+use App\Models\social_responsibility\ProjectDetail;
+use App\Models\social_responsibility\SocialActivity;
 use App\Models\StrategicManagement\ApplicationReceived;
+use App\Models\StrategicManagement\AuditReport;
+use App\Models\StrategicManagement\ContactInfo;
 use App\Models\StrategicManagement\MissionVision;
+use App\Models\StrategicManagement\ParentInstitution;
 use App\Models\StrategicManagement\Scope;
+use App\Models\StrategicManagement\StatutoryCommittee;
 use App\Models\StrategicManagement\StrategicPlan;
 use App\Models\StrategicManagement\StudentEnrolment;
 use App\NbeacCriteria;
 use App\StudentsGraduated;
 use App\FacultyDegree;
+use App\StudentTransfer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -183,10 +213,7 @@ class SARDeskReviewController extends Controller
 
         $desk_rev= DeskReview::with('campus','department')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 //        dd($desk_rev);
-        return view('desk_review.desk_review', compact(
-            'program_dates',
-            'mission_vision',
-            'strategic_plan',
+        return view('desk_review.desk_review', compact('program_dates', 'mission_vision', 'strategic_plan',
             'strategic_date_diff',
             'application_received',
             'student_enrolment',
@@ -358,9 +385,9 @@ class SARDeskReviewController extends Controller
             if($update!=null)
             {
                 $data = array(
-                    'name'      => 'Safiullah'
+                    'name'      => 'Sania Tufail'
                 );
-                Mail::to('yoursafi509@gmail.com')->send(new EligibilityScreeningEmail($data));
+                Mail::to('info@nbeac.gov.pk')->send(new EligibilityScreeningEmail($data));
                 return response()->json(['success' => 'Case forwarded to eligibility screening']);
             }
         }catch (\Exception $e)
@@ -368,6 +395,94 @@ class SARDeskReviewController extends Controller
             return response()->json(['message' => 'Forwarding case to eligibility screening Failed.']);
         }
 
+    }
+
+    public  function sar_files(Request $request){
+        try {
+            $where = ['campus_id'=> $request->cid, 'department_id' => $request->did, 'type'=>'SAR'];
+            $whereReg = ['campus_id'=> $request->cid, 'department_id' => $request->did];
+//            dd($where);
+            $schoolInfo = Slip::where(['business_school_id'=> $request->cid, 'department_id' => $request->did])->with('campus', 'department')->first();
+//            dd($schoolInfo);/
+            $ContactInfo = ContactInfo::where($where)->get() ?? [] ;
+//            dd($ContactInfo);
+            //Appendix 1A
+            $StateryCommittee = StatutoryCommittee::where($where)->get() ??[];
+            $MissionVision = MissionVision::where($where)->first()->file ?? '' ;
+            $StrategicPlan = StrategicPlan::where($where)->first()->file ?? [] ;
+//            dd($StrategicPlan);
+            $AuditReport = AuditReport::where($whereReg)->first()->file ?? [] ;
+            $ParentInstitution = ParentInstitution::where($whereReg)->first()->file ?? '';
+//           Appendix 2A
+            $CourseOutline = CourseOutline::where($whereReg)->first()->file ?? '';
+//           Appendix 2B
+            $EvaluationMethod = EvaluationMethod::where($whereReg)->with('evaluation_items')->get()??[];
+//            dd($EvaluationMethod);
+            $ProgramDelivery = ProgramDelivery::where($whereReg)->first()->file ?? '';
+            $QuestionPaper = QuestionPaper::where($whereReg)->first()->file ?? '';
+            $PlagiarismCase = PlagiarismCase::where($whereReg)->first()->file ?? '';
+//            Students
+            $FinancialAssistance = FinancialAssistance::where($whereReg)->first()->file ?? '';
+            $AlumniMembership = AlumniMembership::where($whereReg)->first()->file ?? '';
+//            Faculty
+            $FacultyPromotion = FacultyPromotion::where($whereReg)->first()->file ?? '';
+            $FacultyDevelop = FacultyDevelop::where($whereReg)->first()->file ?? '';
+            $FacultyConsultancy = FacultyConsultancyProject::where($whereReg)->first()->file ?? '';
+            $FacultyExposure = FacultyExposure::where($whereReg)->first()->file ?? '';
+//            Research Development
+            $ResearchAgenda = ResearchAgenda::where($whereReg)->first()->file ?? '';
+            $ProjectDetail = ProjectDetail::where($whereReg)->first()->file ?? '';
+            $EnvProtection = EnvProtection::where($whereReg)->first()->file ?? '';
+            $ComplaintResolution = ComplaintResolution::where($whereReg)->first()->file ?? '';
+            $InternalCommunity = InternalCommunity::where($whereReg)->first()->file ?? '';
+            $SocialActivity = SocialActivity::where($whereReg)->first()->file ?? '';
+            $QecInfo = QecInfo::where($whereReg)->first()->file ?? '';
+            $Linkages = Linkages::where($whereReg)->first()->file ?? '';
+            $StudentExchange = StudentExchange::where($whereReg)->first()->file ?? '';
+            $FacultyExchange = FacultyExchange::where($whereReg)->first()->file ?? '';
+            $ObtainedInternship = ObtainedInternship::where($whereReg)->first()->file ?? '';
+            $AdmissionOffice = AdmissionOffice::where($whereReg)->first()->file ?? '';
+            $CreditTransfer = CreditTransfer::where($whereReg)->first()->file ?? '';
+            $StudentTransfer = StudentTransfer::where($whereReg)->first()->file ?? '';
+            $DocumentaryEvidence= DocumentaryEvidence::where($whereReg)->first()->file ?? '';
+
+//            dd($CourseOutline);
+            return  view('desk_review.sar_files', compact('schoolInfo','ContactInfo', 'StateryCommittee',
+'MissionVision',
+'StrategicPlan',
+'AuditReport',
+'ParentInstitution',
+'CourseOutline',
+'EvaluationMethod',
+'ProgramDelivery',
+'QuestionPaper',
+'PlagiarismCase',
+'FinancialAssistance',
+'AlumniMembership',
+'FacultyPromotion',
+'FacultyDevelop',
+'FacultyConsultancy',
+'FacultyExposure',
+'ResearchAgenda',
+'ProjectDetail',
+'EnvProtection',
+'ComplaintResolution',
+'InternalCommunity',
+'SocialActivity',
+'QecInfo',
+'Linkages',
+'StudentExchange',
+'FacultyExchange',
+'ObtainedInternship',
+'AdmissionOffice',
+'CreditTransfer',
+'StudentTransfer',
+'DocumentaryEvidence'
+                )
+);
+        }catch (Exception $e) {
+            return response()->json(['message'=>'something went wrong']);
+        }
     }
 
     /**

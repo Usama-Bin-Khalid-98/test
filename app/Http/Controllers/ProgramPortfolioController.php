@@ -25,7 +25,6 @@ class ProgramPortfolioController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
 
-        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
        // dd($scopes);
         $courses = CourseType::where('status', 'active')->get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
@@ -36,6 +35,8 @@ class ProgramPortfolioController extends Controller
         }else {
            $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
+
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $isSAR?'SAR':'REG'])->get();
         //dd($portfolios[0]->program);
          return view('registration.curriculum.portfolio', compact('scopes','courses','portfolios', 'isSAR'));
     }

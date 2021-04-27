@@ -8,6 +8,7 @@ use App\Models\Common\Department;
 use App\Models\Common\PaymentMethod;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\Sar\SarInvoice;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -35,7 +36,14 @@ class SarInvoiceController extends Controller
         @$departments = Department::where(['status'=> 'active', 'id'=>Auth::user()->department_id])->get()->first();
         $payment_methods = PaymentMethod::where('status', 'active')->get();
 //        dd($payment_methods);
-        $fee_amount = DepartmentFee::with('fee_type')->where(['fee_type_id'=>6,'status'=> 'active'])->get()->first();
+        $program_fee = DepartmentFee::with('fee_type')->where(['fee_type_id'=>6,'status'=> 'active'])->get()->first();
+
+        $getScopes =  Scope::where(['campus_id'=> $school_id->campus_id, 'department_id'=> $school_id->department_id, 'type'=>'SAR'])->with('program')->get();
+        $countPrograms = $getScopes->count()??0;
+        $amount = $program_fee->amount??0;
+        $fee_amount = $amount * $countPrograms;
+//        dd($fee_amount);
+//        dd($getScope);
 //        dd($fee_amount);
         //// generate invoice ///////////
         $latest = SarInvoice::latest()->first();
@@ -46,7 +54,7 @@ class SarInvoiceController extends Controller
             $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
             $invoice_no = 'NBEAC-HEC/ GU, SAR:'. sprintf('%05d', $string + 1);
         }
-        return view('sar.invoices', compact('invoices','departments','invoice_no', 'payment_methods','fee_amount'));
+        return view('sar.invoices', compact('invoices','getScopes','departments','invoice_no', 'payment_methods','fee_amount'));
 
     }
 
@@ -70,13 +78,16 @@ class SarInvoiceController extends Controller
     {
         try {
             $getFee =DepartmentFee::where(['fee_type_id'=> 6])->first();
+            $getScops= Scope::where(['campus_id'=>Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'type'=>'SAR'])->get()->count();
+//            dd($getScops);
+            $netAmount = $getFee->amount *$getScops;
             if($getFee) {
                 SarInvoice::create([
                     'campus_id' => Auth::user()->campus_id,
                     'invoice_no' => $request->invoice_no,
                     'department_id' => Auth::user()->department_id,
                     'fee_type_id' => 6,
-                    'amount' => $getFee->amount,
+                    'amount' => $netAmount,
                     'status' => 'pending',
                     'created_by' => Auth::id(),
                 ]);
@@ -261,8 +272,16 @@ class SarInvoiceController extends Controller
      * @param  \App\Models\Sar\SarInvoice  $sarInvoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SarInvoice $sarInvoice)
+    public function destroy($sarInvoice)
     {
-        //
+//        dd($sarInvoice);
+        try {
+        SarInvoice::destroy($sarInvoice);
+
+        return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
     }
 }

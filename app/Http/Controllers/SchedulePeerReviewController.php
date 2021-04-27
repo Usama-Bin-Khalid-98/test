@@ -91,10 +91,12 @@ class SchedulePeerReviewController extends Controller
     }
 
     public function doublemax($mylist){
-        @$maxvalue=max($mylist);
+        if($mylist){
+        @$maxvalue=max(@$mylist);
         foreach ($mylist as $key=>$value) {
             if($value==$maxvalue)$maxindex=$key;
         }
+    }
         return @$maxindex;
         //return array("m"=>$maxvalue,"i"=>$maxindex);
     }

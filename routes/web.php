@@ -322,12 +322,16 @@ Route::get('/email', function() {
         Route::group(['middleware' => ['role:Mentor']], function () {
             Route::resource('mentorReport', 'MentoringReportController');
             Route::put('updateInvoiceStatus/{id}', 'MentoringInvoiceController@updateInvoiceStatus');
+            Route::get('sap-report', 'SARDeskReviewController@sap_report');
+            Route::get('sar-files/{cid?}', 'SARDeskReviewController@sar_files');
+            Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
+
         });
 
-        Route::group(['middleware' => ['role:Mentor|NBEACAdmin']], function () {
+        Route::group(['middleware' => ['role:NBEACAdmin']], function () {
             Route::resource('sar-desk-review', 'SARDeskReviewController');
-            Route::get('sap-report', 'SARDeskReviewController@sap_report');
             Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
+
 
 
         });

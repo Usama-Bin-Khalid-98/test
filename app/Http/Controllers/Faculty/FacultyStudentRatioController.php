@@ -25,7 +25,6 @@ class FacultyStudentRatioController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
@@ -42,6 +41,7 @@ class FacultyStudentRatioController extends Controller
                 ->get();
         }
 
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
         $getFTE = FacultyTeachingCources::with('faculty_program')
             ->where('lookup_faculty_type_id' , 1)
             ->where('deleted_at', null)

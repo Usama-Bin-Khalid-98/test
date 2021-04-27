@@ -23,6 +23,7 @@ use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
 use function GuzzleHttp\Promise\queue;
 
+error_reporting(E_ALL ^ E_DEPRECATED);
 
 class EligibilityScreeningController extends Controller
 {
