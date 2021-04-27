@@ -27,7 +27,6 @@ class ApplicationReceivedController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $semesters = Semester::where('status', 'active')->get();
 
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
@@ -37,6 +36,7 @@ class ApplicationReceivedController extends Controller
             $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
 
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
         return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
     }
 

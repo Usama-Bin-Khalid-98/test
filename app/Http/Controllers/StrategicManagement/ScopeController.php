@@ -22,16 +22,25 @@ class ScopeController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        @$department_id = Slip::where(
-            [
-                'business_school_id' => Auth::user()->campus_id,
-                'status'=>'approved'
-            ])->get()->first()->department_id;
+//        @$department_id = Slip::where(
+//            [
+//                'business_school_id' => Auth::user()->campus_id,
+//                'status'=>'approved'
+//            ])->get()->first()->department_id;
+
         //dd(DB::getQueryLog());
         //dd($department_id);
         $programs = Program::where(['status' => 'active'])->get();
         $levels = Level::where('status', 'active')->get();
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])
+            ->where('regStatus','SAR')
+            ->orWhere('regStatus', 'SAP')
+            ->orWhere('regStatus', 'SARDeskReview')
+            ->orWhere('regStatus', 'PeerReviewVisit')
+            ->orWhere('regStatus', 'ScheduledPRVisit')
+            ->orWhere('regStatus', 'PeerReviewReport')
+                ->first();
+//       dd($slip);
         $isSAR = false;
         if($slip){
             $scopes = Scope::with('level', 'program')

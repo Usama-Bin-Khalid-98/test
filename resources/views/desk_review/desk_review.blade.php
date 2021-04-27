@@ -633,7 +633,7 @@
             // $('#edit_nbeac_criteria').val(data.nbeac_criteria);
             let id = data.id;
             // $('#comments').val(data_row.comments);
-            CKEDITOR.instances.comments.setData('{!! @$desk_rev[0]->desk_review_comments !!}');
+            {{--CKEDITOR.instances.comments.setData('{!! @$desk_rev[0]->desk_review_comments !!}');--}}
 
             $.ajax({
                 url:'{{url('desk-review-edit')}}/'+id,

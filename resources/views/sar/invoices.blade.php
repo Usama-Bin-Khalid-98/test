@@ -58,10 +58,19 @@
                                     <input type="hidden" readonly id="department_id" name="department_id" readonly class="form-control" value="{{@$departments->id}}">
                                 </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Programs</label>
+                                    <ul>@foreach($getScopes as $program)<li>{{$program->program->name}} @endforeach</li></ul>
+                                    </div>
+                            </div>
+
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Department Fee amount</label>
-                                    <input type="text" readonly id="fee_amount" readonly name="fee_amount" value="{{@$fee_amount->amount}}" class="form-control">
+                                    <input type="text" readonly id="fee_amount" readonly name="fee_amount" value="{{@$fee_amount}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -70,6 +79,7 @@
                                     <input type="text" readonly id="invoice_no" readonly name="invoice_no" value="{{@$invoice_no??old('invoice_no')}}" class="form-control">
                                 </div>
                             </div>
+
 
                             {{--                            <div class="col-md-6">--}}
                             {{--                                <div class="form-group">--}}
@@ -645,7 +655,7 @@
                             if(response.success){
                                 Notiflix.Notify.Success(response.success);
                             }
-                            location.reload();
+                            // location.reload();
                         },
                         error:function(response, exception){
                             Notiflix.Loading.Remove();

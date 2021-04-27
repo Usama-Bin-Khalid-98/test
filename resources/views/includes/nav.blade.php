@@ -1055,11 +1055,11 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasanyrole('Mentor')
           <li class="{{ (request()->is('mentorReport')) ? 'active' : '' }}"><a href="{{url('mentorReport')}}"><i class="fa fa-meetup text-red"></i>Mentor Report on Registration</a></li>
           @endhasrole
-          @hasrole('NBEACAdmin')
+          @hasrole('Mentor')
           <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-files-o text-blue " ></i>Self Assessment Process Report</a></li>
           @endhasrole
 {{--          @if($isActiveSAR)--}}
-          @hasrole('NBEACAdmin|Mentor')
+          @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('sar-desk-review')) ? 'active' : '' }}">
               <a href="{{url('sar-desk-review')}}"><i class="fa fa-search text-blue " ></i>SAR Desk Review
                   @if($SarDesk != 0)

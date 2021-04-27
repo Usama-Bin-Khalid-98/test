@@ -23,13 +23,13 @@ class StudentGenderController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
             $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=>$slip?'SAR':'REG'])->get();
 
         return view('registration.student_enrolment.student_gender', compact('programs','genders'));
     }

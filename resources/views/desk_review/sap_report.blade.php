@@ -104,6 +104,7 @@
                                     <th>Email</th>
                                     {{--                                <th>Invoice Slip</th>--}}
                                     <th>Desk Review</th>
+                                    <th>Files</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -120,9 +121,9 @@
                                         <td>{{@$regist->contact_no}}</td>
                                         <td>{{@$regist->email}}</td>
                                         <td><a href="print?cid={{@$regist->campusId}}&bid={{@$regist->schoolId}}">SAR Review</a></td>
-                                        {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                                        <td><a href="sar-files?cid={{@$regist->campusId}}&did={{@$regist->department_id}}">Files</a> </td>
                                         <td><i class="badge {{$regist->regStatus == 'Review'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'created'}}</i></td>
-                                        <td><i class="fa fa-trash text-info"></i> | <i  class="fa fa-pencil text-blue edit" onclick="deskReview({{$regist->id}})"></i> </td>
+                                        <td><i class="fa fa-trash text-info"></i> | <i  class="fa fa-pencil text-blue edit" data-id="{{str_replace(array("\r\n", "\r", "\n"), "", $regist->comments)}}" data-row='{"id":{{$regist->id}}}' onclick="deskReview({{$regist->id}})"></i> </td>
                                     </tr>
 
                                 @endforeach
@@ -138,6 +139,7 @@
                                     <th>Email</th>
                                     {{--                                <th>Invoice Slip</th>--}}
                                     <th>Desk Review</th>
+                                    <th>Files</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
