@@ -305,7 +305,7 @@
                     "endDate": info.endStr
                 })
             },
-            @hasrole('ESScheduler|NBEACAdmin|NbeacFocalPerson|Mentor')
+            @hasrole('ESScheduler|NBEACAdmin|NbeacFocalPerson|Mentor|PeerReviewer')
             eventClick: function(info) {
                 $('#peerReviewer-modal').modal('show');
                 console.log('Event: complete details' + info.event.id);

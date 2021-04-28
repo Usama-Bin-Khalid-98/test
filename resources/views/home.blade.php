@@ -1590,7 +1590,7 @@
           </div>
       </div>
       <div class="modal fade" id="thankyou-modal">
-          <div class="modal-dialog" style="width: 90%;">
+          <div class="modal-dialog" style="width: 40%;">
               <div class="modal-content">
                   <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1603,13 +1603,13 @@
                       <div class="modal-body">
                           <input type="hidden" id="thankyou_slip_id" name="slip_id">
 
-                          <textarea id="comments" name="thankyouEmail"></textarea>
+{{--                          <textarea id="comments" name="thankyouEmail"></textarea>--}}
                           <!-- /.form group -->
 
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <input type="submit" name="submit" class="btn btn-info" value="Send">
+                          <input type="submit" name="submit" class="btn btn-info" value="Send Auto generated Email">
                       </div>
                   </form>
               </div>
@@ -1670,20 +1670,20 @@
         $('#thankyou_slip_id').val($(this).data('id'));
     })
     $('#Thankyouform').submit(function (e) {
-        for ( instance in CKEDITOR.instances ) {
-            CKEDITOR.instances[instance].updateElement();
-        }
-        var comments = CKEDITOR.instances.comments.getData();
-        // var file = $('#file').val();
-
-        // !file?addClass('file'):removeClass('file');
-        !comments?addClass('comments'):removeClass('comments');
-
-        if(!comments)
-        {
-            Notiflix.Notify.Warning("Fill all the required Fields.");
-            return;
-        }
+        // for ( instance in CKEDITOR.instances ) {
+        //     CKEDITOR.instances[instance].updateElement();
+        // }
+        // var comments = CKEDITOR.instances.comments.getData();
+        // // var file = $('#file').val();
+        //
+        // // !file?addClass('file'):removeClass('file');
+        // !comments?addClass('comments'):removeClass('comments');
+        //
+        // if(!comments)
+        // {
+        //     Notiflix.Notify.Warning("Fill all the required Fields.");
+        //     return;
+        // }
         e.preventDefault();
         let formData = new FormData(this)
         $.ajaxSetup({
@@ -1894,7 +1894,7 @@
                 let data = JSON.parse(JSON.stringify(response));
                 console.log("success resp ",data);
                 console.log('pr date value',data.pr_visit_date);
-                $('#profile_sheet').attr('href',data.profile_sheet);w
+                $('#profile_sheet').attr('href',data.profile_sheet);
 
                 $('#profileSheetStatus').css('display', 'block');
                 $('#downloadProfileSheet').css('display', 'block');

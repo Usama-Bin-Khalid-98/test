@@ -271,6 +271,10 @@ class HomeController extends Controller
         $businessSchools = Slip::with('campus', 'department')
             ->where(['status' =>'approved', 'regStatus'=>'SAR'])->get();
 
+        $profileSheet = Slip::with('campus', 'department')
+            ->where(['business_school_id'=>Auth::user()->campus_id,
+                'department_id'=>Auth::user()->department_id])->first();
+
         $travel_plan = Slip::where('id', @$PeerReviewVisit[0]->id)->get()->first();
 //        dd($travel_plan);
         $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();
@@ -296,7 +300,7 @@ class HomeController extends Controller
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
             'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks',
             'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips',
-            'mentoring_slip_count', 'PeerReviewers'));
+            'mentoring_slip_count', 'PeerReviewers','profileSheet'));
     }
 
     /**
