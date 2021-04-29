@@ -409,9 +409,9 @@ class SARDeskReviewController extends Controller
             //Appendix 1A
             $StateryCommittee = StatutoryCommittee::where($where)->get() ??[];
             $MissionVision = MissionVision::where($where)->first()->file ?? '' ;
-            $StrategicPlan = StrategicPlan::where($where)->first()->file ?? [] ;
+            $StrategicPlan = StrategicPlan::where($where)->first()->file ?? '' ;
 //            dd($StrategicPlan);
-            $AuditReport = AuditReport::where($whereReg)->first()->file ?? [] ;
+            $AuditReport = AuditReport::where($whereReg)->first()->file ?? '' ;
             $ParentInstitution = ParentInstitution::where($whereReg)->first()->file ?? '';
 //           Appendix 2A
             $CourseOutline = CourseOutline::where($whereReg)->first()->file ?? '';
