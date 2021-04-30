@@ -134,7 +134,7 @@
                                     <tr>
                                         <td>Statutory Committee</td>
                                         <td>Appendix-1B</td>
-                                        <td> @foreach($StateryCommittee as $committee) @if($committee->file !='') <a href="{{url($committee->file??'#')}}"><span data-toggle="tooltip" title="{{$committee->file??''}}" class="label label-{{$committee->file?'success':'danger'}}"><i class="glyphicon glyphicon-file"></i></span></a> @endif @endforeach</td>
+                                        <td> @foreach($StateryCommittee as $committee) @if($committee->file !='' && $committee->file !='/') <a href="{{url($committee->file??'#')}}"><span data-toggle="tooltip" title="{{$committee->file??''}}" class="label label-{{$committee->file?'success':'danger'}}"><i class="glyphicon glyphicon-file"></i></span></a> @endif @endforeach</td>
                                     </tr>
 
                                     <tr>
