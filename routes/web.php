@@ -258,6 +258,8 @@ Route::get('/email', function() {
         Route::group(['middleware' => ['role:ESScheduler|PeerReviewer|NBEACAdmin|Mentor']], function () {
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::get('PeerReviewerAvailability', 'SchedulePeerReviewController@peerAvailability');
+            Route::get('sar-files/{cid?}', 'SARDeskReviewController@sar_files');
+
 
         });
 
@@ -323,13 +325,13 @@ Route::get('/email', function() {
             Route::resource('mentorReport', 'MentoringReportController');
             Route::put('updateInvoiceStatus/{id}', 'MentoringInvoiceController@updateInvoiceStatus');
             Route::get('sap-report', 'SARDeskReviewController@sap_report');
-            Route::get('sar-files/{cid?}', 'SARDeskReviewController@sar_files');
             Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
 
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
-            Route::resource('sar-desk-review', 'SARDeskReviewController');
+            Route::resource('sar-desk-review', 'SARDes
+            kReviewController');
             Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
 
 

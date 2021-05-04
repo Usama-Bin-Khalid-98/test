@@ -261,13 +261,13 @@ class SlipController extends Controller
         return [
             'visit_date' => 'required',
             'slip_id' => 'required',
-            'file' => 'mimes:pdf,docx'
+//            'file' => 'mimes:pdf,docx'
         ];
     }
     public function sheet_rules(){
         return [
             'slip_id' => 'required',
-            'file' => 'mimes:pdf,docx,xlsx,xls,doc'
+//            'file' => 'mimes:pdf,docx,xlsx,xls,doc'
         ];
     }
     protected function messages() {

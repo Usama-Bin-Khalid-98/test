@@ -71,7 +71,7 @@
                                 <td>{{@$feedback->department}}</td>
 {{--                                <td><a href="{{url('deskreview')}}/{{@$feedback->id}}">Desk Review</a></td>--}}
                                 {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
-                                <td><a href="{{url('registrationPrint?cid=')}}{{@$feedback->campus_id}}&bid={{@$feedback->business_school_id}}">Registration Print </a></td>
+                                <td><a href="{{url('registrationPrint?cid=')}}{{@$feedback->campus_id}}&bid={{@$feedback->business_school_id}}&did={{@$feedback->department_id}}">Registration Print </a></td>
                                 {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                 <td>
                                     <a href="{{$feedback->feedback_file}}" class="badge bg-green"> feedback <i class="fa fa-file-excel-o"></i></a>

@@ -29,7 +29,7 @@
         </section><!-- Main content -->
 
 
-        @hasrole('NBEACAdmin|Mentor')
+        @hasrole('NBEACAdmin|Mentor|PeerReviewer')
         <section class="content">
 
             <div class="row" >
@@ -412,69 +412,3 @@
 <!-- /.modal -->
  <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
  <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
-<!-- Morris.js charts -->
-{{--<script src="bower_components/raphael/raphael.min.js"></script>--}}
-{{--<script src="bower_components/morris.js/morris.min.js"></script>--}}
-<!-- Sparkline -->
-{{--<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>--}}
-<!-- jvectormap -->
-{{--<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>--}}
-{{--<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>--}}
-<!-- jQuery Knob Chart -->
-{{--<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>--}}
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-{{--<script src="dist/js/pages/dashboard.js"></script>--}}
-@hasrole('NBEACAdmin|Mentor')
-<script>
-    $('.status').on('click', function (e) {
-        var id = $(this).data('id');
-
-        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
-            function(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                })
-                // Yes button callback
-                $.ajax({
-                    url:'{{url("admin")}}/'+id,
-                    type:'PATCH',
-                    data: { id:id},
-                    beforeSend: function(){
-                        Notiflix.Loading.Pulse('Processing...');
-                    },
-                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                    success: function (response) {
-                        Notiflix.Loading.Remove();
-                        console.log("success resp ",response.success);
-                        if(response.success){
-                            Notiflix.Notify.Success(response.success);
-                        }
-
-                        location.reload();
-
-                        console.log('response here', response);
-                    },
-                    error:function(response, exception){
-                        Notiflix.Loading.Remove();
-                        $.each(response.responseJSON, function (index, val) {
-                            Notiflix.Notify.Failure(val);
-                        })
-
-                    }
-                })
-            },
-            function(){ // No button callback
-                // alert('If you say so...');
-            } );
-    });
-
-function deskReview(id){
-    $('#myModal').modal("show");
-    $("#slipId").val(id);
-}
-
-</script>
-
-@endhasrole

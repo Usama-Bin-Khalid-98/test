@@ -1057,6 +1057,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
           @hasrole('Mentor')
           <li  class="{{ (request()->is('sap-report')) ? 'active' : '' }}"><a href="{{url('sap-report')}}"><i class="fa fa-files-o text-blue " ></i>Self Assessment Process Report</a></li>
+
           @endhasrole
 {{--          @if($isActiveSAR)--}}
           @hasrole('NBEACAdmin')
@@ -1143,6 +1144,10 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
 
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('basic-info')) ? 'active' : '' }}"><a href="{{url('basic-info')}}"><i class="fa fa-info text-maroon"></i>NBEAC Basic Info</a></li>
+          @endhasrole
+
+          @hasrole('PeerReviewer')
+          <li  class="{{ (request()->is('peerReviewReport')) ? 'active' : '' }}"><a href="{{url('peerReviewReport')}}"><i class="fa fa-file text-yellow"></i>Peer Review Report</a></li>
           @endhasrole
 
           </ul>
