@@ -1294,6 +1294,7 @@
                           <th>Desk Review</th>
                           <th>Registration Print</th>
                           <th>SAR</th>
+                          <th>Files</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -1308,7 +1309,9 @@
                               <td><a href="{{url('deskreview')}}/{{@$slip->id}}">Desk Review</a></td>
                               {{--<a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
                               <td><a href="{{url('registrationPrint?cid=')}}{{@$slip->campus->id}}&bid={{@$slip->campus->business_school->id}}&did={{@$slip->department_id}}">Registration Print </a></td>
-                              <td><a class="badge bg-maroon" href="print?cid={{$slip->campus->id}}&bid={{$slip->campus->business_school->id}}&did={{@$slip->department_id}}">SAR</a></td>
+                              <td><a href="print?cid={{$slip->campus->id}}&bid={{$slip->campus->business_school->id}}&did={{@$slip->department_id}}">SAR</a></td>
+
+                              <td><a href="sar-files?cid={{@$slip->campus->id}}&did={{@$slip->department_id}}">Files</a> </td>
                               <td><i class="badge" data-id="{{@$slip->id}}"  style="background: {{$slip->regStatus == 'Initiated'?'red':''}}{{$slip->regStatus == 'Review'?'brown':''}}{{$slip->regStatus == 'Approved'?'green':''}}" >{{@$slip->regStatus != ''?ucwords($slip->regStatus):'Initiated'}}</i></td>
                               <td>
                                   @if(@$slip->regStatus =='ScheduledPRVisit' || @$slip->regStatus =='PeerReviewVisit' )
@@ -1340,6 +1343,7 @@
                           <th>Desk Review</th>
                           <th>Registration Print</th>
                           <th>SAR</th>
+                          <th>Files</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
