@@ -1320,7 +1320,7 @@
                                   @hasrole('NbeacFocalPerson|NBEACAdmin')
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#consultativeCommittee-modal" class="btn-xs bg-red-active consultativeCommittee" style="cursor: pointer"> <i data-toggle="tooltip" title="Consultative committee" class="fa fa-users"></i></a><br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#TravelPlane-modal" class="btn-xs bg-aqua TravelPlane" style="cursor: pointer"> <i data-toggle="tooltip" title="Generate Travel Plan" class="fa fa-car"></i></a><br>
-                                  <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#profileSheet-modal" class="btn-xs btn-primary profileSheet" style="cursor: pointer"> <i data-toggle="tooltip" title="Upload Profile Sheet" class="fa fa-file-excel-o"></i></a> <br>
+                                  <a href="profile_sheet/{{$slip->campus->id}}/{{@$slip->department_id}}" class="btn-xs btn-primary" style="cursor: pointer"> <i data-toggle="tooltip" title="Upload Profile Sheet" class="fa fa-file-excel-o"></i></a> <br>
                                   <a data-id="{{@$slip->id}}" data-toggle="modal" data-target="#thankyou-modal" class="btn-xs bg-maroon thankyou" style="cursor: pointer"> <i class="fa fa-envelope" data-toggle="tooltip" title="Thank You Email"></i></a>
                                   @endhasrole
                                   @hasrole('Mentor|PeerReviewer')
