@@ -344,7 +344,9 @@ Route::get('/email', function() {
             Route::put('updateSlipStatus/{id}', 'PeerReviewReportController@updateSlipStatus');
             Route::get('peerReviewDetails/{id?}', 'PeerReviewReportController@details');
             Route::post('travelPlan', 'StrategicManagement\SlipController@travelPlan');
-            Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
+//            Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
+            Route::post('add_profile_sheet', 'ProfileSheetController@store');
+            Route::get('profile_sheet/{cid}/{did}', 'ProfileSheetController@edit');
             Route::get('getIeligibility-screeningnvoice/{id}', 'StrategicManagement\SlipController@edit');
             Route::post('approvedConsultativeComitt','SchedulePeerReviewController@approvedConsultative');
             Route::post('ThankyouMsg', 'PeerReviewReportController@ThankyouMsg');
