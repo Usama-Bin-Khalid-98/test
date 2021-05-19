@@ -7,6 +7,8 @@ use App\Models\PeerReview\PeerReviewReviewer;
 use App\Models\StrategicManagement\Scope;
 use App\ProfileSheet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class ProfileSheetController extends Controller
 {
@@ -38,6 +40,37 @@ class ProfileSheetController extends Controller
      */
     public function store(Request $request)
     {
+        $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+        if($validation->fails()){
+            return response()->json($validation->messages()->all(), 422);
+
+        }
+        try {
+
+            $delete_all = ProfileSheet::where(['campus_id'=> $request->campus_id, 'department_id' => $request->department_id])->delete();
+
+            foreach($request->all() as $key=>$item)
+            {
+                if($key !='campus_id' && $key !='department_id')
+                {
+                $data= [
+                    'column_name' => $key,
+                    'value' => $item,
+                    'campus_id'=> $request->campus_id,
+                    'department_id'=> $request->department_id
+                ];
+
+            $insert_new = ProfileSheet::create($data);
+            }
+            }
+            dd($request->campus_id);
+
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+
+        }
         dd($request);
     }
 
@@ -95,6 +128,26 @@ class ProfileSheetController extends Controller
      */
     public function destroy(ProfileSheet $profileSheet)
     {
-        //
+        try {
+            ProfileSheet::destroy($profileSheet->id);
+            return response()->json(['success' => 'Record deleted successfully.']);
+        }catch (Exception $e)
+        {
+            return response()->json(['error' => 'Failed to delete record.']);
+        }
+    }
+
+    protected function rules() {
+        return [
+            'department_id' => 'required',
+            'campus_id' => 'required',
+
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'required' => 'The :attribute can not be blank.',
+        ];
     }
 }

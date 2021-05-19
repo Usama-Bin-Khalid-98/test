@@ -77,6 +77,8 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
+                            <input type="hidden" id="campus_id"  name="campus_id" value="{{ Request::segment(2) }}">
+                            <input type="hidden" id="department_id" name="department_id" value="{{ Request::segment(3) }}">
                                 <table class="table table-bordered ">
                                     <thead>
                                         <tr>
@@ -184,7 +186,7 @@
                                     </tfoot>
 
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;">  </div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -990,7 +992,7 @@
                                     <tr>
                                         <td>49</td>
                                         <td>Financial Management </td>
-                                        <td><textarea class="form-control" name="comments44" id="comments44"></textarea></td>
+                                        <td><textarea class="form-control" name="comments49" id="comments49"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w49" id="w49"></td>
                                         <td><input type="text" maxlength="1" name="x49" id="x49"></td>
                                         <td><input type="text" maxlength="1" name="y49" id="y49"></td>
@@ -1002,7 +1004,7 @@
                                     <tr>
                                         <td>50</td>
                                         <td>Learning Environment</td>
-                                        <td><textarea class="form-control" name="comments45" id="comments45"></textarea></td>
+                                        <td><textarea class="form-control" name="comments50" id="comments50"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w50" id="w50"></td>
                                         <td><input type="text" maxlength="1" name="x50" id="x50"></td>
                                         <td><input type="text" maxlength="1" name="y50" id="y50"></td>
@@ -1014,7 +1016,7 @@
                                     <tr>
                                         <td>51</td>
                                         <td>Library</td>
-                                        <td><textarea class="form-control" name="comments46" id="comments46"></textarea></td>
+                                        <td><textarea class="form-control" name="comments51" id="comments51"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w51" id="w51"></td>
                                         <td><input type="text" maxlength="1" name="x51" id="x51"></td>
                                         <td><input type="text" maxlength="1" name="y51" id="y51"></td>
@@ -1026,7 +1028,7 @@
                                     <tr>
                                         <td>52</td>
                                         <td>Computing facilities</td>
-                                        <td><textarea class="form-control" name="comments47" id="comments47"></textarea></td>
+                                        <td><textarea class="form-control" name="comments52" id="comments52"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w52" id="w52"></td>
                                         <td><input type="text" maxlength="1" name="x52" id="x52"></td>
                                         <td><input type="text" maxlength="1" name="y52" id="y52"></td>
@@ -1038,7 +1040,7 @@
                                     <tr>
                                         <td>53</td>
                                         <td>Other facilities</td>
-                                        <td><textarea class="form-control" name="comments48" id="comments48"></textarea></td>
+                                        <td><textarea class="form-control" name="comments53" id="comments53"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w53" id="w53"></td>
                                         <td><input type="text" maxlength="1" name="x53" id="x53"></td>
                                         <td><input type="text" maxlength="1" name="y53" id="y53"></td>
@@ -1050,7 +1052,7 @@
                                     <tr>
                                         <td>54</td>
                                         <td>Administrative Support Function</td>
-                                        <td><textarea class="form-control" name="comments48" id="comments48"></textarea></td>
+                                        <td><textarea class="form-control" name="comments54" id="comments54"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w54" id="w54"></td>
                                         <td><input type="text" maxlength="1" name="x54" id="x54"></td>
                                         <td><input type="text" maxlength="1" name="y54" id="y54"></td>
@@ -1062,7 +1064,7 @@
                                     <tr>
                                         <td>55</td>
                                         <td>Quality Enhancement Cell</td>
-                                        <td><textarea class="form-control" name="comments48" id="comments48"></textarea></td>
+                                        <td><textarea class="form-control" name="comments55" id="comments55"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w55" id="w55"></td>
                                         <td><input type="text" maxlength="1" name="x55" id="x55"></td>
                                         <td><input type="text" maxlength="1" name="y55" id="y55"></td>
@@ -1129,7 +1131,7 @@
                                     <tr>
                                         <td>56</td>
                                         <td>International Linkages </td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments56" id="comments56"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w56" id="w56"></td>
                                         <td><input type="text" maxlength="1" name="x56" id="x56"></td>
                                         <td><input type="text" maxlength="1" name="y56" id="y56"></td>
@@ -1141,7 +1143,7 @@
                                     <tr>
                                         <td>57</td>
                                         <td>National Academic Linkages</td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments57" id="comments57"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w57" id="w57"></td>
                                         <td><input type="text" maxlength="1" name="x57" id="x57"></td>
                                         <td><input type="text" maxlength="1" name="y57" id="y57"></td>
@@ -1153,7 +1155,7 @@
                                     <tr>
                                         <td>58</td>
                                         <td>Corporate Linkages </td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments58" id="comments58"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w58" id="w58"></td>
                                         <td><input type="text" maxlength="1" name="x58" id="x58"></td>
                                         <td><input type="text" maxlength="1" name="y58" id="y58"></td>
@@ -1165,7 +1167,7 @@
                                     <tr>
                                         <td>59</td>
                                         <td>Corporate Linkages </td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments59" id="comments59"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w59" id="w59"></td>
                                         <td><input type="text" maxlength="1" name="x59" id="x59"></td>
                                         <td><input type="text" maxlength="1" name="y59" id="y59"></td>
@@ -1177,7 +1179,7 @@
                                     <tr>
                                         <td>60</td>
                                         <td>Placement Office: Internships and Placements</td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments60" id="comments60"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w60" id="w60"></td>
                                         <td><input type="text" maxlength="1" name="x60" id="x60"></td>
                                         <td><input type="text" maxlength="1" name="y60" id="y60"></td>
@@ -1189,7 +1191,7 @@
                                     <tr>
                                         <td>61</td>
                                         <td>Placement Office: Corporate Involvement</td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments61" id="comments61"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w61" id="w61"></td>
                                         <td><input type="text" maxlength="1" name="x61" id="x61"></td>
                                         <td><input type="text" maxlength="1" name="y61" id="y61"></td>
@@ -1251,7 +1253,7 @@
                                     <tr>
                                         <td>62</td>
                                         <td>Admissions Office </td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments62" id="comments62"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w62" id="w62"></td>
                                         <td><input type="text" maxlength="1" name="x62" id="x62"></td>
                                         <td><input type="text" maxlength="1" name="y62" id="y62"></td>
@@ -1263,7 +1265,7 @@
                                     <tr>
                                         <td>63</td>
                                         <td>Student Selection Processes</td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments63" id="comments63"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w63" id="w63"></td>
                                         <td><input type="text" maxlength="1" name="x63" id="x63"></td>
                                         <td><input type="text" maxlength="1" name="y63" id="y63"></td>
@@ -1275,7 +1277,7 @@
                                     <tr>
                                         <td>64</td>
                                         <td>Examination Monitoring</td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments64" id="comments64"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w64" id="w64"></td>
                                         <td><input type="text" maxlength="1" name="x64" id="x64"></td>
                                         <td><input type="text" maxlength="1" name="y64" id="y64"></td>
@@ -1287,7 +1289,7 @@
                                     <tr>
                                         <td>65</td>
                                         <td>Examination cell</td>
-                                        <td><textarea class="form-control"></textarea></td>
+                                        <td><textarea class="form-control"  name="comments65" id="comments65"></textarea></td>
                                         <td><input type="text" maxlength="1" name="w65" id="w65" ></td>
                                         <td><input type="text" maxlength="1" name="x65" id="x65" ></td>
                                         <td><input type="text" maxlength="1" name="y65" id="y65" ></td>
