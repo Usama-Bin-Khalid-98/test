@@ -16,7 +16,7 @@ class CreateProfileSheetsTable extends Migration
         Schema::create('profile_sheets', function (Blueprint $table) {
             $table->id();
             $table->string('column_name',255);
-            $table->text('value');
+            $table->text('value')->nullable();
             $table->integer('campus_id')->unsigned();
             $table->foreign('campus_id')
                 ->references('id')
