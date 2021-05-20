@@ -60,10 +60,11 @@ class ProfileSheetController extends Controller
                     'department_id'=> $request->department_id
                 ];
 
-            $insert_new = ProfileSheet::create($data);
+                    $insert_new = ProfileSheet::create($data);
+                }
             }
-            }
-            dd($request->campus_id);
+            return response()->json(['success' => 'Action Completed Successfully.']);
+//            dd($request->campus_id);
 
 
         }catch (Exception $e)
@@ -101,10 +102,15 @@ class ProfileSheetController extends Controller
 //        dd($peerReviewers);
         $scopes = Scope::where($where_scop)->get();
 
+        $getProfileSheet = ProfileSheet::where(['campus_id' => $cid, 'department_id'=>$did])->get();
+//        dd($getProfileSheet[0]);
+
+
+
         //
 //        dd($registrations);
 
-        return view('profile_sheet.profile_sheet', compact('registrations','scopes'));
+        return view('profile_sheet.profile_sheet', compact('registrations','scopes', 'getProfileSheet', 'peerReviewers'));
 
     }
 

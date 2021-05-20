@@ -46,7 +46,9 @@
                         </div>
 
                         <!-- /.box-header -->
-                        <div class="box-body">
+
+                        <div class="box-body center">
+                            <div class="col-md-9 center" >
                                 <h4>Peer Review Panel Members</h4>
                                 <table class="table table-bordered ">
                                     <thead>
@@ -57,9 +59,21 @@
                                             <th style="width: 45%">Signature</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                    @foreach($peerReviewers as $peer)
+
+                                    <tr>
+                                        <td>{{$peer->user->name}} - {{$peer->user->designation->name}}</td>
+                                        <td>{{$peer->user->from_institute}}</td>
+                                        <td> {{$peer->user->designation->name}}</td>
+                                        <td></td>
+                                    </tr
+                                    @endforeach
+                                    </tbody>
                                 </table>
                         </div>
                         <!-- /.box-body -->
+                    </div>
                     </div>
                     <!-- /.box -->
                 </div>
@@ -95,12 +109,12 @@
                                     </thead>
                                     <tr>
                                         <td>1</td>
-                                        <td>Autonomy of the Business School</td>
-                                        <td><textarea class="form-control" name="comments1" id="comments1"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w1" id="w1"></td>
-                                        <td><input type="text" maxlength="1" name="x1" id="x1"></td>
-                                        <td><input type="text" maxlength="1" name="y1" id="y1"></td>
-                                        <td><input type="text" maxlength="1" name="z1" id="z1"></td>
+                                        <td>Autonomy of the Business School </td>
+                                        <td><textarea class="form-control" name="comments1" id="comments1">{{$getProfileSheet[0]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w1" id="w1" value="{{$getProfileSheet[1]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x1" id="x1" value="{{$getProfileSheet[2]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y1" id="y1" value="{{$getProfileSheet[3]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z1" id="z1" value="{{$getProfileSheet[4]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -108,11 +122,11 @@
                                     <tr>
                                         <td>2</td>
                                         <td>Financial Support</td>
-                                        <td><textarea class="form-control" name="comments2" id="comments2"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w2" id="w2"></td>
-                                        <td><input type="text" maxlength="1" name="x2" id="x2"></td>
-                                        <td><input type="text" maxlength="1" name="y2" id="y2"></td>
-                                        <td><input type="text" maxlength="1" name="z2" id="z2"></td>
+                                        <td><textarea class="form-control" name="comments2" id="comments2">{{$getProfileSheet[5]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w2" id="w2" value="{{$getProfileSheet[6]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x2" id="x2" value="{{$getProfileSheet[7]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y2" id="y2" value="{{$getProfileSheet[8]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z2" id="z2" value="{{$getProfileSheet[9]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -120,11 +134,11 @@
                                     <tr>
                                         <td>3</td>
                                         <td>External Participation in Academic Governance</td>
-                                        <td><textarea class="form-control" name="comments3" id="comments3"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w3" id="w3"></td>
-                                        <td><input type="text" maxlength="1" name="x3" id="x3"></td>
-                                        <td><input type="text" maxlength="1" name="y3" id="y3"></td>
-                                        <td><input type="text" maxlength="1" name="z3" id="z3"></td>
+                                        <td><textarea class="form-control" name="comments3" id="comments3">{{$getProfileSheet[10]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w3" id="w3" value="{{$getProfileSheet[11]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x3" id="x3" value="{{$getProfileSheet[12]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y3" id="y3" value="{{$getProfileSheet[13]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z3" id="z3" value="{{$getProfileSheet[14]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -132,11 +146,11 @@
                                     <tr>
                                         <td>4</td>
                                         <td>Internal Governance</td>
-                                        <td><textarea class="form-control" name="comments4" id="comments4"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w4" id="w4"></td>
-                                        <td><input type="text" maxlength="1" name="x4" id="x4"></td>
-                                        <td><input type="text" maxlength="1" name="y4" id="y4"></td>
-                                        <td><input type="text" maxlength="1" name="z4" id="z4"></td>
+                                        <td><textarea class="form-control" name="comments4" id="comments4">{{$getProfileSheet[15]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w4" id="w4" value="{{$getProfileSheet[16]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x4" id="x4" value="{{$getProfileSheet[17]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y4" id="y4" value="{{$getProfileSheet[18]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z4" id="z4" value="{{$getProfileSheet[19]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -144,11 +158,11 @@
                                     <tr>
                                         <td>5</td>
                                         <td>Sense of Vision and Mission</td>
-                                        <td><textarea class="form-control" name="comments5" id="comments5"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w5" id="w5"></td>
-                                        <td><input type="text" maxlength="1" name="x5" id="x5"></td>
-                                        <td><input type="text" maxlength="1" name="y5" id="y5"></td>
-                                        <td><input type="text" maxlength="1" name="z5" id="z5"></td>
+                                        <td><textarea class="form-control" name="comments5" id="comments5">{{$getProfileSheet[20]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w5" id="w5" value="{{$getProfileSheet[21]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x5" id="x5" value="{{$getProfileSheet[22]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y5" id="y5" value="{{$getProfileSheet[23]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z5" id="z5" value="{{$getProfileSheet[24]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -156,11 +170,11 @@
                                     <tr>
                                         <td>6</td>
                                         <td>Credibility of Strategic Planning and Positioning</td>
-                                        <td><textarea class="form-control" name="comments6" id="comments6"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w6" id="w6"></td>
-                                        <td><input type="text" maxlength="1" name="x6" id="x6"></td>
-                                        <td><input type="text" maxlength="1" name="y6" id="y6"></td>
-                                        <td><input type="text" maxlength="1" name="z6" id="z6"></td>
+                                        <td><textarea class="form-control" name="comments6" id="comments6">{{$getProfileSheet[25]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w6" id="w6" value="{{$getProfileSheet[26]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x6" id="x6" value="{{$getProfileSheet[27]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y6" id="y6" value="{{$getProfileSheet[28]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z6" id="z6" value="{{$getProfileSheet[29]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -219,11 +233,11 @@
                                     <tr>
                                         <td>7</td>
                                         <td>Curriculum and Portfolio Alignment</td>
-                                        <td><textarea class="form-control" name="comments7" id="comments7"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w7" id="w7"></td>
-                                        <td><input type="text" maxlength="1" name="x7" id="x7"></td>
-                                        <td><input type="text" maxlength="1" name="y7" id="y7"></td>
-                                        <td><input type="text" maxlength="1" name="z7" id="z7"></td>
+                                        <td><textarea class="form-control" name="comments7" id="comments7"> {{$getProfileSheet[30]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w7" id="w7" value="{{$getProfileSheet[31]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x7" id="x7" value="{{$getProfileSheet[32]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y7" id="y7" value="{{$getProfileSheet[33]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z7" id="z7" value="{{$getProfileSheet[34]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -231,11 +245,11 @@
                                     <tr>
                                         <td>8</td>
                                         <td>Program Design</td>
-                                        <td><textarea class="form-control" name="comments8" id="comments8"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w8" id="w8"></td>
-                                        <td><input type="text" maxlength="1" name="x8" id="x8"></td>
-                                        <td><input type="text" maxlength="1" name="y8" id="y8"></td>
-                                        <td><input type="text" maxlength="1" name="z8" id="z8"></td>
+                                        <td><textarea class="form-control" name="comments8" id="comments8"> {{$getProfileSheet[35]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w8" id="w8" value="{{$getProfileSheet[36]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x8" id="x8" value="{{$getProfileSheet[37]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y8" id="y8" value="{{$getProfileSheet[38]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z8" id="z8" value="{{$getProfileSheet[39]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -243,11 +257,11 @@
                                     <tr>
                                         <td>9</td>
                                         <td>Program Content and Coverage</td>
-                                        <td><textarea class="form-control" name="comments9" id="comments9"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w9" id="w9"></td>
-                                        <td><input type="text" maxlength="1" name="x9" id="x9"></td>
-                                        <td><input type="text" maxlength="1" name="y9" id="y9"></td>
-                                        <td><input type="text" maxlength="1" name="z9" id="z9"></td>
+                                        <td><textarea class="form-control" name="comments9" id="comments9"> {{$getProfileSheet[40]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w9" id="w9" value="{{$getProfileSheet[41]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x9" id="x9" value="{{$getProfileSheet[42]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y9" id="y9" value="{{$getProfileSheet[43]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z9" id="z9" value="{{$getProfileSheet[44]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -255,11 +269,11 @@
                                     <tr>
                                         <td>10</td>
                                         <td>Responsiveness to Corporate Needs</td>
-                                        <td><textarea class="form-control" name="comments10" id="comments10"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w10" id="w10"></td>
-                                        <td><input type="text" maxlength="1" name="x10" id="x10"></td>
-                                        <td><input type="text" maxlength="1" name="y10" id="y10"></td>
-                                        <td><input type="text" maxlength="1" name="z10" id="z10"></td>
+                                        <td><textarea class="form-control" name="comments10" id="comments10">{{$getProfileSheet[45]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w10" id="w10" value="{{$getProfileSheet[46]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x10" id="x10" value="{{$getProfileSheet[47]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y10" id="y10" value="{{$getProfileSheet[48]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z10" id="z10" value="{{$getProfileSheet[49]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -267,11 +281,11 @@
                                     <tr>
                                         <td>11</td>
                                         <td>Indigenous and Comparative Material in Course Content</td>
-                                        <td><textarea class="form-control" name="comments11" id="comments11"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w11" id="w11"></td>
-                                        <td><input type="text" maxlength="1" name="x11" id="x11"></td>
-                                        <td><input type="text" maxlength="1" name="y11" id="y11"></td>
-                                        <td><input type="text" maxlength="1" name="z11" id="z11"></td>
+                                        <td><textarea class="form-control" name="comments11" id="comments11"> {{$getProfileSheet[50]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w11" id="w11" value="{{$getProfileSheet[51]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x11" id="x11" value="{{$getProfileSheet[52]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y11" id="y11" value="{{$getProfileSheet[53]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z11" id="z11" value="{{$getProfileSheet[54]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -279,11 +293,11 @@
                                     <tr>
                                         <td>12</td>
                                         <td>Soft Skills Provision</td>
-                                        <td><textarea class="form-control" name="comments12" id="comments12"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w12" id="w12"></td>
-                                        <td><input type="text" maxlength="1" name="x12" id="x12"></td>
-                                        <td><input type="text" maxlength="1" name="y12" id="y12"></td>
-                                        <td><input type="text" maxlength="1" name="z12" id="z12"></td>
+                                        <td><textarea class="form-control" name="comments12" id="comments12"> {{$getProfileSheet[55]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w12" id="w12" value="{{$getProfileSheet[56]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x12" id="x12" value="{{$getProfileSheet[57]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y12" id="y12" value="{{$getProfileSheet[58]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z12" id="z12" value="{{$getProfileSheet[59]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -291,11 +305,11 @@
                                     <tr>
                                         <td>13</td>
                                         <td>Program Delivery</td>
-                                        <td><textarea class="form-control" name="comments13" id="comments13"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w13" id="w13"></td>
-                                        <td><input type="text" maxlength="1" name="x13" id="x13"></td>
-                                        <td><input type="text" maxlength="1" name="y13" id="y13"></td>
-                                        <td><input type="text" maxlength="1" name="z13" id="z13"></td>
+                                        <td><textarea class="form-control" name="comments13" id="comments13"> {{$getProfileSheet[60]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w13" id="w13" value="{{$getProfileSheet[61]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x13" id="x13" value="{{$getProfileSheet[62]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y13" id="y13" value="{{$getProfileSheet[63]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z13" id="z13" value="{{$getProfileSheet[64]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -303,11 +317,11 @@
                                     <tr>
                                         <td>14</td>
                                         <td>Examination and Assessment</td>
-                                        <td><textarea class="form-control" name="comments14" id="comments14"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w14" id="w14"></td>
-                                        <td><input type="text" maxlength="1" name="x14" id="x14"></td>
-                                        <td><input type="text" maxlength="1" name="y14" id="y14"></td>
-                                        <td><input type="text" maxlength="1" name="z14" id="z14"></td>
+                                        <td><textarea class="form-control" name="comments14" id="comments14"> {{$getProfileSheet[65]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w14" id="w14" value="{{$getProfileSheet[66]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x14" id="x14" value="{{$getProfileSheet[67]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y14" id="y14" value="{{$getProfileSheet[68]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z14" id="z14" value="{{$getProfileSheet[69]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -315,11 +329,11 @@
                                     <tr>
                                         <td>15</td>
                                         <td>Academic Honesty</td>
-                                        <td><textarea class="form-control" name="comments15" id="comments15"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w15" id="w15"></td>
-                                        <td><input type="text" maxlength="1" name="x15" id="x15"></td>
-                                        <td><input type="text" maxlength="1" name="y15" id="y15"></td>
-                                        <td><input type="text" maxlength="1" name="z15" id="z15"></td>
+                                        <td><textarea class="form-control" name="comments15" id="comments15"> {{$getProfileSheet[70]->value??''}}</textarea></td>
+                                        <td><input type="text" maxlength="1" name="w15" id="w15" value="{{$getProfileSheet[71]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x15" id="x15" value="{{$getProfileSheet[72]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y15" id="y15" value="{{$getProfileSheet[73]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z15" id="z15" value="{{$getProfileSheet[74]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -382,11 +396,11 @@
                                     <tr>
                                         <td>16</td>
                                         <td>Student Enrollment</td>
-                                        <td><textarea class="form-control" name="comments16" id="comments16"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w16" id="w16"></td>
-                                        <td><input type="text" maxlength="1" name="x16" id="x16"></td>
-                                        <td><input type="text" maxlength="1" name="y16" id="y16"></td>
-                                        <td><input type="text" maxlength="1" name="z16" id="z16"></td>
+                                        <td><textarea class="form-control" name="comments16" id="comments16" >{{$getProfileSheet[75]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w16" id="w16" value="{{$getProfileSheet[76]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="x16" id="x16" value="{{$getProfileSheet[77]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="y16" id="y16" value="{{$getProfileSheet[78]->value??''}}"></td>
+                                        <td><input type="text" maxlength="1" name="z16" id="z16" value="{{$getProfileSheet[79]->value??''}}"></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -394,11 +408,11 @@
                                     <tr>
                                         <td>17</td>
                                         <td>Average Success Percentage</td>
-                                        <td><textarea class="form-control" name="comments17" id="comments17"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w17" id="w17"></td>
-                                        <td><input type="text" maxlength="1" name="x17" id="x17"></td>
-                                        <td><input type="text" maxlength="1" name="y17" id="y17"></td>
-                                        <td><input type="text" maxlength="1" name="z17" id="z17"></td>
+                                        <td><textarea class="form-control" name="comments17" id="comments17" >{{$getProfileSheet[80]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w17" id="w17" value="{{$getProfileSheet[81]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x17" id="x17" value="{{$getProfileSheet[82]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y17" id="y17" value="{{$getProfileSheet[83]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z17" id="z17" value="{{$getProfileSheet[84]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -406,11 +420,11 @@
                                     <tr>
                                         <td>18</td>
                                         <td>Scholarships and Financial aid</td>
-                                        <td><textarea class="form-control" name="comments18" id="comments18"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w18" id="w18"></td>
-                                        <td><input type="text" maxlength="1" name="x18" id="x18"></td>
-                                        <td><input type="text" maxlength="1" name="y18" id="y18"></td>
-                                        <td><input type="text" maxlength="1" name="z18" id="z18"></td>
+                                        <td><textarea class="form-control" name="comments18" id="comments18" >{{$getProfileSheet[85]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w18" id="w18" value="{{$getProfileSheet[86]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x18" id="x18" value="{{$getProfileSheet[87]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y18" id="y18" value="{{$getProfileSheet[88]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z18" id="z18" value="{{$getProfileSheet[89]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -418,11 +432,11 @@
                                     <tr>
                                         <td>19</td>
                                         <td>Student Progression and Individual Learning</td>
-                                        <td><textarea class="form-control" name="comments19" id="comments19"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w19" id="w19"></td>
-                                        <td><input type="text" maxlength="1" name="x19" id="x19"></td>
-                                        <td><input type="text" maxlength="1" name="y19" id="y19"></td>
-                                        <td><input type="text" maxlength="1" name="z19" id="z19"></td>
+                                        <td><textarea class="form-control" name="comments19" id="comments19" >{{$getProfileSheet[90]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w19" id="w19" value="{{$getProfileSheet[91]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x19" id="x19" value="{{$getProfileSheet[92]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y19" id="y19" value="{{$getProfileSheet[93]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z19" id="z19" value="{{$getProfileSheet[94]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -430,11 +444,11 @@
                                     <tr>
                                         <td>20</td>
                                         <td>Personal Grooming and Interpersonal Skills</td>
-                                        <td><textarea class="form-control" name="comments20" id="comments20"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w20" id="w20"></td>
-                                        <td><input type="text" maxlength="1" name="x20" id="x20"></td>
-                                        <td><input type="text" maxlength="1" name="y20" id="y20"></td>
-                                        <td><input type="text" maxlength="1" name="z20" id="z20"></td>
+                                        <td><textarea class="form-control" name="comments20" id="comments20" >{{$getProfileSheet[95]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w20" id="w20" value="{{$getProfileSheet[96]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x20" id="x20" value="{{$getProfileSheet[97]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y20" id="y20" value="{{$getProfileSheet[98]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z20" id="z20" value="{{$getProfileSheet[99]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -442,11 +456,11 @@
                                     <tr>
                                         <td>21</td>
                                         <td>Student Counselling and Guidance</td>
-                                        <td><textarea class="form-control" name="comments21" id="comments21"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w21" id="w21"></td>
-                                        <td><input type="text" maxlength="1" name="x21" id="x21"></td>
-                                        <td><input type="text" maxlength="1" name="y21" id="y21"></td>
-                                        <td><input type="text" maxlength="1" name="z21" id="z21"></td>
+                                        <td><textarea class="form-control" name="comments21" id="comments21" >{{$getProfileSheet[100]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w21" id="w21" value="{{$getProfileSheet[101]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x21" id="x21" value="{{$getProfileSheet[102]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y21" id="y21" value="{{$getProfileSheet[103]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z21" id="z21" value="{{$getProfileSheet[104]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -454,11 +468,11 @@
                                     <tr>
                                         <td>22</td>
                                         <td>Extracurricular & Co-curricular Activities</td>
-                                        <td><textarea class="form-control" name="comments22" id="comments22"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w22" id="w22"></td>
-                                        <td><input type="text" maxlength="1" name="x22" id="x22"></td>
-                                        <td><input type="text" maxlength="1" name="y22" id="y22"></td>
-                                        <td><input type="text" maxlength="1" name="z22" id="z22"></td>
+                                        <td><textarea class="form-control" name="comments22" id="comments22" >{{$getProfileSheet[105]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w22" id="w22" value="{{$getProfileSheet[106]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x22" id="x22" value="{{$getProfileSheet[107]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y22" id="y22" value="{{$getProfileSheet[108]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z22" id="z22" value="{{$getProfileSheet[109]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -466,11 +480,11 @@
                                     <tr>
                                         <td>23</td>
                                         <td>Alumni Network</td>
-                                        <td><textarea class="form-control" name="comments23" id="comments23"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w23" id="w23"></td>
-                                        <td><input type="text" maxlength="1" name="x23" id="x23"></td>
-                                        <td><input type="text" maxlength="1" name="y23" id="y23"></td>
-                                        <td><input type="text" maxlength="1" name="z23" id="z23"></td>
+                                        <td><textarea class="form-control" name="comments23" id="comments23" >{{$getProfileSheet[110]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w23" id="w23" value="{{$getProfileSheet[111]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x23" id="x23" value="{{$getProfileSheet[112]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y23" id="y23" value="{{$getProfileSheet[113]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z23" id="z23" value="{{$getProfileSheet[114]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -530,11 +544,11 @@
                                     <tr>
                                         <td>24</td>
                                         <td>Faculty Size and Portfolio</td>
-                                        <td><textarea class="form-control" name="comments24" id="comments24"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w24" id="w24"></td>
-                                        <td><input type="text" maxlength="1" name="x24" id="x24"></td>
-                                        <td><input type="text" maxlength="1" name="y24" id="y24"></td>
-                                        <td><input type="text" maxlength="1" name="z24" id="z24"></td>
+                                        <td><textarea class="form-control" name="comments24" id="comments24" >{{$getProfileSheet[115]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w24" id="w24" value="{{$getProfileSheet[116]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x24" id="x24" value="{{$getProfileSheet[117]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y24" id="y24" value="{{$getProfileSheet[118]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z24" id="z24" value="{{$getProfileSheet[119]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -542,11 +556,11 @@
                                     <tr>
                                         <td>25</td>
                                         <td>Faculty Qualifications</td>
-                                        <td><textarea class="form-control" name="comments25" id="comments25"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w25" id="w25"></td>
-                                        <td><input type="text" maxlength="1" name="x25" id="x25"></td>
-                                        <td><input type="text" maxlength="1" name="y25" id="y25"></td>
-                                        <td><input type="text" maxlength="1" name="z25" id="z25"></td>
+                                        <td><textarea class="form-control" name="comments25" id="comments25" >{{$getProfileSheet[120]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w25" id="w25" value="{{$getProfileSheet[121]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x25" id="x25" value="{{$getProfileSheet[122]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y25" id="y25" value="{{$getProfileSheet[123]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z25" id="z25" value="{{$getProfileSheet[124]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -554,11 +568,11 @@
                                     <tr>
                                         <td>26</td>
                                         <td>Faculty Planning</td>
-                                        <td><textarea class="form-control" name="comments26" id="comments26"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w26" id="w26"></td>
-                                        <td><input type="text" maxlength="1" name="x26" id="x26"></td>
-                                        <td><input type="text" maxlength="1" name="y26" id="y26"></td>
-                                        <td><input type="text" maxlength="1" name="z26" id="z26"></td>
+                                        <td><textarea class="form-control" name="comments26" id="comments26" >{{$getProfileSheet[125]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w26" id="w26" value="{{$getProfileSheet[126]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x26" id="x26" value="{{$getProfileSheet[127]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y26" id="y26" value="{{$getProfileSheet[128]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z26" id="z26" value="{{$getProfileSheet[129]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -566,11 +580,11 @@
                                     <tr>
                                         <td>27</td>
                                         <td>Faculty’s Stability and Turnover</td>
-                                        <td><textarea class="form-control" name="comments27" id="comments27"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w27" id="w27"></td>
-                                        <td><input type="text" maxlength="1" name="x27" id="x27"></td>
-                                        <td><input type="text" maxlength="1" name="y27" id="y27"></td>
-                                        <td><input type="text" maxlength="1" name="z27" id="z27"></td>
+                                        <td><textarea class="form-control" name="comments27" id="comments27" >{{$getProfileSheet[130]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w27" id="w27" value="{{$getProfileSheet[131]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x27" id="x27" value="{{$getProfileSheet[132]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y27" id="y27" value="{{$getProfileSheet[133]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z27" id="z27" value="{{$getProfileSheet[134]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -578,11 +592,11 @@
                                     <tr>
                                         <td>28</td>
                                         <td>Faculty to Student Ratios</td>
-                                        <td><textarea class="form-control" name="comments28" id="comments28"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w28" id="w28"></td>
-                                        <td><input type="text" maxlength="1" name="x28" id="x28"></td>
-                                        <td><input type="text" maxlength="1" name="y28" id="y28"></td>
-                                        <td><input type="text" maxlength="1" name="z28" id="z28"></td>
+                                        <td><textarea class="form-control" name="comments28" id="comments28" >{{$getProfileSheet[135]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w28" id="w28" value="{{$getProfileSheet[136]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x28" id="x28" value="{{$getProfileSheet[137]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y28" id="y28" value="{{$getProfileSheet[138]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z28" id="z28" value="{{$getProfileSheet[139]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -590,11 +604,11 @@
                                     <tr>
                                         <td>29</td>
                                         <td>Faculty Policies: Recruitment and Selection</td>
-                                        <td><textarea class="form-control" name="comments29" id="comments29"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w29" id="w29"></td>
-                                        <td><input type="text" maxlength="1" name="x29" id="x29"></td>
-                                        <td><input type="text" maxlength="1" name="y29" id="y29"></td>
-                                        <td><input type="text" maxlength="1" name="z29" id="z29"></td>
+                                        <td><textarea class="form-control" name="comments29" id="comments29" >{{$getProfileSheet[140]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w29" id="w29" value="{{$getProfileSheet[141]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x29" id="x29" value="{{$getProfileSheet[142]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y29" id="y29" value="{{$getProfileSheet[143]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z29" id="z29" value="{{$getProfileSheet[144]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -602,11 +616,11 @@
                                     <tr>
                                         <td>30</td>
                                         <td>Faculty Promotion, Retention and Development</td>
-                                        <td><textarea class="form-control" name="comments30" id="comments30"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w30" id="w30"></td>
-                                        <td><input type="text" maxlength="1" name="x30" id="x30"></td>
-                                        <td><input type="text" maxlength="1" name="y30" id="y30"></td>
-                                        <td><input type="text" maxlength="1" name="z30" id="z30"></td>
+                                        <td><textarea class="form-control" name="comments30" id="comments30" >{{$getProfileSheet[145]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w30" id="w30" value="{{$getProfileSheet[146]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x30" id="x30" value="{{$getProfileSheet[147]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y30" id="y30" value="{{$getProfileSheet[148]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z30" id="z30" value="{{$getProfileSheet[149]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -614,11 +628,11 @@
                                     <tr>
                                         <td>31</td>
                                         <td>Faculty Evaluation and Assessment</td>
-                                        <td><textarea class="form-control" name="comments31" id="comments31"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w31" id="w31"></td>
-                                        <td><input type="text" maxlength="1" name="x31" id="x31"></td>
-                                        <td><input type="text" maxlength="1" name="y31" id="y31"></td>
-                                        <td><input type="text" maxlength="1" name="z31" id="z31"></td>
+                                        <td><textarea class="form-control" name="comments31" id="comments31" >{{$getProfileSheet[150]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w31" id="w31" value="{{$getProfileSheet[151]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x31" id="x31" value="{{$getProfileSheet[152]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y31" id="y31" value="{{$getProfileSheet[153]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z31" id="z31" value="{{$getProfileSheet[154]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -626,11 +640,11 @@
                                     <tr>
                                         <td>32</td>
                                         <td>Role of Faculty in Decision Making</td>
-                                        <td><textarea class="form-control" name="comments32" id="comments32"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w32" id="w32"></td>
-                                        <td><input type="text" maxlength="1" name="x32" id="x32"></td>
-                                        <td><input type="text" maxlength="1" name="y32" id="y32"></td>
-                                        <td><input type="text" maxlength="1" name="z32" id="z32"></td>
+                                        <td><textarea class="form-control" name="comments32" id="comments32" >{{$getProfileSheet[155]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w32" id="w32" value="{{$getProfileSheet[156]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x32" id="x32" value="{{$getProfileSheet[157]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y32" id="y32" value="{{$getProfileSheet[158]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z32" id="z32" value="{{$getProfileSheet[159]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -638,11 +652,11 @@
                                     <tr>
                                         <td>33</td>
                                         <td>Faculty Consulting and Training Engagements</td>
-                                        <td><textarea class="form-control" name="comments33" id="comments33"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w33" id="w33"></td>
-                                        <td><input type="text" maxlength="1" name="x33" id="x33"></td>
-                                        <td><input type="text" maxlength="1" name="y33" id="y33"></td>
-                                        <td><input type="text" maxlength="1" name="z33" id="z33"></td>
+                                        <td><textarea class="form-control" name="comments33" id="comments33" >{{$getProfileSheet[160]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w33" id="w33" value="{{$getProfileSheet[161]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x33" id="x33" value="{{$getProfileSheet[162]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y33" id="y33" value="{{$getProfileSheet[163]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z33" id="z33" value="{{$getProfileSheet[164]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -650,11 +664,11 @@
                                     <tr>
                                         <td>34</td>
                                         <td>Faculty Engagements in the Social and Professional Organizations, and Businesses</td>
-                                        <td><textarea class="form-control" name="comments34" id="comments34"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w34" id="w34"></td>
-                                        <td><input type="text" maxlength="1" name="x34" id="x34"></td>
-                                        <td><input type="text" maxlength="1" name="y34" id="y34"></td>
-                                        <td><input type="text" maxlength="1" name="z34" id="z34"></td>
+                                        <td><textarea class="form-control" name="comments34" id="comments34" >{{$getProfileSheet[165]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w34" id="w34" value="{{$getProfileSheet[166]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x34" id="x34" value="{{$getProfileSheet[167]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y34" id="y34" value="{{$getProfileSheet[168]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z34" id="z34" value="{{$getProfileSheet[169]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -662,11 +676,11 @@
                                     <tr>
                                         <td>35</td>
                                         <td>International exposure of the faculty</td>
-                                        <td><textarea class="form-control" name="comments35" id="comments35"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w35" id="w35"></td>
-                                        <td><input type="text" maxlength="1" name="x35" id="x35"></td>
-                                        <td><input type="text" maxlength="1" name="y35" id="y35"></td>
-                                        <td><input type="text" maxlength="1" name="z35" id="z35"></td>
+                                        <td><textarea class="form-control" name="comments35" id="comments35" >{{$getProfileSheet[170]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w35" id="w35" value="{{$getProfileSheet[171]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x35" id="x35" value="{{$getProfileSheet[172]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y35" id="y35" value="{{$getProfileSheet[173]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z35" id="z35" value="{{$getProfileSheet[174]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -727,11 +741,11 @@
                                     <tr>
                                         <td>36</td>
                                         <td>R & D Policy</td>
-                                        <td><textarea class="form-control" name="comments36" id="comments36"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w36" id="w36"></td>
-                                        <td><input type="text" maxlength="1" name="x36" id="x36"></td>
-                                        <td><input type="text" maxlength="1" name="y36" id="y36"></td>
-                                        <td><input type="text" maxlength="1" name="z36" id="z36"></td>
+                                        <td><textarea class="form-control" name="comments36" id="comments36" >{{$getProfileSheet[175]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w36" id="w36" value="{{$getProfileSheet[176]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x36" id="x36" value="{{$getProfileSheet[177]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y36" id="y36" value="{{$getProfileSheet[178]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z36" id="z36" value="{{$getProfileSheet[179]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -739,11 +753,11 @@
                                     <tr>
                                         <td>37</td>
                                         <td>Sufficiency of time Devoted to Research</td>
-                                        <td><textarea class="form-control" name="comments37" id="comments37"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w37" id="w37"></td>
-                                        <td><input type="text" maxlength="1" name="x37" id="x37"></td>
-                                        <td><input type="text" maxlength="1" name="y37" id="y37"></td>
-                                        <td><input type="text" maxlength="1" name="z37" id="z37"></td>
+                                        <td><textarea class="form-control" name="comments37" id="comments37" >{{$getProfileSheet[180]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w37" id="w37" value="{{$getProfileSheet[181]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x37" id="x37" value="{{$getProfileSheet[182]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y37" id="y37" value="{{$getProfileSheet[183]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z37" id="z37" value="{{$getProfileSheet[184]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -751,11 +765,11 @@
                                     <tr>
                                         <td>38</td>
                                         <td>Adequacy of Funding for Research</td>
-                                        <td><textarea class="form-control" name="comments38" id="comments38"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w38" id="w38"></td>
-                                        <td><input type="text" maxlength="1" name="x38" id="x38"></td>
-                                        <td><input type="text" maxlength="1" name="y38" id="y38"></td>
-                                        <td><input type="text" maxlength="1" name="z38" id="z38"></td>
+                                        <td><textarea class="form-control" name="comments38" id="comments38" >{{$getProfileSheet[185]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w38" id="w38" value="{{$getProfileSheet[186]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x38" id="x38" value="{{$getProfileSheet[187]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y38" id="y38" value="{{$getProfileSheet[188]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z38" id="z38" value="{{$getProfileSheet[189]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -763,11 +777,11 @@
                                     <tr>
                                         <td>39</td>
                                         <td>Quality of Research Output</td>
-                                        <td><textarea class="form-control" name="comments39" id="comments39"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w39" id="w39"></td>
-                                        <td><input type="text" maxlength="1" name="x39" id="x39"></td>
-                                        <td><input type="text" maxlength="1" name="y39" id="y39"></td>
-                                        <td><input type="text" maxlength="1" name="z39" id="z39"></td>
+                                        <td><textarea class="form-control" name="comments39" id="comments39" >{{$getProfileSheet[190]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w39" id="w39" value="{{$getProfileSheet[191]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x39" id="x39" value="{{$getProfileSheet[192]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y39" id="y39" value="{{$getProfileSheet[193]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z39" id="z39" value="{{$getProfileSheet[194]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -775,11 +789,11 @@
                                     <tr>
                                         <td>40</td>
                                         <td>Distinctive Expertise</td>
-                                        <td><textarea class="form-control" name="comments40" id="comments40"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w40" id="w40"></td>
-                                        <td><input type="text" maxlength="1" name="x40" id="x40"></td>
-                                        <td><input type="text" maxlength="1" name="y40" id="y40"></td>
-                                        <td><input type="text" maxlength="1" name="z40" id="z40"></td>
+                                        <td><textarea class="form-control" name="comments40" id="comments40" >{{$getProfileSheet[195]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w40" id="w40" value="{{$getProfileSheet[196]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x40" id="x40" value="{{$getProfileSheet[197]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y40" id="y40" value="{{$getProfileSheet[198]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z40" id="z40" value="{{$getProfileSheet[199]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -787,11 +801,11 @@
                                     <tr>
                                         <td>41</td>
                                         <td>Innovative Development</td>
-                                        <td><textarea class="form-control" name="comments41" id="comments41"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w41" id="w41"></td>
-                                        <td><input type="text" maxlength="1" name="x41" id="x41"></td>
-                                        <td><input type="text" maxlength="1" name="y41" id="y41"></td>
-                                        <td><input type="text" maxlength="1" name="z41" id="z41"></td>
+                                        <td><textarea class="form-control" name="comments41" id="comments41" >{{$getProfileSheet[200]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w41" id="w41" value="{{$getProfileSheet[201]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x41" id="x41" value="{{$getProfileSheet[202]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y41" id="y41" value="{{$getProfileSheet[203]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z41" id="z41" value="{{$getProfileSheet[204]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -799,11 +813,11 @@
                                     <tr>
                                         <td>42</td>
                                         <td>Contribution of R & D to Courses & Programs</td>
-                                        <td><textarea class="form-control" name="comments42" id="comments42"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w42" id="w42"></td>
-                                        <td><input type="text" maxlength="1" name="x42" id="x42"></td>
-                                        <td><input type="text" maxlength="1" name="y42" id="y42"></td>
-                                        <td><input type="text" maxlength="1" name="z42" id="z42"></td>
+                                        <td><textarea class="form-control" name="comments42" id="comments42" >{{$getProfileSheet[205]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w42" id="w42" value="{{$getProfileSheet[206]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x42" id="x42" value="{{$getProfileSheet[207]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y42" id="y42" value="{{$getProfileSheet[208]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z42" id="z42" value="{{$getProfileSheet[209]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -811,11 +825,11 @@
                                     <tr>
                                         <td>43</td>
                                         <td>Contribution of R & D to Faculty Development </td>
-                                        <td><textarea class="form-control" name="comments43" id="comments43"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w43" id="w43"></td>
-                                        <td><input type="text" maxlength="1" name="x43" id="x43"></td>
-                                        <td><input type="text" maxlength="1" name="y43" id="y43"></td>
-                                        <td><input type="text" maxlength="1" name="z43" id="z43"></td>
+                                        <td><textarea class="form-control" name="comments43" id="comments43" >{{$getProfileSheet[210]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w43" id="w43" value="{{$getProfileSheet[211]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x43" id="x43" value="{{$getProfileSheet[212]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y43" id="y43" value="{{$getProfileSheet[213]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z43" id="z43" value="{{$getProfileSheet[214]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -877,11 +891,11 @@
                                     <tr>
                                         <td>44</td>
                                         <td>Policy of Community Services and Social Activities</td>
-                                        <td><textarea class="form-control" name="comments44" id="comments44"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w44" id="w44"></td>
-                                        <td><input type="text" maxlength="1" name="x44" id="x44"></td>
-                                        <td><input type="text" maxlength="1" name="y44" id="y44"></td>
-                                        <td><input type="text" maxlength="1" name="z44" id="z44"></td>
+                                        <td><textarea class="form-control" name="comments44" id="comments44" >{{$getProfileSheet[215]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w44" id="w44" value="{{$getProfileSheet[216]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x44" id="x44" value="{{$getProfileSheet[217]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y44" id="y44" value="{{$getProfileSheet[218]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z44" id="z44" value="{{$getProfileSheet[219]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -889,11 +903,11 @@
                                     <tr>
                                         <td>45</td>
                                         <td>Formal Relationship with Social Sector Organizations </td>
-                                        <td><textarea class="form-control" name="comments45" id="comments45"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w45" id="w45"></td>
-                                        <td><input type="text" maxlength="1" name="x45" id="x45"></td>
-                                        <td><input type="text" maxlength="1" name="y45" id="y45"></td>
-                                        <td><input type="text" maxlength="1" name="z45" id="z45"></td>
+                                        <td><textarea class="form-control" name="comments45" id="comments45" >{{$getProfileSheet[220]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w45" id="w45" value="{{$getProfileSheet[221]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x45" id="x45" value="{{$getProfileSheet[222]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y45" id="y45" value="{{$getProfileSheet[223]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z45" id="z45" value="{{$getProfileSheet[224]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -901,11 +915,11 @@
                                     <tr>
                                         <td>46</td>
                                         <td>Code of Moral Principles, Ethics, Behaviors and Conducts</td>
-                                        <td><textarea class="form-control" name="comments46" id="comments46"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w46" id="w46"></td>
-                                        <td><input type="text" maxlength="1" name="x46" id="x46"></td>
-                                        <td><input type="text" maxlength="1" name="y46" id="y46"></td>
-                                        <td><input type="text" maxlength="1" name="z46" id="z46"></td>
+                                        <td><textarea class="form-control" name="comments46" id="comments46" >{{$getProfileSheet[225]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w46" id="w46" value="{{$getProfileSheet[226]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x46" id="x46" value="{{$getProfileSheet[227]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y46" id="y46" value="{{$getProfileSheet[228]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z46" id="z46" value="{{$getProfileSheet[229]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -913,11 +927,11 @@
                                     <tr>
                                         <td>47</td>
                                         <td>Development and Protection of Internal Community</td>
-                                        <td><textarea class="form-control" name="comments47" id="comments47"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w47" id="w47"></td>
-                                        <td><input type="text" maxlength="1" name="x47" id="x47"></td>
-                                        <td><input type="text" maxlength="1" name="y47" id="y47"></td>
-                                        <td><input type="text" maxlength="1" name="z47" id="z47"></td>
+                                        <td><textarea class="form-control" name="comments47" id="comments47" >{{$getProfileSheet[230]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w47" id="w47" value="{{$getProfileSheet[231]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x47" id="x47" value="{{$getProfileSheet[232]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y47" id="y47" value="{{$getProfileSheet[233]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z47" id="z47" value="{{$getProfileSheet[234]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -925,11 +939,11 @@
                                     <tr>
                                         <td>48</td>
                                         <td>Impact on the Society</td>
-                                        <td><textarea class="form-control" name="comments48" id="comments48"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w48" id="w48"></td>
-                                        <td><input type="text" maxlength="1" name="x48" id="x48"></td>
-                                        <td><input type="text" maxlength="1" name="y48" id="y48"></td>
-                                        <td><input type="text" maxlength="1" name="z48" id="z48"></td>
+                                        <td><textarea class="form-control" name="comments48" id="comments48" >{{$getProfileSheet[235]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w48" id="w48" value="{{$getProfileSheet[236]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x48" id="x48" value="{{$getProfileSheet[237]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y48" id="y48" value="{{$getProfileSheet[238]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z48" id="z48" value="{{$getProfileSheet[239]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -992,11 +1006,11 @@
                                     <tr>
                                         <td>49</td>
                                         <td>Financial Management </td>
-                                        <td><textarea class="form-control" name="comments49" id="comments49"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w49" id="w49"></td>
-                                        <td><input type="text" maxlength="1" name="x49" id="x49"></td>
-                                        <td><input type="text" maxlength="1" name="y49" id="y49"></td>
-                                        <td><input type="text" maxlength="1" name="z49" id="z49"></td>
+                                        <td><textarea class="form-control" name="comments49" id="comments49" >{{$getProfileSheet[240]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w49" id="w49" value="{{$getProfileSheet[241]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x49" id="x49" value="{{$getProfileSheet[242]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y49" id="y49" value="{{$getProfileSheet[243]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z49" id="z49" value="{{$getProfileSheet[244]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1004,11 +1018,11 @@
                                     <tr>
                                         <td>50</td>
                                         <td>Learning Environment</td>
-                                        <td><textarea class="form-control" name="comments50" id="comments50"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w50" id="w50"></td>
-                                        <td><input type="text" maxlength="1" name="x50" id="x50"></td>
-                                        <td><input type="text" maxlength="1" name="y50" id="y50"></td>
-                                        <td><input type="text" maxlength="1" name="z50" id="z50"></td>
+                                        <td><textarea class="form-control" name="comments50" id="comments50" >{{$getProfileSheet[245]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w50" id="w50" value="{{$getProfileSheet[246]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x50" id="x50" value="{{$getProfileSheet[247]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y50" id="y50" value="{{$getProfileSheet[248]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z50" id="z50" value="{{$getProfileSheet[249]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -1016,11 +1030,11 @@
                                     <tr>
                                         <td>51</td>
                                         <td>Library</td>
-                                        <td><textarea class="form-control" name="comments51" id="comments51"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w51" id="w51"></td>
-                                        <td><input type="text" maxlength="1" name="x51" id="x51"></td>
-                                        <td><input type="text" maxlength="1" name="y51" id="y51"></td>
-                                        <td><input type="text" maxlength="1" name="z51" id="z51"></td>
+                                        <td><textarea class="form-control" name="comments51" id="comments51" >{{$getProfileSheet[250]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w51" id="w51" value="{{$getProfileSheet[251]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x51" id="x51" value="{{$getProfileSheet[252]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y51" id="y51" value="{{$getProfileSheet[253]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z51" id="z51" value="{{$getProfileSheet[254]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1028,11 +1042,11 @@
                                     <tr>
                                         <td>52</td>
                                         <td>Computing facilities</td>
-                                        <td><textarea class="form-control" name="comments52" id="comments52"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w52" id="w52"></td>
-                                        <td><input type="text" maxlength="1" name="x52" id="x52"></td>
-                                        <td><input type="text" maxlength="1" name="y52" id="y52"></td>
-                                        <td><input type="text" maxlength="1" name="z52" id="z52"></td>
+                                        <td><textarea class="form-control" name="comments52" id="comments52" >{{$getProfileSheet[255]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w52" id="w52" value="{{$getProfileSheet[256]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x52" id="x52" value="{{$getProfileSheet[257]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y52" id="y52" value="{{$getProfileSheet[258]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z52" id="z52" value="{{$getProfileSheet[259]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1040,11 +1054,11 @@
                                     <tr>
                                         <td>53</td>
                                         <td>Other facilities</td>
-                                        <td><textarea class="form-control" name="comments53" id="comments53"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w53" id="w53"></td>
-                                        <td><input type="text" maxlength="1" name="x53" id="x53"></td>
-                                        <td><input type="text" maxlength="1" name="y53" id="y53"></td>
-                                        <td><input type="text" maxlength="1" name="z53" id="z53"></td>
+                                        <td><textarea class="form-control" name="comments53" id="comments53" >{{$getProfileSheet[260]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w53" id="w53" value="{{$getProfileSheet[261]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x53" id="x53" value="{{$getProfileSheet[262]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y53" id="y53" value="{{$getProfileSheet[263]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z53" id="z53" value="{{$getProfileSheet[264]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1052,11 +1066,11 @@
                                     <tr>
                                         <td>54</td>
                                         <td>Administrative Support Function</td>
-                                        <td><textarea class="form-control" name="comments54" id="comments54"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w54" id="w54"></td>
-                                        <td><input type="text" maxlength="1" name="x54" id="x54"></td>
-                                        <td><input type="text" maxlength="1" name="y54" id="y54"></td>
-                                        <td><input type="text" maxlength="1" name="z54" id="z54"></td>
+                                        <td><textarea class="form-control" name="comments54" id="comments54" >{{$getProfileSheet[265]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w54" id="w54" value="{{$getProfileSheet[266]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x54" id="x54" value="{{$getProfileSheet[267]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y54" id="y54" value="{{$getProfileSheet[268]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z54" id="z54" value="{{$getProfileSheet[269]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1064,11 +1078,11 @@
                                     <tr>
                                         <td>55</td>
                                         <td>Quality Enhancement Cell</td>
-                                        <td><textarea class="form-control" name="comments55" id="comments55"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w55" id="w55"></td>
-                                        <td><input type="text" maxlength="1" name="x55" id="x55"></td>
-                                        <td><input type="text" maxlength="1" name="y55" id="y55"></td>
-                                        <td><input type="text" maxlength="1" name="z55" id="z55"></td>
+                                        <td><textarea class="form-control" name="comments55" id="comments55" >{{$getProfileSheet[270]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w55" id="w55" value="{{$getProfileSheet[271]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x55" id="x55" value="{{$getProfileSheet[272]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y55" id="y55" value="{{$getProfileSheet[273]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z55" id="z55" value="{{$getProfileSheet[274]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1131,11 +1145,11 @@
                                     <tr>
                                         <td>56</td>
                                         <td>International Linkages </td>
-                                        <td><textarea class="form-control"  name="comments56" id="comments56"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w56" id="w56"></td>
-                                        <td><input type="text" maxlength="1" name="x56" id="x56"></td>
-                                        <td><input type="text" maxlength="1" name="y56" id="y56"></td>
-                                        <td><input type="text" maxlength="1" name="z56" id="z56"></td>
+                                        <td><textarea class="form-control"  name="comments56" id="comments56" >{{$getProfileSheet[275]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w56" id="w56" value="{{$getProfileSheet[276]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x56" id="x56" value="{{$getProfileSheet[277]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y56" id="y56" value="{{$getProfileSheet[278]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z56" id="z56" value="{{$getProfileSheet[279]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1143,11 +1157,11 @@
                                     <tr>
                                         <td>57</td>
                                         <td>National Academic Linkages</td>
-                                        <td><textarea class="form-control"  name="comments57" id="comments57"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w57" id="w57"></td>
-                                        <td><input type="text" maxlength="1" name="x57" id="x57"></td>
-                                        <td><input type="text" maxlength="1" name="y57" id="y57"></td>
-                                        <td><input type="text" maxlength="1" name="z57" id="z57"></td>
+                                        <td><textarea class="form-control"  name="comments57" id="comments57" >{{$getProfileSheet[280]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w57" id="w57" value="{{$getProfileSheet[281]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x57" id="x57" value="{{$getProfileSheet[282]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y57" id="y57" value="{{$getProfileSheet[283]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z57" id="z57" value="{{$getProfileSheet[284]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -1155,11 +1169,11 @@
                                     <tr>
                                         <td>58</td>
                                         <td>Corporate Linkages </td>
-                                        <td><textarea class="form-control"  name="comments58" id="comments58"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w58" id="w58"></td>
-                                        <td><input type="text" maxlength="1" name="x58" id="x58"></td>
-                                        <td><input type="text" maxlength="1" name="y58" id="y58"></td>
-                                        <td><input type="text" maxlength="1" name="z58" id="z58"></td>
+                                        <td><textarea class="form-control"  name="comments58" id="comments58" >{{$getProfileSheet[285]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w58" id="w58" value="{{$getProfileSheet[286]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x58" id="x58" value="{{$getProfileSheet[287]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y58" id="y58" value="{{$getProfileSheet[288]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z58" id="z58" value="{{$getProfileSheet[289]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1167,11 +1181,11 @@
                                     <tr>
                                         <td>59</td>
                                         <td>Corporate Linkages </td>
-                                        <td><textarea class="form-control"  name="comments59" id="comments59"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w59" id="w59"></td>
-                                        <td><input type="text" maxlength="1" name="x59" id="x59"></td>
-                                        <td><input type="text" maxlength="1" name="y59" id="y59"></td>
-                                        <td><input type="text" maxlength="1" name="z59" id="z59"></td>
+                                        <td><textarea class="form-control"  name="comments59" id="comments59" >{{$getProfileSheet[290]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w59" id="w59" value="{{$getProfileSheet[291]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x59" id="x59" value="{{$getProfileSheet[292]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y59" id="y59" value="{{$getProfileSheet[293]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z59" id="z59" value="{{$getProfileSheet[294]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1179,11 +1193,11 @@
                                     <tr>
                                         <td>60</td>
                                         <td>Placement Office: Internships and Placements</td>
-                                        <td><textarea class="form-control"  name="comments60" id="comments60"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w60" id="w60"></td>
-                                        <td><input type="text" maxlength="1" name="x60" id="x60"></td>
-                                        <td><input type="text" maxlength="1" name="y60" id="y60"></td>
-                                        <td><input type="text" maxlength="1" name="z60" id="z60"></td>
+                                        <td><textarea class="form-control"  name="comments60" id="comments60" >{{$getProfileSheet[295]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w60" id="w60" value="{{$getProfileSheet[296]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x60" id="x60" value="{{$getProfileSheet[297]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y60" id="y60" value="{{$getProfileSheet[298]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z60" id="z60" value="{{$getProfileSheet[299]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1191,11 +1205,11 @@
                                     <tr>
                                         <td>61</td>
                                         <td>Placement Office: Corporate Involvement</td>
-                                        <td><textarea class="form-control"  name="comments61" id="comments61"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w61" id="w61"></td>
-                                        <td><input type="text" maxlength="1" name="x61" id="x61"></td>
-                                        <td><input type="text" maxlength="1" name="y61" id="y61"></td>
-                                        <td><input type="text" maxlength="1" name="z61" id="z61"></td>
+                                        <td><textarea class="form-control"  name="comments61" id="comments61" >{{$getProfileSheet[300]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w61" id="w61" value="{{$getProfileSheet[301]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x61" id="x61" value="{{$getProfileSheet[302]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y61" id="y61" value="{{$getProfileSheet[303]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z61" id="z61" value="{{$getProfileSheet[304]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1253,11 +1267,11 @@
                                     <tr>
                                         <td>62</td>
                                         <td>Admissions Office </td>
-                                        <td><textarea class="form-control"  name="comments62" id="comments62"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w62" id="w62"></td>
-                                        <td><input type="text" maxlength="1" name="x62" id="x62"></td>
-                                        <td><input type="text" maxlength="1" name="y62" id="y62"></td>
-                                        <td><input type="text" maxlength="1" name="z62" id="z62"></td>
+                                        <td><textarea class="form-control"  name="comments62" id="comments62" >{{$getProfileSheet[305]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w62" id="w62" value="{{$getProfileSheet[306]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x62" id="x62" value="{{$getProfileSheet[307]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y62" id="y62" value="{{$getProfileSheet[308]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z62" id="z62" value="{{$getProfileSheet[309]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1265,11 +1279,11 @@
                                     <tr>
                                         <td>63</td>
                                         <td>Student Selection Processes</td>
-                                        <td><textarea class="form-control"  name="comments63" id="comments63"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w63" id="w63"></td>
-                                        <td><input type="text" maxlength="1" name="x63" id="x63"></td>
-                                        <td><input type="text" maxlength="1" name="y63" id="y63"></td>
-                                        <td><input type="text" maxlength="1" name="z63" id="z63"></td>
+                                        <td><textarea class="form-control"  name="comments63" id="comments63" >{{$getProfileSheet[310]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w63" id="w63" value="{{$getProfileSheet[311]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x63" id="x63" value="{{$getProfileSheet[312]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y63" id="y63" value="{{$getProfileSheet[313]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z63" id="z63" value="{{$getProfileSheet[314]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                      </tr>
@@ -1277,11 +1291,11 @@
                                     <tr>
                                         <td>64</td>
                                         <td>Examination Monitoring</td>
-                                        <td><textarea class="form-control"  name="comments64" id="comments64"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w64" id="w64"></td>
-                                        <td><input type="text" maxlength="1" name="x64" id="x64"></td>
-                                        <td><input type="text" maxlength="1" name="y64" id="y64"></td>
-                                        <td><input type="text" maxlength="1" name="z64" id="z64"></td>
+                                        <td><textarea class="form-control"  name="comments64" id="comments64" >{{$getProfileSheet[315]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w64" id="w64" value="{{$getProfileSheet[316]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x64" id="x64" value="{{$getProfileSheet[317]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y64" id="y64" value="{{$getProfileSheet[318]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z64" id="z64" value="{{$getProfileSheet[319]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1289,11 +1303,11 @@
                                     <tr>
                                         <td>65</td>
                                         <td>Examination cell</td>
-                                        <td><textarea class="form-control"  name="comments65" id="comments65"></textarea></td>
-                                        <td><input type="text" maxlength="1" name="w65" id="w65" ></td>
-                                        <td><input type="text" maxlength="1" name="x65" id="x65" ></td>
-                                        <td><input type="text" maxlength="1" name="y65" id="y65" ></td>
-                                        <td><input type="text" maxlength="1" name="z65" id="z65" ></td>
+                                        <td><textarea class="form-control"  name="comments65" id="comments65" >{{$getProfileSheet[320]->value??''}} </textarea></td>
+                                        <td><input type="text" maxlength="1" name="w65" id="w65"  value="{{$getProfileSheet[321]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="x65" id="x65"  value="{{$getProfileSheet[322]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="y65" id="y65"  value="{{$getProfileSheet[323]->value??''}}" ></td>
+                                        <td><input type="text" maxlength="1" name="z65" id="z65"  value="{{$getProfileSheet[324]->value??''}}" ></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -1355,7 +1369,19 @@
         })
 
     </script>
+
+
     <script type="text/javascript">
+
+        calculate01();
+        calculate02();
+        calculate03();
+        calculate04();
+        calculate05();
+        calculate06();
+        calculate07();
+        calculate08();
+        calculate09();
 
         function calculate01() {
             let val1 = $('#w1').val();
@@ -2045,7 +2071,7 @@
             (val55 == 'w')?wcount++:'';
 
             $('#count-w07').text(wcount);
-            let wtotal = wcount * 0;
+            let wtotal = wcount * 4;
             $('#total-w07').text(wtotal);
 
             let zcount = 0;
