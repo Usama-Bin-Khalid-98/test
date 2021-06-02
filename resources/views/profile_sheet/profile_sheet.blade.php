@@ -23,17 +23,18 @@
             </ol>
         </section>
         <section class="content-header">
-{{--            <div class="col-md-12 new-button">--}}
-{{--                <div class="pull-right">--}}
-{{--                    <button class="btn gradient-bg-color"--}}
-{{--                            --}}{{--                           data-toggle="modal" data-target="#add-modal"--}}
-{{--                            style="color: white;"--}}
-{{--                            value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div class="col-md-12 new-button">
+                <div class="pull-right">
+                    <button class="btn gradient-bg-color" onclick='printDiv();' style="color: white;">Print <i class="fa fa-file-pdf-o"></i></button>
+                </div>
+            </div>
         </section>
         {{--Dean section --}}
-            <div class="row">
+
+
+        <section id='DivIdToPrint'>
+
+        <div class="row">
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-title" style="padding: 30px;" align="center">National Business Education Accreditation Council (NBEAC), Higher Education Commission, Islamabad</div>
@@ -81,7 +82,6 @@
 
                 <!-- Main content -->
             </div>
-        <section>
             <form name="profile_sheet" id="profileSheet" method="post">
             <div class="row">
                 <div class="col-md-12">
@@ -1335,6 +1335,11 @@
                                         <th><span id="totalCalculatedScore"></span></th>
                                         <th>100</th>
                                     </tr>
+                                    <tr>
+                                        <th colspan="3" style="color: green">Over all category</th>
+                                        <th colspan="4">-</th>
+                                        <th><span id="category" style="color: green"></span></th>
+                                    </tr>
                                     </tfoot>
                                 </table>
 
@@ -1372,12 +1377,38 @@
         });
         $(function () {
             $('#datatable').DataTable()
-        })
+        });
+
+        function printDiv()
+        {
+
+            var divToPrint=document.getElementById('DivIdToPrint');
+
+            var newWin=window.open('','Print-Window');
+
+            newWin.document.open();
+
+            newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+            newWin.document.close();
+
+            setTimeout(function(){newWin.close();},10);
+
+        }
 
     </script>
 
 
     <script type="text/javascript">
+        let calculate1 =0;
+        let calculate2 =0;
+        let calculate3 =0;
+        let calculate4 =0;
+        let calculate5 =0;
+        let calculate6 =0;
+        let calculate7 =0;
+        let calculate8 =0;
+        let calculate9 =0;
 
         calculate01();
         calculate02();
@@ -1389,15 +1420,7 @@
         calculate08();
         calculate09();
 
-        let calculate1 =0;
-        let calculate2 =0;
-        let calculate3 =0;
-        let calculate4 =0;
-        let calculate5 =0;
-        let calculate6 =0;
-        let calculate7 =0;
-        let calculate8 =0;
-        let calculate9 =0;
+
 
         function calculate01() {
             let val1 = $('#w1').val();
@@ -2285,10 +2308,24 @@
                  });
              });
 
-        let cal = calculate1+calculate2+calculate3+calculate4+calculate5+calculate6+calculate7+calculate8+calculate9;
+        let cal = parseFloat(calculate1)+parseFloat(calculate2)+parseFloat(calculate3)+parseFloat(calculate4)+parseFloat(calculate5)+parseFloat(calculate6)+parseFloat(calculate7)+parseFloat(calculate8)+parseFloat(calculate9);
 
         console.log(cal);
-        $('#totalCalculatedScore').text(cal)
+        let finalScore = cal.toFixed(2);
+        let category = 'Z';
+        $('#totalCalculatedScore').text(finalScore)
+       if(finalScore>= 80 && finalScore <= 100 ){
+           category = 'W'
+        }else if(finalScore >= 65 && finalScore <= 79 ){
+            category = 'X'
+        }else  if(finalScore >= 60 && finalScore <= 64) {
+           category = 'Y'
+       }else if(finalScore < 60)
+       {
+           category = 'Z'
+       }
+
+        $('#category').text(category);
 
     </script>
 
