@@ -102,8 +102,9 @@ class ProfileSheetController extends Controller
 //        dd($peerReviewers);
         $scopes = Scope::where($where_scop)->get();
 
-        $getProfileSheet = ProfileSheet::where(['campus_id' => $cid, 'department_id'=>$did])->get();
-//        dd($getProfileSheet[0]);
+        $getProfileSheet = ProfileSheet::where(['campus_id' => $cid, 'department_id'=>$did])->orderby('id', 'ASC')->get();
+        // $getProfileSheet->sortBy('id');
+        // dd($getProfileSheet[0]);
 
 
 
