@@ -358,7 +358,7 @@
                                     </tfoot>
 
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;"></div>
 
                         </div>
                         <!-- /.box-body -->
@@ -509,7 +509,7 @@
                                     </tfoot>
 
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;"></div>
 
                         </div>
                         <!-- /.box-body -->
@@ -706,7 +706,7 @@
                                     </tfoot>
 
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;"></div>
 
                         </div>
                         <!-- /.box-body -->
@@ -856,7 +856,7 @@
                                     </tfoot>
 
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;"></div>
 
                         </div>
                         <!-- /.box-body -->
@@ -971,7 +971,7 @@
                                     </tfoot>
 
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;"></div>
 
                         </div>
                         <!-- /.box-body -->
@@ -1110,7 +1110,7 @@
                                     </tfoot>
 
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;"></div>
 
                         </div>
                         <!-- /.box-body -->
@@ -1234,7 +1234,7 @@
 
                                     </tfoot>
                                 </table>
-                            <div class="col-md-12 " style="padding: 20px"><button class="btn btn-primary update" style="float: right;">  update</button></div>
+                            <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary" value="Update" style="float: right;"></div>
 
                         </div>
                         <!-- /.box-body -->
