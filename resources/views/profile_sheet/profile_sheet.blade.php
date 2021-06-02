@@ -61,7 +61,6 @@
                                     </thead>
                                     <tbody>
                                     @foreach($peerReviewers as $peer)
-
                                     <tr>
                                         <td>{{$peer->user->name}} - {{$peer->user->designation->name}}</td>
                                         <td>{{$peer->user->from_institute}}</td>
@@ -1329,9 +1328,16 @@
                                         <th><span id="total_score09"></span></th>
                                         <th>5</th>
                                     </tr>
-                                    </tfoot>
+                                    <tr>
+                                        <th colspan="3">Gained Score</th>
+                                        <th colspan="4">-</th>
 
+                                        <th><span id="totalCalculatedScore"></span></th>
+                                        <th>100</th>
+                                    </tr>
+                                    </tfoot>
                                 </table>
+
                             <div class="col-md-12 " style="padding: 20px"><input type="submit" class="btn btn-primary update" value="Update" style="float: right;"></div>
 
                         </div>
@@ -1382,6 +1388,16 @@
         calculate07();
         calculate08();
         calculate09();
+
+        let calculate1 =0;
+        let calculate2 =0;
+        let calculate3 =0;
+        let calculate4 =0;
+        let calculate5 =0;
+        let calculate6 =0;
+        let calculate7 =0;
+        let calculate8 =0;
+        let calculate9 =0;
 
         function calculate01() {
             let val1 = $('#w1').val();
@@ -1464,7 +1480,8 @@
             let score_gained =(((wtotal+xtotal+ytotal+ztotal)/24)*15).toFixed(2);
 
             $('#total_score01').text(score_gained);
-
+            calculate1 = score_gained;
+            console.log('calculate 1', calculate1);
         }
 
         function calculate02(){
@@ -1565,6 +1582,7 @@
             let score_gained =(((wtotal+xtotal+ytotal+ztotal)/36)*15).toFixed(2);
 
             $('#total_score02').text(score_gained);
+            calculate2 = score_gained;
         }
 
         function calculate03(){
@@ -1662,6 +1680,7 @@
             let score_gained =(((wtotal+xtotal+ytotal+ztotal)/32)*15).toFixed(2);
 
             $('#total_score03').text(score_gained);
+            calculate3 =score_gained;
         }
 
         ////// 09 starts here/////
@@ -1725,6 +1744,7 @@
             let score_gained =(((wtotal+xtotal+ytotal+ztotal)/16)*5).toFixed(2);
 
             $('#total_score09').text(score_gained);
+             calculate9 = score_gained;
 
 
         }
@@ -1872,6 +1892,8 @@
 
             $('#total_score04').text(score_gained);
 
+            calculate4 = score_gained;
+
 
         }
 
@@ -1971,7 +1993,7 @@
             let score_gained =(((wtotal+xtotal+ytotal+ztotal)/36)*10).toFixed(2);
 
             $('#total_score05').text(score_gained);
-
+            calculate5 = score_gained;
         }
 
         $( "#w43, #w42, #w41, #w40, #w39,#w38, #w37, #w36,#x43, #x42, #x41, #x40, #x39,#x38, #x37, #x36,#y43, #y42, #y41, #y40, #y39,#y38, #y37, #y36,#z43, #z42, #z41, #z40, #z39,#z38, #z37, #z36" ).keyup(function() {
@@ -2042,6 +2064,8 @@
             let score_gained =(((wtotal+xtotal+ytotal+ztotal)/20)*5).toFixed(2);
 
             $('#total_score06').text(score_gained);
+
+            calculate6 = score_gained;
 
         }
 
@@ -2133,7 +2157,7 @@
             let score_gained =(((wtotal+xtotal+ytotal+ztotal)/24)*10).toFixed(2);
 
             $('#total_score07').text(score_gained);
-
+            calculate7 = score_gained;
 
         }
         $( "#w49, #w50, #w51, #w52, #w53, #w54, #w55,#z49,#x49, #x50, #x51, #x52, #x53, #x54, #x55,#y49, #y50, #y51, #y52, #y53, #y54, #y55, #z50, #z51, #z52, #z53, #z54, #z55" ).keyup(function() {
@@ -2215,12 +2239,13 @@
 
             $('#total_score08').text(score_gained);
 
+            calculate8 = score_gained;
+
         }
 
         $( "#w56, #w57, #w58, #w59, #w60, #w61,#x56, #x57, #x58, #x59, #x60, #x61,#y56, #y57, #y58, #y59, #y60, #y61,#z56, #z57, #z58, #z59, #z60, #z61" ).keyup(function() {
            calculate08()
         });
-
 
         $('#profileSheet').submit( function (e){
             e.preventDefault();
@@ -2260,6 +2285,10 @@
                  });
              });
 
+        let cal = calculate1+calculate2+calculate3+calculate4+calculate5+calculate6+calculate7+calculate8+calculate9;
+
+        console.log(cal);
+        $('#totalCalculatedScore').text(cal)
 
     </script>
 
