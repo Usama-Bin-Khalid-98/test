@@ -1267,7 +1267,7 @@
 
       @hasrole('NbeacFocalPerson|ESScheduler|BusinessSchool|Mentor|PeerReviewer|NBEACAdmin')
       <!--Invoices list-->
-      @if(!empty(@$PeerReviewVisit[0]->campus->business_school->name))
+{{--      @if(!empty(@$PeerReviewVisit[0]->campus->business_school->name))--}}
       <section class="col-lg-12 connectedSortable">
           <!-- TO DO List -->
           <div class="box box-primary">
@@ -1357,7 +1357,7 @@
           </div>
           <!-- /.box -->
       </section>
-  @endif
+{{--  @endif--}}
       <!-- right col -->
         @endhasrole
 

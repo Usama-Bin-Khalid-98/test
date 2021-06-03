@@ -342,7 +342,6 @@ Route::get('/email', function() {
             Route::get('peerReviewReport', 'PeerReviewReportController@index');
             Route::post('peerReviewReport', 'PeerReviewReportController@store');
             Route::put('updateSlipStatus/{id}', 'PeerReviewReportController@updateSlipStatus');
-            Route::get('peerReviewDetails/{id?}', 'PeerReviewReportController@details');
             Route::post('travelPlan', 'StrategicManagement\SlipController@travelPlan');
 //            Route::post('profileSheet', 'StrategicManagement\SlipController@profileSheet');
             Route::post('add_profile_sheet', 'ProfileSheetController@store');
@@ -350,12 +349,16 @@ Route::get('/email', function() {
             Route::get('getIeligibility-screeningnvoice/{id}', 'StrategicManagement\SlipController@edit');
             Route::post('approvedConsultativeComitt','SchedulePeerReviewController@approvedConsultative');
             Route::post('ThankyouMsg', 'PeerReviewReportController@ThankyouMsg');
-
-        });
-        Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin']], function () {
             Route::get('instituteFeedback', 'InstituteFeedbackController@index');
             Route::get('instituteFeedback/{id}', 'InstituteFeedbackController@edit');
             Route::put('peerReviewStatus', 'InstituteFeedbackController@peerReviewStatus');
+
+        });
+        Route::group(['middleware' => ['role:NbeacFocalPerson|NBEACAdmin|PeerReviewer']], function () {
+
+            Route::get('peerReviewReport', 'PeerReviewReportController@index');
+            Route::post('peerReviewReport', 'PeerReviewReportController@store');
+            Route::get('peerReviewDetails/{id?}', 'PeerReviewReportController@details');
 
         });
         Route::group(['middleware' => ['role:ESScheduler|NBEACAdmin']], function () {
