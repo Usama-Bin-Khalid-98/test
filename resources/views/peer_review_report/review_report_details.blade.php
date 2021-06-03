@@ -30,7 +30,7 @@
         </section><!-- Main content -->
 
 
-        @hasrole('NbeacFocalPerson|NBEACAdmin')
+        @hasrole('NbeacFocalPerson|NBEACAdmin|PeerReviewer')
         <section class="content">
 
             <div class="row" >
@@ -241,7 +241,7 @@
 
 @endif
 
-@hasrole('NbeacFocalPerson|NBEACAdmin')
+@hasrole('NbeacFocalPerson|NBEACAdmin|PeerReviewer')
 <script>
 
     $('.edit').on('click', function () {

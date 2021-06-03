@@ -30,7 +30,7 @@
             </ol>
         </section><!-- Main content -->
 
-        @hasrole('NbeacFocalPerson|NBEACAdmin')
+        @hasrole('NbeacFocalPerson|NBEACAdmin|PeerReviewer')
         <!--Invoices list-->
         <section class="col-lg-12 connectedSortable">
             <!-- TO DO List -->
@@ -127,7 +127,7 @@
 
 @endif
 
-@hasrole('NbeacFocalPerson|NBEACAdmin')
+@hasrole('NbeacFocalPerson|NBEACAdmin|PeerReviewer')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <script
     src="https://code.jquery.com/jquery-3.5.1.js"
