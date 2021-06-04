@@ -132,7 +132,7 @@
             });
             $.ajax({
                 type: id?'PUT':'POST',
-                url: "{{url('faculty-degree')}}/"+id,
+                url: "{{url('faculty-degree')}}/"+id?id:'',
                 data: {
                     id: id,
                     faculty_foreign: faculty_foreign,
@@ -149,7 +149,7 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    location.reload();
+                    // location.reload();
                     console.log('response here', response);
                 },
                 error:function(response, exception){
