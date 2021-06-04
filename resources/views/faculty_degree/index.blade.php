@@ -131,8 +131,8 @@
                 }
             });
             $.ajax({
-                type: id?'PUT':'POST',
-                url: "{{url('faculty-degree')}}/"+id?id:'',
+                type: 'POST',
+                url: '{{url("faculty-degree")}}',
                 data: {
                     id: id,
                     faculty_foreign: faculty_foreign,
