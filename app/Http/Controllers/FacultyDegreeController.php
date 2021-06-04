@@ -50,13 +50,32 @@ class FacultyDegreeController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
+        // dd($request);
         try {
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
             if($validation->fails())
             {
                 return response()->json($validation->messages()->all(), 422);
             }else {
+                
+                if($request->id){
+                    $update = FacultyDegree::where('id', $request->id)
+                          ->update(
+                              [
+                                  'campus_id' => Auth::user()->campus_id,
+                                  'department_id' => Auth::user()->department_id,
+                                  'faculty_foreign' => $request->faculty_foreign,
+                                  'faculty_domestic' => $request->faculty_domestic,
+                                  'faculty_international' => $request->faculty_international,
+                                  'isComplete' => 'yes',
+                                  'updated_by' => Auth::user()->id
+
+                                  ]
+                          );
+
+                return response()->json(['success' => ' Faculty Degree Updated successfully.']);
+            
+                }else{
 
                 $update = FacultyDegree::
                     create(
@@ -71,6 +90,7 @@ class FacultyDegreeController extends Controller
 
                         ]
                     );
+                }
 
                 return response()->json(['success' => ' Faculty Degree added successfully.']);
             }
