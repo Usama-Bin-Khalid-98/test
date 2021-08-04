@@ -73,9 +73,10 @@ class EntryRequirementController extends Controller
             }
             $program_id = $request->program_id;
            // dd($program_id);
-            for ($i = 0; $i<= count($request->all()); $i++) {
+            for ($i = 0; $i<= count($request->eligibility_criteria_id)-1; $i++) {
                 //dd('value.....', $request->min_req[$i]);
-                EntryRequirement::create([
+
+                $add = EntryRequirement::firstOrCreate([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
                     'program_id' => $program_id,
@@ -85,6 +86,14 @@ class EntryRequirementController extends Controller
                     'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
+
+                if ($add->wasRecentlyCreated) {
+                    // "firstOrCreate" didn't find the user in the DB, so it created it.
+                } else {
+                    return response()->json(['error' => 'Entry Requirement already exists.'], 422);
+
+                    // "firstOrCreate" found the user in the DB and fetched it.
+                }
             }
             return response()->json(['success' => 'Entry Requirement added successfully.']);
 

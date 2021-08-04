@@ -153,8 +153,8 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
+{{--                                    <th>Business School</th>--}}
+{{--                                    <th>Campus</th>--}}
                                     <th>Program(s) under review</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>
@@ -166,8 +166,8 @@
 
                                 @foreach($entryRequirements as $req)
                                 <tr>
-                                    <td>{{$req->campus->business_school->name}}</td>
-                                    <td>{{$req->campus->location}}</td>
+{{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
+{{--                                    <td>{{$req->campus->location}}</td>--}}
                                     <td>{{$req->program->name}}</td>
                                     <td>{{$req->eligibility_criteria->name}}</td>
                                     <td>{{$req->min_req}}</td>
@@ -179,8 +179,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School</th>
-                                    <th>Campus</th>
+{{--                                    <th>Business School</th>--}}
+{{--                                    <th>Campus</th>--}}
                                     <th>Program(s) under review</th>
                                     <th>Eligibility Criteria</th>
                                     <th>Minimum requirements/Relative Weightage</th>
@@ -343,6 +343,10 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+                    if(response.error){
+                        Notiflix.Notify.Failure(response.error);
+
+                    }
                     console.log('response', response);
                     location.reload();
                 },
@@ -451,11 +455,6 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
-
-
-
-
-
 
 
     </script>

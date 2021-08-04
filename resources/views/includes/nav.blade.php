@@ -313,7 +313,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         <i class="fa {{$sources_funding==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                     </span></span></a>
                     </li>
-                    @endif
+
 
                     <li  class="{{ (request()->is('strategic/audit-report')) ? 'active' : '' }}">
                         <a href="{{url('strategic/audit-report')}}">1.9 Audit Report
@@ -323,7 +323,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                                 </span>
                             </span>
                         </a></li>
-                    @if($isActiveSAR)
+
                     <li  class="{{ (request()->is('strategic/mission-vision')) ? 'active' : '' }}"><a href="{{url('strategic/mission-vision')}}">1.10 Mission Vision
                             <span class="pull-right-container">
                                 <span class="text text-{{$mission==='C'?'green':'red'}} pull-right">
@@ -339,12 +339,13 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$plan==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+                    @endif
              <li  class="{{ (request()->is('strategic/parent-institution')) ? 'active' : '' }}"><a href="{{url('strategic/parent-institution')}}">@if($isActiveSAR) 1.12 Organograms @else 1.9 Organograms @endif<span class="pull-right-container">
                         <span class="text text-{{$parent==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$parent==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            @endif
+
             <!-- Below are the Tables For SAR  -->
 
                 </ul>

@@ -100,6 +100,7 @@ class SlipController extends Controller
             ]);
 
             $data = array(
+                'id'      =>  $request->id,
                 'user'      =>  $request->user,
                 'designation'      =>  $request->designation,
                 'school'      =>  $request->school,

@@ -83,7 +83,7 @@
 
                                          <td class="fontsize">
                                              <input type="text" name="name[]" placeholder="name" id="name_{{@$body->id}}" class="form-control" style="margin-bottom: 5px !important;">
-                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2" style="width: 100%;">
+                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2  designations" style="width: 100%;">
                                                  <option value="">Select Designation</option>
                                                  @foreach($designations as $designation)
                                                      <option value="{{$designation->id}}">{{$designation->name }}</option>
@@ -341,6 +341,35 @@
     </div>
     <!-- /.modal -->
 
+    <div class="modal fade" id="designation_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Designation</h4>
+                </div>
+                    <form method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="designation_index">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name"> Name</label>
+                                <input type="name" id="name" class="form-control">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="button" class="btn btn-info" value="Add" id="add_designation">
+                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
     <!-- /.modal -->
     <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -372,6 +401,15 @@
     //     $('#date_fourth_meeting').datepicker({
     //   autoclose:true
     // });
+    $('.designations').on('change', function () {
+
+        if($(this).val() == 8){
+            $('#designation_modal').modal('show');
+            console.log('designation', $(this).attr('id'))
+            $('#designation_index').val($(this).attr('id'))
+
+        }
+    })
 
         //Flat red color scheme for iCheck
         $('input[type="radio"].flat-red').iCheck({
@@ -384,6 +422,55 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+
+        $('#add_designation').on('click', function (e) {
+
+            console.log($(this).attr('id'))
+            let designation_index = $('#designation_index').val();
+            console.log('yes attr here....',designation_index)
+
+            let name = $('#name').val();
+            !name?addClass('name'):removeClass('name');
+            if(!name){
+                Notiflix.Notify.Failure("Designation name field is required.");
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{{url('add-designation')}}",
+                data: {name:name},
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    console.log("success resp ",response.success);
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+
+                    let insert_id = response.insert_id;
+                    if(insert_id){
+
+                        let options = $('<option selected></option>').val(insert_id).text(name);
+                        $('#'+designation_index).append(options).trigger('change');
+                    }
+                    $('#designation_modal').modal('hide');
+                    console.log('response here', response);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            });
+
         });
         /*Add Scope*/
         $('#add').submit(function (e) {
