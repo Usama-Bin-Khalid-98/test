@@ -29,11 +29,11 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-                           data-toggle="modal" data-target="#add-modal"
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+{{--                    <button class="btn gradient-bg-color"--}}
+{{--                           data-toggle="modal" data-target="#add-modal"--}}
+{{--                           style="color: white;"--}}
+{{--                           value="Add New"--}}
+{{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                 </div>
             </div>
         </section>
@@ -154,7 +154,7 @@
             let qualification = $('#qualification').val();
             let reports_to = $('#reports_to').val();
             let composition = $('#composition').val();
-             
+
              !research_center?addClass('research_center'):removeClass('research_center');
              !hierarchical_position?addClass('hierarchical_position'):removeClass('hierarchical_position');
              !year_establishment?addClass('year_establishment'):removeClass('year_establishment');

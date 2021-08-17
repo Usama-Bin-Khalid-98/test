@@ -146,7 +146,7 @@
                                 <tr>
                                     <td>{{$plan->campus->business_school->name}}</td>
                                     <td>{{$plan->campus->location}}</td>
-                                    <td>{{$plan->plan_period}}</td>
+                                    <td>{{$plan->plan_period}} <br/>{{$plan->plan_period_from}} To {{$plan->plan_period_to}}</td>
                                     <td>{{$plan->aproval_date}}</td>
                                     <td>{{$plan->aproving_authority}}</td>
                                     <td><a href="{{$plan->file}}" download="{{$plan->file}}"><i class="fa fa-file-word-o"></i> </a></td>

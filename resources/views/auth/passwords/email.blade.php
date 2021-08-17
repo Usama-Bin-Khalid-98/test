@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <div class="jumbotron jumbotron-fluid" style="padding-bottom: 0;">
+        <div class="container">
+            <img src="{{URL::asset('dist/img/logo.png')}}" style="width: 100px">
+            <span class="lead" style="font-size: 20px;"><strong>NBEAC</strong> (National Business Education Accreditation Council).</span>
+        </div>
+    </div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -16,7 +23,6 @@
 
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
-
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 

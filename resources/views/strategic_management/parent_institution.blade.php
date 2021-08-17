@@ -44,7 +44,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">1.9. Provide organograms of the business school and the parent institution as Appendix-1F.</p>
+                            <p class="box-title">1.9. Provide organograms of the business school and the parent institution as Appendix-1E.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -63,7 +63,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc (Appendix-1F)</label>
+                                    <label for="name">Attach Doc (Appendix-1E)</label>
                                     <input type="file" name="file" id="file"  >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>

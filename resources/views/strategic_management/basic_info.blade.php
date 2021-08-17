@@ -30,11 +30,11 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-                           data-toggle="modal" data-target="#add-modal"
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+{{--                    <button class="btn gradient-bg-color"--}}
+{{--                           data-toggle="modal" data-target="#add-modal"--}}
+{{--                           style="color: white;"--}}
+{{--                           value="Add New"--}}
+{{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                 </div>
             </div>
         </section>
@@ -228,7 +228,7 @@
                             <div class="form-row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="type">{{ __('Profit/Non-profit Status') }} : </label>
+                                        <label for="type">{{ __('Profit/Not for profit Status') }} : </label>
                                         <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'Not for Profit' ? 'checked' : '' }}> Not for Profit</p>
                                         <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ @$basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
 

@@ -49,7 +49,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title" style="width: 92%;">Provide a summary of 5.1  Provide a summary of research output8 of business school in last three academic years in Table.5.1. Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly mentioning type of each item as impact factor or HEC category, as Appendix-5A.</h3>
+                            <h3 class="box-title" style="width: 92%;">Provide a summary of 5.1  Provide a summary of research output<sup>6</sup> of business school in last three academic years in Table.5.1. Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly mentioning type of each item as impact factor or HEC category, as Appendix-5A.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

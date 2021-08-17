@@ -16,6 +16,7 @@
 <p>Thank You.</p>
 
 <p>Best Regards,</p>
+<a href="{{url('/strategic/invoice')}}/{{@$data['id']}}">Here is the Invoice</a>
 @php
 $nbeac = \App\Models\Config\NbeacBasicInfo::all()->first();
 @endphp
