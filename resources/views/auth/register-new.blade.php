@@ -58,7 +58,7 @@
 
                                 <h3 class="timeline-header"><a href="#" class="text-success">Instructions for the application preparation</a></h3>
                                 <div class="timeline-body">
-                                    <p>1.	Before starting the registration application, please go through the guidelines given in Section III of the <a href="https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf"> NBEAC Accreditation Process Manual</a></p>
+                                    <p>1.	Before starting the registration application, please go through the guidelines given in Section III of the <a href="https://nbeac.org.pk/files/Accreditation%20Process%20Manual%202020%20Updated%2026May2021.pdf" target="_blank"> NBEAC Accreditation Process Manual</a></p>
                                 </div>
                             </div>
                         </li>
