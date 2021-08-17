@@ -23,7 +23,7 @@ class WorkLoadController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-         $designations = Designation::whereIn('id', [1,2,6,10])->get();
+         $designations = Designation::whereIn('id', [1,2,6,10,8])->get();
         /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();

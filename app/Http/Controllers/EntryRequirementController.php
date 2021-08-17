@@ -87,13 +87,10 @@ class EntryRequirementController extends Controller
                     'created_by' => Auth::user()->id
                 ]);
 
-                if ($add->wasRecentlyCreated) {
+                if (!$add->wasRecentlyCreated) {
                     // "firstOrCreate" didn't find the user in the DB, so it created it.
-                } else {
                     return response()->json(['error' => 'Entry Requirement already exists.'], 422);
-
-                    // "firstOrCreate" found the user in the DB and fetched it.
-                }
+                } 
             }
             return response()->json(['success' => 'Entry Requirement added successfully.']);
 

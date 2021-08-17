@@ -138,9 +138,9 @@
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
 {{--                                    <th>Year</th>--}}
-                                    <th>Total Enrollments</th>
-                                    <th>Total FTE</th>
-                                    <th>Total VFE</th>
+                                    <th>Total Enrollments (B)</th>
+                                    <th>Total FTE (C)</th>
+                                    <th>Total VFE (D)</th>
                                     <th>Student to teacher ratio
                                         =B/(C+D)
                                     </th>
@@ -423,7 +423,7 @@ $('#updateForm').submit(function (e) {
                             if(response.success){
                                 Notiflix.Notify.Success(response.success);
                             }
-                            // location.reload();
+                            location.reload();
                             // console.log('response here', response);
                         },
                         error:function(response, exception){

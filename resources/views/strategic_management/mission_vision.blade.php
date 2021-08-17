@@ -58,21 +58,23 @@
                         </div>
 
                         <!-- /.box-header -->
-                        <div class="box-body">
-                          <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="box-body pad">
-                                <label>Mission</label>
-                        <textarea id="mission" name="mission" rows="10" cols="80">
-                            {{@$get->mission}}
-                        </textarea>
-                        <input type="hidden" id="id" value="{{@$get->id}}">
-                </div>
+
                 <div class="box-body pad">
                                 <label>Vision</label>
                         <textarea id="vision" name="vision" rows="10" cols="80">
                             {{@$get->vision}}
                         </textarea>
                 </div>
+
+                <div class="box-body">
+                    <form action="javascript:void(0)" id="form" method="POST">
+                        <div class="box-body pad">
+                            <label>Mission</label>
+                            <textarea id="mission" name="mission" rows="10" cols="80">
+                    {{@$get->mission}}
+                </textarea>
+                            <input type="hidden" id="id" value="{{@$get->id}}">
+                        </div>
 
                 <div class="col-md-3">
                     <div class="form-group">
@@ -84,18 +86,20 @@
                     @endif
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="name">Mission Approval Date</label>
-                        <input type="text" name="mission_approval" id="mission_approval" class="form-control" autocomplete="off" value="{{@$get->mission_approval}}" >
-                    </div>
-                </div>
+
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="name">Vision Approval Date</label>
                         <input type="text" name="vision_approval" id="vision_approval" class="form-control" autocomplete="off" value="{{@$get->vision_approval}}" >
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="name">Mission Approval Date</label>
+                        <input type="text" name="mission_approval" id="mission_approval" class="form-control" autocomplete="off" value="{{@$get->mission_approval}}" >
+                    </div>
+                </div>
+
 
 
                 <div class="col-md-12">

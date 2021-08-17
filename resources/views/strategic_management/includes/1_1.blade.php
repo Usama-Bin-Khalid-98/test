@@ -85,7 +85,7 @@
                                     ?> </td>
                                 </tr>
                                 <tr class="left">
-                                    <td>n)  Profit/Non-profit status</td>
+                                    <td>n)  Profit/Not for profit status</td>
                                     <td><?php if(isset($bussinessSchool[0]->profit_status))
                                     print_r($bussinessSchool[0]->profit_status);
                                     ?> </td>
