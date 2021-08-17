@@ -1,0 +1,1 @@
+[14-Jul-2021 14:12:12 Asia/Karachi] PHP Fatal error:  Declaration of Carbon\Translator::setLocale($locale) must be compatible with Symfony\Contracts\Translation\LocaleAwareInterface::setLocale(string $locale) in /home/nbeacorg/public_html/nbeac_app/vendor/nesbot/carbon/src/Carbon/Translator.php on line 18
