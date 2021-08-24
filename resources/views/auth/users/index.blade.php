@@ -318,7 +318,7 @@
                                     <label>Role</label>
                                 <select name="role_id" class="form-control select2" id="edit_role_id">
                                     <option disabled selected >Select Role</option>
-                                    @foreach($roles as $role)
+                                    @foreach($edit_roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
                                     @endforeach
                                 </select>

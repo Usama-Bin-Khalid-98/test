@@ -17,8 +17,10 @@ use App\Models\Common\Sector;
 use App\Models\Config\NbeacBasicInfo;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
 use PragmaRX\Countries\Package\Countries;
 use Spatie\Permission\Models\Permission;
@@ -36,12 +38,13 @@ class UserController extends Controller
 //        $designations = Designation::all();
         $permissions = Permission::all();
         $roles = Role::where('id', '!=', 1)->get();
+        $edit_roles = Role::all();
         $designations=Designation::where('status', 'active')->get();
 
         //dd($users);
 
         return view('auth.users.index', compact(
-                'designations','users','permissions', 'roles')
+                'designations','users','permissions', 'roles', 'edit_roles')
         );
         //return view('auth.users.index', compact('users', 'designations', 'permissions', 'roles'));
     }
@@ -157,10 +160,16 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-
         return view('users.edit',compact('user','roles','userRole'));
     }
 
+    public function profile(){
+
+        $user_id = Auth::user()->id;
+        $user = User::with('designation')->where(['id'=> $user_id])->first();
+//        dd($user);
+    return view('auth.users.profile', compact('user'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -194,6 +203,50 @@ class UserController extends Controller
           DB::table('model_has_roles')->where('model_id',$id)->delete();
           $user->assignRole($request->input('role_id'));
             return response()->json(['success' => 'Record updated successfully.']);
+
+        }catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 422);
+        }
+    }
+
+    public function update_profile(Request $request)
+    {
+      $validation = Validator::make($request->all(), $this->profile_rules(), $this->messages());
+        if($validation->fails())
+        {
+            return response()->json($validation->messages()->all(), 422);
+        }
+        $id = Auth::user()->id;
+        $full_path= '';
+        $imageName= '';
+        if($request->file('file')) {
+            $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+            $path = 'uploads/users';
+            if(!file_exists($path)){
+                mkdir($path, 0777, true);
+            }
+            $diskName = env('DISK');
+            $disk = Storage::disk($diskName);
+            $request->file('file')->move($path, $imageName);
+            $full_path = $path.'/'.$imageName;
+        }else{
+            $full_path = Auth::user()->image;
+
+        }
+
+        try {
+            User::where('id', $id)->update([
+                'name' => $request->inputName,
+                'cnic' => $request->inputCNIC,
+                'contact_no' => $request->inputContact,
+                'address' => $request->address,
+                'email' => $request->inputEmail,
+                'image' => $full_path,
+            ]);
+
+            return response()->json(['success' => 'Profile updated successfully.']);
+
 
         }catch (Exception $e)
         {
@@ -298,6 +351,7 @@ class UserController extends Controller
 
 
 
+
     protected function update_rules() {
         return [
             'name' => 'required',
@@ -310,6 +364,13 @@ class UserController extends Controller
         ];
     }
 
+
+    protected function profile_rules() {
+        return [
+            'inputName' => 'required',
+            'inputEmail' => 'required',
+        ];
+    }
 
     protected function password_rules() {
         return [
