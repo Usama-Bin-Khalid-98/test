@@ -41,6 +41,8 @@ Route::get('/email', function() {
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('admin', 'DashboardController@index');
     Route::get('submitSAR', 'PrintController@submitSAR');
+    Route::get('profile', 'Auth\UserController@profile');
+    Route::post('profile/update', 'Auth\UserController@update_profile');
 
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
         ////// Users permissions
