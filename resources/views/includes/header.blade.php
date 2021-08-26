@@ -225,7 +225,7 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset(@Auth::user()->image ) ?? 'dist/img/user8-128x128.jpg' }}" class="img-circle" alt="User Image">
+                <img src="{{ asset(@Auth::user()->image  ?? 'dist/img/user8-128x128.jpg') }}" class="img-circle" alt="User Image">
 
                 <p>
                   {{ Auth::user()->name }}
