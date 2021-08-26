@@ -43,6 +43,7 @@ Route::get('/email', function() {
     Route::get('submitSAR', 'PrintController@submitSAR');
     Route::get('profile', 'Auth\UserController@profile');
     Route::post('profile/update', 'Auth\UserController@update_profile');
+    Route::post('profile/updatePassword', 'Auth\UserController@updatePassword');
 
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
         ////// Users permissions

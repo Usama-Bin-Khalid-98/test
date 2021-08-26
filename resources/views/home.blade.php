@@ -1003,7 +1003,7 @@
           <!-- /.box -->
 
       </section>
-  @endif
+      @endif
       <!-- right col -->
         @endhasrole
 

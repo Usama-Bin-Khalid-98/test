@@ -30,7 +30,13 @@ use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
+
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        $this->middleware('auth');
+    }
     //
     public function index() {
         $users = User::with('business_school', 'roles', 'permissions')->get();
@@ -264,7 +270,7 @@ class UserController extends Controller
         }
 
         try {
-            User::where('id', $request->id)->update([
+            User::where('id', Auth::user()->id)->update([
                 'password' => Hash::make($request->new_password)
             ]);
             return response()->json(['success' => ' Password updated successfully.']);
