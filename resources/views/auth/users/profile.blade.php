@@ -33,7 +33,7 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{{@$user->image}}" alt="User profile picture">
+                        <img class="profile-user-img img-responsive img-circle" src="{{ $user->image?$user->image:'dist/img/avatar2.png'}}" alt="User profile picture">
                         <h3 class="profile-username text-center">{{@$user->name}}</h3>
                         <p class="text-muted text-center">{{@$user->designaion->name}}</p>
 
