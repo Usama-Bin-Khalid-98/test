@@ -933,6 +933,7 @@
 
 
       </section>
+      @hasrole('BusinessSchool')
       @if($invoices)
       <section class="col-lg-12 connectedSortable">
 
@@ -1003,8 +1004,9 @@
           <!-- /.box -->
 
       </section>
-  @endif
+      @endif
       <!-- right col -->
+        @endhasrole
         @endhasrole
 
 

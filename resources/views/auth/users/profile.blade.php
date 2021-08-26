@@ -226,23 +226,23 @@
                         </div><!-- /.tab-pane -->
 
                         <div class="tab-pane" id="settings">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" name="updatePassword" id="updatePassword" method="post">
                                 <div class="form-group">
-                                    <label for="old_password" class="col-sm-2 control-label">Old Password</label>
+                                    <label for="current_password" class="col-sm-2 control-label">Current Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="old_password" placeholder="Old Password">
+                                        <input type="password" class="form-control" id="current_password" name="current_password" placeholder="Current Password">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="new_password" class="col-sm-2 control-label">New Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="new_password" placeholder="New Password">
+                                        <input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="conf_password" class="col-sm-2 control-label">Confirm Password</label>
+                                    <label for="confirm_new_password" class="col-sm-2 control-label">Confirm Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="conf_password" placeholder="Confirm Password">
+                                        <input type="password" class="form-control" id="confirm_new_password" name="confirm_new_password" placeholder="Confirm Password">
                                     </div>
                                 </div>
 
@@ -290,6 +290,51 @@
 
             $.ajax({
                 url:'{{url("profile/update")}}',
+                type:'POST',
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                    location.reload();
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            });
+        });
+
+        $('#updatePassword').submit(function (e){
+            e.preventDefault();
+            let current_password = $('#current_password').val();
+            let new_password = $('#new_password').val();
+            let conf_password = $('#confirm_new_password').val();
+
+            !current_password?addClass('current_password'):removeClass('current_password');
+            !new_password?addClass('new_password'):removeClass('new_password');
+            !conf_password?addClass('conf_password'):removeClass('conf_password');
+
+            if(!current_password || !new_password || !conf_password)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            let formData = new FormData(this);
+
+            $.ajax({
+                url:'{{url("profile/updatePassword")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
