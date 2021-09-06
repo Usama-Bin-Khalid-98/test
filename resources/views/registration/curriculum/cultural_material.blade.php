@@ -24,17 +24,7 @@
                 <li class="active"> Cultural Material </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -114,7 +104,7 @@
                                 @endforeach
                                 </tbody>
                                 <tfoot>
-                                <tr> 
+                                <tr>
                                     <th>Indigenous and culturally relevant material</th>
                                     <th>Course title</th>
                                     <th>Status</th>
@@ -221,7 +211,7 @@
             let cultural_material = $('#cultural_material').val();
             let course_title = $('#course_title').val();
 
-            
+
             !cultural_material?addClass('cultural_material'):removeClass('cultural_material');
             !course_title?addClass('course_title'):removeClass('course_title');
 

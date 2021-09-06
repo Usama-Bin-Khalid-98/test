@@ -25,17 +25,7 @@
                 <li class="active"> Extra Activities </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -61,7 +51,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                            
+
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -168,7 +158,7 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                              
+
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Date</label>

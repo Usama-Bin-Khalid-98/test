@@ -24,17 +24,7 @@
                 <li class="active">Financial Risk</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -58,7 +48,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                          <form action="javascript:void(0)" id="form" method="POST">
-                            
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Risk identified</label>
@@ -121,7 +111,7 @@
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"risk_identified":"{{$summary->risk_identified}}","stakeholder_involved":"{{$summary->stakeholder_involved}}","remedial_measure":"{{$summary->remedial_measure}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                               
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -168,15 +158,15 @@
                                     <input type="text" name="stakeholder_involved" id="edit_stakeholder_involved" value="{{old('edit_stakeholder_involved')}}" class="form-control">
                                 </div>
                               </div>
-                            
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Remedial Measure</label>
                                     <input type="text" name="remedial_measure" id="edit_remedial_measure" value="{{old('edit_remedial_measure')}}" class="form-control">
                                 </div>
                               </div>
-                            
-                            
+
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
@@ -185,7 +175,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -199,7 +189,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

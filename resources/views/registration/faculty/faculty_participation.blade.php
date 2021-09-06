@@ -25,17 +25,7 @@
                 <li class="active"> Faculty Participation</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
@@ -77,7 +67,7 @@
                                     <input type="text" name="faculty_name" id="faculty_name" class="form-control">
                                 </div>
                             </div>
-                            
+
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -184,7 +174,7 @@
                                     <input type="text" name="faculty_name" id="edit_faculty_name" value="{{old('edit_faculty_name')}}" class="form-control">
                                 </div>
                             </div>
-                            
+
 
                             <div class="col-md-6">
                                 <div class="form-group">

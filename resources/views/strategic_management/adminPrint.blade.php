@@ -13,7 +13,7 @@
     @include("../includes.header")
     <style type="text/css">
         table, th, td, thead{
-            border: 0.5px solid black !important; 
+            border: 0.5px solid black !important;
             border-collapse: collapse !important;
         }
     </style>
@@ -30,17 +30,7 @@
                 <li class="active"> Print </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -48,7 +38,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                   
+
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
@@ -65,7 +55,7 @@
                     <span class="center"><h1>Report</h1></spans>
                         <div class="center"><h1>(SAR)</h1></div>
                     <h5 style="text-align: center;">NBEAC</h5><br><hr>
-                    <p>The SAR is to be completed by the business school seeking accreditation from the  
+                    <p>The SAR is to be completed by the business school seeking accreditation from the
 National Business Education Accreditation Council (NBEAC) of the Higher Education Commission, Pakistan
 </p>
                     <br>
@@ -74,8 +64,8 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                         <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/nbeacLogo.jpg')}}"></div>
                         <div class="col col-sm-12 col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
                         <div class="col  col-md-3 col-lg-3"></div>
-                    
-                    
+
+
                     </div>
 
 
@@ -106,8 +96,8 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                         <div class="col col-sm-12 col-md-3 col-lg-3"></div>
                         <div class="col col-sm-12 col-md-3 col-lg-3"></div>
                         <div class="col  col-md-3 col-lg-3"><img src="{{asset('/images/HECLogo.jpg')}}"></div>
-                    
-                    
+
+
                     </div>
 
 
@@ -116,7 +106,7 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                     <h1>Perface</h1><br>
                     <div class="row">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10">
                             <p class="justify">This document guides accreditation applicants in the provision of information based on which NBEAC may make an accreditation decision. Information is sought for nine standards listed below together with their weights in the total accreditation score in parentheses.  The more complete the data provided, the more accurate the assessment.</p>
                             <ol>
@@ -136,8 +126,8 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                             </p>
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div><br><br><br><br><br><br>
 
 
@@ -147,7 +137,7 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                         </div><br><br>
                         <div class="row">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10">
                             <p class="left">1.  To ensure that the SAR is prepared in accordance with the relevant guidelines, please consult  Section IV of the NBEAC Accreditation Process Manual<a style="color: blue" href="https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf"> https://www.nbeac.org.pk/images/Accreditation/accreditation-process-manual-2019.pdf</a> before starting.</p>
                             <p class="left">2.  Please do not change the original text and structure of the SAR. However, where some illustrative data is shown in colored font, you are expected to replace it with actual data.</p>
@@ -165,8 +155,8 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                             </p>
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div>
                     </div><br><br><br><br><br>
 
@@ -178,7 +168,7 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                         </div><br><br>
                         <div class="row">
                         <div class="col  col-md-1 col-lg-1"></div>
-                        
+
                         <div class="col col-sm-12 col-md-10 col-lg-10"><p class="left">I, the undersigned, fully understand and agree with the terms and conditions of the NBEAC given below. </p>
                             <p class="left">1.  I confirm the accuracy of the information provided in the Self-Assessment Report (SAR). </p>
                             <p class="left">2.  I confirm that my institution will pay the NBEAC an accreditation fee as defined in the NBEAC Fee Schedule <a style="color: blue" href="https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2"> https://www.nbeac.org.pk/index.php/accreditation-2/accreditation-fee-2</a> together with this application form. </p>
@@ -197,11 +187,11 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                             <p>City and country: ________________________________________________________________________________</p>
                             <p>Telephone: ______________________________________ Fax: __________________________________________</p>
 
-                            
+
                         </div>
                         <div class="col  col-md-1 col-lg-1"></div>
-                    
-                    
+
+
                     </div>
                     </div><br><br><br><br><br>
                         <!-- /.box-header -->
@@ -243,7 +233,7 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Strategic Plan. </h4>
                 </div>
-               
+
             </div>
             <!-- /.modal-content -->
         </div>
@@ -251,7 +241,7 @@ National Business Education Accreditation Council (NBEAC) of the Higher Educatio
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

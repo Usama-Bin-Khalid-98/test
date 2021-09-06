@@ -57,7 +57,7 @@ class CreateUsersTable extends Migration
             $table->string('email',100)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',255);
-            $table->string('image',255);
+            $table->string('image',255)->nullable();
             $table->string('user_type', 50);
             $table->enum('status', ['active', 'inactive', 'pending', 'approved']);
             $table->enum('request', ['created', 'pending', 'sent', 'approved'])->default('created');

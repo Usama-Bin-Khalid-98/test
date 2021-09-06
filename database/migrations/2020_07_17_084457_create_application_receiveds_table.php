@@ -27,7 +27,7 @@ class CreateApplicationReceivedsTable extends Migration
             $table->foreign('program_id')
                 ->references('id')
                 ->on('programs');
-            $table->unsignedBigInteger('semester_id');
+            $table->year('year');
             $table->string('app_received',100);
             $table->string('admission_offered',100);
             $table->string('student_intake',100);
@@ -51,10 +51,10 @@ class CreateApplicationReceivedsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('semester_id')
-                ->references('id')
-                ->on('semesters')
-                ->onDelete('cascade');
+//            $table->foreign('semester_id')
+//                ->references('id')
+//                ->on('semesters')
+//                ->onDelete('cascade');
         });
     }
 
