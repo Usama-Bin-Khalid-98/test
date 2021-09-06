@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\StrategicManagement\ApplicationReceived;
 use App\Models\StrategicManagement\Scope;
 use App\Models\Common\Semester;
@@ -36,8 +37,13 @@ class ApplicationReceivedController extends Controller
             $apps  = ApplicationReceived::with('campus','program','semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
 
+        $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
+        $years['yeart'] = @$getYears->tyear;
+        $years['year_t_1'] = @$getYears->year_t_1;
+        $years['year_t_2'] = @$getYears->year_t_2;
+
         $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
-        return view('registration.curriculum.app_received', compact('scopes','semesters','apps'));
+        return view('registration.curriculum.app_received', compact('scopes','semesters','apps', 'years'));
     }
 
     /**
@@ -79,7 +85,7 @@ class ApplicationReceivedController extends Controller
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
-                'semester_id' => $request->semester_id,
+                'year' => $request->year,
                 'app_received' => $request->app_received,
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
@@ -139,7 +145,7 @@ class ApplicationReceivedController extends Controller
 
             ApplicationReceived::where('id', $applicationReceived->id)->update([
                 'program_id' => $request->program_id,
-                'semester_id' => $request->semester_id,
+                'year' => $request->year,
                 'app_received' => $request->app_received,
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
@@ -178,7 +184,7 @@ class ApplicationReceivedController extends Controller
     protected function rules() {
         return [
             'program_id' => 'required',
-            'semester_id' => 'required',
+            'year' => 'required',
             'app_received' => 'required|numeric',
             'admission_offered' => 'required|numeric',
             'student_intake' => 'required|numeric',

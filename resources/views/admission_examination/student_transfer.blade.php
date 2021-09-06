@@ -24,17 +24,7 @@
                 <li class="active">Student transfer</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -60,7 +50,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                           
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Attach Doc</label>
@@ -108,7 +98,7 @@
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                                 
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -149,7 +139,7 @@
                     <h4 class="modal-title">Edit Student transfer. </h4>
                 </div>
                 <form role="form" id="updateForm" >
-                    <div class="modal-body"> 
+                    <div class="modal-body">
 
                               <div class="col-md-6">
                             <div class="form-group">
@@ -170,7 +160,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -184,7 +174,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
@@ -269,7 +259,7 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
 
-            
+
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()

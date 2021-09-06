@@ -23,17 +23,7 @@
                 <li class="active">Student to teacher Ratio</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -187,6 +177,7 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
+            </div>
             </div>
         </section>
     </div>

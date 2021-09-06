@@ -28,11 +28,11 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <button class="btn gradient-bg-color"
+{{--                    <button class="btn gradient-bg-color"--}}
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+{{--                           style="color: white;"--}}
+{{--                           value="Add New"--}}
+{{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                 </div>
             </div>
         </section>
@@ -61,7 +61,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                            
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Name of faculty</label>
@@ -160,9 +160,9 @@
                                     <td><a href="{{($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","faculty_name":"{{$contact->faculty_name}}","project_name":"{{$contact->project_name}}","client_name":"{{$contact->client_name}}","start_date":"{{$contact->start_date}}","end_date":"{{$contact->end_date}}","all_participants":"{{$contact->all_participants}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-                                </tr> 
-                                @endforeach 
-                                 
+                                </tr>
+                                @endforeach
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -207,7 +207,7 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                              
+
                              <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Name of faculty</label>
@@ -286,7 +286,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

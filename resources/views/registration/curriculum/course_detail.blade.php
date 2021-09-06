@@ -25,10 +25,10 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <button class="btn gradient-bg-color"
+{{--                    <button class="btn gradient-bg-color"--}}
 {{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
+{{--                           style="color: white;"--}}
+{{--                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                 </div>
             </div>
         </section>
@@ -159,7 +159,7 @@ $('#update').on('click', function (e) {
 <?php }else{ ?>
 
     $('#update').on('click', function (e) {
-            let id = $('#id').val(); 
+            let id = $('#id').val();
             let summary = CKEDITOR.instances.summary.getData();
 
              !summary?addClass('summary'):removeClass('summary');

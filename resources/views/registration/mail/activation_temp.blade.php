@@ -378,14 +378,14 @@
                                         <p>Department: {{@$content->department->name}}</p>
                                         <p>Account Type: {{@$content['user_type']}}</p>
                                         {{--<p>address: {{$content['address']}}</p>--}}
-                                        <a href="http://www.nbeac.org.pk">Login to Online Accreditation Application.</a>
+                                        <a href="https://app.nbeac.org.pk">Login to Online Accreditation Application.</a>
                                         <p>With Kind Regards,</p>
                                         <p>NBEAC</p>
                                         <p>National Business Education Accreditation Council,</p>
                                         <p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</p>
                                         <p>Phone (Off) 92 51 9080 0206-07</p>
                                         <p>Fax: +92 51 9080 0208</p>
-                                        <p>Web: <a href="http://www.nbeac.org.pk"> www.nbeac.org.pk</a></p>
+                                        <p>Web: <a href="https://app.nbeac.org.pk"> www.nbeac.org.pk</a></p>
                                          <p>Best Regards</p>
                                     </td>
                                 </tr>

@@ -26,11 +26,11 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-                            {{--                           data-toggle="modal" data-target="#add-modal"--}}
-                            style="color: white;"
-                            value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
+{{--                    <button class="btn gradient-bg-color"--}}
+{{--                            --}}{{--                           data-toggle="modal" data-target="#add-modal"--}}
+{{--                            style="color: white;"--}}
+{{--                            value="Add New"--}}
+{{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                 </div>
             </div>
         </section>
@@ -85,10 +85,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="name">Degree awarding critarea/requirments</label>
-                                        <input type="text" name="degree_req" id="degree_req" class="form-control">
+                                        <textarea name="degree_req" id="degree_req" class="form-control"></textarea>
                                     </div>
                                 </div>
 
@@ -128,7 +128,7 @@
                                         <td>{{$portfolio->campus->business_school->name}}</td>
                                         <td>{{$portfolio->campus->location}}</td>
                                         <td>{{$portfolio->program->name}}</td>
-                                        <td>{{$portfolio->degree_awarding_criteria}}</td>
+                                        <td>{!! $portfolio->degree_awarding_criteria !!}</td>
                                         <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                         <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","degree_req":"{{$portfolio->degree_awarding_criteria}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
@@ -167,7 +167,7 @@
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Program Name</label>
                                 <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
@@ -179,15 +179,15 @@
                             </div>
                             <input type="hidden" id="edit_id">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Degree awarding critarea/requirments</label>
-                                <input type="text" name="degree_req" id="edit_degree_req" value="{{old('edit_degree_req')}}" class="form-control">
+                                <textarea type="text" name="degree_req" id="edit_degree_req" class="form-control">{{old('edit_degree_req')}}</textarea>
                             </div>
                         </div>
 
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="type">{{ __('Status') }} : </label>
                                 <p><input type="radio" name="status" class="flat-red" value="active" > Active
@@ -229,6 +229,11 @@
     </script>
     <script type="text/javascript">
 
+        $(function () {
+            // instance, using default configuration.
+            CKEDITOR.replace('degree_req');
+            CKEDITOR.replace('edit_degree_req');
+        })
         $('.select2').select2();
 
         $.ajaxSetup({
@@ -241,7 +246,10 @@
 
         $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
-            let degree_req =$('#degree_req').val();
+            for ( instance in CKEDITOR.instances ) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            let degree_req = CKEDITOR.instances.degree_req.getData();
 
             !program_id?addClass('program_id'):removeClass('program_id');
             !degree_req?addClass('degree_req'):removeClass('degree_req');
@@ -274,7 +282,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -290,14 +298,21 @@
             let data = JSON.parse(JSON.stringify($(this).data('row')));
 
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_degree_req').val(data.degree_req);
+            // $('#edit_degree_req').val(data.degree_req);
+            CKEDITOR.instances.edit_degree_req.setData(data.degree_req);
+
+
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
         $('#updateForm').submit(function (e) {
             let program_id = $('#edit_program_id').val();
-            let degree_req=$('#edit_degree_req').val();
+            for ( instance in CKEDITOR.instances ) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            let edit_degree_req = CKEDITOR.instances.edit_degree_req.getData();
+
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();

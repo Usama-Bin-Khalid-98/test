@@ -25,17 +25,7 @@
                 <li class="active"> Statutory Body Meetings </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
         {{--Dean section --}}
         {{--Dean section --}}
         <section class="content">
@@ -126,7 +116,7 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    
+
                                     <th>Participant name</th>
                                     <th>Designation</th>
                                     <th>Affiliation</th>
@@ -353,7 +343,7 @@
         $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
             // Initialize Select2
-           
+
             $('#edit_participant_name').val(data.participant_name);
             $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_affiliation').val(data.affiliation);

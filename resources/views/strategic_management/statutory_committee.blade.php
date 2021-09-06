@@ -188,7 +188,8 @@
                                     <td>{{$committee->date_second_meeting}}</td>
                                     <td>{{$committee->date_third_meeting}}</td>
                                     <td>{{$committee->date_fourth_meeting}}</td>
-                                    <td><a href="{{url($committee->file)}}">file</a></td>
+
+                                    <td>@if(!empty($committee->file) && $committee->file !=='/')<a href="{{url($committee->file)}}"><i class="fa fa-file-word-o"></i></a> @endif</td>
                                     <td><div class="badge {{$committee->status=='active'?'bg-green':'bg-red'}}">{{$committee->status=='active'?'Active':'Inactive'}}</div></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$committee->id}}"></i> |
                                         <i class="fa fa-pencil text-blue edit" data-toggle="modal" data-target="#edit-modal"

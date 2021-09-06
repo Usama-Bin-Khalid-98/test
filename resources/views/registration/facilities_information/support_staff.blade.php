@@ -24,17 +24,7 @@
                 <li class="active">Support Staff</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -81,7 +71,7 @@
                                     <input type="text" name="supervisor_qualification" id="supervisor_qualification" class="form-control">
                                 </div>
                               </div>
-                            
+
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -126,7 +116,7 @@
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"staff_category_id":"{{$summary->staff_category_id}}","total_staff":"{{$summary->total_staff}}","supervisor_qualification":"{{$summary->supervisor_qualification}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
-                               
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -192,7 +182,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -206,7 +196,7 @@
     </div>
     <!-- /.modal -->
 
-    
+
     <!-- /.modal -->
      <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")

@@ -25,17 +25,7 @@
                 <li class="active">Plagiarism Case</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New"
-                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -61,7 +51,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                            
+
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -150,9 +140,9 @@
                                     <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","date":"{{$contact->date}}","students_initial":"{{$contact->students_initial}}","degree":"{{$contact->degree}}","nature":"{{$contact->nature}}","penalty":"{{$contact->penalty}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
-                                </tr> 
-                                @endforeach 
-                                 
+                                </tr>
+                                @endforeach
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -264,7 +254,7 @@
     </div>
     <!-- /.modal -->
 
-   
+
     <!-- /.modal -->
    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
