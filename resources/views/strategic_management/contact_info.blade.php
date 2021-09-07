@@ -141,7 +141,12 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Update" class="btn btn-info Update">
+                                </div>
+
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="addNext" value="Update & Next" class="btn btn-success Update">
                                 </div>
                             </div>
                            </form>
@@ -365,7 +370,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    window.location = '/strategic/statutory-committees';
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

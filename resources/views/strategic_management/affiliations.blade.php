@@ -105,7 +105,12 @@
                                <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info addMe">
+                                </div>
+
+                                   <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success addMe">
                                 </div>
                             </div>
                          </form>
@@ -411,7 +416,8 @@
 
 
 
-         $('#form').submit(function (e) {
+         $('.addMe').click(function (e) {
+             let clickMe = $(this).val();
             let designation_id = $('#designation_id').val();
             let affiliation = $('#affiliation').val();
             let name = $('#name').val();
@@ -428,16 +434,14 @@
                 return;
             }
             // Yes button callback
-            e.preventDefault();
-            var formData = new FormData(this);
+            // e.preventDefault();
+            // var formData = new FormData(this);
 
             $.ajax({
                 url:'{{url("strategic/affiliations")}}',
                 type:'POST',
-                data: formData,
-                cache:false,
-                contentType:false,
-                processData:false,
+                data:{'name':name, 'designation_id':designation_id, 'affiliation': affiliation, 'statutory_bodies_id':statutory_bodies_id},
+
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -448,7 +452,11 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    if (clickMe == 'Add') {
+                        location.reload();
+                    }else {
+                        window.location = '/strategic/budgetary-info';
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

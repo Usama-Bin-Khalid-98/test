@@ -52,7 +52,14 @@ class RegistrationPrintController extends Controller
 
 
 
-            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.type="REG" AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array($req->cid));
+            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
+                FROM scopes, programs, levels, campuses
+                WHERE scopes.campus_id=campuses.id
+                  AND scopes.type="REG"
+                  AND scopes.program_id=programs.id
+                  AND scopes.level_id=levels.id
+                  AND scopes.campus_id=?
+                  AND scopes.department_id=?', array($req->cid, $req->did));
 
 
             $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, campuses WHERE designations.id=contact_infos.designation_id AND contact_infos.type="REG" AND contact_infos.campus_id=? AND contact_infos.campus_id=campuses.id', array($req->cid));
@@ -212,25 +219,36 @@ AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facilit
                 ->where('deleted_at', null)
                 ->get();
 
-            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
-FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id
-AND scopes.type="REG" AND scopes.program_id=programs.id AND scopes.deleted_at=null
-AND scopes.level_id=levels.id AND scopes.campus_id=? AND scopes.department_id=?', array($campus_id, $department_id));
+//            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
+//FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id
+//AND scopes.type="REG"
+//AND scopes.program_id=programs.id
+//AND scopes.level_id=levels.id
+//AND scopes.campus_id=?
+//AND scopes.department_id=?', array($campus_id, $department_id));
 
 
-            $contactInformation = DB::select('SELECT contact_infos.*
-                FROM contact_infos
-                WHERE contact_infos.type="REG" AND contact_infos.deleted_at = null
-                AND contact_infos.campus_id=?
-                AND contact_infos.department_id=?',
-                array($campus_id, $department_id));
+            $scopeOfAcredation = Scope::with('program', 'level')
+                ->where(['type'=> 'REG', 'department_id'=>$department_id, 'campus_id'=>$campus_id, 'deleted_at'=> null])
+                ->get();
+//
+//dd($scopeOfAcredation);
+//            $contactInformation = DB::select('SELECT contact_infos.*
+//                FROM contact_infos
+//                WHERE contact_infos.type="REG"
+//                AND contact_infos.campus_id=?
+//                AND contact_infos.department_id=?',
+//                array($campus_id, $department_id));
+
+            $contactInformation = ContactInfo::where(['type'=> 'REG', 'department_id'=>$department_id, 'campus_id'=>$campus_id, 'deleted_at'=> null])->get();
+//            dd($contactInformation);
 
             $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName
 FROM statutory_committees, statutory_bodies, business_schools, designations
 WHERE statutory_committees.statutory_body_id=statutory_bodies.id
   AND statutory_committees.type="REG"
   AND statutory_committees.designation_id=designations.id
-  AND statutory_committees.deleted_at = null
+  AND statutory_committees.deleted_at is null
   AND business_schools.id=?
   AND statutory_committees.campus_id=?
   AND statutory_committees.department_id=?', array($bussinessSchool[0]->id, $campus_id, $department_id));
@@ -241,7 +259,7 @@ WHERE statutory_committees.statutory_body_id=statutory_bodies.id
             WHERE  affiliations.statutory_bodies_id=statutory_bodies.id
               AND affiliations.type="REG"
               AND affiliations.designation_id=designations.id
-              AND affiliations.deleted_at=null
+              AND affiliations.deleted_at is null
               AND business_schools.id=?
               AND affiliations.campus_id=?
               AND affiliations.department_id=?', array($bussinessSchool[0]->id,$campus_id, $department_id));
@@ -250,7 +268,7 @@ WHERE statutory_committees.statutory_body_id=statutory_bodies.id
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* FROM budgetary_infos, business_schools, campuses
  WHERE business_schools.id=? AND budgetary_infos.type="REG"
    AND  budgetary_infos.campus_id=campuses.id
-   AND budgetary_infos.deleted_at=null
+   AND budgetary_infos.deleted_at is null
    AND budgetary_infos.campus_id=?
    AND budgetary_infos.department_id=?', array($bussinessSchool[0]->id, $campus_id, $department_id));
 
@@ -263,13 +281,13 @@ WHERE statutory_committees.statutory_body_id=statutory_bodies.id
    AND strategic_plans.campus_id=campuses.id
    AND strategic_plans.campus_id=?
    AND strategic_plans.department_id=?
-   AND strategic_plans.deleted_at=null',
+   AND strategic_plans.deleted_at is null',
    array($bussinessSchool[0]->id, $campus_id, $department_id));
 
              $mission    = DB::select(' SELECT mission_visions.* from mission_visions, business_schools, campuses
  WHERE business_schools.id=?
    AND mission_visions.campus_id=campuses.id
-   AND mission_visions.deleted_at=null
+   AND mission_visions.deleted_at is null
    AND mission_visions.campus_id=?
    AND mission_visions.department_id=?', array($bussinessSchool[0]->id, $campus_id, $department_id));
 
@@ -279,7 +297,7 @@ WHERE statutory_committees.statutory_body_id=statutory_bodies.id
                 WHERE program_portfolios.program_id=programs.id
                   AND program_portfolios.type="REG"
                   AND program_portfolios.course_type_id=course_types.id
-                  AND program_portfolios.deleted_at=null
+                  AND program_portfolios.deleted_at is null
                   AND business_schools.id=?
                   AND program_portfolios.campus_id=campuses.id
                   AND program_portfolios.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
@@ -288,7 +306,7 @@ WHERE statutory_committees.statutory_body_id=statutory_bodies.id
 FROM entry_requirements, eligibility_criterias, programs, campuses
 WHERE entry_requirements.program_id=programs.id
   AND entry_requirements.type="REG"
-  AND entry_requirements.deleted_at=null
+  AND entry_requirements.deleted_at is null
   AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id
   AND entry_requirements.campus_id=campuses.id
   AND entry_requirements.campus_id=?', array($userCampus[0]->campus_id));
@@ -298,14 +316,14 @@ WHERE entry_requirements.program_id=programs.id
 FROM application_receiveds, programs, semesters, campuses
 WHERE application_receiveds.program_id=programs.id
   AND application_receiveds.type="REG"
-  AND application_receiveds.deleted_at=null
+  AND application_receiveds.deleted_at is null
   AND campuses.id=?
   AND application_receiveds.department_id=?', array($campus_id, $department_id));
 
              $app_Received = DB::select('SELECT app_receiveds.*, programs.name as programName
             FROM app_receiveds, programs
             WHERE app_receiveds.program_id=programs.id AND app_receiveds.type="REG"
-              AND app_receiveds.deleted_at=null
+              AND app_receiveds.deleted_at is null
             AND campus_id=?
            AND app_receiveds.department_id=?', array($campus_id, $department_id));
 
@@ -315,7 +333,7 @@ WHERE student_enrolments.campus_id=campuses.id
 AND campuses.id=?
 AND student_enrolments.department_id=?
 AND student_enrolments.type="REG"
-AND student_enrolments.deleted_at=null
+AND student_enrolments.deleted_at is null
 AND student_enrolments.year>YEAR(CURDATE())-3', array($campus_id, $department_id));
 
 
@@ -323,7 +341,7 @@ AND student_enrolments.year>YEAR(CURDATE())-3', array($campus_id, $department_id
                 FROM students_graduateds, programs, campuses
                 WHERE students_graduateds.campus_id=campuses.id
                 AND students_graduateds.type="REG"
-                  AND students_graduateds.deleted_at=null
+                  AND students_graduateds.deleted_at is null
                 AND students_graduateds.program_id=programs.id
                 AND students_graduateds.campus_id=?
                 AND students_graduateds.department_id=?', array($campus_id, $department_id));
@@ -333,7 +351,7 @@ AND student_enrolments.year>YEAR(CURDATE())-3', array($campus_id, $department_id
 from student_genders, programs, campuses
 WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
   AND student_genders.program_id=programs.id
-  AND student_genders.deleted_at=null
+  AND student_genders.deleted_at is null
   AND student_genders.campus_id=?
   AND student_genders.department_id=?', array($campus_id, $department_id));
 

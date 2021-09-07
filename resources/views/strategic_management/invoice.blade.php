@@ -23,12 +23,12 @@
       </ol>
     </section>
 
-{{--    <div class="pad margin no-print">--}}
-{{--      <div class="callout callout-info" style="margin-bottom: 0!important;">--}}
-{{--        <h4><i class="fa fa-info"></i> Note:</h4>--}}
-{{--        This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.--}}
-{{--      </div>--}}
-{{--    </div>--}}
+    <div class="pad margin no-print">
+      <div class="callout callout-info" style="margin-bottom: 0!important;">
+        <h4><i class="fa fa-info"></i> Note:</h4>
+        This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+      </div>
+    </div>
 
     <!-- Main content -->
     <section class="invoice">
@@ -151,14 +151,14 @@
 
       <!-- this row will not appear when printing -->
       <div class="row no-print">
-{{--        <div class="col-xs-12">--}}
-{{--          <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>--}}
+        <div class="col-xs-12">
+          <a href="{{url('strategic/print/')}}/{{@$getInvoice->id}}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
 {{--          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment--}}
 {{--          </button>--}}
 {{--          <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
 {{--            <i class="fa fa-download"></i> Generate PDF--}}
 {{--          </button>--}}
-{{--        </div>--}}
+        </div>
       </div>
     </section>
     <!-- /.content -->
