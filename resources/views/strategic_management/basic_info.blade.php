@@ -287,7 +287,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">&nbsp;&nbsp;</label>
-                                        <input type="button" name="update" id="update" value="Update" class="btn btn-info">
+                                        <input type="button" name="update" id="update" value="Update" class="btn btn-info update">
+                                    </div>
+
+                                    <div class="form-group pull-right" style="margin-top: 40px">
+                                        <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="button"  value="Update & Next" class="btn btn-success update">
                                     </div>
                                 </div>
 
@@ -361,7 +366,9 @@
             radioClass   : 'iradio_flat-green'
         })
 
-        $('#update').on('click', function (e) {
+        $('.update').on('click', function (e) {
+            let buttonClick =  $(this).val();
+
             let id = $('#id').val();
             let contact_person = $('#contact_person').val();
             // let contact_no = $('#contact_no').val();
@@ -433,7 +440,11 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    location.reload();
+                    if(buttonClick == 'Update') {
+                        location.reload();
+                    }else{
+                        window.location = '/strategic/scope';
+                    }
                     console.log('response here', response);
                 },
                 error:function(response, exception){

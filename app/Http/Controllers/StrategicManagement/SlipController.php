@@ -45,10 +45,10 @@ class SlipController extends Controller
         $latest = Slip::latest()->first();
         $invoice_no ='';
         if (! $latest) {
-            $invoice_no =  'NBEAC-HEC/ GU, Karachi:0001';
+            $invoice_no =  'NBEAC-HEC:0001';
         }else {
             $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
-            $invoice_no = 'NBEAC-HEC/ GU, Karachi:'. sprintf('%05d', $string + 1);
+            $invoice_no = 'NBEAC-HEC:'. sprintf('%05d', $string + 1);
         }
         return view('strategic_management.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods','fee_amount'));
     }
@@ -351,6 +351,15 @@ class SlipController extends Controller
         $getInvoice = Slip::with('campus', 'department')->where(['id' => $id])->get()->first();
 //        dd($getInvoice);
         return view('strategic_management.invoice', compact('getInvoice'));
+    }
+
+    public function invoicePrint($id=null)
+    {
+        //dd('invoice here ');
+        $user_data = Auth::user();
+        $getInvoice = Slip::with('campus', 'department')->where(['id' => $id])->get()->first();
+//        dd($getInvoice);
+        return view('strategic_management.print', compact('getInvoice'));
     }
 
     /**

@@ -16,4 +16,6 @@ class ContactInfo extends Model
     {
         return $this->belongsTo(Designation::class);
     }
+
+
 }

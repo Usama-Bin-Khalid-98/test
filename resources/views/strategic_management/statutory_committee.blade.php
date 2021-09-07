@@ -130,7 +130,12 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 20px;">
                                     <label for="name"></label>
-                                    <input type="submit" name="add" value="Submit" class="btn btn-info">
+                                    <input type="submit" name="add" value="Submit" class="btn btn-info Update">
+                                </div>
+
+                                <div class="form-group pull-right" style="margin-top: 20px;">
+                                    <label for="name"></label>
+                                    <input type="submit" name="add" value="Submit & Next" class="btn btn-success Update">
                                 </div>
                             </div>
                         <!-- /.box-body -->
@@ -519,7 +524,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    window.location = '/strategic/affiliations';
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

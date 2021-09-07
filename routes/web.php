@@ -270,6 +270,7 @@ Route::get('/email', function() {
             Route::get('invoicesList', 'StrategicManagement\SlipController@invoicesList');
             Route::get('mentoring-invoices', 'MentoringInvoiceController@index');
             Route::get('strategic/invoice/{id}','StrategicManagement\SlipController@invoice');
+            Route::get('strategic/print/{id}','StrategicManagement\SlipController@invoicePrint');
             Route::get('mentoringInvoice/{id}','MentoringInvoiceController@invoice');
             Route::post('generateMentoringInvoice','MentoringInvoiceController@generateInvoice');
             Route::put('updateMentoringInvoice/{id}','MentoringInvoiceController@update');

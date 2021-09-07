@@ -110,7 +110,11 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="button" name="add" id="add" value="Add" class="btn btn-info">
+                                    <input type="button" name="add" id="add" value="Add" class="btn btn-info add">
+                                </div>
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="button" value="Add & Next" class="btn btn-success add">
                                 </div>
                             </div>
 
@@ -282,7 +286,8 @@
             }
         });
         /*Add Scope*/
-        $('#add').on('click', function (e) {
+        $('.add').on('click', function (e) {
+            let clickButton = $(this).val();
             let program_id = $('#program_id').val();
             let level_id = $('#level_id').val();
             let date_program = $('#date_program').val();
@@ -309,7 +314,12 @@
                         if(response.success){
                             Notiflix.Notify.Success(response.success);
                         }
-                        setTimeout(() => location.reload(), 1000);
+                        if(clickButton == 'Add') {
+                            setTimeout(() => location.reload(), 1000);
+                        }
+                        else {
+                            window.location = '/strategic/contact-info';
+                        }
                     },
                     error:function(response, exception){
                         Notiflix.Loading.Remove();

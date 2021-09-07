@@ -24,16 +24,15 @@
                 <li class="active">Invoices </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-{{--                    <button class="btn gradient-bg-color"--}}
-{{--                            data-toggle="modal" data-target="#generate-modal" style="color: white;"--}}
-{{--                            value="Add New">Generate Invoice <i class="fa fa-file-pdf-o"></i>--}}
+{{--        <section class="content-header">--}}
+{{--            <div class="col-md-12 new-button">--}}
+{{--                <div class="pull-right">--}}
+{{--                    <button class="btn gradient-bg-color" id="print" style="color: white;"--}}
+{{--                            value="Print">Print <i class="fa fa-print"></i>--}}
 {{--                    </button>--}}
-                </div>
-            </div>
-        </section>
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
 
         {{--Dean section --}}
         <section class="content">
@@ -232,6 +231,24 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         })
+
+        $('#print').on('click', function (){
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+            mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write('<h1>' + document.title  + '</h1>');
+            mywindow.document.write(document.getElementById('content').innerHTML);
+            mywindow.document.write('</body></html>');
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        });
 
         //let data = JSON.parse(JSON.stringify($(this).data('row')));
         //$('#edit_program_id').select2().val(data.program_id).trigger('change');
