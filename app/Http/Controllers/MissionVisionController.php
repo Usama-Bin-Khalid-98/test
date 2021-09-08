@@ -64,8 +64,6 @@ class MissionVisionController extends Controller
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
-
-                    //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
                     $slip = Slip::where(['business_school_id'=>Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'regStatus'=>'SAR'])->first();
                     if($slip){
