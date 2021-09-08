@@ -48,6 +48,7 @@
                         </div>
 
                         <!-- /.box-header -->
+                        <form action="javascript:void(0)" id="form" method="POST">
 
                 <div class="box-body pad">
                                 <label>Vision</label>
@@ -57,7 +58,6 @@
                 </div>
 
                 <div class="box-body">
-                    <form action="javascript:void(0)" id="form" method="POST">
                         <div class="box-body pad">
                             <label>Mission</label>
                             <textarea id="mission" name="mission" rows="10" cols="80">
@@ -197,8 +197,8 @@
   $(function () {
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace('mission');
     CKEDITOR.replace('vision');
+    CKEDITOR.replace('mission');
   })
 </script>
     <script type="text/javascript">
@@ -222,6 +222,7 @@
              }
             let mission = CKEDITOR.instances.mission.getData();
             let vision = CKEDITOR.instances.vision.getData();
+            console.log('vision console here.....',vision);
             let file = $('#file').val();
             let mission_approval = $('#mission_approval').val();
             let vision_approval = $('#vision_approval').val();
@@ -256,7 +257,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
