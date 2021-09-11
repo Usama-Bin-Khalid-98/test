@@ -104,6 +104,11 @@
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
+
+                                 <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
+                                </div>
                             </div>
                         </form>
 
@@ -253,7 +258,7 @@
         })
     </script>
     <script type="text/javascript">
-
+        let check= false;
         $('.select2').select2();
         $('#plan_period').datepicker({
             format: 'yyyy-mm-dd',
@@ -314,7 +319,8 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                   location.reload();
+                    check = true;
+                   // location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -423,6 +429,14 @@ $('#updateForm').submit(function (e) {
         })
 
 
+        $('.next').on('click', function (){
+
+            setTimeout(()=>{
+                if(check==true){
+                    window.location = '/strategic/parent-institution';
+                }
+            }, 2000)
+        });
     </script>
 
 

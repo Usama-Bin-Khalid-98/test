@@ -62,6 +62,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -192,7 +193,7 @@
         })
     </script>
     <script type="text/javascript">
-
+        let check = false;
         $('.select2').select2()
 
          $.ajaxSetup({
@@ -232,7 +233,8 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    // location.reload();
+                    check = true;
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -330,6 +332,13 @@ $('#updateForm').submit(function (e) {
 
         })
 
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/program-portfolio';
+                }
+            }, 2000)
+        });
 
     </script>
 

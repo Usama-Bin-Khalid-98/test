@@ -135,6 +135,7 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -291,6 +292,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        let check = false;
 
          $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
@@ -347,8 +349,11 @@
                         Notiflix.Notify.Failure(response.error);
 
                     }
+                    check = true;
                     console.log('response', response);
-                    location.reload();
+                    setTimeout(()=> {
+                    location.reload();}, 2000);
+
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -455,7 +460,13 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
-
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/application-received';
+                }
+            }, 1000)
+        });
 
     </script>
 

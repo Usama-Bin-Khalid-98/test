@@ -102,7 +102,12 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info add">
+                                </div>
+
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success add">
                                 </div>
                             </div>
                         </form>
@@ -333,7 +338,7 @@
             }
         });
 
-         $('#form').submit(function (e) {
+         $('.add').on('click',function (e) {
             let year = $('#year').val();
             let uni_budget = $('#uni_budget').val();
             let uni_proposed_budget = $('#uni_proposed_budget').val();
@@ -352,13 +357,14 @@
                 return;
             }
             // Yes button callback
-            e.preventDefault();
-            var formData = new FormData(this);
-
             $.ajax({
                 url:'{{url("strategic/budgetary-info")}}',
                 type:'POST',
-                data: formData,
+                data: {'year':year,
+                    'uni_budget': uni_budget,
+                    'uni_proposed_budget': uni_proposed_budget,
+                    'budget_receive': budget_receive,
+                    'budget_type':budget_type},
                 cache:false,
                 contentType:false,
                 processData:false,
