@@ -197,7 +197,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" name="update" value="update" class="btn btn-info">
+                        <input type="submit" name="update" value="Update & Next" class="btn btn-success next">
+                        <input type="submit" name="update" value="Update" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -242,7 +243,7 @@
             }
         });
 
-
+let check = false;
 
         $('#form').submit(function (e) {
             let program_id = $('#program_id').val();
@@ -281,8 +282,12 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+                    check = true;
                     console.log('response', response);
-                    // location.reload();
+                    setTimeout(()=> {
+
+                    location.reload();
+                    }, 2000);
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -396,6 +401,13 @@
 
 
 
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/student-enrolment';
+                }
+            }, 1000)
+        });
 
 
 

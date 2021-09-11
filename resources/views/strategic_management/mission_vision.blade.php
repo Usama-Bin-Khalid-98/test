@@ -95,12 +95,13 @@
                 <div class="col-md-12">
                     <div class="form-group pull-right" style="margin-top: 40px">
                         <label for="sector">&nbsp;&nbsp;</label>
+                        <input type="submit" name="add" value="Submit & Next" class="btn btn-success update">
                         <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                     </div>
                 </div>
-            </form>
 
         </div>
+            </form>
         <!-- /.box-body -->
         <!-- /.box -->
     </div>
@@ -162,7 +163,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" name="update" value="update" class="btn btn-info">
+                        <input type="submit" name="update" value="Update" class="btn btn-info">
+                        <input type="submit" name="update" value="Update & Next" class="btn btn-info update">
                     </div>
                 </form>
             </div>
@@ -257,7 +259,7 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    // location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -323,6 +325,9 @@
 
 <?php } ?>
 
+        $('.update').on('click', function (){
+            window.location = '/strategic/strategic-plan';
+        })
 
     </script>
 
