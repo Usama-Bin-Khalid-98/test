@@ -94,6 +94,11 @@
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
+
+                                <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" id="add" value="Add & Next" class="btn btn-success next">
+                                </div>
                             </div>
                            </form>
                         </div>
@@ -254,6 +259,7 @@
             }
         });
 
+        let check = false;
         $('#form').submit(function (e) {
             // let uni_id = $('#uni_id').val();
             let program_id = $('#program_id').val();
@@ -298,7 +304,9 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    check = true;
+                    setTimeout(()=>{
+                    location.reload();}, 2000);
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -406,6 +414,14 @@
 
         })
 
+
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/faculty-summary';
+                }
+            }, 1000)
+        });
 
 
 
