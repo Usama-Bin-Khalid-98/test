@@ -101,6 +101,11 @@
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
+
+                                 <div class="form-group pull-right" style="margin-top: 40px">
+                                    <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" id="add" value="Add & Next" class="btn btn-success next">
+                                </div>
                             </div>
                         </form>
 
@@ -317,7 +322,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+let check = false;
          $('#form').submit(function (e) {
             let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
             let designation_id = $('#designation_id').val();
@@ -359,7 +364,10 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    check = true;
+                    setTimeout(()=> {
+                    location.reload();}, 2000);
+
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -477,6 +485,15 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
+
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = 'faculty-student-ratio';
+                }
+            }, 1000)
+        });
+
 
     </script>
 
