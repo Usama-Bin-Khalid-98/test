@@ -1,4 +1,4 @@
-@section('pageTitle', 'Faculty Degree')
+s@section('pageTitle', 'Faculty Degree')
 
 
 @if(Auth::user())
@@ -82,7 +82,12 @@
                                 <div class="col-md-3">
                                     <div class="form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">&nbsp;&nbsp;</label>
-                                        <input type="button" name="update" id="update" value="Update" class="btn btn-info">
+                                        <input type="button" name="update" id="update" value="Update" class="btn btn-info update">
+                                    </div>
+
+                                    <div class="form-group pull-right" style="margin-top: 40px">
+                                        <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="button" name="update" value="Update & Next" class="btn btn-success update">
                                     </div>
                                 </div>
                         </div>
@@ -115,8 +120,8 @@
             radioClass   : 'iradio_flat-green'
         })
 
-        $('#update').on('click', function (e) {
-
+        $('.update').on('click', function (e) {
+            let check = $(this).val();
             let id = $('#id').val();
             let faculty_foreign = $('#faculty_foreign').val();
             let faculty_domestic = $('#faculty_domestic').val();
@@ -150,6 +155,10 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     // location.reload();
+                    if(check == 'Update & Next')
+                    {
+                        window.location = '/research-summary';
+                    }
                     console.log('response here', response);
                 },
                 error:function(response, exception){
