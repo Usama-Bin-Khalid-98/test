@@ -100,10 +100,6 @@ Route::get('/email', function() {
 
             });
 
-    //        Route::resource('print','PrintController');
-    //        Route::resource('registrationPrint','RegistrationPrintController');
-
-
             // Curriculum
             Route::resource('program-portfolio','ProgramPortfolioController');
             Route::resource('program-courses','ProgramCourseController');
@@ -334,8 +330,7 @@ Route::get('/email', function() {
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
-            Route::resource('sar-desk-review', 'SARDes
-            kReviewController');
+            Route::resource('sar-desk-review', 'SARDeskReviewController');
             Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
 
 

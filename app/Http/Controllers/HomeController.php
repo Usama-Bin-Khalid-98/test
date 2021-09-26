@@ -53,6 +53,9 @@ class HomeController extends Controller
         $user_id = Auth::id();
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
+
+        $invoicesCount = Slip::get()->count();
+
         //check is registration forms data completed:
         $check = $this->isRegCompleted(['user_id'=> $user_id, 'campus_id'=>$campus_id, 'department_id'=>$department_id]);
         $memberShips = User::with('business_school', 'department')->where('status', 'pending')->get();
@@ -292,6 +295,10 @@ class HomeController extends Controller
         $fm_count = FacultyGender::where(['status' => 'active'])->get()->sum('male');
         $fem_count = FacultyGender::where(['status' => 'active'])->get()->sum('female');
         $mentoring_slip_count = MentoringInvoice::where(['status' => 'active'])->get()->count();
+        $user_count = User::where(['status' => 'active'])->get()->count();
+        $user_pending = User::where(['status' => 'pending'])->get()->count();
+        $desk_count = Slip::where(['regStatus'=>'Review'])->get()->count();
+        $sar_desk_count = Slip::where(['regStatus'=>'SARDeskReview'])->get()->count();
 //        dd($mentoring_slip_count);
         $PeerReviewers = User::where(['user_type'=> 'Mentor'])->orWhere(['user_type'=> 'PeerReviewer'])->get();
 
@@ -300,7 +307,7 @@ class HomeController extends Controller
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
             'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks',
             'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips',
-            'mentoring_slip_count', 'PeerReviewers','profileSheet'));
+            'mentoring_slip_count', 'PeerReviewers','profileSheet', 'user_count', 'desk_count', 'sar_desk_count', 'user_pending'));
     }
 
     /**

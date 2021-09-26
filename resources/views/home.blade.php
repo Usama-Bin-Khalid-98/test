@@ -104,14 +104,14 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>1</h3>
+                        <h3>{{@$count_slips}}</h3>
 
                         <p>Registration Invoices</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/invoicesList')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -119,27 +119,27 @@
                 <!-- small box -->
                 <div class="small-box bg-maroon">
                     <div class="inner">
-                        <h3>1</h3>
+                        <h3>{{@$user_count}}</h3>
 
                         <p>Users</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/users')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-light-blue-active">
                     <div class="inner">
-                        <h3>1</h3>
+                        <h3>{{@$desk_count}}</h3>
                         <p>Registrations Desk Review</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/desk-review')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -147,14 +147,14 @@
                 <!-- small box -->
                 <div class="small-box bg-fuchsia">
                     <div class="inner">
-                        <h3>1</h3>
+                        <h3>{{@$sar_desk_count}}</h3>
 
                         <p>SAR Desk Review</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/sar-desk-review')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 
@@ -162,14 +162,14 @@
                 <!-- small box -->
                 <div class="small-box" style="background-color: #00c0ef;color:#fff;">
                     <div class="inner">
-                        <h3>1</h3>
+                        <h3>{{@$bs_count}}</h3>
 
-                        <p>Chief Administrative Officer</p>
+                        <p>Business Schools</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/config/business_school')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -177,14 +177,14 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>5<sup style="font-size: 20px"></sup></h3>
+                        <h3>{{@$programs}}<sup style="font-size: 20px"></sup></h3>
 
                         <p>Degree Programs</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/config/programs')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -192,9 +192,9 @@
                 <!-- small box -->
                 <div class="small-box bg-purple-gradient ">
                     <div class="inner">
-                        <h3>4</h3>
+                        <h3>{{@$user_pending}}</h3>
 
-                        <p>Applications Received</p>
+                        <p>Pending Membership Requests</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -207,14 +207,14 @@
                 <!-- small box -->
                 <div class="small-box bg-light-blue-gradient">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>{{@$dept_count}}</h3>
 
-                        <p>Total Students</p>
+                        <p>Total Departments</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/config/departments')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->

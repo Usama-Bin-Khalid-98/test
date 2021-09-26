@@ -92,7 +92,7 @@
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
 
-                                <table class="table table-bordered ">
+                                <table class="table table-striped ">
                                     <thead>
                                         <tr>
                                             <th style="width: 45%">Data provided by University</th>
@@ -105,6 +105,7 @@
                                             <td>
                                                 1. Programs started (Table-1.2 date of program commencement)
                                                 <ol type="i">
+
                                                     @foreach($program_dates as $dates)
                                                         <li>{{$dates['program']}} Started in  {{$dates['date']}} (Difference {{$dates['date_diff']}})</li>
                                                     @endforeach
@@ -169,10 +170,28 @@
                                         <tr>
                                             <td>
                                                 <p>4. Student Intake(Table 2.3)</p>
-                                                Student Intake
+                                                <table class="table table-striped ">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Program</th>
+                                                        <th>Year</th>
+                                                        <th>Student Intake</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+{{--                                                Student Intake--}}
+
                                                     @foreach(@$application_received as $applications)
-                                                    <p> {{@$applications->program->name}}- {{@$applications->semester->name}} : {{@$applications->student_intake}} </p>
+                                                        <tr>
+                                                            <td>{{@$applications->program->name}}</td>
+                                                            <td>{{@$applications->year}}</td>
+                                                            <td>{{@$applications->student_intake}}</td>
+                                                        </tr>
+
+{{--                                                    <p> {{@$applications->program->name}}- {{@$applications->semester->name}} : {{@$applications->student_intake}} </p>--}}
                                                     @endforeach
+                                                    </tbody>
+                                                </table>
 
                                             </td>
                                             <td> {!! @$nbeac_criteria->student_intake !!} </td>
@@ -209,7 +228,7 @@
 
                                                 <strong> b)	Faculty Portfolio (Section 4)</strong>
 
-                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Full time Faculty: {{@$faculty_summary}}</p>
+                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Full time Faculty: {{@$faculty_summary_full}}</p>
                                                 <p class="{{$getFullProfessors<1?'text-red':''}}" > <strong>d)</strong>	Professors: {{@$getFullProfessors}}</p>
                                                 <p class="{{$AssociateProfessors<1?'text-red':''}}"> <strong>e)</strong> Associate professors: {{@$AssociateProfessors}}</p>
                                                 <p class="{{$AssistantProfessors<3?'text-red':''}}"> <strong>f)</strong> Assistant professors: {{@$AssistantProfessors}}</p>
@@ -329,7 +348,7 @@
 
                                         <tr>
                                             <td>
-                                                8. Bandwidth =  GB (table 6.2 Laboratories)= {{@$bandwidth->remark}}
+                                                8. Bandwidth in GB's =   {{@$bandwidth->remark}} GB
                                             </td>
                                             <td>
                                                 {!! @$nbeac_criteria->bandwidth !!}

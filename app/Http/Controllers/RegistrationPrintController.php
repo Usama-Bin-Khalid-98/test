@@ -48,21 +48,34 @@ class RegistrationPrintController extends Controller
 
             $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
             //dd($userCampus[0]->campus_id);
-            $campuses = Campus::where('business_school_id', $req->bid)->all();
+            $campuses = Campus::where('business_school_id', $req->bid)->get();
 
 
 
-            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
-                FROM scopes, programs, levels, campuses
-                WHERE scopes.campus_id=campuses.id
-                  AND scopes.type="REG"
-                  AND scopes.program_id=programs.id
-                  AND scopes.level_id=levels.id
-                  AND scopes.campus_id=?
-                  AND scopes.department_id=?', array($req->cid, $req->did));
+//            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
+//                FROM scopes, programs, levels, campuses
+//                WHERE scopes.campus_id=campuses.id
+//                  AND scopes.type="REG"
+//                  AND scopes.program_id=programs.id
+//                  AND scopes.level_id=levels.id
+//                  AND scopes.campus_id=?
+//                  AND scopes.department_id=?', array($req->cid, $req->did));
+
+            $scopeOfAcredation = Scope::with('program', 'level')
+                ->where(['type'=> 'REG', 'department_id'=>$req->did, 'campus_id'=>$req->cid, 'deleted_at'=> null])
+                ->get();
+//
+
+//            dd($scopeOfAcredation);
 
 
-            $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, campuses WHERE designations.id=contact_infos.designation_id AND contact_infos.type="REG" AND contact_infos.campus_id=? AND contact_infos.campus_id=campuses.id', array($req->cid));
+            $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId
+FROM designations, contact_infos, campuses
+WHERE designations.id=contact_infos.designation_id
+  AND contact_infos.type="REG"
+  AND contact_infos.campus_id=?
+  AND contact_infos.department_id=?
+  AND contact_infos.campus_id=campuses.id', array($req->cid, $req->did));
 
 
 
@@ -88,7 +101,7 @@ class RegistrationPrintController extends Controller
 
             $facultyTeachingCourses4b = FacultyTeachingCources::
             with('campus','lookup_faculty_type','designation', 'faculty_program')
-                ->where($whereb)->all();
+                ->where($whereb)->get();
 
             $mission = DB::select(' SELECT mission_visions.* from mission_visions, business_schools, campuses
             WHERE business_schools.id=?  AND mission_visions.campus_id=campuses.id AND mission_visions.campus_id=?',
@@ -104,8 +117,8 @@ class RegistrationPrintController extends Controller
              $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName FROM entry_requirements, eligibility_criterias, programs, campuses WHERE entry_requirements.program_id=programs.id AND entry_requirements.type="REG" AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=campuses.id AND entry_requirements.campus_id=?', array($req->cid));
              //dd($userCampus[0]->campus_id);
              //dd($entryRequirements);
-             $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName, semesters.name as semesterName
-FROM application_receiveds, programs, `year` as semesters, campuses
+             $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName, `year` as semesterName
+FROM application_receiveds, programs, campuses
 WHERE application_receiveds.program_id=programs.id
   AND application_receiveds.type="REG"
   AND campuses.id=?', array($req->cid));
@@ -161,7 +174,7 @@ AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.y
 
             $facultyTeachingCourses = FacultyTeachingCources::
                 with('campus','lookup_faculty_type','designation', 'faculty_program')
-                ->where($where)->all();
+                ->where($where)->get();
 //            dd($facultyTeachingCourses);
              $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs, campuses WHERE faculty_student_ratio.campus_id=campuses.id

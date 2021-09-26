@@ -102,12 +102,12 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info add">
+                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
 
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success add">
+                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
                                 </div>
                             </div>
                         </form>
@@ -300,7 +300,8 @@
             }
         });
 
-         $('.add').on('click',function (e) {
+         let check = false;
+         $('#form').submit(function (e) {
             let year = $('#year').val();
             let uni_budget = $('#uni_budget').val();
             let uni_proposed_budget = $('#uni_proposed_budget').val();
@@ -318,15 +319,12 @@
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
             }
+             var formData = new FormData(this);
             // Yes button callback
             $.ajax({
                 url:'{{url("strategic/budgetary-info")}}',
                 type:'POST',
-                data: {'year':year,
-                    'uni_budget': uni_budget,
-                    'uni_proposed_budget': uni_proposed_budget,
-                    'budget_receive': budget_receive,
-                    'budget_type':budget_type},
+                data: formData,
                 cache:false,
                 contentType:false,
                 processData:false,
@@ -340,7 +338,10 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    location.reload();
+                    check = true;
+                    setTimeout(()=> {
+                         location.reload();
+                    }, 2000)
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -451,7 +452,15 @@ $('#updateForm').submit(function (e) {
                     // alert('If you say so...');
                 } );
 
-        })
+        });
+
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/strategic/mission-vision';
+                }
+            }, 1000)
+        });
 
     </script>
 
