@@ -226,7 +226,7 @@
             }
         });
 
-         $('#form').submit(function (e) {
+         $('#form').submit(function () {
              // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
              console.log('submit button clicked');
 

@@ -60,6 +60,7 @@ class BudgetaryInfoController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request);
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
         if($validation->fails())
         {
