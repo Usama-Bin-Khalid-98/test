@@ -233,8 +233,10 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    // location.reload();
+
                     check = true;
+                    setTimeout(()=> {
+                    location.reload()}, 2000);
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -337,7 +339,7 @@ $('#updateForm').submit(function (e) {
                 if(check){
                     window.location = '/program-portfolio';
                 }
-            }, 2000)
+            }, 1000)
         });
 
     </script>

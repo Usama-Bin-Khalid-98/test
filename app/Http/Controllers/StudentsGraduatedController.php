@@ -70,18 +70,29 @@ class StudentsGraduatedController extends Controller
             }else {
                 $type = 'REG';
             }
-            StudentsGraduated::create([
+
+            $check_data = [
                 'campus_id' => $uni_id,
                 'department_id' => $dept_id,
-                'program_id' => $request->program_id,
-                'grad_std_t' => $request->grad_std_t,
-                'grad_std_t_1' => $request->grad_std_tt,
-                'grad_std_t_2' => $request->grad_std_ttt,
                 'isComplete' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
-
+                'program_id' => $request->program_id,
+                'type' => $type];
+            $check = StudentsGraduated::where($check_data)->exists();
+                if(!$check) {
+                    StudentsGraduated::create([
+                        'campus_id' => $uni_id,
+                        'department_id' => $dept_id,
+                        'program_id' => $request->program_id,
+                        'grad_std_t' => $request->grad_std_t,
+                        'grad_std_t_1' => $request->grad_std_tt,
+                        'grad_std_t_2' => $request->grad_std_ttt,
+                        'isComplete' => 'yes',
+                        'type' => $type,
+                        'created_by' => Auth::user()->id
+                    ]);
+                }else{
+                    return response()->json(['error' => 'Student Graduated already exists.'], 422);
+                }
             return response()->json(['success' => 'Student Graduated Inserted successfully.']);
 
 

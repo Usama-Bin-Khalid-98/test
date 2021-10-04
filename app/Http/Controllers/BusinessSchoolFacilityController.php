@@ -21,7 +21,7 @@ class BusinessSchoolFacilityController extends Controller
         $this->middleware(['auth','verified']);
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $campus_id = Auth::user()->campus_id;
@@ -75,10 +75,20 @@ class BusinessSchoolFacilityController extends Controller
                 $type = 'REG';
             }
 
+
             foreach ($request->all() as $key => $facility){
                 //dd();ount]['id']);
                 foreach ($facility as $value){
-                    //dd($value['id']);
+            $check_data = [
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'facility_id' => $value['id'],
+                'isComplete' => 'yes',
+                'type' => $type];
+            $check = BusinessSchoolFacility::where($check_data)->exists();
+
+            if($check) {
+                //dd($value['id']);
                 BusinessSchoolFacility::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
@@ -88,7 +98,10 @@ class BusinessSchoolFacilityController extends Controller
                     'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
+            }else{
+            return response()->json(['error' => 'Business School Facility already exists.'], 422);
 
+            }
                 }
 
 
@@ -165,7 +178,7 @@ class BusinessSchoolFacilityController extends Controller
     {
          try {
             BusinessSchoolFacility::where('id', $businessSchoolFacility->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
             BusinessSchoolFacility::destroy($businessSchoolFacility->id);
             return response()->json(['success' => 'Record deleted successfully.']);

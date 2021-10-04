@@ -67,9 +67,9 @@ class FinancialAssistanceController extends Controller
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'summary' => $request->summary,
-                        'file' => $path.'/'.$imageName, 
-                        'isComplete' => 'yes', 
-                        'created_by' => Auth::user()->id 
+                        'file' => $path.'/'.$imageName,
+                        'isComplete' => 'yes',
+                        'created_by' => Auth::user()->id
                 ]);
 
                     return response()->json(['success' => 'Record added successfully.']);
@@ -137,7 +137,7 @@ class FinancialAssistanceController extends Controller
                     'summary' => $request->summary,
                     'file' => $path.'/'.$imageName,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -146,7 +146,7 @@ class FinancialAssistanceController extends Controller
            FinancialAssistance::where('id', $financialAssistance->id)->update([
                'summary' => $request->summary,
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Record updated successfully.']);
 
@@ -166,7 +166,7 @@ class FinancialAssistanceController extends Controller
     {
         try {
              FinancialAssistance::where('id', $financialAssistance->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              FinancialAssistance::destroy($financialAssistance->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

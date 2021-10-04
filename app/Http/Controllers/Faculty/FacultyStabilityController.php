@@ -90,32 +90,45 @@ class FacultyStabilityController extends Controller
 
             if($request->year) {
                 foreach ($request->year as $key=>$year) {
-                    FacultyStability::create([
+                    $check_data = [
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'total_faculty' => $request->total_faculty[$key],
                         'year' => $request->year[$key],
-                        'resigned' => $request->resigned[$key],
-                        'retired' => $request->retired[$key],
-                        'terminated' => $request->terminated[$key],
-                        'new_induction' => $request->new_induction[$key],
                         'isCompleted' => 'yes',
-                        'type' => $type,
-                        'created_by' => Auth::user()->id
-                    ]);
-                    FacultyStability::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'total_faculty' => $request->total_faculty[$key],
-                        'year' => $request->year[$key],
-                        'resigned' => $request->resigned[$key],
-                        'retired' => $request->retired[$key],
-                        'terminated' => $request->terminated[$key],
-                        'new_induction' => $request->new_induction[$key],
-                        'isCompleted' => 'yes',
-                        'type' => 'SAR',
-                        'created_by' => Auth::user()->id
-                    ]);
+                        'type' => $type];
+                    $check = FacultyStability::where($check_data)->exists();
+                    if (!$check) {
+                        FacultyStability::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'total_faculty' => $request->total_faculty[$key],
+                            'year' => $request->year[$key],
+                            'resigned' => $request->resigned[$key],
+                            'retired' => $request->retired[$key],
+                            'terminated' => $request->terminated[$key],
+                            'new_induction' => $request->new_induction[$key],
+                            'isCompleted' => 'yes',
+                            'type' => $type,
+                            'created_by' => Auth::user()->id
+                        ]);
+                        FacultyStability::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'total_faculty' => $request->total_faculty[$key],
+                            'year' => $request->year[$key],
+                            'resigned' => $request->resigned[$key],
+                            'retired' => $request->retired[$key],
+                            'terminated' => $request->terminated[$key],
+                            'new_induction' => $request->new_induction[$key],
+                            'isCompleted' => 'yes',
+                            'type' => 'SAR',
+                            'created_by' => Auth::user()->id
+                        ]);
+                    }else{
+                        return response()->json(['error' => 'Faculty Stability already exists.'], 422);
+
+                    }
                 }
             }
             return response()->json(['success' => 'Faculty Stability added successfully.']);

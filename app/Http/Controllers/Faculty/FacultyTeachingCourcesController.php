@@ -124,7 +124,18 @@ class FacultyTeachingCourcesController extends Controller
                 $type = 'REG';
             }
 
-               $insert =  FacultyTeachingCources::create([
+            $check_data = [
+                'name' => $request->name,
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
+                'designation_id' => $request->designation_id,
+                'isCompleted' => 'yes',
+                'type' => $type];
+            $check = FacultyTeachingCources::where($check_data)->exists();
+            if(!$check) {
+
+                $insert = FacultyTeachingCources::create([
                     'name' => $request->name,
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
@@ -136,18 +147,18 @@ class FacultyTeachingCourcesController extends Controller
                     'created_by' => Auth::user()->id
                 ]);
 
-            foreach ($request->tc_program as $key=>$program) {
-                $insertTcProgram = FacultyProgram::create(
-                    [
-                        'faculty_teaching_cource_id' => $insert->id,
-                        'program_id' => $key,
-                        'tc_program' => $program,
-                        'created_by'=> Auth::id()
-                    ]
-                );
-            }
+                foreach ($request->tc_program as $key => $program) {
+                    $insertTcProgram = FacultyProgram::create(
+                        [
+                            'faculty_teaching_cource_id' => $insert->id,
+                            'program_id' => $key,
+                            'tc_program' => $program,
+                            'created_by' => Auth::id()
+                        ]
+                    );
+                }
 
-            $insert =  FacultyTeachingCources::create([
+                $insert = FacultyTeachingCources::create([
                     'name' => $request->name,
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
@@ -159,18 +170,21 @@ class FacultyTeachingCourcesController extends Controller
                     'created_by' => Auth::user()->id
                 ]);
 
-            foreach ($request->tc_program as $key=>$program) {
-                $insertTcProgram = FacultyProgram::create(
-                    [
-                        'faculty_teaching_cource_id' => $insert->id,
-                        'program_id' => $key,
-                        'tc_program' => $program,
-                        'created_by'=> Auth::id()
-                    ]
-                );
+                foreach ($request->tc_program as $key => $program) {
+                    $insertTcProgram = FacultyProgram::create(
+                        [
+                            'faculty_teaching_cource_id' => $insert->id,
+                            'program_id' => $key,
+                            'tc_program' => $program,
+                            'created_by' => Auth::id()
+                        ]
+                    );
+                }
+            }else{
+                return response()->json(['error' => 'Visiting Faculty already exists.'], 422);
             }
 
-            return response()->json(['success' => 'Visiting Faculty added successfully.']);
+                return response()->json(['success' => 'Visiting Faculty added successfully.']);
 
 
         }catch (Exception $e)

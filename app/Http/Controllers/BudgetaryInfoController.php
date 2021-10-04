@@ -75,32 +75,49 @@ class BudgetaryInfoController extends Controller
             }else {
                 $type = 'REG';
             }
+
+
+
+
             if($request->year){
                 foreach ($request->year as $key=>$year) {
-                    BudgetaryInfo::create([
+
+                    $where_data = [
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'year' => $request->year[$key],
-                        'uni_budget' => $request->uni_budget[$key],
-                        'uni_proposed_budget' => $request->uni_proposed_budget[$key],
-                        'budget_receive' => $request->budget_receive[$key],
-                        'budget_type' => $request->budget_type[$key],
-                        'isComplete' => 'yes',
                         'type' => $type,
-                        'created_by' => Auth::user()->id
-                    ]);
-                    BudgetaryInfo::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'year' => $request->year[$key],
-                        'uni_budget' => $request->uni_budget[$key],
-                        'uni_proposed_budget' => $request->uni_proposed_budget[$key],
-                        'budget_receive' => $request->budget_receive[$key],
-                        'budget_type' => $request->budget_type[$key],
-                        'isComplete' => 'yes',
-                        'type' => 'SAR',
-                        'created_by' => Auth::user()->id
-                    ]);
+                        ];
+                    $check = BudgetaryInfo::where($where_data)->exists();
+                    if(!$check) {
+                        BudgetaryInfo::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'year' => $request->year[$key],
+                            'uni_budget' => $request->uni_budget[$key],
+                            'uni_proposed_budget' => $request->uni_proposed_budget[$key],
+                            'budget_receive' => $request->budget_receive[$key],
+                            'budget_type' => $request->budget_type[$key],
+                            'isComplete' => 'yes',
+                            'type' => $type,
+                            'created_by' => Auth::user()->id
+                        ]);
+                        BudgetaryInfo::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'year' => $request->year[$key],
+                            'uni_budget' => $request->uni_budget[$key],
+                            'uni_proposed_budget' => $request->uni_proposed_budget[$key],
+                            'budget_receive' => $request->budget_receive[$key],
+                            'budget_type' => $request->budget_type[$key],
+                            'isComplete' => 'yes',
+                            'type' => 'SAR',
+                            'created_by' => Auth::user()->id
+                        ]);
+                    }else
+                    {
+                        return response()->json(['error' => 'Budgetary Information already exists.'], 422);
+                    }
                 }
             }
 

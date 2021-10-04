@@ -130,12 +130,12 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 20px;">
                                     <label for="name"></label>
-                                    <input type="submit" name="add" value="Submit" class="btn btn-info Update">
+                                    <input type="submit" name="add" value="Submit" class="btn btn-info">
                                 </div>
 
                                 <div class="form-group pull-right" style="margin-top: 20px;">
                                     <label for="name"></label>
-                                    <input type="submit" name="add" value="Submit & Next" class="btn btn-success Update">
+                                    <input type="submit" name="add" value="Submit & Next" class="btn btn-success next">
                                 </div>
                             </div>
                         <!-- /.box-body -->
@@ -478,6 +478,7 @@
             });
 
         });
+        let check = false;
         /*Add Scope*/
         $('#add').submit(function (e) {
             // let statutory_body_id = $('#statutory_body_id').val();
@@ -523,9 +524,16 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+                    if(response.error)
+                        Notiflix.Notify.Failure(response.error);
+                    {
+
+                    }
                     console.log('response', response);
-                    window.location = '/strategic/affiliations';
-                },
+                    check = true;
+                    setTimeout(()=> {
+                        location.reload();}, 2000);
+                    },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
                     $.each(response.responseJSON, function (index, val) {
@@ -644,6 +652,14 @@
                 } );
 
         })
+
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/strategic/affiliations';
+                }
+            }, 1000)
+        });
 
     </script>
 
