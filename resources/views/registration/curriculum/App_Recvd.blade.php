@@ -97,6 +97,11 @@
                                         <label for="sector">&nbsp;&nbsp;</label>
                                         <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                     </div>
+
+                                    <div class="form-group pull-right" style="margin-top: 40px">
+                                        <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="submit" name="add" id="add" value="Add & Next" class="btn btn-success next">
+                                    </div>
                                 </div>
                             </form>
                         </div>

@@ -113,27 +113,38 @@ class FacultyStudentRatioController extends Controller
             }else {
                 $type = 'REG';
             }
-
-            FacultyStudentRatio::create([
+            $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
-                'total_enrollments' => $request->total_enrollments,
                 'isCompleted' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
+                'type' => $type];
+            $check = FacultyStudentRatio::where($check_data)->exists();
+            if(!$check) {
 
-            FacultyStudentRatio::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'program_id' => $request->program_id,
-                'total_enrollments' => $request->total_enrollments,
-                'isCompleted' => 'yes',
-                'type' => 'SAR',
-                'created_by' => Auth::user()->id
-            ]);
+                FacultyStudentRatio::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'total_enrollments' => $request->total_enrollments,
+                    'isCompleted' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
 
+                FacultyStudentRatio::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'total_enrollments' => $request->total_enrollments,
+                    'isCompleted' => 'yes',
+                    'type' => 'SAR',
+                    'created_by' => Auth::user()->id
+                ]);
+            }else{
+            return response()->json(['error' => 'Faculty Student Ratio already exists.'], 422);
+
+            }
             return response()->json(['success' => 'Faculty Student Ratio added successfully.']);
 
 

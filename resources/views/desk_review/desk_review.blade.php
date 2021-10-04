@@ -170,28 +170,25 @@
                                         <tr>
                                             <td>
                                                 <p>4. Student Intake(Table 2.3)</p>
-                                                <table class="table table-striped ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Program</th>
-                                                        <th>Year</th>
-                                                        <th>Student Intake</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-{{--                                                Student Intake--}}
 
+                                                Student Intake
+                                                <p>
+                                                    @php
+                                                    $pre = 0;
+                                                @endphp
                                                     @foreach(@$application_received as $applications)
-                                                        <tr>
-                                                            <td>{{@$applications->program->name}}</td>
-                                                            <td>{{@$applications->year}}</td>
-                                                            <td>{{@$applications->student_intake}}</td>
-                                                        </tr>
 
-{{--                                                    <p> {{@$applications->program->name}}- {{@$applications->semester->name}} : {{@$applications->student_intake}} </p>--}}
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
+                                                        @if($applications->program->name != $applications)
+                                                        {{@$applications->program->name}} ({{@$applications->year}}) {{@$applications->student_intake}},
+                                                    @endif
+                                                            @php
+                                                                echo  $pre++;
+                                                            @endphp
+
+                                                            @endforeach
+                                                    </p>
+{{--                                                    </tbody>--}}
+{{--                                                </table>--}}
 
                                             </td>
                                             <td> {!! @$nbeac_criteria->student_intake !!} </td>

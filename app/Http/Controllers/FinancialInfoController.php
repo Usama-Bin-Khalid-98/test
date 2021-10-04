@@ -82,8 +82,7 @@ class FinancialInfoController extends Controller
             }else {
                 $type = 'REG';
             }
-
-            FinancialInfo::create([
+            $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'income_source_id' => $request->income_source_id,
@@ -91,13 +90,28 @@ class FinancialInfoController extends Controller
                 'year_two' => $request->year_two,
                 'year_one' => $request->year_one,
                 'year_t' => $request->year_t,
-                'year_t_plus_one' => $request->year_t_plus_one,
-                'year_t_plus_two' => $request->year_t_plus_two,
                 'isComplete' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
+                'type' => $type];
+            $check = FinancialInfo::where($check_data)->exists();
+            if(!$check) {
+                FinancialInfo::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'income_source_id' => $request->income_source_id,
+                    'year_three' => $request->year_three,
+                    'year_two' => $request->year_two,
+                    'year_one' => $request->year_one,
+                    'year_t' => $request->year_t,
+                    'year_t_plus_one' => $request->year_t_plus_one,
+                    'year_t_plus_two' => $request->year_t_plus_two,
+                    'isComplete' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
+            }else{
+            return response()->json(['error' => 'Financial Info already exists.'], 422);
 
+            }
             return response()->json(['success' => 'Financial Info added successfully.']);
 
 

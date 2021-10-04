@@ -80,20 +80,33 @@ class ApplicationReceivedController extends Controller
             }else {
                 $type = 'REG';
             }
-
-            ApplicationReceived::create([
+            $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
-                'app_received' => $request->app_received,
-                'admission_offered' => $request->admission_offered,
-                'student_intake' => $request->student_intake,
-                'semester_comm_date' => $request->semester_comm_date,
                 'isComplete'=>'yes',
-                'type'=>$type,
-                'created_by' => Auth::user()->id
-            ]);
+                'type'=>$type];
+            $check = ApplicationReceived::where($check_data)->exists();
+
+            if(!$check) {
+                ApplicationReceived::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
+                    'year' => $request->year,
+                    'app_received' => $request->app_received,
+                    'admission_offered' => $request->admission_offered,
+                    'student_intake' => $request->student_intake,
+                    'semester_comm_date' => $request->semester_comm_date,
+                    'isComplete' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
+            }else{
+            return response()->json(['error' => 'Application Received already exists.'], 422);
+
+            }
 
             return response()->json(['success' => 'Application Received added successfully.']);
 

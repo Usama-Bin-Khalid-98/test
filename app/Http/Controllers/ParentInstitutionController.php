@@ -28,7 +28,7 @@ class ParentInstitutionController extends Controller
         }else {
              $parents = ParentInstitution::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
-        
+
         return view('strategic_management.parent_institution', compact('parents'));
     }
 
@@ -67,12 +67,19 @@ class ParentInstitutionController extends Controller
             }else{
                 $type = 'REG';
             }
-                if($request->file('file')) {
-                    $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
-                    $path = 'uploads/parent_institution';
-                    $diskName = env('DISK');
-                    $disk = Storage::disk($diskName);
-                    $request->file('file')->move($path, $imageName);
+            $where_data = [
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'type' => $type];
+                $check = ParentInstitution::where($where_data)->exists();
+
+                if(!$check) {
+                    if ($request->file('file')) {
+                        $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                        $path = 'uploads/parent_institution';
+                        $diskName = env('DISK');
+                        $disk = Storage::disk($diskName);
+                        $request->file('file')->move($path, $imageName);
                         ParentInstitution::create([
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
@@ -83,7 +90,11 @@ class ParentInstitutionController extends Controller
                         ]);
 
 
-                    return response()->json(['success' => 'Document added successfully.']);
+                        return response()->json(['success' => 'Document added successfully.']);
+                    }
+                }else{
+
+                        return response()->json(['error' => 'Document already exists.'], 422);
                 }
 
         }catch (Exception $e)
@@ -148,7 +159,7 @@ class ParentInstitutionController extends Controller
                     [
                     'file' => $path.'/'.$imageName,
                     'status' => $request->status,
-                    'updated_by' => Auth::user()->id 
+                    'updated_by' => Auth::user()->id
                     ]
                 );
 
@@ -156,7 +167,7 @@ class ParentInstitutionController extends Controller
             }
            ParentInstitution::where('id', $parentInstitution->id)->update([
                'status' => $request->status,
-               'updated_by' => Auth::user()->id 
+               'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Document updated successfully.']);
 
@@ -176,7 +187,7 @@ class ParentInstitutionController extends Controller
     {
         try {
              ParentInstitution::where('id', $parentInstitution->id)->update([
-               'deleted_by' => Auth::user()->id 
+               'deleted_by' => Auth::user()->id
            ]);
              ParentInstitution::destroy($parentInstitution->id);
                 return response()->json(['success' => 'Record deleted successfully.']);

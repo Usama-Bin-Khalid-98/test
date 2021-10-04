@@ -65,51 +65,76 @@ class AffiliationController extends Controller
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
             $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+
             if($slip){
-                $type='SAR';
-                Affiliation::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'name' => $request->name,
-                    'designation_id' => $request->designation_id,
-                    'affiliation' => $request->affiliation,
-                    'statutory_bodies_id' => $request->statutory_bodies_id,
-                    'isComplete' => 'yes',
-                    'type' => $type,
-                    'created_by' => Auth::user()->id
-
-                ]);
-            }else {
+                $type = 'SAR';
+            }else
+            {
                 $type = 'REG';
-                Affiliation::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'name' => $request->name,
-                    'designation_id' => $request->designation_id,
-                    'affiliation' => $request->affiliation,
-                    'statutory_bodies_id' => $request->statutory_bodies_id,
-                    'isComplete' => 'yes',
-                    'type' => $type,
-                    'created_by' => Auth::user()->id
+            }
 
-                ]);
-                Affiliation::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'name' => $request->name,
-                    'designation_id' => $request->designation_id,
-                    'affiliation' => $request->affiliation,
-                    'statutory_bodies_id' => $request->statutory_bodies_id,
-                    'isComplete' => 'yes',
-                    'type' => 'SAR',
-                    'created_by' => Auth::user()->id
+            $where_data = [
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'name' => $request->name,
+                'designation_id' => $request->designation_id,
+                'statutory_bodies_id' => $request->statutory_bodies_id,
+                'isComplete' => 'yes',
+                'type' => $type];
 
-                ]);
+            $check = Affiliation::where($where_data)->exists();
+
+
+            if(!$check) {
+
+                if ($slip) {
+                    $type = 'SAR';
+                    Affiliation::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'name' => $request->name,
+                        'designation_id' => $request->designation_id,
+                        'affiliation' => $request->affiliation,
+                        'statutory_bodies_id' => $request->statutory_bodies_id,
+                        'isComplete' => 'yes',
+                        'type' => $type,
+                        'created_by' => Auth::user()->id
+
+                    ]);
+                } else {
+                    $type = 'REG';
+                    Affiliation::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'name' => $request->name,
+                        'designation_id' => $request->designation_id,
+                        'affiliation' => $request->affiliation,
+                        'statutory_bodies_id' => $request->statutory_bodies_id,
+                        'isComplete' => 'yes',
+                        'type' => $type,
+                        'created_by' => Auth::user()->id
+
+                    ]);
+                    Affiliation::create([
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'name' => $request->name,
+                        'designation_id' => $request->designation_id,
+                        'affiliation' => $request->affiliation,
+                        'statutory_bodies_id' => $request->statutory_bodies_id,
+                        'isComplete' => 'yes',
+                        'type' => 'SAR',
+                        'created_by' => Auth::user()->id
+
+                    ]);
+                }
+            }else{
+            return response()->json(['error' => ' affiliation already exists.'], 422);
+
             }
 
 
-
-            return response()->json(['success' => ' Affiliations added successfully.']);
+            return response()->json(['success' => ' Affiliations added successfully.'], 200);
 
 
         }catch (Exception $e)

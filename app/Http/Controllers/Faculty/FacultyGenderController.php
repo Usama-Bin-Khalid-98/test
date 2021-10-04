@@ -88,28 +88,40 @@ class FacultyGenderController extends Controller
                 $type = 'REG';
             }
 
-            FacultyGender::create([
+            $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                'male' => $request->male,
-                'female' => $request->female,
                 'isCompleted' => 'yes',
-                'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
-            FacultyGender::create([
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                'male' => $request->male,
-                'female' => $request->female,
-                'isCompleted' => 'yes',
-                'type' => 'SAR',
-                'created_by' => Auth::user()->id
-            ]);
+                'type' => $type];
+            $check = FacultyGender::where($check_data)->exists();
 
-            return response()->json(['success' => 'Faculty Gender added successfully.']);
+            if(!$check) {
+                FacultyGender::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
+                    'male' => $request->male,
+                    'female' => $request->female,
+                    'isCompleted' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
+                FacultyGender::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
+                    'male' => $request->male,
+                    'female' => $request->female,
+                    'isCompleted' => 'yes',
+                    'type' => 'SAR',
+                    'created_by' => Auth::user()->id
+                ]);
+            }
+            else{
+                return response()->json(['error' => 'Faculty Gender already exists.'], 422);
+            }
+                return response()->json(['success' => 'Faculty Gender added successfully.']);
 
 
         }catch (Exception $e)

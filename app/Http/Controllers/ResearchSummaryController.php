@@ -76,28 +76,42 @@ class ResearchSummaryController extends Controller
             }else {
                 $type = 'REG';
             }
+
             //dd($request->all());
             for($i = 0; $i <= count($request->total_items); $i++)
             {
+            $check_data = [
+                'publication_type_id' => @$request->publication_type_id[$i],
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'year' => @$request->year,
+                'isComplete' => 'yes',
+                'type' => $type];
+                $check = ResearchSummary::where($check_data)->exists();
                // dd($request->total_items[$i]);
 //                for($j = 0; $j<=count($request->publication_type_id); $j++)
 //                {
 //                dd($request->total_items[$i]);
-                if(!empty($request->total_items[$i])) {
-                    ResearchSummary::create([
-                        'publication_type_id' => $request->publication_type_id[$i],
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'total_items' => @$request->total_items[$i],
-                        'year' => $request->year,
-                        'contributing_core_faculty' => $request->contributing_core_faculty[$i],
-                        'jointly_produced_other' => $request->jointly_produced_other[$i],
-                        'jointly_produced_same' => $request->jointly_produced_same[$i],
-                        'jointly_produced_multiple' => $request->jointly_produced_multiple[$i],
-                        'isComplete' => 'yes',
-                        'type' => $type,
-                        'created_by' => Auth::user()->id
-                    ]);
+                if(!$check) {
+                    if (!empty($request->total_items[$i])) {
+                        ResearchSummary::create([
+                            'publication_type_id' => $request->publication_type_id[$i],
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'total_items' => @$request->total_items[$i],
+                            'year' => $request->year,
+                            'contributing_core_faculty' => $request->contributing_core_faculty[$i],
+                            'jointly_produced_other' => $request->jointly_produced_other[$i],
+                            'jointly_produced_same' => $request->jointly_produced_same[$i],
+                            'jointly_produced_multiple' => $request->jointly_produced_multiple[$i],
+                            'isComplete' => 'yes',
+                            'type' => $type,
+                            'created_by' => Auth::user()->id
+                        ]);
+                    }
+                }else{
+                    return response()->json(['error' => 'Research Summary Information already exists.'], 422);
+
                 }
 
                 //}
