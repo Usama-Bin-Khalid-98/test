@@ -102,7 +102,7 @@
                                     <th>Contact Person Name</th>
                                     <th>Contact</th>
                                     <th>Email</th>
-                                    {{--                                <th>Invoice Slip</th>--}}
+                                    <th>Files</th>
                                     <th>Desk Review</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -119,6 +119,7 @@
                                         <td>{{@$regist->user}}</td>
                                         <td>{{@$regist->contact_no}}</td>
                                         <td>{{@$regist->email}}</td>
+                                        <td><a href="{{url('reg-files/?cid=')}}{{$regist->business_school_id}}/&did={{@$regist->department_id}}"><i class="fa fa-file text-green" ></i></a></td>
                                         <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Click to Review</a></td>
                                         {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                         <td><i style="cursor: default" class="badge {{$regist->regStatus == 'Review'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'created'}}</i></td>

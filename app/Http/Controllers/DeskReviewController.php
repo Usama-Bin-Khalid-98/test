@@ -2,27 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\AdmissionOffice;
+use App\AlumniMembership;
+use App\CreditTransfer;
+use App\DocumentaryEvidence;
+use App\FinancialAssistance;
+use App\Models\Carriculum\CourseOutline;
+use App\Models\Carriculum\EvaluationMethod;
+use App\Models\Carriculum\PlagiarismCase;
+use App\Models\Carriculum\ProgramDelivery;
+use App\Models\Carriculum\QuestionPaper;
 use App\Models\Common\EligibilityStatus;
 use App\Models\Common\Slip;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\DeskReview;
+use App\Models\External_Linkages\FacultyExchange;
+use App\Models\External_Linkages\Linkages;
+use App\Models\External_Linkages\ObtainedInternship;
+use App\Models\External_Linkages\StudentExchange;
+use App\Models\facility\QecInfo;
+use App\Models\Faculty\FacultyConsultancyProject;
+use App\Models\Faculty\FacultyDevelop;
+use App\Models\Faculty\FacultyExposure;
 use App\Models\Faculty\FacultyGender;
+use App\Models\Faculty\FacultyPromotion;
 use App\Models\Faculty\FacultySummary;
 use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\Faculty\VisitingFaculty;
 use App\Models\Faculty\FacultyStability;
 use App\Models\Faculty\WorkLoad;
 use App\Models\Facility\BusinessSchoolFacility;
+use App\Models\Research\ResearchAgenda;
 use App\Models\Research\ResearchSummary;
+use App\Models\social_responsibility\ComplaintResolution;
+use App\Models\social_responsibility\EnvProtection;
+use App\Models\social_responsibility\InternalCommunity;
+use App\Models\social_responsibility\ProjectDetail;
+use App\Models\social_responsibility\SocialActivity;
 use App\Models\StrategicManagement\ApplicationReceived;
+use App\Models\StrategicManagement\AuditReport;
+use App\Models\StrategicManagement\ContactInfo;
 use App\Models\StrategicManagement\MissionVision;
+use App\Models\StrategicManagement\ParentInstitution;
 use App\Models\StrategicManagement\Scope;
+use App\Models\StrategicManagement\StatutoryCommittee;
 use App\Models\StrategicManagement\StrategicPlan;
 use App\Models\StrategicManagement\StudentEnrolment;
 use App\NbeacCriteria;
 use App\StudentsGraduated;
 use App\FacultyDegree;
+use App\StudentTransfer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +85,7 @@ class DeskReviewController extends Controller
 //            ->where('s.reg')
             ->where('s.regStatus', '!=', 'initiated')
             ->get();
-        //dd($desk_reviews);
+//        dd($registrations);
 
         return view('desk_review.index', compact('registrations'));
     }
@@ -703,4 +733,34 @@ class DeskReviewController extends Controller
             'required' => 'The :attribute can not be blank.'
         ];
     }
+
+    public  function reg_files(Request $request){
+        try {
+            $where = ['campus_id'=> $request->cid, 'department_id' => $request->did, 'type'=>'REG'];
+            $whereReg = ['campus_id'=> $request->cid, 'department_id' => $request->did];
+//            dd($where);
+            $schoolInfo = Slip::where(['business_school_id'=> $request->cid, 'department_id' => $request->did])->with('campus', 'department')->first();
+//            dd($schoolInfo);/
+            $ContactInfo = ContactInfo::where($where)->get() ?? [] ;
+//            dd($ContactInfo);
+            //Appendix 1A
+            $StateryCommittee = StatutoryCommittee::where($where)->get() ??[];
+            $MissionVision = MissionVision::where($where)->first()->file ?? '' ;
+            $StrategicPlan = StrategicPlan::where($where)->first()->file ?? '' ;
+//            dd($StrategicPlan);
+            $ParentInstitution = ParentInstitution::where($whereReg)->first()->file ?? '';
+//            dd($CourseOutline);
+            return  view('desk_review.reg_files', compact('schoolInfo','ContactInfo', 'StateryCommittee',
+                    'MissionVision',
+                    'StrategicPlan',
+                    'ParentInstitution')
+            );
+        }catch (Exception $e) {
+            return response()->json(['message'=>'something went wrong']);
+        }
+    }
+
 }
+
+
+
