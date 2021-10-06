@@ -258,6 +258,7 @@ Route::get('/email', function() {
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::get('PeerReviewerAvailability', 'SchedulePeerReviewController@peerAvailability');
             Route::get('sar-files/{cid?}', 'SARDeskReviewController@sar_files');
+            Route::get('reg-files/{cid?}', 'DeskReviewController@reg_files');
 
 
         });

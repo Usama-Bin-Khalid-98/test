@@ -55,10 +55,9 @@
 {{--          </address>--}}
             <address>
             <strong>NBEAC .</strong><br>
-              201,2nd floor,HRD Building<br>
-              Higher Education Commission<br>
-              Sector H-8<br>
-              Islamabad– Pakistan 44000<br>
+                National Business Education Accreditation Council (NBEAC),<br>
+                N-Block, HEC, H-8/1,<br>
+                Islamabad– Pakistan 44000<br>
                 <strong>Phone:</strong> +92-51-90800206-9<br>
                 <strong>Email:</strong> nbeac@hec.gov.pk<br>
                 <strong>Web:</strong> www.nbeac.org.pk<br>
