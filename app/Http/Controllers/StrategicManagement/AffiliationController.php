@@ -26,17 +26,16 @@ class AffiliationController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $designations = Designation::all();
         $bodies = StatutoryBody::all();
 
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
             if($slip){
-                $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+                $affiliations = Affiliation::with('campus','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
             }else {
-                $affiliations = Affiliation::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+                $affiliations = Affiliation::with('campus','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
             }
         //dd($affiliations);
-        return view('strategic_management.affiliations', compact('designations','bodies','affiliations'));
+        return view('strategic_management.affiliations', compact('bodies','affiliations'));
     }
 
     /**
@@ -80,13 +79,6 @@ class AffiliationController extends Controller
 
             foreach($csv_data as $index=>$addData)
             {
-                $getDesignation = Designation::where(['name'=> @$addData[1]])->first();
-                if(!$getDesignation)
-                {
-                    return response()->json(['error' => ' Incorrect Designation in line ', 'line'=> $index + 2], 422);
-
-                }
-
                 $getStrBody = StatutoryBody::where(['name'=> @$addData[3]])->first();
                 if(!$getStrBody)
                 {
@@ -94,12 +86,11 @@ class AffiliationController extends Controller
 
                 }
 
-
                 $where_data = [
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
                     'name' => @$addData[0],
-                    'designation_id' => $getDesignation->id,
+                    'designation' => @$addData[1],
                     'statutory_bodies_id' => $getStrBody->id,
                     'isComplete' => 'yes',
                     'type' => $type];
@@ -111,7 +102,7 @@ class AffiliationController extends Controller
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'name' => @$addData[0],
-                        'designation_id' => $getDesignation->id,
+                        'designation' => @$addData[1],
                         'statutory_bodies_id' => $getStrBody->id,
                         'affiliation' => @$addData[2],
                         'isComplete' => 'yes',
@@ -122,11 +113,6 @@ class AffiliationController extends Controller
 
 
             }
-
-
-
-                dd($csv_data);
-
 
             }else {
 
@@ -139,7 +125,7 @@ class AffiliationController extends Controller
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
                     'name' => $request->name,
-                    'designation_id' => $request->designation_id,
+                    'designation' => $request->designation,
                     'statutory_bodies_id' => $request->statutory_bodies_id,
                     'isComplete' => 'yes',
                     'type' => $type];
@@ -153,7 +139,7 @@ class AffiliationController extends Controller
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'name' => $request->name,
-                            'designation_id' => $request->designation_id,
+                            'designation' => $request->designation,
                             'affiliation' => $request->affiliation,
                             'statutory_bodies_id' => $request->statutory_bodies_id,
                             'isComplete' => 'yes',
@@ -166,7 +152,7 @@ class AffiliationController extends Controller
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'name' => $request->name,
-                            'designation_id' => $request->designation_id,
+                            'designation' => $request->designation,
                             'affiliation' => $request->affiliation,
                             'statutory_bodies_id' => $request->statutory_bodies_id,
                             'isComplete' => 'yes',
@@ -177,7 +163,7 @@ class AffiliationController extends Controller
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'name' => $request->name,
-                            'designation_id' => $request->designation_id,
+                            'designation' => $request->designation,
                             'affiliation' => $request->affiliation,
                             'statutory_bodies_id' => $request->statutory_bodies_id,
                             'isComplete' => 'yes',
@@ -190,6 +176,7 @@ class AffiliationController extends Controller
                 }
                 return response()->json(['success' => ' Affiliations added successfully.'], 200);
             }
+                return response()->json(['success' => ' Affiliations added successfully.'], 200);
 
         }catch (Exception $e)
         {
@@ -239,7 +226,7 @@ class AffiliationController extends Controller
 
             Affiliation::where('id', $affiliation->id)->update([
                 'name' => $request->name,
-                'designation_id' => $request->designation_id,
+                'designation' => $request->designation,
                 'affiliation' => $request->affiliation,
                 'statutory_bodies_id' => $request->statutory_bodies_id,
                 'status' => $request->status,
@@ -272,7 +259,7 @@ class AffiliationController extends Controller
                 "campus_id" => $affiliation->campus_id,
                 "department_id" => $affiliation->department_id,
                 "affiliation" => $affiliation->affiliation,
-                "designation_id" => $affiliation->designation_id,
+                "designation" => $affiliation->designation,
                 "statutory_bodies_id" => $affiliation->statutory_bodies_id,
             ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);
@@ -286,13 +273,11 @@ class AffiliationController extends Controller
         return [
 
             'name' => 'required',
-            'designation_id' => 'required',
+            'designation' => 'required',
             'affiliation' => 'required',
 //            'statutory_bodies_id' => 'required'
         ];
     }
-
-
 
     protected function messages() {
         return [

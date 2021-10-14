@@ -391,8 +391,8 @@ let check = false;
                     }
                     console.log('response', response);
                     check = true;
-                    // setTimeout(()=> {
-                    // location.reload();}, 2000);
+                    setTimeout(()=> {
+                    location.reload();}, 2000);
 
                 },
                 error:function(response, exception){

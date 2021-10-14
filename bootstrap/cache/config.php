@@ -1,16 +1,16 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'NBEAC',
-    'env' => 'production',
+    'name' => 'Laravel',
+    'env' => 'local',
     'debug' => true,
-    'url' => 'http://app.nbeac.org.pk',
+    'url' => 'http://localhost',
     'asset_url' => NULL,
     'timezone' => 'Asia/Karachi',
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:bJ6LEABLQupOI/B00T3io3wY19OZEvpKkXK/jpQig8k=',
+    'key' => 'base64:eLNBIrHH9Z3EjbtdRG0a6zM0Q30KD7PAHRQNCmttduk=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -181,7 +181,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/home/nbeacorg/public_html/nbeac_app/storage/framework/cache/data',
+        'path' => '/Volumes/dev_data/nbeac/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -220,7 +220,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'nbeac_cache',
+    'prefix' => 'laravel_cache',
   ),
   'cors' => 
   array (
@@ -256,7 +256,7 @@
       'enabled' => true,
       'service' => 'PragmaRX\\Countries\\Package\\Services\\Cache\\Service',
       'duration' => 180,
-      'directory' => '/tmp/__PRAGMARX_COUNTRIES__/cache',
+      'directory' => '/var/folders/0n/sw3l_59n1dnf9k75nrvqkzsw0000gp/T/__PRAGMARX_COUNTRIES__/cache',
     ),
     'hydrate' => 
     array (
@@ -307,7 +307,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'nbeacorg_application',
+        'database' => 'nbeac',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -317,9 +317,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'nbeacorg_application',
-        'username' => 'nbeacorg_u_nbeac',
-        'password' => 'D-YnhdclH&}gxO',
+        'database' => 'nbeac',
+        'username' => 'root',
+        'password' => 'password',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -337,9 +337,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'nbeacorg_application',
-        'username' => 'nbeacorg_u_nbeac',
-        'password' => 'D-YnhdclH&}gxO',
+        'database' => 'nbeac',
+        'username' => 'root',
+        'password' => 'password',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -352,9 +352,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'nbeacorg_application',
-        'username' => 'nbeacorg_u_nbeac',
-        'password' => 'D-YnhdclH&}gxO',
+        'database' => 'nbeac',
+        'username' => 'root',
+        'password' => 'password',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -367,7 +367,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'nbeac_database_',
+        'prefix' => 'laravel_database_',
       ),
       'default' => 
       array (
@@ -393,10 +393,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => '/home/nbeacorg/public_html/nbeac_app/storage/fonts/',
-      'font_cache' => '/home/nbeacorg/public_html/nbeac_app/storage/fonts/',
-      'temp_dir' => '/tmp',
-      'chroot' => '/home/nbeacorg/public_html/nbeac_app',
+      'font_dir' => '/Volumes/dev_data/nbeac/storage/fonts/',
+      'font_cache' => '/Volumes/dev_data/nbeac/storage/fonts/',
+      'temp_dir' => '/var/folders/0n/sw3l_59n1dnf9k75nrvqkzsw0000gp/T',
+      'chroot' => '/Volumes/dev_data/nbeac',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -406,7 +406,7 @@
       'enable_php' => true,
       'enable_javascript' => true,
       'enable_remote' => true,
-      'font_height_ratio' => 1.100000000000000088817841970012523233890533447265625,
+      'font_height_ratio' => 1.1,
       'enable_html5_parser' => true,
     ),
   ),
@@ -419,13 +419,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/home/nbeacorg/public_html/nbeac_app/storage/app',
+        'root' => '/Volumes/dev_data/nbeac/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/home/nbeacorg/public_html/nbeac_app/storage/app/public',
-        'url' => 'http://app.nbeac.org.pk/storage',
+        'root' => '/Volumes/dev_data/nbeac/storage/app/public',
+        'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -441,7 +441,7 @@
     ),
     'links' => 
     array (
-      '/home/nbeacorg/public_html/nbeac_app/public/storage' => '/home/nbeacorg/public_html/nbeac_app/storage/app/public',
+      '/Volumes/dev_data/nbeac/public/storage' => '/Volumes/dev_data/nbeac/storage/app/public',
     ),
   ),
   'hashing' => 
@@ -475,13 +475,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => '/home/nbeacorg/public_html/nbeac_app/storage/logs/laravel.log',
+        'path' => '/Volumes/dev_data/nbeac/storage/logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => '/home/nbeacorg/public_html/nbeac_app/storage/logs/laravel.log',
+        'path' => '/Volumes/dev_data/nbeac/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -531,7 +531,7 @@
       ),
       'emergency' => 
       array (
-        'path' => '/home/nbeacorg/public_html/nbeac_app/storage/logs/laravel.log',
+        'path' => '/Volumes/dev_data/nbeac/storage/logs/laravel.log',
       ),
     ),
   ),
@@ -543,11 +543,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'server.nbeac.org.pk',
-        'port' => '465',
-        'encryption' => 'ssl',
-        'username' => 'info@nbeac.org.pk',
-        'password' => '-a7nq{Tik*w4',
+        'host' => 'smtp.mailtrap.io',
+        'port' => '2525',
+        'encryption' => 'tls',
+        'username' => '6e4392736afded',
+        'password' => '13945f9b5f9db2',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -580,7 +580,7 @@
     ),
     'from' => 
     array (
-      'address' => 'info@nbeac.org.pk',
+      'address' => 'admin@nbeac.org.pk',
       'name' => 'NBEAC',
     ),
     'markdown' => 
@@ -588,7 +588,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/home/nbeacorg/public_html/nbeac_app/resources/views/vendor/mail',
+        0 => '/Volumes/dev_data/nbeac/resources/views/vendor/mail',
       ),
     ),
   ),
@@ -715,7 +715,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/home/nbeacorg/public_html/nbeac_app/storage/framework/sessions',
+    'files' => '/Volumes/dev_data/nbeac/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -724,7 +724,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'nbeac_session',
+    'cookie' => 'laravel_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
@@ -735,9 +735,9 @@
   array (
     'paths' => 
     array (
-      0 => '/home/nbeacorg/public_html/nbeac_app/resources/views',
+      0 => '/Volumes/dev_data/nbeac/resources/views',
     ),
-    'compiled' => '/home/nbeacorg/public_html/nbeac_app/storage/framework/views',
+    'compiled' => '/Volumes/dev_data/nbeac/storage/framework/views',
   ),
   'flare' => 
   array (
@@ -769,27 +769,10 @@
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
   ),
-  'google-calendar' => 
-  array (
-    'default_auth_profile' => 'service_account',
-    'auth_profiles' => 
-    array (
-      'service_account' => 
-      array (
-        'credentials_json' => '/home/nbeacorg/public_html/nbeac_app/storage/app/google-calendar/service-account-credentials.json',
-      ),
-      'oauth' => 
-      array (
-        'credentials_json' => '/home/nbeacorg/public_html/nbeac_app/storage/app/google-calendar/oauth-credentials.json',
-        'token_json' => '/home/nbeacorg/public_html/nbeac_app/storage/app/google-calendar/oauth-token.json',
-      ),
-    ),
-    'calendar_id' => NULL,
-  ),
   'trustedproxy' => 
   array (
     'proxies' => NULL,
-    'headers' => 30,
+    'headers' => 94,
   ),
   'tinker' => 
   array (

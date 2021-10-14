@@ -75,12 +75,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                        <option selected  disabled >Select Designation</option>
-                                        @foreach($designations as $designation)
-                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" name="designation" id="designation" class="form-control">
                                 </div>
                             </div>
                            <div class="col-md-3">
@@ -116,7 +111,7 @@
                                         <label for="sector">&nbsp;Import CSV</label>
                                         <input type="file" name="file" id="file" />
                                     <div style="margin-top: 20px">
-                                        <input type="submit" name="add" id="add" value="Import" class="btn btn-info addMe">
+                                        <input type="submit" name="add" id="add" value="Import" class="btn btn-info">
                                     </div>
                                     </div>
                                    </div>
@@ -125,12 +120,12 @@
                                    <div class="col-md-6">
                                         <div class="form-group pull-right" style="margin-top: 40px">
                                             <label for="sector">&nbsp;&nbsp;</label>
-                                            <input type="submit" name="add" id="add" value="Add" class="btn btn-info addMe">
+                                            <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                         </div>
 
                                    <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success addMe">
+                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
                                 </div>
                             </div>
                          </form>
@@ -181,11 +176,11 @@
                                     <td>{{$affiliation->campus->business_school->name}}</td>
                                     <td>{{$affiliation->campus->location}}</td>
                                     <td>{{$affiliation->name}}</td>
-                                    <td>{{$affiliation->designation->name}}</td>
+                                    <td>{{$affiliation->designation}}</td>
                                     <td>{{$affiliation->affiliation}}</td>
                                     <td>{{@$affiliation->statutory_bodies->name}}</td>
                                     <td><i class="badge {{$affiliation->status == 'active'?'bg-green':'bg-red'}}">{{$affiliation->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","name":"{{$affiliation->name}}","designation_id":"{{$affiliation->designation_id}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","name":"{{$affiliation->name}}","designation":"{{$affiliation->designation}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -244,12 +239,8 @@
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                    <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
-                                        <option selected  disabled >Select Designation</option>
-                                        @foreach($designations as $designation)
-                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                        @endforeach
-                                    </select>
+                                        <input type="text" name="designation" id="edit_designation" value="{{old('edit_designation')}}"  class="form-control">
+
                                 </div>
                             </div>
 
@@ -359,13 +350,13 @@
     </script>
     <script type="text/javascript">
 
-        $('#designation_id').on('change', function () {
-            let val = $(this).val();
-            if(val === '13')
-            {
-                $('#designation_modal').modal('show');
-            }
-        });
+        // $('#designation_id').on('change', function () {
+        //     let val = $(this).val();
+        //     if(val === '13')
+        //     {
+        //         $('#designation_modal').modal('show');
+        //     }
+        // });
 
         $('#statutory_bodies_id').on('change', function () {
             let val = $(this).val();
@@ -406,12 +397,12 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     let insert_id = response.insert_id;
-                    if(insert_id){
-
-                        let options = $('<option selected></option>').val(insert_id).text(designation_name);
-                        $('#designation_id').append(options).trigger('change');
-                    }
-                    $('#designation_modal').modal('hide');
+                    // if(insert_id){
+                    //
+                    //     let options = $('<option selected></option>').val(insert_id).text(designation_name);
+                    //     $('#designation_id').append(options).trigger('change');
+                    // }
+                    // $('#designation_modal').modal('hide');
                     console.log('response here', response);
                 },
                 error:function(response, exception){
@@ -426,7 +417,7 @@
         });
 
 
-
+        var check = false;
         $('#form').submit(function (e) {
             //  let clickMe = $(this).val();
             // let designation_id = $('#designation_id').val();
@@ -470,11 +461,10 @@
                         Notiflix.Notify.Failure(response.error);
                     }
                     console.log('response', response);
-                    if (clickMe == 'Add') {
-                         location.reload();
-                    }else {
-                        window.location = '/strategic/budgetary-info';
-                    }
+
+                    check = true;
+                    setTimeout(()=> {
+                        location.reload();}, 2000);
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -520,7 +510,7 @@
                     }
 
                     $('#add-other-modal').modal('hide');
-                    // location.reload();
+                    location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -536,7 +526,7 @@
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_name').val(data.name);
-            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_designation').select2().val(data.designation).trigger('change');
             $('#edit_affiliation').val(data.affiliation);
             $('#edit_statutory_bodies_id').select2().val(data.statutory_bodies_id).trigger('change');
             $('#edit_id').val(data.id);
@@ -545,18 +535,18 @@
 
         $('#updateForm').submit(function (e) {
             let name = $('#edit_name').val();
-            let designation_id = $('#edit_designation_id').val();
+            let designation = $('#edit_designation').val();
             let affiliation = $('#edit_affiliation').val();
             let statutory_bodies_id = $('#edit_statutory_bodies_id').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
             !name?addClass('edit_name'):removeClass('edit_name');
-            !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
+            !designation?addClass('edit_designation'):removeClass('edit_designation');
             !affiliation?addClass('edit_affiliation'):removeClass('edit_affiliation');
             !statutory_bodies_id?addClass('edit_statutory_bodies_id'):removeClass('edit_statutory_bodies_id');
 
-            if(!name || !designation_id || !affiliation || !statutory_bodies_id)
+            if(!name || !designation || !affiliation || !statutory_bodies_id)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -631,6 +621,13 @@
 
         })
 
+        $('.next').on('click', function (){
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/strategic/budgetary-info';
+                }
+            }, 1000)
+        });
 
 
 
