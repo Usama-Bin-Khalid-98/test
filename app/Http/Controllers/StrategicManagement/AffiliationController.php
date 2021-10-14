@@ -83,14 +83,14 @@ class AffiliationController extends Controller
                 $getDesignation = Designation::where(['name'=> @$addData[1]])->first();
                 if(!$getDesignation)
                 {
-                    return response()->json(['error' => ' Incorrect Designation in line '. $index + 2], 422);
+                    return response()->json(['error' => ' Incorrect Designation in line ', 'line'=> $index + 2], 422);
 
                 }
 
                 $getStrBody = StatutoryBody::where(['name'=> @$addData[3]])->first();
                 if(!$getStrBody)
                 {
-                    return response()->json(['error' => ' Incorrect Statutory Body in line '. $index + 2], 422);
+                    return response()->json(['error' => ' Incorrect Statutory Body in line ', 'line'=> $index + 2], 422);
 
                 }
 

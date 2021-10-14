@@ -3,7 +3,7 @@
   array (
     'name' => 'NBEAC',
     'env' => 'production',
-    'debug' => false,
+    'debug' => true,
     'url' => 'http://app.nbeac.org.pk',
     'asset_url' => NULL,
     'timezone' => 'Asia/Karachi',

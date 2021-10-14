@@ -131,7 +131,7 @@ class FacultyTeachingCourcesController extends Controller
                 foreach($csv_data as $index=>$addData) {
                     $getDesignation = Designation::where(['name' => @$addData[1]])->first();
                     if (!$getDesignation) {
-                        return response()->json(['error' => ' Incorrect Designation in line ' . $index + 2], 422);
+                        return response()->json(['error' => ' Incorrect Designation in line ', 'line' => $index + 2], 422);
 
                     }
 
@@ -139,7 +139,7 @@ class FacultyTeachingCourcesController extends Controller
                     $getFacultyType = LookupFacultyType::where(['faculty_type'=> @$addData[2]])->first();
                     if(!$getFacultyType)
                     {
-                        return response()->json(['error' => ' Incorrect Faculty Type in line ' . $index + 2], 422);
+                        return response()->json(['error' => ' Incorrect Faculty Type in line ', 'line' => $index + 2], 422);
 
                     }
 
@@ -158,7 +158,7 @@ class FacultyTeachingCourcesController extends Controller
                     $program = Program::where(['name'=> @$addData[4]])->first();
                     if(!$program)
                     {
-                        return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                        return response()->json(['error' => ' Incorrect Program in line ', 'line'=> $index + 2], 422);
 
                     }
 
@@ -179,7 +179,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[4]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ', 'line' => $index + 2], 422);
 
                         }
 
@@ -197,7 +197,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[6]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ', 'line' => $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
@@ -214,7 +214,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[8]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ', 'line'=> $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
@@ -231,7 +231,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[10]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
@@ -247,7 +247,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[12]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
@@ -263,7 +263,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[14]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
@@ -279,7 +279,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[16]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
@@ -295,7 +295,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[18]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
@@ -311,7 +311,7 @@ class FacultyTeachingCourcesController extends Controller
                         $program = Program::where(['name'=> @$addData[20]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ' . $index + 2], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
 
                         }
                         $insertTcProgram = FacultyProgram::create(
