@@ -1004,7 +1004,9 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
           @endif
           @hasrole('BusinessSchool')
-            <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('registration-apply')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C')
+            <li  class="{{ (request()->is('apply-registration')) ? 'active' : '' }}"><a href="{{url('apply-registration')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+          @endif
           @endhasrole
           @if($isActiveSAR)
           @hasrole('BusinessSchool')

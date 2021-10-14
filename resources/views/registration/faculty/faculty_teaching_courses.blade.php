@@ -45,14 +45,14 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                            <form action="javascript:void(0)" id="form" method="POST">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="name">Faculty Name</label>
                                    <input type="text" name="name" id="name" class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="name">Designation(B)</label>
                                    <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
@@ -63,7 +63,7 @@
                                         </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="name">Faculty type(C)</label>
                                    <select name="lookup_faculty_type_id" id="lookup_faculty_type_id" class="form-control select2" style="width: 100%;">
@@ -74,15 +74,15 @@
                                         </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="name">Maximum teaching courses Allowed(E)</label>
+                                    <label for="name">Max teaching courses Allowed(E)</label>
                                     <input type="number" name="max_cources_allowed" id="max_cources_allowed" class="form-control">
                                 </div>
                             </div>
 
                             @foreach($getScope as $program)
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="name">Teaching courses in {{$program->program->name}}(F) </label>
                                         <input type="number" name="tc_program[{{$program->program->id}}]" id="tc_program{{$program->program->id}}" data-id="{{$program->program->id}}" class="form-control programs">
@@ -96,6 +96,8 @@
 {{--                                       <input type="number" name="tc_program2" id="tc_program2" class="form-control">--}}
 {{--                                   </div>--}}
 {{--                               </div>--}}
+
+
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -107,6 +109,30 @@
                                     <input type="submit" name="add" id="add" value="Add & Next" class="btn btn-success next">
                                 </div>
                             </div>
+
+
+                               <div class="col-md-6 jumbotron">
+                                   <div class="col-md-6">
+                                   <div class="form-group pull-left">
+                                       <label for="sector">Sample File</label>
+                                       <div style="margin-top: 20px">
+                                           <a href="{{url('samples/faculty-sample.csv')}}" class="btn btn-danger">Click to Download</a>
+                                       </div>
+                                   </div>
+                                   </div>
+                                   <div class="col-md-6">
+
+                                   <div class="form-group pull-left" style="margin-top: 40px">
+                                       <label for="sector">&nbsp;Import CSV</label>
+                                       <input type="file" name="file" id="file" />
+                                       <div style="margin-top: 20px">
+                                           <input type="submit" name="add" id="add" value="Import" class="btn btn-info addMe">
+                                       </div>
+                                   </div>
+                                   </div>
+                               </div>
+
+
                         </form>
 
                         </div>
@@ -324,25 +350,25 @@
         });
 let check = false;
          $('#form').submit(function (e) {
-            let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
-            let designation_id = $('#designation_id').val();
-            let max_cources_allowed = $('#max_cources_allowed').val();
-
-
-            let tc_program = $('#tc_program').val();
-            // let tc_program2 = $('#tc_program2').val();
-
-            !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
-            !tc_program?addClass('tc_program'):removeClass('tc_program');
-            // !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
-
-            if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
-            }
+            // let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
+            // let designation_id = $('#designation_id').val();
+            // let max_cources_allowed = $('#max_cources_allowed').val();
+            //
+            //
+            // let tc_program = $('#tc_program').val();
+            // // let tc_program2 = $('#tc_program2').val();
+            //
+            // !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
+            // !designation_id?addClass('designation_id'):removeClass('designation_id');
+            // !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
+            // !tc_program?addClass('tc_program'):removeClass('tc_program');
+            // // !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
+            //
+            // if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed )
+            // {
+            //     Notiflix.Notify.Warning("Fill all the required Fields.");
+            //     return;
+            // }
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
@@ -365,8 +391,8 @@ let check = false;
                     }
                     console.log('response', response);
                     check = true;
-                    setTimeout(()=> {
-                    location.reload();}, 2000);
+                    // setTimeout(()=> {
+                    // location.reload();}, 2000);
 
                 },
                 error:function(response, exception){

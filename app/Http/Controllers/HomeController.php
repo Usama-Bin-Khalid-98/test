@@ -318,11 +318,35 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
     public function getPeerReviewers(Request $request) {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
             if($validation->fails()){
                 return response()->json($validation->messages()->all(), 422);
             }
+    }
+
+    public function getApplyForm(){
+
+        $campus_id = Auth::user()->campus_id;
+        $department_id = Auth::user()->department_id;
+
+        $query = '
+        SELECT slips.*, campuses.location as campus,
+        departments.name as department,
+        users.name as user,
+        users.email, users.contact_no,
+        business_schools.name as school
+        FROM slips, campuses, departments, business_schools, users
+        WHERE slips.business_school_id=campuses.id
+        AND departments.id=slips.department_id
+        AND campuses.business_school_id=business_schools.id
+        AND users.id = slips.created_by ';
+        $campus_id? $query.='AND campuses.id = '.$campus_id:'';
+
+        $department_id? $query.=' AND departments.id = '.$department_id:'';
+        $invoices = DB::select($query);
+       return view('registration.home', compact('invoices'));
     }
 
     public function getConsultants($id) {

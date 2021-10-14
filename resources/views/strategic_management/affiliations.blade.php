@@ -57,7 +57,7 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                           <form action="javascript:void(0)" id="form" method="POST">
+                           <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
 
                                <div class="col-md-3">
                                 <div class="form-group">
@@ -102,11 +102,31 @@
                                </div>
 
 
-                               <div class="col-md-12">
-                                <div class="form-group pull-right" style="margin-top: 40px">
-                                    <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info addMe">
-                                </div>
+                               <div class="col-md-6 jumbotron">
+                                   <div class="col-md-6">
+                                       <div class="form-group pull-left">
+                                           <label for="sector">Sample File</label>
+                                           <div style="margin-top: 20px">
+                                               <a href="{{url('samples/affiliation-sample.csv')}}" class="btn btn-danger">Click to Download</a>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-6">
+                                    <div class="form-group pull-left" style="margin-top: 40px">
+                                        <label for="sector">&nbsp;Import CSV</label>
+                                        <input type="file" name="file" id="file" />
+                                    <div style="margin-top: 20px">
+                                        <input type="submit" name="add" id="add" value="Import" class="btn btn-info addMe">
+                                    </div>
+                                    </div>
+                                   </div>
+                               </div>
+
+                                   <div class="col-md-6">
+                                        <div class="form-group pull-right" style="margin-top: 40px">
+                                            <label for="sector">&nbsp;&nbsp;</label>
+                                            <input type="submit" name="add" id="add" value="Add" class="btn btn-info addMe">
+                                        </div>
 
                                    <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
@@ -140,8 +160,6 @@
                         </div>
 
                     {{--  Content here --}}
-                    <!-- /.box -->
-
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
@@ -160,7 +178,6 @@
                                 <tbody>
                                @foreach($affiliations as $affiliation)
                                 <tr>
-
                                     <td>{{$affiliation->campus->business_school->name}}</td>
                                     <td>{{$affiliation->campus->location}}</td>
                                     <td>{{$affiliation->name}}</td>
@@ -172,7 +189,6 @@
 
                                 </tr>
                                 @endforeach
-
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -189,15 +205,10 @@
                             </table>
                         </div>
                         <!-- /.box-body -->
-
-                        <!-- /.box -->
-
-
                     </div>
                 </div>
             </div>
         </section>
-
     </div>
 
     <div class="modal fade" id="edit-modal">
@@ -208,7 +219,7 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Edit Affiliations. </h4>
                 </div>
-                <form role="form" id="updateForm" >
+                <form role="form" id="updateForm" enctype="multipart/form-data" >
                     <div class="modal-body">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -416,32 +427,35 @@
 
 
 
-         $('.addMe').click(function (e) {
-             let clickMe = $(this).val();
-            let designation_id = $('#designation_id').val();
-            let affiliation = $('#affiliation').val();
-            let name = $('#name').val();
-            let statutory_bodies_id = $('#statutory_bodies_id').val();
+        $('#form').submit(function (e) {
+            //  let clickMe = $(this).val();
+            // let designation_id = $('#designation_id').val();
+            // let affiliation = $('#affiliation').val();
+            // let name = $('#name').val();
+            // let statutory_bodies_id = $('#statutory_bodies_id').val();
 
-            !name?addClass('name'):removeClass('name');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !affiliation?addClass('affiliation'):removeClass('affiliation');
-            // !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
-
-            if(!designation_id || !affiliation || !name)
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
-            }
+            // !name?addClass('name'):removeClass('name');
+            // !designation_id?addClass('designation_id'):removeClass('designation_id');
+            // !affiliation?addClass('affiliation'):removeClass('affiliation');
+            // // !statutory_bodies_id?addClass('statutory_bodies_id'):removeClass('statutory_bodies_id');
+            //
+            // if(!designation_id || !affiliation || !name)
+            // {
+            //     Notiflix.Notify.Warning("Fill all the required Fields.");
+            //     return;
+            // }
             // Yes button callback
-            // e.preventDefault();
-            // var formData = new FormData(this);
+            e.preventDefault();
+            var formData = new FormData(this);
 
             $.ajax({
+
                 url:'{{url("strategic/affiliations")}}',
                 type:'POST',
-                data:{'name':name, 'designation_id':designation_id, 'affiliation': affiliation, 'statutory_bodies_id':statutory_bodies_id},
-
+                data:formData,
+                cache:false,
+                contentType:false,
+                processData:false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -451,9 +465,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+
+                    if(response.error){
+                        Notiflix.Notify.Failure(response.error);
+                    }
                     console.log('response', response);
                     if (clickMe == 'Add') {
-                        location.reload();
+                         location.reload();
                     }else {
                         window.location = '/strategic/budgetary-info';
                     }
