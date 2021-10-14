@@ -901,32 +901,6 @@
                   <!-- /.info-box -->
               </div>
               <!-- /.col -->
-{{--              <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                  <div class="info-box">--}}
-{{--                      <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people"></i></span>--}}
-
-{{--                      <div class="info-box-content">--}}
-{{--                          <span class="info-box-text">Business Schools</span>--}}
-{{--                          <span class="info-box-number">{{@$bs_count}}</span>--}}
-{{--                      </div>--}}
-{{--                      <!-- /.info-box-content -->--}}
-{{--                  </div>--}}
-{{--                  <!-- /.info-box -->--}}
-{{--              </div>--}}
-
-{{--              <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                  <div class="info-box">--}}
-{{--                      <span class="info-box-icon bg-aqua-gradient"><i class="ion ion-ios-people"></i></span>--}}
-
-{{--                      <div class="info-box-content">--}}
-{{--                          <span class="info-box-text">Faculty male/Female</span>--}}
-{{--                          <span class="info-box-number">{{@$fm_count+$fem_count}}</span>--}}
-{{--                      </div>--}}
-{{--                      <!-- /.info-box-content -->--}}
-{{--                  </div>--}}
-{{--                  <!-- /.info-box -->--}}
-{{--              </div>--}}
-              <!-- /.col -->
           </div>
           @endhasrole
           <!-- /.row -->
@@ -963,7 +937,7 @@
 {{--                          <th>Invoice Slip</th>--}}
 {{--                          <th>Account Type</th>--}}
                           <th>Status</th>
-                          <th>Action</th>
+{{--                          <th>Action</th>--}}
                       </tr>
                       </thead>
 
@@ -977,7 +951,7 @@
 {{--                              <td><a href="{{@$invoice_re->slip}}">Invoice Slip</a></td>--}}
                               {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                               <td><i class="badge" data-id="{{@$invoice_re->id}}"  style="background: {{$invoice_re->regStatus == 'Initiated'?'red':''}}{{$invoice_re->regStatus == 'Review'?'brown':''}}{{$invoice_re->regStatus == 'Approved'?'green':''}}; cursor: default;" >{{@$invoice_re->regStatus != ''?ucwords($invoice_re->regStatus):'Initiated'}} {{$invoice_re->regStatus=='Eligibility'?'Screening':''}}</i></td>
-                              <td>@if($invoice_re->regStatus =='Initiated' || $invoice_re->regStatus =='Pending') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department_id}}"> Apply Now </button>  @elseif($invoice_re->regStatus =='Review')Desk Review In-progress @endif</td>
+{{--                              <td>@if($invoice_re->regStatus =='Initiated' || $invoice_re->regStatus =='Pending') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department_id}}"> Apply Now </button>  @elseif($invoice_re->regStatus =='Review')Desk Review In-progress @endif</td>--}}
                           </tr>
                       @endforeach
 
@@ -990,7 +964,7 @@
 {{--                          <th>Invoice Slip</th>--}}
                           {{-- <th>Account Type</th>--}}
                           <th>Status</th>
-                          <th>Action</th>
+{{--                          <th>Action</th>--}}
                       </tr>
                       </tfoot>
                   </table>

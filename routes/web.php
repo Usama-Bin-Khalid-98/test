@@ -215,6 +215,8 @@ Route::get('/email', function() {
             Route::get('peer-review-details/{id}', 'PeerReviewReportController@peer_review_details');
             Route::post('bs_feedback_PRR', 'StrategicManagement\SlipController@bs_feedback_prr');
 
+            Route::get('apply-registration', 'HomeController@getApplyForm');
+
 
         });
 
