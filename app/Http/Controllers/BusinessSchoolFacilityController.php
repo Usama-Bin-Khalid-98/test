@@ -68,7 +68,9 @@ class BusinessSchoolFacilityController extends Controller
         try {
 
             $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $campus_id = Auth::user()->campus_id;
+
+            $slip = Slip::where(['department_id'=> $department_id, 'business_school_id'=>$campus_id])->where('regStatus','SAR')->first();
             if($slip){
                 $type='SAR';
             }else {
@@ -87,7 +89,7 @@ class BusinessSchoolFacilityController extends Controller
                 'type' => $type];
             $check = BusinessSchoolFacility::where($check_data)->exists();
 
-            if($check) {
+            if(!$check) {
                 //dd($value['id']);
                 BusinessSchoolFacility::create([
                     'campus_id' => Auth::user()->campus_id,
