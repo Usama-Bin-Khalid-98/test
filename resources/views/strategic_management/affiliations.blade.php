@@ -500,14 +500,14 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    let last_insert_id = response.last_insert_id
-                    if(last_insert_id)
-                    {
-                        console.log('name id', last_insert_id, 'name ', name);
-                        var $option = $("<option selected></option>").val(last_insert_id).text(name);
-
-                        $('#statutory_bodies_id').append($option).trigger('change');
-                    }
+                    // let last_insert_id = response.last_insert_id
+                    // if(last_insert_id)
+                    // {
+                    //     console.log('name id', last_insert_id, 'name ', name);
+                    //     var $option = $("<option selected></option>").val(last_insert_id).text(name);
+                    //
+                    //     $('#statutory_bodies_id').append($option).trigger('change');
+                    // }
 
                     $('#add-other-modal').modal('hide');
                     location.reload();
@@ -526,7 +526,7 @@
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_name').val(data.name);
-            $('#edit_designation').select2().val(data.designation).trigger('change');
+            $('#edit_designation').val(data.designation)
             $('#edit_affiliation').val(data.affiliation);
             $('#edit_statutory_bodies_id').select2().val(data.statutory_bodies_id).trigger('change');
             $('#edit_id').val(data.id);
