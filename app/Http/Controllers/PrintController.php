@@ -58,9 +58,9 @@ class PrintController extends Controller
 
         $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($req->bid, $req->cid));
 
-         $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
-            FROM affiliations, statutory_bodies, business_schools, designations
-            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="SAR" AND affiliations.designation_id=designations.id AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid, $req->cid));
+         $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
+            FROM affiliations, statutory_bodies, business_schools
+            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="SAR" AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid, $req->cid));
 
          $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
 
@@ -318,9 +318,9 @@ AND faculty_student_ratio.type=?',
 
         $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
-         $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
-            FROM affiliations, statutory_bodies, business_schools, designations
-            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="SAR" AND affiliations.designation_id=designations.id AND business_schools.id=? AND affiliations.campus_id=?', array($bussinessSchool[0]->id,auth()->user()->campus_id));
+         $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
+            FROM affiliations, statutory_bodies, business_schools
+            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="SAR" AND business_schools.id=? AND affiliations.campus_id=?', array($bussinessSchool[0]->id,auth()->user()->campus_id));
 
          $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 

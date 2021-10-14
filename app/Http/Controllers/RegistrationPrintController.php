@@ -82,9 +82,9 @@ WHERE designations.id=contact_infos.designation_id
             $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="REG" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($req->bid, $req->cid));
 
 
-             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
-            FROM affiliations, statutory_bodies, business_schools, designations
-            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="REG" AND affiliations.designation_id=designations.id AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid,$req->cid));
+             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
+            FROM affiliations, statutory_bodies, business_schools
+            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="REG" AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid,$req->cid));
 
 
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses
@@ -267,11 +267,10 @@ WHERE statutory_committees.statutory_body_id=statutory_bodies.id
   AND statutory_committees.department_id=?', array($bussinessSchool[0]->id, $campus_id, $department_id));
 
 
-             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
+             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
             FROM affiliations, statutory_bodies, business_schools, designations
             WHERE  affiliations.statutory_bodies_id=statutory_bodies.id
               AND affiliations.type="REG"
-              AND affiliations.designation_id=designations.id
               AND affiliations.deleted_at is null
               AND business_schools.id=?
               AND affiliations.campus_id=?
