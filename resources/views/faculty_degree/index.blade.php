@@ -1,4 +1,4 @@
-s@section('pageTitle', 'Faculty Degree')
+@section('pageTitle', 'Faculty Degree')
 
 
 @if(Auth::user())

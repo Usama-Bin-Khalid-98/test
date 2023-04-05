@@ -55,7 +55,7 @@ Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)
                                     </tr>
 
                                     <tr>
-                                        <td colspan="4" align="center">Total FTE</td>
+                                        <td colspan="4" align="center">Total VFE</td>
                                         @if(!empty($data->faculty_program))
                                             @foreach($data->faculty_program as $program )
                                             <td>

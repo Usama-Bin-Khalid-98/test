@@ -147,6 +147,13 @@ class EntryRequirementController extends Controller
         }
 
         try {
+            $sum_of_all = EntryRequirement::where('id','<>',$entryRequirement->id)->where('campus_id',Auth::user()->campus_id)->sum('min_req');
+            $total = floatval($sum_of_all) + floatval($request->min_req);
+            if(floatval($total) > 100){
+                return response()->json(['error' => 'Total of all exceeds 100. This should be equal to hundred']);
+            }else if(floatval($total) < 100){
+                return response()->json(['error' => 'Total of all is not equal 100. This should be equal to hundred']);
+            }
 
             EntryRequirement::where('id', $entryRequirement->id)->update([
                 'program_id' => $request->program_id,

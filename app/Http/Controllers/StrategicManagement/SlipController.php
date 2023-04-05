@@ -10,6 +10,7 @@ use App\Models\Common\PaymentMethod;
 use App\DepartmentFee;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
+use App\Models\Common\Campus;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\PeerReview\PeerReviewReviewer;
 use App\Models\PeerReview\SchedulePeerReview;
@@ -85,7 +86,7 @@ class SlipController extends Controller
                 'd.name as department', 'u.name as user', 'u.email as email',
                 'u.contact_no', 'bs.name as school')
             ->get();
-//        dd($invoices);
+        // dd($invoices);
 
         return view('admin.slip', compact('invoices'));
     }
@@ -94,11 +95,9 @@ class SlipController extends Controller
     {
 //        dd($request->all());
         try {
-            Slip::find($request->id)->update([
-                'status' => $request->status,
-                'updated_by' => Auth::id(),
-            ]);
-
+            $slip = Slip::with('department')->where('id', $request->id)->first();
+            $campus = Campus::where('id', $slip->business_school_id)->first();
+            $school = BusinessSchool::with('user', 'campus')->where('id', $campus->business_school_id)->first();
             $data = array(
                 'id'      =>  $request->id,
                 'user'      =>  $request->user,
@@ -106,11 +105,40 @@ class SlipController extends Controller
                 'school'      =>  $request->school,
                 'campus'      =>  $request->campus,
                 'cheque_no'      =>  $request->cheque_no,
-                'transaction_date'      =>  $request->transaction_date
+                'transaction_date'      =>  $request->transaction_date,
+                'school' => $school,
             );
+            
+            
+            Slip::find($request->id)->update([
+                'status' => $request->status,
+                'updated_by' => Auth::id(),
+            ]);
+            
+            $mailData['school'] = $school;
+            $mailData['slip'] = $slip;
+            
+            $getNbeacInfo = NbeacBasicInfo::all()->first();
+
+            $mailData['nbeac'] = $getNbeacInfo;
+
+            $mailInfo = [
+                'to' => $school->user->email ?? '',
+                'to_name' => $school->user->name ?? '',
+                'school' => $school->name ?? '',
+                'from' => $getNbeacInfo->email ?? 'info@nbeac.org.pk',
+                'from_name' => $getNbeacInfo->director ?? '',
+            ];
+
+            Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function ($message) use ($mailInfo) {
+                //dd($user);
+                $message->to($mailInfo['to'], $mailInfo['to_name'])
+                    ->subject('Acknowledgement of Registration Fee');
+                $message->from($mailInfo['from'], $mailInfo['from_name']);
+            });
 
 
-            Mail::to($request->email)->send(new ChangeResgistrationStatusMail($data));
+            // Mail::to($request->email)->send(new ChangeResgistrationStatusMail($data));
             return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
         }
         catch (Exception $e)
@@ -320,17 +348,42 @@ class SlipController extends Controller
      */
     public function generateInvoice(Request $request)
     {
+        $school = BusinessSchool::with('user', 'campus')->where('id', Auth::user()->business_school_id)->first();
         try {
             $getFee =DepartmentFee::findorfail(1)->first();
             if($getFee) {
+                
+                $getNbeacInfo = NbeacBasicInfo::all()->first();
+
+                $mailData['nbeac'] = $getNbeacInfo;
+
+                $mailSchoolInfo = [
+                    'to' => $school->user->email,
+                    'to_name' => $school->user->name,
+                    'school' => $getNbeacInfo->name??'',
+                    'from' => $getNbeacInfo->email??'',
+                    'from_name' => $getNbeacInfo->director??'',
+                ];
+
+                
                 Slip::create([
                     'business_school_id' => Auth::user()->campus_id,
                     'invoice_no' => $request->invoice_no,
                     'department_id' => Auth::user()->department_id,
                     'amount' => $getFee->amount,
-                    'status' => 'pending',
+                    'status' => 'unpaid',
                     'created_by' => Auth::id(),
                 ]);
+                
+                $mailData['school'] = $school;
+
+                
+                Mail::send('registration.mail.paid_fee_mail', ['data' => $mailData], function($message) use ($mailSchoolInfo) {
+                    //dd($user);
+                    $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
+                        ->subject('Invoice Generated');
+                    $message->from('mirkhan@nbeac.org.pk',$mailSchoolInfo['from_name']);
+                });
 
                  return response()->json(['success' => 'Invoice Slip added successfully.'], 200);
             }else{
@@ -349,7 +402,7 @@ class SlipController extends Controller
         //dd('invoice here ');
         $user_data = Auth::user();
         $getInvoice = Slip::with('campus', 'department')->where(['id' => $id])->get()->first();
-//        dd($getInvoice);
+        // dd($getInvoice);
         return view('strategic_management.invoice', compact('getInvoice'));
     }
 
@@ -451,35 +504,20 @@ class SlipController extends Controller
 
 //                dd($data['school']);
                 $mailInfo = [
-                    'to' => $getNbeacInfo->email??'info@nbeac.org.pk',
-                    'to_name' => $getNbeacInfo->director??'',
+                    'to' => $school->user->email??'',
+                    'to_name' => $school->user->name??'',
                     'school' => $school->name??'',
-                    'from' => $school->user->email??'',
-                    'from_name' => $school->user->name??'',
-                ];
-
-                $mailSchoolInfo = [
-                    'to' => $school->user->email,
-                    'to_name' => $school->user->name,
-                    'school' => $getNbeacInfo->name??'',
-                    'from' => $getNbeacInfo->email??'',
+                    'from' => $getNbeacInfo->email??'info@nbeac.org.pk',
                     'from_name' => $getNbeacInfo->director??'',
                 ];
 
-//                dd($mailData);
-                Mail::send('registration.mail.paid_fee_mail', ['data' => $mailData], function($message) use ($mailSchoolInfo) {
-                    //dd($user);
-                    $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
-                        ->subject($mailSchoolInfo['school'].' paid registration fee - '. $mailSchoolInfo['school']);
-                    $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
-                });
-
-                Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
-                    //dd($user);
-                    $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                        ->subject($mailInfo['school'].' paid registration fee - '. $mailInfo['school']);
-                    $message->from($mailInfo['from'],$mailInfo['from_name']);
-                });
+                
+                // Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
+                //     //dd($user);
+                //     $message->to($mailInfo['to'],$mailInfo['to_name'] )
+                //         ->subject('Acknowledgement of Registration Fee');
+                //     $message->from($mailInfo['from'],$mailInfo['from_name']);
+                // });
 
                 return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
             }

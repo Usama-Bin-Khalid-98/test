@@ -151,10 +151,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                <!--<div class="btn-group">-->
+                                <!--    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                <!--        <i class="fa fa-file-pdf-o"></i></button>-->
+                                <!--</div>-->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -181,6 +181,7 @@
                                 <tbody id="showRecord">
                                 @php $totalAmount = 0; @endphp
                                 @foreach($invoices as $invoice)
+                                    <?php $url = $invoice->slip; ?>
                                     @php
                                         $totalAmount+= $invoice->amount;
                                     @endphp
@@ -189,14 +190,14 @@
                                     <td>{{@$invoice->amount}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
                                     <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>
-                                    <td><a href="{{$invoice->slip}}">Pay Slip</a></td>
+                                    <td><a href="<?php echo empty($url) ? '#' : url($url); ?>">Pay Slip</a></td>
                                     <td>{{$invoice->transaction_date}}</td>
                                     <td>{{$invoice->comments}}</td>
                                     <td><i style="cursor: default;" class="badge {{$invoice->status ==='approved'?'bg-green':'bg-red'}}">{{$invoice->status =='active'?'Active':ucwords($invoice->status)}}</i></td>
                                     <td><i style="cursor: default;" class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
-                                    <td><span data-toggle="tooltip" title="Add|Edit Invoice Slip" >
-                                            <i class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
-                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}' ></i> </span><i class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
+                                    <td><span data-toggle="tooltip" title="Submit Payment Details" >
+                                            <i style="font-size:32px" class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
+                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}'></i> </span><i style="font-size:32px" class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
                                 </tr>
                                 @endforeach
 
@@ -357,7 +358,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="slip">Bank Deposit Slip</label>
+                                            <label for="slip">Bank Deposit Slip *</label>
                                             <input type="file" name="slip" id="slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">
                                             <span class="text-blue">Max 2mb file size allowed. </span>
                                         </div>
@@ -405,13 +406,22 @@
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">
@@ -457,7 +467,8 @@
            // console.log('this value', $(this));
             //console.log('modal showed', $(this).data('id'));
             $('#id').val($(this).data('id'));
-            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            // const data = $(this).data('row');
+            const data = JSON.parse(JSON.stringify($(this).data('row')));
             console.log('invoice id ', data);
             $('#edit_department_id').val(data.department_id);
             $('#transaction_date').val(data.transaction_date);
@@ -477,12 +488,13 @@
             let slip = $('#slip').val();
             let id = $('#id').val();
             let payment_method = $('#payment_method').val();
+            let file = document.getElementById('slip');
 
             !invoice_no?addClass('invoice_no'):removeClass('invoice_no');
             !payment_method?addClass('payment_method'):removeClass('payment_method');
             !transaction_date?addClass('transaction_date'):removeClass('transaction_date');
             !slip?addClass('slip'):removeClass('slip');
-            if(!transaction_date || !invoice_no || !payment_method)
+            if(!transaction_date || !invoice_no || !payment_method || file.files.length < 1)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

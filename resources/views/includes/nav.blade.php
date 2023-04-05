@@ -118,6 +118,7 @@ $faculty_detail= isCompletedSAR('App\Models\Faculty\FacultyDetailedInfo', ['camp
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
 $RegDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Review']);
+$RegInvoice = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Initiated']);
 $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
 
 @endphp
@@ -230,7 +231,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @hasrole('BusinessSchool')
             <li class=" treeview {{(request()->is('strategic/basicinfo'))?'active':''}} {{(request()->is('strategic/summarize-policy'))?'active':''}} {{(request()->is('strategic/statutory-committees'))?'active':''}} {{(request()->is('strategic/scope'))?'active':''}}{{(request()->is('strategic/contact-info'))?'active':''}}{{(request()->is('strategic/affiliations'))?'active':''}}{{(request()->is('strategic/mission-vision'))?'active':''}}{{(request()->is('strategic/budgetary-info'))?'active':''}}{{(request()->is('strategic/strategic-plan'))?'active':''}}{{(request()->is('strategic/sources-funding'))?'active':''}}{{(request()->is('strategic/audit-report'))?'active':''}}{{(request()->is('strategic/parent-institution'))?'active':''}}">
           <a href="{{url('strategic/basicinfo')}}" >
-            <i class="fa fa-users " style="color: #D81B60"></i><span>1: Strategic Management</span>
+            <i class="fa fa-users " style="color: #D81B60"></i><span>1: Basic Info Management</span>
              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -267,7 +268,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                             <i class="fa {{$committee==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}">1.5 Affiliations of AC<span class="pull-right-container">
+            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}">1.5 Affiliations of External <br> Member<span class="pull-right-container">
                         <span class="text text-{{$affiliation==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$affiliation==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -403,7 +404,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                     </span></a>
             </li>
-              <li  class="{{ (request()->is('app-recvd')) ? 'active' : '' }}"><a href="{{url('app-recvd')}}">2.4 Application Received<span class="pull-right-container">
+              <li  class="{{ (request()->is('app-recvd')) ? 'active' : '' }}"><a href="{{url('app-recvd')}}">2.4 Degree Awarding Criteria<span class="pull-right-container">
                         <span class="text text-{{$app_receivd==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$app_receivd==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -1020,6 +1021,11 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           <li class=" treeview {{request()->is('registrations')?'active':''}} {{request()->is('accreditation-invoices-list')?'active':''}} {{ (request()->is('invoicesList')) ? 'active' : '' }}{{ (request()->is('mentoringInvoices')) ? 'active' : '' }}">
               <a href="#">
                   <i class="fa fa-globe text-blue " ></i><span>Registrations / Invoices</span>
+                  @if(@$RegInvoice != 0)
+                      <span class="pull-right-container">
+                        <i class="badge bg-maroon pull-right">{{@$RegInvoice}}</i>
+                      </span>
+                  @endif
                   <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>

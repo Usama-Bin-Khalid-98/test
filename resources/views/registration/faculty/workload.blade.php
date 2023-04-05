@@ -37,10 +37,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
+                                <!-- <div class="btn-group">
                                     <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
                                         <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                </div> -->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -64,12 +64,8 @@
                                    <div class="col-md-3">
                                    <div class="form-group">
                                        <label for="name">Designation</label>
-                                       <select name="designation_id" id="designation_id" class="form-control select2" style="width: 100%;">
-                                           <option selected disabled>Select Designation</option>
-                                           @foreach($designations as $business)
-                                               <option value="{{$business->id}}">{{$business->name}}</option>
-                                           @endforeach
-                                       </select>
+                                       <input type="text" name="designation" id="designation" class="form-control">
+
                                    </div>
                                </div>
                                </div>
@@ -139,12 +135,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Designation</label>
-                                        <select name="designation_id_1" id="designation_id_1" class="form-control select2" style="width: 100%;">
-                                            <option selected disabled>Select Designation</option>
-                                            @foreach($designations as $business)
-                                                <option value="{{$business->id}}">{{$business->name}}</option>
-                                            @endforeach
-                                        </select>
+                                       <input type="text" name="designation_1" id="designation_1" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -187,6 +178,27 @@
                                     </div>
                                 </div>
                             </div>
+
+                                <div class="col-md-6 jumbotron">
+                                    <div class="col-md-6">
+                                        <div class="form-group pull-left">
+                                            <label for="sector">Sample File</label>
+                                            <div style="margin-top: 20px">
+                                                <a href="{{url('samples/faculty-workload-sample.csv')}}" class="btn btn-danger">Click to Download</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group pull-left" style="margin-top: 40px">
+                                            <label for="sector">&nbsp;Import CSV</label>
+                                            <input type="file" name="file" id="file" />
+                                            <div style="margin-top: 20px">
+                                                <input type="submit" name="add" value="Import" class="btn btn-info">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -235,7 +247,7 @@
                                     <td>{{$req->campus->business_school->name}}</td>
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->faculty_name}}</td>
-                                    <td>{{$req->designation->name}}</td>
+                                    <td>{{$req->designation}}</td>
                                     <td>{{$req->total_courses}}</td>
                                     <td>{{$req->phd}}</td>
                                     <td>{{$req->masters}}</td>
@@ -243,7 +255,7 @@
                                     <td>{{$req->admin_responsibilities}}</td>
                                     <td>{{$req->year_t}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation_id":"{{$req->designation_id}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year_t":"{{$req->year_t}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation":"{{$req->designation}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year_t":"{{$req->year_t}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -299,12 +311,7 @@
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-bottom: 21px;">
                                     <label for="name">Designation</label>
-                                   <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Designation</option>
-                                        @foreach($designations as $business)
-                                         <option value="{{$business->id}}">{{$business->name}}</option>
-                                        @endforeach
-                                        </select>
+                                   <input type="text" name="designation" id="edit_designation" class="form-control" value="{{old('edit_designation')}}">
                                 </div>
                             </div>
 
@@ -407,13 +414,22 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">
@@ -425,59 +441,59 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $('#designation_id').on('change', function () {
-            let val = $(this).val();
-            if(val === '13')
-            {
-                $('#designation_modal').modal('show');
-            }
-        });
+        // $('#designation_id').on('change', function () {
+        //     let val = $(this).val();
+        //     if(val === '13')
+        //     {
+        //         $('#designation_modal').modal('show');
+        //     }
+        // });
 
-        $('#add_designation').on('click', function () {
-            let designation_name = $('#designation_name').val();
-            !designation_name?addClass('designation_name'):removeClass('designation_name');
-            if(!designation_name){
-                Notiflix.Notify.Failure("Designation name field is required.");
-                return false;
-            }
-            $.ajax({
-                type: 'POST',
-                url: "{{url('add-designation')}}",
-                data: {name:designation_name},
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                beforeSend: function(){
-                    Notiflix.Loading.Pulse('Processing...');
-                },
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                success: function (response) {
-                    Notiflix.Loading.Remove();
-                    console.log("success resp ",response.success);
-                    if(response.success){
-                        Notiflix.Notify.Success(response.success);
-                    }
-                    let insert_id = response.insert_id;
-                    if(insert_id){
+        {{--$('#add_designation').on('click', function () {--}}
+        {{--    let designation_name = $('#designation_name').val();--}}
+        {{--    !designation_name?addClass('designation_name'):removeClass('designation_name');--}}
+        {{--    if(!designation_name){--}}
+        {{--        Notiflix.Notify.Failure("Designation name field is required.");--}}
+        {{--        return false;--}}
+        {{--    }--}}
+        {{--    $.ajax({--}}
+        {{--        type: 'POST',--}}
+        {{--        url: "{{url('add-designation')}}",--}}
+        {{--        data: {name:designation_name},--}}
+        {{--        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');--}}
+        {{--        beforeSend: function(){--}}
+        {{--            Notiflix.Loading.Pulse('Processing...');--}}
+        {{--        },--}}
+        {{--        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');--}}
+        {{--        success: function (response) {--}}
+        {{--            Notiflix.Loading.Remove();--}}
+        {{--            console.log("success resp ",response.success);--}}
+        {{--            if(response.success){--}}
+        {{--                Notiflix.Notify.Success(response.success);--}}
+        {{--            }--}}
+        {{--            let insert_id = response.insert_id;--}}
+        {{--            if(insert_id){--}}
 
-                        let options = $('<option selected></option>').val(insert_id).text(designation_name);
-                        $('#designation_id').append(options).trigger('change');
-                    }
-                    $('#designation_modal').modal('hide');
-                    console.log('response here', response);
-                },
-                error:function(response, exception){
-                    Notiflix.Loading.Remove();
-                    $.each(response.responseJSON, function (index, val) {
-                        Notiflix.Notify.Failure(val);
-                    })
+        {{--                let options = $('<option selected></option>').val(insert_id).text(designation_name);--}}
+        {{--                $('#designation_id').append(options).trigger('change');--}}
+        {{--            }--}}
+        {{--            $('#designation_modal').modal('hide');--}}
+        {{--            console.log('response here', response);--}}
+        {{--        },--}}
+        {{--        error:function(response, exception){--}}
+        {{--            Notiflix.Loading.Remove();--}}
+        {{--            $.each(response.responseJSON, function (index, val) {--}}
+        {{--                Notiflix.Notify.Failure(val);--}}
+        {{--            })--}}
 
-                }
-            });
+        {{--        }--}}
+        {{--    });--}}
 
-        });
-let check = false;
+        {{--});--}}
+        let check = false;
          $('#form').submit(function (e) {
             let faculty_name = $('#faculty_name').val();
-            let designation_id = $('#designation_id').val();
+            let designation = $('#designation').val();
             let total_courses = $('#total_courses').val();
             let phd = $('#phd').val();
             let masters = $('#masters').val();
@@ -553,7 +569,7 @@ let check = false;
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#edit_faculty_name').val(data.faculty_name);
-            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_designation').val(data.designation);
             $('#edit_total_courses').val(data.total_courses);
             $('#edit_phd').val(data.phd);
             $('#edit_masters').val(data.masters);
@@ -566,7 +582,7 @@ let check = false;
 
 $('#updateForm').submit(function (e) {
             let faculty_name = $('#edit_faculty_name').val();
-            let designation_id = $('#edit_designation_id').val();
+            let designation = $('#edit_designation').val();
             let total_courses = $('#edit_total_courses').val();
             let phd = $('#edit_phd').val();
             let masters = $('#edit_masters').val();
@@ -577,7 +593,7 @@ $('#updateForm').submit(function (e) {
 
             let status = $('input[name=edit_status]:checked').val();
             !faculty_name?addClass('edit_faculty_name'):removeClass('edit_faculty_name');
-            !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
+            !designation?addClass('edit_designation'):removeClass('edit_designation');
             !total_courses?addClass('edit_total_courses'):removeClass('edit_total_courses');
             !phd?addClass('edit_phd'):removeClass('edit_phd');
             !masters?addClass('edit_masters'):removeClass('edit_masters');
@@ -585,7 +601,7 @@ $('#updateForm').submit(function (e) {
             !admin_responsibilities?addClass('edit_admin_responsibilities'):removeClass('edit_admin_responsibilities');
             !year_t?addClass('edit_year_t'):removeClass('edit_year_t');
 
-            if(!faculty_name || !designation_id || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !year_t )
+            if(!faculty_name || !designation || !total_courses || !phd || !masters || !bachleors || !admin_responsibilities || !year_t )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;

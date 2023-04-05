@@ -1,4 +1,4 @@
-@section('pageTitle', 'Strategic Plan')
+@section('pageTitle', 'Summary BSF')
 
 
 @if(Auth::user())
@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{URL::asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{URL::asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{URL::asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{URL::asset('notiflix/notiflix-2.3.2.min.css')}}" />
     @include("../includes.header")
@@ -17,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                 Approval of strategic plan
+                Summary BSF
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Approval of Strategic Plan </li>
+                <li class="active"> Summary BSF </li>
             </ol>
         </section>
 
@@ -35,8 +34,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.8 Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
-
+                            <h3 class="box-title">4.1 Provide information about core business school faculty : present aggregate numbers in Table 4.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -50,64 +48,40 @@
 
                         <!-- /.box-header -->
                         <div class="box-body">
-                          <form action="javascript:void(0)" id="form" method="POST">
+                            <form action="javascript:void(0)" id="form" method="POST">
+                                <table id="formTable" class="table table-bordered table-striped" >
+                                    <thead>
+                                    <th>Qualification</th>
+                                    @foreach($discipline as $program)
+                                    <th>{{@$program->name}}
+                                    <input type="hidden" name="discipline_id[]" value="{{@$program->id}}">
+                                    </th>
+                                    @endforeach
+                                    <th>Total</th>
+                                    </thead>
+                                    <tbody id="tbody">
+                                    @foreach($qualification as $degree)
+                                    <tr>
+                                        <td>{{$degree->name}}
+                                        <input type="hidden" name="faculty_qualification_id[]" value="{{@$degree->id}}">
+                                        </td>
+                                        @foreach($discipline as $program)
+                                            <td><input type="number" min="0" name="number_faculty[{{@$program->id}}][]" placeholder="no of Faculty" class="form-control"></td>
+                                        @endforeach
+                                        <td><input type="number" readonly name="total[]" value="" class="form-control"></td>
+                                    </tr>
+                                    @endforeach
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Period of the strategic plan (From)</label>
-                                    <div class="input-group">
-                                    <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                                    <input type="text" name="plan_period" id="plan_period" autocomplete="off" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                              <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Period of the strategic plan (To)</label>
-                                    <div class="input-group">
-                                    <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                                    <input type="text" name="plan_period_to" id="plan_period_to" autocomplete="off" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+                                    </tbody>
+                                </table>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Date of approval</label>
-                                    <div class="input-group">
-                                    <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                                    <input type="text" name="aproval_date" id="aproval_date" autocomplete="off" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Approving Authority</label>
-                                    <input type="text" name="aproving_authority" id="aproving_authority" class="form-control">
-                                </div>
-                            </div>
-
-                              <div class="col-md-3">
-                                  <div class="form-group">
-                                      <label for="upload file">Upload file (appendix 1-D)</label>
-                                      <input type="file" name="file" id="file">
-                                  </div>
-                              </div>
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
-                                    <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
 
-                                 <div class="form-group pull-right" style="margin-top: 40px">
-                                    <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
+                                 <div class="form-group pull-right" style="margin-top: 40px; margin-right: 10px">
+                                    <input type="submit" name="add" id="add" value="Add & Next" class="btn btn-success next">
                                 </div>
                             </div>
                         </form>
@@ -119,47 +93,43 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 1.7 Approval of Strategic Plan List</h3>
+                            <h3 class="box-title">Table 4.1. Summary of the business schools’ faculty</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Period of the strategic plan</th>
-                                    <th>Date of Approval</th>
-                                    <th>Approving Authority</th>
-                                    <th>file</th>
+                                    <th>Faculty Qualification</th>
+                                    <th>Discipline</th>
+                                    <th>Number of Faculty</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                               @foreach($plans as $plan)
+                                 @foreach($summaries as $portfolio)
                                 <tr>
-                                    <td>{{$plan->campus->business_school->name}}</td>
-                                    <td>{{$plan->campus->location}}</td>
-                                    <td>{{$plan->plan_period}} <br/>{{$plan->plan_period_from}} To {{$plan->plan_period_to}}</td>
-                                    <td>{{$plan->aproval_date}}</td>
-                                    <td>{{$plan->aproving_authority}}</td>
-                                    <td>@if($plan->file && $plan->file !='/') <a href="{{$plan->file}}" download="{{$plan->file}}"><i class="fa fa-file-word-o"></i> </a>@endif</td>
-                                    <td><i class="badge {{$plan->status == 'active'?'bg-green':'bg-red'}}">{{$plan->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "plan_period":"{{$plan->plan_period}}","plan_period_from" : "{{$plan->plan_period_from}}","plan_period_to" : "{{$plan->plan_period_to}}", "aproval_date":"{{$plan->aproval_date}}", "aproving_authority":"{{$plan->aproving_authority}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                    <td>{{$portfolio->campus->business_school->name}}</td>
+                                    <td>{{$portfolio->campus->location}}</td>
+                                    <td>{{$portfolio->faculty_qualification->name}}</td>
+                                    <td>{{$portfolio->discipline->name}}</td>
+                                    <td>{{$portfolio->number_faculty}}</td>
+                                    <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"faculty_qualification_id":"{{$portfolio->faculty_qualification_id}}","discipline_id":"{{$portfolio->discipline_id}}","number_faculty":"{{$portfolio->number_faculty}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
 
                                 </tr>
                                 @endforeach
-
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Business School Name</th>
+                                    <th>Business School</th>
                                     <th>Campus</th>
-                                    <th>Period of the strategic plan</th>
-                                    <th>Date of Approval</th>
-                                    <th>Approving Authority</th>
-                                    <th>file</th>
+                                    <th>Faculty Qualification</th>
+                                    <th>Discipline</th>
+                                    <th>Total : {{@$number/2}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -171,56 +141,51 @@
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
-
-
             </div>
-            <!-- /.row -->
-
-            <!-- /.row -->
-
-            <!-- /.content -->
-
-
         </section>
-
     </div>
 
-    <div class="modal fade" id="edit-modal">
+     <div class="modal fade" id="edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Strategic Plan. </h4>
+                    <h4 class="modal-title">Edit Summary BSF. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                              <div class="col-md-6">
+                        <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Period of Strategic Plan (from)</label>
-                                    <input type="text" name="plan_period" id="edit_plan_period" value="{{old('edit_plan_period')}}" class="form-control">
+                                    <label for="name">Faculty Qualification</label>
+                                    <select name="faculty_qualification_id" id="edit_faculty_qualification_id" class="form-control select2">
+                                        <option value="">Select Qualification</option>
+                                        @foreach($qualification as $degree)
+                                        <option value="{{$degree->id}}">{{$degree->name}}</option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
                                 <input type="hidden" id="edit_id">
                             </div>
-                            <div class="col-md-6">
+
+                        <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Period of Strategic Plan(to)</label>
-                                    <input type="text" name="plan_period_to" id="edit_plan_period_to" value="{{old('edit_plan_period')}}" class="form-control">
+                                    <label for="name">Discipline</label>
+                                    <select name="discipline_id" id="edit_discipline_id" class="form-control">
+                                        <option value="">Select Discipline</option>
+                                        @foreach($discipline as $program)
+                                            <option value="{{$program->id}}">{{$program->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                              <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Date of approval</label>
-                                    <input type="text" name="aproval_date" id="edit_aproval_date" value="{{old('edit_aproval_date')}}" class="form-control">
+                                   <label for="name">Number of Faculty</label>
+                                    <input type="number" name="number_faculty" id="edit_number_faculty" value="{{old('edit_number_faculty')}}"class="form-control">
                                 </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Aproving Authority</label>
-                                    <input type="text" name="aproving_authority" id="edit_aproving_authority" value="{{old('edit_aproving_authority')}}" class="form-control">
-                                </div>
-                              </div>
+                            </div>
 
 
                         <div class="col-md-6">
@@ -244,15 +209,13 @@
     <!-- /.modal -->
 
 
-    <!-- /.modal -->
-   <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
+    <script src="{{URL::asset('notiflix/notiflix-2.3.2.min.js')}}"></script>
     @include("../includes.footer")
     <script src="{{URL::asset('plugins/iCheck/icheck.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{URL::asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
@@ -273,42 +236,53 @@
         })
     </script>
     <script type="text/javascript">
-        let check= false;
-        $('.select2').select2();
-        $('#plan_period').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose:true
-    });
 
-        $('#plan_period_to').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose:true
-    });
+        $('.select2').select2()
 
-        $('#aproval_date').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose:true
+        $(document).ready(function () {
+            let total = 0;
+            $('input[name*="number_faculty"]').keyup(function () {
+                let columns = $(this).closest('tr').find('td');
+                    // columns.addClass('row-highlight');
+                var total = 0;
+                var value = 0;
 
-        });
+                let col = columns.find('input[name*="total"]').val('');
+                console.log('colums data here ....',columns);
+                jQuery.each(columns, function(key) {
+                if(key!=0) {
+                    console.log('key here', key);
+
+                    value = $('input:eq(0)', this).val();
+
+                    console.log('value here....', value);
+                    value ? total += parseInt(value) || 0 : 0;
+                }
+                });
+                console.log('total here', total);
+                columns.find('input[name*="total"]').val(total);
+
+            });
+        })
+
 
          $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        let check = false;
 
-         $('#form').submit(function (e) {
-            let plan_period = $('#plan_period').val();
-            let plan_period_to = $('#plan_period_to').val();
-            let aproval_date = $('#aproval_date').val();
-            let aproving_authority = $('#aproving_authority').val();
-            let file = document.getElementById('file');
-            !plan_period?addClass('plan_period'):removeClass('plan_period');
-            !plan_period_to?addClass('plan_period_to'):removeClass('plan_period_to');
-            !aproval_date?addClass('aproval_date'):removeClass('aproval_date');
-            !aproving_authority?addClass('aproving_authority'):removeClass('aproving_authority');
+             $('#form').submit(function (e) {
+            let faculty_qualification_id = $('input[name*="faculty_qualification_id"]').val();
+            let discipline_id = $('input[name*="discipline_id"]').val();
+            let number_faculty = $('input[name*="number_faculty"]').val();
 
-            if(!plan_period || !aproval_date || !aproving_authority || !plan_period_to || file.files.length < 1)
+            !faculty_qualification_id?addClass('faculty_qualification_id'):removeClass('faculty_qualification_id');
+            !discipline_id?addClass('discipline_id'):removeClass('discipline_id');
+            !number_faculty?addClass('number_faculty'):removeClass('number_faculty');
+
+            if(!faculty_qualification_id || !discipline_id || !number_faculty )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -318,7 +292,7 @@
             var formData = new FormData(this);
 
             $.ajax({
-                url:'{{url("strategic/strategic-plan")}}',
+                url:'{{url("faculty-summary")}}',
                 type:'POST',
                 data: formData,
                 cache:false,
@@ -335,7 +309,9 @@
                     }
                     console.log('response', response);
                     check = true;
-                    location.reload();
+                    setTimeout(()=> {
+                   location.reload();}, 2000);
+
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -345,53 +321,29 @@
                 }
             })
         });
-        function parseDate(input, format) {
-            format = format || 'mm/dd/yyyy'; // default format
-            var parts = input.match(/(\d+)/g), 
-                i = 0, fmt = {};
-            // extract date-part indexes from the format
-            format.replace(/(mm|dd|yyyy)/g, function(part) { fmt[part] = i++; });
 
-            return new Date(parts[fmt['mm']], parts[fmt['dd']]-1, parts[fmt['yyyy']]);
-        }
+$('.edit').on('click', function () {
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
 
-
-         $('.edit').on('click', function () {
-            // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
-             document.getElementById('edit_plan_period').value = data.plan_period_from;
-             document.getElementById('edit_plan_period_to').value = data.plan_period_to;
-            $('#edit_plan_period').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose:true
-            });
-            $('#edit_plan_period_to').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose:true
-            });
-            $('#edit_aproval_date').val(data.aproval_date);
-            $('#edit_aproval_date').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose:true
-            });
-            $('#edit_aproving_authority').val(data.aproving_authority);
+            $('#edit_faculty_qualification_id').select2().val(data.faculty_qualification_id).trigger('change');
+            $('#edit_discipline_id').select2().val(data.discipline_id).trigger('change');
+            $('#edit_number_faculty').val(data.number_faculty);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let plan_period = $('#edit_plan_period').val();
-            let plan_period_to = $('#edit_plan_period_to').val();
-            let aproval_date = $('#edit_aproval_date').val();
-            let aproving_authority = $('#edit_aproving_authority').val();
+            let faculty_qualification_id = $('#edit_faculty_qualification_id').val();
+            let discipline_id = $('#edit_discipline_id').val();
+            let number_faculty = $('#edit_number_faculty').val();
             let id = $('#edit_id').val();
 
             let status = $('input[name=edit_status]:checked').val();
-            !plan_period?addClass('edit_plan_period'):removeClass('edit_plan_period');
-            !aproval_date?addClass('edit_aproval_date'):removeClass('edit_aproval_date');
-            !aproving_authority?addClass('edit_aproving_authority'):removeClass('edit_aproving_authority');
+            !faculty_qualification_id?addClass('edit_faculty_qualification_id'):removeClass('edit_faculty_qualification_id');
+            !discipline_id?addClass('edit_discipline_id'):removeClass('edit_discipline_id');
+            !number_faculty?addClass('edit_number_faculty'):removeClass('edit_number_faculty');
 
-            if(!plan_period || !aproval_date || !aproving_authority)
+            if(!faculty_qualification_id || !discipline_id || !number_faculty)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return false;
@@ -401,7 +353,7 @@ $('#updateForm').submit(function (e) {
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("strategic/strategic-plan")}}/'+id,
+                url:'{{url("faculty-summary")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
@@ -430,13 +382,13 @@ $('#updateForm').submit(function (e) {
         });
 
 
-         $('.delete').on('click', function (e) {
+$('.delete').on('click', function (e) {
             let id =  $(this).data('id');
             Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete?', 'Yes', 'No',
                 function(){
                     // Yes button callback
                     $.ajax({
-                        url:'{{url("strategic/strategic-plan")}}/'+id,
+                        url:'{{url("faculty-summary")}}/'+id,
                         type:'DELETE',
                         data: { id:id},
                         beforeSend: function(){
@@ -466,15 +418,15 @@ $('#updateForm').submit(function (e) {
 
         })
 
-
         $('.next').on('click', function (){
-
             setTimeout(()=>{
-                if(check==true){
-                    window.location = '/strategic/parent-institution';
+                if(check){
+                    window.location = '/work-load';
                 }
-            }, 2000)
+            }, 1000)
         });
+
+
     </script>
 
 

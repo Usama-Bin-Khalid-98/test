@@ -58,7 +58,7 @@
 
                                 <h3 class="timeline-header"><a href="#" class="text-success">Instructions for the application preparation</a></h3>
                                 <div class="timeline-body">
-                                    <p>1.	Before starting the registration application, please go through the guidelines given in Section III of the <a href="https://nbeac.org.pk/files/Accreditation%20Process%20Manual%202020%20Updated%2026May2021.pdf" target="_blank"> NBEAC Accreditation Process Manual</a></p>
+                                    <p>1.	Before starting the registration application, please go through the guidelines given in the <a href="https://nbeac.org.pk/files/Accreditation%20Process%20Manual%202020%20Updated%2026May2021.pdf" target="_blank"> NBEAC Accreditation Process Manual</a> and <a href="https://nbeac.org.pk/files/NBEAC%20Registration%20Application2020.pdf" target="_blank">Registration Application</a></p>
                                 </div>
                             </div>
                         </li>
@@ -147,12 +147,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group @error('country') has-error @enderror">
                                                     <label for="name">Country</label>
-                                                    <select name="country" id="country"  class="form-control select2" style="width: 100%;">
+                                                    <input type="text" name="country" id="country" value="Pakistan" class="form-control">
+                                                    <!-- <select name="country" id="country"  class="form-control select2" style="width: 100%;">
                                                         <option value="">Select Country</option>
                                                         @foreach($countries as $country)
                                                             <option value="{{$country->admin??$country->name->common}}" {{old('country')===$country->name->common?'selected':'' }}>{{$country->admin??$country->name->common}}</option>
                                                         @endforeach
-                                                    </select>
+                                                    </select> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -160,6 +161,218 @@
                                                     <label for="name">City</label>
                                                     <select name="city" id="city" class="form-control select2" style="width: 100%;">
                                                         <option value="">Select City</option>
+                                                        <option selected value="Islamabad">Islamabad</option>
+                                                        <option value="Karachi">Karachi</option>
+                                                        <option value="Lahore">Lahore</option>
+                                                        <option value="Rawalpindi">Rawalpindi</option>
+                                                        <option value="Abbottabad">Abbottabad</option>
+                                                        <option value="Abdul Hakim">Abdul Hakim</option>
+                                                        <option value="Ahmedpur East">Ahmedpur East</option>
+                                                        <option value="Alipur">Alipur</option>
+                                                        <option value="Arifwala">Arifwala</option>
+                                                        <option value="Astore">Astore</option>
+                                                        <option value="Attock">Attock</option>
+                                                        <option value="Awaran">Awaran</option>
+                                                        <option value="Badin">Badin</option>
+                                                        <option value="Bagh">Bagh</option>
+                                                        <option value="Bahawalnagar">Bahawalnagar</option>
+                                                        <option value="Bahawalpur">Bahawalpur</option>
+                                                        <option value="Balakot">Balakot</option>
+                                                        <option value="Bannu">Bannu</option>
+                                                        <option value="Barnala">Barnala</option>
+                                                        <option value="Batkhela">Batkhela</option>
+                                                        <option value="Bhakkar">Bhakkar</option>
+                                                        <option value="Bhalwal">Bhalwal</option>
+                                                        <option value="Bhimber">Bhimber</option>
+                                                        <option value="Buner">Buner</option>
+                                                        <option value="Burewala">Burewala</option>
+                                                        <option value="Chaghi">Chaghi</option>
+                                                        <option value="Chakwal">Chakwal</option>
+                                                        <option value="Charsadda">Charsadda</option>
+                                                        <option value="Chichawatni">Chichawatni</option>
+                                                        <option value="Chiniot">Chiniot</option>
+                                                        <option value="Chishtian Sharif">Chishtian Sharif</option>
+                                                        <option value="Chitral">Chitral</option>
+                                                        <option value="Choa Saidan Shah">Choa Saidan Shah</option>
+                                                        <option value="Chunian">Chunian</option>
+                                                        <option value="Dadu">Dadu</option>
+                                                        <option value="Daharki">Daharki</option>
+                                                        <option value="Daska">Daska</option>
+                                                        <option value="Daur">Daur</option>
+                                                        <option value="Depalpur">Depalpur</option>
+                                                        <option value="Dera Ghazi Khan">Dera Ghazi Khan</option>
+                                                        <option value="Dera Ismail Khan">Dera Ismail Khan</option>
+                                                        <option value="Dijkot">Dijkot</option>
+                                                        <option value="Dina">Dina</option>
+                                                        <option value="Dobian">Dobian</option>
+                                                        <option value="Duniya Pur">Duniya Pur</option>
+                                                        <option value="FATA">FATA</option>
+                                                        <option value="Faisalabad">Faisalabad</option>
+                                                        <option value="Fateh Jang">Fateh Jang</option>
+                                                        <option value="Gaarho">Gaarho</option>
+                                                        <option value="Gadoon">Gadoon</option>
+                                                        <option value="Galyat">Galyat</option>
+                                                        <option value="Ghakhar">Ghakhar</option>
+                                                        <option value="Gharo">Gharo</option>
+                                                        <option value="Ghotki">Ghotki</option>
+                                                        <option value="Gilgit">Gilgit</option>
+                                                        <option value="Gojra">Gojra</option>
+                                                        <option value="Gujar Khan">Gujar Khan</option>
+                                                        <option value="Gujranwala">Gujranwala</option>
+                                                        <option value="Gujrat">Gujrat</option>
+                                                        <option value="Gwadar">Gwadar</option>
+                                                        <option value="Hafizabad">Hafizabad</option>
+                                                        <option value="Hala">Hala</option>
+                                                        <option value="Hangu">Hangu</option>
+                                                        <option value="Harappa">Harappa</option>
+                                                        <option value="Haripur">Haripur</option>
+                                                        <option value="Haroonabad">Haroonabad</option>
+                                                        <option value="Hasilpur">Hasilpur</option>
+                                                        <option value="Hassan Abdal">Hassan Abdal</option>
+                                                        <option value="Haveli Lakha">Haveli Lakha</option>
+                                                        <option value="Hazro">Hazro</option>
+                                                        <option value="Hub Chowki">Hub Chowki</option>
+                                                        <option value="Hujra Shah Muqeem">Hujra Shah Muqeem</option>
+                                                        <option value="Hunza">Hunza</option>
+                                                        <option value="Hyderabad">Hyderabad</option>
+                                                        <option value="Islamabad">Islamabad</option>
+                                                        <option value="Jacobabad">Jacobabad</option>
+                                                        <option value="Jahanian">Jahanian</option>
+                                                        <option value="Jalalpur Jattan">Jalalpur Jattan</option>
+                                                        <option value="Jampur">Jampur</option>
+                                                        <option value="Jamshoro">Jamshoro</option>
+                                                        <option value="Jatoi">Jatoi</option>
+                                                        <option value="Jauharabad">Jauharabad</option>
+                                                        <option value="Jhang">Jhang</option>
+                                                        <option value="Jhelum">Jhelum</option>
+                                                        <option value="Kaghan">Kaghan</option>
+                                                        <option value="Kahror Pakka">Kahror Pakka</option>
+                                                        <option value="Kalat">Kalat</option>
+                                                        <option value="Kamalia">Kamalia</option>
+                                                        <option value="Kamoki">Kamoki</option>
+                                                        <option value="Kandiaro">Kandiaro</option>
+                                                        <option value="Karachi">Karachi</option>
+                                                        <option value="Karak">Karak</option>
+                                                        <option value="Kasur">Kasur</option>
+                                                        <option value="Khairpur">Khairpur</option>
+                                                        <option value="Khanewal">Khanewal</option>
+                                                        <option value="Khanpur">Khanpur</option>
+                                                        <option value="Kharian">Kharian</option>
+                                                        <option value="Khipro">Khipro</option>
+                                                        <option value="Khushab">Khushab</option>
+                                                        <option value="Khuzdar">Khuzdar</option>
+                                                        <option value="Kohat">Kohat</option>
+                                                        <option value="Kot Addu">Kot Addu</option>
+                                                        <option value="Kotli">Kotli</option>
+                                                        <option value="Kotri">Kotri</option>
+                                                        <option value="Lahore">Lahore</option>
+                                                        <option value="Lakki Marwat">Lakki Marwat</option>
+                                                        <option value="Lalamusa">Lalamusa</option>
+                                                        <option value="Larkana">Larkana</option>
+                                                        <option value="Lasbela">Lasbela</option>
+                                                        <option value="Layyah">Layyah</option>
+                                                        <option value="Liaquatpur">Liaquatpur</option>
+                                                        <option value="Lodhran">Lodhran</option>
+                                                        <option value="Loralai">Loralai</option>
+                                                        <option value="Lower Dir">Lower Dir</option>
+                                                        <option value="Mailsi">Mailsi</option>
+                                                        <option value="Makran">Makran</option>
+                                                        <option value="Malakand">Malakand</option>
+                                                        <option value="Mandi Bahauddin">Mandi Bahauddin</option>
+                                                        <option value="Mangla">Mangla</option>
+                                                        <option value="Mansehra">Mansehra</option>
+                                                        <option value="Mardan">Mardan</option>
+                                                        <option value="Matiari">Matiari</option>
+                                                        <option value="Matli">Matli</option>
+                                                        <option value="Mian Channu">Mian Channu</option>
+                                                        <option value="Mianwali">Mianwali</option>
+                                                        <option value="Mingora">Mingora</option>
+                                                        <option value="Mirpur">Mirpur</option>
+                                                        <option value="Mirpur Khas">Mirpur Khas</option>
+                                                        <option value="Mirpur Sakro">Mirpur Sakro</option>
+                                                        <option value="Mitha Tiwana">Mitha Tiwana</option>
+                                                        <option value="Moro">Moro</option>
+                                                        <option value="Multan">Multan</option>
+                                                        <option value="Muridke">Muridke</option>
+                                                        <option value="Murree">Murree</option>
+                                                        <option value="Muzaffarabad">Muzaffarabad</option>
+                                                        <option value="Muzaffargarh">Muzaffargarh</option>
+                                                        <option value="Nankana Sahib">Nankana Sahib</option>
+                                                        <option value="Naran">Naran</option>
+                                                        <option value="Narowal">Narowal</option>
+                                                        <option value="Nasar Ullah Khan Town">Nasar Ullah Khan Town</option>
+                                                        <option value="Nasirabad">Nasirabad</option>
+                                                        <option value="Naushahro Feroze">Naushahro Feroze</option>
+                                                        <option value="Nawabshah">Nawabshah</option>
+                                                        <option value="Neelum">Neelum</option>
+                                                        <option value="New Mirpur City">New Mirpur City</option>
+                                                        <option value="Nowshera">Nowshera</option>
+                                                        <option value="Okara">Okara</option>
+                                                        <option value="Others">Others</option>
+                                                        <option value="Others Azad Kashmir">Others Azad Kashmir</option>
+                                                        <option value="Others Balochistan">Others Balochistan</option>
+                                                        <option value="Others Gilgit Baltistan">Others Gilgit Baltistan</option>
+                                                        <option value="Others Khyber Pakhtunkhwa">Others Khyber Pakhtunkhwa</option>
+                                                        <option value="Others Punjab">Others Punjab</option>
+                                                        <option value="Others Sindh">Others Sindh</option>
+                                                        <option value="Pakpattan">Pakpattan</option>
+                                                        <option value="Pasrur">Pasrur</option>
+                                                        <option value="Peshawar">Peshawar</option>
+                                                        <option value="Pind Dadan Khan">Pind Dadan Khan</option>
+                                                        <option value="Pindi Bhattian">Pindi Bhattian</option>
+                                                        <option value="Pir Mahal">Pir Mahal</option>
+                                                        <option value="Qazi Ahmed">Qazi Ahmed</option>
+                                                        <option value="Quetta">Quetta</option>
+                                                        <option value="Rahim Yar Khan">Rahim Yar Khan</option>
+                                                        <option value="Rajana">Rajana</option>
+                                                        <option value="Rajanpur">Rajanpur</option>
+                                                        <option value="Ratwal">Ratwal</option>
+                                                        <option value="Rawalkot">Rawalkot</option>
+                                                        <option value="Rawalpindi">Rawalpindi</option>
+                                                        <option value="Rohri">Rohri</option>
+                                                        <option value="Sadiqabad">Sadiqabad</option>
+                                                        <option value="Sahiwal">Sahiwal</option>
+                                                        <option value="Sakrand">Sakrand</option>
+                                                        <option value="Samundri">Samundri</option>
+                                                        <option value="Sanghar">Sanghar</option>
+                                                        <option value="Sangla Hill">Sangla Hill</option>
+                                                        <option value="Sarai Alamgir">Sarai Alamgir</option>
+                                                        <option value="Sargodha">Sargodha</option>
+                                                        <option value="Sehwan">Sehwan</option>
+                                                        <option value="Shabqadar">Shabqadar</option>
+                                                        <option value="Shahdadpur">Shahdadpur</option>
+                                                        <option value="Shahkot">Shahkot</option>
+                                                        <option value="Shahpur Chakar">Shahpur Chakar</option>
+                                                        <option value="Shakargarh">Shakargarh</option>
+                                                        <option value="Shehr Sultan">Shehr Sultan</option>
+                                                        <option value="Sheikhupura">Sheikhupura</option>
+                                                        <option value="Sher Garh">Sher Garh</option>
+                                                        <option value="Shikarpur">Shikarpur</option>
+                                                        <option value="Shorkot">Shorkot</option>
+                                                        <option value="Sialkot">Sialkot</option>
+                                                        <option value="Sibi">Sibi</option>
+                                                        <option value="Skardu">Skardu</option>
+                                                        <option value="Sudhnoti">Sudhnoti</option>
+                                                        <option value="Sujawal">Sujawal</option>
+                                                        <option value="Sukkur">Sukkur</option>
+                                                        <option value="Swabi">Swabi</option>
+                                                        <option value="Swat">Swat</option>
+                                                        <option value="Talagang">Talagang</option>
+                                                        <option value="Tando Adam">Tando Adam</option>
+                                                        <option value="Tando Allahyar">Tando Allahyar</option>
+                                                        <option value="Tando Bago">Tando Bago</option>
+                                                        <option value="Tando Muhammad Khan">Tando Muhammad Khan</option>
+                                                        <option value="Taxila">Taxila</option>
+                                                        <option value="Tharparkar">Tharparkar</option>
+                                                        <option value="Thatta">Thatta</option>
+                                                        <option value="Toba Tek Singh">Toba Tek Singh</option>
+                                                        <option value="Turbat">Turbat</option>
+                                                        <option value="Vehari">Vehari</option>
+                                                        <option value="Wah">Wah</option>
+                                                        <option value="Wazirabad">Wazirabad</option>
+                                                        <option value="Waziristan">Waziristan</option>
+                                                        <option value="Yazman">Yazman</option>
+                                                        <option value="Zhob">Zhob</option>
                                                     </select>
 
                                                 </div>
@@ -389,12 +602,18 @@
                                                 <div class="form-group @error('institute') has-error @enderror">
                                                     <label for="name">Qualified from Institution</label>
 {{--                                                    <input type="text" name="institute" id="institute" class="form-control" value="{{old('institute')}}">--}}
-                                                    <select name="institute" id="institute" class="form-control select2" style="width: 100%;">
-                                                        <option value="">Select Business/Institute</option>
-                                                        @foreach($business_school as $school)
-                                                            <option value="{{$school->id}}" {{old('institute')==$school->id?'selected':''}}>{{$school->name}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <!-- <input type="radio" name="rb_institute" class="flat-red rb_institute" value="National"><span>&nbsp;National</span><input type="radio" name="rb_institute" class="flat-red rb_institute" value="International"><span>International</span> -->
+                                                    <div class="national">
+                                                        <select name="institute" id="institute" class="form-control select2" style="width: 100%;">
+                                                            <option value="">Select Business/Institute</option>
+                                                            @foreach($business_school as $school)
+                                                                <option value="{{$school->id}}" {{old('institute')==$school->id?'selected':''}}>{{$school->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="international hide">
+                                                        <input type="text" name="institute" id="institue" class="form-control">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -727,9 +946,9 @@
             sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
         });
 
-        $('#country').select2({
-            sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
-        }).val('Pakistan').trigger('change');
+        // $('#country').select2({
+        //     sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+        // }).val('Pakistan').trigger('change');
         //Flat red color scheme for iCheck
 
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -864,6 +1083,18 @@
 
         });
 
+        
+        // $('input[name=rb_institute]').on('ifChecked' ,function (){
+        //     if(this.checked){
+        //         if(this.value == "National"){
+        //             $('.national').removeClass('hide');
+        //             $('.international').addClass('hide');
+        //         }else{
+        //             $('.international').removeClass('hide');
+        //             $('.national').addClass('hide');
+        //         }
+        //     }
+        // })
 
         $("#submit").on('click', function () {
 
@@ -927,37 +1158,60 @@
                 }
             });
         })
+        function matchStart(params, data) {
+            // If there are no search terms, return all of the data
+            if ($.trim(params.term) === '') {
+                return data;
+            }
 
-        $('#country').on('change', function () {
-            let country= $(this).val();
-            $.ajax({
-                type: 'GET',
-                url: "{{url('get-cities')}}",
-                data: {
-                    country: country
-                },
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                success: function (response) {
-                    console.log('response here', response);
-                    var data =[];
-                    //$('#city').val(null);
-                    $("#city").empty();
-                    Object.keys(response).forEach(function (index) {
-                        data.push({id:response[index].name, text:response[index].name});
-                    })
-                    $('#city').select2({
-                        data
-                    });
-                },
-                error:function(response, exception){
-                    Notiflix.Loading.Remove();
-                    $.each(response.responseJSON, function (index, val) {
-                        Notiflix.Notify.Failure(val);
-                    })
+            // Skip if there is no 'children' property
+            if (typeof data.text === 'undefined') {
+                return null;
+            }
 
-                }
-            });
-        })
+            // `data` contains the actual options that we are matching against
+            if(data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0){
+                var modifiedData = $.extend({}, data, true);
+                // You can return modified objects from here
+                // This includes matching the `children` how you want in nested data sets
+                return modifiedData;
+            }
+
+
+            // Return `null` if the term should not be displayed
+            return null;
+        }
+        // $('#country').on('change', function () {
+        //     let country= $(this).val();
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "{{url('get-cities')}}",
+        //         data: {
+        //             country: country
+        //         },
+        //         // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+        //         success: function (response) {
+        //             console.log('response here', response);
+        //             var data =[];
+        //             //$('#city').val(null);
+        //             $("#city").empty();
+        //             Object.keys(response).forEach(function (index) {
+        //                 data.push({id:response[index].name, text:response[index].name});
+        //             })
+        //             $('#city').select2({
+        //                 data,
+        //                 matcher: matchStart
+        //             });
+        //         },
+        //         error:function(response, exception){
+        //             Notiflix.Loading.Remove();
+        //             $.each(response.responseJSON, function (index, val) {
+        //                 Notiflix.Notify.Failure(val);
+        //             })
+
+        //         }
+        //     });
+        // })
 
         $('#business_school_id').on('change', function () {
             let id= $(this).val();
@@ -1043,38 +1297,7 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-                let country= $("#country").val();
-                $.ajax({
-                    type: 'GET',
-                    url: "{{url('get-cities')}}",
-                    data: {
-                        country: country
-                    },
-                    // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                    success: function (response) {
-                        console.log('response here', response);
-                        var data =[];
-                        //$('#city').val(null);
-                        $("#city").empty();
-                        Object.keys(response).forEach(function (index) {
-                            data.push({id:response[index].name, text:response[index].name});
-                        })
-                        $('#city').select2({
-                            data
-                        });
-                    },
-                    error:function(response, exception){
-                        Notiflix.Loading.Remove();
-                        $.each(response.responseJSON, function (index, val) {
-                            Notiflix.Notify.Failure(val);
-                        })
-
-                    }
-                });
-        })
-    </script>
+    
 
     @if ($errors->any())
         @foreach($errors->all() as $error)

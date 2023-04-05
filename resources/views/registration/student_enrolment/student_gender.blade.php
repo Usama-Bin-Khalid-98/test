@@ -250,7 +250,12 @@
   })
     </script>
     <script type="text/javascript">
-
+        $("#male").on('change',function (e) {
+            document.getElementById('female').value = 100 - parseFloat(document.getElementById('male').value);
+        })
+        $(document).on('change', '#edit_male', function (e) {
+            document.getElementById('edit_female').value = 100 - parseFloat(document.getElementById('edit_male').value);
+        })
         $('.select2').select2()
 
          $.ajaxSetup({
@@ -330,11 +335,12 @@
         });
 
         $('#updateForm').submit(function (e) {
+            e.preventDefault();
             let program_id = $('#edit_program_id').val();
             let male = $('#edit_male').val();
             let female = $('#edit_female').val();
             let id = $('#edit_id').val();
-
+            let total = parseInt(male) + parseInt(female);
             let status = $('input[name=edit_status]:checked').val();
             !program_id?addClass('program_id'):removeClass('program_id');
             !male?addClass('male'):removeClass('male');
@@ -343,6 +349,11 @@
             if(!program_id || !male || !female )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            if(total > 100 )
+            {
+                Notiflix.Notify.Failure("percentage ratio should be less then or equal to 100%.");
                 return false;
             }
             e.preventDefault();

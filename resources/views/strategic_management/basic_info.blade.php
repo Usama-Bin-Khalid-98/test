@@ -49,8 +49,8 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
+                                    <!--<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--    <i class="fa fa-file-pdf-o"></i></button>-->
 {{--                                    <ul class="dropdown-menu" role="menu">--}}
 {{--                                        <li><a href="#">Action</a></li>--}}
 {{--                                        <li><a href="#">Another action</a></li>--}}
@@ -99,8 +99,8 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
+                                    <!--<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--    <i class="fa fa-file-pdf-o"></i></button>-->
 {{--                                    <ul class="dropdown-menu" role="menu">--}}
 {{--                                        <li><a href="#">Action</a></li>--}}
 {{--                                        <li><a href="#">Another action</a></li>--}}
@@ -229,7 +229,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="type">{{ __('Profit/Not for profit Status') }} : </label>
-                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'Not for Profit' ? 'checked' : '' }}> Not for Profit</p>
+                                        <p><input type="radio" name="profit_status" class="flat-red" value="None Profit" {{ @$basic_info->profit_status == 'None Profit' ? 'checked' : '' }}> Not for Profit</p>
                                         <p><input type="radio" name="profit_status" class="flat-red" value="For Profit" {{ @$basic_info->profit_status == 'For Profit' ? 'checked' : '' }}> For Profit</p>
 
                                     </div>

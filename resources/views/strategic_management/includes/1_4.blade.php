@@ -20,7 +20,7 @@
                                     @foreach($statutoryCommitties as $data)
                                     <tr>
                                         <td>{{$data->statutoryName}}</td>
-                                        <td>{{$data->name.":".$data->designationName}}</td>
+                                        <td>{{$data->name.": ".$data->designation}}</td>
                                         <td>{{$data->date_first_meeting}}</td>
                                         <td>{{$data->date_second_meeting}}</td>
                                         <td>{{$data->date_third_meeting}}</td>

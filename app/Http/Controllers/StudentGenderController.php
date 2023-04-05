@@ -66,18 +66,29 @@ class StudentGenderController extends Controller
             }else {
                 $type = 'REG';
             }
-            StudentGender::create([
+            $check_data = [
                 'campus_id' => $uni_id,
                 'department_id' => $dept_id,
                 'program_id' => $request->program_id,
-                'male' => $request->male,
-                'female' => $request->female,
-                'isComplete' => 'yes',
                 'type' => $type,
-                'created_by' => Auth::user()->id
-            ]);
+            ];
+            $check = StudentGender::where($check_data)->exists();
+            if(!$check){
+                StudentGender::create([
+                    'campus_id' => $uni_id,
+                    'department_id' => $dept_id,
+                    'program_id' => $request->program_id,
+                    'male' => $request->male,
+                    'female' => $request->female,
+                    'isComplete' => 'yes',
+                    'type' => $type,
+                    'created_by' => Auth::user()->id
+                ]);
+    
+                return response()->json(['success' => 'Student Gender Inserted successfully.']);
+            }
 
-            return response()->json(['success' => 'Student Gender Inserted successfully.']);
+            return response()->json(['error' => 'Student Gender already exists.'], 422);
 
 
         }catch (Exception $e)
@@ -124,6 +135,11 @@ class StudentGenderController extends Controller
         }
 
         try {
+            $total = $request->male + $request->female;
+            return response()->json($total);
+            if($total > 100){
+                return response()->json(['error' => 'Male & Female should not exceed 100']);
+            }
             StudentGender::where('id', $studentGender->id)->update([
                 'program_id' => $request->program_id,
                 'male' => $request->male,

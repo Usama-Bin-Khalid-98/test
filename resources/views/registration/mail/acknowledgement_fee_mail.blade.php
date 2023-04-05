@@ -350,7 +350,6 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>AOA,</p>
                                         <p></p>
 
                                         <p>Dear {{@$data['nbeac']->director}},</p>
@@ -359,22 +358,22 @@
 
                                         <p>Hope you are doing well,</p>
 
-                                        <p>This email is with reference to registration fee received from {{@$data['school']->name}}, {{@$data['school']->campus->location}} it is acknowledge that we received the registration fee. </p>
-                                        <p>please check the payment if received approve and forward the case to Desk review.</p>
-                                        <p>{{@$data['slip']->cheque_no?'Cheque No:'. $data['slip']->cheque_no:''}} Amount Rs: 50,000/- dated
-                                            {{@$data['slip']->transaction_date}}.</p>
+                                        <p>This email is with reference to registration fee received from {{@$data['school']->name}}, {{@$data['school']->campus->location}}. It is acknowledge you that we have received the registration fee. </p>
+                                        <p>{{@$data['slip']['cheque_no']?'Cheque No: '. $data['slip']['cheque_no']:''}} Amount Rs: 50,000/- dated:
+                                            {{@$data['slip']['transaction_date']}}.</p>
 
-{{--                                        <p>The registration application is under desk review process.  You can check the status of your application on the following link:</p>--}}
-
+                                        <p>The registration application is under desk review process.  You can check the status of your application on the following link:</p>
+                                        <p><a href="https://app.nbeac.org.pk/strategic/invoices">https://app.nbeac.org.pk/strategic/invoices</a></p>
                                         <p>Thank You.</p>
 
-                                        <p>Best Regards,</p>
-                                        <p>{{@$data['school']->user->name}}</p>
-                                        <p>{{@$data['school']->name}} - Campus: ({{@$data['school']->campus->location}}),</p>
-                                        <i>Address: {{@$data['school']->user->address}}</i><br/>
-                                        <i>Phone (Off): {{@$data['school']->user->contact_no}}</i><br/>
-{{--                                        <i>Fax: {{@$data['school']->fax}}</i><br/>--}}
-                                        <i>Web: <a href="{{@$data['school']->user->web_url}}">{{@$data['school']->user->web_url}}</a></i>
+                                        <p>Regards,</p>
+                                        <p>Mr. Irfan Khan</p>
+                                        <p>Assistant Manager Accreditation</p>
+                                        <i>Phone-I (Off) 92 51 9080 0214</i><br>
+                                        <i>Phone-II (Cell): +92 333 5126229</i><br>
+                                        <i>Web: <a href="{{@$data['nbeac']->website}}">{{@$data['nbeac']->website}}</a></i><br>
+                                        <small>*Please do not reply to this email. This is computer generated email</small>
+                                        <small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
                                     </td>
                                 </tr>
                             </table>

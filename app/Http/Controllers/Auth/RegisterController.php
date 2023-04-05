@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use PragmaRX\Countries\Package\Countries;
 use App\BusinessSchool;
 use App\CharterType;
 use App\Http\Controllers\Controller;
@@ -22,8 +23,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
-use PragmaRX\Countries\Package\Countries;
 use Illuminate\Support\Facades\Input;
+use App\Models\Config\NbeacBasicInfo;
+use Illuminate\Support\Facades\Mail;
 class RegisterController extends Controller
 {
     /*
@@ -131,7 +133,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $businessSchool = BusinessSchool::where('id', $data['business_school_id']);
+        $businessSchool = BusinessSchool::where('id', $data['business_school_id'])->first();
 
         if($data['account_type']== 'BusinessSchool') {
 //            try {
@@ -181,6 +183,26 @@ class RegisterController extends Controller
                     'user_type' => $data['account_type'],
                     'status' => 'pending',
                 ]);
+                
+                // New User Email 
+                $getNbeacInfo = NbeacBasicInfo::all()->first();
+                $mailData['data']= $user;
+                $mailData['school']= $businessSchool;
+                $mailData['nbeac']= $getNbeacInfo;
+
+                $mailSchoolInfo = [
+                    'from' => $getNbeacInfo->email??'',
+                    'from_name' => $getNbeacInfo->director??'',
+                ];
+
+                Mail::send('registration.mail.new_user', ['data' => $mailData], function($message) use ($mailSchoolInfo) {
+                    //dd($user);
+                    $message->to('info@nbeac.org.pk','NBEAC Admin')
+                        ->subject('New User Registered')
+                        ->cc(['mirkhan@hec.gov.pk']);
+                    $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
+                });
+                // End New User mail
 
                 $user->assignRole('BusinessSchool');
                 return $user;
@@ -240,7 +262,9 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        $countries = Countries::all();
+        // dd(new Countries());
+        // $countries = Countries::all();
+        $countries = [];
         // $institute_types= InstituteType::where('status', 'active')->get();
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
@@ -255,8 +279,7 @@ class RegisterController extends Controller
         $degrees = Degree::where('status', 'active')->get();
         $users = \App\User::where('user_type', 'PeerReviewer');
         $questions = Question::where('status', 'active')->get();
-        //dd($users);
-
+        
         return view('auth.register-new', compact(
              'chart_types',
             'business_school','designations','countries',

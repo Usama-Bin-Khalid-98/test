@@ -30,7 +30,7 @@
                 <li class="active"> Statutory Committee</li>
             </ol>
         </section>
-        <section class="content-header">
+        <!-- <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
                     <button class="btn gradient-bg-color"
@@ -38,7 +38,7 @@
                            style="color: white;">PDF <i class="fa fa-file-pdf-o"></i></button>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         {{--Dean section --}}
         <section class="content">
@@ -50,10 +50,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
+                                <!-- <div class="btn-group">
                                     <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
                                         <i class="fa fa-file-pdf-o"></i></button>
-                                     </div>
+                                     </div> -->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -83,12 +83,13 @@
 
                                          <td class="fontsize">
                                              <input type="text" name="name[]" placeholder="name" id="name_{{@$body->id}}" class="form-control" style="margin-bottom: 5px !important;">
-                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2  designations" style="width: 100%;">
+                                             <input type="text" name="designation[]" id="designation_id_{{@$body->id}}" placeholder="Designation" class="form-control">
+                                             <!-- <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2  designations" style="width: 100%;">
                                                  <option value="">Select Designation</option>
                                                  @foreach($designations as $designation)
                                                      <option value="{{$designation->id}}">{{$designation->name }}</option>
                                                  @endforeach
-                                             </select>
+                                             </select> -->
                                          </td>
                                          <td>
                                             <div class="input-group">
@@ -125,6 +126,11 @@
                                          <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}"></td>
                                      </tr>
                                          @endforeach
+                                         <tr id="add-more-row">
+                                             <td>
+                                                 <button title="Add More Rows" class="btn btn-success btn-add-more-rows"><i class="fa fa-plus"></i></button>
+                                             </td>
+                                         </tr>
                                      </tbody>
                                  </table>
                             <div class="col-md-12">
@@ -155,10 +161,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
+                                <!-- <div class="btn-group">
                                     <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
                                         <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                </div> -->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -188,7 +194,7 @@
                                 <tr>
                                     <td>{{$committee->statutory_body->name}}</td>
                                     <td>{{$committee->name}} </td>
-                                    <td>{{$committee->designation->name}}</td>
+                                    <td>{{$committee->designation}}</td>
                                     <td>{{$committee->date_first_meeting}}</td>
                                     <td>{{$committee->date_second_meeting}}</td>
                                     <td>{{$committee->date_third_meeting}}</td>
@@ -200,7 +206,7 @@
                                         <i class="fa fa-pencil text-blue edit" data-toggle="modal" data-target="#edit-modal"
                                            data-row='{"id":{{$committee->id}},
                                          "statutory_body_id":{{$committee->statutory_body->id}},
-                                         "name":"{{$committee->name}}", "designation_id":{{$committee->designation->id}},
+                                         "name":"{{$committee->name}}", "designation":"{{$committee->designation}}",
                                          "date_first_meeting":"{{$committee->date_first_meeting}}",
                                          "date_second_meeting":"{{$committee->date_second_meeting}}",
                                          "date_third_meeting":"{{$committee->date_third_meeting}}",
@@ -277,12 +283,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name">Designation</label>
-                                                <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                                <input type="text" name="designation" id="edit_designation" placeholder="Designation" class="form-control">
+                                                <!-- <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
                                                     <option value="">Select Designation</option>
                                                     @foreach($designations as $designation)
                                                         <option value="{{$designation->id}}">{{$designation->name }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
 
@@ -386,9 +393,18 @@
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $(function () {
-            $('#statutoryTable').DataTable()
+            $('#statutoryTable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">
@@ -407,6 +423,60 @@
     //     $('#date_fourth_meeting').datepicker({
     //   autoclose:true
     // });
+    var row = 7;
+    var designations = '<?php echo $designations; ?>'
+    designations = JSON.parse(designations);
+    $(".btn-add-more-rows").on('click', function (e) {
+        e.preventDefault();
+        row++;
+        var data = `
+        <tr>
+            <td class="fontsize">
+                Any Other
+                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_`+row+`" value="7">
+            </td>
+
+            <td class="fontsize">
+                <input type="text" name="name[]" placeholder="name" id="name_`+row+`" class="form-control" style="margin-bottom: 5px !important;">
+                <input type="text" name="designation[]" id="designation_`+row+`" placeholder="Designation" class="form-control">
+            </td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-addon">
+
+                    </div>
+                    <input type="date" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-addon">
+
+                    </div>
+                    <input type="date" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-addon">
+
+                    </div>
+                    <input type="date" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-addon">
+
+                    </div>
+                    <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                </div>
+            </td>
+            <td style="font-size: 8px"><input type="file" name="file`+row+`"></td>
+        </tr>
+        `
+        $(data).insertBefore("#add-more-row");
+    })
     $('.designations').on('change', function () {
 
         if($(this).val() == 8){
@@ -548,7 +618,7 @@
            // console.log(data);
             // Initialize Select2
             $('#edit_statutory_body_id').select2().val(data.statutory_body_id).trigger('change');
-            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_designation').val(data.designation);
             $('#edit_name').val(data.name);
             $('#edit_date_first_meeting').val(data.date_first_meeting);
             $('#edit_date_second_meeting').val(data.date_second_meeting);
@@ -562,7 +632,7 @@
         $('#update').submit(function (e) {
             let name = $('#edit_name').val();
             let statutory_body_id = $('#edit_statutory_body_id').val();
-            let designation_id = $('#edit_designation_id').val();
+            let designation_id = $('#edit_designation').val();
             let date_first_meeting = $('#edit_date_first_meeting').val();
             let date_second_meeting = $('#edit_date_second_meeting').val();
             let date_third_meeting = $('#edit_date_third_meeting').val();
@@ -576,7 +646,7 @@
             !date_second_meeting?addClass('edit_date_second_meeting'):removeClass('edit_date_second_meeting');
             !date_third_meeting?addClass('edit_date_third_meeting'):removeClass('edit_date_third_meeting');
             !date_fourth_meeting?addClass('edit_date_fourth_meeting'):removeClass('edit_date_fourth_meeting');
-            !designation_id?addClass('edit_designation_id'):removeClass('edit_designation_id');
+            !designation_id?addClass('edit_designation'):removeClass('edit_designation');
 
             if(!name || !statutory_body_id || !designation_id || !date_first_meeting || !date_second_meeting || !date_third_meeting|| !date_fourth_meeting)
             {

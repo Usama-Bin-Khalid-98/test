@@ -350,7 +350,6 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p></p>
                                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
                                             <tr>
@@ -366,10 +365,9 @@
                                             </tr>
                                             </tbody>
                                         </table>
-
-                                        <p>Dear NBEAC</p>
-                                        <p>The business school name ({{$data['school']->campus->business_school->name}}) has submitted a registration application for the {{$data['school']->department->name}}. Please start the desk review <a href="https://app.nbeac.org.pk/desk-review">(Link)</a></p>
-
+                                        <p>Dear Admin NBEAC</p>
+                                        <p>The {{@$data['school']->name}} has registered with NBEAC.</p>
+                                        <p>Please activate the account by login <a href="https://app.nbeac.org.pk/login">https://app.nbeac.org.pk/login</a></p>
                                         <p>Regards,</p>
                                         <p>NBEAC</p>
                                     </td>
@@ -388,12 +386,12 @@
                         <tr>
                             <td class="content-block">
                                 <span class="apple-link">National Business Education Accreditation Council (NBEAC)</span>
-                                <br> Don't like these emails? <a href="http://nbeac.pk">Unsubscribe</a>.
+                                <br> Don't like these emails? <a href="http://www.nbeac.org.pk">Unsubscribe</a>.
                             </td>
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                Powered by <a href="http://htmlemail.io">NBEAC</a>.
+                                Powered by <a href="http://www.nbeac.org.pk">NBEAC</a>.
                             </td>
                         </tr>
                     </table>

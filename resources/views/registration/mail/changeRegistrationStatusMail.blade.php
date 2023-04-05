@@ -7,24 +7,19 @@
 <p style="font-weight: bold">Dear {{@$data['user']}},</p>
 
 <p>Hope you are doing well,</p>
-
-<p>This email is with reference to registration fee received from {{@$data['school']}}, Campus {{@$data['campus']}} it is acknowledge that we received the registration fee <span style="font-weight: bold"> Cheque No: {{@$data['cheque_no']}}, Amount Rs: 50,000/- dated {{@$data['transaction_date']}}. </span> </p>
-{{--<p>address: {{$content['address']}}</p>--}}
-
-<p style="color: #0b93d5;">The registration application is under desk review process.  You can check the status of your application on the following link: </p>
-
+<p>Thank you for submitting the registration application of {{@$data['department']}} {{@$data['school']->campus->business_school->name}}, {{@$data['campus']}}. The desk review of registration application is under process. You can check the status of your application on the registration application page. <a href="{{url('strategic/invoices')}}">(Link)</a></p>
 <p>Thank You.</p>
 
-<p>Best Regards,</p>
-<a href="{{url('/strategic/invoice')}}/{{@$data['id']}}">Here is the Invoice</a>
+<p>Regards,</p>
 @php
 $nbeac = \App\Models\Config\NbeacBasicInfo::all()->first();
 @endphp
-<p style="color: #1d68a7">{{@$nbeac->director}} || Director<br>
-    {{@$nbeac->name}} ({{@$nbeac->short_name}}),</p>
-<p style="color: grey">{{@$nbeac->address}}<br>
-Phone (Off): {{@$nbeac->phone1}} || Cell: {{@$nbeac->phone2}}</p>
-Fax: {{@$nbeac->fax}}</p>
-
+<p style="color: #1d68a7">{{@$nbeac->director}} || Mr. Irfan Khan</p>
+<p style="color: #1d68a7">Assistant Manager Accreditation</p>
+<p style="color: #1d68a7">Phone-I (Off) 92 51 9080 0214</p>
+<p style="color: #1d68a7">Phone-II (Cell): +92 333 5126229</p>
+<p style="color: #1d68a7">Web: www.nbeac.org.pk</p>
+<small>*Please do not reply to this email. This is computer generated email</small>
+<small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
 </body>
 </html>

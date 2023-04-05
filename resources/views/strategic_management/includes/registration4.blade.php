@@ -15,4 +15,6 @@
 @include('strategic_management.includes.registration4_5')
 <br><p class="left">4.6	Provide data on the gender mix of the business school faculty in Table 4.6.</p>
 @include('strategic_management.includes.4_6')
+<br><p class="left">4.7	Provide data on the faculty degree in Table 4.7.</p>
+@include('strategic_management.includes.4_7')
  

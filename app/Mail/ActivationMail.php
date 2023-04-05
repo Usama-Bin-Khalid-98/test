@@ -33,7 +33,7 @@ class ActivationMail extends Mailable
     {
         $getInfo = NbeacBasicInfo::all()->first();
         return $this->from($getInfo->email,'NBEAC Admin')
-            ->subject('Account Registration Request mail')
+            ->subject('Account Acctivated')
             ->view('registration.mail.activation_temp')
             ->with('message', 'message here');
 

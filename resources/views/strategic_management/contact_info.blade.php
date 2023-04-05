@@ -25,16 +25,16 @@
                 <li class="active"> Contact Information</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-                           data-toggle="modal" data-target="#add-modal"
-                           style="color: white;"
-                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+        <!--<section class="content-header">-->
+        <!--    <div class="col-md-12 new-button">-->
+        <!--        <div class="pull-right">-->
+        <!--            <button class="btn gradient-bg-color"-->
+        <!--                   data-toggle="modal" data-target="#add-modal"-->
+        <!--                   style="color: white;"-->
+        <!--                   value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</section>-->
 
         {{--Dean section --}}
         {{--Dean section --}}

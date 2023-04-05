@@ -85,6 +85,7 @@ class ApplicationReceivedController extends Controller
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'year' => $request->year,
+                'semester' => $request->semester,
                 'isComplete'=>'yes',
                 'type'=>$type];
             $check = ApplicationReceived::where($check_data)->exists();
@@ -95,6 +96,7 @@ class ApplicationReceivedController extends Controller
                     'department_id' => Auth::user()->department_id,
                     'program_id' => $request->program_id,
                     'year' => $request->year,
+                    'semester' => $request->semester,
                     'app_received' => $request->app_received,
                     'admission_offered' => $request->admission_offered,
                     'student_intake' => $request->student_intake,
@@ -163,6 +165,7 @@ class ApplicationReceivedController extends Controller
                 'admission_offered' => $request->admission_offered,
                 'student_intake' => $request->student_intake,
                 'semester_comm_date' => $request->semester_comm_date,
+                'semester' => $request->semester,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);

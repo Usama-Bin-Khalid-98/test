@@ -350,7 +350,6 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>AOA,</p>
                                         <p></p>
 
                                         <p>Dear {{@$data['school']->user->name}},</p>
@@ -360,19 +359,19 @@
 
                                         <p>Hope you are doing well,</p>
 
-                                        <p>Thank you for submitting your registration fee to nbeac, This is an auto generated email, Soon you will receive an Approval email once the NBEAC admin receive and approve your payment.</p>
-                                        <p>if you have any query feel free to contact us. </p>
-                                        <p>You can check the status of your application on the registration invoice page:</p>
+                                        <p>Thank you for generating the invoice for {{@$data['school']->user->department->name}} {{@$data['school']->name}}, {{@$data['school']->campus->location}}. You will receive an approval email once the NBEAC admin approve the invoice status.</p>
+                                        <p>You can check the status of your application on the registration invoice page: <a href="https://app.nbeac.org.pk/strategic/invoices">https://app.nbeac.org.pk/strategic/invoices</a></p>
 
                                         <p>Thank You.</p>
 
                                         <p>Best Regards,</p>
                                         <p>{{@$data['nbeac']->chairman}}</p>
-                                        <p>{{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}}),</p>
-                                        <i>Address: {{@$data['nbeac']->address}}</i><br/>
-                                        <i>Phone (Off): {{@$data['nbeac']->phone1}} || Cell: {{@$data['nbeac']->phone2}}</i><br/>
-                                        <i>Fax: {{@$data['nbeac']->fax}}</i><br/>
-                                        <i>Web: <a href="{{@$data['nbeac']->website}}"> {{@$data['nbeac']->website}}</a></i>
+                                        <p>Assistant Manager Accreditation</p>
+                                        <i>Phone-I (Off) 92 51 9080 0214</i><br>
+                                        <i>Phone-II (Cell): +92 333 5126229</i><br>
+                                        <i>Web: <a href="{{@$data['nbeac']->website}}"> {{@$data['nbeac']->website}}</a></i><br>
+                                        <small>*Please do not reply to this email. This is computer generated email</small><br>
+                                        <small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
                                     </td>
                                 </tr>
                             </table>

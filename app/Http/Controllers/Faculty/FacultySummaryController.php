@@ -62,6 +62,98 @@ class FacultySummaryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
+    // {
+    //     $validation = Validator::make($request->all(), $this->rules(), $this->messages());
+    //     if($validation->fails())
+    //     {
+    //         return response()->json($validation->messages()->all(), 422);
+    //     }
+    //     try {
+
+    //         $campus_id = Auth::user()->campus_id;
+    //         $department_id = Auth::user()->department_id;
+    //         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+
+    //         if($slip){
+    //             $type = 'SAR';
+    //         }else{
+    //             $type = 'REG';
+    //         }
+
+    //         if($slip){
+    //             $type='SAR';
+    //             for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
+    //                 for ($j = 0; $j < count($request->discipline_id); $j++) {
+    //                     $check_data = ['campus_id' => Auth::user()->campus_id,
+    //                         'department_id' => Auth::user()->department_id,
+    //                         'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+    //                         'discipline_id' => @$request->discipline_id[$j],
+    //                         'isComplete' => 'yes',
+    //                         'type' => $type];
+    //                     $check = FacultySummary::where($check_data)->exists();
+    //                     if(!$check) {
+    //                         FacultySummary::create([
+    //                             'campus_id' => Auth::user()->campus_id,
+    //                             'department_id' => Auth::user()->department_id,
+    //                             'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+    //                             'discipline_id' => @$request->discipline_id[$j],
+    //                             'number_faculty' => @$request->number_faculty[$j + 1][$i],
+    //                             'isComplete' => 'yes',
+    //                             'type' => $type,
+    //                             'created_by' => Auth::user()->id
+    //                         ]);
+    //                     }else{
+    //                         return response()->json(['error' => 'Faculty Summary already exists.'], 422);
+    //                     }
+    //                 }
+    //             }
+    //         }else {
+    //             $type = 'REG';
+    //             for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
+    //                 for ($j = 0; $j < count($request->discipline_id); $j++) {
+    //                     $check_data = ['campus_id' => Auth::user()->campus_id,
+    //                         'department_id' => Auth::user()->department_id,
+    //                         'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+    //                         'discipline_id' => @$request->discipline_id[$j],
+    //                         'isComplete' => 'yes',
+    //                         'type' => $type,
+    //                         ];
+    //                     $check = FacultySummary::where($check_data)->exists();
+    //                     if(!$check) {
+    //                         FacultySummary::create([
+    //                             'campus_id' => Auth::user()->campus_id,
+    //                             'department_id' => Auth::user()->department_id,
+    //                             'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+    //                             'discipline_id' => @$request->discipline_id[$j],
+    //                             'number_faculty' => @$request->number_faculty[$j + 1][$i],
+    //                             'isComplete' => 'yes',
+    //                             'type' => $type,
+    //                             'created_by' => Auth::user()->id
+    //                         ]);
+    //                         FacultySummary::create([
+    //                             'campus_id' => Auth::user()->campus_id,
+    //                             'department_id' => Auth::user()->department_id,
+    //                             'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
+    //                             'discipline_id' => @$request->discipline_id[$j],
+    //                             'number_faculty' => @$request->number_faculty[$j + 1][$i],
+    //                             'isComplete' => 'yes',
+    //                             'type' => 'SAR',
+    //                             'created_by' => Auth::user()->id
+    //                         ]);
+    //                     }else{
+    //                         return response()->json(['error' => 'Faculty Summary already exists.'], 422);
+    //                     }
+    //                 }
+    //             }
+    //         }
+
+    //         return response()->json(['success' => 'Faculty Summary added successfully.'], 200);
+    //     }catch (Exception $e)
+    //     {
+    //         return response()->json($e->getMessage(), 422);
+    //     }
+    // }
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), $this->rules(), $this->messages());
@@ -84,7 +176,7 @@ class FacultySummaryController extends Controller
             if($slip){
                 $type='SAR';
                 for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
-                    for ($j = 0; $j < count($request->discipline_id); $j++) {
+                    foreach ($request->discipline_id as $discipline_id) {
                         $check_data = ['campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
@@ -97,8 +189,8 @@ class FacultySummaryController extends Controller
                                 'campus_id' => Auth::user()->campus_id,
                                 'department_id' => Auth::user()->department_id,
                                 'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                                'discipline_id' => @$request->discipline_id[$j],
-                                'number_faculty' => @$request->number_faculty[$j + 1][$i],
+                                'discipline_id' => $discipline_id,
+                                'number_faculty' => @$request->number_faculty[$discipline_id][$i],
                                 'isComplete' => 'yes',
                                 'type' => $type,
                                 'created_by' => Auth::user()->id
@@ -111,11 +203,11 @@ class FacultySummaryController extends Controller
             }else {
                 $type = 'REG';
                 for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
-                    for ($j = 0; $j < count($request->discipline_id); $j++) {
+                    foreach ($request->discipline_id as $discipline_id) {
                         $check_data = ['campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                            'discipline_id' => @$request->discipline_id[$j],
+                            'discipline_id' => $discipline_id,
                             'isComplete' => 'yes',
                             'type' => $type,
                             ];
@@ -125,8 +217,8 @@ class FacultySummaryController extends Controller
                                 'campus_id' => Auth::user()->campus_id,
                                 'department_id' => Auth::user()->department_id,
                                 'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                                'discipline_id' => @$request->discipline_id[$j],
-                                'number_faculty' => @$request->number_faculty[$j + 1][$i],
+                                'discipline_id' => $discipline_id,
+                                'number_faculty' => @$request->number_faculty[$discipline_id][$i],
                                 'isComplete' => 'yes',
                                 'type' => $type,
                                 'created_by' => Auth::user()->id
@@ -135,8 +227,8 @@ class FacultySummaryController extends Controller
                                 'campus_id' => Auth::user()->campus_id,
                                 'department_id' => Auth::user()->department_id,
                                 'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                                'discipline_id' => @$request->discipline_id[$j],
-                                'number_faculty' => @$request->number_faculty[$j + 1][$i],
+                                'discipline_id' => $discipline_id,
+                                'number_faculty' => @$request->number_faculty[$discipline_id][$i],
                                 'isComplete' => 'yes',
                                 'type' => 'SAR',
                                 'created_by' => Auth::user()->id
@@ -154,6 +246,7 @@ class FacultySummaryController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+
 
     /**
      * Display the specified resource.

@@ -30,129 +30,63 @@
 <div class="wrapper">
     <!-- Main content -->
     <!-- Main content -->
-    <section class="invoice">
+    <section class="invoice" style="border-left: 4px solid #a7a168;border-top: 4px solid #a7a168;border-radius: 41px 0px;">
         <div class="jumbotron jumbotron-fluid" style="padding-bottom: 0;">
             <div class="container">
                 <img src="{{URL::asset('dist/img/logo.png')}}" style="width: 100px">
-                <span class="lead" style="font-size: 20px;"><strong>NBEAC</strong> (National Business Education Accreditation Council).</span>
+                <span class="lead" style="font-size: 20px;"><strong>National Business Education Accreditation Council</strong>.</span>
+                <img src="{{URL::asset('images/HECLogo.jpg')}}" style="width: 100px">
             </div>
         </div>
         <!-- title row -->
         <div class="row">
             <div class="col-xs-12">
-                <h2 class="page-header">
-                    <i class="fa fa-globe"></i> Department Registration Invoice.
-                    <small class="pull-right">Date: {{@$getInvoice->created_at}}</small>
-                </h2>
+                <h2 style="text-align: center;"><strong><u style="letter-spacing: 24px;">&nbsp;INVOICE</u></strong></h2>
+                <h2 style="text-align:center"><small>Date: {{date("M d,Y",strtotime(@$getInvoice->created_at))}}</small></h2>
+                <h4 style="margin-left: 10px;margin-right: 10px;">Invoice Number: {{@$getInvoice->invoice_no}}</h4>
+                <h4 style="margin-left: 10px;margin-right: 10px;"><u>Member Code: {{@$getInvoice->campus->business_school->name}} Campus {{@$getInvoice->campus->location}}</u></h4>
+                <h4 style="margin-left: 10px;margin-right: 10px;border-bottom:1px solid black"> {{@$getInvoice->campus->business_school->name}} Campus {{@$getInvoice->campus->location}} Accreditation registration fee.</h4>
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- info row -->
-        <div class="row invoice-info">
-            <div class="col-sm-4 invoice-col">
-                From
-                {{--          <address>--}}
-                {{--            <strong>NBEAC .</strong><br>--}}
-                {{--              201,2nd floor,HRD Building<br>--}}
-                {{--              Higher Education Commission<br>--}}
-                {{--              Sector H-8<br>--}}
-                {{--              Islamabad– Pakistan 44000--}}
-                {{--          </address>--}}
-                <address>
-                    <strong>NBEAC .</strong><br>
-                    201,2nd floor,HRD Building<br>
-                    Higher Education Commission<br>
-                    Sector H-8<br>
-                    Islamabad– Pakistan 44000<br>
-                    <strong>Phone:</strong> +92-51-90800206-9<br>
-                    <strong>Email:</strong> nbeac@hec.gov.pk<br>
-                    <strong>Web:</strong> www.nbeac.org.pk<br>
-                </address>
+            <div class="col-xs-12">
+                <h4 style="margin: 0px 10px 0px 10px;"><strong class="pull-left">Particular</strong><strong class="pull-right">Amount Rs.</strong></h4><br>
+                <h4 style="margin: 0px 10px 0px 10px;"><span class="pull-left">Registration Fee</span><span class="pull-right">{{number_format(@$getInvoice->amount)}}/-</span></h4>
             </div>
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-                To
-                <address>
-                    <strong>Member Code: </strong> {{@$getInvoice->campus->business_school->name}} Campus {{@$getInvoice->campus->location}}<br>
-                    <strong>Location:</strong>{{@$getInvoice->campus->location}}<br>
-                    <strong>Phone:</strong> {{@$getInvoice->user->contact_no}}<br>
-                    <strong>Email:</strong> {{@$getInvoice->user->email}}
-                </address>
+            <div class="col-xs-7"></div>
+            <div class="col-xs-5">
+                <h4 style="border-bottom:1px solid black"></h4>
+                <h4 style="border-bottom: 2px solid black;margin-top:20px;margin-left: 10px;margin-right:10px;"><strong style="text-align:left">Total: Rupees. </strong><strong class="pull-right">{{number_format(@$getInvoice->amount)}}/-</strong></h4><br>
+                <h4 class="pull-right" style="margin-top:70px;margin-left:10px;margin-right:10px;">Asad Khan</h4><br>
+                <h4 class="pull-right" style="margin: 0px 10px 0px 10px;">Accounts-Officer-NBEAC</h4>
             </div>
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-                <b>Invoice #</b>{{@$getInvoice->invoice_no}}<br>
-                <br>
-                {{--          <b>Payment Due:</b> {{date('Y-m-d') }}<br>--}}
-                {{--          <b>Account:</b> 968-34567--}}
+            <div class="col-xs-12">
+                <p style="font-size: 16px;color:red;margin: 0px 10px 0px 10px;">HEC is Tax Exempted and FTN Number is 9011007-2.:</p><br>
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <!-- Table row -->
-        <div class="row">
-            <div class="col-xs-12 table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Serial No</th>
-                        <th>Business School</th>
-                        <th>Campus</th>
-                        <th>Department</th>
-                        <th>Amount</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <tr>
-                        <td>1</td>
-                        <td>{{@$getInvoice->campus->business_school->name}}</td>
-                        <td>{{@$getInvoice->campus->location}}</td>
-                        <td>{{@$getInvoice->department->name}}</td>
-                        <td>{{@$getInvoice->amount}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="col-xs-12">
+                <p style="margin: 0px 10px 0px 10px;font-size:16px">Mail us the Cheque bearing the above stated amount in favor of NBEAC-HEC at National Business Education Accreditation Council, Room # 201, HRD Building, Gate # 2, Higher Education Commission, H-8, and Islamabad, Pakistan.</p><br>
+                <p style="margin: 0px 10px 0px 10px;font-size:16px">CC: Mr. Ahtesham Ali Raja (Program Director-NBEAC)</p>
+                <p style="margin: 0px 10px 0px 10px;font-size:16px">CC: Dr. Farrukh Iqbal (Chairman –NBEAC)</p>
             </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-            <!-- accepted payments column -->
+            <div class="col-xs-6"></div>
             <div class="col-xs-6">
-                <p class="lead" style="font-size: 16px">HEC is Tax Exempted and FTN Number is 9011007-2.:</p>
-                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                    Mail us the Cheque bearing the above stated amount in favor of NBEAC-HEC at National Business Education Accreditation Council, Room # 201, HRD Building, Gate # 2, Higher Education Commission, H-8, and Islamabad, Pakistan.
-                    <br>CC: Mr. Ahtesham Ali Raja (Program Director-NBEAC) <br>CC: Dr. Farrukh Iqbal (Chairman –NBEAC)
-                </p>
-            </div>
-            <!-- /.col -->
-            <div class="col-xs-6">
-                <p class="lead">Details </p>
-
-                <div class="table-responsive">
-                    <table class="table">
-                        <tr>
-                            <th style="width:50%">Subtotal:</th>
-                            <td>{{@$getInvoice->amount}}</td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <th>Total:</th>
-                            <td>{{@$getInvoice->amount}}</td>
-                        </tr>
-                    </table>
+                <div class="col-xs-6">
+                    <div style="border-right:1px solid black;">
+                        <p style="font-size: 12px;"><small>201,2nd floor,HRD Building<br>
+                        Higher Education Commission<br>
+                        Sector H-8,<br>
+                        Islamabad– Pakistan 44000</small></p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <p style="font-size: 12px;"><small>
+                        Tel: +92-51-90800206-9<br>
+                        Email: nbeac@hec.gov.pk<br>
+                        Web: www.nbeac.org.pk<br>
+                    </small></p>
                 </div>
             </div>
             <!-- /.col -->
         </div>
-        <!-- /.row -->
+        
 
         <!-- this row will not appear when printing -->
         <div class="row no-print">

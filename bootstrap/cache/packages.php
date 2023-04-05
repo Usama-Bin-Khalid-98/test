@@ -86,6 +86,17 @@
       'Countries' => 'PragmaRX\\CountriesLaravel\\Package\\Facade',
     ),
   ),
+  'spatie/laravel-google-calendar' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\GoogleCalendar\\GoogleCalendarServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'GoogleCalendar' => 'Spatie\\GoogleCalendar\\GoogleCalendarFacade',
+    ),
+  ),
   'spatie/laravel-permission' => 
   array (
     'providers' => 

@@ -64,10 +64,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                <!--<div class="btn-group">-->
+                                <!--    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                <!--        <i class="fa fa-file-pdf-o"></i></button>-->
+                                <!--</div>-->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -82,7 +82,9 @@
                                      <th class="fontsize">Minimum requirements/relative weightage</th>
                                      </thead>
                                      <tbody>
+                                         @php $c = 0; @endphp
                                      @foreach($criterias as $criteria)
+                                     @php $c++; @endphp
                                      <tr>
                                          @if($loop->iteration == 1)
                                          <td rowspan="{{count(@$criterias)}}">
@@ -103,7 +105,7 @@
                                              <input type="hidden" name="eligibility_criteria_id[]" id="eligibility_criteria_id" value="{{@$criteria->id}}">
                                          </td>
                                          <td>
-                                             <input type="number" name="min_req[]" min="0" class="form-control">
+                                             <input type="number" name="min_req[]" id="{{$c}}" min="0" class="form-control">
                                          </td>
                                              @endforeach
                                      </tr>
@@ -274,17 +276,34 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">
-
+        $(".calculate").on('change', function (e) {
+            var val = document.getElementById('1').value == '' ? 0 : parseFloat(document.getElementById('1').value);
+            var val_2 = document.getElementById('2').value == '' ? 0 : parseFloat(document.getElementById('2').value);
+            var val_3 = document.getElementById('3').value == '' ? 0 : parseFloat(document.getElementById('3').value);
+            var val_4 = document.getElementById('4').value == '' ? 0 : parseFloat(document.getElementById('4').value);
+            var val_5 = document.getElementById('5').value == '' ? 0 : parseFloat(document.getElementById('5').value);
+            var val_6 = document.getElementById('6').value == '' ? 0 : parseFloat(document.getElementById('6').value);
+            document.getElementById('total').innerHTML = val + val_2 + val_3 + val_4 + val_5 + val_6;
+        })
         $('.select2').select2()
 
          $.ajaxSetup({
@@ -411,9 +430,11 @@ $('#updateForm').submit(function (e) {
                     Notiflix.Loading.Remove();
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
+                        location.reload();
                     }
-                    //console.log('response', response);
-                    location.reload();
+                    if(response.error){
+                        Notiflix.Notify.Failure(response.error);
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

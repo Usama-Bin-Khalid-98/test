@@ -4,28 +4,21 @@
                                 <caption style="text-align: center;color: red">Table 4.7. Training/workshops organized by core business faculty</caption>
                                 <thead>
                                     <th>No</th>
-                                    <th>Date</th>
-                                    <th>Venue</th>
-                                    <th>Title</th>
-                                    <th>Name of faculty trainer</th>
-                                    <th>No. of participants</th>
+                                    <th>No. of faculty with terminal degree (foreign institutions)</th>
+                                    <th>No. of faculty with terminal degree (domestic institutions)</th>
+                                    <th>No. of faculty with international work experience</th>
                                   
                                     
                                 </thead>
                                 <tbody>
-                                    @foreach($facultyWorkshops as $data)
+                                    @isset($facultyDegree)
                                     <tr>
-                                        <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->date}}</td>
-                                        <td>{{$data->venue}}</td>
-                                        <td>{{$data->title}}</td>
-                                        <td>{{$data->faculty_trainer_name}}</td>
-                                        <td>{{$data->participants}}</td>
-                                       
-                                       
-                                       
+                                        <td>1</td>
+                                        <td>{{$facultyDegree->faculty_foreign}}</td>
+                                        <td>{{$facultyDegree->faculty_domestic}}</td>
+                                        <td>{{$facultyDegree->faculty_international}}</td>
                                     </tr>
-                                    @endforeach
+                                    @endisset
                                 </tbody>
                                 <tfoot></tfoot>
                               

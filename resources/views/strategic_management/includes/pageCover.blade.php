@@ -5,7 +5,7 @@
                         <p style="text-align: justify; margin-left: 10%;">
                             Name of University: <span style="font-size: 12px;">{{$docHeaderData->campus->business_school->name??''}}</span>
                         <br>Name of Business School: <span style="font-size: 12px;">{{$docHeaderData->department->name??''}}</span>
-                        <br>Program(s) for Review: <span style="font-size: 12px;"> @foreach($programsUnderReview as $program) {{$program->program->name}}, @endforeach</span>
+                        <br>Program(s) for Review: <span style="font-size: 12px;"> @foreach($app_Received as $program) {{$program->programName}}, @endforeach</span>
                         <br>Submission date:  <span style="font-size: 12px;">{{$docHeaderData->registration_date??''}}</span>
                         </p>
                     </div>

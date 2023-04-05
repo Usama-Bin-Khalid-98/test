@@ -43,41 +43,76 @@ class FacultyStudentRatioController extends Controller
 
         $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
         $getFTE = FacultyTeachingCources::with('faculty_program')
-            ->where('lookup_faculty_type_id' , 1)
+            ->where('campus_id', $campus_id)
+            ->where('department_id', $department_id)
+            ->where('type', $slip? 'SAR':'REG')
             ->where('deleted_at', null)
-            ->orWhere('lookup_faculty_type_id', 2)
+            ->where(function($query){
+                $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
+            })
             ->get();
-
+        // dd($ratios);
         $totalFTE = 0;
+        $byProgramFTE = [];
         if($getFTE){
             foreach ($getFTE as $val)
             {
                 foreach ($val->faculty_program as $key => $progs)
                 {
-                    $totalFTE += $progs->tc_program/$val->max_cources_allowed;
+                    if(count($byProgramFTE) == 0){
+                        $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                    }else{
+                        if(array_key_exists($progs->program_id, $byProgramFTE)){
+                            $byProgramFTE[$progs->program_id] = $byProgramFTE[$progs->program_id] + round($progs->tc_program/$val->max_cources_allowed, 2);
+                        }else{
+                            $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                        }
+                    }
                 }
             }
-            $totalFTE = round($totalFTE, 2);
         }
+        
 
         $getVFE = FacultyTeachingCources::with('faculty_program')
             ->where('lookup_faculty_type_id' , 3)
+            ->where('campus_id', $campus_id)
+            ->where('department_id', $department_id)
+            ->where('type', $slip? 'SAR':'REG')
             ->where('deleted_at', null)
             ->get();
-
         $totalVFE = 0;
+        $byProgramVFE = [];
         if($getVFE){
             foreach ($getVFE as $vfe)
             {
                 foreach ($vfe->faculty_program as $key => $prog)
                 {
-                    $totalVFE += $prog->tc_program/$vfe->max_cources_allowed;
+                    if(count($byProgramVFE) == 0){
+                        if(intval($vfe->max_cources_allowed) > 0){
+                            $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                        }else{
+                            $byProgramVFE[$prog->program_id] = round($prog->tc_program, 2);
+                        }
+                    }else{
+                        if(array_key_exists($prog->program_id, $byProgramVFE)){
+                            if(intval($vfe->max_cources_allowed) > 0){
+                                $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            }else{
+                                $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program, 2);
+                            }
+                        }else{
+                            if(intval($vfe->max_cources_allowed) > 0){
+                                $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            }else{
+                                $byProgramVFE[$prog->program_id] = round($prog->tc_program, 2);
+                            }
+                        }
+                    }
                 }
             }
-            $totalVFE = round($totalFTE/3, 2);
-            //dd($totalVFE);
         }
-         return view('registration.faculty.faculty_student_ratio', compact('programs','ratios', 'totalFTE', 'totalVFE'));
+        // dd($byProgramFTE);
+         return view('registration.faculty.faculty_student_ratio', compact('programs','ratios', 'byProgramFTE', 'byProgramVFE'));
     }
 
     /**

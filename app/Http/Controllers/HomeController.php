@@ -23,6 +23,7 @@ use App\BusinessSchool;
 use App\Models\Faculty\FacultyGender;
 use App\Models\Common\Program;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ChangeResgistrationStatusMail;
 
 class HomeController extends Controller
 {
@@ -273,11 +274,9 @@ class HomeController extends Controller
 
         $businessSchools = Slip::with('campus', 'department')
             ->where(['status' =>'approved', 'regStatus'=>'SAR'])->get();
-
         $profileSheet = Slip::with('campus', 'department')
             ->where(['business_school_id'=>Auth::user()->campus_id,
                 'department_id'=>Auth::user()->department_id])->first();
-
         $travel_plan = Slip::where('id', @$PeerReviewVisit[0]->id)->get()->first();
 //        dd($travel_plan);
         $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();
@@ -421,9 +420,15 @@ class HomeController extends Controller
                 Mail::send('registration.mail.reg_apply_temp', ['data'=>$data], function($message) use ($mailInfo) {
                     //dd($user);
                     $message->to($mailInfo['to'],$mailInfo['to_name'] )
-                        ->subject('Apply For Registration - '. $mailInfo['school']);
+                        ->subject('Registration Application Submitted');
                     $message->from($mailInfo['from'],$mailInfo['from_name']);
                 });
+                
+                $data['user'] = $businessSchool->campus->user->name;
+                $data['department'] = $businessSchool->department->name;
+                $data['campus'] = $businessSchool->campus->location;
+
+                Mail::to($businessSchool->campus->user->email)->send(new ChangeResgistrationStatusMail($data));
 
                 return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
             }

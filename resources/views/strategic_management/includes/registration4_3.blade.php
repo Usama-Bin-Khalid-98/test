@@ -31,6 +31,7 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                     </tr>
                                     @php
                                         $totalFTE1=$totalFTE2=$counter=$totalPrograms=0;
+                                        $arr = [];
                                     @endphp
                                     @foreach($facultyTeachingCourses as $data)
                                     <tr>
@@ -50,6 +51,15 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
 
                                         @php
                                         foreach (@$data->faculty_program as $programRow)
+                                            if(empty($arr)){
+                                                $arr[$programRow->program->name] = [round($programRow->tc_program/$data->max_cources_allowed, 2)];
+                                            }else{
+                                                if(array_key_exists($programRow->program->name,$arr)){
+                                                    array_push($arr[$programRow->program->name],round($programRow->tc_program/$data->max_cources_allowed, 2));
+                                                }else{
+                                                    $arr[$programRow->program->name] = [round($programRow->tc_program/$data->max_cources_allowed, 2)];   
+                                                }
+                                            }
                                             $totalFTE2+=$programRow->tc_program/$data->max_cources_allowed;
                                             $totalPrograms+=$data->max_cources_allowed;
                                         @endphp
@@ -58,13 +68,9 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
 
                                     <tr>
                                         <td colspan="5">Total FTE</td>
-                                        @if(!empty($data->faculty_program))
-                                        @foreach(@$data->faculty_program as $program )
-                                            <td>
-                                                {{round($totalFTE2, 2)}}
-                                            </td>
+                                        @foreach($arr as $program_total)
+                                            <td>Program Total: {{array_sum($program_total)}}</td>
                                         @endforeach
-                                        @endif
                                     </tr>
 
                                    @php

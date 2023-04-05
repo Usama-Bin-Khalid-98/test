@@ -172,9 +172,11 @@ class StrategicPlanController extends Controller
         }
 
         try {
-
+            @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
             StrategicPlan::where('id', $strategicPlan->id)->update([
-                'plan_period' => $request->plan_period,
+                'plan_period' => $period,
+                'plan_period_from' => $request->plan_period,
+                'plan_period_to' => $request->plan_period_to,
                 'aproval_date' => $request->aproval_date,
                 'aproving_authority' => $request->aproving_authority,
                 'status' => $request->status,

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use phpseclib3\Crypt\RC2;
 use Session;
 class LoginController extends Controller
 {
@@ -50,14 +52,38 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    protected function credentials(Request $request)
+    // protected function credentials(Request $request)
+    // {
+    //     Session::flash('message', "Your account is not activated or.");
+    //     return [
+    //         'email' => $request->{$this->username()},
+    //         'password' => $request->password,
+    //         'status' => 'active',
+    //     ];
+    // }
+    
+    public function login(Request $request)
     {
-        Session::flash('message', "Your account is not activated or.");
-        return [
-            'email' => $request->{$this->username()},
-            'password' => $request->password,
-            'status' => 'active',
-        ];
+        $this->validate($request, [
+            'email' => 'required|email', 'password' => 'required',
+        ]);
+
+        $credentials = $this->credentials($request);
+        // This section is the only change
+        if (Auth::validate($credentials)) {
+            $user = Auth::getLastAttempted();
+            if ($user->status == "active") {
+                Auth::login($user, $request->has('remember'));
+                return redirect()->route('home');
+            } else {
+                Session::flash('message', "Your account is not activated.");
+                return redirect()->back();
+            }
+        }
+        
+        Session::flash('message', "Invalid Credentials, Your credentials does not match.");
+        return redirect()->back();
+
     }
 
 }

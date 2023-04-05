@@ -41,9 +41,6 @@ Route::get('/email', function() {
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('admin', 'DashboardController@index');
     Route::get('submitSAR', 'PrintController@submitSAR');
-    Route::get('profile', 'Auth\UserController@profile');
-    Route::post('profile/update', 'Auth\UserController@update_profile');
-    Route::post('profile/updatePassword', 'Auth\UserController@updatePassword');
 
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
         ////// Users permissions
@@ -99,6 +96,10 @@ Route::get('/email', function() {
                 Route::resource('summarize-policy', 'SummarizePolicyController');
 
             });
+
+    //        Route::resource('print','PrintController');
+    //        Route::resource('registrationPrint','RegistrationPrintController');
+
 
             // Curriculum
             Route::resource('program-portfolio','ProgramPortfolioController');
@@ -215,8 +216,6 @@ Route::get('/email', function() {
             Route::get('peer-review-details/{id}', 'PeerReviewReportController@peer_review_details');
             Route::post('bs_feedback_PRR', 'StrategicManagement\SlipController@bs_feedback_prr');
 
-            Route::get('apply-registration', 'HomeController@getApplyForm');
-
 
         });
 
@@ -260,7 +259,6 @@ Route::get('/email', function() {
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
             Route::get('PeerReviewerAvailability', 'SchedulePeerReviewController@peerAvailability');
             Route::get('sar-files/{cid?}', 'SARDeskReviewController@sar_files');
-            Route::get('reg-files/{cid?}', 'DeskReviewController@reg_files');
 
 
         });
@@ -269,7 +267,6 @@ Route::get('/email', function() {
             Route::get('invoicesList', 'StrategicManagement\SlipController@invoicesList');
             Route::get('mentoring-invoices', 'MentoringInvoiceController@index');
             Route::get('strategic/invoice/{id}','StrategicManagement\SlipController@invoice');
-            Route::get('strategic/print/{id}','StrategicManagement\SlipController@invoicePrint');
             Route::get('mentoringInvoice/{id}','MentoringInvoiceController@invoice');
             Route::post('generateMentoringInvoice','MentoringInvoiceController@generateInvoice');
             Route::put('updateMentoringInvoice/{id}','MentoringInvoiceController@update');
@@ -333,7 +330,8 @@ Route::get('/email', function() {
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
-            Route::resource('sar-desk-review', 'SARDeskReviewController');
+            Route::resource('sar-desk-review', 'SARDes
+            kReviewController');
             Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
 
 

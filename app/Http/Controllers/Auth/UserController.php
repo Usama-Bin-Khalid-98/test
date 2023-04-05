@@ -347,7 +347,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-             User::destroy($id);
+            User::where('id',$id)->first()->forceDelete();
                 return response()->json(['success' => 'Record deleted successfully.']);
          }catch (Exception $e)
              {

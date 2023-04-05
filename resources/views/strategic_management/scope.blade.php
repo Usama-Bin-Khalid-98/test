@@ -25,16 +25,16 @@
                 <li class="active">Provide scope of accreditation </li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-                           data-toggle="modal" data-target="#add-modal"
-                           style="color: white;"
-                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+        <!--<section class="content-header">-->
+        <!--    <div class="col-md-12 new-button">-->
+        <!--        <div class="pull-right">-->
+        <!--            <button class="btn gradient-bg-color"-->
+        <!--                   data-toggle="modal" data-target="#add-modal"-->
+        <!--                   style="color: white;"-->
+        <!--                   value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</section>-->
 
         {{--Dean section --}}
         <section class="content">
@@ -70,8 +70,27 @@
                                             <option value="{{$program->id}}" {{$program->id==old('program_id')?'selected':''}}>{{$program->name}}</option>
 {{--                                        @endif--}}
                                                 @endforeach
-                                        <option>Other</option>
+                                        <option value="other">Other</option>
                                         </select>
+                                </div>
+                            </div>
+                            <div class="hide other-field">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="other">Enter Degree Name</label>
+                                        <input type="text" name="other_name" id="other_name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="discipline">Select Discipline</label>
+                                        <select name="discipline_id" id="discipline_id" class="form-control select2">
+                                            <option disabled selected>Select One</option>
+                                            @foreach($disciplines as $discipline)
+                                                <option value="{{$discipline->id}}">{{$discipline->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
@@ -137,10 +156,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                <!--<div class="btn-group">-->
+                                <!--    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                <!--        <i class="fa fa-file-pdf-o"></i></button>-->
+                                <!--</div>-->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -230,7 +249,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Date of Program commencement</label>
-                                <input type="date" id="edit_date_program" value="{{old('date_program')}}" class="form-control">
+                                <input type="text" id="edit_date_program" class="form-control">
                                 <input type="hidden" id="id">
                             </div>
                         </div>
@@ -263,17 +282,32 @@
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">
-
+        $("#program_id").on('change', function (e) {
+            if(this.options[this.selectedIndex].text == "Other"){
+                $(".other-field").removeClass('hide');
+            }else{
+                $(".other-field").addClass('hide');
+            }
+        })
         //Initialize Select2 Elements
         $('.select2').select2();
         $('#date_program').datepicker({
@@ -291,6 +325,8 @@
             let program_id = $('#program_id').val();
             let level_id = $('#level_id').val();
             let date_program = $('#date_program').val();
+            let other_name = $("#other_name").val();
+            let discipline_id = $("#discipline_id").val();
 
             !program_id?addClass('program_id'):removeClass('program_id');
             !level_id?addClass('level_id'):removeClass('level_id');
@@ -304,7 +340,7 @@
                 $.ajax({
                     url:'{{url("strategic/scope")}}',
                     type:'POST',
-                    data: {program_id:program_id,level_id:level_id, date_program:date_program},
+                    data: {program_id:program_id,level_id:level_id, date_program:date_program, other_name:other_name, discipline_id: discipline_id},
                     beforeSend: function(){
                         Notiflix.Loading.Pulse('Processing...');
                     },
@@ -336,9 +372,12 @@
             // Initialize Select2
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_level_id').select2().val(data.level_id).trigger('change');
-            // $('#edit_date_program').val(data.date_program);
-
-            $('#edit_date_program').datepicker("setDate", new Date(18,12,2020) );
+            document.getElementById('edit_date_program').value = data.date_program;
+            $('#edit_date_program').datepicker({
+                autoclose:true
+            });
+            // $( "#edit_date_program" ).datepicker().val(data.date_program);
+            // $('#edit_date_program').datepicker("setDate", data.date_program );
 
             $('#id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');

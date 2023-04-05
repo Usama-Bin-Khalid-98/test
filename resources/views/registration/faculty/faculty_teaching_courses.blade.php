@@ -30,14 +30,22 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">4.3 Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table 4.3a.</h3>
+                            <h3 class="box-title">
+                                @if( Request::segment(1) == 'faculty-teaching')
+                                    4.3 Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table 4.3a.
+                                @endif
+
+                                @if( Request::segment(1) == 'visiting_faculty')
+                                        4.3b Provide data for Visiting Faculty Equivalent (VFE) of last year in table 4.3.b for the program under review.
+                                @endif
+                            </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                <!--<div class="btn-group">-->
+                                <!--    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                <!--        <i class="fa fa-file-pdf-o"></i></button>-->
+                                <!--</div>-->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -143,7 +151,15 @@
 
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">4.3(a) FTE for the permanent, regular and adjunct faculty in program(s)</h3>
+                            <h3 class="box-title">
+                                @if( Request::segment(1) == 'faculty-teaching')
+                                    4.3 Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table 4.3a.
+                                @endif
+
+                                @if( Request::segment(1) == 'visiting_faculty')
+                                        4.3b Provide data for Visiting Faculty Equivalent (VFE) of last year in table 4.3.b for the program under review.
+                                @endif
+                            </h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -170,7 +186,7 @@
 
                                 @php
                                 $totalFTE =0; @endphp
-
+                                @php $arr = [] @endphp
                                 @foreach(@$visitings as $req)
                                 <tr>
 {{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
@@ -178,13 +194,42 @@
                                     <td>{{@$req->lookup_faculty_type->faculty_type}}</td>
                                     <td>{{@$req->designation->name}}</td>
                                     <td>{{@$req->max_cources_allowed}}</td>
-
+                                        @php $r = 0 @endphp
                                         @foreach(@$req->faculty_program as $program )
+                                        @php
+                                            if(empty($arr)){
+                                                if(intval($req->max_cources_allowed) > 0){
+                                                    $arr[$program->program->name] = [round($program->tc_program/$req->max_cources_allowed, 2)];
+                                                }else{
+                                                    $arr[$program->program->name] = [round($program->tc_program, 2)];
+                                                }
+                                            }else{
+                                                if(array_key_exists($program->program->name,$arr)){
+                                                    if(intval($req->max_cources_allowed) > 0){
+                                                        array_push($arr[$program->program->name],round($program->tc_program/$req->max_cources_allowed, 2));
+                                                    }else{
+                                                        array_push($arr[$program->program->name],round($program->tc_program, 2));
+                                                    }
+                                                }else{
+                                                    if(intval($req->max_cources_allowed) > 0){
+                                                        $arr[$program->program->name] = [round($program->tc_program/$req->max_cources_allowed, 2)];   
+                                                    }else{
+                                                        $arr[$program->program->name] = [round($program->tc_program, 2)];   
+                                                    }
+                                                }
+                                            }
+                                        @endphp
                                         <td>
                                             Courses: {{@$program->tc_program}} <br>
                                             @if(@$req->lookup_faculty_type->faculty_type == 'Visiting')
-                                            Program VFE: @else Program FTE:  @endif {{round($program->tc_program/$req->max_cources_allowed, 2)}}
-                                            @php $totalFTE += $program->tc_program/$req->max_cources_allowed; @endphp
+                                            Program VFE: @else Program FTE:  @endif @if(intval($req->max_cources_allowed) > 0) {{round($program->tc_program/$req->max_cources_allowed, 2)}} @else {{round($program->tc_program, 2)}} @endif
+                                            @php
+                                                if(intval($req->max_cources_allowed) > 0){
+                                                    $totalFTE += $program->tc_program/$req->max_cources_allowed; 
+                                                }else{
+                                                    $totalFTE += $program->tc_program; 
+                                                }
+                                            @endphp
                                         </td>
                                         @endforeach
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
@@ -199,16 +244,17 @@
                                 <tr>
                                     @if(@$visitings[0]->lookup_faculty_type->faculty_type == 'Visiting')
                                     <th colspan="4" align="center">Total VFE</th>
-                                    <th>Total VFE: {{round($totalFTE/3, 2)}}</th>
+                                    <!-- <th>Total VFE: {{round($totalFTE/3, 2)}}</th> -->
                                     @else
                                         <th colspan="4" align="center">Total FTE</th>
-                                        <th>Total FTE: {{(round($totalFTE, 2))}}</th>
+                                        <!-- <th>Total FTE: {{(round($totalFTE, 2))}}</th> -->
                                     @endif
-                                    @foreach(@$visitings as $req)
-                                        @foreach(@$req->faculty_program as $program )
-                                            <th> </th>
-                                        @endforeach
-                                        @break
+                                    @foreach($arr as $program_total)
+                                        @if(@$visitings[0]->lookup_faculty_type->faculty_type == 'Visiting')
+                                            <th>Program Total: {{number_format(array_sum($program_total) / 3, 2)}}</th>
+                                        @else
+                                            <th>Program Total: {{array_sum($program_total)}}</th>
+                                        @endif
                                     @endforeach
                                 </tr>
                                 <tr>
@@ -330,13 +376,22 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">
@@ -350,7 +405,7 @@
         });
 let check = false;
          $('#form').submit(function (e) {
-            // let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
+            let lookup_faculty_type_id = $('#lookup_faculty_type_id').val();
             // let designation_id = $('#designation_id').val();
             // let max_cources_allowed = $('#max_cources_allowed').val();
             //
@@ -370,6 +425,13 @@ let check = false;
             //     return;
             // }
             // Yes button callback
+            if(document.getElementById('file').files.length < 1){
+                if(!lookup_faculty_type_id )
+                {
+                    Notiflix.Notify.Warning("Fill all the required Fields.");
+                    return;
+                }
+            }
             e.preventDefault();
             var formData = new FormData(this);
 
@@ -414,7 +476,7 @@ let check = false;
             $('#edit_max_cources_allowed').val(data.max_cources_allowed);
             let tc_program_name = "tc_program"+""+data.id;
             console.log(('tc program name', data.tc_program1));
-            $('#edit_tc_program').val(data.tc_program1);
+            $('#edit_tc_program').val(data.tc_program3);
             // $('#edit_tc_program2').val(data.tc_program2);
             $('#edit_name').val(data.name);
             $('#edit_id').val(data.id);

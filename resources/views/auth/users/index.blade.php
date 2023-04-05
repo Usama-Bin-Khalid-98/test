@@ -220,7 +220,7 @@
 {{--                                        <td>{{$contact->school_contact}}</td>--}}
 {{--                                        <td><a href="{{url($contact->cv)}}"><i class="fa fa-file-word-o"></i></a> </td>--}}
                                         <td>
-                                            <i class="badge {{$user->status == 'active'?'bg-green':'bg-red'}}">{{$user->status == 'active'?'Active':'Inactive'}}</i>
+                                            <i data-id="{{@$user->id}}" class="badge status {{$user->status == 'active'?'bg-green':'bg-red'}}">{{$user->status == 'active'?'Active':'Inactive'}}</i>
                                         </td>
                                         <td>
                                             <!-- <i class="fa fa-check-square permissions" data-toggle="modal" data-target="#permissions-modal" data-row='{"id":{{@$user->id}},"role_id":"{{@$user->roles}}","permissions":"{{@$user->permissions}}"}'> </i> | -->
@@ -452,6 +452,44 @@
         })
     </script>
     <script type="text/javascript">
+        $('.status').on('click', function (e) {
+            var id = $(this).data('id');
+
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
+                function(){
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("admin")}}/'+id,
+                        type:'PATCH',
+                        data: { id:id},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+
+                            location.reload();
+
+                            console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+        });
         //Initialize Select2 Elements
         $('.select2').select2()
 

@@ -59,6 +59,7 @@ Table 6.2. Business schools’ resources
 
                                     for ($i=0; $i <1; $i++) { if($BIResources)
                                         if($BIResources[$i]->facilityType=="Business School"){
+                                            dd($BIResources[$i]);
                                     ?>
                                     <tr>
                                         <td class="" rowspan="<?php echo $countbusiness; ?>" style="text-align: center;">Business school</td>

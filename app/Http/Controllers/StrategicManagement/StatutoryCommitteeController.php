@@ -28,9 +28,9 @@ class StatutoryCommitteeController extends Controller
         $designations = Designation::all();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
-            $statutory_committees = StatutoryCommittee::with('designation', 'statutory_body')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+            $statutory_committees = StatutoryCommittee::with('statutory_body')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
-            $statutory_committees = StatutoryCommittee::with('designation', 'statutory_body')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+            $statutory_committees = StatutoryCommittee::with('statutory_body')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
         return view('strategic_management.statutory_committee', compact('bodies', 'designations', 'statutory_committees'));
     }
@@ -67,7 +67,7 @@ class StatutoryCommitteeController extends Controller
             }else {
                 $type = 'REG';
             }
-          for($i =0; $i<=count(@$request->all()); $i++)
+          for($i =0; $i<=count(@$request->name); $i++)
           {
 
               $check = StatutoryCommittee::where([
@@ -76,7 +76,7 @@ class StatutoryCommitteeController extends Controller
                   'statutory_body_id' => @$request->statutory_body_id[$i],
                   'name' => @$request->name[$i],
                   'type'=>$type,
-                  'designation_id' => @$request->designation_id[$i]
+                  'designation' => @$request->designation[$i]
               ])->exists();
 //dd($check);
               if(!$check)
@@ -96,7 +96,7 @@ class StatutoryCommitteeController extends Controller
                           'department_id' => Auth::user()->department_id,
                           'statutory_body_id' => $request->statutory_body_id[$i],
                           'name' => $request->name[$i],
-                          'designation_id' => $request->designation_id[$i],
+                          'designation' => $request->designation[$i],
                           'date_first_meeting' => $request->date_first_meeting[$i],
                           'date_second_meeting' => $request->date_second_meeting[$i],
                           'date_third_meeting' => $request->date_third_meeting[$i],
@@ -111,7 +111,7 @@ class StatutoryCommitteeController extends Controller
                           'department_id' => Auth::user()->department_id,
                           'statutory_body_id' => $request->statutory_body_id[$i],
                           'name' => $request->name[$i],
-                          'designation_id' => $request->designation_id[$i],
+                          'designation' => $request->designation[$i],
                           'date_first_meeting' => $request->date_first_meeting[$i],
                           'date_second_meeting' => $request->date_second_meeting[$i],
                           'date_third_meeting' => $request->date_third_meeting[$i],
@@ -192,7 +192,7 @@ class StatutoryCommitteeController extends Controller
             StatutoryCommittee::where('id', $statutoryCommittee->id)->update([
                 'statutory_body_id' => $request->statutory_body_id,
                 'name' => $request->name,
-                'designation_id' => $request->designation_id,
+                'designation' => $request->designation,
                 'date_first_meeting' => $request->date_first_meeting,
                 'date_second_meeting' => $request->date_second_meeting,
                 'date_third_meeting' => $request->date_third_meeting,
@@ -229,7 +229,7 @@ class StatutoryCommitteeController extends Controller
                 "department_id" => $statutoryCommittee->department_id,
                 "statutory_body_id" => $statutoryCommittee->statutory_body_id,
                 "name" => $statutoryCommittee->name,
-                "designation_id" => $statutoryCommittee->designation_id,
+                "designation" => $statutoryCommittee->designation,
                 "date_first_meeting" => $statutoryCommittee->date_first_meeting,
                 "date_second_meeting" => $statutoryCommittee->date_second_meeting,
                 "date_third_meeting" => $statutoryCommittee->date_third_meeting,
@@ -258,7 +258,7 @@ class StatutoryCommitteeController extends Controller
         return [
             'statutory_body_id' => 'required',
             'name' => 'required',
-            'designation_id' => 'required',
+            'designation' => 'required',
             'date_first_meeting' => 'required',
             'date_second_meeting' => 'required',
             'date_third_meeting' => 'required',

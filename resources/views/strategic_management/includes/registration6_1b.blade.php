@@ -44,12 +44,13 @@ Table 6.1. Financial information of the business school
                                       @foreach($financialInfos as $data)
                                       <?php
                                       if($data->particularType=="income"){
-                                        $iyt_3+=$data->year_three;
-                                        $iyt_2+=$data->year_two;
-                                        $iyt_1+=$data->year_one;
-                                        $iyt+=$data->year_t;
-                                        $iyt_p1+=$data->year_t_plus_one;
-                                        $iyt_p2+=$data->year_t_plus_two;
+                                          
+                                        $iyt_3+=floatval($data->year_three);
+                                        $iyt_2+=floatval($data->year_two);
+                                        $iyt_1+=floatval($data->year_one);
+                                        $iyt+=floatval($data->year_t);
+                                        $iyt_p1+=floatval($data->year_t_plus_one);
+                                        $iyt_p2+=floatval($data->year_t_plus_two);
                                         ?><tr>
                                         <td>{{$data->particularType}}</td>
                                         <td>{{$data->particularName}}</td>
@@ -77,12 +78,12 @@ Table 6.1. Financial information of the business school
                                       @foreach($financialInfos as $data)
                                       <?php
                                        if($data->particularType=="expense"){
-                                        $eyt_3+=$data->year_three;
-                                        $eyt_2+=$data->year_two;
-                                        $eyt_1+=$data->year_one;
-                                        $eyt+=$data->year_t;
-                                        $eyt_p1+=$data->year_t_plus_one;
-                                        $eyt_p2+=$data->year_t_plus_two;
+                                        $eyt_3+=floatval($data->year_three);
+                                        $eyt_2+=floatval($data->year_two);
+                                        $eyt_1+=floatval($data->year_one);
+                                        $eyt+=floatval($data->year_t);
+                                        $eyt_p1+=floatval($data->year_t_plus_one);
+                                        $eyt_p2+=floatval($data->year_t_plus_two);
                                         ?><tr>
                                         <td>{{$data->particularType}}</td>
                                         <td>{{$data->particularName}}</td>

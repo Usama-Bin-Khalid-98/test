@@ -350,7 +350,6 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>AOA,</p>
                                         <p></p>
                                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
@@ -372,21 +371,23 @@
                                         <p>Your Account has been activated by the administrator of NBEAC:</p>
                                         <p>Name: {{@$content['name']}}</p>
                                         <p>Designation: {{@$content->designation->name}}</p>
-                                        <p>email: {{@$content['email']}}</p>
-                                        <p>contact No: {{@$content['contact_no']}}</p>
+                                        <p>Email: {{@$content['email']}}</p>
+                                        <p>Contact No: {{@$content['contact_no']}}</p>
                                         <p>Institute: {{@$content->business_school->name}}</p>
                                         <p>Department: {{@$content->department->name}}</p>
                                         <p>Account Type: {{@$content['user_type']}}</p>
                                         {{--<p>address: {{$content['address']}}</p>--}}
                                         <a href="https://app.nbeac.org.pk">Login to Online Accreditation Application.</a>
-                                        <p>With Kind Regards,</p>
-                                        <p>NBEAC</p>
-                                        <p>National Business Education Accreditation Council,</p>
-                                        <p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</p>
-                                        <p>Phone (Off) 92 51 9080 0206-07</p>
-                                        <p>Fax: +92 51 9080 0208</p>
+                                        <p>Regards,</p>
+                                        <p>Mr. Irfan Khan</p>
+                                        <p>Assistant Manager Accreditation,</p>
+                                        <!-- <p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</p> -->
+                                        <p>Phone-I (Off) 92 51 9080 0214</p>
+                                        <p>Phone-II (Cell): +92 333 5126229</p>
+                                        <!-- <p>Fax: +92 51 9080 0208</p> -->
                                         <p>Web: <a href="https://app.nbeac.org.pk"> www.nbeac.org.pk</a></p>
-                                         <p>Best Regards</p>
+                                        <small>*Please do not reply to this email. This is computer generated email</small>
+                                        <small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
                                     </td>
                                 </tr>
                             </table>

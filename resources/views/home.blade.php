@@ -1,3 +1,6 @@
+@php
+$invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
+@endphp
 @section('pageTitle', 'Dashboard')
 
 @if(Auth::user())
@@ -199,7 +202,7 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{url('/users')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -427,7 +430,7 @@
                 <!-- TO DO List -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Business school Membership Requests. </h3>
+                        <h3 class="box-title">Business School Membership Requests. </h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                             </button>
@@ -452,6 +455,7 @@
                                 <th>Contact</th>
                                 <th>Email</th>
                                 {{--                            <th>Invoice Slip</th>--}}
+                                <th>Date</th>
                                 <th>Account Type</th>
                                 <th>Status</th>
                                 {{--                            <th>Action</th>--}}
@@ -469,6 +473,7 @@
                                     <td>{{$user->contact_no}}</td>
                                     <td>{{$user->email}}</td>
                                     {{--                            <td><a href="{{@$user->business_school->slip[0]->slip}}">{{$user->user_type==='peer_review'?'no slip':'Invoice Slip'}}</a></td>--}}
+                                    <td>{{$user->created_at}}</td>
                                     <td>{{$user->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>
                                     <td><i class="badge {{$user->status=='disabled'?'bg-red':''}} status" data-id="{{$user->id}}" style="background: red" >Disabled</i></td>
                                     {{--                            <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>--}}
@@ -484,6 +489,7 @@
                                 <th>Contact Person Name</th>
                                 <th>Contact</th>
                                 <th>Email</th>
+                                <th>Date</th>
                                 {{--                            <th>Invoice Slip</th>--}}
                                 <th>Account Type</th>
                                 <th>Status</th>
@@ -769,7 +775,7 @@
                                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                       <h4><i class="icon fa fa-sticky-note"></i>Note</h4>
                                       <ol type="1">
-
+                                            <li><h5><a href="https://nbeac.org.pk/files/Instruction%20for%20preparation%20of%20online%20application.pdf" target="_blank">Instruction for preparation of online registration application</a></h5></li>
                                           <li><h5>Generate Invoice</h5>
                                               <p>Generate invoice in invoices tab, to change the status of invoice click on the the dollor icon and make it paid. The approvement request will be sent to nbeac admin. </p>
                                               <p>Registration application will be activated once registration Fee invoice will be approved by NBEAC admin</p>
@@ -781,6 +787,9 @@
                                           <li><h5>Apply for registration</h5>
                                               <p>Apply for registration. when complete required forms from strategic management to Facility Information. A registration request will be sent to NBEAC Admin. </p>
                                           </li>
+                                          @if($invoicesIsCompleted==='C')
+                                          <li><h5><a style="background-color:black;color:white" class="btn" href="{{url('strategic/basicinfo')}}">Goto Table 1.1</a></h5></li>
+                                          @endif
                                       </ol>
 
 
@@ -907,6 +916,38 @@
 
 
       </section>
+      <section class="content">
+        <div class="col-lg-4">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Registration Invoice Amount</h3>
+                </div>
+                <div class="box-body">
+                    <h1 style="text-align: center;">Rs. 50,000/-</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h2 class="box-title">Mentoring Invoice Amount</h2>
+                </div>
+                <div class="box-body">
+                    <h2 style="text-align: center;">Rs. 30,000/- (Per Visit)</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h2 class="box-title">Accreditation Invoice Amount</h2>
+                </div>
+                <div class="box-body">
+                    <h2 style="text-align: center;">Rs. 2,50,000/- (Per Program)</h2>
+                </div>
+            </div>
+        </div>
+      </section>
       @if($invoices)
       <section class="col-lg-12 connectedSortable">
 
@@ -950,7 +991,7 @@
                               <td>{{@$invoice_re->department}}</td>
 {{--                              <td><a href="{{@$invoice_re->slip}}">Invoice Slip</a></td>--}}
                               {{--                            <td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
-                              <td><i class="badge" data-id="{{@$invoice_re->id}}"  style="background: {{$invoice_re->regStatus == 'Initiated'?'red':''}}{{$invoice_re->regStatus == 'Review'?'brown':''}}{{$invoice_re->regStatus == 'Approved'?'green':''}}; cursor: default;" >{{@$invoice_re->regStatus != ''?ucwords($invoice_re->regStatus):'Initiated'}} {{$invoice_re->regStatus=='Eligibility'?'Screening':''}}</i></td>
+                              <td><i class="badge" data-id="{{@$invoice_re->id}}"  style="background: {{$invoice_re->regStatus == 'Initiated'?'red':''}}{{$invoice_re->regStatus == 'Review'?'brown':''}}{{$invoice_re->status == 'approved'?'green':''}}; cursor: default;" >{{@$invoice_re->regStatus != ''?ucwords($invoice_re->status):'Initiated'}} {{$invoice_re->regStatus=='Eligibility'?'Screening':''}}</i></td>
 {{--                              <td>@if($invoice_re->regStatus =='Initiated' || $invoice_re->regStatus =='Pending') <button class="btn-xs btn-info apply" name="apply" id="apply" data-id="{{@$invoice_re->id}}" data-row="{{@$invoice_re->department_id}}"> Apply Now </button>  @elseif($invoice_re->regStatus =='Review')Desk Review In-progress @endif</td>--}}
                           </tr>
                       @endforeach

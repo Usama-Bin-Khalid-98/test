@@ -29,6 +29,7 @@ use App\Models\Faculty\FacultyGender;
 use App\Models\Faculty\FacultyPromotion;
 use App\Models\Faculty\FacultySummary;
 use App\Models\Faculty\FacultyTeachingCources;
+use App\Models\Faculty\FacultyStudentRatio;
 use App\Models\Faculty\VisitingFaculty;
 use App\Models\Faculty\FacultyStability;
 use App\Models\Faculty\WorkLoad;
@@ -162,7 +163,9 @@ class DeskReviewController extends Controller
             ->where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG'])
             ->get();
 //dd($application_received);
-        $student_enrolment = StudentEnrolment::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG', 'deleted_at' => Null ])->get();
+        $student_enrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND student_enrolments.type="REG" AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($campus_id));
+        // $student_enrolment = StudentEnrolment::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG', 'deleted_at' => Null ])->get();
+        // dd($student_enrolment);
         $graduated_students = StudentsGraduated::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG'])->get();
 
         $getYears = BusinessSchoolTyear::where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
@@ -179,7 +182,8 @@ class DeskReviewController extends Controller
 
 //        dd($faculty_summary);
 //        dd($faculty_summary);
-        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1, 'type'=>'REG'])->get()->count();
+        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1, 'type'=>'REG'])->get()->sum('number_faculty');
+        // dd($faculty_summary_doc);
 
         $getFullProfessors = FacultyTeachingCources::where(
             ['status' => 'active',
@@ -242,8 +246,8 @@ class DeskReviewController extends Controller
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
                     'lookup_faculty_type_id'=>2, 'type'=>'REG'])
-            ->count();
-        $faculty_degree = FacultyDegree::get()->first();
+            ->first()->female;
+        $faculty_degree = FacultyDegree::where(['campus_id' => $campus_id, "department_id" => $department_id])->get()->first();
         $total_induction = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('new_induction');
         $faculty_terminated = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('terminated');
         $faculty_resigned = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('resigned');
@@ -260,7 +264,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> 10, 'type'=>'REG'
+                'designation'=> 'Professor', 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
 
@@ -269,7 +273,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> 1, 'type'=>'REG'
+                'designation'=> 'Associate Professor', 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
 
@@ -278,7 +282,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> 2, 'type'=>'REG'
+                'designation'=> 'Assistant Professor', 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
 
@@ -287,7 +291,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> 6, 'type'=>'REG'
+                'designation'=> 'Lecturer', 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
 
@@ -415,6 +419,123 @@ class DeskReviewController extends Controller
 //        dd($desk_reviews);
         $desk_reviews_report = DeskReview::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 
+        $where = ['campus_id'=> $campus_id, 'department_id'=> $department_id, 'type' => 'REG'];
+        
+        $facultyTeachingCourses = FacultyTeachingCources::
+        with('campus','lookup_faculty_type','designation', 'faculty_program')
+        ->where($where)->get();
+        
+        $fte_program_wise = [];
+        
+        foreach($facultyTeachingCourses as $data){
+            foreach(@$data->faculty_program as $programRow){
+                if(empty($fte_program_wise)){
+                    $fte_program_wise[$programRow->program->name] = [round($programRow->tc_program/$data->max_cources_allowed, 2)];
+                }else{
+                    if(array_key_exists($programRow->program->name,$fte_program_wise)){
+                        array_push($fte_program_wise[$programRow->program->name],round($programRow->tc_program/$data->max_cources_allowed, 2));
+                    }else{
+                        $fte_program_wise[$programRow->program->name] = [round($programRow->tc_program/$data->max_cources_allowed, 2)];   
+                    }
+                }
+            }
+        }
+        
+        $whereb = ['campus_id'=> $campus_id,'department_id'=>$department_id,  'type' => 'REG', 'lookup_faculty_type_id' => 3];
+        $facultyTeachingCourses4b = FacultyTeachingCources::
+         with('campus','lookup_faculty_type','designation', 'faculty_program')
+            ->where($whereb)->get();
+            
+        $totalFTE2 = 0;
+            
+        $vfe_program_wise = [];
+        foreach($facultyTeachingCourses4b as $data){
+            foreach ($data->faculty_program as $programRow){
+                $totalFTE2 += $programRow->tc_program / $data->max_cources_allowed;
+            }
+            foreach($data->faculty_program as $program)
+            {
+                if(empty($vfe_program_wise)){
+                    $vfe_program_wise[$program->program->name] = [round($totalFTE2 / 3, 2)];
+                }else{
+                    if(array_key_exists($program->program->name,$vfe_program_wise)){
+                        array_push($vfe_program_wise[$program->program->name], round($totalFTE2 / 3, 2));
+                    }else{
+                        $vfe_program_wise[$program->program->name] = [round($totalFTE2 / 3, 2)];
+                    }
+                }
+            }
+        }
+        
+        $facultyStudentRatio = FacultyStudentRatio::with('campus','program')
+                ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+                ->where('type','REG')
+                ->where('deleted_at',null)
+                ->get();
+            
+        $getFTE = FacultyTeachingCources::with('faculty_program')->where('deleted_at', null)
+                    ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+                    ->where('type', 'REG')
+                    ->get();
+        $byProgramFTE = [];
+        if($getFTE){
+            foreach ($getFTE as $val)
+            {
+                foreach ($val->faculty_program as $key => $progs)
+                {
+                    if(count($byProgramFTE) == 0){
+                        $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                    }else{
+                        if(array_key_exists($progs->program_id, $byProgramFTE)){
+                            $byProgramFTE[$progs->program_id] = $byProgramFTE[$progs->program_id] + round($progs->tc_program/$val->max_cources_allowed, 2);
+                        }else{
+                            $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                        }
+                    }
+                }
+            }
+        }
+        
+
+        $getVFE = FacultyTeachingCources::with('faculty_program')
+            ->where('lookup_faculty_type_id' , 3)
+            ->where('campus_id', $campus_id)
+            ->where('department_id', $department_id)
+            ->where('type', 'REG')
+            ->where('deleted_at', null)
+            ->get();
+
+        $byProgramVFE = [];
+        if($getVFE){
+            foreach ($getVFE as $vfe)
+            {
+                foreach ($vfe->faculty_program as $key => $prog)
+                {
+                    if(count($byProgramVFE) == 0){
+                        $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                    }else{
+                        if(array_key_exists($prog->program_id, $byProgramVFE)){
+                            $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                        }else{
+                            $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                        }
+                    }
+                }
+            }
+        }
+        
+        $teacher_student_ratio = 0;
+        foreach($facultyStudentRatio as $req){
+            (isset($byProgramFTE[$req->program_id], $byProgramVFE[$req->program_id]) && $byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]) != 0 ? $teacher_student_ratio = (round($req->total_enrollments/($byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]), 2))."%" : $teacher_student_ratio = "0%"; 
+        }
+        
+        $facultyStability = DB::select('SELECT faculty_stability.*
+                FROM faculty_stability
+                WHERE faculty_stability.type="REG"
+                  AND faculty_stability.department_id=?
+                  AND faculty_stability.campus_id=?', array($department_id, $campus_id));
+        
+        
         return view('desk_review.desk_review', compact(
             'program_dates','faculty_summary_full',
             'mission_vision',
@@ -451,7 +572,11 @@ class DeskReviewController extends Controller
             'total_courses_prof',
             'total_courses_assis',
             'total_courses_assoc',
-            'total_courses_lec'
+            'total_courses_lec',
+            'fte_program_wise',
+            'vfe_program_wise',
+            'teacher_student_ratio',
+            'facultyStability',
         ));
     }
     /**

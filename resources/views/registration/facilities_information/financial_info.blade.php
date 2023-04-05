@@ -37,10 +37,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                <!--<div class="btn-group">-->
+                                <!--    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                <!--        <i class="fa fa-file-pdf-o"></i></button>-->
+                                <!--</div>-->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -140,15 +140,28 @@
                                 <tbody>
                                     @php
                                         $year3 = $year2 =  $year1 = $year_t = $year_t_plus = $year_t_plus_two = 0 ;
+                                        //dd($infos);
                                     @endphp
                                     @foreach($infos as $summary)
                                         @php
-                                            $year3 += $summary->year_three;
-                                            $year2 += $summary->year_two;
-                                            $year1 += $summary->year_one;
-                                            $year_t += $summary->year_t;
-                                            $year_t_plus += $summary->year_t_plus_one;
-                                            $year_t_plus_two += $summary->year_t_plus_two;
+                                            if(is_numeric(str_replace(",","",$summary->year_three))){
+                                                $year3 += str_replace(",","",$summary->year_three);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary->year_two))){
+                                                $year2 += str_replace(",","",$summary->year_two);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary->year_one))){
+                                                $year1 += str_replace(",","",$summary->year_one);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary->year_t))){
+                                                $year_t += str_replace(",","",$summary->year_t);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary->year_t_plus_one))){
+                                                $year_t_plus += str_replace(",","",$summary->year_t_plus_one);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary->year_t_plus_two))){
+                                                $year_t_plus_two += str_replace(",","",$summary->year_t_plus_two);
+                                            }
                                         @endphp
                                 <tr>
 {{--                                    <td>{{$summary->campus->business_school->name}}</td>--}}
@@ -167,12 +180,12 @@
 
                                 <tr style="background-color: #8B98AB">
                                     <th >TOTAL REVENUE (A)</th>
-                                    <th>{{$year3}}</th>
-                                    <th>{{$year2}}</th>
-                                    <th>{{$year1}}</th>
-                                    <th>{{$year_t}}</th>
-                                    <th>{{$year_t_plus}}</th>
-                                    <th>{{$year_t_plus_two}}</th>
+                                    <th>{{number_format($year3)}}</th>
+                                    <th>{{number_format($year2)}}</th>
+                                    <th>{{number_format($year1)}}</th>
+                                    <th>{{number_format($year_t)}}</th>
+                                    <th>{{number_format($year_t_plus)}}</th>
+                                    <th>{{number_format($year_t_plus_two)}}</th>
                                     <th colspan="2"></th>
                                 </tr>
 
@@ -181,12 +194,24 @@
                                     @endphp
                                     @foreach($infos_expense as $summary_expense)
                                         @php
-                                            $exp_year3 += $summary_expense->year_three;
-                                            $exp_year2 += $summary_expense->year_two;
-                                            $exp_year1 += $summary_expense->year_one;
-                                            $exp_year_t += $summary_expense->year_t;
-                                            $exp_year_t_plus += $summary_expense->year_t_plus_one;
-                                            $exp_year_t_plus_two += $summary_expense->year_t_plus_two;
+                                            if(is_numeric(str_replace(",","",$summary_expense->year_three))){
+                                                $exp_year3 += str_replace(",","",$summary_expense->year_three);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary_expense->year_two))){
+                                                $exp_year2 += str_replace(",","",$summary_expense->year_two);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary_expense->year_one))){
+                                                $exp_year1 += str_replace(",","",$summary_expense->year_one);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary_expense->year_t))){
+                                                $exp_year_t += str_replace(",","",$summary_expense->year_t);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary_expense->year_t_plus_one))){
+                                                $exp_year_t_plus += str_replace(",","",$summary_expense->year_t_plus_one);
+                                            }
+                                            if(is_numeric(str_replace(",","",$summary_expense->year_t_plus_two))){
+                                                $exp_year_t_plus_two += str_replace(",","",$summary_expense->year_t_plus_two);
+                                            }
                                         @endphp
                                 <tr>
 {{--                                    <td>{{$summary_expense->campus->business_school->name}}</td>--}}
@@ -205,16 +230,27 @@
 
                                 <tr style="background-color: #8B98AB">
                                     <th>TOTAL EXPENSES (B)</th>
-                                    <th>{{$exp_year3}}</th>
-                                    <th>{{$exp_year2}}</th>
-                                    <th>{{$exp_year1}}</th>
-                                    <th>{{$exp_year_t}}</th>
-                                    <th>{{$exp_year_t_plus}}</th>
-                                    <th>{{$exp_year_t_plus_two}}</th>
+                                    <th>{{number_format($exp_year3)}}</th>
+                                    <th>{{number_format($exp_year2)}}</th>
+                                    <th>{{number_format($exp_year1)}}</th>
+                                    <th>{{number_format($exp_year_t)}}</th>
+                                    <th>{{number_format($exp_year_t_plus)}}</th>
+                                    <th>{{number_format($exp_year_t_plus_two)}}</th>
                                     <th colspan="2"></th>
                                 </tr>
                                 </tbody>
                                 <tfoot>
+                                     <tr>
+                                        <th>Difference (A-B)</th>
+                                        <th>{{number_format($year3 - $exp_year3)}}</th>
+                                        <th>{{number_format($year2 - $exp_year2)}}</th>
+                                        <th>{{number_format($year1 - $exp_year1)}}</th>
+                                        <th>{{number_format($year_t - $exp_year_t)}}</th>
+                                        <th>{{number_format($year_t_plus - $exp_year_t_plus)}}</th>
+                                        <th>{{number_format($year_t_plus_two - $exp_year_t_plus_two)}}</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
                                 <tr>
 {{--                                    <th>Business School</th>--}}
 {{--                                    <th>Campus</th>--}}
@@ -331,13 +367,22 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">

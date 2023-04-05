@@ -227,6 +227,7 @@
                             <th>Email</th>
 {{--                            <th>Invoice Slip</th>--}}
                             <th>Account Type</th>
+                            <th>Amount</th>
                             <th>Status</th>
 {{--                            <th>Action</th>--}}
                         </tr>

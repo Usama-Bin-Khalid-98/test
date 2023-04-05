@@ -54,8 +54,8 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
+                                    <!--<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--    <i class="fa fa-file-pdf-o"></i></button>-->
                                 </div>
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
@@ -82,6 +82,14 @@
                                          <option value="{{$years['yeart']}}">{{ $years['yeart']}}</option>
                                          <option value="{{$years['year_t_1']}}">{{ $years['year_t_1']}}</option>
                                          <option value="{{$years['year_t_2']}}">{{ $years['year_t_2']}}</option>
+                                     </select>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                     <label for="semester">Select Semester</label>
+                                     <select name="semester" id="semester" class="form-control select2">
+                                         <option selected disabled>Select Semester</option>
+                                         <option value="Fall">Fall</option>
+                                         <option value="Spring">Spring</option>
                                      </select>
                                  </div>
                                <div class="col-md-3">
@@ -151,6 +159,7 @@
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
                                     <th>Year</th>
+                                    <th>Semester</th>
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
@@ -167,12 +176,13 @@
                                     <td>{{$portfolio->campus->location}}</td>
                                     <td>{{$portfolio->program->name}}</td>
                                     <td>{{$portfolio->year}}</td>
+                                    <td>{{$portfolio->semester}}</td>
                                     <td>{{$portfolio->app_received}}</td>
                                     <td>{{$portfolio->admission_offered}}</td>
                                     <td>{{$portfolio->student_intake}}</td>
                                     <td>{{$portfolio->semester_comm_date}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","year":"{{$portfolio->year}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","degree_req":"{{$portfolio->degree_awarding_criteria}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"semester":"{{$portfolio->semester}}","id":"{{$portfolio->id}}","program_id":"{{$portfolio->program_id}}","year":"{{$portfolio->year}}","app_received":"{{$portfolio->app_received}}","admission_offered":"{{$portfolio->admission_offered}}","student_intake":"{{$portfolio->student_intake}}","degree_req":"{{$portfolio->degree_awarding_criteria}}","semester_comm_date":"{{$portfolio->semester_comm_date}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
                                 </tr>
                                 @endforeach
@@ -239,6 +249,17 @@
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Year</label>
+
+                                <select name="semester" id="edit_semester" class="form-control select2" style="width: 100%;">
+                                    <option selected disabled>Select Semester</option>
+                                    <option value="Fall">Fall</option>
+                                    <option value="Spring">Spring</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Applications Received</label>
                                     <input type="text" name="app_received" id="edit_app_received" value="{{old('edit_app_received')}}" class="form-control">
@@ -253,7 +274,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Student Intake</label>
-                                    <textarea name="student_intake" id="edit_student_intake" value="{{old('edit_student_intake')}}" class="form-control"></textarea>
+                                    <input type="number" name="student_intake" id="edit_student_intake" value="{{old('edit_student_intake')}}" class="form-control">
                                 </div>
                             </div>
 
@@ -301,13 +322,42 @@
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
+        })
+        $("#admission_offered").on('change', function (e) {
+            if(parseFloat(document.getElementById('app_received').value) < this.value){
+                Notiflix.Notify.Warning('Application Received Should be greater or equal admission offered');
+            }
+        })
+        $("#student_intake").on('change', function (e) {
+            if(parseFloat(document.getElementById('admission_offered').value) < this.value){
+                Notiflix.Notify.Warning('Student Intake Should be less or equal admission offered');
+            }
+        })
+        $("#edit_admission_offered").on('change', function (e) {
+            if(parseFloat(document.getElementById('edit_app_received').value) < this.value){
+                Notiflix.Notify.Warning('Application Received Should be greater or equal admission offered');
+            }
+        })
+        $("#edit_student_intake").on('change', function (e) {
+            if(parseFloat(document.getElementById('edit_admission_offered').value) < this.value){
+                Notiflix.Notify.Warning('Student Intake Should be less or equal admission offered');
+            }
         })
     </script>
     <script type="text/javascript">
@@ -347,6 +397,14 @@ let check = false;
             if(!program_id || !year || !app_received || !admission_offered || !student_intake || !semester_comm_date)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            if(parseFloat(document.getElementById('app_received').value) < document.getElementById('admission_offered').value){
+                Notiflix.Notify.Warning('Application Received Should be greater or equal admission offered');
+                return;
+            }
+            if(parseFloat(document.getElementById('admission_offered').value) < document.getElementById('student_intake').value){
+                Notiflix.Notify.Warning('Student Intake Should be less or equal admission offered');
                 return;
             }
              console.log(app_received);
@@ -402,6 +460,7 @@ let check = false;
 
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
             $('#edit_year').select2().val(data.year).trigger('change');
+            $('#edit_semester').select2().val(data.semester).trigger('change');
             $('#edit_app_received').val(data.app_received);
             $('#edit_admission_offered').val(data.admission_offered);
             $('#edit_student_intake').val(data.student_intake);
@@ -411,6 +470,7 @@ let check = false;
         });
 
 $('#updateForm').submit(function (e) {
+            e.preventDefault();
             let program_id = $('#edit_program_id').val();
             let year = $('#edit_year').val();
             let app_received = $('#edit_app_received').val();
@@ -426,7 +486,15 @@ $('#updateForm').submit(function (e) {
             !admission_offered?addClass('edit_admission_offered'):removeClass('edit_admission_offered');
             !student_intake?addClass('edit_student_intake'):removeClass('edit_student_intake');
             !semester_comm_date?addClass('edit_semester_comm_date'):removeClass('edit_semester_comm_date');
-
+            
+            if(parseFloat(document.getElementById('edit_app_received').value) < document.getElementById('edit_admission_offered').value){
+                Notiflix.Notify.Warning('Application Received Should be greater or equal admission offered');
+                return;
+            }
+            if(parseFloat(document.getElementById('edit_admission_offered').value) < document.getElementById('edit_student_intake').value){
+                Notiflix.Notify.Warning('Student Intake Should be less or equal admission offered');
+                return;
+            }
             if(!program_id || !year || !app_received || !admission_offered || !student_intake || !semester_comm_date)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");

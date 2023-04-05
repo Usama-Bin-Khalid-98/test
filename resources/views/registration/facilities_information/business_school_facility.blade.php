@@ -24,16 +24,16 @@
                 <li class="active">Business School Facility</li>
             </ol>
         </section>
-        <section class="content-header">
-            <div class="col-md-12 new-button">
-                <div class="pull-right">
-                    <button class="btn gradient-bg-color"
-{{--                           data-toggle="modal" data-target="#add-modal"--}}
-                           style="color: white;"
-                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>
-                </div>
-            </div>
-        </section>
+<!--        <section class="content-header">-->
+<!--            <div class="col-md-12 new-button">-->
+<!--                <div class="pull-right">-->
+<!--                    <button class="btn gradient-bg-color"-->
+<!--{{--                           data-toggle="modal" data-target="#add-modal"--}}-->
+<!--                           style="color: white;"-->
+<!--                           value="Add New">PDF <i class="fa fa-file-pdf-o"></i></button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -46,10 +46,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                <!--<div class="btn-group">-->
+                                <!--    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                <!--        <i class="fa fa-file-pdf-o"></i></button>-->
+                                <!--</div>-->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -207,13 +207,22 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">

@@ -23,6 +23,13 @@
             </ol>
         </section>
         <section class="content-header">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <button class="btn btn-primary" id="btnPrintDeskReview">Print</button>
+                </div>
+            </div>
+        </section>
+        <section class="content-header">
 {{--            <div class="col-md-12 new-button">--}}
 {{--                <div class="pull-right">--}}
 {{--                    <button class="btn gradient-bg-color"--}}
@@ -34,7 +41,7 @@
         </section>
 @php $checkGrade=$checkUnderGrade = true; @endphp
         {{--Dean section --}}
-        <section class="content">
+        <section class="content" id="printDeskReview">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-primary">
@@ -181,9 +188,6 @@
                                                         @if($applications->program->name != $applications)
                                                         {{@$applications->program->name}} ({{@$applications->year}}) {{@$applications->student_intake}},
                                                     @endif
-                                                            @php
-                                                                echo  $pre++;
-                                                            @endphp
 
                                                             @endforeach
                                                     </p>
@@ -209,7 +213,7 @@
                                                 @foreach(@$student_enrolment as $enrollment)
                                                     <p> Year {{$enrollment->year}}	16 years programs : {{$enrollment->bs_level}}</p>
                                                     <p> Year {{$enrollment->year}}	18 years programs : {{$enrollment->ms_level}}</p>
-                                                    <p> Year {{$enrollment->year}}   Doctoral programs:  {{$enrollment->ms_level}}</p>
+                                                    <p> Year {{$enrollment->year}}   Doctoral programs:  {{$enrollment->phd_level}}</p>
                                                 @endforeach
 
                                                 <p><strong> Graduated Students</strong></p>
@@ -225,7 +229,7 @@
 
                                                 <strong> b)	Faculty Portfolio (Section 4)</strong>
 
-                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Full time Faculty: {{@$faculty_summary_full}}</p>
+                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Full time Faculty: {{@$faculty_summary}}</p>
                                                 <p class="{{$getFullProfessors<1?'text-red':''}}" > <strong>d)</strong>	Professors: {{@$getFullProfessors}}</p>
                                                 <p class="{{$AssociateProfessors<1?'text-red':''}}"> <strong>e)</strong> Associate professors: {{@$AssociateProfessors}}</p>
                                                 <p class="{{$AssistantProfessors<3?'text-red':''}}"> <strong>f)</strong> Assistant professors: {{@$AssistantProfessors}}</p>
@@ -236,13 +240,13 @@
                                                 <p> <strong>k)</strong>	Total number of permanent faculty: {{@$permanent_faculty}}</p>
                                                 <p> <strong>l)</strong>	Total number of adjunct faculty: {{@$adjunct_faculty}}</p>
                                                 <p> <strong>m)</strong>
-                                                    Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)) = </p>
-                                                <p> <strong>n)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s))</p>
-                                                <p> <strong>o)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4)</p>
+                                                    Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)) = @foreach($fte_program_wise as $key => $value) {{$key}} ({{array_sum($value)}}), @endforeach</p>
+                                                <p> <strong>n)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)) = @foreach($vfe_program_wise as $key => $value) {{$key}} ({{array_sum($value)}}), @endforeach</p>
+                                                <p> <strong>o)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4) = {{$teacher_student_ratio}}</p>
 {{--                                                <p> BBA (program1) = </p>--}}
 {{--                                                <p> MBA (program2) = </p>--}}
-                                                <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction) = {{@$total_induction}}</p>
-                                                <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = {{@$faculty_resigned + @$faculty_terminated + @$faculty_retired}}</p>
+                                                <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction) = @foreach($facultyStability as $fs) {{$fs->year}} ({{$fs->new_induction}}), @endforeach</p>
+                                                <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = @foreach($facultyStability as $fs) {{$fs->year}} ({{$fs->resigned + $fs->retired + $fs->terminated}}), @endforeach</p>
                                                 <p> <strong>r)</strong>	FT:PT (as per table 4.3 a 4.3 b)=</p>
                                                 <p> <strong>s)</strong>	No. of faculty with terminal degree from foreign institutions = {{@$faculty_degree->faculty_foreign}}</p>
                                                 <p> <strong>t)</strong>	No. of faculty with terminal degree from domestic institutions = {{@$faculty_degree->faculty_domestic}}</p>
@@ -500,6 +504,24 @@
 
     </script>
     <script type="text/javascript">
+    
+        $('#btnPrintDeskReview').on('click', function (){
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+            mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write('<h1>' + document.title  + '</h1>');
+            mywindow.document.write(document.getElementById('printDeskReview').innerHTML);
+            mywindow.document.write('</body></html>');
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        });
 
         $('.select2').select2()
 

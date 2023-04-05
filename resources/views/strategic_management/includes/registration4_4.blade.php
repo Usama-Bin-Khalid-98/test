@@ -30,14 +30,13 @@
 {{--                                    </tr>--}}
 {{--                                    @endforeach--}}
 {{--                                @endif--}}
-
                                     @foreach($ratios as $req)
                                         <tr>
                                             <td>{{$req->program->name}}</td>
                                             <td>{{$req->total_enrollments}}</td>
-                                            <td>{{$totalFTE}}</td>
-                                            <td>{{$totalVFE}}</td>
-                                            <td>{{$totalFTE+$totalVFE!=0 ?(round($req->total_enrollments/($totalFTE+$totalVFE), 2)):0}}%</td>
+                                            <td>{{isset($byProgramFTE[$req->program_id]) ? $byProgramFTE[$req->program_id] : ""}}</td>
+                                            <td>{{isset($byProgramVFE[$req->program_id]) ? round($byProgramVFE[$req->program_id]/3, 2) : ""}}</td>
+                <td>{{(isset($byProgramFTE[$req->program_id],$byProgramVFE[$req->program_id]) && $byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id] !=0) ?(round($req->total_enrollments/($byProgramFTE[$req->program_id]+round($byProgramVFE[$req->program_id]/3, 2)), 2)):0}}%</td>
 
                                         </tr>
                                     @endforeach

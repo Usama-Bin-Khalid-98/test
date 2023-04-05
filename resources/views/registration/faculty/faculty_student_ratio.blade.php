@@ -52,10 +52,10 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-file-pdf-o"></i></button>
-                                </div>
+                                <!--<div class="btn-group">-->
+                                <!--    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">-->
+                                <!--        <i class="fa fa-file-pdf-o"></i></button>-->
+                                <!--</div>-->
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times" data-toggle="tooltip" data-placement="left" title="close"></i></button>
                             </div>
                         </div>
@@ -150,9 +150,18 @@
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->program->name}}</td>
                                     <td>{{$req->total_enrollments}}</td>
-                                    <td>{{$totalFTE}}</td>
-                                    <td>{{$totalVFE}}</td>
-                                    <td>{{$totalFTE+$totalVFE!=0 ?(round($req->total_enrollments/($totalFTE+$totalVFE), 2)):0}}%</td>
+                                    <td>@isset($byProgramVFE[$req->program_id]){{$byProgramFTE["$req->program_id"]}}@endisset</td>
+                                    <td>@isset($byProgramVFE[$req->program_id]){{round($byProgramVFE[$req->program_id]/3, 2)}}@endisset</td>
+                                    @php
+                                        if(isset($byProgramVFE[$req->program_id],$byProgramFTE[$req->program_id])){
+                                            $totalFTEVFE = $byProgramFTE[$req->program_id]+round($byProgramVFE[$req->program_id]/3, 2);
+                                        }else if(isset($byProgramVFE[$req->program_id])){
+                                            $totalFTEVFE = round($byProgramVFE[$req->program_id]/3, 2);
+                                        }else if(isset($byProgramFTE[$req->program_id])){
+                                            $totalFTEVFE = $byProgramFTE[$req->program_id];
+                                        }
+                                    @endphp
+                                    <td>{{(isset($totalFTEVFE) && $totalFTEVFE) !=0 ?(round($req->total_enrollments/($totalFTEVFE), 2)):0}}%</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","program_id":"{{$req->program_id}}","total_enrollments":"{{$req->total_enrollments}}","total_fte":"{{$req->total_fte}}","total_vfe":"{{$req->total_vfe}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
@@ -276,13 +285,22 @@
     <!-- DataTables -->
     <script src="{{URL::asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
     <script>
         $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass   : 'iradio_flat-green'
         });
         $(function () {
-            $('#datatable').DataTable()
+            $('#datatable').DataTable({
+                dom : "lBfrtip",
+            })
         })
     </script>
     <script type="text/javascript">
