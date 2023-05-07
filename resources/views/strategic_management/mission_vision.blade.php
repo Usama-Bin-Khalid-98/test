@@ -48,7 +48,7 @@
                         </div>
 
                         <!-- /.box-header -->
-                        <form action="javascript:void(0)" id="form" method="POST">
+                        <form action="javascript:void(0)" class='mission' id="form" method="POST">
 
                 <div class="box-body pad">
                                 <label>Vision</label>
@@ -87,6 +87,12 @@
                     <div class="form-group">
                         <label for="name">Mission Approval Date</label>
                         <input type="text" name="mission_approval" id="mission_approval" class="form-control" autocomplete="off" value="{{@$get->mission_approval}}" >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="mission_url">URL of Mission/Vision on official website</label>
+                        <input type="text" name="mission_url" id="mission_url" class="form-control" autocomplete="off" value="{{@$get->mission_url}}" >
                     </div>
                 </div>
 
@@ -236,12 +242,13 @@
             let file = $('#file').val();
             let mission_approval = $('#mission_approval').val();
             let vision_approval = $('#vision_approval').val();
+            let mission_url = $('#mission_url').val();
 
             !mission?addClass('mission'):removeClass('mission');
             !vision?addClass('vision'):removeClass('vision');
             !file?addClass('file'):removeClass('file');
 
-            if(!mission || !vision || !file || !mission_approval)
+            if(!mission || !vision || !file || !mission_approval || !mission_url)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

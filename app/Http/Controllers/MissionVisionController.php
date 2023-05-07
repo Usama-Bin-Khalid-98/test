@@ -77,6 +77,7 @@ class MissionVisionController extends Controller
                         'mission' => $request->mission,
                         'vision' => $request->vision,
                         'file' => $path.'/'.$imageName,
+                        'mission_url' => $request->mission_url,
                         'isComplete' => 'yes',
                         'type' => $type,
                         'mission_approval' => $request->mission_approval,
@@ -90,6 +91,7 @@ class MissionVisionController extends Controller
                         'mission' => $request->mission,
                         'vision' => $request->vision,
                         'file' => $path.'/'.$imageName,
+                        'mission_url' => $request->mission_url,
                         'isComplete' => 'yes',
                         'type' => 'SAR',
                         'mission_approval' => $request->mission_approval,
@@ -164,6 +166,7 @@ class MissionVisionController extends Controller
                     'file' => $path.'/'.$imageName,
                     'mission_approval' => $request->mission_approval,
                     'vision_approval' => $request->vision_approval,
+                    'mission_url' => $request->mission_url,
                     'updated_by' => Auth::user()->id
                     ]
                 );
@@ -173,6 +176,9 @@ class MissionVisionController extends Controller
            MissionVision::where('id', $id)->update([
                'mission' => $request->mission,
                'vision' => $request->vision,
+               'mission_approval' => $request->mission_approval,
+               'vision_approval' => $request->vision_approval,
+               'mission_url' => $request->mission_url,
                'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Mission Vision updated successfully.']);
