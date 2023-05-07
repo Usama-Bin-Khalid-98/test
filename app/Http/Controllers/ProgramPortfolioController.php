@@ -83,6 +83,17 @@ class ProgramPortfolioController extends Controller
                 'type' => $type];
 
             $check = ProgramPortfolio::where($check_data)->exists();
+            $check_semster_data = [
+                'campus_id' => Auth::user()->campus_id,
+                'department_id' => Auth::user()->department_id,
+                'program_id' => $request->program_id,
+                'isComplete' => 'yes',
+                'type' => $type
+            ];
+            $check_semster = ProgramPortfolio::where($check_semster_data)->first();
+            if($check_semster && $check_semster->total_semesters != $request->total_semesters){
+                return response()->json(['error' => 'Semester number should be same for a single program'], 422);
+            }
             if(!$check) {
 //            dd($request->all());
                 if ($slip) {
@@ -134,7 +145,7 @@ class ProgramPortfolioController extends Controller
                     ]);
                 }
             }else{
-            return response()->json(['errir' => 'Program Portfolio already exists.'], 422);
+            return response()->json(['error' => 'Program Portfolio already exists.'], 422);
 
             }
 

@@ -185,13 +185,11 @@
                                     @php
                                     $total_credit_hours = 0;
                                     $total_courses = 0;
-                                    $total_semesters = 0;
                                 @endphp
                                  @foreach($portfolios as $portfolio)
                                  @php
                                  $total_credit_hours += floatval($portfolio->credit_hours);
                                  $total_courses += floatval($portfolio->no_of_course);
-                                 $total_semesters += floatval($portfolio->total_semesters);
                                  @endphp
                                 <tr>
 {{--                                    <td>{{$portfolio->program}}</td>--}}
@@ -205,20 +203,26 @@
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
+                                @if ($loop->last || $portfolio->program_id !== $portfolios[$loop->index +1 ]->program_id)
+                                 <tr>
+                                    <td><span>{{@$portfolio->program->name}} </span></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total : {{$total_courses}}</strong></td>
+                                    <td><strong>Total : {{$total_credit_hours}}</strong></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    </tr>
+                                @php
+                                $total_credit_hours = 0;
+                                    $total_courses = 0;
+                                @endphp
+                                @endif
                                 @endforeach
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                    <th></th>
-                                    <th>Total: {{$total_semesters}}</th>
-                                    <th></th>
-                                    <th>Total: {{$total_courses}}</th>
-                                    <th>Total: {{$total_credit_hours}}</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
                                 <tr>
 {{--                                    <th>Program</th>--}}
                                     <th>Program(s) under review</th>
