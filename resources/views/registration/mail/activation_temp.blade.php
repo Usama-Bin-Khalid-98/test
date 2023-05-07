@@ -369,23 +369,27 @@
 
                                         <p>Dear {{@$content['name']}}</p>
                                         <p>Your Account has been activated by the administrator of NBEAC:</p>
-                                        <p>Name: {{@$content['name']}}</p>
-                                        <p>Designation: {{@$content->designation->name}}</p>
-                                        <p>Email: {{@$content['email']}}</p>
-                                        <p>Contact No: {{@$content['contact_no']}}</p>
-                                        <p>Institute: {{@$content->business_school->name}}</p>
-                                        <p>Department: {{@$content->department->name}}</p>
-                                        <p>Account Type: {{@$content['user_type']}}</p>
-                                        {{--<p>address: {{$content['address']}}</p>--}}
-                                        <a href="https://app.nbeac.org.pk">Login to Online Accreditation Application.</a>
-                                        <p>Regards,</p>
-                                        <p>Mr. Irfan Khan</p>
-                                        <p>Assistant Manager Accreditation,</p>
+                                        <table border="2px" cellpadding="5px" style="text-align:left;">
+                                        <tr><th>Name</th><td>{{@$content['name']}}</td></tr>
+                                        <tr><th>Designation</th> <td>{{@$content->designation->name}}</td></tr>
+                                        <tr><th>Email</th> <td>{{@$content['email']}}</td></tr>
+                                        <tr><th>Contact No</th> <td>{{@$content['contact_no']}}</td></tr>
+                                        <tr><th>Institute</th> <td>{{@$content->business_school->name}}</td></tr>
+                                        <tr><th>Department</th> <td>{{@$content->department->name}}</td></tr>
+                                        <tr><th>Account Type</th> <td>{{@$content['user_type']}}</td></tr>
+                                        <!-- {{--<p>address: {{$content['address']}}</p>--}} -->
+                                        
+                                        <tr><td colspan="2"><a href="https://app.nbeac.org.pk">Login to Online Accreditation Application.</a></td></tr>
+                                        </table>
+                                        <br><br>
+                                        <p>Regards,<br>
+                                        Mr. Irfan Khan<br>
+                                        Assistant Manager Accreditation,<br>
                                         <!-- <p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</p> -->
-                                        <p>Phone-I (Off) 92 51 9080 0214</p>
-                                        <p>Phone-II (Cell): +92 333 5126229</p>
+                                        Phone-I (Off) 92 51 9080 0214<br>
+                                        Phone-II (Cell): +92 333 5126229<br>
                                         <!-- <p>Fax: +92 51 9080 0208</p> -->
-                                        <p>Web: <a href="https://app.nbeac.org.pk"> www.nbeac.org.pk</a></p>
+                                        Web: <a href="https://app.nbeac.org.pk"> www.nbeac.org.pk</a></p>
                                         <small>*Please do not reply to this email. This is computer generated email</small>
                                         <small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
                                     </td>

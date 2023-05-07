@@ -32,7 +32,7 @@ class ChangeResgistrationStatusMail extends Mailable
     {
         $getInfo = NbeacBasicInfo::all()->first();
         return $this->from($getInfo->email,'NBEAC Admin')
-            ->subject('FW: Acknowledgement for Registration Fee')
+            ->subject('Acknowledgement of Registration Application')
             ->view('registration.mail.changeRegistrationStatusMail')
             ->with('data', $this->data);
     }
