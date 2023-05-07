@@ -193,7 +193,7 @@ class UserController extends Controller
         }
 
         try {
-
+            $new_role = Role::find($request->input('role_id'));
             User::where('id', $id)->update([
                 'name' => $request->name,
                 'cnic' => $request->cnic,
@@ -201,7 +201,8 @@ class UserController extends Controller
                 'address' => $request->address,
                 'designation_id' => $request->designation_id,
                 'email' => $request->email,
-                'status' => $request->status
+                'status' => $request->status,
+                'user_type' => $new_role->name
             ]);
 
            $user = User::find($id);
