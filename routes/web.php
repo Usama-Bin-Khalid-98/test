@@ -190,7 +190,7 @@ Route::get('/email', function() {
             Route::resource('complaint-resolution','ComplaintResolutionController');
             Route::resource('internal-community','InternalCommunityController');
             Route::resource('social-activity','SocialActivityController');
-            Route::patch('registration-apply/{id}','HomeController@apply');
+            Route::get('registration-apply/{id}','HomeController@apply');
             Route::patch('share-nbeac/{id}','PrintController@applyNBEAC');
             Route::patch('share-mentor/{id}','PrintController@applyMentor');
 
