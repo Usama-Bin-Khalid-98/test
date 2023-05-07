@@ -201,17 +201,26 @@
                                 </div>
 
                              <div class="col-md-12">
-                                <div class="form-group pull-right" style="margin-top: 40px">
+                                <div class="form-group pull-right" style="margin-top: 20px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
 
-                                 <div class="form-group pull-right" style="margin-top: 40px">
+                                 <div class="form-group pull-right" style="margin-top: 20px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" id="add" value="Add & Next" class="btn btn-success next">
                                 </div>
                             </div>
                             </div>
+                        </form>
+                        <form action="javascript:void(0)" id="fileform" method="POST" enctype="multipart/form-data">
+                        <table class='jumbotron'  >   
+                            <tr> 
+                            <td style="padding:15px;" ><label for="file4A">Appendix 4A</label>
+                            <input type="file" name="file" id="file4A"></td>
+                            <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
+                            </tr>
+                        </table>
                         </form>
 
                         <!-- /.box-body -->
@@ -684,6 +693,46 @@ $('#updateForm').submit(function (e) {
             }, 1000)
         });
 
+        $('#fileform').submit(function (e) {
+            let file=$('#file4A').val();
+            if(!file)
+            {
+                Notiflix.Notify.Warning("Please Choose a file.");
+                return;
+            }
+
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url:'{{url("work-load/file")}}',
+                type:'POST',
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                    check = true;
+                    setTimeout(()=>{
+                    location.reload()},2000 )
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        })
     </script>
 
 

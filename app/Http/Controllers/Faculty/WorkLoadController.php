@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Faculty;
 
+use App\AppendixFile;
 use App\Http\Controllers\Controller;
 use App\Models\Common\Slip;
 use App\Models\Faculty\WorkLoad;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class WorkLoadController extends Controller
 {
@@ -309,5 +311,30 @@ class WorkLoadController extends Controller
         return [
             'required' => 'The :attribute can not be blank.'
         ];
+    }
+
+    public function file(Request $request){
+        if(!$request->file('file')){
+            return response()->json(['error' => 'Please upload a valid file']);
+        }
+        $appendix_file = AppendixFile::where(['campus_id'=> Auth::user()->campus_id, 'business_school_id'=>Auth::user()->business_school_id])->first();
+        $path = 'uploads/workload_policy';
+            $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+            $diskName = env('DISK');
+            Storage::disk($diskName);
+            $request->file('file')->move($path, $imageName);
+        if($appendix_file){
+            if($appendix_file->workload_policy && $appendix_file->workload_policy !==''){
+                unlink($appendix_file->workload_policy);
+            }
+            AppendixFile::where(['id'=>$appendix_file->id])->update(['workload_policy'=>$path.'/'.$imageName]);        
+        }else{
+            AppendixFile::create([
+                'campus_id'=>Auth::user()->campus_id,
+                'business_school_id'=>Auth::user()->business_school_id,
+                'workload_policy'=>$path.'/'.$imageName
+            ]);
+        }
+        return response()->json(['success' => 'Appendix 4A uploaded successfully.']);
     }
 }

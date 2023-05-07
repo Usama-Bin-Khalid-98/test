@@ -175,7 +175,15 @@
                                 </div>
                             </div>
                         </form>
-
+                        <form action="javascript:void(0)" id="fileform" method="POST" enctype="multipart/form-data">
+                        <table>   
+                            <tr> 
+                            <td><label for="file">Appendix 5A</label>
+                            <input type="file" name="file" id="file"></td>
+                            <td><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
+                            </tr>
+                        </table>
+                        </form>
                         </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
@@ -593,8 +601,47 @@
                 }
             }, 1000)
         });
+        
+        $('#fileform').submit(function (e) {
+            let file=$('#file').val();
+            if(!file)
+            {
+                Notiflix.Notify.Warning("Please Choose a file.");
+                return;
+            }
 
+            e.preventDefault();
+            var formData = new FormData(this);
 
+            $.ajax({
+                url:'{{url("research-summary/file")}}',
+                type:'POST',
+                data: formData,
+                cache:false,
+                contentType:false,
+                processData:false,
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    console.log('response', response);
+                    check = true;
+                    setTimeout(()=>{
+                    location.reload()},2000 )
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+                }
+            })
+        })
     </script>
 
 
