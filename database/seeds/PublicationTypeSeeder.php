@@ -27,7 +27,9 @@ class PublicationTypeSeeder extends Seeder
                 ['name' => 'Consultancy project reports', 'status' => 'active','publication_category_id'=>3],
                 ['name' => 'Practice oriented research articles', 'status' => 'active','publication_category_id'=>3],
                 ['name' => 'MS/MPhil thesis', 'status' => 'active','publication_category_id'=>3],
-                ['name' => 'Doctoral thesis', 'status' => 'active','publication_category_id'=>3]
+                ['name' => 'Doctoral thesis', 'status' => 'active','publication_category_id'=>3],
+                ['name' => 'Books Chapter', 'status' => 'active','publication_category_id'=>2],
+                ['name' => 'Other Listings', 'status' => 'active','publication_category_id'=>1]
             ]
         );
     }

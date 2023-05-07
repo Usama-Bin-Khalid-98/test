@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
         $this->call(DegreeSeeder::class);
         $this->call(PublicationCategorySeeder::class);
         $this->call(PublicationTypeSeeder::class);
-        $this->call(CourseTypeSeeder::class);
+        // $this->call(CourseTypeSeeder::class);
         $this->call(EligibilityCriteriaSeeder::class);
-        $this->call(SemesterSeeder::class);
+        // $this->call(SemesterSeeder::class);
         $this->call(FacultyTypeSeeder::class);
         $this->call(QuestionSeeder::class);
         $this->call(IncomeSourceSeeder::class);
