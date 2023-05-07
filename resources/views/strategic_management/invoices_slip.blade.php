@@ -1,5 +1,8 @@
 @section('pageTitle', 'Users')
 
+@php
+$is_processing_a_slip = isProcessingASlip();
+@endphp
 
 @if(Auth::user())
 
@@ -28,7 +31,7 @@
         <section class="content-header">
             <div class="col-md-12 new-button">
                 <div class="pull-right">
-                    <button class="btn gradient-bg-color"
+                    <button class="btn gradient-bg-color" @if($is_processing_a_slip) disabled @endif
                            data-toggle="modal" data-target="#generate-modal" style="color: white;"
                            value="Add New">Generate Invoice <i class="fa fa-file-pdf-o"></i>
                     </button>

@@ -118,9 +118,9 @@ $faculty_detail= isCompletedSAR('App\Models\Faculty\FacultyDetailedInfo', ['camp
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
 $RegDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Review']);
-$RegInvoice = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Initiated']);
+$RegInvoice = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Pending', 'status'=>'paid']);
 $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
-
+$invoice_id = getRegInvoiceId();
 @endphp
 
 <aside class="main-sidebar">
@@ -454,7 +454,7 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
                         </span>
                     </span></a></li>
 
-                  <li  class="{{ (request()->is('checklist-document')) ? 'active' : '' }}"><a href="{{url('checklist-document')}}">2.11 Docuemnt Checklist<span class="pull-right-container">
+                  <li  class="{{ (request()->is('checklist-document')) ? 'active' : '' }}"><a href="{{url('checklist-document')}}">2.11 Document Checklist<span class="pull-right-container">
                         <span class="text text-{{$checklist_document==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$checklist_document==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -1005,8 +1005,8 @@ $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskR
           @endhasrole
           @endif
           @hasrole('BusinessSchool')
-          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C')
-            <li  class="{{ (request()->is('apply-registration')) ? 'active' : '' }}"><a href="{{url('apply-registration')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C' &&$invoice_id!=-1)
+            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="{{url('registration-apply')}}/{{$invoice_id}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
           @endif
           @endhasrole
           @if($isActiveSAR)

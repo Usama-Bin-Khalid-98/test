@@ -1,4 +1,8 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
     if (!function_exists('checkIsCompleted')) {
 
         function checkIsCompleted($model, $where)
@@ -92,6 +96,27 @@
         function isChecked($where){
            return  \App\Models\Carriculum\MappingPos::where($where)->first()->isChecked;
 //            dd($result);
+        }
+    }
+
+    if(!function_exists('getRegInvoiceId')){
+
+        function getRegInvoiceId()
+        {
+            $result = \App\Models\Common\Slip::where(['regStatus'=>'Pending', 'status'=>'approved', 'business_school_id'=>Auth::user()->campus_id])->get()->first();
+            if (!$result){
+                return -1;
+            }
+            return $result->id;
+        }
+    }
+
+    if(!function_exists('isProcessingASlip')){
+
+        function isProcessingASlip()
+        {
+            Log::debug(Auth::user()->campus->id);
+            return \App\Models\Common\Slip::where('regStatus','<>','inactive')->where('status','<>','inactive')->where(['business_school_id'=>Auth::user()->campus_id])->exists();
         }
     }
 ?>
