@@ -386,6 +386,7 @@ let check = false;
             let admission_offered = $('#admission_offered').val();
             let student_intake = $('#student_intake').val();
             let semester_comm_date = $('#semester_comm_date').val();
+            let semester= $('#semester').val();
 
             !program_id?addClass('program_id'):removeClass('program_id');
             !year?addClass('year'):removeClass('year');
@@ -394,7 +395,7 @@ let check = false;
             !student_intake?addClass('student_intake'):removeClass('student_intake');
             !semester_comm_date?addClass('semester_comm_date'):removeClass('semester_comm_date');
 
-            if(!program_id || !year || !app_received || !admission_offered || !student_intake || !semester_comm_date)
+            if(!program_id || !year || !app_received || !admission_offered || !student_intake || !semester_comm_date || !semester)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
