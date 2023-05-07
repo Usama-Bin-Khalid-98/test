@@ -157,12 +157,12 @@ WHERE designations.id=contact_infos.designation_id
             //dd($prevSemester);
             $getYear = BusinessSchoolTyear::where(['campus_id'=>$req->cid])->get()->first();
 
-            $facultyWorkLoad = DB::select('SELECT work_loads.*,designation as designationName
-FROM work_loads, campuses WHERE work_loads.type="REG"
+            $facultyWorkLoad = DB::select('SELECT work_loads.*,designations.name as designationName
+FROM work_loads, campuses, designations WHERE work_loads.type="REG"
 AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.year_t=?', array($req->cid, $getYear->tyear));
 
-             $facultyWorkLoadb = DB::select('SELECT work_loads.*,designation as designationName
-FROM work_loads, campuses WHERE work_loads.type="REG"
+             $facultyWorkLoadb = DB::select('SELECT work_loads.*,designations.name as designationName
+FROM work_loads, campuses, designations WHERE work_loads.type="REG"
 AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.year_t=? ', array($req->cid, $getYear->year_t_1));
 
             $facultyTeachingCourses = DB::select('
@@ -454,16 +454,16 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
 
             $userInfo = Auth::user();
             $getYear = BusinessSchoolTyear::where(['campus_id'=> $userInfo->campus_id, 'department_id' => $userInfo->department_id])->get()->first();
-             $facultyWorkLoad = DB::select('SELECT work_loads.*,designation as designationName
-                FROM work_loads, campuses
+             $facultyWorkLoad = DB::select('SELECT work_loads.*,designations.name as designationName
+                FROM work_loads, campuses, designations
                 WHERE work_loads.type="REG"
                   AND work_loads.campus_id=?
                   AND work_loads.department_id=?
                   AND work_loads.year_t=?
                   AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id, $department_id, $getYear->tyear));
             
-             $facultyWorkLoadb = DB::select('SELECT work_loads.*,designation as designationName
-                FROM work_loads, campuses
+             $facultyWorkLoadb = DB::select('SELECT work_loads.*,designations.name as designationName
+                FROM work_loads, campuses, designations
                 WHERE work_loads.type="REG"
                   AND work_loads.campus_id=?
                   AND work_loads.department_id=?

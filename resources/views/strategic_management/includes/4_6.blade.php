@@ -12,20 +12,20 @@
                                 </thead>
                                 <tbody>
                                    <?php
-                                   $facPer = $facPerm = array();
+                                   $facPer = $facPerm = array(0,0,0);
                                    //print_r($facultyGenders);
                                    for ($i=0;$i<count(@$facultyGenders);$i++) {
                                         if($facultyGenders[$i]->facultyTypeName=='Permanent'){
-                                           $facPer[$i] = $facultyGenders[$i]->male;
-                                           $facPerm[$i] = $facultyGenders[$i]->female;
+                                           $facPer[0] = $facultyGenders[$i]->male;
+                                           $facPerm[0] = $facultyGenders[$i]->female;
                                         }
                                         else if($facultyGenders[$i]->facultyTypeName=='Visiting'){
-                                           $facPer[$i] = $facultyGenders[$i]->male;
-                                           $facPerm[$i] = $facultyGenders[$i]->female;
+                                           $facPer[2] = $facultyGenders[$i]->male;
+                                           $facPerm[2] = $facultyGenders[$i]->female;
                                         }
                                        else if($facultyGenders[$i]->facultyTypeName=='Adjunct'){
-                                           $facPer[$i] = $facultyGenders[$i]->male;
-                                           $facPerm[$i] = $facultyGenders[$i]->female;
+                                           $facPer[1] = $facultyGenders[$i]->male;
+                                           $facPerm[1] = $facultyGenders[$i]->female;
                                         }
                                         //print_r($facPer);
                                     }

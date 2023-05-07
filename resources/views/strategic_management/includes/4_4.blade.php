@@ -35,7 +35,7 @@ Table 4.4a FTE for the permanent, regular and adjunct faculty in program(s)
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{@$data->name}}</td>
                                         <td>{{@$data->desName}}</td>
-                                        <td>{{@$data->lookupFacultyType}}</td>
+                                        <td>{{@$data->lookup_faculty_type->name}}</td>
                                         <td>{{@$data->   max_cources_allowed}}</td>
                                         <td>{{@$data->tc_program1}}</td>
                                         <td>{{@$data->tc_program2}}</td>

@@ -35,7 +35,7 @@ Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{@$data->name}}</td>
-                                        <td>{{@$data->desName}}</td>
+                                        <td>{{@$data->designation->name}}</td>
 {{--                                        <td>{{@$data->lookupFacultyType}}</td>--}}
                                         <td>{{$data->max_cources_allowed}}</td>
                                         @foreach($data->faculty_program as $program )
