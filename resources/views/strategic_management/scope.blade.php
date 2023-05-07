@@ -186,7 +186,7 @@
                                     <td>{{$scope->program->name}}</td>
                                     <td>{{$scope->level->name}}</td>
                                     <td>{{$scope->date_program}}</td>
-                                    <td><i class="badge {{$scope->status =='active'?'bg-green':'bg-red'}}">{{$scope->status =='active'?'Active':'Inactive'}}</i></td>
+                                    <td><i data-id="{{@$scope->id}}" data-program-id="{{@$scope->program->id}}" data-level-id="{{@$scope->level->id}}" data-date-program="{{@$scope->date_program}}" class="badge status {{$scope->status =='active'?'bg-green':'bg-red'}}">{{$scope->status =='active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$scope->id}}" ></i> | <i class="fa fa-pencil text-blue edit" data-id="{{$scope->id}}" data-row='{"id":{{$scope->id}},"program_id":{{$scope->program->id}},"level_id":{{$scope->level->id}},"date_program":"{{$scope->date_program}}", "status":"{{$scope->status}}"}' data-toggle="modal" data-target="#edit-modal"></i> </td>
                                 </tr>
                                 @endforeach
@@ -301,6 +301,50 @@
         })
     </script>
     <script type="text/javascript">
+        $('.status').on('click', function (e) {
+            var id = $(this).data('id');
+            var program_id = $(this).data('program-id');
+            var level_id = $(this).data('level-id');
+            var date_program = $(this).data('date-program');
+            // console.log(level_id)
+            Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to activate?', 'Yes', 'No',
+                function(){
+                    // Yes button callback
+                    $.ajax({
+                        url:'{{url("strategic/scope")}}/'+id,
+                        type:'PATCH',
+                        data: { program_id:id,
+                            level_id:level_id,
+                            date_program:date_program,
+                            status:'active'},
+                        beforeSend: function(){
+                            Notiflix.Loading.Pulse('Processing...');
+                        },
+                        // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+                        success: function (response) {
+                            Notiflix.Loading.Remove();
+                            console.log("success resp ",response.success);
+                            if(response.success){
+                                Notiflix.Notify.Success(response.success);
+                            }
+
+                            location.reload();
+
+                            console.log('response here', response);
+                        },
+                        error:function(response, exception){
+                            Notiflix.Loading.Remove();
+                            $.each(response.responseJSON, function (index, val) {
+                                Notiflix.Notify.Failure(val);
+                            })
+
+                        }
+                    })
+                },
+                function(){ // No button callback
+                    // alert('If you say so...');
+                } );
+        });
         $("#program_id").on('change', function (e) {
             if(this.options[this.selectedIndex].text == "Other"){
                 $(".other-field").removeClass('hide');

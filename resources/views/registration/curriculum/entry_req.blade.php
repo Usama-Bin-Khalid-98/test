@@ -105,7 +105,7 @@
                                              <input type="hidden" name="eligibility_criteria_id[]" id="eligibility_criteria_id" value="{{@$criteria->id}}">
                                          </td>
                                          <td>
-                                             <input type="number" name="min_req[]" id="{{$c}}" min="0" class="form-control">
+                                             <input type="number" name="min_req[]" id="{{$c}}" min="0" class="form-control calculate">
                                          </td>
                                              @endforeach
                                      </tr>
