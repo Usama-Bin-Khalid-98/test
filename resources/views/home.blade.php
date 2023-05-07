@@ -916,38 +916,7 @@ $invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_sch
 
 
       </section>
-      <section class="content">
-        <div class="col-lg-4">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Registration Invoice Amount</h3>
-                </div>
-                <div class="box-body">
-                    <h1 style="text-align: center;">Rs. 50,000/-</h1>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h2 class="box-title">Mentoring Invoice Amount</h2>
-                </div>
-                <div class="box-body">
-                    <h2 style="text-align: center;">Rs. 30,000/- (Per Visit)</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h2 class="box-title">Accreditation Invoice Amount</h2>
-                </div>
-                <div class="box-body">
-                    <h2 style="text-align: center;">Rs. 2,50,000/- (Per Program)</h2>
-                </div>
-            </div>
-        </div>
-      </section>
+
       @if($invoices)
       <section class="col-lg-12 connectedSortable">
 
