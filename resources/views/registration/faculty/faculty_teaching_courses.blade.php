@@ -172,11 +172,8 @@
                                     <th>Designation</th>
                                     <th>Maximum teaching Courses Allowed</th>
 
-                                    @foreach(@$visitings as $req)
-                                        @foreach(@$req->faculty_program as $program )
+                                    @foreach(@$getScope as $program)
                                          <th> {{@$program->program->name}}:</th>
-                                        @endforeach
-                                        @break
                                     @endforeach
                                     <th>Status</th>
                                     <th>Action</th>
@@ -189,7 +186,7 @@
                                 @php $arr = [] @endphp
                                 @foreach(@$visitings as $req)
                                 <tr>
-{{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
+{{--                                <td>{{$req->campus->business_school->name}}</td>--}}
                                     <td>{{@$req->name}}</td>
                                     <td>{{@$req->lookup_faculty_type->faculty_type}}</td>
                                     <td>{{@$req->designation->name}}</td>
@@ -234,7 +231,7 @@
                                         @endforeach
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> |
-                                   <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","name":"{{$req->name}}","tc_program{{$req->id}}":"{{$req->faculty_program[0]->tc_program}}","lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                                   <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","name":"{{$req->name}}","tc_program":{{$req->faculty_program}},"lookup_faculty_type_id":"{{$req->lookup_faculty_type_id}}","designation_id":"{{$req->designation_id}}","max_cources_allowed":"{{$req->max_cources_allowed}}","status":"{{$req->status}}","isCompleted":"{{$req->isCompleted}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -249,6 +246,7 @@
                                         <th colspan="4" align="center">Total FTE</th>
                                         <!-- <th>Total FTE: {{(round($totalFTE, 2))}}</th> -->
                                     @endif
+                                    
                                     @foreach($arr as $program_total)
                                         @if(@$visitings[0]->lookup_faculty_type->faculty_type == 'Visiting')
                                             <th>Program Total: {{number_format(array_sum($program_total) / 3, 2)}}</th>
@@ -263,11 +261,8 @@
                                     <th>Faculty Type</th>
                                     <th>Designation</th>
                                     <th>Maximum teaching Courses Allowed</th>
-                                    @foreach(@$visitings as $req)
-                                        @foreach(@$req->faculty_program as $program )
-                                            <th> {{@$program->program->name}}</th>
-                                        @endforeach
-                                        @break
+                                    @foreach(@$getScope as $program)
+                                         <th> {{@$program->program->name}}:</th>
                                     @endforeach
                                     <th>Status</th>
                                     <th>Action</th>
@@ -333,7 +328,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Teaching courses in {{$program->program->name}}(F) </label>
-                                        <input type="number" name="tc_program[{{$program->program->id}}]" id="edit_tc_program" data-id="{{$program->program->id}}" class="form-control programs">
+                                        <input type="number" name="tc_program[{{$program->program->id}}]" id="edit_program_{{$program->program->id}}" data-id="{{$program->program->id}}" class="form-control programs">
                                     </div>
                                 </div>
                             @endforeach
@@ -470,13 +465,13 @@ let check = false;
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-             console.log(data);
             $('#edit_lookup_faculty_type_id').select2().val(data.lookup_faculty_type_id).trigger('change');
-            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
+            $('#edit_designation_id').select2().val(data.designation_id);
             $('#edit_max_cources_allowed').val(data.max_cources_allowed);
             let tc_program_name = "tc_program"+""+data.id;
-            console.log(('tc program name', data.tc_program1));
-            $('#edit_tc_program').val(data.tc_program3);
+            for( let i = 0; i<data.tc_program.length;i++){
+                $('#edit_program_'+data.tc_program[i].program_id).val(data.tc_program[i].tc_program);
+            }
             // $('#edit_tc_program2').val(data.tc_program2);
             $('#edit_name').val(data.name);
             $('#edit_id').val(data.id);
@@ -488,16 +483,6 @@ $('#updateForm').submit(function (e) {
     let lookup_faculty_type_id = $('#edit_lookup_faculty_type_id').val();
     let designation_id = $('#edit_designation_id').val();
     let max_cources_allowed = $('#edit_max_cources_allowed').val();
-
-
-    let tc_program = $('#edit_tc_program').val();
-    // let tc_program2 = $('#tc_program2').val();
-
-    !lookup_faculty_type_id?addClass('lookup_faculty_type_id'):removeClass('lookup_faculty_type_id');
-    !designation_id?addClass('designation_id'):removeClass('designation_id');
-    !max_cources_allowed?addClass('max_cources_allowed'):removeClass('max_cources_allowed');
-    !tc_program?addClass('tc_program'):removeClass('tc_program');
-    // !tc_program2?addClass('tc_program2'):removeClass('tc_program2');
 
     if(!lookup_faculty_type_id || !designation_id || !max_cources_allowed )
     {
@@ -526,7 +511,7 @@ $('#updateForm').submit(function (e) {
                         Notiflix.Notify.Success(response.success);
                     }
                     //console.log('response', response);
-                    location.reload();
+                     location.reload();
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

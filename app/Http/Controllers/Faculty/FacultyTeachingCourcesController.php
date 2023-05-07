@@ -58,7 +58,9 @@ class FacultyTeachingCourcesController extends Controller
 
         if($getUrl =='faculty-teaching') {
 
-            $visitings = FacultyTeachingCources::with(['campus','department','lookup_faculty_type'])
+            $visitings = FacultyTeachingCources::with(['faculty_program' => function ($query) {
+                $query->orderBy('program_id', 'asc');
+            },'campus','department','lookup_faculty_type'])
             //     'lookup_faculty_type'=> function($query) {
             //     $query->where('id', 1);
             //     $query->orWhere('id', 2);
@@ -178,158 +180,50 @@ class FacultyTeachingCourcesController extends Controller
                                 'type' => $type,
                                 'created_by' => Auth::user()->id
                             ]);
-
-                    if(@$addData[4]) {
-
-                        $program = Program::where(['name'=> @$addData[4]])->first();
+                            
+                    for($index2=4; $index2<count($addData);$index2+=2){
+                        $program = Program::where(['name'=> @$addData[$index2]])->first();
                         if(!$program)
                         {
-                            return response()->json(['error' => ' Incorrect Program in line ', 'line' => $index + 2], 422);
-
+                            FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id,])->delete();
+                            FacultyTeachingCources::find($insert->id)->delete();
+                            return response()->json(['error' => ' Incorrect Program in line ' . ($index+2)], 422);
                         }
-
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[5],
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-
-                    if(@$addData[6]) {
-                        $program = Program::where(['name'=> @$addData[6]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ', 'line' => $index + 2], 422);
-
+                        $scope = Scope::where(['campus_id'=>Auth::user()->campus_id, 'department_id'=> Auth::user()->department_id, 'program_id'=>$program->id])->exists();
+                        if(!$scope){
+                            FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id,])->delete();
+                            FacultyTeachingCources::find($insert->id)->delete();
+                            return response()->json(['error' => ' Program not in scope in line ' . ($index+2), 'line' => $index + 2], 422);
                         }
                         $insertTcProgram = FacultyProgram::create(
                             [
                                 'faculty_teaching_cource_id' => $insert->id,
                                 'program_id' => $program->id,
-                                'tc_program' => @$addData[7],
+                                'tc_program' => @$addData[$index2+1],
                                 'created_by' => Auth::id()
                             ]
                         );
                     }
 
-                    if(@$addData[8]) {
-                        $program = Program::where(['name'=> @$addData[8]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ', 'line'=> $index + 2], 422);
-
+                    $scopes = Scope::where([
+                        'campus_id'=>Auth::user()->campus_id,
+                        'department_id'=>Auth::user()->department_id,
+                        'type'=>'REG'
+                    ])->get();
+  
+                    foreach($scopes as $scope){
+                        if(FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id, 'program_id'=>$scope->program_id])->exists()){
+                            continue;
                         }
-                        $insertTcProgram = FacultyProgram::create(
+                        FacultyProgram::create(
                             [
                                 'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[9],
+                                'program_id' => $scope->program_id,
+                                'tc_program' => 0,
                                 'created_by' => Auth::id()
                             ]
                         );
                     }
-
-                    if(@$addData[10]) {
-                        $program = Program::where(['name'=> @$addData[10]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
-
-                        }
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[11],
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-                    if(@$addData[12]) {
-                        $program = Program::where(['name'=> @$addData[12]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
-
-                        }
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[13],
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-                    if(@$addData[14]) {
-                        $program = Program::where(['name'=> @$addData[14]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
-
-                        }
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[15],
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-                    if(@$addData[16]) {
-                        $program = Program::where(['name'=> @$addData[16]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
-
-                        }
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[17],
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-                    if(@$addData[18]) {
-                        $program = Program::where(['name'=> @$addData[18]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
-
-                        }
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[19],
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-                    if(@$addData[20]) {
-                        $program = Program::where(['name'=> @$addData[20]])->first();
-                        if(!$program)
-                        {
-                            return response()->json(['error' => ' Incorrect Program in line ' , 'line'=> $index + 2], 422);
-
-                        }
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $program->id,
-                                'tc_program' => @$addData[21],
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-
-
                     }
                 }
 
@@ -461,6 +355,11 @@ class FacultyTeachingCourcesController extends Controller
 //                'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
+            foreach($request->tc_program as $program_id=>$tc){
+                FacultyProgram::where(['faculty_teaching_cource_id'=>$facultyTeaching->id,'program_id'=>$program_id])->update([
+                    'tc_program'=> $tc
+                ]);
+            }
             return response()->json(['success' => 'Visiting Faculty updated successfully.']);
 
         }catch (Exception $e)
