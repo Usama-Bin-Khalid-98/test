@@ -60,6 +60,7 @@ Route::get('/email', function() {
             Route::post('desk-review-not-eligible', 'DeskReviewController@not_eligible');
             Route::get('desk-review-edit/{id}', 'DeskReviewController@edit');
             Route::get('deskreview/{id?}', 'DeskReviewController@deskreview');
+            Route::get('reg-files/{cid}/{did}', 'DeskReviewController@reg_files');
             Route::post('deskreviewStatus', 'DeskReviewController@deskreviewStatus');
             Route::resource('nbeac-criteria', 'NbeacCriteriaController');
             Route::resource('department-fee', 'DepartmentFeeController');
@@ -82,6 +83,7 @@ Route::get('/email', function() {
                 Route::post('add-body-name','StrategicManagement\StatutoryBodyController@store');
                 Route::resource('basicinfo','StrategicManagement\BasicInfoController');
                 Route::resource('invoices','StrategicManagement\SlipController');
+                Route::get('print/{id?}','StrategicManagement\SlipController@invoicePrint');
                 Route::post('generateInvoice','StrategicManagement\SlipController@generateInvoice');
                 Route::resource('scope','StrategicManagement\ScopeController');
                 Route::resource('contact-info','StrategicManagement\ContactInfoController');
@@ -148,6 +150,7 @@ Route::get('/email', function() {
             Route::resource('faculty-stability','Faculty\FacultyStabilityController');
             Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
             Route::resource('work-load','Faculty\WorkLoadController');
+            Route::post('work-load/file','Faculty\WorkLoadController@file');
             Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
             Route::resource('faculty-summary','Faculty\FacultySummaryController');
             Route::resource('faculty-degree', 'FacultyDegreeController');
@@ -168,6 +171,7 @@ Route::get('/email', function() {
             Route::resource('research-funding','ResearchFundingController');
             Route::resource('research-project','ResearchProjectController');
             Route::resource('research-summary','ResearchSummaryController');
+            Route::post('research-summary/file','ResearchSummaryController@file');
             Route::resource('research-output','ResearchOutputController');
             Route::resource('curriculum-role','CurriculumRoleController');
             Route::resource('faculty-development','FacultyDevelopmentController');
@@ -330,8 +334,7 @@ Route::get('/email', function() {
         });
 
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
-            Route::resource('sar-desk-review', 'SARDes
-            kReviewController');
+            Route::resource('sar-desk-review', 'SARDeskReviewController');
             Route::patch('SARDeskReviewReport/{id}', 'SARDeskReviewController@submitDeskReport');
 
 
