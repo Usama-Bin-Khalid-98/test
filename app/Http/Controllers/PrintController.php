@@ -120,7 +120,7 @@ AND campuses.id=work_loads.campus_id ', array($req->cid));
 
             $entryRequirements = DB::select('SELECT entry_requirements.*, programs.name as program, eligibility_criterias.name as eligibilityCriteria FROM entry_requirements, programs, eligibility_criterias, campuses WHERE entry_requirements.campus_id=campuses.id AND entry_requirements.type="SAR" AND entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=?', array($req->cid));
 
-            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program, semesters.name as semester FROM application_receiveds, programs, semesters, campuses WHERE application_receiveds.campus_id=campuses.id  AND application_receiveds.type="SAR" AND application_receiveds.program_id=programs.id AND application_receiveds.semester_id=semesters.id AND application_receiveds.campus_id=?', array($req->cid));
+            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program FROM application_receiveds, programs, semesters, campuses WHERE application_receiveds.campus_id=campuses.id  AND application_receiveds.type="SAR" AND application_receiveds.program_id=programs.id AND application_receiveds.campus_id=?', array($req->cid));
 
             $orics = DB::select('SELECT orics.* FROM orics, campuses WHERE orics.campus_id=campuses.id AND campuses.id=?', array( $req->cid));
 
@@ -381,7 +381,7 @@ AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id));
 
             $entryRequirements = DB::select('SELECT entry_requirements.*, programs.name as program, eligibility_criterias.name as eligibilityCriteria FROM entry_requirements, programs, eligibility_criterias, campuses, users WHERE entry_requirements.campus_id=campuses.id AND entry_requirements.type="SAR" AND entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
-            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program, semesters.name as semester FROM application_receiveds, programs, semesters, campuses, users WHERE application_receiveds.campus_id=campuses.id AND application_receiveds.type="SAR" AND application_receiveds.program_id=programs.id AND application_receiveds.semester_id=semesters.id AND application_receiveds.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program, semester FROM application_receiveds, programs, campuses, users WHERE application_receiveds.campus_id=campuses.id AND application_receiveds.type="SAR" AND application_receiveds.program_id=programs.id AND application_receiveds.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
             $orics = DB::select('SELECT orics.* FROM orics, campuses, users WHERE orics.campus_id=campuses.id AND campuses.id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
