@@ -114,7 +114,7 @@
                                                 <ol type="i">
 
                                                     @foreach($program_dates as $dates)
-                                                        <li>{{$dates['program']}} Started in  {{$dates['date']}} (Difference {{$dates['date_diff']}})</li>
+                                                        <li>{{$dates['program']}} Started on  {{$dates['date']}} (Difference {{$dates['date_diff']}})</li>
                                                     @endforeach
                                                 </ol>
                                             </td>
@@ -135,9 +135,12 @@
                                         <tr>
                                             <td>
                                                 2. Vision and Mission statements ( Question 1.7)
-                                                <p><strong>Mission : </strong> {!! @$mission_vision->mission !!}</p>
-
-                                                <p><strong>Vision : </strong> {!! @$mission_vision->vision !!}</p>
+                                                <ol type="i">
+                                                <li class="{{$mission_vision->file ==''?'text-red':''}}">Mission & Vision Exists : @if(@$mission_vision->file !='')Yes @else No @endif </li>
+                                                <li>Mission Approval Date : {{@$mission_vision->mission_approval}}</li>
+                                                <li>Vision Approval Date : {{@$mission_vision->vision_approval}}</li>
+                                                <li>Url of Mission/Vision on official website: <a href="https:\\{{@$mission_vision->mission_url}}">{{@$mission_vision->mission_url}}</a></li>
+                                            </ol>
 
                                             </td>
                                             <td>
@@ -158,10 +161,11 @@
                                         <tr>
                                             <td>
                                                 <p>3. Strategic Plan (Question 1.8)</p>
-                                                <p>Strategic Plan from date: {{@$strategic_plan->plan_period_from}}</p>
-                                                <p>Strategic Plan to date: {{@$strategic_plan->plan_period_to}}</p>
-                                                <p>Approval Date {{@$strategic_plan->aproval_date}}</p>
-                                                <p>Duration {{@$strategic_plan['date_diff']}} years</p>
+                                                <ol type="i">
+                                                <li>Strategic Plan from date: {{@$strategic_plan->plan_period_from}}
+                                                <li>Strategic Plan to date: {{@$strategic_plan->plan_period_to}}
+                                                <li>Approval Date {{@$strategic_plan->aproval_date}}
+                                                <li>Duration {{@$strategic_plan['date_diff']}} years</ol>
                                             </td>
                                             <td>
                                                 {!! @$nbeac_criteria->strategic_plan !!}
@@ -177,19 +181,20 @@
                                         <tr>
                                             <td>
                                                 <p>4. Student Intake(Table 2.3)</p>
-
-                                                Student Intake
                                                 <p>
                                                     @php
                                                     $pre = 0;
                                                 @endphp
+                                                <ol type='i'>
                                                     @foreach(@$application_received as $applications)
-
-                                                        @if($applications->program->name != $applications)
-                                                        {{@$applications->program->name}} ({{@$applications->year}}) {{@$applications->student_intake}},
-                                                    @endif
-
+                                                        @if($loop->first || (!$loop->first && ($applications->program->id !== $application_received[$loop->index-1]->program->id)))
+                                                            <li> {{$applications->program->name}}&emsp;=&emsp;({{$applications->year}}){{$applications->student_intake}}; &emsp;
+                                                        @else
+                                                            ({{$applications->year}}){{$applications->student_intake}};&emsp;
+                                                        @endif
+                                                        
                                                             @endforeach
+                                                            </ol>
                                                     </p>
 {{--                                                    </tbody>--}}
 {{--                                                </table>--}}
@@ -206,52 +211,67 @@
 
                                         <tr>
                                             <td>
-                                                <strong> 5.	Student enrollment</strong>
+                                                5.	Student enrollment
                                                 @php  $grade=$under_grade= false; @endphp
                                                 <p>
-                                                    <strong> a)	Total Annual Enrollment Table (3.1)</strong></p>
+                                                    a)	Total Annual Enrollment Table (3.1) :</p>
                                                 @foreach(@$student_enrolment as $enrollment)
                                                     <p> Year {{$enrollment->year}}	16 years programs : {{$enrollment->bs_level}}</p>
                                                     <p> Year {{$enrollment->year}}	18 years programs : {{$enrollment->ms_level}}</p>
                                                     <p> Year {{$enrollment->year}}   Doctoral programs:  {{$enrollment->phd_level}}</p>
                                                 @endforeach
 
-                                                <p><strong> Graduated Students</strong></p>
-
+                                                <p>b) Graduated Students :</p>
+                                                <ol type="i">
                                                 @foreach($graduated_students as $graduated)
-                                                    <p class="{{$graduated->grad_std_t < 15 ?'text-red':''}}"> Program {{$graduated->program->name}}, Year {{$graduated_students?$graduated_students->tyear:''}} ({{$graduated->grad_std_t}}),
-                                                        Year {{$graduated_students?$graduated_students->year_t_1:''}} ({{$graduated->grad_std_t_1}}) ,
-                                                        Year {{$graduated_students?$graduated_students->year_t_2:''}} ({{$graduated->grad_std_t_2}}) </p>
+                                                    <li class="{{$graduated->grad_std_t < 15 ?'text-red':''}}"> Program {{$graduated->program->name}}&emsp;=&emsp;({{$graduated_students?$graduated_students->tyear:''}}){{$graduated->grad_std_t}};&emsp;
+                                                        ({{$graduated_students?$graduated_students->year_t_1:''}}){{$graduated->grad_std_t_1}};&emsp;
+                                                        ({{$graduated_students?$graduated_students->year_t_2:''}}){{$graduated->grad_std_t_2}}</li>
                                                     @php $graduated->grad_std_t>=20?$grade=true:$grade=false @endphp
 
                                                 @endforeach
+                                                </ol>
 {{--                                                @php if($graduated_students[0])@endphp--}}
+                                                </td><td>
+                                                    {!! @$nbeac_criteria->student_enrollment !!}
+                                                </td>
+                                                    @hasrole('NBEACAdmin')
+                                            <td>
+                                                <input type="radio" name="eligibility_student_enrollment" value="yes"> yes
+                                                <input type="radio" name="eligibility_student_enrollment" checked value="no"> no
+                                            </td>
+                                            @endhasrole
+                                            </tr>
+                                                <tr>
+                                                <td>
+                                                 6.	Faculty Portfolio (Section 4)
 
-                                                <strong> b)	Faculty Portfolio (Section 4)</strong>
-
-                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>c)</strong>	Total Full time Faculty: {{@$faculty_summary}}</p>
-                                                <p class="{{$getFullProfessors<1?'text-red':''}}" > <strong>d)</strong>	Professors: {{@$getFullProfessors}}</p>
-                                                <p class="{{$AssociateProfessors<1?'text-red':''}}"> <strong>e)</strong> Associate professors: {{@$AssociateProfessors}}</p>
-                                                <p class="{{$AssistantProfessors<3?'text-red':''}}"> <strong>f)</strong> Assistant professors: {{@$AssistantProfessors}}</p>
-                                                <p> <strong>g)</strong>	Lecturers: {{@$lecturers}}</p>
-                                                <p> <strong>h)</strong>	Other: {{@$other}}</p>
-                                                <p class="{{$female_faculty<20?'text-red':''}}"> <strong>i)</strong>% of female permanent / regular faculty: {{@$female_faculty}}</p>
-                                                <p class="{{($faculty_summary_doc/$faculty_summary)*100<20?'text-red':''}}"> <strong>j)</strong> % holding a doctoral degree: {{@$faculty_summary_doc}}</p>
-                                                <p> <strong>k)</strong>	Total number of permanent faculty: {{@$permanent_faculty}}</p>
-                                                <p> <strong>l)</strong>	Total number of adjunct faculty: {{@$adjunct_faculty}}</p>
-                                                <p> <strong>m)</strong>
-                                                    Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)) = @foreach($fte_program_wise as $key => $value) {{$key}} ({{array_sum($value)}}), @endforeach</p>
-                                                <p> <strong>n)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)) = @foreach($vfe_program_wise as $key => $value) {{$key}} ({{array_sum($value)}}), @endforeach</p>
-                                                <p> <strong>o)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4) = {{$teacher_student_ratio}}</p>
+                                                <p class="{{$faculty_summary<15?'text-red':''}}"> <strong>a)</strong>	Total Full time Faculty: {{@$faculty_summary}}</p>
+                                                <p class="{{$getFullProfessors<1?'text-red':''}}" > <strong>b)</strong>	Professors: {{@$getFullProfessors}}</p>
+                                                <p class="{{$AssociateProfessors<1?'text-red':''}}"> <strong>c)</strong> Associate professors: {{@$AssociateProfessors}}</p>
+                                                <p class="{{$AssistantProfessors<3?'text-red':''}}"> <strong>d)</strong> Assistant professors: {{@$AssistantProfessors}}</p>
+                                                <p> <strong>e)</strong>	Lecturers: {{@$lecturers}}</p>
+                                                <p> <strong>f)</strong>	Other: {{@$other}}</p>
+                                                <p class="{{$female_faculty<20?'text-red':''}}"> <strong>g)</strong>% of female permanent / regular faculty: {{@$female_faculty}}</p>
+                                                <p class="{{($faculty_summary_doc/$faculty_summary)*100<20?'text-red':''}}"> <strong>h)</strong> % holding a doctoral degree: {{@$faculty_summary_doc}}</p>
+                                                <p> <strong>i)</strong>	Total number of permanent faculty: {{@$permanent_faculty}}</p>
+                                                <p> <strong>j)</strong>	Total number of adjunct faculty: {{@$adjunct_faculty}}</p>
+                                                <p> <strong>k)</strong>
+                                                    Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)) : <ol type="i">@foreach($fte_program_wise as $key => $value) <li>{{$key}} = {{array_sum($value)}} @endforeach</ol></p>
+                                                <p> <strong>l)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)) : <ol type="i">@foreach($vfe_program_wise as $key => $value) <li>{{$key}} = {{array_sum($value)}} @endforeach</ol></p>
+                                                <p> <strong>m)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4) =  <ol type="i">@foreach($teacher_student_ratio as $key => $value) <li>{{$key}} = {{($value)}} @endforeach</ol></p>
 {{--                                                <p> BBA (program1) = </p>--}}
 {{--                                                <p> MBA (program2) = </p>--}}
-                                                <p> <strong>p)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction) = @foreach($facultyStability as $fs) {{$fs->year}} ({{$fs->new_induction}}), @endforeach</p>
-                                                <p> <strong>q)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = @foreach($facultyStability as $fs) {{$fs->year}} ({{$fs->resigned + $fs->retired + $fs->terminated}}), @endforeach</p>
-                                                <p> <strong>r)</strong>	FT:PT (as per table 4.3 a 4.3 b)=</p>
-                                                <p> <strong>s)</strong>	No. of faculty with terminal degree from foreign institutions = {{@$faculty_degree->faculty_foreign}}</p>
-                                                <p> <strong>t)</strong>	No. of faculty with terminal degree from domestic institutions = {{@$faculty_degree->faculty_domestic}}</p>
-                                                <p> <strong>u)</strong>	No. of faculty with international work experience = {{@$faculty_degree->faculty_international}}</p>
-                                                <p> <strong>v)</strong>	Teaching and research assistants  - on short-term contracts- (Others in Table 4.1)</p>
+                                                <p> <strong>n)</strong>	Permanent / regular faculty hired in last 3 years (FTE) (Table 4.5: Induction) = @foreach($facultyStability as $fs) {{$fs->year}} ({{$fs->new_induction}}), @endforeach</p>
+                                                <p> <strong>o)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = @foreach($facultyStability as $fs) {{$fs->year}} ({{$fs->resigned + $fs->retired + $fs->terminated}}), @endforeach</p>
+                                                <p> <strong>p)</strong>	FT:PT (as per table 4.3 a 4.3 b)=
+                                                <ol type="i">
+                                                    @foreach($fulltime as $program => $number)<li>{{$program}} = {{$number}} : {{$parttime[$program]}} @endforeach
+                                                </ol></p>
+                                                <!-- <p> <strong>q)</strong>	No. of faculty with terminal degree from foreign institutions = {{@$faculty_degree->faculty_foreign}}</p>
+                                                <p> <strong>r)</strong>	No. of faculty with terminal degree from domestic institutions = {{@$faculty_degree->faculty_domestic}}</p>
+                                                <p> <strong>s)</strong>	No. of faculty with international work experience = {{@$faculty_degree->faculty_international}}</p> -->
+                                                <p> <strong>q)</strong>	Teaching and research assistants  - on short-term contracts- = {{$other_faculty}}</p>
 
                                             </td>
                                             <td>
@@ -268,7 +288,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                6. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) = {{@$total_courses}} <br>
+                                                7. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) = {{@$total_courses}} <br>
                                                 <p class="{{$total_courses_prof<4?'text-red':''}}">i.	Professor: {{@$total_courses_prof}} </p>
                                                 <p class="{{$total_courses_assoc<4?'text-red':''}}">ii.	Associate Professor: {{@$total_courses_assoc}} </p>
                                                 <p class="{{$total_courses_assis<6?'text-red':''}}">iii.	Assistant Professor: {{@$total_courses_assis}} </p>
@@ -288,7 +308,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                7. Research Output last three years (Table 5.1 summary of research output)<br><br>
+                                                8. Research Output last three years (Table 5.1 summary of research output)<br><br>
                                                 <p>Academic Research \</p>
                                                 <ul style="list-style-type: lower-alpha">
                                                     <li>Impact factor journals = {{@$summaries['impact_factor']}}</li>
@@ -300,7 +320,7 @@
                                                     <li>Conference paper national:   (Table 5.1) = {{@$summaries['conf_paper']}}</li>
                                                     <li>Conference paper international:  (table 5.1) = {{@$summaries['conf_paper_inter']}}</li>
                                                     <li>Published case studies:  (table 5.1) = {{@$summaries['case_studies']}}</li>
-{{--                                                    <li>Consultancy projects:  (table 5.1) = {{@$summaries['']}}</li>--}}
+                                                    <li>Consultancy projects:  (table 5.1) = {{@$summaries['consult']}}</li>
                                                 </ul>
 
 
@@ -349,7 +369,7 @@
 
                                         <tr>
                                             <td>
-                                                8. Bandwidth in GB's =   {{@$bandwidth->remark}} GB
+                                                9. Bandwidth in GB's =   {{@$bandwidth->remark}} GB
                                             </td>
                                             <td>
                                                 {!! @$nbeac_criteria->bandwidth !!}
@@ -364,7 +384,7 @@
 
                                         <tr>
                                             <td>
-                                                9. Student to Computer ratio is = {{$getStudentComRatio->remark??''}}
+                                                10. Student to Computer ratio is = {{$getStudentComRatio->remark??''}}
                                             </td>
 
                                             <td>{!! $nbeac_criteria->std_comp_ratio !!}</td>
