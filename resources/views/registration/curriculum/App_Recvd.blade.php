@@ -187,7 +187,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Degree awarding critarea/requirments</label>
-                                <textarea type="text" name="degree_req" id="edit_degree_req" class="form-control">{{old('edit_degree_req')}}</textarea>
+                                <textarea type="text" name="degree_req" id="edit_degree_req"  value="{{old('edit_degree_req')}}" class="form-control">{{old('edit_degree_req')}}</textarea>
                             </div>
                         </div>
 
@@ -247,7 +247,7 @@
         $(function () {
             // instance, using default configuration.
             CKEDITOR.replace('degree_req');
-            CKEDITOR.replace('edit_degree_req');
+            // CKEDITOR.replace('edit_degree_req');
         })
         $('.select2').select2();
 

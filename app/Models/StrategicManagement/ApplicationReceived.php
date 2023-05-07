@@ -22,8 +22,4 @@ class ApplicationReceived extends Model
         return $this->belongsTo(Program::class);
     }
 
-    public function semester()
-    {
-        return $this->belongsTo(Semester::class);
-    }
 }
