@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class BusinessSchoolFacilityController extends Controller
 {
@@ -26,7 +27,7 @@ class BusinessSchoolFacilityController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $facility_types = Facility::with('facility_type')->get();
+        $facility_types = Facility::with('facility_type')->orderBy('facility_type_id')->orderBy('id')->get();
 
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){

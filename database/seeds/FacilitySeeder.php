@@ -34,8 +34,8 @@ class FacilitySeeder extends Seeder
             ['id'=>'20','facility_type_id' => '4','name' => 'Number of libraries','status' => 'active'],
             ['id'=>'21','facility_type_id' => '4','name' => 'Total seating capacity','status' => 'active'],
             ['id'=>'22','facility_type_id' => '4','name' => 'Number of business text books (hardcopy)','status' => 'active'],
-            ['id'=>'23','facility_type_id' => '4','name' => 'Number of business reference books ','status' => 'active'],
-            ['id'=>'24','facility_type_id' => '4','name' => 'Number of local journal subscriptions','status' => 'active'],
+            ['id'=>'23','facility_type_id' => '4','name' => 'Number of business reference books (Hardcopy)','status' => 'active'],
+            ['id'=>'24','facility_type_id' => '4','name' => 'Number of local journal subscriptions (Hardcopy)','status' => 'active'],
             ['id'=>'25','facility_type_id' => '4','name' => 'Number of new books added in current year','status' => 'active'],
             ['id'=>'26','facility_type_id' => '4','name' => 'Budget spent on new books in current year (PKR)','status' => 'active'],
             ['id'=>'27','facility_type_id' => '4','name' => 'Number of international journal subscriptions','status' => 'active'], 
@@ -66,6 +66,8 @@ class FacilitySeeder extends Seeder
             ['id'=>'52','facility_type_id' => '9','name' => 'Canteen/cafeteria','status' => 'active'],
             ['id'=>'53','facility_type_id' => '9','name' => 'Gymnasium','status' => 'active'],
             ['id'=>'54','facility_type_id' => '9','name' => 'Playground','status' => 'active'],
+            ['id'=>'55','facility_type_id' => '4','name' => 'Number of business reference books (Softcopy)','status' => 'active'],
+            ['id'=>'56','facility_type_id' => '4','name' => 'Number of local journal subscriptions (Softcopy)','status' => 'active'],
         ]);
     }
 }
