@@ -418,7 +418,6 @@ class HomeController extends Controller
                     'from' => $businessSchool->campus->user->email,
                     'from_name' => $businessSchool->campus->user->name,
                 ];
-                Log::debug('here');
                 Mail::send('registration.mail.reg_apply_temp', ['data'=>$data], function($message) use ($mailInfo) {
                     //dd($user);
                     $message->to($mailInfo['to'],$mailInfo['to_name'] )

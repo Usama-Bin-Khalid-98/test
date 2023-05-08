@@ -115,7 +115,6 @@ use Illuminate\Support\Facades\Log;
 
         function isProcessingASlip()
         {
-            Log::debug(Auth::user()->campus->id);
             return \App\Models\Common\Slip::where('regStatus','<>','inactive')->where('status','<>','inactive')->where(['business_school_id'=>Auth::user()->campus_id])->exists();
         }
     }

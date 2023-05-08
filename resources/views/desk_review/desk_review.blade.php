@@ -275,7 +275,7 @@
 
                                             </td>
                                             <td>
-                                                {!! @$nbeac_criteria->student_enrollment !!}
+                                                {!! @$nbeac_criteria->faculty_portfolio !!}
 
                                             </td>
 

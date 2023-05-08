@@ -155,12 +155,16 @@
                                     <tr>
                                         <td>Workload Policy</td>
                                         <td>Appendix-4A</td>
+                                        @if($appendixFiles->workload_policy)
                                         <td><a href="{{url($appendixFiles->workload_policy)}}"><span data-toggle="tooltip" title="{{$appendixFiles->workload_policy??''}}" class="label label-{{$appendixFiles->workload_policy?'success':'danger'}}"><i class="glyphicon glyphicon-file"></i></span></a></td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <td>Research Summary</td>
                                         <td>Appendix-5A</td>
+                                        @if($appendixFiles->research_summary)
                                         <td><a href="{{url($appendixFiles->research_summary)}}"><span data-toggle="tooltip" title="{{$appendixFiles->research_summary??''}}" class="label label-{{$appendixFiles->research_summary?'success':'danger'}}"><i class="glyphicon glyphicon-file"></i></span></a></td>
+                                        @endif
                                     </tr>
                                 </tbody>
                                 <tfoot>
