@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
     if (!function_exists('checkIsCompleted')) {
 
@@ -103,7 +102,13 @@ use Illuminate\Support\Facades\Log;
 
         function getRegInvoiceId()
         {
-            $result = \App\Models\Common\Slip::where(['regStatus'=>'Pending', 'status'=>'approved', 'business_school_id'=>Auth::user()->campus_id])->get()->first();
+            $result = \App\Models\Common\Slip::where([
+                'regStatus' => 'Pending', 
+                'status' => 'approved', 
+                'business_school_id' => Auth::user()->campus_id])
+                ->get()
+                ->first();
+                
             if (!$result){
                 return -1;
             }
@@ -115,7 +120,10 @@ use Illuminate\Support\Facades\Log;
 
         function isProcessingASlip()
         {
-            return \App\Models\Common\Slip::where('regStatus','<>','inactive')->where('status','<>','inactive')->where(['business_school_id'=>Auth::user()->campus_id])->exists();
+            return \App\Models\Common\Slip::where('regStatus', '<>', 'inactive')
+                ->where('status', '<>', 'inactive')
+                ->where(['business_school_id' => Auth::user()->campus_id])
+                ->exists();
         }
     }
 ?>

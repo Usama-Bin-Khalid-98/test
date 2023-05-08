@@ -17,12 +17,12 @@ class ChangeForeignKeyToTextInWorkLoads extends Migration
     {
         Schema::table('work_loads', function (Blueprint $table) {
             //
-            $table->string('designation',100)->nullable();
+            $table->string('designation', 100)->nullable();
             
         });
         foreach(WorkLoad::all() as $workload){
             $designation_name = Designation::find($workload->designation_id)->name;
-            $workload->update(['designation'=>$designation_name]);
+            $workload->update(['designation' => $designation_name]);
         }
         Schema::table('work_loads', function (Blueprint $table) {
             //

@@ -192,7 +192,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'designation_id'=>10, 'type'=>'REG'])
-            ->where('lookup_faculty_type_id','!=',3)
+            ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $AssociateProfessors = FacultyTeachingCources::
             where(
@@ -201,7 +201,7 @@ class DeskReviewController extends Controller
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
                     'designation_id'=>1, 'type'=>'REG'])
-            ->where('lookup_faculty_type_id','!=',3)
+            ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $AssistantProfessors = FacultyTeachingCources::
             where(
@@ -210,7 +210,7 @@ class DeskReviewController extends Controller
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
                     'designation_id'=>2, 'type'=>'REG'])
-            ->where('lookup_faculty_type_id','!=',3)
+            ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $lecturers = FacultyTeachingCources::
             where(
@@ -219,7 +219,7 @@ class DeskReviewController extends Controller
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
                     'designation_id'=>6, 'type'=>'REG'])
-            ->where('lookup_faculty_type_id','!=',3)
+            ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $permanent_faculty = FacultyTeachingCources::
             where(
@@ -244,7 +244,7 @@ class DeskReviewController extends Controller
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
                     'designation_id'=>8, 'type'=>'REG'])
-            ->where('lookup_faculty_type_id','!=',3)
+            ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $female_faculty = FacultyGender::
             where(
@@ -375,24 +375,26 @@ class DeskReviewController extends Controller
                 'publication_type_id'=> 7, 'type'=>'REG'
             ]
         )->get()->sum('total_items');
-        // $conf_paper_inter!==null?$summaries['conf_paper_inter'] = $conf_paper_inter->total_items:$summaries['conf_paper_inter']='';
+
         $summaries['case_studies'] = ResearchSummary::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 10, 'type'=>'REG'
+                'publication_type_id' => 10, 
+                'type' => 'REG'
             ]
         )->get()->sum('total_items');
+
         $summaries['consult'] = ResearchSummary::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 11, 'type'=>'REG'
+                'publication_type_id' => 11, 
+                'type' => 'REG'
             ]
         )->get()->sum('total_items');
-        // $case_studies!==null?$summaries['case_studies'] = $case_studies->total_items:$summaries['case_studies']='';
 
 //        dd($summaries);
 
@@ -438,7 +440,7 @@ class DeskReviewController extends Controller
         
         $facultyTeachingCourses = FacultyTeachingCources::
         with('campus','designation', 'faculty_program')
-        ->where('lookup_faculty_type_id','!=',3)
+        ->where('lookup_faculty_type_id', '!=', 3)
         ->where($where)->get();
         
         $fte_program_wise = [];
@@ -458,7 +460,7 @@ class DeskReviewController extends Controller
         }
         
         $getVFE = FacultyTeachingCources::with('faculty_program')
-            ->where('lookup_faculty_type_id' , 3)
+            ->where('lookup_faculty_type_id', 3)
             ->where('campus_id', $campus_id)
             ->where('department_id', $department_id)
             ->where('type', 'REG')
@@ -473,16 +475,16 @@ class DeskReviewController extends Controller
                 {
                     {
                         if(array_key_exists($prog->program->name, $vfe_program_wise)){
-                            $vfe_program_wise[$prog->program->name] = round($vfe_program_wise[$prog->program->name], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            $vfe_program_wise[$prog->program->name] = round($vfe_program_wise[$prog->program->name], 2) + round($prog->tc_program / $vfe->max_cources_allowed, 2);
                         }else{
-                            $vfe_program_wise[$prog->program->name] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            $vfe_program_wise[$prog->program->name] = round($prog->tc_program / $vfe->max_cources_allowed, 2);
                         }
                     }
                 }
             }
         }
-        foreach($vfe_program_wise as $program=> $vfe){
-            $vfe_program_wise[$program]= round($vfe/3,2);
+        foreach($vfe_program_wise as $program => $vfe){
+            $vfe_program_wise[$program]= round($vfe / 3, 2);
         }
 
         
@@ -533,16 +535,17 @@ class DeskReviewController extends Controller
                 {
                     {
                         if(array_key_exists($prog->program_id, $byProgramVFE)){
-                            $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program / $vfe->max_cources_allowed, 2);
                         }else{
-                            $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            $byProgramVFE[$prog->program_id] = round($prog->tc_program / $vfe->max_cources_allowed, 2);
                         }
                     }
                 }
             }
         }
+
         foreach($byProgramVFE as $program=> $vfe){
-            $byProgramVFE[$program]= round($vfe/3,2);
+            $byProgramVFE[$program]= round($vfe / 3, 2);
         }
 
         $teacher_student_ratio = [];
@@ -552,10 +555,10 @@ class DeskReviewController extends Controller
                     $teacher_student_ratio[$req->program->name] = 0;
                     continue;
                 }
-                $teacher_student_ratio[$req->program->name] = (round($req->total_enrollments/($byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]), 2));
+                $teacher_student_ratio[$req->program->name] = (round($req->total_enrollments / ($byProgramFTE[$req->program_id] + $byProgramVFE[$req->program_id]), 2));
             }
- // (isset($byProgramFTE[$req->program_id], $byProgramVFE[$req->program_id]) && $byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]) != 0 ? $teacher_student_ratio = (round($req->total_enrollments/($byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]), 2))."%" : $teacher_student_ratio = "0%"; 
         }
+
         $faculty_with_program = FacultyTeachingCources::with('faculty_program')->get();
         $fulltime = [];
         $parttime = [];
@@ -577,7 +580,7 @@ class DeskReviewController extends Controller
             }
         }
 
-        $other_faculty = FacultySummary::where(['type'=>'REG','discipline_id'=>5])->get()->sum('number_faculty');
+        $other_faculty = FacultySummary::where(['type' => 'REG', 'discipline_id' => 5])->get()->sum('number_faculty');
         
         $facultyStability = DB::select('SELECT faculty_stability.*
                 FROM faculty_stability
@@ -912,12 +915,12 @@ class DeskReviewController extends Controller
         ];
     }
 
-    public  function reg_files(Request $request,$cid,$did){
+    public  function reg_files(Request $request, $cid, $did){
         try {
-            $where = ['campus_id'=> $cid, 'department_id' => $did, 'type'=>'REG'];
-            $whereReg = ['campus_id'=> $cid, 'department_id' => $did];
+            $where = ['campus_id' => $cid, 'department_id' => $did, 'type' => 'REG'];
+            $whereReg = ['campus_id' => $cid, 'department_id' => $did];
 //            dd($where);
-            $schoolInfo = Slip::where(['business_school_id'=> $cid, 'department_id' => $did])->with('campus', 'department')->first();
+            $schoolInfo = Slip::where(['business_school_id' => $cid, 'department_id' => $did])->with('campus', 'department')->first();
 //            dd($schoolInfo);/
             $ContactInfo = ContactInfo::where($where)->get() ?? [] ;
 //            dd($ContactInfo);
@@ -928,7 +931,7 @@ class DeskReviewController extends Controller
 //            dd($StrategicPlan);
             $ParentInstitution = ParentInstitution::where($whereReg)->first()->file ?? '';
 //            dd($CourseOutline);
-            $appendixFiles = AppendixFile::where(['campus_id'=>$cid])->first();
+            $appendixFiles = AppendixFile::where(['campus_id' => $cid])->first();
             return  view('desk_review.reg_files', compact('schoolInfo','ContactInfo', 'StateryCommittee',
                     'MissionVision',
                     'StrategicPlan',

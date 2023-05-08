@@ -186,7 +186,7 @@
                                 @php $arr = [] @endphp
                                 @foreach(@$visitings as $req)
                                 <tr>
-{{--                                <td>{{$req->campus->business_school->name}}</td>--}}
+{{--                                    <td>{{$req->campus->business_school->name}}</td>--}}
                                     <td>{{@$req->name}}</td>
                                     <td>{{@$req->lookup_faculty_type->faculty_type}}</td>
                                     <td>{{@$req->designation->name}}</td>
@@ -469,8 +469,8 @@ let check = false;
             $('#edit_designation_id').select2().val(data.designation_id);
             $('#edit_max_cources_allowed').val(data.max_cources_allowed);
             let tc_program_name = "tc_program"+""+data.id;
-            for( let i = 0; i<data.tc_program.length;i++){
-                $('#edit_program_'+data.tc_program[i].program_id).val(data.tc_program[i].tc_program);
+            for( let i = 0 ; i < data.tc_program.length ; i++){
+                $('#edit_program_' + data.tc_program[i].program_id).val(data.tc_program[i].tc_program);
             }
             // $('#edit_tc_program2').val(data.tc_program2);
             $('#edit_name').val(data.name);

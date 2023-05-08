@@ -48,7 +48,7 @@
                         </div>
 
                         <!-- /.box-header -->
-                        <form action="javascript:void(0)" class='mission' id="form" method="POST">
+                        <form action="javascript:void(0)" id="form" method="POST">
 
                 <div class="box-body pad">
                                 <label>Vision</label>

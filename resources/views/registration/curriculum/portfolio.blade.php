@@ -203,7 +203,7 @@
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
-                                @if ($loop->last || $portfolio->program_id !== $portfolios[$loop->index +1 ]->program_id)
+                                @if ($loop->last || $portfolio->program_id !== $portfolios[$loop->index + 1]->program_id)
                                  <tr>
                                     <td><span>{{@$portfolio->program->name}} </span></td>
                                     <td></td>

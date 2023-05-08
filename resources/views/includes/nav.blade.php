@@ -118,7 +118,7 @@ $faculty_detail= isCompletedSAR('App\Models\Faculty\FacultyDetailedInfo', ['camp
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
 $RegDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Review']);
-$RegInvoice = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Pending', 'status'=>'paid']);
+$RegInvoice = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus' => 'Pending', 'status' => 'paid']);
 $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
 $invoice_id = getRegInvoiceId();
 @endphp
@@ -1005,7 +1005,7 @@ $invoice_id = getRegInvoiceId();
           @endhasrole
           @endif
           @hasrole('BusinessSchool')
-          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C' &&$invoice_id!=-1)
+          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C' && $invoice_id != -1)
             <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="{{url('registration-apply')}}/{{$invoice_id}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
           @endif
           @endhasrole

@@ -16,19 +16,12 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css')}}">
     <style type="text/css" media="print">
-      /* @page {
-        size: auto;
-        margin: 10px;
-        
-        
-      } */
       @media print {
         body {
             print-color-adjust: exact;  
             -webkit-print-color-adjust: exact; 
         }
-        
-        }
+    }
     </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -41,7 +34,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body onload="window.print();window.close()">
+<body onload="window.print(); window.close()">
 <div class="wrapper">
     <!-- Main content -->
     <!-- Main content -->
@@ -103,18 +96,6 @@
             <!-- /.col -->
         </div>
         
-
-        <!-- this row will not appear when printing -->
-        <!-- <div class="row no-print">
-            <div class="col-xs-12">
-                <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                {{--          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment--}}
-                {{--          </button>--}}
-                {{--          <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
-                {{--            <i class="fa fa-download"></i> Generate PDF--}}
-                {{--          </button>--}}
-            </div>
-        </div> -->
     </section>
     <!-- /.content -->
     <div class="clearfix"></div>

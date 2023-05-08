@@ -603,7 +603,7 @@
         });
         
         $('#fileform').submit(function (e) {
-            let file=$('#file').val();
+            let file = $('#file').val();
             if(!file)
             {
                 Notiflix.Notify.Warning("Please Choose a file.");

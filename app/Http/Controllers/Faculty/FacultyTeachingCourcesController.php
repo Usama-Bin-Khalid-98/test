@@ -60,7 +60,7 @@ class FacultyTeachingCourcesController extends Controller
 
             $visitings = FacultyTeachingCources::with(['faculty_program' => function ($query) {
                 $query->orderBy('program_id', 'asc');
-            },'campus','department','lookup_faculty_type'])
+            }, 'campus', 'department', 'lookup_faculty_type'])
             //     'lookup_faculty_type'=> function($query) {
             //     $query->where('id', 1);
             //     $query->orWhere('id', 2);
@@ -181,28 +181,31 @@ class FacultyTeachingCourcesController extends Controller
                                 'created_by' => Auth::user()->id
                             ]);
                             
-                    for($index2=4; $index2<count($addData);$index2+=2){
-                        $program = Program::where(['name'=> @$addData[$index2]])->first();
+                    for($column = 4 ; $column < count($addData) ; $column += 2){
+                        $program = Program::where(['name' => @$addData[$column]])->first();
                         if(!$program)
                         {
-                            FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id,])->delete();
+                            FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id])->delete();
                             FacultyTeachingCources::find($insert->id)->delete();
-                            return response()->json(['error' => ' Incorrect Program in line ' . ($index+2)], 422);
+                            return response()->json(['error' => ' Incorrect Program in line ' . ($index + 2)], 422);
                         }
-                        $scope = Scope::where(['campus_id'=>Auth::user()->campus_id, 'department_id'=> Auth::user()->department_id, 'program_id'=>$program->id])->exists();
+                        $scope = Scope::where([
+                            'campus_id'=>Auth::user()->campus_id, 
+                            'department_id'=> Auth::user()->department_id, 
+                            'program_id'=>$program->id
+                            ])->exists();
+
                         if(!$scope){
-                            FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id,])->delete();
+                            FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id])->delete();
                             FacultyTeachingCources::find($insert->id)->delete();
                             return response()->json(['error' => ' Program not in scope in line ' . ($index+2), 'line' => $index + 2], 422);
                         }
-                        $insertTcProgram = FacultyProgram::create(
-                            [
+                        FacultyProgram::create([
                                 'faculty_teaching_cource_id' => $insert->id,
                                 'program_id' => $program->id,
-                                'tc_program' => @$addData[$index2+1],
+                                'tc_program' => @$addData[$column + 1],
                                 'created_by' => Auth::id()
-                            ]
-                        );
+                            ]);
                     }
 
                     $scopes = Scope::where([
@@ -355,10 +358,12 @@ class FacultyTeachingCourcesController extends Controller
 //                'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
-            foreach($request->tc_program as $program_id=>$tc){
-                FacultyProgram::where(['faculty_teaching_cource_id'=>$facultyTeaching->id,'program_id'=>$program_id])->update([
-                    'tc_program'=> $tc
-                ]);
+            foreach($request->tc_program as $program_id => $tc){
+                FacultyProgram::where([
+                    'faculty_teaching_cource_id' => $facultyTeaching->id,
+                    'program_id' => $program_id
+                    ])
+                    ->update(['tc_program' => $tc]);
             }
             return response()->json(['success' => 'Visiting Faculty updated successfully.']);
 

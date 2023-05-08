@@ -183,7 +183,7 @@ class StatutoryCommitteeController extends Controller
                 $path = 'uploads/statutory_committee';
                 $diskName = env('DISK');
                 $disk = Storage::disk($diskName);
-                if($update->file!=='' &&$update->file!=='/'){
+                if($update->file != '' && $update->file != '/'){
                     unlink($update->file);
                }
                 $request->file('file')->move($path, $fileName);

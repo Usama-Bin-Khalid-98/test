@@ -18,12 +18,12 @@ class ChangeForeignKeyToTextInStatutoryCommittees extends Migration
     {
         Schema::table('statutory_committees', function (Blueprint $table) {
             //
-            $table->string('designation',100)->nullable();
+            $table->string('designation', 100)->nullable();
             
         });
         foreach(StatutoryCommittee::all() as $committee){
             $designation_name = Designation::find($committee->designation_id)->name;
-            $committee->update(['designation'=>$designation_name]);
+            $committee->update(['designation' => $designation_name]);
         }
         Schema::table('statutory_committees', function (Blueprint $table) {
             //

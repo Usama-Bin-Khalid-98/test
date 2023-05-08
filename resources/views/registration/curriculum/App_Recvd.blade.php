@@ -247,7 +247,6 @@
         $(function () {
             // instance, using default configuration.
             CKEDITOR.replace('degree_req');
-            // CKEDITOR.replace('edit_degree_req');
         })
         $('.select2').select2();
 

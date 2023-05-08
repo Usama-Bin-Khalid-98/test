@@ -136,7 +136,6 @@ class StudentGenderController extends Controller
 
         try {
             $total = $request->male + $request->female;
-            // return response()->json($total);
             if($total > 100){
                 return response()->json(['error' => 'Male & Female should not exceed 100']);
             }

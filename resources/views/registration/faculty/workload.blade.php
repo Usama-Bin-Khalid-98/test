@@ -694,7 +694,7 @@ $('#updateForm').submit(function (e) {
         });
 
         $('#fileform').submit(function (e) {
-            let file=$('#file4A').val();
+            let file = $('#file4A').val();
             if(!file)
             {
                 Notiflix.Notify.Warning("Please Choose a file.");

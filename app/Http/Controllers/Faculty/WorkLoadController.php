@@ -317,22 +317,26 @@ class WorkLoadController extends Controller
         if(!$request->file('file')){
             return response()->json(['error' => 'Please upload a valid file']);
         }
-        $appendix_file = AppendixFile::where(['campus_id'=> Auth::user()->campus_id, 'business_school_id'=>Auth::user()->business_school_id])->first();
+        $appendix_file = AppendixFile::where([
+            'campus_id'=> Auth::user()->campus_id,
+            'business_school_id'=>Auth::user()->business_school_id
+            ])->first();
+
         $path = 'uploads/workload_policy';
             $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
             $diskName = env('DISK');
             Storage::disk($diskName);
             $request->file('file')->move($path, $imageName);
         if($appendix_file){
-            if($appendix_file->workload_policy && $appendix_file->workload_policy !==''){
+            if($appendix_file->workload_policy && $appendix_file->workload_policy !== ''){
                 unlink($appendix_file->workload_policy);
             }
-            AppendixFile::where(['id'=>$appendix_file->id])->update(['workload_policy'=>$path.'/'.$imageName]);        
+            AppendixFile::where(['id' => $appendix_file->id])->update(['workload_policy' => $path . '/' . $imageName]);        
         }else{
             AppendixFile::create([
-                'campus_id'=>Auth::user()->campus_id,
-                'business_school_id'=>Auth::user()->business_school_id,
-                'workload_policy'=>$path.'/'.$imageName
+                'campus_id' => Auth::user()->campus_id,
+                'business_school_id' => Auth::user()->business_school_id,
+                'workload_policy' => $path . '/' . $imageName
             ]);
         }
         return response()->json(['success' => 'Appendix 4A uploaded successfully.']);

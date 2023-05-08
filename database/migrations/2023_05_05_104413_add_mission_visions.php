@@ -15,7 +15,7 @@ class AddMissionVisions extends Migration
     {
         Schema::table('mission_visions', function (Blueprint $table) {
             //
-            $table->string('mission_url',255);
+            $table->string('mission_url', 255);
         });
     }
 

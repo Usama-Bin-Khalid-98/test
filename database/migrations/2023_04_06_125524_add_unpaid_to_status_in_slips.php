@@ -19,7 +19,7 @@ class AddUnpaidToStatusInSlips extends Migration
         Schema::table('slips', function (Blueprint $table) {
             //
         });
-        DB::statement("ALTER TABLE slips MODIFY COLUMN status ENUM('active', 'inactive','pending', 'paid','approved','unpaid') NOT NULL;");
+        DB::statement("ALTER TABLE slips MODIFY COLUMN status ENUM('active', 'inactive', 'pending', 'paid', 'approved', 'unpaid') NOT NULL;");
 
     }
 

@@ -24,7 +24,6 @@ use App\Models\Faculty\FacultyGender;
 use App\Models\Common\Program;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ChangeResgistrationStatusMail;
-use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -393,7 +392,7 @@ class HomeController extends Controller
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
             $registration_apply = Slip::where(
-                ['id' => $id,'business_school_id'=> $campus_id, 'department_id' => $department_id])
+                ['id' => $id,'business_school_id' => $campus_id, 'department_id' => $department_id])
                 ->update(['regStatus' =>'Review', 'registration_date'=>date('Y-m-d')]);
            //dd(DB::getQueryLog());
             $getNbeacData = NbeacBasicInfo::all()->first();
@@ -404,7 +403,7 @@ class HomeController extends Controller
                         'department_id'=>Auth::user()->department_id,
                     ]
                 )->get()->first();
-                        
+
             if($registration_apply)
             {
                 $data= [];

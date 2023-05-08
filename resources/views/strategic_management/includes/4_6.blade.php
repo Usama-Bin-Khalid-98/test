@@ -12,7 +12,7 @@
                                 </thead>
                                 <tbody>
                                    <?php
-                                   $facPer = $facPerm = array(0,0,0);
+                                   $facPer = $facPerm = array(0, 0, 0);
                                    //print_r($facultyGenders);
                                    for ($i=0;$i<count(@$facultyGenders);$i++) {
                                         if($facultyGenders[$i]->facultyTypeName=='Permanent'){
