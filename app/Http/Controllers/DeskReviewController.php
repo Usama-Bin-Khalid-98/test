@@ -457,31 +457,34 @@ class DeskReviewController extends Controller
             }
         }
         
-        $whereb = ['campus_id'=> $campus_id,'department_id'=>$department_id,  'type' => 'REG', 'lookup_faculty_type_id' => 3];
-        $facultyTeachingCourses4b = FacultyTeachingCources::
-         with('campus','lookup_faculty_type','designation', 'faculty_program')
-            ->where($whereb)->get();
-            
-        $totalFTE2 = 0;
-            
+        $getVFE = FacultyTeachingCources::with('faculty_program')
+            ->where('lookup_faculty_type_id' , 3)
+            ->where('campus_id', $campus_id)
+            ->where('department_id', $department_id)
+            ->where('type', 'REG')
+            ->where('deleted_at', null)
+            ->get();
+
         $vfe_program_wise = [];
-        foreach($facultyTeachingCourses4b as $data){
-            foreach ($data->faculty_program as $programRow){
-                $totalFTE2 += $programRow->tc_program / $data->max_cources_allowed;
-            }
-            foreach($data->faculty_program as $program)
+        if($getVFE){
+            foreach ($getVFE as $vfe)
             {
-                if(empty($vfe_program_wise)){
-                    $vfe_program_wise[$program->program->name] = [round($totalFTE2 / 3, 2)];
-                }else{
-                    if(array_key_exists($program->program->name,$vfe_program_wise)){
-                        array_push($vfe_program_wise[$program->program->name], round($totalFTE2 / 3, 2));
-                    }else{
-                        $vfe_program_wise[$program->program->name] = [round($totalFTE2 / 3, 2)];
+                foreach ($vfe->faculty_program as $key => $prog)
+                {
+                    {
+                        if(array_key_exists($prog->program->name, $vfe_program_wise)){
+                            $vfe_program_wise[$prog->program->name] = round($vfe_program_wise[$prog->program->name], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                        }else{
+                            $vfe_program_wise[$prog->program->name] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                        }
                     }
                 }
             }
         }
+        foreach($vfe_program_wise as $program=> $vfe){
+            $vfe_program_wise[$program]= round($vfe/3,2);
+        }
+
         
         $facultyStudentRatio = FacultyStudentRatio::with('campus','program')
                 ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
@@ -492,6 +495,7 @@ class DeskReviewController extends Controller
         $getFTE = FacultyTeachingCources::with('faculty_program')->where('deleted_at', null)
                     ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
                     ->where('type', 'REG')
+                    ->where('lookup_faculty_type_id', '<>', 3)
                     ->get();
         $byProgramFTE = [];
         if($getFTE){
@@ -527,9 +531,7 @@ class DeskReviewController extends Controller
             {
                 foreach ($vfe->faculty_program as $key => $prog)
                 {
-                    if(count($byProgramVFE) == 0){
-                        $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
-                    }else{
+                    {
                         if(array_key_exists($prog->program_id, $byProgramVFE)){
                             $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
                         }else{
@@ -539,10 +541,17 @@ class DeskReviewController extends Controller
                 }
             }
         }
-        
+        foreach($byProgramVFE as $program=> $vfe){
+            $byProgramVFE[$program]= round($vfe/3,2);
+        }
+
         $teacher_student_ratio = [];
         foreach($facultyStudentRatio as $req){
-            if((isset($byProgramFTE[$req->program_id], $byProgramVFE[$req->program_id]) && $byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]) != 0 ){
+            if(isset($byProgramFTE[$req->program_id], $byProgramVFE[$req->program_id])){
+                if(($byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]) == 0 ){
+                    $teacher_student_ratio[$req->program->name] = 0;
+                    continue;
+                }
                 $teacher_student_ratio[$req->program->name] = (round($req->total_enrollments/($byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]), 2));
             }
  // (isset($byProgramFTE[$req->program_id], $byProgramVFE[$req->program_id]) && $byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]) != 0 ? $teacher_student_ratio = (round($req->total_enrollments/($byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]), 2))."%" : $teacher_student_ratio = "0%"; 
