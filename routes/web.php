@@ -150,7 +150,7 @@ Route::get('/email', function() {
             Route::resource('faculty-stability','Faculty\FacultyStabilityController');
             Route::resource('faculty-student-ratio','Faculty\FacultyStudentRatioController');
             Route::resource('work-load','Faculty\WorkLoadController');
-            Route::post('work-load/file','Faculty\WorkLoadController@file');
+            Route::post('work-load/file','Faculty\WorkLoadController@uploadAppendixFile');
             Route::resource('faculty-teaching','Faculty\FacultyTeachingCourcesController');
             Route::resource('faculty-summary','Faculty\FacultySummaryController');
             Route::resource('faculty-degree', 'FacultyDegreeController');
@@ -171,7 +171,7 @@ Route::get('/email', function() {
             Route::resource('research-funding','ResearchFundingController');
             Route::resource('research-project','ResearchProjectController');
             Route::resource('research-summary','ResearchSummaryController');
-            Route::post('research-summary/file','ResearchSummaryController@file');
+            Route::post('research-summary/file','ResearchSummaryController@uploadAppendixFile');
             Route::resource('research-output','ResearchOutputController');
             Route::resource('curriculum-role','CurriculumRoleController');
             Route::resource('faculty-development','FacultyDevelopmentController');

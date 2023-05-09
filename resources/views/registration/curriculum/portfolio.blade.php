@@ -216,7 +216,7 @@
                                     <td></td>
                                     </tr>
                                 @php
-                                $total_credit_hours = 0;
+                                    $total_credit_hours = 0;
                                     $total_courses = 0;
                                 @endphp
                                 @endif

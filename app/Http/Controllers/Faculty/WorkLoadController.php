@@ -313,8 +313,8 @@ class WorkLoadController extends Controller
         ];
     }
 
-    public function file(Request $request){
-        if(!$request->file('file')){
+    public function uploadAppendixFile(Request $request){
+        if(!$request->file('appendix_4A')){
             return response()->json(['error' => 'Please upload a valid file']);
         }
         $appendix_file = AppendixFile::where([
@@ -323,10 +323,8 @@ class WorkLoadController extends Controller
             ])->first();
 
         $path = 'uploads/workload_policy';
-            $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
-            $diskName = env('DISK');
-            Storage::disk($diskName);
-            $request->file('file')->move($path, $imageName);
+        $imageName = "-file-" . time() . '.' . $request->appendix_4A->getClientOriginalExtension();
+        $request->file('appendix_4A')->move($path, $imageName);
         if($appendix_file){
             if($appendix_file->workload_policy && $appendix_file->workload_policy !== ''){
                 unlink($appendix_file->workload_policy);

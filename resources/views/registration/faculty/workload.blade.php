@@ -217,7 +217,7 @@
                         <table class='jumbotron'  >   
                             <tr> 
                             <td style="padding:15px;" ><label for="file4A">Appendix 4A</label>
-                            <input type="file" name="file" id="file4A"></td>
+                            <input type="file" name="appendix_4A" id="file4A"></td>
                             <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
                             </tr>
                         </table>
@@ -720,10 +720,7 @@ $('#updateForm').submit(function (e) {
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    check = true;
-                    setTimeout(()=>{
-                    location.reload()},2000 )
+                    setTimeout(() => {location.reload()}, 2000)
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

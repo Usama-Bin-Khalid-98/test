@@ -176,11 +176,11 @@
                             </div>
                         </form>
                         <form action="javascript:void(0)" id="fileform" method="POST" enctype="multipart/form-data">
-                        <table>   
+                        <table class='jumbotron'>   
                             <tr> 
-                            <td><label for="file">Appendix 5A</label>
-                            <input type="file" name="file" id="file"></td>
-                            <td><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
+                            <td style="padding:15px;" ><label for="file">Appendix 5A</label>
+                            <input type="file" name="appendix_5A" id="file"></td>
+                            <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
                             </tr>
                         </table>
                         </form>
@@ -629,10 +629,7 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    check = true;
-                    setTimeout(()=>{
-                    location.reload()},2000 )
+                    setTimeout(() => {location.reload()}, 2000)
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

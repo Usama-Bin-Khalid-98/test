@@ -460,11 +460,13 @@ class DeskReviewController extends Controller
         }
         
         $getVFE = FacultyTeachingCources::with('faculty_program')
-            ->where('lookup_faculty_type_id', 3)
-            ->where('campus_id', $campus_id)
-            ->where('department_id', $department_id)
-            ->where('type', 'REG')
-            ->where('deleted_at', null)
+            ->where([
+                'lookup_faculty_type_id' => 3,
+                'campus_id' => $campus_id,
+                'department_id' => $department_id,
+                'type' => 'REG',
+                'deleted_at' => null
+            ])
             ->get();
 
         $vfe_program_wise = [];
@@ -551,7 +553,7 @@ class DeskReviewController extends Controller
         $teacher_student_ratio = [];
         foreach($facultyStudentRatio as $req){
             if(isset($byProgramFTE[$req->program_id], $byProgramVFE[$req->program_id])){
-                if(($byProgramFTE[$req->program_id]+$byProgramVFE[$req->program_id]) == 0 ){
+                if(($byProgramFTE[$req->program_id] + $byProgramVFE[$req->program_id]) == 0 ){
                     $teacher_student_ratio[$req->program->name] = 0;
                     continue;
                 }
@@ -568,14 +570,14 @@ class DeskReviewController extends Controller
                     $parttime[$faculty->program->name] = 0;
                     $fulltime[$faculty->program->name] = 0;
                 }
-                if ($faculty->tc_program==0){
+                if ($faculty->tc_program == 0){
                     continue;
                 }
                 if ($faculty_program->lookup_faculty_type_id == 3){
-                    $parttime[$faculty->program->name] = $parttime[$faculty->program->name] + 1;
+                    $parttime[$faculty->program->name] += 1;
                 }
                 else{
-                    $fulltime[$faculty->program->name] = $fulltime[$faculty->program->name] + 1;
+                    $fulltime[$faculty->program->name] += 1;
                 }
             }
         }
