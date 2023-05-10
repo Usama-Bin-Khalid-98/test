@@ -63,9 +63,15 @@
                                    </div>
                                    <div class="col-md-3">
                                    <div class="form-group">
-                                       <label for="name">Designation</label>
-                                       <input type="text" name="designation" id="designation" class="form-control">
-
+                                   <label for="designation">Designation</label>
+                                    <select name="designation" id="designation" class="form-control select2" style="width: 100%;">
+                                        <option value="" selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="other_designation" id="other_designation" placeholder="Enter designation name" class="form-control hide" style="margin-top:5px;">
+                                
                                    </div>
                                </div>
                                </div>
@@ -134,8 +140,15 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="name">Designation</label>
-                                       <input type="text" name="designation_1" id="designation_1" class="form-control">
+                                    <label for="designation">Designation</label>
+                                    <select name="designation_1" id="designation_1" class="form-control select2" style="width: 100%;">
+                                        <option value="" selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="other_designation_1" id="other_designation_1" placeholder="Enter designation name" class="form-control hide" style="margin-top:5px;">
+                                
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -256,7 +269,7 @@
                                     <td>{{$req->campus->business_school->name}}</td>
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->faculty_name}}</td>
-                                    <td>{{$req->designation}}</td>
+                                    <td>{{$req->designation->name}}</td>
                                     <td>{{$req->total_courses}}</td>
                                     <td>{{$req->phd}}</td>
                                     <td>{{$req->masters}}</td>
@@ -264,7 +277,7 @@
                                     <td>{{$req->admin_responsibilities}}</td>
                                     <td>{{$req->year_t}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation":"{{$req->designation}}","total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year_t":"{{$req->year_t}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation":"{{$req->designation->id}}","designation_name":"{{$req->designation->name}}","designation_default":{{$req->designation->is_default}},"total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year_t":"{{$req->year_t}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -319,8 +332,15 @@
 
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-bottom: 21px;">
-                                    <label for="name">Designation</label>
-                                   <input type="text" name="designation" id="edit_designation" class="form-control" value="{{old('edit_designation')}}">
+                                <label for="name">Designation</label>
+                                    <select name="designation" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                        <option value="" selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="other_designation" id="edit_designation" placeholder="Designation" class="form-control hide">
+
                                 </div>
                             </div>
 
@@ -442,7 +462,35 @@
         })
     </script>
     <script type="text/javascript">
-
+        $('#designation').on('change', function (e) {
+            if(this.options[this.selectedIndex].value == 8){
+                $('#other_designation').removeClass('hide');
+            }else{
+                $('#other_designation').addClass('hide');
+            }
+        });
+        window.onload = function () {
+            if($('#designation').val() == 8){
+                $('#other_designation').removeClass('hide');
+            }
+            if($('#designation_1').val() == 8){
+                $('#other_designation_1').removeClass('hide');
+            }
+        }
+        $("#edit_designation_id").on('change', function(e){
+            if(this.options[this.selectedIndex].value == 8){
+                $("#edit_designation").removeClass('hide');
+            }else{
+                $("#edit_designation").addClass('hide');
+            }
+        })
+        $('#designation_1').on('change', function (e) {
+            if(this.selectedIndex == 4){
+                $('#other_designation_1').removeClass('hide');
+            }else{
+                $('#other_designation_1').addClass('hide');
+            }
+        });
         $('.select2').select2()
 
          $.ajaxSetup({
@@ -576,9 +624,16 @@
 
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            if(data.designation_default){
+                $('#edit_designation_id').val(data.designation).trigger('change');
+                $('#edit_designation').addClass('hide');
+            }else{
+                $('#edit_designation_id').val(8).trigger('change');
+                $('#edit_designation').val(data.designation_name);
+                $('#edit_designation').removeClass('hide');
+            }
             $('#edit_faculty_name').val(data.faculty_name);
-            $('#edit_designation').val(data.designation);
             $('#edit_total_courses').val(data.total_courses);
             $('#edit_phd').val(data.phd);
             $('#edit_masters').val(data.masters);
@@ -591,7 +646,7 @@
 
 $('#updateForm').submit(function (e) {
             let faculty_name = $('#edit_faculty_name').val();
-            let designation = $('#edit_designation').val();
+            let designation = $('#edit_designation_id').val();
             let total_courses = $('#edit_total_courses').val();
             let phd = $('#edit_phd').val();
             let masters = $('#edit_masters').val();

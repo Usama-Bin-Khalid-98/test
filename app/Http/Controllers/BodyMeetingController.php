@@ -23,7 +23,7 @@ class BodyMeetingController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $designation = Designation::get();
+        $designation = Designation::where(['status' => 'active', 'is_default' => true])->get();
         $body = StatutoryBody::get();
         $genders = BodyMeeting::with('campus','designation','statutory_bodies')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 

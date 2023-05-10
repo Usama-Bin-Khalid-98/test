@@ -23,7 +23,7 @@ class ContactInfoController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $designations = Designation::all();
+        $designations = Designation::where(['status' => 'active', 'is_default' => true])->get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus'=>'SAR'])
             ->first();
         if($slip){

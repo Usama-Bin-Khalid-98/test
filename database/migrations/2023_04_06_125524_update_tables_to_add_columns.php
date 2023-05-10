@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\Common\Designation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class AddUnpaidToStatusInSlips extends Migration
+class UpdateTablesToAddColumns extends Migration
 
 
 {
@@ -16,7 +17,7 @@ class AddUnpaidToStatusInSlips extends Migration
      */
     public function up()
     {
-        
+
         Schema::table('application_receiveds', function (Blueprint $table) {
             $table->string('semester', 10);
         });
@@ -31,6 +32,11 @@ class AddUnpaidToStatusInSlips extends Migration
 
         DB::statement("ALTER TABLE slips MODIFY COLUMN status ENUM('active', 'inactive', 'pending', 'paid', 'approved', 'unpaid') NOT NULL;");
         
+        Schema::table('designations', function (Blueprint $table) {
+            $table->boolean('is_default')->default(false);
+        });
+        
+        DB::table('designations')->update(['is_default' => true]);
     }
 
     /**
@@ -54,5 +60,9 @@ class AddUnpaidToStatusInSlips extends Migration
         });
 
         DB::statement("ALTER TABLE slips MODIFY COLUMN status ENUM('active', 'inactive', 'pending', 'paid', 'approved') NOT NULL;");
+    
+        Schema::table('designations', function (Blueprint $table) {
+            $table->dropColumn('is_default');
+        });
     }
 }

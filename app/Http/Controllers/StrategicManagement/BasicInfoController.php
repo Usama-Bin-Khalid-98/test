@@ -40,7 +40,7 @@ class BasicInfoController extends Controller
             $basic_info = BusinessSchool::where('id', $school_id)->get()->first();
             $institute_type = InstituteType::where('status', 'active')->get();
             $chart_types=CharterType::where('status', 'active')->get();
-            $designations = Designation::where('status', 'active')->get();
+            $designations = Designation::where(['status' => 'active', 'is_default' => true])->get();
             $tyear = BusinessSchoolTyear::where(
                 [
                     'campus_id'=>$user_info->campus_id,

@@ -58,7 +58,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                            <form action="javascript:void(0)" id="form" method="POST" enctype="multipart/form-data">
-
+                            <div class="row">
                                <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Name of member</label>
@@ -74,10 +74,17 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <input type="text" name="designation" id="designation" class="form-control">
+                                    <label for="designation">Designation</label>
+                                    <select name="designation" id="designation" class="form-control select2" style="width: 100%;">
+                                        <option value="" selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="other_designation" id="other_designation" placeholder="Enter designation name" class="form-control hide" style="margin-top:5px;">
                                 </div>
                             </div>
+                              
                            <div class="col-md-3">
                             <div class="form-group">
                                 <label for="name">Affiliation</label>
@@ -95,9 +102,9 @@
                                        </select>
                                    </div>
                                </div>
-
-
-                               <div class="col-md-6 jumbotron">
+                               </div>
+                               <div class="row">
+                               <div class="col-md-6 jumbotron" style="margin-left : 20px;">
                                    <div class="col-md-6">
                                        <div class="form-group pull-left">
                                            <label for="sector">Sample File</label>
@@ -116,9 +123,9 @@
                                     </div>
                                    </div>
                                </div>
-
-                                   <div class="col-md-6">
-                                        <div class="form-group pull-right" style="margin-top: 40px">
+                               </div>
+                               <div class="row">
+                                        <div class="form-group pull-right" style="margin-top: 40px;margin-right: 40px">
                                             <label for="sector">&nbsp;&nbsp;</label>
                                             <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                         </div>
@@ -126,8 +133,8 @@
                                    <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
                                     <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
-                                </div>
                             </div>
+                               </div>
                          </form>
                         </div>
                         <!-- /.box-body -->
@@ -176,11 +183,17 @@
                                     <td>{{$affiliation->campus->business_school->name}}</td>
                                     <td>{{$affiliation->campus->location}}</td>
                                     <td>{{$affiliation->name}}</td>
-                                    <td>{{$affiliation->designation}}</td>
+                                    <td>{{$affiliation->designation->name}}</td>
                                     <td>{{$affiliation->affiliation}}</td>
                                     <td>{{@$affiliation->statutory_bodies->name}}</td>
                                     <td><i class="badge {{$affiliation->status == 'active'?'bg-green':'bg-red'}}">{{$affiliation->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$affiliation->id}}","name":"{{$affiliation->name}}","designation":"{{$affiliation->designation}}","affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$affiliation->id}}"></i> | <i class="fa fa-pencil text-blue edit" 
+                               data-row='{"id":"{{$affiliation->id}}",
+                               "name":"{{$affiliation->name}}",
+                               "designation":"{{$affiliation->designation->id}}",
+                               "designation_default":{{$affiliation->designation->is_default}},
+                               "designation_name":"{{$affiliation->designation->name}}",
+                               "affiliation":"{{$affiliation->affiliation}}","statutory_bodies_id":"{{$affiliation->statutory_bodies_id}}","status":"{{$affiliation->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -239,7 +252,13 @@
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Designation</label>
-                                        <input type="text" name="designation" id="edit_designation" value="{{old('edit_designation')}}"  class="form-control">
+                                    <select name="designation" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                        <option value="" selected disabled>Select Designation</option>
+                                        @foreach($designations as $designation)
+                                            <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="other_designation" id="edit_designation" placeholder="Designation" class="form-control hide">
 
                                 </div>
                             </div>
@@ -359,14 +378,25 @@
     </script>
     <script type="text/javascript">
 
-        // $('#designation_id').on('change', function () {
-        //     let val = $(this).val();
-        //     if(val === '13')
-        //     {
-        //         $('#designation_modal').modal('show');
-        //     }
-        // });
-
+        $('#designation').on('change', function (e) {
+            if(this.selectedIndex == 8){
+                $('#other_designation').removeClass('hide');
+            }else{
+                $('#other_designation').addClass('hide');
+            }
+        });
+        window.onload = function () {
+            if($('#designation').val() == 8){
+                $('#other_designation').removeClass('hide');
+            }
+        }
+        $("#edit_designation_id").on('change', function(e){
+            if(this.selectedIndex == 8 ){
+                $("#edit_designation").removeClass('hide');
+            }else{
+                $("#edit_designation").addClass('hide');
+            }
+        })
         $('#statutory_bodies_id').on('change', function () {
             let val = $(this).val();
             console.log('dropdoen val', val);
@@ -531,11 +561,18 @@
         });
 
 
-         $('.edit').on('click', function () {
+         $('.edit').on('click', function () {     
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
-             let data = JSON.parse(JSON.stringify($(this).data('row')));
+            let data = JSON.parse(JSON.stringify($(this).data('row')));
+            if(data.designation_default){
+                $('#edit_designation_id').val(data.designation).trigger('change');
+                $('#edit_designation').addClass('hide');
+            }else{
+                $('#edit_designation_id').val(8).trigger('change');
+                $('#edit_designation').val(data.designation_name);
+                $('#edit_designation').removeClass('hide');
+            }
             $('#edit_name').val(data.name);
-            $('#edit_designation').val(data.designation)
             $('#edit_affiliation').val(data.affiliation);
             $('#edit_statutory_bodies_id').select2().val(data.statutory_bodies_id).trigger('change');
             $('#edit_id').val(data.id);
@@ -544,7 +581,7 @@
 
         $('#updateForm').submit(function (e) {
             let name = $('#edit_name').val();
-            let designation = $('#edit_designation').val();
+            let designation = $('#edit_designation_id').val();
             let affiliation = $('#edit_affiliation').val();
             let statutory_bodies_id = $('#edit_statutory_bodies_id').val();
             let id = $('#edit_id').val();
@@ -580,9 +617,13 @@
                     Notiflix.Loading.Remove();
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
+                        location.reload();
+                    }
+                    if(response.error){
+                        Notiflix.Notify.Failure(response.error);
                     }
                     //console.log('response', response);
-                    location.reload();
+                    
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

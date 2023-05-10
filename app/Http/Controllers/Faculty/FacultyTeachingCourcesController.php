@@ -29,7 +29,7 @@ class FacultyTeachingCourcesController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $designations = Designation::whereIn('id', [1,2,6,10, 17])->get();
+        $designations = Designation::whereIn('id', [1, 2, 6, 10])->get();
         $visitings;
         $faculty_types;
         $getUrl =\Illuminate\Support\Facades\Request::segment(1);

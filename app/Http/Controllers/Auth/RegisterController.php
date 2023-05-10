@@ -269,7 +269,7 @@ class RegisterController extends Controller
         // $institute_types= InstituteType::where('status', 'active')->get();
         $chart_types=CharterType::where('status', 'active')->get();
         $business_school=BusinessSchool::where('status', 'active')->get();
-        $designations=Designation::where('status', 'active')->get();
+        $designations=Designation::where(['status' => 'active', 'is_default' => true])->get();
         $departments = Department::where('status', 'active')->get();
         $disciplines = Discipline::where('status', 'active')->get();
         $regions = Region::where('status', 'active')->get();

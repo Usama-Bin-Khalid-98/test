@@ -83,13 +83,13 @@
 
                                          <td class="fontsize">
                                              <input type="text" name="name[]" placeholder="name" id="name_{{@$body->id}}" class="form-control" style="margin-bottom: 5px !important;">
-                                             <input type="text" name="designation[]" id="designation_id_{{@$body->id}}" placeholder="Designation" class="form-control">
-                                             <!-- <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2  designations" style="width: 100%;">
-                                                 <option value="">Select Designation</option>
-                                                 @foreach($designations as $designation)
-                                                     <option value="{{$designation->id}}">{{$designation->name }}</option>
-                                                 @endforeach
-                                             </select> -->
+                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2  designations" style="width: 100%;">
+                                                <option value="">Select Designation</option>
+                                                @foreach($designations as $designation)
+                                                <option value="{{$designation->id}}">{{$designation->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="text" name="other_designation[]" id="other_designation_id_{{@$body->id}}" placeholder="Enter Designation Name" class="form-control hide" style = " margin-top: 5px;">
                                          </td>
                                          <td>
                                             <div class="input-group">
@@ -194,7 +194,7 @@
                                 <tr>
                                     <td>{{$committee->statutory_body->name}}</td>
                                     <td>{{$committee->name}} </td>
-                                    <td>{{$committee->designation}}</td>
+                                    <td>{{$committee->designation->name}}</td>
                                     <td>{{$committee->date_first_meeting}}</td>
                                     <td>{{$committee->date_second_meeting}}</td>
                                     <td>{{$committee->date_third_meeting}}</td>
@@ -206,7 +206,10 @@
                                         <i class="fa fa-pencil text-blue edit" data-toggle="modal" data-target="#edit-modal"
                                            data-row='{"id":{{$committee->id}},
                                          "statutory_body_id":{{$committee->statutory_body->id}},
-                                         "name":"{{$committee->name}}", "designation":"{{$committee->designation}}",
+                                         "name":"{{$committee->name}}", 
+                                         "designation_name":"{{$committee->designation->name}}",
+                                         "designation_default":{{$committee->designation->is_default}},
+                                         "designation_id":{{$committee->designation->id}},
                                          "date_first_meeting":"{{$committee->date_first_meeting}}",
                                          "date_second_meeting":"{{$committee->date_second_meeting}}",
                                          "date_third_meeting":"{{$committee->date_third_meeting}}",
@@ -283,13 +286,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name">Designation</label>
-                                                <input type="text" name="designation" id="edit_designation" placeholder="Designation" class="form-control">
-                                                <!-- <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
+                                                <select name="designation_id" id="edit_designation_id" class="form-control select2" style="width: 100%;">
                                                     <option value="">Select Designation</option>
                                                     @foreach($designations as $designation)
                                                         <option value="{{$designation->id}}">{{$designation->name }}</option>
                                                     @endforeach
-                                                </select> -->
+                                                </select>
+                                                <input type="text" name="other_designation" id="edit_designation" placeholder="Designation" class="form-control hide">
+                                                
                                             </div>
                                         </div>
 
@@ -408,7 +412,27 @@
         })
     </script>
     <script type="text/javascript">
+        $(".designations").on('change', function (e) {
+            if(this.selectedIndex == 8 ){
+                $("#other_" + this.id).removeClass('hide');
+            }else{
+                $("#other_" + this.id).addClass('hide');
+            }
+        })
+        window.onload = function () {
+            for(let i = 1; i <= 8; i++){
+                if($("#designation_id_" + i).val() == 8)
+                    $("#other_designation_id_" + i).removeClass('hide');
+            }
+        }
 
+        $("#edit_designation_id").on('change', function(e){
+            if(this.selectedIndex == 8 ){
+                $("#edit_designation").removeClass('hide');
+            }else{
+                $("#edit_designation").addClass('hide');
+            }
+        })
         //Initialize Select2 Elements
         $('.select2').select2();
     //     $('#date_first_meeting').datepicker({
@@ -477,15 +501,15 @@
         `
         $(data).insertBefore("#add-more-row");
     })
-    $('.designations').on('change', function () {
+    // $('.designations').on('change', function () {
 
-        if($(this).val() == 8){
-            $('#designation_modal').modal('show');
-            console.log('designation', $(this).attr('id'))
-            $('#designation_index').val($(this).attr('id'))
+    //     if($(this).val() == 8){
+    //         $('#designation_modal').modal('show');
+    //         console.log('designation', $(this).attr('id'))
+    //         $('#designation_index').val($(this).attr('id'))
 
-        }
-    })
+    //     }
+    // })
 
         //Flat red color scheme for iCheck
         $('input[type="radio"].flat-red').iCheck({
@@ -601,8 +625,7 @@
                     }
                     console.log('response', response);
                     check = true;
-                    setTimeout(()=> {
-                        location.reload();}, 2000);
+                    setTimeout(() => {location.reload();}, 2000);
                     },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -618,7 +641,17 @@
            // console.log(data);
             // Initialize Select2
             $('#edit_statutory_body_id').select2().val(data.statutory_body_id).trigger('change');
-            $('#edit_designation').val(data.designation);
+            if(data.designation_default){
+                console.log("if");
+                $('#edit_designation_id').val(data.designation_id).trigger('change');
+                $('#edit_designation').addClass('hide');
+            }else{
+                console.log("else");
+                $('#edit_designation_id').val(8).trigger('change');
+                $('#edit_designation').val(data.designation_name);
+                $('#edit_designation').removeClass('hide');
+            }
+            
             $('#edit_name').val(data.name);
             $('#edit_date_first_meeting').val(data.date_first_meeting);
             $('#edit_date_second_meeting').val(data.date_second_meeting);
@@ -632,7 +665,7 @@
         $('#update').submit(function (e) {
             let name = $('#edit_name').val();
             let statutory_body_id = $('#edit_statutory_body_id').val();
-            let designation_id = $('#edit_designation').val();
+            let designation_id = $('#edit_designation_id').val();
             let date_first_meeting = $('#edit_date_first_meeting').val();
             let date_second_meeting = $('#edit_date_second_meeting').val();
             let date_third_meeting = $('#edit_date_third_meeting').val();
@@ -674,8 +707,11 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+                    if(response.error){
+                        Notiflix.Notify.Failure(response.error);
+                    }
                     //console.log('response', response);
-                    location.reload();
+                    setTimeout(() => {location.reload();}, 2000);
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

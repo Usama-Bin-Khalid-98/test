@@ -25,7 +25,7 @@ class WorkLoadController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-//         $designations = Designation::whereIn('id', [1,2,6,10,8])->get();
+        $designations = Designation::whereIn('id', [1, 2, 6, 10, 8])->get();
         /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
@@ -41,7 +41,7 @@ class WorkLoadController extends Controller
         $workloads = Workload::with('campus')->where($where)->get();
 
 
-         return view('registration.faculty.workload', compact('workloads', 'getTyear'));
+         return view('registration.faculty.workload', compact('workloads', 'getTyear', 'designations'));
     }
 
     /**
@@ -68,7 +68,7 @@ class WorkLoadController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
+            
             $department_id = Auth::user()->department_id;
             $slip = Slip::where(['department_id' => $department_id])->where('regStatus', 'SAR')->first();
             if ($slip) {
@@ -93,10 +93,17 @@ class WorkLoadController extends Controller
                     if (!@$addData[0]) {
                         return response()->json(['error' => 'Name field is required.'], 422);
                     }
+                    $designation = Designation::byName(@$addData[1])->get();
+                    if(!$designation){
+                        $designation = Designation::create([
+                            'name' => @$addData[1],
+                            'is_default' => false
+                        ]);
+                    }
                     $check_data = ['campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'faculty_name' => @$addData[0],
-                        'designation' => @$addData[1],
+                        'designation_id' => $designation->id,
                         'admin_responsibilities' => @$addData[2],
                         'year_t' => @$addData[7],
                         'total_courses' => @$addData[3]];
@@ -107,7 +114,7 @@ class WorkLoadController extends Controller
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'faculty_name' => @$addData[0],
-                            'designation' => @$addData[1],
+                            'designation_id' => $designation->id,
                             'admin_responsibilities' => @$addData[2],
                             'total_courses' => @$addData[3],
                             'phd' => @$addData[4],
@@ -124,11 +131,14 @@ class WorkLoadController extends Controller
                 return response()->json(['success' => 'Faculty WorkLoad CSV imported successfully.']);
 
             }else {
-
+                list($designation_id, $response) = Designation::getOrCreate($request->designation, $request->other_designation);
+                if($response){
+                    return $response;
+                }
                 $check_data = ['campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
                     'faculty_name' => $request->faculty_name,
-                    'designation' => $request->designation,
+                    'designation_id' => $designation_id,
                     'total_courses' => $request->total_courses];
                 $check = WorkLoad::where($check_data)->exists();
 
@@ -138,7 +148,7 @@ class WorkLoadController extends Controller
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'faculty_name' => $request->faculty_name,
-                            'designation' => $request->designation,
+                            'designation_id' => $designation_id,
                             'total_courses' => $request->total_courses,
                             'phd' => $request->phd,
                             'masters' => $request->masters,
@@ -153,7 +163,7 @@ class WorkLoadController extends Controller
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'faculty_name' => $request->faculty_name,
-                            'designation' => $request->designation,
+                            'designation_id' => $designation_id,
                             'total_courses' => $request->total_courses,
                             'phd' => $request->phd,
                             'masters' => $request->masters,
@@ -170,12 +180,16 @@ class WorkLoadController extends Controller
 
                 }
                 if ($request->faculty_name_1) {
+                    list($designation_id, $response) = Designation::getOrCreate($request->designation_1, $request->other_designation_1);
+                    if($response){
+                        return $response;
+                    }
                     WorkLoad::create(
                         [
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
                             'faculty_name' => $request->faculty_name_1,
-                            'designation' => $request->designation_1,
+                            'designation_id' => $designation_id,
                             'total_courses' => $request->total_courses_1,
                             'phd' => $request->phd_1,
                             'masters' => $request->masters_1,
@@ -236,11 +250,14 @@ class WorkLoadController extends Controller
         }
 
         try {
-
+            list($designation_id, $response) = Designation::getOrCreate($request->designation, $request->other_designation);
+            if($response){
+                return $response;
+            }
             if($request->faculty_name) {
                 WorkLoad::where('id', $workLoad->id)->update([
                     'faculty_name' => $request->faculty_name,
-                    'designation' => $request->designation,
+                    'designation_id' => $designation_id,
                     'total_courses' => $request->total_courses,
                     'phd' => $request->phd,
                     'masters' => $request->masters,

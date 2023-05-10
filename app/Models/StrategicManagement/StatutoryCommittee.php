@@ -13,9 +13,9 @@ class StatutoryCommittee extends Model
 
     protected $guarded = [];
 
-//   public function designation() {
-//       return $this->belongsTo(Designation::class);
-//   }
+  public function designation() {
+      return $this->belongsTo(Designation::class);
+  }
 
    public function statutory_body() {
        return $this->belongsTo(StatutoryBody::class);

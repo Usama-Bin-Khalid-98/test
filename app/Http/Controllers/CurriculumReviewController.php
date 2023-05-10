@@ -24,7 +24,7 @@ class CurriculumReviewController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $affiliation = Affiliation::where(['status'=> 'active', 'campus_id'=> $campus_id, 'department_id'=> $department_id])->get();
-        $designations = Designation::where('status', 'active')->get();
+        $designations = Designation::where(['status' => 'active', 'is_default' => true])->get();
         $users = User::where('user_type', 'PeerReviewer')->get();
         $bodies = StatutoryBody::all();
         $summaries = CurriculumReview::with('campus','affiliations','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();

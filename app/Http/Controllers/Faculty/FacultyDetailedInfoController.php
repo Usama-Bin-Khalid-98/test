@@ -27,7 +27,7 @@ class FacultyDetailedInfoController extends Controller
         $countries = Countries::all();
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-         $designations = Designation::all();
+         $designations = Designation::where(['status' => 'active', 'is_default' => true])->all();
          $faculty_types = LookupFacultyType::all();
          $degrees = Degree::all();
          $courses = CourseType::all();
