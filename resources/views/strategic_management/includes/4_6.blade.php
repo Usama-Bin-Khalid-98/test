@@ -19,9 +19,9 @@
                                    ?>
                                     <tr>
                                         <td>Male</td>
-                                        <td>{{$male_faculty_percentage['Permanent']}}</td>
-                                        <td>{{$male_faculty_percentage['Adjunct']}}</td>
-                                        <td>{{$male_faculty_percentage['Visiting']}}</td>
+                                        <td>{{@$male_faculty_percentage['Permanent']}}</td>
+                                        <td>{{@$male_faculty_percentage['Adjunct']}}</td>
+                                        <td>{{@$male_faculty_percentage['Visiting']}}</td>
 
 
 
@@ -29,9 +29,9 @@
 
                                     <tr>
                                         <td>Female</td>
-                                        <td>{{100 - $male_faculty_percentage['Permanent']}}</td>
-                                        <td>{{100 - $male_faculty_percentage['Adjunct']}}</td>
-                                        <td>{{100 - $male_faculty_percentage['Visiting']}}</td>
+                                        <td>@if(@$male_faculty_percentage['Permanent']){{100 - @$male_faculty_percentage['Permanent']}}@endif</td>
+                                        <td>@if(@$male_faculty_percentage['Adjunct']){{100 - @$male_faculty_percentage['Adjunct']}}@endif</td>
+                                        <td>@if(@$male_faculty_percentage['Visiting']){{100 - @$male_faculty_percentage['Visiting']}}@endif</td>
 
 
 

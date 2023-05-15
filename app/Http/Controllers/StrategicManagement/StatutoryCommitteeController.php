@@ -58,7 +58,7 @@ class StatutoryCommitteeController extends Controller
         {
             return response()->json($validation->messages()->all(), 422);
         }
-        // Log::debug($request->all());
+
         try {
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
@@ -71,9 +71,9 @@ class StatutoryCommitteeController extends Controller
 
             for($i =0; $i<count(@$request->name); $i++)
             {
-                list($designation_id, $response) = Designation::getOrCreate($request->designation_id[$i], $request->other_designation[$i]);
-                if($response){
-                    return $response;
+                list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+                if($error){
+                    return $error;
                 }
                 $check = StatutoryCommittee::where([
                     'campus_id' => Auth::user()->campus_id,
@@ -181,9 +181,9 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            list($designation_id, $response) = Designation::getOrCreate($request->designation_id, $request->other_designation);
-            if($response){
-                return $response;
+            list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+            if($error){
+                return $error;
             }
             $update=StatutoryCommittee::find($statutoryCommittee->id);
             $path = ''; $fileName = '';

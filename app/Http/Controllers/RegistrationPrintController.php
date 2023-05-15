@@ -81,14 +81,14 @@ WHERE designations.id=contact_infos.designation_id
 
 
 
-            $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName from statutory_committees, statutory_bodies, business_schools WHERE statutory_committees.statutory_body_id=statutory_bodies.id 
+            $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id 
             AND statutory_committees.type="REG" 
             AND business_schools.id=? 
             AND statutory_committees.campus_id=?
             AND statutory_committees.department_id=?', array($req->bid, $req->cid, $req->did));
 
-             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
-            FROM affiliations, statutory_bodies, business_schools
+             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
+            FROM affiliations, statutory_bodies, business_schools, designations
             WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="REG" AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid,$req->cid));
 
 
@@ -322,8 +322,8 @@ AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facilit
             $contactInformation = ContactInfo::where(['type'=> 'REG', 'department_id'=>$department_id, 'campus_id'=>$campus_id, 'deleted_at'=> null])->get();
 //            dd($contactInformation);
 
-            $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName
-FROM statutory_committees, statutory_bodies, business_schools
+            $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName,designations.name as designationName
+FROM statutory_committees, statutory_bodies, business_schools, designations
 WHERE statutory_committees.statutory_body_id=statutory_bodies.id
   AND statutory_committees.type="REG"
   AND statutory_committees.deleted_at is null
@@ -333,8 +333,8 @@ WHERE statutory_committees.statutory_body_id=statutory_bodies.id
 
 
 
-             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
-            FROM affiliations, statutory_bodies, business_schools
+             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
+            FROM affiliations, statutory_bodies, business_schools, designations
             WHERE  affiliations.statutory_bodies_id=statutory_bodies.id
               AND affiliations.type="REG"
               AND affiliations.deleted_at is null

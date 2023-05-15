@@ -58,6 +58,33 @@
      titleColor:'#dd4b39'
     });
 
+    let postFormToUrl = (formData, uploadUrl) => {
+        $.ajax({
+            url: uploadUrl,
+            type:'POST',
+            data: formData,
+            cache:false,
+            contentType:false,
+            processData:false,
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Processing...');
+            },
+            // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                if(response.success){
+                    Notiflix.Notify.Success(response.success);
+                }
+                setTimeout(() => {location.reload()}, 2000)
+            },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
+            }
+        })
+    }
  </script>
  </body>
 </html>

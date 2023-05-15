@@ -463,29 +463,29 @@
     </script>
     <script type="text/javascript">
         $('#designation').on('change', function (e) {
-            if(this.options[this.selectedIndex].value == 8){
+            if(this.options[this.selectedIndex].text == 'Other'){
                 $('#other_designation').removeClass('hide');
             }else{
                 $('#other_designation').addClass('hide');
             }
         });
         window.onload = function () {
-            if($('#designation').val() == 8){
+            if($('#designation option:selected').text() == 'Other'){
                 $('#other_designation').removeClass('hide');
             }
-            if($('#designation_1').val() == 8){
+            if($('#designation_1 option:selected').text() == 'Other'){
                 $('#other_designation_1').removeClass('hide');
             }
         }
         $("#edit_designation_id").on('change', function(e){
-            if(this.options[this.selectedIndex].value == 8){
+            if(this.options[this.selectedIndex].text == 'Other'){
                 $("#edit_designation").removeClass('hide');
             }else{
                 $("#edit_designation").addClass('hide');
             }
         })
         $('#designation_1').on('change', function (e) {
-            if(this.selectedIndex == 4){
+            if(this.options[this.selectedIndex].text == 'Other'){
                 $('#other_designation_1').removeClass('hide');
             }else{
                 $('#other_designation_1').addClass('hide');
@@ -759,31 +759,7 @@ $('#updateForm').submit(function (e) {
             e.preventDefault();
             var formData = new FormData(this);
 
-            $.ajax({
-                url:'{{url("work-load/file")}}',
-                type:'POST',
-                data: formData,
-                cache:false,
-                contentType:false,
-                processData:false,
-                beforeSend: function(){
-                    Notiflix.Loading.Pulse('Processing...');
-                },
-                // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
-                success: function (response) {
-                    Notiflix.Loading.Remove();
-                    if(response.success){
-                        Notiflix.Notify.Success(response.success);
-                    }
-                    setTimeout(() => {location.reload()}, 2000)
-                },
-                error:function(response, exception){
-                    Notiflix.Loading.Remove();
-                    $.each(response.responseJSON, function (index, val) {
-                        Notiflix.Notify.Failure(val);
-                    })
-                }
-            })
+            postFormToUrl(formData, "work-load/file");
         })
     </script>
 

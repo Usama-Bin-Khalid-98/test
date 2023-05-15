@@ -128,9 +128,9 @@ class AffiliationController extends Controller
                 {
                     return response()->json($validation->messages()->all(), 422);
                 }
-                list($designation_id, $response) = Designation::getOrCreate($request->designation, $request->other_designation);
-                if($response){
-                    return $response;
+                list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+                if($error){
+                    return $error;
                 }
                 $where_data = [
                     'campus_id' => Auth::user()->campus_id,
@@ -234,9 +234,9 @@ class AffiliationController extends Controller
         }
 
         try {
-            list($designation_id, $response) = Designation::getOrCreate($request->designation, $request->other_designation);
-            if($response){
-                return $response;
+            list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+            if($error){
+                return $error;
             }
 
             Affiliation::where('id', $affiliation->id)->update([

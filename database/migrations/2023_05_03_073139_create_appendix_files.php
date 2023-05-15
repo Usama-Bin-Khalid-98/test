@@ -37,8 +37,6 @@ class CreateAppendixFiles extends Migration
      */
     public function down()
     {
-        Schema::table('appendix_files', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('appendix_files');
     }
 }

@@ -379,19 +379,19 @@
     <script type="text/javascript">
 
         $('#designation').on('change', function (e) {
-            if(this.selectedIndex == 8){
+            if(this.options[this.selectedIndex].text == 'Other'){
                 $('#other_designation').removeClass('hide');
             }else{
                 $('#other_designation').addClass('hide');
             }
         });
         window.onload = function () {
-            if($('#designation').val() == 8){
+            if($('#designation option:selected').text() == 'Other'){
                 $('#other_designation').removeClass('hide');
             }
         }
         $("#edit_designation_id").on('change', function(e){
-            if(this.selectedIndex == 8 ){
+            if(this.options[this.selectedIndex].text == 'Other'){
                 $("#edit_designation").removeClass('hide');
             }else{
                 $("#edit_designation").addClass('hide');

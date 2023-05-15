@@ -13,7 +13,7 @@
                                     @foreach($affiliations as $data)
                                     <tr>
                                         <td>{{$data->name}}</td>
-                                        <td>{{$data->designation}}</td>
+                                        <td>{{$data->designationName}}</td>
                                         <td>{{$data->affiliation}}</td>
                                         <td>{{$data->statutoryBody}}</td>
                                     </tr>

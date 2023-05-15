@@ -25,7 +25,12 @@ class WorkLoadController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $designations = Designation::whereIn('id', [1, 2, 6, 10, 8])->get();
+        $designations = Designation::whereIn('name', [
+            'Associate Professor', 
+            'Assistant Professor', 
+            'Lecturer', 
+            'Professor', 
+            'Other'])->get();
         /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
             $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
@@ -131,9 +136,9 @@ class WorkLoadController extends Controller
                 return response()->json(['success' => 'Faculty WorkLoad CSV imported successfully.']);
 
             }else {
-                list($designation_id, $response) = Designation::getOrCreate($request->designation, $request->other_designation);
-                if($response){
-                    return $response;
+                list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+                if($error){
+                    return $error;
                 }
                 $check_data = ['campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,

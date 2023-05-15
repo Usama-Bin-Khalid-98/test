@@ -413,7 +413,7 @@
     </script>
     <script type="text/javascript">
         $(".designations").on('change', function (e) {
-            if(this.selectedIndex == 8 ){
+            if(this.options[this.selectedIndex].text == 'Other'){
                 $("#other_" + this.id).removeClass('hide');
             }else{
                 $("#other_" + this.id).addClass('hide');
@@ -421,13 +421,13 @@
         })
         window.onload = function () {
             for(let i = 1; i <= 8; i++){
-                if($("#designation_id_" + i).val() == 8)
+                if($('#designation_id_' + i + ' option:selected').text() == 'Other')
                     $("#other_designation_id_" + i).removeClass('hide');
             }
         }
 
         $("#edit_designation_id").on('change', function(e){
-            if(this.selectedIndex == 8 ){
+            if(this.options[this.selectedIndex].text == 'Other'){
                 $("#edit_designation").removeClass('hide');
             }else{
                 $("#edit_designation").addClass('hide');
@@ -642,11 +642,9 @@
             // Initialize Select2
             $('#edit_statutory_body_id').select2().val(data.statutory_body_id).trigger('change');
             if(data.designation_default){
-                console.log("if");
                 $('#edit_designation_id').val(data.designation_id).trigger('change');
                 $('#edit_designation').addClass('hide');
             }else{
-                console.log("else");
                 $('#edit_designation_id').val(8).trigger('change');
                 $('#edit_designation').val(data.designation_name);
                 $('#edit_designation').removeClass('hide');
