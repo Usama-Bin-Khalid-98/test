@@ -70,7 +70,7 @@ class MentoringInvoiceController extends Controller
                 'department_id' => Auth::user()->department_id,
                 'fee_type_id' => 4,
                 'amount' => $fee_amount,
-                'status' => 'pending',
+                'status' => 'unpaid',
                 'created_by' => Auth::id(),
             ]);
             return response()->json(['success' => 'Invoice Slip added successfully.'], 200);

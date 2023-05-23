@@ -368,7 +368,7 @@
                                         </table>
 
                                         <p>Dear Admin NBEAC</p>
-                                        <p>The business school name ({{$data['school']->campus->business_school->name}}) has submitted a registration application for the {{$data['school']->department->name}}. Please start the desk review <a href="https://app.nbeac.org.pk/desk-review">(Link)</a></p>
+                                        <p>The ({{$data['school']->campus->business_school->name}}) has submitted a registration application for the {{$data['school']->department->name}} dated . Please start the desk review <a href="https://app.nbeac.org.pk/desk-review">(Link)</a></p>
 
                                         <p>Regards,</p>
                                         <p>NBEAC</p>

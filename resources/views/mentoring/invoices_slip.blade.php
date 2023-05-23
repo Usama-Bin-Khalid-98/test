@@ -123,7 +123,7 @@
 {{--                            <div class="col-md-12">--}}
 {{--                                <div class="form-group">--}}
 {{--                                    <label for="slip">Bank Deposit Slip</label>--}}
-{{--                                    <input type="file" name="slip" id="add_slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">--}}
+{{--                                    <input type="file" name="slip" id="add_slip" accept=".jpg,.jpeg,.png,.pdf,.docx" value="{{old('slip')}}" class="form">--}}
 {{--                                    <span class="text-blue">Max 2mb file size allowed. </span>--}}
 {{--                                </div>--}}
 {{--                            </div>--}}
@@ -402,7 +402,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="slip">Bank Deposit Slip</label>
-                                            <input type="file" name="slip" id="slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">
+                                            <input type="file" name="slip" id="slip" accept=".jpg,.jpeg,.png,.pdf,.docx" value="{{old('slip')}}" class="form">
                                             <span class="text-blue">Max 2mb file size allowed. </span>
                                         </div>
                                     </div>

@@ -34,7 +34,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body onload="window.print(); window.close()">
+<body onload="window.print(); setTimeout(function(){window.close();},1);">
 <div class="wrapper">
     <!-- Main content -->
     <!-- Main content -->

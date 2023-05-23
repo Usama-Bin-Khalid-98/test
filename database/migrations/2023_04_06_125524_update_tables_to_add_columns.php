@@ -31,6 +31,7 @@ class UpdateTablesToAddColumns extends Migration
         });
 
         DB::statement("ALTER TABLE slips MODIFY COLUMN status ENUM('active', 'inactive', 'pending', 'paid', 'approved', 'unpaid') NOT NULL;");
+        DB::statement("ALTER TABLE mentoring_invoices MODIFY COLUMN status ENUM('active', 'inactive', 'pending', 'paid', 'approved', 'unpaid') NOT NULL;");
         
         Schema::table('designations', function (Blueprint $table) {
             $table->boolean('is_default')->default(false);
@@ -60,6 +61,7 @@ class UpdateTablesToAddColumns extends Migration
         });
 
         DB::statement("ALTER TABLE slips MODIFY COLUMN status ENUM('active', 'inactive', 'pending', 'paid', 'approved') NOT NULL;");
+        DB::statement("ALTER TABLE mentoring_invoices MODIFY COLUMN status ENUM('active', 'inactive', 'pending', 'paid', 'approved') NOT NULL;");
     
         Schema::table('designations', function (Blueprint $table) {
             $table->dropColumn('is_default');

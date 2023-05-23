@@ -136,7 +136,7 @@
                                             <td>
                                                 2. Vision and Mission statements ( Question 1.7)
                                                 <ol type="i">
-                                                <li class="{{$mission_vision->file ==''?'text-red':''}}">Mission & Vision Exists : @if(@$mission_vision->file !='')Yes @else No @endif </li>
+                                                <li class="{{@$mission_vision->file ==''?'text-red':''}}">Mission & Vision Exists : @if(@$mission_vision->file !='')Yes @else No @endif </li>
                                                 <li>Mission Approval Date : {{@$mission_vision->mission_approval}}</li>
                                                 <li>Vision Approval Date : {{@$mission_vision->vision_approval}}</li>
                                                 <li>Url of Mission/Vision on official website: <a href="https:\\{{@$mission_vision->mission_url}}">{{@$mission_vision->mission_url}}</a></li>
