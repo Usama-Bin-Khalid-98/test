@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangeResgistrationStatusMail;
-
+use Illuminate\Support\Facades\Log;
 
 class SlipController extends Controller
 {
@@ -97,7 +97,7 @@ class SlipController extends Controller
         try {
             $slip = Slip::with('department')->where('id', $request->id)->first();
             $campus = Campus::where('id', $slip->business_school_id)->first();
-            $school = BusinessSchool::with('user', 'campus')->where('id', $campus->business_school_id)->first();
+            $school = BusinessSchool::with('user', 'user.campus')->where('id', $campus->business_school_id)->first();
             $data = array(
                 'id'      =>  $request->id,
                 'user'      =>  $request->user,
@@ -348,7 +348,8 @@ class SlipController extends Controller
      */
     public function generateInvoice(Request $request)
     {
-        $school = BusinessSchool::with('user', 'campus')->where('id', Auth::user()->business_school_id)->first();
+        $school = BusinessSchool::with('user', 'user.campus')->find(Auth::user()->business_school_id);
+        Log::debug(''.$school);
         try {
             $getFee =DepartmentFee::findorfail(1)->first();
             if($getFee) {

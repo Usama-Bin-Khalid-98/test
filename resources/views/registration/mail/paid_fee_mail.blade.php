@@ -355,11 +355,11 @@
                                         <p>Dear {{@$data['school']->user->name}},</p>
 {{--                                        <p>HoD & Dean,</p>--}}
 {{--                                        <p>University : {{@$data['school']->name}}</p>--}}
-{{--                                        <p>Campus : {{@$data['school']->campus->location}}</p>--}}
+{{--                                        <p>Campus : {{@$data['school']->user->campus->location}}</p>--}}
 
                                         <p>Hope you are doing well,</p>
 
-                                        <p>Thank you for generating the invoice for {{@$data['school']->user->department->name}} {{@$data['school']->name}}, {{@$data['school']->campus->location}}. You will receive an approval email once the NBEAC admin approve the invoice status.</p>
+                                        <p>Thank you for generating the invoice for {{@$data['school']->user->department->name}} {{@$data['school']->name}}, {{@$data['school']->user->campus->location}}. You will receive an approval email once the NBEAC admin approve the invoice status.</p>
                                         <p>You can check the status of your application on the registration invoice page: <a href="https://app.nbeac.org.pk/strategic/invoices">https://app.nbeac.org.pk/strategic/invoices</a></p>
 
                                         <p>Thank You.</p>
