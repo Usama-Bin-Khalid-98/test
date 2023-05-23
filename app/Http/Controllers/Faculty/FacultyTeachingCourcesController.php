@@ -202,7 +202,7 @@ class FacultyTeachingCourcesController extends Controller
                         if(!$scope){
                             FacultyProgram::where(['faculty_teaching_cource_id' => $insert->id])->delete();
                             FacultyTeachingCources::find($insert->id)->delete();
-                            return response()->json(['error' => ' Program not in scope in line ' . ($index+2), 'line' => $index + 2], 422);
+                            return response()->json(['error' => ' Program:' . @$addData[$column] . ' not in scope, csv line no ' . ($index+2)], 422);
                         }
                         FacultyProgram::create([
                                 'faculty_teaching_cource_id' => $insert->id,

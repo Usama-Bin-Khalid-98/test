@@ -98,7 +98,7 @@ class WorkLoadController extends Controller
                     if (!@$addData[0]) {
                         return response()->json(['error' => 'Name field is required.'], 422);
                     }
-                    $designation = Designation::byName(@$addData[1])->get();
+                    $designation = Designation::byName(@$addData[1])->first();
                     if(!$designation){
                         $designation = Designation::create([
                             'name' => @$addData[1],

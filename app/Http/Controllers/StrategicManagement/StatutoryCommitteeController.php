@@ -71,7 +71,11 @@ class StatutoryCommitteeController extends Controller
 
             for($i =0; $i<count(@$request->name); $i++)
             {
-                list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+                if ($request->name[$i] == ''){
+                    break;
+                }
+
+                list($designation_id, $error) = Designation::getOrCreate($request->designation_id[$i], $request->other_designation[$i]);
                 if($error){
                     return $error;
                 }

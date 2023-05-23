@@ -355,7 +355,8 @@
         //Initialize Select2 Elements
         $('.select2').select2();
         $('#date_program').datepicker({
-      autoclose:true
+      autoclose: true,
+      orientation: 'bottom'
     });
 
         $.ajaxSetup({

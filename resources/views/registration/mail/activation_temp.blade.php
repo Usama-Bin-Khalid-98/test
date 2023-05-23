@@ -384,13 +384,13 @@
                                         <br><br>
                                         <p>Regards,<br>
                                         Mr. Irfan Khan<br>
-                                        Assistant Manager Accreditation,<br>
+                                        Assistant Manager Accreditation<br>
                                         <!-- <p>201,2nd Floor, HRD Division,Higher Education Commission, H-8 Islamabad, Pakistan</p> -->
                                         Phone-I (Off) 92 51 9080 0214<br>
                                         Phone-II (Cell): +92 333 5126229<br>
                                         <!-- <p>Fax: +92 51 9080 0208</p> -->
                                         Web: <a href="https://app.nbeac.org.pk"> www.nbeac.org.pk</a></p>
-                                        <small>*Please do not reply to this email. This is computer generated email</small>
+                                        <small>*Please do not reply to this email. This is computer generated email</small><br>
                                         <small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
                                     </td>
                                 </tr>

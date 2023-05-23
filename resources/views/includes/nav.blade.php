@@ -268,7 +268,7 @@ $invoice_id = getRegInvoiceId();
                             <i class="fa {{$committee==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
-            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}">1.5 Affiliations of External <br> Member<span class="pull-right-container">
+            <li  class="{{ (request()->is('strategic/affiliations')) ? 'active' : '' }}"><a href="{{url('strategic/affiliations')}}">1.5 Affiliation of External <br> Member<span class="pull-right-container">
                         <span class="text text-{{$affiliation==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$affiliation==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
@@ -997,7 +997,9 @@ $invoice_id = getRegInvoiceId();
           @endif
 
           @hasrole('BusinessSchool')
+          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C' && $invoice_id != -1)
             <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>
+          @endif
           @endhasrole
           @if($isActiveSAR)
            @hasrole('BusinessSchool')

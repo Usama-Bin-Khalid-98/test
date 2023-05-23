@@ -352,14 +352,14 @@
                                     <td>
                                         <p></p>
 
-                                        <p>Dear {{@$data['nbeac']->director}},</p>
+                                        <p>Dear {{@$data['school']->user->name}},</p>
 {{--                                        <p>HoD & Dean,</p>--}}
 {{--                                        <p>Director of {{@$data['nbeac']->name}} ({{@$data['nbeac']->short_name}})</p>--}}
 
                                         <p>Hope you are doing well,</p>
 
-                                        <p>This email is with reference to registration fee received from {{@$data['school']->name}}, {{@$data['school']->campus->location}}. It is acknowledge you that we have received the registration fee. </p>
-                                        <p>{{@$data['slip']['cheque_no']?'Cheque No: '. $data['slip']['cheque_no']:''}} Amount Rs: 50,000/- dated:
+                                        <p>This email is with reference to registration fee received from {{@$data['school']->name}}, {{@$data['school']->campus->location}}. It is to acknowledge you that we have received the registration fee </p>
+                                        <p>{{@$data['slip']['cheque_no']?'Cheque No: '. $data['slip']['cheque_no']:''}} Amount Rs: 50,000/- ,dated:
                                             {{@$data['slip']['transaction_date']}}.</p>
 
                                         <p>The registration application is under desk review process.  You can check the status of your application on the following link:</p>
@@ -372,7 +372,7 @@
                                         <i>Phone-I (Off) 92 51 9080 0214</i><br>
                                         <i>Phone-II (Cell): +92 333 5126229</i><br>
                                         <i>Web: <a href="{{@$data['nbeac']->website}}">{{@$data['nbeac']->website}}</a></i><br>
-                                        <small>*Please do not reply to this email. This is computer generated email</small>
+                                        <small>*Please do not reply to this email. This is computer generated email</small><br>
                                         <small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
                                     </td>
                                 </tr>

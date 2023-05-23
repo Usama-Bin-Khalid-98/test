@@ -253,8 +253,14 @@
         $("#male").on('change',function (e) {
             document.getElementById('female').value = 100 - parseFloat(document.getElementById('male').value);
         })
+        $("#female").on('change', function (e) {
+            $('#male').val( 100 - parseFloat(this.value));
+        })
         $(document).on('change', '#edit_male', function (e) {
             document.getElementById('edit_female').value = 100 - parseFloat(document.getElementById('edit_male').value);
+        })
+        $('#edit_female').on('change', function (e) {
+           $('#edit_male').val(100 - parseFloat(this.value));
         })
         $('.select2').select2()
 

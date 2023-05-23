@@ -194,14 +194,14 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Year t</label>
+                                <label for="name">{{$programs->tyear??'Year t'}}</label>
                                     <input type="text" name="grad_std_t"
                                     id="edit_grad_std_t" value="{{old('edit_grad_std_t')}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Year t-1</label>
+                                <label for="name">{{$programs->year_t_1??'Year t-1'}}</label>
                                     <input type="text" name="grad_std_t_2"
                                     id="edit_grad_std_t_2" value="{{old('edit_grad_std_t_2')}}" class="form-control">
                             </div>
@@ -209,7 +209,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Year t-2</label>
+                                <label for="name">{{$programs->year_t_2??'Year t-2'}}</label>
                                     <input type="text" name="grad_std_t_3"
                                     id="edit_grad_std_t_3" value="{{old('edit_grad_std_t_3')}}" class="form-control">
                             </div>

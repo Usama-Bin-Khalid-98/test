@@ -61,21 +61,21 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">16 Year programs(A)</label>
-                                        <input type="text" name="bs_level[]" id="bs_level" class="form-control">
+                                        <input type="number" name="bs_level[]" id="bs_level" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">18 Year programs(B)</label>
-                                        <input type="text" name="ms_level[]" id="ms_level" class="form-control">
+                                        <input type="number" name="ms_level[]" id="ms_level" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="name">Doctoral Programs(C)</label>
-                                        <input type="text" name="phd_level[]" id="phd_level" class="form-control">
+                                        <input type="number" name="phd_level[]" id="phd_level" class="form-control">
                                     </div>
                                 </div>
                             @endforeach
@@ -186,7 +186,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">16 year Program</label>
-                                    <input type="text" name="bs_level" id="edit_bs_level" value="{{old('bs_level')}}" class="form-control">
+                                    <input type="number" name="bs_level" id="edit_bs_level" value="{{old('bs_level')}}" class="form-control">
 
                             </div>
                         </div>
@@ -194,14 +194,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">18 year Program</label>
-                                    <input type="text" name="ms_level" id="edit_ms_level" value="{{old('ms_level')}}" class="form-control">
+                                    <input type="number" name="ms_level" id="edit_ms_level" value="{{old('ms_level')}}" class="form-control">
 
                             </div>
                         </div>
                          <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Doctoral Program</label>
-                                    <input type="text" name="phd_level" id="edit_phd_level" value="{{old('phd_level')}}" class="form-control">
+                                    <input type="number" name="phd_level" id="edit_phd_level" value="{{old('phd_level')}}" class="form-control">
 
                             </div>
                         </div>

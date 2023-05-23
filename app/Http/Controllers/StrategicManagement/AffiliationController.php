@@ -86,7 +86,7 @@ class AffiliationController extends Controller
                     return response()->json(['error' => ' Incorrect Statutory Body in line ', 'line'=> $index + 2], 422);
 
                 }
-                $designation = Designation::byName(@$addData[1])->get();
+                $designation = Designation::byName(@$addData[1])->first();
                 if(!$designation){
                     $designation = Designation::create([
                         'name' => @$addData[1],

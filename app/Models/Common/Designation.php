@@ -37,7 +37,7 @@ class Designation extends Model
     }
 
     public static function getOrCreate($id, $name) {
-        $designation = Designation::find($id)->get();
+        $designation = Designation::find($id);
         if($designation->name == 'Other'){
             if(!$name){
                 return [-1, response()->json(['error' => 'If Designation is specified as "other",

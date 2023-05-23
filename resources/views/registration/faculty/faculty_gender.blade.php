@@ -247,6 +247,15 @@
         $("#male").on('change', function (e) {
             document.getElementById('female').value = 100 - parseFloat(this.value);
         })
+        $("#female").on('change', function (e) {
+            $('#male').val(100 - parseFloat(this.value));
+        })
+        $('#edit_male').on('change', function (e) {
+           $('#edit_female').val(100 - parseFloat(this.value));
+        })
+        $('#edit_female').on('change', function (e) {
+           $('#edit_male').val(100 - parseFloat(this.value));
+        })
         $('.select2').select2()
 
          $.ajaxSetup({
