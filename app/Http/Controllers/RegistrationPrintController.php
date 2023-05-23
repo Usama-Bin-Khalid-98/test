@@ -45,7 +45,16 @@ class RegistrationPrintController extends Controller
                     ]
                 )->get()->first();
 //dd($req->did);
-             $bussinessSchool  = DB::select('SELECT * from business_schools where id=?', array($req->bid));
+            $bussinessSchool  = DB::table('users')
+                ->leftJoin('business_schools', 'users.business_school_id', '=', 'business_schools.id')
+                ->leftJoin('institute_types','business_schools.institute_type_id','=','institute_types.id')
+                ->leftJoin('charter_types','business_schools.charter_type_id','=','charter_types.id')
+                ->leftJoin('designations','users.designation_id','=','designations.id')
+                ->where('users.business_school_id',$req->bid)
+                ->where('business_schools.deleted_at', NULL)
+                ->select('business_schools.*','institute_types.name as typeName', 'charter_types.name as charterName', 'designations.name as designationName' )
+                ->get();
+            
 
 
             $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
@@ -156,7 +165,7 @@ WHERE designations.id=contact_infos.designation_id
             //dd($currSemester);
             //dd($prevSemester);
             $getYear = BusinessSchoolTyear::where(['campus_id'=>$req->cid])->get()->first();
-
+            if($getYear){
             $facultyWorkLoad = DB::select('SELECT work_loads.*,designations.name as designationName
 FROM work_loads, campuses, designations WHERE work_loads.type="REG"
 AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.year_t=?', array($req->cid, $getYear->tyear));
@@ -164,7 +173,10 @@ AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.y
              $facultyWorkLoadb = DB::select('SELECT work_loads.*,designations.name as designationName
 FROM work_loads, campuses, designations WHERE work_loads.type="REG"
 AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.year_t=? ', array($req->cid, $getYear->year_t_1));
-
+            }else{
+                $facultyWorkLoad = [];
+                $facultyWorkLoadb = [];
+            }
             $facultyTeachingCourses = DB::select('
                SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType,
                designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users
@@ -454,6 +466,7 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
 
             $userInfo = Auth::user();
             $getYear = BusinessSchoolTyear::where(['campus_id'=> $userInfo->campus_id, 'department_id' => $userInfo->department_id])->get()->first();
+            if($getYear){
              $facultyWorkLoad = DB::select('SELECT work_loads.*,designations.name as designationName
                 FROM work_loads, campuses, designations
                 WHERE work_loads.type="REG"
@@ -469,6 +482,10 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
                   AND work_loads.department_id=?
                   AND work_loads.year_t=?
                   AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id, $department_id, $getYear->year_t_1));
+            }else{
+                $facultyWorkLoad = [];
+                $facultyWorkLoadb =[];
+            }
 
             // $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*,
             // lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources,

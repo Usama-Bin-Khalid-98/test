@@ -67,7 +67,7 @@ class SlipController extends Controller
                 'dg.name as designation', 'd.name as department','d.id as department_id',
                 'u.name as user', 'u.email as email', 'u.contact_no',
                 'bs.name as school', 'bs.id as business_school_id')
-            ->where('s.regStatus', '!=', 'initiated')
+            ->where('s.regStatus', '!=', 'Initiated')
             ->get();
         //dd($invoice_no);
         return view('registration.index', compact('registrations'));

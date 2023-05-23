@@ -286,7 +286,21 @@ class FacultySummaryController extends Controller
         }
 
         try {
-
+            $faculty_summary = FacultySummary::where('id',$id)->first();
+            FacultySummary::where([
+                'campus_id' => $faculty_summary->campus_id,
+                'department_id' => $faculty_summary->department_id,
+                'faculty_qualification_id' => $faculty_summary->faculty_qualification_id,
+                'discipline_id' => $faculty_summary->discipline_id,
+                'number_faculty' => $faculty_summary->number_faculty,
+                'status' => $faculty_summary->status,
+            ])->update([
+                'faculty_qualification_id' => $request->faculty_qualification_id,
+                'discipline_id' => $request->discipline_id,
+                'number_faculty' => $request->number_faculty,
+                'status' => $request->status,
+                'updated_by' => Auth::user()->id
+            ]);
             FacultySummary::where('id', $id)->update([
                 'faculty_qualification_id' => $request->faculty_qualification_id,
                 'discipline_id' => $request->discipline_id,

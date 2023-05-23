@@ -76,7 +76,11 @@
                                     <td>{{@$slip->school}}</td>
                                     <td>{{@$slip->campus??'Main Campus'}}</td>
                                     <td>{{@$slip->department}}</td>
+                                    @if($slip->regStatus != 'Pending')
                                     <td><a href="{{url('deskreview')}}/{{@$slip->id}}">Desk Review</a></td>
+                                    @else
+                                    <td>School hasn't submitted application yet</td>
+                                    @endif
                                     {{--<a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
                                     <td><a href="{{url('registrationPrint?cid=')}}{{@$slip->campus_id}}&bid={{@$slip->business_school_id}}&did={{@$slip->department_id}}">Registration Print </a></td>
                                     <td><a class="badge bg-maroon" href="print?cid={{$slip->campus_id}}&bid={{$slip->business_school_id}}">SAR</a></td>

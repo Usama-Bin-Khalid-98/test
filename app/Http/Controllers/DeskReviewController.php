@@ -66,6 +66,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ActivationMail;
+use App\Models\Common\Designation;
 
 class DeskReviewController extends Controller
 {
@@ -85,7 +86,7 @@ class DeskReviewController extends Controller
             ->join('users as u', 'u.id', '=', 's.created_by')
             ->select('s.*', 'c.location as campus', 'd.name as department', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as schoolId')
 //            ->where('s.reg')
-            ->where('s.regStatus', '!=', 'initiated')
+            ->where('s.regStatus', 'Review')
             ->get();
 //        dd($registrations);
 
@@ -265,40 +266,42 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
-
+        
+        $professor = Designation::where('name','Professor')->first();
         $total_courses_prof = WorkLoad::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation'=> 'Professor', 'type'=>'REG'
+                'designation_id'=> $professor->id, 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
-
+        $assocprofessor = Designation::where('name','Associate Professor')->first();
+        
         $total_courses_assoc = WorkLoad::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation'=> 'Associate Professor', 'type'=>'REG'
+                'designation_id'=> $assocprofessor->id, 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
-
+        $assistprofessor = Designation::where('name','Assistant Professor')->first();
         $total_courses_assis = WorkLoad::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation'=> 'Assistant Professor', 'type'=>'REG'
+                'designation_id'=> $assistprofessor->id, 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
-
+        $lecturer = Designation::where('name','Lecturer')->first();
          $total_courses_lec = WorkLoad::where(
             [
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation'=> 'Lecturer', 'type'=>'REG'
+                'designation_id'=> $lecturer->id, 'type'=>'REG'
             ]
         )->get()->sum('total_courses');
 

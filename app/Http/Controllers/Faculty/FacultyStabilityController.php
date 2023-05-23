@@ -90,6 +90,9 @@ class FacultyStabilityController extends Controller
 
             if($request->year) {
                 foreach ($request->year as $key=>$year) {
+                    if(!$request->total_faculty[$key]){
+                        break;
+                    }
                     $check_data = [
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,

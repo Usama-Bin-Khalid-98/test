@@ -31,9 +31,9 @@ class ProgramPortfolioController extends Controller
        $isSAR = false;
         if($slip){
             $isSAR = true;
-           $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+           $portfolios  = ProgramPortfolio::with('campus','program','course_type')->orderBy('program_id')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
-           $portfolios  = ProgramPortfolio::with('campus','program','course_type')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+           $portfolios  = ProgramPortfolio::with('campus','program','course_type')->orderBy('program_id')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
 
         $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $isSAR?'SAR':'REG'])->get();

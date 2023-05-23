@@ -997,9 +997,7 @@ $invoice_id = getRegInvoiceId();
           @endif
 
           @hasrole('BusinessSchool')
-          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C' && $invoice_id != -1)
             <li  class="{{ (request()->is('registrationPrint')) ? 'active' : '' }}"><a href="{{url('registrationPrint')}}"><i class="fa fa-circle-o text-yellow"></i>Print Registration</a></li>
-          @endif
           @endhasrole
           @if($isActiveSAR)
            @hasrole('BusinessSchool')

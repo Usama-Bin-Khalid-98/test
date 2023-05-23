@@ -7,7 +7,7 @@
 <p style="font-weight: bold">Dear {{@$data['user']}},</p>
 
 <p>Hope you are doing well,</p>
-<p>Thank you for submitting the registration application of {{@$data['department']}} {{@$data['school']->campus->business_school->name}}, {{@$data['campus']}}. The desk review of registration application is under process. You can check the status of your application on the registration application page. <a href="{{url('strategic/invoices')}}">(Link)</a></p>
+<p>Thank you for submitting the registration application of {{@$data['department']}} {{@$data['school']->campus->business_school->name}}, {{@$data['campus']}} for program(s) @foreach($data['scopes'] as $scope){{$scope->program->name}} @if(!$loop->last), @endif @endforeach. The desk review of registration application is under process. You can check the status of your application on the registration application page. <a href="{{url('strategic/invoices')}}">(Link)</a></p>
 <p>Thank You.</p>
 
 <p>Regards,</p>
@@ -19,7 +19,7 @@ $nbeac = \App\Models\Config\NbeacBasicInfo::all()->first();
 <p style="color: #1d68a7">Phone-I (Off) 92 51 9080 0214</p>
 <p style="color: #1d68a7">Phone-II (Cell): +92 333 5126229</p>
 <p style="color: #1d68a7">Web: www.nbeac.org.pk</p>
-<small>*Please do not reply to this email. This is computer generated email</small>
+<small>*Please do not reply to this email. This is computer generated email</small><br>
 <small>*For any query related to the program, please email us at mirkhan@hec.gov.pk</small>
 </body>
 </html>

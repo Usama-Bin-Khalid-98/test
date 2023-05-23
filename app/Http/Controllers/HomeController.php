@@ -24,6 +24,7 @@ use App\Models\Faculty\FacultyGender;
 use App\Models\Common\Program;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ChangeResgistrationStatusMail;
+use App\Models\StrategicManagement\Scope;
 
 class HomeController extends Controller
 {
@@ -427,6 +428,11 @@ class HomeController extends Controller
                 $data['user'] = $businessSchool->campus->user->name;
                 $data['department'] = $businessSchool->department->name;
                 $data['campus'] = $businessSchool->campus->location;
+                $data['scopes'] = Scope::where([
+                    'campus_id' => $businessSchool->campus->id,
+                    'department_id' => $businessSchool->department->id,
+                    'type' => 'REG'
+                ])->get();
 
                 Mail::to($businessSchool->campus->user->email)->send(new ChangeResgistrationStatusMail($data));
 
