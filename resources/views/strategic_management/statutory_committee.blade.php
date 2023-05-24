@@ -194,7 +194,7 @@
                                 <tr>
                                     <td>{{$committee->statutory_body->name}}</td>
                                     <td>{{$committee->name}} </td>
-                                    <td>{{$committee->designation->name}}</td>
+                                    <td>{{@$committee->designation->name}}</td>
                                     <td>{{$committee->date_first_meeting}}</td>
                                     <td>{{$committee->date_second_meeting}}</td>
                                     <td>{{$committee->date_third_meeting}}</td>
@@ -207,9 +207,9 @@
                                            data-row='{"id":{{$committee->id}},
                                          "statutory_body_id":{{$committee->statutory_body->id}},
                                          "name":"{{$committee->name}}", 
-                                         "designation_name":"{{$committee->designation->name}}",
-                                         "designation_default":{{$committee->designation->is_default}},
-                                         "designation_id":{{$committee->designation->id}},
+                                         "designation_name":"{{@$committee->designation->name}}",
+                                         "designation_default":{{@$committee->designation->is_default}},
+                                         "designation_id":{{@$committee->designation->id}},
                                          "date_first_meeting":"{{$committee->date_first_meeting}}",
                                          "date_second_meeting":"{{$committee->date_second_meeting}}",
                                          "date_third_meeting":"{{$committee->date_third_meeting}}",

@@ -569,6 +569,9 @@ class DeskReviewController extends Controller
         $parttime = [];
         foreach($faculty_with_program as $faculty_program){
             foreach($faculty_program->faculty_program as $faculty){
+                if(!$faculty->program){
+                    continue;
+                }
                 if(!array_key_exists($faculty->program->name, $parttime)){
                     $parttime[$faculty->program->name] = 0;
                     $fulltime[$faculty->program->name] = 0;

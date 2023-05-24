@@ -10,8 +10,8 @@
                                 <tbody>
                                     @foreach($scopeOfAcredation as $data)
                                     <tr>
-                                        <td>{{$data->program->name}}</td>
-                                        <td>{{$data->level->name}}</td>
+                                        <td>{{$data->programName}}</td>
+                                        <td>{{$data->levelName}}</td>
                                         <td>{{$data->date_program}}</td>
                                     </tr>
                                    @endforeach

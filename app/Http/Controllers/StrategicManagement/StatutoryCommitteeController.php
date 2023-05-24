@@ -28,7 +28,7 @@ class StatutoryCommitteeController extends Controller
         $designations = Designation::where(['status' => 'active', 'is_default' => true])->get();
         $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
         if($slip){
-            $statutory_committees = StatutoryCommittee::with('statutory_body')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
+            $statutory_committees = StatutoryCommittee::with('statutory_body', 'designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
         }else {
             $statutory_committees = StatutoryCommittee::with('statutory_body', 'designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
         }
