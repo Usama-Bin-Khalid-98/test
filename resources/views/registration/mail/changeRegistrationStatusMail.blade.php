@@ -7,7 +7,7 @@
 <p style="font-weight: bold">Dear {{@$data['user']}},</p>
 
 <p>Hope you are doing well,</p>
-<p>Thank you for submitting the registration application of {{@$data['department']}} {{@$data['school']->campus->business_school->name}}, {{@$data['campus']}} for program(s) @foreach($data['scopes'] as $scope){{$scope->program->name}} @if(!$loop->last), @endif @endforeach. The desk review of registration application is under process. You can check the status of your application on the registration application page. <a href="{{url('strategic/invoices')}}">(Link)</a></p>
+<p>Thank you for submitting the registration application of {{@$data['department']}} {{@$data['school']->campus->business_school->name}}, {{@$data['campus']}} for the @foreach($data['scopes'] as $scope){{$scope->program->name}} @if(!$loop->last), @endif @endforeach. The desk review of registration application is under process. You can check the status of your application on the registration application page. <a href="{{url('strategic/invoices')}}">(Link)</a></p>
 <p>Thank You.</p>
 
 <p>Regards,</p>

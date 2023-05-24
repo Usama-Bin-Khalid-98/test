@@ -349,7 +349,6 @@ class SlipController extends Controller
     public function generateInvoice(Request $request)
     {
         $school = BusinessSchool::with('user', 'user.campus')->find(Auth::user()->business_school_id);
-        Log::debug(''.$school);
         try {
             $getFee =DepartmentFee::findorfail(1)->first();
             if($getFee) {

@@ -18,10 +18,6 @@ class UpdateTablesToAddColumns extends Migration
     public function up()
     {
 
-        Schema::table('application_receiveds', function (Blueprint $table) {
-            $table->string('semester', 10);
-        });
-
         Schema::table('mission_visions', function (Blueprint $table) {
             $table->string('mission_url', 255);
         });
@@ -47,10 +43,6 @@ class UpdateTablesToAddColumns extends Migration
      */
     public function down()
     {
-
-        Schema::table('application_receiveds', function (Blueprint $table) {
-            $table->dropColumn('semester');
-        });
 
         Schema::table('mission_visions', function (Blueprint $table) {
             $table->dropColumn('mission_url');

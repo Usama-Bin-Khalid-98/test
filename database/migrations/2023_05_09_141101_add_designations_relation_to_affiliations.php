@@ -16,17 +16,22 @@ class AddDesignationsRelationToAffiliations extends Migration
     public function up()
     {
         Schema::table('affiliations', function (Blueprint $table) {
-            $table->integer('designation_id')->unsigned();
+            $table->integer('designation_id')->unsigned()->nullable();
             $table->foreign('designation_id')
                 ->references('id')
                 ->on('designations');
         });
         
-        foreach(Designation::all() as $designation){
-            Affiliation::where('designation', $designation->name)
-                ->update([
-                    'designation_id' => $designation->id
-                ]);
+        foreach(Affiliation::all() as $affiliation){
+            $designation = Designation::where('name', $affiliation->designation)->first();
+            if(!$designation){
+                $designation = Designation::create([
+                    'name' => $affiliation->designation
+                ]);    
+            }
+            $affiliation->update([
+                'designation_id' => $designation->id
+            ]);
         }
 
         Schema::table('affiliations', function (Blueprint $table) {
