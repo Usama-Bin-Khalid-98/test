@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Database\QueryException;
 
 use Auth;
 
@@ -83,16 +84,21 @@ class AffiliationController extends Controller
                 $getStrBody = StatutoryBody::where(['name'=> @$addData[3]])->first();
                 if(!$getStrBody)
                 {
-                    return response()->json(['error' => ' Incorrect Statutory Body in line ', 'line'=> $index + 2], 422);
+                    return response()->json(['error' => ' Incorrect Statutory Body in line '. ($index + 2)], 422);
 
                 }
                 $designation = Designation::byName(@$addData[1])->first();
                 if(!$designation){
-                    $designation = Designation::create([
-                        'name' => @$addData[1],
-                        'is_default' => false
-                    ]);
-                }
+                    try{
+                        $designation = Designation::create([
+                            'name' => @$addData[1],
+                            'is_default' => false
+                        ]);
+                    }catch(QueryException $ex){
+                        return response()->json(['error' => 'Invalid character in Designation on line '. ($index + 2)], 422);
+                        }
+                    }
+
                 $where_data = [
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
@@ -105,17 +111,21 @@ class AffiliationController extends Controller
                 $check = Affiliation::where($where_data)->exists();
 
                 if (!$check) {
-                    Affiliation::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'name' => @$addData[0],
-                        'designation_id' => $designation->id,
-                        'statutory_bodies_id' => $getStrBody->id,
-                        'affiliation' => @$addData[2],
-                        'isComplete' => 'yes',
-                        'type' => $type,
-                        'created_by' => Auth::user()->id
-                    ]);
+                    try{
+                        Affiliation::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'name' => @$addData[0],
+                            'designation_id' => $designation->id,
+                            'statutory_bodies_id' => $getStrBody->id,
+                            'affiliation' => @$addData[2],
+                            'isComplete' => 'yes',
+                            'type' => $type,
+                            'created_by' => Auth::user()->id
+                        ]);
+                    }catch(QueryException $ex){
+                        return response()->json(['error' => 'Invalid character in Name or Affiliation on line '. ($index + 2)], 422);
+                    }
                 }
 
 

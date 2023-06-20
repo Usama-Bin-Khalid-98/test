@@ -18,6 +18,6 @@ class StudentGender extends Model
     }
 
     public function program() {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class)->withTrashed();
     }
 }
