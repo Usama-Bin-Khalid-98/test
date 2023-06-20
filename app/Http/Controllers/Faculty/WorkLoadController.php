@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
+use PDO;
 
 class WorkLoadController extends Controller
 {
@@ -100,10 +102,14 @@ class WorkLoadController extends Controller
                     }
                     $designation = Designation::byName(@$addData[1])->first();
                     if(!$designation){
-                        $designation = Designation::create([
-                            'name' => @$addData[1],
-                            'is_default' => false
-                        ]);
+                        try {
+                            $designation = Designation::create([
+                                'name' => @$addData[1],
+                                'is_default' => false
+                            ]);
+                        } catch (QueryException $ex) {
+                            return response()->json(['error' => 'Invalid character in Designation on line '. ($index + 2)], 422);
+                        }
                     }
                     $check_data = ['campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
@@ -115,21 +121,25 @@ class WorkLoadController extends Controller
                     $check = WorkLoad::where($check_data)->exists();
 
                     if(!$check) {
-                        WorkLoad::create([
-                            'campus_id' => Auth::user()->campus_id,
-                            'department_id' => Auth::user()->department_id,
-                            'faculty_name' => @$addData[0],
-                            'designation_id' => $designation->id,
-                            'admin_responsibilities' => @$addData[2],
-                            'total_courses' => @$addData[3],
-                            'phd' => @$addData[4],
-                            'masters' => @$addData[5],
-                            'bachleors' => @$addData[6],
-                            'year_t' => @$addData[7],
-                            'isCompleted' => 'yes',
-                            'type' => $type,
-                            'created_by' => Auth::user()->id
-                        ]);
+                        try {
+                            WorkLoad::create([
+                                'campus_id' => Auth::user()->campus_id,
+                                'department_id' => Auth::user()->department_id,
+                                'faculty_name' => @$addData[0],
+                                'designation_id' => $designation->id,
+                                'admin_responsibilities' => @$addData[2],
+                                'total_courses' => @$addData[3],
+                                'phd' => @$addData[4],
+                                'masters' => @$addData[5],
+                                'bachleors' => @$addData[6],
+                                'year_t' => @$addData[7],
+                                'isCompleted' => 'yes',
+                                'type' => $type,
+                                'created_by' => Auth::user()->id
+                            ]);
+                        } catch (QueryException $ex) {
+                            return response()->json(['error' => 'Invalid character in line '. ($index + 2)], 422);
+                        }
                     }
 
                 }

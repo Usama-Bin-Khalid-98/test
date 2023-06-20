@@ -14,7 +14,7 @@ class StudentEnrolment extends Model
     protected $guarded = [];
 
     public function program() {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class)->withTrashed();
     }
 
     public function campus()
