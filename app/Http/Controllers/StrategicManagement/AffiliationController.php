@@ -89,12 +89,12 @@ class AffiliationController extends Controller
                 }
                 $designation = Designation::byName(@$addData[1])->first();
                 if(!$designation){
-                    try{
+                    try {
                         $designation = Designation::create([
                             'name' => @$addData[1],
                             'is_default' => false
                         ]);
-                    }catch(QueryException $ex){
+                    } catch (QueryException $ex) {
                         return response()->json(['error' => 'Invalid character in Designation on line '. ($index + 2)], 422);
                         }
                     }
@@ -111,7 +111,7 @@ class AffiliationController extends Controller
                 $check = Affiliation::where($where_data)->exists();
 
                 if (!$check) {
-                    try{
+                    try {
                         Affiliation::create([
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
@@ -123,7 +123,7 @@ class AffiliationController extends Controller
                             'type' => $type,
                             'created_by' => Auth::user()->id
                         ]);
-                    }catch(QueryException $ex){
+                    } catch (QueryException $ex) {
                         return response()->json(['error' => 'Invalid character in Name or Affiliation on line '. ($index + 2)], 422);
                     }
                 }

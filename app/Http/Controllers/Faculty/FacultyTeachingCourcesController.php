@@ -173,7 +173,7 @@ class FacultyTeachingCourcesController extends Controller
                         return response()->json(['error' => ' Incorrect Program in line ', 'line'=> $index + 2], 422);
 
                     }
-                        try{
+                        try {
                             $insert = FacultyTeachingCources::create([
                                 'name' => @$addData[0],
                                 'campus_id' => Auth::user()->campus_id,
@@ -185,7 +185,7 @@ class FacultyTeachingCourcesController extends Controller
                                 'type' => $type,
                                 'created_by' => Auth::user()->id
                             ]);
-                        }catch(QueryException $ex){
+                        } catch (QueryException $ex) {
                             return response()->json(['error' => 'Invalid character in name or max courses on line '. ($index + 2)], 422);
                         }
                     for($column = 4 ; $column < count($addData) ; $column += 2){
@@ -207,14 +207,14 @@ class FacultyTeachingCourcesController extends Controller
                             FacultyTeachingCources::find($insert->id)->delete();
                             return response()->json(['error' => ' Program:' . @$addData[$column] . ' not in scope, csv line no ' . ($index+2)], 422);
                         }
-                        try{
+                        try {
                             FacultyProgram::create([
                                     'faculty_teaching_cource_id' => $insert->id,
                                     'program_id' => $program->id,
                                     'tc_program' => @$addData[$column + 1],
                                     'created_by' => Auth::id()
                                 ]);
-                        }catch(QueryException $ex){
+                        } catch (QueryException $ex) {
                             return response()->json(['error' => 'Invalid value in cell' . ($column + 2 ) . ' on line '. ($index + 2)], 422);
                         }
                     }
