@@ -63,18 +63,15 @@ class RegistrationPrintController extends Controller
 
 
 
-//            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
-//                FROM scopes, programs, levels, campuses
-//                WHERE scopes.campus_id=campuses.id
-//                  AND scopes.type="REG"
-//                  AND scopes.program_id=programs.id
-//                  AND scopes.level_id=levels.id
-//                  AND scopes.campus_id=?
-//                  AND scopes.department_id=?', array($req->cid, $req->did));
+           $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
+               FROM scopes, programs, levels, campuses
+               WHERE scopes.campus_id=campuses.id
+                 AND scopes.type="REG"
+                 AND scopes.program_id=programs.id
+                 AND scopes.level_id=levels.id
+                 AND scopes.campus_id=?
+                 AND scopes.department_id=?', array($req->cid, $req->did));
 
-            $scopeOfAcredation = Scope::with('program', 'level')
-                ->where(['type'=> 'REG', 'department_id'=>$req->did, 'campus_id'=>$req->cid, 'deleted_at'=> null])
-                ->get();
 //
 
 //            dd($scopeOfAcredation);
@@ -90,17 +87,33 @@ WHERE designations.id=contact_infos.designation_id
 
 
 
-            $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id 
-            AND statutory_committees.type="REG" 
-            AND business_schools.id=? 
-            AND statutory_committees.campus_id=?
-            AND statutory_committees.department_id=?', array($req->bid, $req->cid, $req->did));
+            $statutoryCommitties = DB::table('statutory_committees')
+                ->join('designations', 'statutory_committees.designation_id', '=', 'designations.id')
+                ->join('statutory_bodies', 'statutory_committees.statutory_body_id', '=', 'statutory_bodies.id')
+                ->where('statutory_committees.type', 'REG')
+                ->whereNull('statutory_committees.deleted_at')
+                ->where('statutory_committees.campus_id', $req->cid)
+                ->where('statutory_committees.department_id', $req->did)
+                ->select(
+                    'statutory_committees.*',
+                    'statutory_bodies.name as statutoryName',
+                    'designations.name as designationName'
+                )
+                ->get();
 
-             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
-            FROM affiliations, statutory_bodies, business_schools, designations
-            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="REG" AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid,$req->cid));
-
-
+            $affiliations = DB::table('affiliations')
+                ->join('statutory_bodies', 'affiliations.statutory_bodies_id', '=', 'statutory_bodies.id')
+                ->join('designations', 'affiliations.designation_id', '=', 'designations.id')
+                ->where('affiliations.type', '=', 'REG')
+                ->whereNull('affiliations.deleted_at')
+                ->where('affiliations.campus_id', $req->cid)
+                ->where('affiliations.department_id', $req->did)
+                ->select(
+                    'affiliations.*',
+                    'statutory_bodies.name as statutoryBody',
+                    'designations.name as designationName'
+                )
+                ->get();
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses
                 WHERE business_schools.id=? AND budgetary_infos.type="REG"
                 AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
@@ -166,13 +179,27 @@ WHERE designations.id=contact_infos.designation_id
             //dd($prevSemester);
             $getYear = BusinessSchoolTyear::where(['campus_id'=>$req->cid])->get()->first();
             if($getYear){
-            $facultyWorkLoad = DB::select('SELECT work_loads.*,designations.name as designationName
-FROM work_loads, campuses, designations WHERE work_loads.type="REG"
-AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.year_t=?', array($req->cid, $getYear->tyear));
+            $facultyWorkLoad = DB::table('work_loads')
+                ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
+                ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
+                ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $req->cid, 'work_loads.year_t' => $getYear->tyear])
+                ->whereNull('work_loads.deleted_at')
+                ->select(
+                    'work_loads.*',
+                    'designations.name as designationName'
+                )
+                ->get();
 
-             $facultyWorkLoadb = DB::select('SELECT work_loads.*,designations.name as designationName
-FROM work_loads, campuses, designations WHERE work_loads.type="REG"
-AND campuses.id=work_loads.campus_id AND work_loads.campus_id=? AND work_loads.year_t=? ', array($req->cid, $getYear->year_t_1));
+            $facultyWorkLoadb = DB::table('work_loads')
+                ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
+                ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
+                ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $req->cid, 'work_loads.year_t' => $getYear->year_t_1])
+                ->whereNull('work_loads.deleted_at')
+                ->select(
+                    'work_loads.*',
+                    'designations.name as designationName'
+                )
+                ->get();
             }else{
                 $facultyWorkLoad = [];
                 $facultyWorkLoadb = [];
@@ -310,18 +337,15 @@ AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facilit
                 ->where('deleted_at', null)
                 ->get();
 
-//            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
-//FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id
-//AND scopes.type="REG"
-//AND scopes.program_id=programs.id
-//AND scopes.level_id=levels.id
-//AND scopes.campus_id=?
-//AND scopes.department_id=?', array($campus_id, $department_id));
+           $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
+FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id
+AND scopes.type="REG"
+AND scopes.program_id=programs.id
+AND scopes.level_id=levels.id
+AND scopes.campus_id=?
+AND scopes.department_id=?', array($campus_id, $department_id));
 
 
-            $scopeOfAcredation = Scope::with('program', 'level')
-                ->where(['type'=> 'REG', 'department_id'=>$department_id, 'campus_id'=>$campus_id, 'deleted_at'=> null])
-                ->get();
 //
 //dd($scopeOfAcredation);
 //            $contactInformation = DB::select('SELECT contact_infos.*
@@ -334,26 +358,36 @@ AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facilit
             $contactInformation = ContactInfo::where(['type'=> 'REG', 'department_id'=>$department_id, 'campus_id'=>$campus_id, 'deleted_at'=> null])->get();
 //            dd($contactInformation);
 
-            $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName,designations.name as designationName
-FROM statutory_committees, statutory_bodies, business_schools, designations
-WHERE statutory_committees.statutory_body_id=statutory_bodies.id
-  AND statutory_committees.type="REG"
-  AND statutory_committees.deleted_at is null
-  AND business_schools.id=?
-  AND statutory_committees.campus_id=?
-  AND statutory_committees.department_id=?', array($bussinessSchool[0]->id, $campus_id, $department_id));
+
+            $statutoryCommitties = DB::table('statutory_committees')
+                ->join('statutory_bodies', 'statutory_committees.statutory_body_id', '=', 'statutory_bodies.id')
+                ->join('designations', 'statutory_committees.designation_id', '=', 'designations.id')
+                ->where('statutory_committees.type', '=', 'REG')
+                ->whereNull('statutory_committees.deleted_at')
+                ->where('statutory_committees.campus_id', $campus_id)
+                ->where('statutory_committees.department_id', $department_id)
+                ->select(
+                    'statutory_committees.*',
+                    'statutory_bodies.name as statutoryName',
+                    'designations.name as designationName'
+                )
+                ->get();
 
 
 
-             $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody, designations.name as designationName
-            FROM affiliations, statutory_bodies, business_schools, designations
-            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id
-              AND affiliations.type="REG"
-              AND affiliations.deleted_at is null
-              AND business_schools.id=?
-              AND affiliations.campus_id=?
-              AND affiliations.department_id=?', array($bussinessSchool[0]->id,$campus_id, $department_id));
-
+            $affiliations = DB::table('affiliations')
+                ->join('statutory_bodies', 'affiliations.statutory_bodies_id', '=', 'statutory_bodies.id')
+                ->join('designations', 'affiliations.designation_id', '=', 'designations.id')
+                ->where('affiliations.type', '=', 'REG')
+                ->whereNull('affiliations.deleted_at')
+                ->where('affiliations.campus_id', $campus_id)
+                ->where('affiliations.department_id', $department_id)
+                ->select(
+                    'affiliations.*',
+                    'statutory_bodies.name as statutoryBody',
+                    'designations.name as designationName'
+                )
+                ->get();
 
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* FROM budgetary_infos, business_schools, campuses
  WHERE business_schools.id=? AND budgetary_infos.type="REG"
@@ -467,21 +501,28 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
             $userInfo = Auth::user();
             $getYear = BusinessSchoolTyear::where(['campus_id'=> $userInfo->campus_id, 'department_id' => $userInfo->department_id])->get()->first();
             if($getYear){
-             $facultyWorkLoad = DB::select('SELECT work_loads.*,designations.name as designationName
-                FROM work_loads, campuses, designations
-                WHERE work_loads.type="REG"
-                  AND work_loads.campus_id=?
-                  AND work_loads.department_id=?
-                  AND work_loads.year_t=?
-                  AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id, $department_id, $getYear->tyear));
+                $facultyWorkLoad = DB::table('work_loads')
+                    ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
+                    ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
+                    ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $userCampus[0]->campus_id, 'work_loads.year_t' => $getYear->tyear, 'work_loads.department_id' =>$department_id])
+                    ->whereNull('work_loads.deleted_at')
+                    ->select(
+                        'work_loads.*',
+                        'designations.name as designationName'
+                    )
+                    ->get();
             
-             $facultyWorkLoadb = DB::select('SELECT work_loads.*,designations.name as designationName
-                FROM work_loads, campuses, designations
-                WHERE work_loads.type="REG"
-                  AND work_loads.campus_id=?
-                  AND work_loads.department_id=?
-                  AND work_loads.year_t=?
-                  AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id, $department_id, $getYear->year_t_1));
+                $facultyWorkLoadb = DB::table('work_loads')
+                    ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
+                    ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
+                    ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $userCampus[0]->campus_id, 'work_loads.year_t' => $getYear->year_t_1, 'work_loads.department_id' =>$department_id])
+                    ->whereNull('work_loads.deleted_at')
+                    ->select(
+                        'work_loads.*',
+                        'designations.name as designationName'
+                    )
+                    ->get();
+            
             }else{
                 $facultyWorkLoad = [];
                 $facultyWorkLoadb =[];

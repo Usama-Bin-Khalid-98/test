@@ -14,6 +14,7 @@ use App\Models\MentoringMentor;
 use App\Models\PeerReview\PeerReviewReport;
 use App\Models\PeerReview\PeerReviewReviewer;
 use App\Models\PeerReview\SchedulePeerReview;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Slip extends Model
@@ -81,5 +82,9 @@ class Slip extends Model
 
     public function peer_review_reviewer(){
         return $this->hasOne(PeerReviewReviewer::class);
+    }
+    
+    public function creator(){
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

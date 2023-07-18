@@ -82,9 +82,7 @@
                                      <th class="fontsize">Minimum requirements/relative weightage</th>
                                      </thead>
                                      <tbody>
-                                         @php $c = 0; @endphp
                                      @foreach($criterias as $criteria)
-                                     @php $c++; @endphp
                                      <tr>
                                          @if($loop->iteration == 1)
                                          <td rowspan="{{count(@$criterias)}}">
@@ -105,7 +103,7 @@
                                              <input type="hidden" name="eligibility_criteria_id[]" id="eligibility_criteria_id" value="{{@$criteria->id}}">
                                          </td>
                                          <td>
-                                             <input type="number" name="min_req[]" id="{{$c}}" min="0" class="form-control calculate">
+                                             <input type="number" name="min_req[]" min="0" class="form-control calculate">
                                          </td>
                                              @endforeach
                                      </tr>
@@ -296,13 +294,11 @@
     </script>
     <script type="text/javascript">
         $(".calculate").on('change', function (e) {
-            var val = document.getElementById('1').value == '' ? 0 : parseFloat(document.getElementById('1').value);
-            var val_2 = document.getElementById('2').value == '' ? 0 : parseFloat(document.getElementById('2').value);
-            var val_3 = document.getElementById('3').value == '' ? 0 : parseFloat(document.getElementById('3').value);
-            var val_4 = document.getElementById('4').value == '' ? 0 : parseFloat(document.getElementById('4').value);
-            var val_5 = document.getElementById('5').value == '' ? 0 : parseFloat(document.getElementById('5').value);
-            var val_6 = document.getElementById('6').value == '' ? 0 : parseFloat(document.getElementById('6').value);
-            document.getElementById('total').innerHTML = val + val_2 + val_3 + val_4 + val_5 + val_6;
+            var total = 0 
+             $('.calculate').map(function (){
+                total += this.value == '' ? 0 : parseFloat(this.value)
+            })
+            $('#total').html(total);
         })
         $('.select2').select2()
 

@@ -91,12 +91,11 @@ class FacultyStabilityController extends Controller
             if($request->year) {
                 foreach ($request->year as $key=>$year) {
                     if(!$request->total_faculty[$key]){
-                        break;
+                        continue;
                     }
                     $check_data = [
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
-                        'total_faculty' => $request->total_faculty[$key],
                         'year' => $request->year[$key],
                         'isCompleted' => 'yes',
                         'type' => $type];
@@ -129,7 +128,7 @@ class FacultyStabilityController extends Controller
                             'created_by' => Auth::user()->id
                         ]);
                     }else{
-                        return response()->json(['error' => 'Faculty Stability already exists.'], 422);
+                        return response()->json(['error' => 'Faculty Stability for year ' . $year . ' already exists.'], 422);
 
                     }
                 }

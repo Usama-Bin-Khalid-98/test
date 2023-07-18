@@ -313,7 +313,7 @@
                     $.ajax({
                         url:'{{url("strategic/scope")}}/'+id,
                         type:'PATCH',
-                        data: { program_id:id,
+                        data: { program_id:program_id,
                             level_id:level_id,
                             date_program:date_program,
                             status:'active'},

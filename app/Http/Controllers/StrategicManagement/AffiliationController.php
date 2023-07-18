@@ -95,7 +95,7 @@ class AffiliationController extends Controller
                             'is_default' => false
                         ]);
                     } catch (QueryException $ex) {
-                        return response()->json(['error' => 'Invalid character in Designation on line '. ($index + 2)], 422);
+                        return response()->json(['error' => 'Import file has invalid character in Designation on line '. ($index + 2)], 422);
                         }
                     }
 
@@ -124,7 +124,7 @@ class AffiliationController extends Controller
                             'created_by' => Auth::user()->id
                         ]);
                     } catch (QueryException $ex) {
-                        return response()->json(['error' => 'Invalid character in Name or Affiliation on line '. ($index + 2)], 422);
+                        return response()->json(['error' => 'Import file has invalid character in Name or Affiliation on line '. ($index + 2)], 422);
                     }
                 }
 
