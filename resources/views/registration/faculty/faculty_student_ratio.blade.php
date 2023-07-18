@@ -150,7 +150,7 @@
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->program->name}}</td>
                                     <td>{{$req->total_enrollments}}</td>
-                                    <td>@isset($byProgramVFE[$req->program_id]){{$byProgramFTE["$req->program_id"]}}@endisset</td>
+                                    <td>@isset($byProgramVFE[$req->program_id]){{@$byProgramFTE[$req->program_id]}}@endisset</td>
                                     <td>@isset($byProgramVFE[$req->program_id]){{round($byProgramVFE[$req->program_id]/3, 2)}}@endisset</td>
                                     @php
                                         if(isset($byProgramVFE[$req->program_id],$byProgramFTE[$req->program_id])){

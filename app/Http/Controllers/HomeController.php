@@ -105,8 +105,7 @@ class HomeController extends Controller
             ->join('users as u', 'u.id', '=', 's.created_by')
             ->select('s.*', 'c.location as campus', 'd.name as department',
                 'd.id as department_id', 'u.name as user', 'u.email', 'u.contact_no', 'bs.name as school', 'bs.id as school_id')
-            ->where('s.regStatus', 'Eligibility')
-            ->orWhere('s.regStatus', 'ScheduledES')
+            ->whereIn('s.regStatus', ['Eligibility', 'ScheduledES'])
             ->get();
         //dd($eligibility_registrations);
 
@@ -196,8 +195,7 @@ class HomeController extends Controller
 //                    ->whereHas('mentoring_mentor', function ($q) {
 //                        $q->where('user_id', Auth::id());
 //                    })
-                ->where('regStatus', 'ScheduledMentoring')
-                ->orWhere('regStatus', 'Mentoring')
+                ->whereIn('regStatus', ['ScheduledMentoring', 'Mentoring'])
                 ->get();
 
 //            dd($MentoringMeetings);
@@ -219,8 +217,7 @@ class HomeController extends Controller
 //                    ->whereHas('mentoring_mentor', function ($q) {
 //                        $q->where('user_id', Auth::id());
 //                    })
-                ->where('regStatus', 'ScheduledMentoring')
-                ->orWhere('regStatus', 'Mentoring')
+                ->whereIn('regStatus', ['ScheduledMentoring', 'Mentoring'])
                 ->where(['created_by'=> Auth::id()])
                 ->get();
 
@@ -234,8 +231,7 @@ class HomeController extends Controller
 //            dd('mentors ');
 
             $PeerReviewVisit = Slip::with('campus', 'department')
-                ->where('regStatus', 'ScheduledPRVisit')
-                ->orWhere('regStatus', 'PeerReviewVisit')
+                ->whereIn('regStatus', ['ScheduledPRVisit', 'PeerReviewVisit'])
                 ->where('status', 'approved')
                 ->get();
 
@@ -244,8 +240,7 @@ class HomeController extends Controller
                 $PeerReviewVisit = Slip::with(['campus', 'department','peer_review_reviewer' => function($q) {
                     $q->where(['user_id'=>Auth::id()]);
                 }])
-                    ->where('regStatus', 'ScheduledPRVisit')
-                    ->orWhere('regStatus', 'PeerReviewVisit')
+                    ->whereIn('regStatus', ['ScheduledPRVisit', 'PeerReviewVisit'])
                     ->where('status', 'approved')
                     ->get();
 
@@ -255,8 +250,7 @@ class HomeController extends Controller
             $PeerReviewVisit = Slip::with('campus', 'department')
                 ->where(['business_school_id'=>Auth::user()->campus_id,
                     'department_id'=>Auth::user()->department_id])
-                ->where('regStatus', 'ScheduledPRVisit')
-                ->orWhere('regStatus', 'PeerReviewVisit')
+                ->whereIn('regStatus', ['ScheduledPRVisit', 'PeerReviewVisit'])
                 ->where('status', 'approved')
                 ->get();
         }
@@ -300,7 +294,7 @@ class HomeController extends Controller
         $desk_count = Slip::where(['regStatus'=>'Review'])->get()->count();
         $sar_desk_count = Slip::where(['regStatus'=>'SARDeskReview'])->get()->count();
 //        dd($mentoring_slip_count);
-        $PeerReviewers = User::where(['user_type'=> 'Mentor'])->orWhere(['user_type'=> 'PeerReviewer'])->get();
+        $PeerReviewers = User::whereIn('user_type', ['Mentor', 'PeerReviewer'])->get();
 
 
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',

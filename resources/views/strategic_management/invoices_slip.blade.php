@@ -170,6 +170,7 @@ $is_processing_a_slip = isProcessingASlip();
                                 <thead>
                                 <tr>
                                     <th>Department</th>
+                                    <th>Generator</th>
                                     <th>Fee amount</th>
                                     <th>Invoice No</th>
                                     <th>Invoice</th>
@@ -190,6 +191,10 @@ $is_processing_a_slip = isProcessingASlip();
                                     @endphp
                                 <tr>
                                     <td>{{@$invoice->department->name}}</td>
+                                    <td>Name : {{@$invoice->creator->name}}<br>
+                                        Email : {{@$invoice->creator->email}}<br>
+                                        Phone No : {{@$invoice->creator->contact_no}}
+                                    </td>
                                     <td>{{@$invoice->amount}}</td>
                                     <td>{{$invoice->invoice_no}}</td>
                                     <td><a href="{{url('strategic/invoice/'.$invoice->id)}}">Invoice</a></td>

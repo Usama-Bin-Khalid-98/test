@@ -108,7 +108,7 @@ class WorkLoadController extends Controller
                                 'is_default' => false
                             ]);
                         } catch (QueryException $ex) {
-                            return response()->json(['error' => 'Invalid character in Designation on line '. ($index + 2)], 422);
+                            return response()->json(['error' => 'Import File has invalid character in Designation on line '. ($index + 2)], 422);
                         }
                     }
                     $check_data = ['campus_id' => Auth::user()->campus_id,
@@ -138,7 +138,7 @@ class WorkLoadController extends Controller
                                 'created_by' => Auth::user()->id
                             ]);
                         } catch (QueryException $ex) {
-                            return response()->json(['error' => 'Invalid character in line '. ($index + 2)], 422);
+                            return response()->json(['error' => 'Import file has invalid character in line '. ($index + 2)], 422);
                         }
                     }
 
@@ -146,19 +146,21 @@ class WorkLoadController extends Controller
                 return response()->json(['success' => 'Faculty WorkLoad CSV imported successfully.']);
 
             }else {
-                list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
-                if($error){
-                    return $error;
-                }
-                $check_data = ['campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'faculty_name' => $request->faculty_name,
-                    'designation_id' => $designation_id,
-                    'total_courses' => $request->total_courses];
-                $check = WorkLoad::where($check_data)->exists();
 
-                if (!$check) {
-                    if ($request->faculty_name) {
+                if ($request->faculty_name) {
+                    list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+                    if($error){
+                        return $error;
+                    }
+                    $check_data = ['campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'faculty_name' => $request->faculty_name,
+                        'designation_id' => $designation_id,
+                        'total_courses' => $request->total_courses,
+                        'year_t' => $request->year_t];
+                    $check = WorkLoad::where($check_data)->exists();
+
+                    if (!$check) {   
                         WorkLoad::create([
                             'campus_id' => Auth::user()->campus_id,
                             'department_id' => Auth::user()->department_id,
@@ -189,33 +191,62 @@ class WorkLoadController extends Controller
                             'type' => 'SAR',
                             'created_by' => Auth::user()->id
                         ]);
+                    }else {
+                        return response()->json(['error' => 'Faculty WorkLoad already exists.'], 422);
                     }
-                } else {
-                    return response()->json(['error' => 'Faculty WorkLoad already exists.'], 422);
-
-                }
+                } 
                 if ($request->faculty_name_1) {
                     list($designation_id, $response) = Designation::getOrCreate($request->designation_1, $request->other_designation_1);
                     if($response){
                         return $response;
                     }
-                    WorkLoad::create(
-                        [
-                            'campus_id' => Auth::user()->campus_id,
-                            'department_id' => Auth::user()->department_id,
-                            'faculty_name' => $request->faculty_name_1,
-                            'designation_id' => $designation_id,
-                            'total_courses' => $request->total_courses_1,
-                            'phd' => $request->phd_1,
-                            'masters' => $request->masters_1,
-                            'bachleors' => $request->bachleors_1,
-                            'admin_responsibilities' => $request->admin_responsibilities_1,
-                            'year_t' => $request->year_t_1,
-                            'isCompleted' => 'yes',
-                            'type' => $type,
-                            'created_by' => Auth::user()->id
-                        ]
-                    );
+                    $check_data = ['campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'faculty_name' => $request->faculty_name_1,
+                        'designation_id' => $designation_id,
+                        'total_courses' => $request->total_courses_1,
+                        'year_t' => $request->year_t_1];
+                    $check = WorkLoad::where($check_data)->exists();
+
+                    if (!$check) {
+                        WorkLoad::create(
+                            [
+                                'campus_id' => Auth::user()->campus_id,
+                                'department_id' => Auth::user()->department_id,
+                                'faculty_name' => $request->faculty_name_1,
+                                'designation_id' => $designation_id,
+                                'total_courses' => $request->total_courses_1,
+                                'phd' => $request->phd_1,
+                                'masters' => $request->masters_1,
+                                'bachleors' => $request->bachleors_1,
+                                'admin_responsibilities' => $request->admin_responsibilities_1,
+                                'year_t' => $request->year_t_1,
+                                'isCompleted' => 'yes',
+                                'type' => $type,
+                                'created_by' => Auth::user()->id
+                            ]
+                        );
+                        WorkLoad::create(
+                            [
+                                'campus_id' => Auth::user()->campus_id,
+                                'department_id' => Auth::user()->department_id,
+                                'faculty_name' => $request->faculty_name_1,
+                                'designation_id' => $designation_id,
+                                'total_courses' => $request->total_courses_1,
+                                'phd' => $request->phd_1,
+                                'masters' => $request->masters_1,
+                                'bachleors' => $request->bachleors_1,
+                                'admin_responsibilities' => $request->admin_responsibilities_1,
+                                'year_t' => $request->year_t_1,
+                                'isCompleted' => 'yes',
+                                'type' => 'SAR',
+                                'created_by' => Auth::user()->id
+                            ]
+                        );
+                    }else{
+                        return response()->json(['error' => 'Faculty WorkLoad already exists.'], 422);
+                    }
+
                 }
             }
 //}

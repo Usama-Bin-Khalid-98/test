@@ -269,7 +269,7 @@
                                     <td>{{$req->campus->business_school->name}}</td>
                                     <td>{{$req->campus->location}}</td>
                                     <td>{{$req->faculty_name}}</td>
-                                    <td>{{$req->designation->name}}</td>
+                                    <td>{{@$req->designation->name}}</td>
                                     <td>{{$req->total_courses}}</td>
                                     <td>{{$req->phd}}</td>
                                     <td>{{$req->masters}}</td>
@@ -277,7 +277,7 @@
                                     <td>{{$req->admin_responsibilities}}</td>
                                     <td>{{$req->year_t}}</td>
                                     <td><i class="badge {{$req->status == 'active'?'bg-green':'bg-red'}}">{{$req->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$req->id}}","faculty_name":"{{$req->faculty_name}}","designation":"{{$req->designation->id}}","designation_name":"{{$req->designation->name}}","designation_default":{{$req->designation->is_default}},"total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year_t":"{{$req->year_t}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{@$req->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{@$req->id}}","faculty_name":"{{$req->faculty_name}}","designation":"{{@$req->designation->id}}","designation_name":"{{@$req->designation->name}}","designation_default":{{@$req->designation->is_default}},"total_courses":"{{$req->total_courses}}","phd":"{{$req->phd}}","masters":"{{$req->masters}}","bachleors":"{{$req->bachleors}}","admin_responsibilities":"{{$req->admin_responsibilities}}","year_t":"{{$req->year_t}}","total_enrollments":"{{$req->total_enrollments}}","status":"{{$req->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach

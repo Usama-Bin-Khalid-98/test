@@ -56,7 +56,7 @@ class PrintController extends Controller
 
         $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, campuses WHERE designations.id=contact_infos.designation_id AND contact_infos.type="SAR" AND contact_infos.campus_id=? AND contact_infos.campus_id=campuses.id', array($req->cid));
 
-        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($req->bid, $req->cid));
+        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($req->bid, $req->cid));
 
          $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
             FROM affiliations, statutory_bodies, business_schools
@@ -316,7 +316,7 @@ AND faculty_student_ratio.type=?',
 
         $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND contact_infos.type="SAR" AND contact_infos.campus_id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
 
-        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
          $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
             FROM affiliations, statutory_bodies, business_schools

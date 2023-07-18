@@ -144,7 +144,7 @@
                                     <td>{{$plan->plan_period}} <br/>{{$plan->plan_period_from}} To {{$plan->plan_period_to}}</td>
                                     <td>{{$plan->aproval_date}}</td>
                                     <td>{{$plan->aproving_authority}}</td>
-                                    <td>@if($plan->file && $plan->file !='/') <a href="{{$plan->file}}" download="{{$plan->file}}"><i class="fa fa-file-word-o"></i> </a>@endif</td>
+                                    <td>@if($plan->file && $plan->file !='/') <a href="../{{$plan->file}}" download="{{$plan->file}}"><i class="fa fa-file-word-o"></i> </a>@endif</td>
                                     <td><i class="badge {{$plan->status == 'active'?'bg-green':'bg-red'}}">{{$plan->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "plan_period":"{{$plan->plan_period}}","plan_period_from" : "{{$plan->plan_period_from}}","plan_period_to" : "{{$plan->plan_period_to}}", "aproval_date":"{{$plan->aproval_date}}", "aproving_authority":"{{$plan->aproving_authority}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 

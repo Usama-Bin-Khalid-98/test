@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;color: red">Table 4.7. Training/workshops organized by core business faculty</caption>
+                                <caption style="text-align: center;color: red">Table 4.7. Number of Faculty Degree </caption>
                                 <thead>
                                     <th>No</th>
                                     <th>No. of faculty with terminal degree (foreign institutions)</th>

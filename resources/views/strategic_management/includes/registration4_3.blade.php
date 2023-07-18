@@ -30,7 +30,7 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                         @endforeach
                                     </tr>
                                     @php
-                                        $totalFTE1=$totalFTE2=$counter=$totalPrograms=0;
+                                        $totalProgramFTE = [];
                                         $arr = [];
                                     @endphp
                                     @foreach($facultyTeachingCourses as $data)
@@ -60,22 +60,23 @@ Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)
                                                     $arr[$programRow->program->name] = [round($programRow->tc_program/$data->max_cources_allowed, 2)];   
                                                 }
                                             }
-                                            $totalFTE2+=$programRow->tc_program/$data->max_cources_allowed;
-                                            $totalPrograms+=$data->max_cources_allowed;
                                         @endphp
                                         @endforeach
                                     </tr>
 
                                     <tr>
                                         <td colspan="5">Total FTE</td>
-                                        @foreach($arr as $program_total)
+                                        @foreach($arr as $key=>$program_total)
                                             <td>Program Total: {{array_sum($program_total)}}</td>
+                                            @php
+                                            $totalProgramFTE[$key] = array_sum($program_total);
+                                            @endphp
                                         @endforeach
                                     </tr>
 
                                    @php
 
-                                   View::share('VFE', $totalFTE2);
+                                   View::share('FTE', $totalProgramFTE);
                                    @endphp
 
 

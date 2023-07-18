@@ -56,41 +56,41 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">Year</label>
-                                            <input type="text" readonly name="year[]"  id="year" class="form-control" value="{{@$year}}">
+                                            <input type="text" readonly name="year[]"  id="year-{{@$year}}" class="form-control year-field" value="{{@$year}}">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">Total faculty</label>
-                                            <input type="number" name="total_faculty[]" id="total_faculty" class="form-control">
+                                            <input type="number" name="total_faculty[]" id="total_faculty-{{@$year}}" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">Resigned</label>
-                                            <input type="number" name="resigned[]" id="resigned" class="form-control">
+                                            <input type="number" name="resigned[]" id="resigned-{{@$year}}" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">Retired</label>
-                                            <input type="number" name="retired[]" id="retired" class="form-control">
+                                            <input type="number" name="retired[]" id="retired-{{@$year}}" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">Terminated</label>
-                                            <input type="number" name="terminated[]" id="terminated" class="form-control">
+                                            <input type="number" name="terminated[]" id="terminated-{{@$year}}" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">New induction</label>
-                                            <input type="number" name="new_induction[]" id="new_induction" class="form-control">
+                                            <input type="number" name="new_induction[]" id="new_induction-{{@$year}}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -340,25 +340,39 @@
 
         let check = false;
          $('#form').submit(function (e) {
-            let total_faculty = $('#total_faculty').val();
-            let year = $('#year').val();
-            let resigned = $('#resigned').val();
-            let retired = $('#retired').val();
-            let terminated = $('#terminated').val();
-            let new_induction = $('#new_induction').val();
+            let fields = ['resigned','retired','terminated','new_induction'];
+            let hasEmptyField = false;
+            let isEmptyForm = true;
 
+            $('.year-field').map(function(){
+                let year = this.id.split('-')[1];
+                if ($('#total_faculty-' + year).val()){
+                    isEmptyForm = false;
+                    fields.forEach(function(value, index){
+                        let field_id = value + '-' + year;
+                        if($('#' + field_id).val()){
+                            removeClass(field_id);
+                        }else{
+                            addClass(field_id);
+                            hasEmptyField = true;
+                        }
+                    })
+                }else{
+                    fields.forEach(function(value, index){
+                        let field_id = value + '-' + year;
+                        removeClass(field_id);
+                    })
+                }
+            })
 
-            !total_faculty?addClass('total_faculty'):removeClass('total_faculty');
-            !year?addClass('year'):removeClass('year');
-            !resigned?addClass('resigned'):removeClass('resigned');
-            !retired?addClass('retired'):removeClass('retired');
-            !terminated?addClass('terminated'):removeClass('terminated');
-            !new_induction?addClass('new_induction'):removeClass('new_induction');
-
-            if(!total_faculty || !year || !resigned || !retired || !terminated || !new_induction)
+            if(hasEmptyField)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
+            }
+            if(isEmptyForm){
+                Notiflix.Notify.Warning("Please fill data of at least 1 year");
+                return
             }
             // Yes button callback
             e.preventDefault();
