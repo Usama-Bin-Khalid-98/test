@@ -185,7 +185,7 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+            list($designation_id, $error) = Designation::getOrCreate($request->designation_id, $request->other_designation);
             if($error){
                 return $error;
             }

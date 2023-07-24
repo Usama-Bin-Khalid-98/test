@@ -83,7 +83,7 @@
 
                                          <td class="fontsize">
                                              <input type="text" name="name[]" placeholder="name" id="name_{{@$body->id}}" class="form-control" style="margin-bottom: 5px !important;">
-                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2  designations" style="width: 100%;">
+                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2 designations" style="width: 100%;">
                                                 <option value="">Select Designation</option>
                                                 @foreach($designations as $designation)
                                                 <option value="{{$designation->id}}">{{$designation->name }}</option>
@@ -412,7 +412,10 @@
         })
     </script>
     <script type="text/javascript">
-        $(".designations").on('change', function (e) {
+        var designations = '<?php echo $designations; ?>'
+        designations = JSON.parse(designations);
+        var row_count = '<?php echo $bodies->count(); ?>'
+        $(document).on('change', ".designations", function (e) {
             if(this.options[this.selectedIndex].text == 'Other'){
                 $("#other_" + this.id).removeClass('hide');
             }else{
@@ -420,7 +423,7 @@
             }
         })
         window.onload = function () {
-            for(let i = 1; i <= 8; i++){
+            for(let i = 1; i <= row_count; i++){
                 if($('#designation_id_' + i + ' option:selected').text() == 'Other')
                     $("#other_designation_id_" + i).removeClass('hide');
             }
@@ -447,22 +450,28 @@
     //     $('#date_fourth_meeting').datepicker({
     //   autoclose:true
     // });
-    var row = 7;
-    var designations = '<?php echo $designations; ?>'
-    designations = JSON.parse(designations);
+
     $(".btn-add-more-rows").on('click', function (e) {
         e.preventDefault();
-        row++;
+        row_count++;
+        var designation_raw_options = '';
+        for (var i = 0; i < designations.length; i++){
+            designation_raw_options += `<option value="` + designations[i].id + `">` + designations[i].name + `</option>`
+        }
+        
         var data = `
         <tr>
             <td class="fontsize">
                 Any Other
-                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_`+row+`" value="7">
+                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_`+row_count+`" value="7">
             </td>
 
             <td class="fontsize">
-                <input type="text" name="name[]" placeholder="name" id="name_`+row+`" class="form-control" style="margin-bottom: 5px !important;">
-                <input type="text" name="designation[]" id="designation_`+row+`" placeholder="Designation" class="form-control">
+                <input type="text" name="name[]" placeholder="name" id="name_` + row_count + `" class="form-control" style="margin-bottom: 5px !important;">
+                <select name="designation_id[]" id="designation_id_` + row_count + `" class="form-control select2 designations" style="width: 100%;">
+                                                <option value="">Select Designation</option>` + designation_raw_options + `
+                                            </select>
+                <input type="text" name="other_designation[]" id="other_designation_id_` + row_count + `" placeholder="Designation" class="form-control hide">
             </td>
             <td>
                 <div class="input-group">
@@ -496,7 +505,7 @@
                     <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
-            <td style="font-size: 8px"><input type="file" name="file`+row+`"></td>
+            <td style="font-size: 8px"><input type="file" name="file`+row_count+`"></td>
         </tr>
         `
         $(data).insertBefore("#add-more-row");
