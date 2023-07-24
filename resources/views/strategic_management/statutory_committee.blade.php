@@ -96,7 +96,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_first_meeting_{{@$body->id}}" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -104,7 +104,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_second_meeting_{{@$body->id}}" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -112,7 +112,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_third_meeting_{{@$body->id}}" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -120,7 +120,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_fourth_meeting_{{@$body->id}}" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}"></td>
@@ -584,6 +584,41 @@
         let check = false;
         /*Add Scope*/
         $('#add').submit(function (e) {
+            let hasEmptyField = false;
+            let isEmptyForm = true;
+            let fields = ['designation_id', 'other_designation_id', 'date_first_meeting', 'date_second_meeting', 'date_third_meeting', 'date_fourth_meeting'];
+            $('.designations').map(function(index, element){
+                let statutory_body_id = element.id.split('_').pop();
+                let name = $('#name_'+statutory_body_id).val();
+                if (name){
+                    isEmptyForm = false;
+                    fields.forEach(function(value, index){
+                        let field_id = value + '_' + statutory_body_id;
+                        if ($('#' + field_id).val()){
+                            removeClass(field_id);
+                        }else{
+                            addClass(field_id);
+                            hasEmptyField = true;
+                        }
+                    })
+                }else{
+                    fields.forEach(function(value, index){
+                        let field_id = value + '-' + statutory_body_id;
+                        removeClass(field_id);
+                    })
+                }
+
+            })
+            if(hasEmptyField)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            if(isEmptyForm){
+                Notiflix.Notify.Warning("Please fill data of at least 1 statutory body");
+                return
+            }
+
             // let statutory_body_id = $('#statutory_body_id').val();
             // let name = $('#name').val();
             // let designation_id = $('#designation_id').val();
