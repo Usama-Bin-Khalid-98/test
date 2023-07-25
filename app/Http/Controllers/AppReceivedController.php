@@ -90,11 +90,11 @@ class AppReceivedController extends Controller
                 ]);
             }else{
 
-            return response()->json(['error' => 'Application Received already exists.'], 422);
+            return response()->json(['error' => 'Criteria already exists.'], 422);
 
             }
 
-            return response()->json(['success' => 'Application Received added successfully.']);
+            return response()->json(['success' => 'Criteria added successfully.']);
 
 
         }catch (Exception $e)
@@ -148,7 +148,7 @@ class AppReceivedController extends Controller
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
-            return response()->json(['success' => 'Application Received updated successfully.']);
+            return response()->json(['success' => 'Criteria updated successfully.']);
 
         }catch (Exception $e)
         {
