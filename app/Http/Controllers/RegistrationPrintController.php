@@ -11,6 +11,7 @@ use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\StrategicManagement\ContactInfo;
 use App\Models\StrategicManagement\Scope;
 use App\Models\Facility\BusinessSchoolFacility;
+use App\Models\Faculty\FacultySummary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -161,7 +162,23 @@ WHERE designations.id=contact_infos.designation_id
              $studentsGenders = DB::select('SELECT student_genders.*, programs.name as programName from student_genders, programs, campuses WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG" AND student_genders.program_id=programs.id AND student_genders.campus_id=?', array($req->cid));
 
 
-             $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
+             $faculty_summaries = FacultySummary::with('campus','faculty_qualification','discipline')
+                ->where(['campus_id' => $req->cid, 'department_id' => $req->did, 'type' => 'REG'])
+                ->orderBy('faculty_qualification_id')
+                ->orderBy('discipline_id')
+                ->get();
+
+             $faculty_qualifications = [];
+             $faculty_disciplines= [];
+             foreach($faculty_summaries as $summary){
+                if(!in_array($summary->discipline->name, $faculty_disciplines)){
+                    $faculty_disciplines[] = $summary->discipline->name;
+                }
+                if(!in_array($summary->faculty_qualification->name, $faculty_qualifications)){
+                    $faculty_qualifications[] = $summary->faculty_qualification->name;
+                }
+             }
+
              $now = Carbon::now();
 
             $currMonth = $now->month;
@@ -481,7 +498,24 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
   AND student_genders.department_id=?', array($campus_id, $department_id));
 
 
-             $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
+             $faculty_summaries = FacultySummary::with('campus','faculty_qualification','discipline')
+                ->where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type' => 'REG'])
+                ->orderBy('faculty_qualification_id')
+                ->orderBy('discipline_id')
+                ->get();
+
+             $faculty_qualifications = [];
+             $faculty_disciplines= [];
+             foreach($faculty_summaries as $summary){
+                if(!in_array($summary->discipline->name, $faculty_disciplines)){
+                    $faculty_disciplines[] = $summary->discipline->name;
+                }
+                if(array_key_exists($summary->faculty_qualification->name, $faculty_qualifications)){
+                    $faculty_qualifications[$summary->faculty_qualification->name][] = $summary->number_faculty;
+                }else{
+                    $faculty_qualifications[$summary->faculty_qualification->name] = [$summary->number_faculty];
+                }
+             }
              $now = Carbon::now();
 
             $currMonth = $now->month;
@@ -676,10 +710,10 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
             'app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation',
             'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans',
             'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents',
-            'studentsGenders','facultySummary','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses',
+            'studentsGenders','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses',
             'studentTeachersRatio','facultyStability',
             'facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData',
-            'programsUnderReview','mission','ratios', 'byProgramFTE', 'byProgramVFE','facultyDegree'));
+            'programsUnderReview','mission','ratios', 'byProgramFTE', 'byProgramVFE','facultyDegree','faculty_qualifications','faculty_disciplines'));
 
         // return view('strategic_management.registration_application', compact(
         //     'app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation',
