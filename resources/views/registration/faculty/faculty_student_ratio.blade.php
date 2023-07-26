@@ -122,7 +122,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">4.4 student to teacher ratio for last year of each program under review in Table 4.4.</h3>
+                            <h3 class="box-title">4.4 Student to teacher ratio</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
