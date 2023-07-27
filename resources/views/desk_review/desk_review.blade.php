@@ -467,8 +467,8 @@
                                     @hasrole('NBEACAdmin')<td><i class="badge {{@$review->regStatus == 'Review'?'bg-green':'bg-red'}}">{{$review->regStatus?$review->regStatus:'Inactive'}}</i></td>@endhasrole
                                     @hasrole('NBEACAdmin')
                                     <td>
-                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i>|
-                                        <i data-id='{"id":{{$review->id}}}' class="fa fa-pencil text-blue edit"></i>
+                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i>
+                                        <!-- |<i data-id='{"id":{{$review->id}}}' class="fa fa-pencil text-blue edit"></i> -->
                                     </td>
                                     @endhasrole
                                 </tr>

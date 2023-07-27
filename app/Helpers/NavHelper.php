@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Common\Slip;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
     if (!function_exists('checkIsCompleted')) {
 
@@ -124,6 +126,16 @@ use Illuminate\Support\Facades\Auth;
                 ->where('status', '<>', 'inactive')
                 ->where(['business_school_id' => Auth::user()->campus_id])
                 ->exists();
+        }
+    }
+    if(!function_exists('getDeskReviewCount')){
+
+        function getDeskReviewCount()
+        {
+            return $registrations = DB::table('slips as s')
+                ->join('users as u', 'u.id', '=', 's.created_by')
+                ->where('s.regStatus', 'Review')
+                ->count();
         }
     }
 ?>
