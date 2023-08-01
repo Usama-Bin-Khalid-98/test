@@ -611,9 +611,6 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="international hide">
-                                                        <input type="text" name="institute" id="institue" class="form-control">
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
