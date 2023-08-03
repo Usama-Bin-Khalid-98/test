@@ -564,10 +564,13 @@ class DeskReviewController extends Controller
             }
         }
 
-        $faculty_with_program = FacultyTeachingCources::with('faculty_program')->get();
+        $faculty_with_program = FacultyTeachingCources::with('faculty_program')
+            ->where(['campus_id' => $campus_id, 'department_id' => $department_id])
+            ->get();
         $fulltime = [];
         $parttime = [];
         foreach($faculty_with_program as $faculty_program){
+            
             foreach($faculty_program->faculty_program as $faculty){
                 if(!$faculty->program){
                     continue;
@@ -588,7 +591,7 @@ class DeskReviewController extends Controller
             }
         }
 
-        $other_faculty = FacultySummary::where(['type' => 'REG', 'discipline_id' => 5])->get()->sum('number_faculty');
+        $other_faculty = FacultySummary::where(['type' => 'REG', 'discipline_id' => 5, 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->sum('number_faculty');
         
         $facultyStability = DB::select('SELECT faculty_stability.*
                 FROM faculty_stability

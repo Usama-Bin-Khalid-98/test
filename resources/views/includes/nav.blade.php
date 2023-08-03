@@ -629,7 +629,7 @@ $invoice_id = getRegInvoiceId();
                         </span>
                     </span></a></li>
               @endif
-            <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}">4.2 Faculty Work Load T<span class="pull-right-container">
+            <li  class="{{ (request()->is('work-load')) ? 'active' : '' }}"><a href="{{url('work-load')}}">4.2 Faculty Work Load<span class="pull-right-container">
                         <span class="text text-{{$workload==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$workload==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>

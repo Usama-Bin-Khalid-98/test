@@ -466,7 +466,7 @@ $invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_sch
 
                             @foreach($memberShips as $user)
                                 <tr>
-                                    <td>{{$user->business_school->name}}</td>
+                                    <td>{{@$user->business_school->name}}</td>
                                     <td>{{$user->campus->location??'Main Campus'}}</td>
                                     <td>{{@$user->department->name}}</td>
                                     <td>{{$user->name}}</td>

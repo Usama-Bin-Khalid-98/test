@@ -586,7 +586,7 @@
         $('#add').submit(function (e) {
             let hasEmptyField = false;
             let isEmptyForm = true;
-            let fields = ['designation_id', 'other_designation_id', 'date_first_meeting', 'date_second_meeting', 'date_third_meeting', 'date_fourth_meeting'];
+            let fields = ['designation_id', 'date_first_meeting', 'date_second_meeting', 'date_third_meeting', 'date_fourth_meeting'];
             $('.designations').map(function(index, element){
                 let statutory_body_id = element.id.split('_').pop();
                 let name = $('#name_'+statutory_body_id).val();

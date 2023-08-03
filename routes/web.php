@@ -45,6 +45,7 @@ Route::get('/email', function() {
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
         ////// Users permissions
         //Route::get('permission', 'Auth\UserController@permissions');
+        Route::get('profile', 'Auth\UserController@profile');
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
             ///// Dashboard
             Route::patch('admin/{id}', 'DashboardController@schoolStatus');
