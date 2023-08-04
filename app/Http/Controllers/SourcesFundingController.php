@@ -64,6 +64,10 @@ class SourcesFundingController extends Controller
         }
         try {
             $userInfo = Auth::user();
+            $alreadyExists = SourcesFunding::where(['campus_id'=>$userInfo->campus_id, 'department_id'=> $userInfo->department_id])->exists();
+            if($alreadyExists){
+                return response()->json(['error' => 'Funding sources already exist'], 422);
+            }
             $slip = Slip::where(['business_school_id'=>$userInfo->campus_id,'department_id'=> $userInfo->department_id, 'regStatus'=>'SAR'])->first();
             if($slip){
                 $type='SAR';
@@ -71,16 +75,18 @@ class SourcesFundingController extends Controller
                 $type = 'REG';
             }
 
-            SourcesFunding::create([
-                'campus_id' => $userInfo->campus_id,
-                'department_id' => $userInfo->department_id,
-                'funding_sources_id' => $request->funding_sources_id,
-                'amount' => $request->amount,
-                'percent_share' => $request->percent_share,
-                'type' => $type,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+            foreach($request->funding_id as $index => $funding_id){
+                SourcesFunding::create([
+                    'campus_id' => $userInfo->campus_id,
+                    'department_id' => $userInfo->department_id,
+                    'funding_sources_id' => $funding_id,
+                    'amount' => $request->amount[$index],
+                    'percent_share' => $request->percent_share[$index],
+                    'type' => $type,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
+                ]);
+            }
 
             return response()->json(['success' => 'Sources of Funding added successfully.']);
 
@@ -131,7 +137,7 @@ class SourcesFundingController extends Controller
         try {
 
             SourcesFunding::where('id', $sourcesFunding->id)->update([
-                'funding_sources_id' => $request->funding_sources_id,
+                'funding_sources_id' => $request->funding_id,
                 'amount' => $request->amount,
                 'percent_share' => $request->percent_share,
                 'status' => $request->status,
@@ -167,7 +173,7 @@ class SourcesFundingController extends Controller
 
     protected function rules() {
         return [
-            'funding_sources_id' => 'required',
+            'funding_id' => 'required',
             'amount' => 'required',
             'percent_share' => 'required'
         ];
