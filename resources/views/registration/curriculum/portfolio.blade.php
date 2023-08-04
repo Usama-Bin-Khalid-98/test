@@ -162,7 +162,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">@if(@!$isSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title">@if(@!$isSAR)2.1.Programs Portfolio @else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

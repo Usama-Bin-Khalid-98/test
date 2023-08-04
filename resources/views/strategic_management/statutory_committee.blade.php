@@ -83,7 +83,7 @@
 
                                          <td class="fontsize">
                                              <input type="text" name="name[]" placeholder="name" id="name_{{@$body->id}}" class="form-control" style="margin-bottom: 5px !important;">
-                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2  designations" style="width: 100%;">
+                                             <select name="designation_id[]" id="designation_id_{{@$body->id}}" class="form-control select2 designations" style="width: 100%;">
                                                 <option value="">Select Designation</option>
                                                 @foreach($designations as $designation)
                                                 <option value="{{$designation->id}}">{{$designation->name }}</option>
@@ -96,7 +96,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_first_meeting_{{@$body->id}}" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -104,7 +104,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_second_meeting_{{@$body->id}}" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -112,7 +112,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_third_meeting_{{@$body->id}}" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -120,7 +120,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_fourth_meeting_{{@$body->id}}" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}"></td>
@@ -412,7 +412,10 @@
         })
     </script>
     <script type="text/javascript">
-        $(".designations").on('change', function (e) {
+        var designations = '<?php echo $designations; ?>'
+        designations = JSON.parse(designations);
+        var row_count = '<?php echo $bodies->count(); ?>'
+        $(document).on('change', ".designations", function (e) {
             if(this.options[this.selectedIndex].text == 'Other'){
                 $("#other_" + this.id).removeClass('hide');
             }else{
@@ -420,7 +423,7 @@
             }
         })
         window.onload = function () {
-            for(let i = 1; i <= 8; i++){
+            for(let i = 1; i <= row_count; i++){
                 if($('#designation_id_' + i + ' option:selected').text() == 'Other')
                     $("#other_designation_id_" + i).removeClass('hide');
             }
@@ -447,22 +450,28 @@
     //     $('#date_fourth_meeting').datepicker({
     //   autoclose:true
     // });
-    var row = 7;
-    var designations = '<?php echo $designations; ?>'
-    designations = JSON.parse(designations);
+
     $(".btn-add-more-rows").on('click', function (e) {
         e.preventDefault();
-        row++;
+        row_count++;
+        var designation_raw_options = '';
+        for (var i = 0; i < designations.length; i++){
+            designation_raw_options += `<option value="` + designations[i].id + `">` + designations[i].name + `</option>`
+        }
+        
         var data = `
         <tr>
             <td class="fontsize">
                 Any Other
-                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_`+row+`" value="7">
+                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_`+row_count+`" value="7">
             </td>
 
             <td class="fontsize">
-                <input type="text" name="name[]" placeholder="name" id="name_`+row+`" class="form-control" style="margin-bottom: 5px !important;">
-                <input type="text" name="designation[]" id="designation_`+row+`" placeholder="Designation" class="form-control">
+                <input type="text" name="name[]" placeholder="name" id="name_` + row_count + `" class="form-control" style="margin-bottom: 5px !important;">
+                <select name="designation_id[]" id="designation_id_` + row_count + `" class="form-control select2 designations" style="width: 100%;">
+                                                <option value="">Select Designation</option>` + designation_raw_options + `
+                                            </select>
+                <input type="text" name="other_designation[]" id="other_designation_id_` + row_count + `" placeholder="Designation" class="form-control hide">
             </td>
             <td>
                 <div class="input-group">
@@ -496,7 +505,7 @@
                     <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
-            <td style="font-size: 8px"><input type="file" name="file`+row+`"></td>
+            <td style="font-size: 8px"><input type="file" name="file`+row_count+`"></td>
         </tr>
         `
         $(data).insertBefore("#add-more-row");
@@ -575,6 +584,41 @@
         let check = false;
         /*Add Scope*/
         $('#add').submit(function (e) {
+            let hasEmptyField = false;
+            let isEmptyForm = true;
+            let fields = ['designation_id', 'other_designation_id', 'date_first_meeting', 'date_second_meeting', 'date_third_meeting', 'date_fourth_meeting'];
+            $('.designations').map(function(index, element){
+                let statutory_body_id = element.id.split('_').pop();
+                let name = $('#name_'+statutory_body_id).val();
+                if (name){
+                    isEmptyForm = false;
+                    fields.forEach(function(value, index){
+                        let field_id = value + '_' + statutory_body_id;
+                        if ($('#' + field_id).val()){
+                            removeClass(field_id);
+                        }else{
+                            addClass(field_id);
+                            hasEmptyField = true;
+                        }
+                    })
+                }else{
+                    fields.forEach(function(value, index){
+                        let field_id = value + '-' + statutory_body_id;
+                        removeClass(field_id);
+                    })
+                }
+
+            })
+            if(hasEmptyField)
+            {
+                Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            if(isEmptyForm){
+                Notiflix.Notify.Warning("Please fill data of at least 1 statutory body");
+                return
+            }
+
             // let statutory_body_id = $('#statutory_body_id').val();
             // let name = $('#name').val();
             // let designation_id = $('#designation_id').val();

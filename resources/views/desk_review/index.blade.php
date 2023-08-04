@@ -105,7 +105,7 @@
                                     <th>Files</th>
                                     <th>Desk Review</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                                 </thead>
 
@@ -123,7 +123,7 @@
                                         <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Click to Review</a></td>
                                         {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                         <td><i style="cursor: default" class="badge {{$regist->regStatus == 'Review'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'created'}}</i></td>
-                                        <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
+                                        <!-- <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
                                     </tr>
 
                                 @endforeach
@@ -137,10 +137,10 @@
                                     <th>Contact Person Name</th>
                                     <th>Contact</th>
                                     <th>Email</th>
-                                    {{--                                <th>Invoice Slip</th>--}}
+                                    <th>Files</th>
                                     <th>Desk Review</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                                 </tfoot>
                             </table>

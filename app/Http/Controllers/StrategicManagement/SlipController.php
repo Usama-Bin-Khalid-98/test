@@ -496,7 +496,7 @@ class SlipController extends Controller
 //            ]);
             if($updateSlip) {
                 $mailData['school']= $school;
-                $mailData['slip']= $data;
+                $mailData['slip'] = Slip::where('id', $request->id)->first();
 
                 $getNbeacInfo = NbeacBasicInfo::all()->first();
 
@@ -504,14 +504,17 @@ class SlipController extends Controller
 
 //                dd($data['school']);
                 $mailInfo = [
-                    'to' => $school->user->email??'',
-                    'to_name' => $school->user->name??'',
+                    'from' => $school->user->email??'',
+                    'from_name' => $school->user->name??'',
                     'school' => $school->name??'',
-                    'from' => $getNbeacInfo->email??'info@nbeac.org.pk',
-                    'from_name' => $getNbeacInfo->director??'',
+                    'to' => $getNbeacInfo->email??'info@nbeac.org.pk',
+                    'to_name' => $getNbeacInfo->director??'',
                 ];
 
-                
+                Mail::send('registration.mail.registration_invoice_admin_mail', ['data' => $mailData], function ($message) use ($mailInfo){
+                    $message->to($mailInfo['to'], $mailInfo['to_name'])->subject('Registration Fee Paid');
+                    $message->from($mailInfo['from'], $mailInfo['from_name']);
+                });
                 // Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
                 //     //dd($user);
                 //     $message->to($mailInfo['to'],$mailInfo['to_name'] )

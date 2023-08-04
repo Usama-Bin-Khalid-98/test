@@ -325,7 +325,7 @@
                 $('input[name=status]').iCheck('check');
             }
             $('#cheque_no').text(data.cheque_no);
-            $('#comments').val(data.comments);
+            $('#comments').text(data.comments);
         })
 
         /*Add Scope*/

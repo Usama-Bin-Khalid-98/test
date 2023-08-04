@@ -15,7 +15,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Application Received
+                Applications Received
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -193,6 +193,7 @@
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
                                     <th>Year</th>
+                                    <th>Semester</th>
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>

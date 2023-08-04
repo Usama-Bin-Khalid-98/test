@@ -229,7 +229,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+        let check = false;
          <?php if(@$get->id==null){ ?>
 
          $('#form').submit(function (e) {
@@ -269,6 +269,7 @@
                 },
                 // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
+                    check = true;
                     Notiflix.Loading.Remove();
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
@@ -319,6 +320,7 @@
                 },
                 // You can add a message if you wish so, in String formatNotiflix.Loading.Pulse('Processing...');
                 success: function (response) {
+                    check = true;
                     Notiflix.Loading.Remove();
                     console.log("success resp ",response.success);
                     if(response.success){
@@ -340,7 +342,11 @@
 <?php } ?>
 
         $('.update').on('click', function (){
-            window.location = '/strategic/strategic-plan';
+            setTimeout(()=>{
+                if(check){
+                    window.location = '/strategic/strategic-plan';
+                }
+            }, 1000)
         })
 
     </script>

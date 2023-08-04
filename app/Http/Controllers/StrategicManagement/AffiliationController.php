@@ -284,7 +284,7 @@ class AffiliationController extends Controller
                 "campus_id" => $affiliation->campus_id,
                 "department_id" => $affiliation->department_id,
                 "affiliation" => $affiliation->affiliation,
-                "designation_id" => $affiliation->designation,
+                "designation_id" => $affiliation->designation_id,
                 "statutory_bodies_id" => $affiliation->statutory_bodies_id,
             ])->delete();
             return response()->json(['success' => 'Record deleted successfully.']);

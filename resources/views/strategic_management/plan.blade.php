@@ -119,7 +119,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 1.7 Approval of Strategic Plan List</h3>
+                            <h3 class="box-title">Table 1.8 Approval of Strategic Plan List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

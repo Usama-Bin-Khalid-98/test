@@ -341,7 +341,7 @@ class WorkLoadController extends Controller
                     "campus_id" => $workLoad->campus_id,
                     "department_id" => $workLoad->department_id,
                     "faculty_name" => $workLoad->faculty_name,
-                    "designation" => $workLoad->designation,
+                    "designation_id" => $workLoad->designation_id,
                     "total_courses" => $workLoad->total_courses,
                     "phd" => $workLoad->phd,
                     "masters" => $workLoad->masters,

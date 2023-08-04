@@ -4,135 +4,45 @@
                                 <caption style="text-align: center;color: red">Table 4.1. Summary of business schools’ faculty</caption>
                                 <thead>
                                     <th></th>
-                                    <th>Business administration</th>
-                                    <th>Public administration</th>
-                                    <th>Management sciences</th>
-                                    <th>Commerce/Economics</th>
-                                    <th>Others</th>
+                                    @foreach($faculty_disciplines as $discipline)
+                                    <th>{{$discipline}}</th>
+                                    @endforeach
                                     <th>Total</th>
-
                                 </thead>
-                                <tbody>
-                                    <?php
-//                                    echo "<pre>";
-//                                    print_r($facultySummary); echo "<pre>";
-//                                    exit;
-//                                        dd($facultySummary);
-                                    $total=$totalPA=$totalMS=$totalCE=$totalO=0;
-                                    for ($i=0; $i <count($facultySummary[0]) ; $i++) {
-                                                                            ?>
-
+                                @php
+                                    $discipline_total = [];
+                                    $grand_total = 0
+                                @endphp
+                                <body>
+                                    @foreach($faculty_qualifications as $qualification=>$faculty_counts)
+                                    @php
+                                        $qualification_total = 0;
+                                    @endphp
                                     <tr>
-                                        <td><?php print_r($facultySummary[0][$i]->name);?></td>
-                                        <td>
-                                            @php
-                                            if(\Illuminate\Support\Facades\Auth::user()->user_type=='BusinessSchool')
-                                            {
-                                                $campus_id = auth()->user()->campus_id;
+                                    <td>{{$qualification}}</td>
+                                        @foreach($faculty_counts as $faculty_count)
+                                        <td>{{$faculty_count}}</td>
+                                        @php
+                                            if(count($discipline_total) == $loop->index){
+                                                $discipline_total[] = $faculty_count;
                                             }else{
-                                                $campus_id =request()->get('cid');
+                                                $discipline_total[$loop->index] += $faculty_count;
                                             }
-    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,$facultySummary[0],$campus_id, 'REG');
-   @endphp
-   <?php
-//    dd($facSum);
-   $v_total= 0;
-    for($j=0;$j<count($facSum);$j++) {
-        $v_total += $facSum[$j]->number_faculty;
-        if($facSum[$j]->disciplineName=='Business Administration'){
-//        echo $j;
-            echo $facSum[$j]->number_faculty;
-            $total +=$facSum[$j]->number_faculty;
-        }
-    }
-//    dd($v_total)
-   ?>
-                                        </td>
-                                        <td>
-                                          <?php
-
-    for($k=0;$k<count($facSum);$k++) {
-        //print_r($facSum[$j]->disciplineName);
-
-        if($facSum[$k]->disciplineName=='Public Administration'){
-            echo $facSum[$k]->number_faculty;
-            $totalPA +=$facSum[$k]->number_faculty;
-        }
-
-
-    }
-   ?>
-                                        </td>
-                                        <td>
-                                            <?php
-
-    for($l=0;$l<count($facSum);$l++) {
-        //print_r($facSum[$j]->disciplineName);
-
-        if($facSum[$l]->disciplineName=='Management Sciences'){
-            echo $facSum[$l]->number_faculty;
-            $totalMS +=$facSum[$l]->number_faculty;
-        }
-
-
-    }
-   ?>
-                                        </td>
-                                        <td>
-                                               <?php
-
-    for($m=0;$m<count($facSum);$m++) {
-        //print_r($facSum[$j]->disciplineName);
-
-        if($facSum[$m]->disciplineName=='Commerce/Economics'){
-            echo $facSum[$m]->number_faculty;
-            $totalCE +=$facSum[$m]->number_faculty;
-        }
-
-
-    }
-   ?>
-                                        </td>
-                                        <td>
-                                              <?php
-
-    for($n=0;$n<count($facSum);$n++) {
-        //print_r($facSum[$j]->disciplineName);
-
-        if($facSum[$n]->disciplineName=='Other'){
-            echo $facSum[$n]->number_faculty;
-            $totalO +=$facSum[$n]->number_faculty;
-        }
-
-
-    }
-   ?>
-                                        </td>
-                                        <td><?php
-//                                            dd($total+$totalPA+$totalMS+$totalCE+$totalO);
-                                            echo $v_total;
-                                        ?></td>
-
+                                            $qualification_total += $faculty_count;
+                                            $grand_total += $faculty_count;
+                                        @endphp
+                                        @endforeach
+                                        <td style="font-weight: bold;">{{$qualification_total}}</td>
                                     </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                    <tr style="background-color: grey;color: white;">
-                                        <td style="font-weight: bold;">Total</td>
-                                        <td style="font-weight: bold;">{{$total}}</td>
-                                        <td style="font-weight: bold;">{{$totalPA}}</td>
-                                        <td style="font-weight: bold;">{{$totalMS}}</td>
-                                        <td style="font-weight: bold;">{{$totalCE}}</td>
-                                        <td style="font-weight: bold;">{{$totalO}}</td>
-                                        <td style="font-weight: bold;">{{$total+$totalPA+$totalMS+$totalCE+$totalO}}</td>
+                                    @endforeach
+                                    <tr>
+                                        <td style="background-color: grey;color: white;">Total</td>
+                                        @foreach($discipline_total as $total)
+                                            <td style="font-weight: bold;">{{$total}}</td>
+                                        @endforeach
+                                        <td style="font-weight: bold;">{{$grand_total}}</td>
                                     </tr>
-
-
-
-                                </tbody>
+                                </body>
                                 <tfoot></tfoot>
-
-
-
                             </table>
                         </div>

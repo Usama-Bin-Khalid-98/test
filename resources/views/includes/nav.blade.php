@@ -117,7 +117,7 @@ $faculty_workshop = isCompletedSAR('App\Models\Faculty\FacultyWorkshop', ['campu
 $faculty_detail= isCompletedSAR('App\Models\Faculty\FacultyDetailedInfo', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $isFiveRegistrations = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Eligibility']);
 $isFiveRegistrationsMentoring = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Mentoring']);
-$RegDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'Review']);
+$desk_review_count = getDeskReviewCount();
 $RegInvoice = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus' => 'Pending', 'status' => 'paid']);
 $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
 $invoice_id = getRegInvoiceId();
@@ -1052,9 +1052,9 @@ $invoice_id = getRegInvoiceId();
           @hasrole('NBEACAdmin')
           <li  class="{{ (request()->is('desk-review')) ? 'active' : '' }}">
               <a href="{{url('desk-review')}}"><i class="fa fa-search-plus text-blue " ></i>Registrations Desk Review
-                  @if(@$RegDesk != 0)
+                  @if(@$desk_review_count != 0)
                       <span class="pull-right-container">
-                        <i class="badge bg-maroon pull-right">{{@$RegDesk}}</i>
+                        <i class="badge bg-maroon pull-right">{{@$desk_review_count}}</i>
                       </span>
                   @endif
 
