@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangeResgistrationStatusMail;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Support\Facades\Log;
 
 class SlipController extends Controller
@@ -70,7 +71,16 @@ class SlipController extends Controller
             ->where('s.regStatus', '!=', 'Initiated')
             ->get();
         //dd($invoice_no);
-        return view('registration.index', compact('registrations'));
+        $programs = [];
+        foreach($registrations as $slip){
+
+            $scopes = Scope::with('program')->where(['campus_id' => $slip->campus_id, 'department_id' => $slip->department_id, 'type' => 'REG'])->get();
+            $programs[$slip->id] = [];
+            foreach($scopes as $scope){
+                array_push( $programs[$slip->id], @$scope->program->name);
+            }
+        }
+        return view('registration.index', compact('registrations', 'programs'));
     }
 
     public function invoicesList()

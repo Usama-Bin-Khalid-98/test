@@ -90,7 +90,17 @@ class DeskReviewController extends Controller
             ->get();
 //        dd($registrations);
 
-        return view('desk_review.index', compact('registrations'));
+        $programs = [];
+        foreach($registrations as $slip){
+
+            $scopes = Scope::with('program')->where(['campus_id' => $slip->business_school_id, 'department_id' => $slip->department_id, 'type' => 'REG'])->get();
+            $programs[$slip->id] = [];
+            foreach($scopes as $scope){
+                array_push( $programs[$slip->id], @$scope->program->name);
+            }
+        }
+
+        return view('desk_review.index', compact('registrations', 'programs'));
     }
 
 
@@ -942,7 +952,7 @@ class DeskReviewController extends Controller
 //            dd($StrategicPlan);
             $ParentInstitution = ParentInstitution::where($whereReg)->first()->file ?? '';
 //            dd($CourseOutline);
-            $appendixFiles = AppendixFile::where(['campus_id' => $cid])->first();
+            $appendixFiles = AppendixFile::where(['campus_id' => $cid, 'department_id' => $did])->first();
             return  view('desk_review.reg_files', compact('schoolInfo','ContactInfo', 'StateryCommittee',
                     'MissionVision',
                     'StrategicPlan',

@@ -315,6 +315,7 @@ Route::get('/email', function() {
 
         Route::group(['middleware' => ['role:Mentor|BusinessSchool']], function () {
             Route::post('mentorsAvailability', 'ScheduleMentorMeetingController@mentorsAvailability');
+            Route::get('reg-files/{cid}/{did}', 'DeskReviewController@reg_files');
         });
 
         Route::group(['middleware' => ['role:BusinessSchool|NBEACAdmin']], function () {

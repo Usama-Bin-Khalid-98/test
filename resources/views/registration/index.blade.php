@@ -63,6 +63,8 @@
                                 <th>Business School Name</th>
                                 <th>Campus</th>
                                 <th>Department</th>
+                                <th>Programs</th>
+                                <th>Registration Date</th>
                                 <th>Desk Review</th>
                                 <th>Registration Print</th>
                                 <th>SAR</th>
@@ -76,6 +78,12 @@
                                     <td>{{@$slip->school}}</td>
                                     <td>{{@$slip->campus??'Main Campus'}}</td>
                                     <td>{{@$slip->department}}</td>
+                                    <td>
+                                        @foreach(@$programs[@$slip->id] as $program)
+                                            {{$program}}<br> 
+                                        @endforeach
+                                    </td>
+                                    <td>{{@$slip->registration_date}}</td>
                                     @if($slip->regStatus != 'Pending')
                                     <td><a href="{{url('deskreview')}}/{{@$slip->id}}">Desk Review</a></td>
                                     @else
@@ -94,6 +102,8 @@
                                 <th>Business School Name</th>
                                 <th>Campus</th>
                                 <th>Department</th>
+                                <th>Programs</th>
+                                <th>Registrations</th>
                                 <th>Desk Review</th>
                                 <th>Registration Print</th>
                                 <th>SAR</th>

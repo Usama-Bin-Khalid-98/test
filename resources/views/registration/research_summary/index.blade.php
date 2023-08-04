@@ -179,7 +179,11 @@
                         <table class='jumbotron'>   
                             <tr> 
                             <td style="padding:15px;" ><label for="file">Appendix 5A</label>
-                            <input type="file" name="appendix_5A" id="file"></td>
+                            <input type="file" name="appendix_5A" id="file">
+                            @if(@$appendix_file->research_summary)
+                            <a href="{{$appendix_file->research_summary}}">Current File <i class="glyphicon glyphicon-file"></i></a>
+                            @endif
+                            </td>
                             <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
                             </tr>
                         </table>

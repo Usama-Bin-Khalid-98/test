@@ -186,7 +186,7 @@ class HomeController extends Controller
 //                ->groupBy('s.id')
 //                ->get();
 
-                $MentoringMeetings = MentoringMentor::with(['slip' ])
+                $MentoringMeetings = MentoringMentor::with(['slip',  ])
                   ->where(['user_id'=> Auth::id(), 'status'=> 'active'])
                     ->get();
             }

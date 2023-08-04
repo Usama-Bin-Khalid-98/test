@@ -230,7 +230,10 @@
                         <table class='jumbotron'  >   
                             <tr> 
                             <td style="padding:15px;" ><label for="file4A">Appendix 4A</label>
-                            <input type="file" name="appendix_4A" id="file4A"></td>
+                            <input type="file" name="appendix_4A" id="file4A">
+                            @if(@$appendix_file->workload_policy)
+                            <a href="{{$appendix_file->workload_policy}}">Current Policy <i class="glyphicon glyphicon-file"></i></a>
+                            @endif</td>
                             <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
                             </tr>
                         </table>
