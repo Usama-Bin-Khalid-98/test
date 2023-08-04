@@ -1,5 +1,7 @@
 @section('pageTitle', 'Strategic Plan')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -35,7 +37,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.8 Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1D. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
+                            <h3 class="box-title">1.8 Provide the approved strategic plan including critical success factors and key performance indicators of the business school as @if($isActiveSAR) Appendix-1E @else Appendix-1D @endif. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -95,7 +97,7 @@
 
                               <div class="col-md-3">
                                   <div class="form-group">
-                                      <label for="upload file">Upload file (appendix 1-D)</label>
+                                      <label for="upload file">Upload file (@if($isActiveSAR) Appendix-1E @else Appendix-1D @endif)</label>
                                       <input type="file" name="file" id="file">
                                   </div>
                               </div>

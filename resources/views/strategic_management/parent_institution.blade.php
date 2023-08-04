@@ -1,5 +1,7 @@
 @section('pageTitle', 'Organograms ')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -34,7 +36,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">1.9. Provide organograms of the business school and the parent institution as Appendix-1E.</p>
+                            <p class="box-title">1.9. Provide organograms of the business school and the parent institution as @if($isActiveSAR) Appendix-1F @else Appendix-1E @endif.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -53,7 +55,7 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Attach Doc (Appendix-1E)</label>
+                                    <label for="name">Attach Doc (@if($isActiveSAR) Appendix-1F @else Appendix-1E @endif)</label>
                                     <input type="file" name="file" id="file"  >
                                     <span class="text-red">Max upload file size 2mb.</span>
                                 </div>
@@ -144,7 +146,7 @@
 
                               <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc  (Appendix-1F)</label>
+                                <label for="name">Attach Doc  (@if($isActiveSAR) Appendix-1F @else Appendix-1E @endif)</label>
                                 <input type="file" name="file" id="edit_file" >
                                 <input type="hidden" name="old_file" id="old_file" >
                                 <span class="text-blue" id="file-name"></span>
