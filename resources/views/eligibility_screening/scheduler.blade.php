@@ -136,6 +136,8 @@
                             <div class="input-group">
                                 <input name="registrations" id="registrations" hidden value={{$registrations[0]->id}}>
                                 <p id="title">{{@$registrations[0]->school}}-{{@$registrations[0]->department}}</p>
+                                <input type="hidden" id="start_date">
+                                <input type="hidden" id="end_date">
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -487,6 +489,8 @@
             eventClick: function(info) {
                 $('#peerReviewer-modal').modal('show');
                 console.log('Event: complete details' + info.event.id);
+                $('#start_date').val(info.event.start);
+                $('#end_date').val(info.event.end);
                 $('#eligibility_screenings_id').val(info.event.id);
                 console.log('Event: complete campus_id' + info.event.campus_id);
                 console.log('Event: complete title' + info.event.title);
@@ -557,6 +561,15 @@
 
         let dates = $('#multiDatesPicker').val();
         let eligibility_screenings_id = $('#eligibility_screenings_id').val();
+        let startDate = Date.parse($('#start_date').val());
+        let endDate = Date.parse($('#end_date').val());
+        for(d of dates.split(',')){
+            let date = Date.parse(d);
+            if (date<=startDate || date>=endDate){
+                Notiflix.Notify.Warning("All dates should be within the event limits");
+                return;
+            }
+        }
         console.log('working on datepicker.....', dates);
         $.ajax({
             url:"{{url('PRAvailability')}}",

@@ -282,7 +282,7 @@ Route::get('/email', function() {
             Route::post('accreditation-invoice-Status', 'SarInvoiceController@update_status');
         });
 
-        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {
+        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor']], function () {
             Route::resource('MentoringScheduler', 'ScheduleMentorMeetingController');
             Route::get('MentorScheduler/{id?}', 'ScheduleMentorMeetingController@MentorScheduler');
             Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');

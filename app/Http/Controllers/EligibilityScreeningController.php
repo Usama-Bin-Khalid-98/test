@@ -351,7 +351,7 @@ class EligibilityScreeningController extends Controller
                         ReviewerAvailability::where(['slip_id' => $request->registrations, 'user_id' => $existingReviewer->user_id])->delete();
                     }
                     Slip::find($request->registrations)->update(['regStatus'=>'ScheduledES']);
-                    return response()->json(['success' => 'Existing Meeting updated']);
+                    return response()->json(['success' => 'Existing Meeting updated'], 200);
                 }
             }catch (Exception $e)
             {
