@@ -134,11 +134,8 @@
                         <div class="form-group">
                             <label>Registrations:</label>
                             <div class="input-group">
-                                <select name="registrations" id="registrations" class="form-control select2">
-                                    @foreach(@$registrations as $reg)
-                                        <option value="{{@$reg->id}}">{{@$reg->school}}-{{@$reg->department}}</option>
-                                    @endforeach
-                                </select>
+                                <input name="registrations" id="registrations" hidden value={{$registrations[0]->id}}>
+                                <p id="title">{{@$registrations[0]->school}}-{{@$registrations[0]->department}}</p>
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -146,7 +143,7 @@
                             <label>Reviewers:</label>
                             <select class="form-control select2" name="reviewers" id="reviewers" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
                                 @foreach(@$reviewers_all as $reviewer)
-                                    <option value="{{@$reviewer->id}}">{{@$reviewer->name}}</option>
+                                    <option value="{{@$reviewer->id}}" @if(in_array( @$reviewer->id, $selectedReviewers)) selected @endif >{{@$reviewer->name}}</option>
                                 @endforeach
                             </select>
                             <!-- /.input group -->
@@ -795,16 +792,15 @@
 
     $('#notifyAll').on('click', function () {
         let registrations = $('#registrations').val();
-        let title = $('#registrations option:selected').text();
+        let title = $('#title').text();
         let reviewers = $('#reviewers').val();
         let esScheduleDateTime = $('#esScheduleDateTime').val();
         let color = $('#color').val();
 
-        !registrations?addClass('registrations'):removeClass('registrations');
         !reviewers?addClass('reviewers'):removeClass('reviewers');
         !esScheduleDateTime?addClass('esScheduleDateTime'):removeClass('esScheduleDateTime');
         !color?addClass('color'):removeClass('color');
-        if(!registrations || !reviewers || !esScheduleDateTime)
+        if(!reviewers || !esScheduleDateTime)
         {
             Notiflix.notify.error('Fill all the required Fields');
             return false;
@@ -846,6 +842,9 @@
                 $('#add-modal').modal('hide');
                 // location.reload();
                 console.log('response here', response);
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
             },
             error:function(response, exception){
                 Notiflix.Loading.Remove();
