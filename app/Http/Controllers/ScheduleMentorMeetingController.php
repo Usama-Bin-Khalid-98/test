@@ -110,6 +110,7 @@ class ScheduleMentorMeetingController extends Controller
             try {
                 $update = ScheduleMentorMeeting::where(['slip_id' => $request->slip_id, 'availability_dates' =>$request->dateVal])->update(['is_confirm' => $request->confirm]);
                 if($update){
+                    ScheduleMentorMeeting::where(['slip_id' => $request->slip_id, 'is_confirm' => 'no'])->delete();
                     return response()->json(['success' => 'updated successfully'], 200);
                 }
 
@@ -340,6 +341,7 @@ class ScheduleMentorMeetingController extends Controller
 //                            'department_id' => $getEvent->department_id,
                             'slip_id' => $getEvent->slip_id,
                             'user_id' => Auth::id(),
+                            'is_confirm' => 'no',
                             'availability_dates' => date('Y-m-d', strtotime($date_val))
                         ];
                         Auth::user()->user_type==='ESScheduler'? $mentorsData['status'] = 'active':

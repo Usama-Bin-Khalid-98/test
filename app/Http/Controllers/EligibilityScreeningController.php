@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
 use function GuzzleHttp\Promise\queue;
 
 error_reporting(E_ALL ^ E_DEPRECATED);
@@ -40,15 +42,17 @@ class EligibilityScreeningController extends Controller
 
     public function changeConfirmStatus(Request $request)
     {
+        Log::debug($request);
         $validation = Validator::make($request->all(), ['slip_id'=>'required', 'dateVal' => 'required'], $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
         }else {
             try {
-                $update = ReviewerAvailability::where(['slip_id' => $request->slip_id])->update(['is_confirm' => $request->confirm]);
+                $update = ReviewerAvailability::where(['slip_id' => $request->slip_id, 'availability_dates' =>$request->dateVal])->update(['is_confirm' => $request->confirm]);
                 if($update){
-                    return response()->json($validation->messages()->all(), 200);
+                    ReviewerAvailability::where(['slip_id' => $request->slip_id, 'is_confirm' => 'no'])->delete();
+                    return response()->json(["success" =>"Successfully updated"], 200);
                 }
 
             } catch (Exception $e) {
