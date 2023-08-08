@@ -121,6 +121,19 @@ $desk_review_count = getDeskReviewCount();
 $RegInvoice = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus' => 'Pending', 'status' => 'paid']);
 $SarDesk = isFiveRegistrations('App\Models\Common\Slip' ,['regStatus'=>'SARDeskReview']);
 $invoice_id = getRegInvoiceId();
+
+$reg1Statuses = [$basic_info, $scope, $contact, $committee, $affiliation, $budget, $mission, $plan, $parent];
+$isReg1Complete = !(in_array('In', $reg1Statuses));
+$reg2Statuses = [$portfolio, $entry, $application, $app_receivd];
+$isReg2Complete = !(in_array('In', $reg2Statuses));
+$reg3Statuses = [$enrolment, $graduated, $gender];
+$isReg3Complete = !(in_array('In', $reg3Statuses));
+$reg4Statuses = [$bsf ,$workload, $visiting_perm, $visiting, $ratio, $stability, $facultygender, $faculty_degree];
+$isReg4Complete = !(in_array('In', $reg4Statuses));
+$isReg5Complete = $research === 'C';
+$isReg6Complete = $financialinfo === 'C' && $bsfacility === 'C';
+$isRegComplete = $isReg1Complete && $isReg2Complete && $isReg3Complete && $isReg4Complete && $isReg5Complete;
+
 @endphp
 
 <aside class="main-sidebar">
@@ -1005,8 +1018,12 @@ $invoice_id = getRegInvoiceId();
           @endhasrole
           @endif
           @hasrole('BusinessSchool')
-          @if($financialinfo =='C' && $bsfacility == 'C' && $research == 'C' && $invoice_id != -1)
-            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="{{url('registration-apply')}}/{{$invoice_id}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+          @if($invoice_id != -1)
+            @if($isRegComplete)
+            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="javascript:javascript:void(0)" onClick="javascript:applyForRegistration({{$invoice_id}})"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+            @else
+            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="javascript:javascript:void(0"><i class="fa fa-close" style="color: #FF0000" ></i><span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Application can only be submitted after completing all tables">Apply for Registration</span></a></li>
+            @endif
           @endif
           @endhasrole
           @if($isActiveSAR)
@@ -1167,3 +1184,35 @@ $invoice_id = getRegInvoiceId();
     </section>
     <!-- /.sidebar -->
   </aside>
+<script>
+    let applyForRegistration = (invoiceId) => {
+        $.ajax({
+            url:'{{url("registration-apply")}}/'+invoiceId,
+            type:'GET',
+            cache:false,
+            contentType:false,
+            processData:false,
+            beforeSend: function(){
+                Notiflix.Loading.Pulse('Submitting ...');
+            },
+
+            success: function (response) {
+                Notiflix.Loading.Remove();
+                if(response.success){
+                    Notiflix.Notify.Success(response.success);
+                }
+                if(response.error)
+                {
+                    Notiflix.Notify.Failure(response.error);
+                }
+                setTimeout(() => {window.location = "/home"}, 2000);
+                },
+            error:function(response, exception){
+                Notiflix.Loading.Remove();
+                $.each(response.responseJSON, function (index, val) {
+                    Notiflix.Notify.Failure(val);
+                })
+            }
+        })
+    }
+</script>

@@ -46,6 +46,8 @@ Route::get('/email', function() {
         ////// Users permissions
         //Route::get('permission', 'Auth\UserController@permissions');
         Route::get('profile', 'Auth\UserController@profile');
+        Route::post('profile/update', 'Auth\UserController@update_profile');
+        Route::post('profile/updatePassword', 'Auth\UserController@updatePassword');
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
             ///// Dashboard
             Route::patch('admin/{id}', 'DashboardController@schoolStatus');

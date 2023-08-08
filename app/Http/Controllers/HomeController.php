@@ -430,7 +430,7 @@ class HomeController extends Controller
 
                 Mail::to($businessSchool->campus->user->email)->send(new ChangeResgistrationStatusMail($data));
 
-                return redirect('/home');
+                return response()->json(['success' => 'Application Submitted'], 200);
             }
             return redirect('/home');
 
