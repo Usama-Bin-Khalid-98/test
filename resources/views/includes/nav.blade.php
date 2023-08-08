@@ -134,6 +134,28 @@ $isReg5Complete = $research === 'C';
 $isReg6Complete = $financialinfo === 'C' && $bsfacility === 'C';
 $isRegComplete = $isReg1Complete && $isReg2Complete && $isReg3Complete && $isReg4Complete && $isReg5Complete;
 
+$sar1Statuses = [$basic_info, $scope, $contact, $committee, $affiliation, $summary_policy, $budget, $sources_funding, $audit_report, $mission, $plan, $parent];
+$sar2Statuses = [$portfolio, $program_courses, $curriculum_review, $program_objective, $learning_outcome, $mapping_pos, $aligned_program, $course_outline,
+                 $course_detail, $cultural_material, $checklist_document, $managerial_skill, $program_delivery_method, $evaluation_method, $program_delivery, $question_paper, $plagiarism_case];
+$sar3Statuses = [$enrolment, $student_intake, $size, $dropout, $financial_assistance, $student_financial, $weak, $grooming, $counselling, $student_participation, $extra, $membership, $alumni];
+$sar4Statuses = [$bsf, $faculty_detail, $workload, $visiting_perm, $visiting, $ratio, $stability, $facultygender, $faculty_promotion, $faculty_workshop, $faculty_develop, $consultancy_project, $faculty_participation, $faculty_membership, $international_faculty, $faculty_exposure];
+$sar5Statuses = [$oric, $research_center, $research_agenda, $research_funding, $research_project, $research, $output, $curriculum_role, $faculty_development, $conference];
+$sar6Statuses = [$club, $detail, $env, $formal, $complaint, $internal, $social];
+$sar7Statuses = [$financialinfo, $financialrisk, $support_staff, $qecinfo, $bsfacility];
+$sar8Statuses = [$placementOffice, $linkages, $bodymeeting, $sexchange, $fexchange, $obtained, $placement];
+$sar9Statuses = [$admission_office, $entry, $applications, $credit_transfer, $student_transfer, $documentary_evidence];
+
+$isSAR1Complete = !(in_array('In', $sar1Statuses));
+$isSAR2Complete = !(in_array('In', $sar2Statuses));
+$isSAR3Complete = !(in_array('In', $sar3Statuses));
+$isSAR4Complete = !(in_array('In', $sar4Statuses));
+$isSAR5Complete = !(in_array('In', $sar5Statuses));
+$isSAR6Complete = !(in_array('In', $sar6Statuses));
+$isSAR7Complete = !(in_array('In', $sar7Statuses));
+$isSAR8Complete = !(in_array('In', $sar8Statuses));
+$isSAR9Complete = !(in_array('In', $sar9Statuses));
+
+$isSARComplete = $isSAR1Complete && $isSAR2Complete && $isSAR3Complete && $isSAR4Complete && $isSAR5Complete && $isSAR6Complete && $isSAR7Complete && $isSAR8Complete && $isSAR9Complete;
 @endphp
 
 <aside class="main-sidebar">
@@ -1020,15 +1042,19 @@ $isRegComplete = $isReg1Complete && $isReg2Complete && $isReg3Complete && $isReg
           @hasrole('BusinessSchool')
           @if($invoice_id != -1)
             @if($isRegComplete)
-            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="javascript:javascript:void(0)" onClick="javascript:applyForRegistration({{$invoice_id}})"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
+            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="javascript:void(0)" onClick="javascript:applyForRegistration({{$invoice_id}})"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Apply for Registration</a></li>
             @else
-            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="javascript:javascript:void(0"><i class="fa fa-close" style="color: #FF0000" ></i><span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Application can only be submitted after completing all tables">Apply for Registration</span></a></li>
+            <li  class="{{ (request()->is('apply-registration'))? 'active' : '' }}"><a href="#0"><i class="fa fa-close" style="color: #FF0000" ></i><span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Application can only be submitted after completing all tables" style="margin-left: 0px;">Apply for Registration</span></a></li>
             @endif
           @endif
           @endhasrole
           @if($isActiveSAR)
           @hasrole('BusinessSchool')
-            <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" ></i>Submit SAR</a></li>
+          @if($isSARComplete)
+            <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="{{url('submitSAR')}}"><i class="fa fa-circle-o" style="color: #D81B60" style="margin-left: 0px;"></i>Submit SAR</a></li>
+          @else
+            <li  class="{{ (request()->is('registration-apply')) ? 'active' : '' }}"><a href="#0"><i class="fa fa-close" style="color: #FF0000" ></i><span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Application can only be submitted after completing all tables" style="margin-left: 0px;">Submit SAR</span></a></li>
+          @endif
           @endhasrole
           @endif
 
