@@ -81,7 +81,7 @@
                         <div id='external-events'>
                             <div class="external-event bg-green fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
                                 @hasrole('ESScheduler')
-                                    <input type="checkbox" value="{{@$maxSelectedDate}}"
+                                    <input type="checkbox" @if(!$canConfirmDate) disabled @endif value="{{@$maxSelectedDate}}"
                                        @foreach($MentorsDates as $checkDate)
                                            @foreach($checkDate as $availableDate)
                                         @if($availableDate->availability_dates == $maxSelectedDate && $availableDate->is_confirm =='yes' ) checked @endif

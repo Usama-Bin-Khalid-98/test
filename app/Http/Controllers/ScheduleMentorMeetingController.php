@@ -64,6 +64,9 @@ class ScheduleMentorMeetingController extends Controller
                 $count++;
             }
         }
+        $isSchoolAvailable = ScheduleMentorMeeting::where(['user_id' => $registrations[0]->created_by])->exists();
+        $isAnyMentorAvailable = ScheduleMentorMeeting::where(['slip_id'=> $id])->where('user_id','!=',$registrations[0]->created_by)->exists();
+        $canConfirmDate = $isSchoolAvailable && $isAnyMentorAvailable;
 //        dd($userDates);
         $availability = ScheduleMentorMeeting::where(['slip_id'=> $id, 'user_id'=>Auth::id()])->get();
         $availability_percent = ScheduleMentorMeeting::where(['slip_id'=> $id])->get();
@@ -87,7 +90,7 @@ class ScheduleMentorMeetingController extends Controller
         $count_val = array_count_values($dates);
         if ($count_val) $maxSelectedDate = $this->doublemax($count_val);
         $selectedMentors = MentoringMentor::where(['slip_id' => $id])->pluck('user_id')->toArray();
-        return view('mentoring.scheduler', compact('registrations', 'mentors','MentorsDates', 'userDates', 'MeetingMentors', 'maxSelectedDate', 'selectedMentors'));
+        return view('mentoring.scheduler', compact('registrations', 'mentors','MentorsDates', 'userDates', 'MeetingMentors', 'maxSelectedDate', 'selectedMentors', 'canConfirmDate'));
     }
 
     public function doublemax($mylist){
@@ -276,7 +279,6 @@ class ScheduleMentorMeetingController extends Controller
                 ->where('s.status', 'approved')
                 ->where('mm.user_id', Auth::id())
                 ->get();
-            //dd($MentoringMeetings);
         }else {
             $MentoringMeetings = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')

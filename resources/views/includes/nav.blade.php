@@ -1126,7 +1126,7 @@ $invoice_id = getRegInvoiceId();
           @endif
 
           @if(@$isFiveRegistrationsMentoring >= 1)
-          @hasanyrole('ESScheduler')
+          @hasanyrole('ESScheduler|Mentor')
           <li  class="{{ (request()->is('MentorScheduler')) ? 'active' : '' }}"><a href="{{url('MentorScheduler')}}"><i class="fa fa-calendar text-yellow"></i>Mentoring Scheduler</a></li>
           @endhasrole
           @endif
