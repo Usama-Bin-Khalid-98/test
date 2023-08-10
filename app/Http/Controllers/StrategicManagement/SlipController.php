@@ -360,7 +360,7 @@ class SlipController extends Controller
     {
         $school = BusinessSchool::with('user', 'user.campus')->find(Auth::user()->business_school_id);
         try {
-            $getFee =DepartmentFee::findorfail(1)->first();
+            $getFee = FeeType::where(['name' => 'Registration Fee'])->first();
             if($getFee) {
                 
                 $getNbeacInfo = NbeacBasicInfo::all()->first();
@@ -380,7 +380,7 @@ class SlipController extends Controller
                     'business_school_id' => Auth::user()->campus_id,
                     'invoice_no' => $request->invoice_no,
                     'department_id' => Auth::user()->department_id,
-                    'amount' => $getFee->amount,
+                    'amount' => $getFee->amount * $request->number_of_programs,
                     'status' => 'unpaid',
                     'created_by' => Auth::id(),
                 ]);
