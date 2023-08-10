@@ -259,6 +259,7 @@ Route::get('/email', function() {
             Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
             Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
             Route::patch('PeerReviewerReport/{id}', 'EligibilityScreeningController@update');
+            Route::get('delete-esc-meeting/{id}', 'EligibilityScreeningController@resetMeeting');
 
         });
 

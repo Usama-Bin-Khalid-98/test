@@ -85,6 +85,7 @@
                                     id="confirmDate" data-id="{{@request()->route('id')}}">@endhasrole Date: {{@$maxSelectedDate}}
                                 : @php $confirm = 'Not Confirmed yet'; @endphp @foreach($reviewers as $checkDate) @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) @php $confirm = 'confirmed'; @endphp @break @endif @endforeach @php echo $confirm @endphp
                             </div>
+                                <button id="btn-reset-meeting" class="btn-info pull-right" style="border-radius: 4px; margin-top:5px;"><span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Delete current meeting. Use ONLY if you want to setup a new meeting" style="margin-left: 0px;">Reset Meeting</span></button>
 
 {{--                            @foreach(@$availability as $available)--}}
 {{--                                @if($available->availability_dates !== $availability[$index - 1]->availability_dates)--}}
@@ -866,6 +867,34 @@
                 })
 
             }
+        })
+    })
+    $('#btn-reset-meeting').on('click', function(){
+        let slip_id = $('#registrations').val();
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete Meeting Data?', 'Yes', 'No', function(){
+            $.ajax({
+                url:"{{url('delete-esc-meeting')}}/"+slip_id,
+                type:"GET",
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            })
         })
     })
 </script>

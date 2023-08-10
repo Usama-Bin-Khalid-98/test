@@ -240,7 +240,7 @@ class EligibilityScreeningController extends Controller
         $id ? $query .= ' AND slips.id = ' . $id : '';
         $registrations = DB::select($query, array());
 
-        $reviewers_all = User::role('PeerReviewer')->get();
+        $reviewers_all = User::role('EligibilityScreening')->get();
 //        dd($reviewers_all);
         $reviewers = ReviewerAvailability::with('slip', 'user')->where('slip_id', $id)->get();
 //        dd($reviewers);
@@ -778,5 +778,21 @@ class EligibilityScreeningController extends Controller
         return [
             'required'=> 'The :attribute can not be blanked. '
         ];
+    }
+
+    public function resetMeeting(Request $request, $id)
+    {
+        Log::debug($id);
+        try{
+            EligibilityScreening::where('slip_id', '=', $id)->delete();
+            ESReviewer::where('slip_id', '=', $id)->delete();
+            ReviewerAvailability::where('slip_id', '=', $id)->delete();
+            Slip::find($id)->update([
+                'regStatus' => 'Eligibility'
+            ]);
+            return response()->json(['success' => 'Meeting Removed Successfully']);
+        }catch (Exception $e){
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
     }
 }
