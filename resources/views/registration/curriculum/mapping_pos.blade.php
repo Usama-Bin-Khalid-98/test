@@ -103,6 +103,7 @@
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px;">
+                                    <input type="submit" name="add" id="add-and-next" value="Submit & Next" class="btn btn-success">
                                     <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                 </div>
                             </div>
@@ -145,7 +146,12 @@
             }
         });
 
-             $('#form').submit(function (e) {
+        
+        $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             let plo_po = $('input[name="plo_po"]').val();
             e.preventDefault();
             var formData = new FormData(this);
@@ -166,7 +172,11 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response', response);
-                    // location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/aligned-program';
+                        }, 1000);
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

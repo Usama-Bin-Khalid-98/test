@@ -85,6 +85,7 @@
                             <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 20px;">
                                     <label for="name"></label>
+                                    <input type="submit" name="add" id="add-and-next" value="Submit & Next" class="btn btn-success">
                                     <input type="submit" name="add" value="Submit" class="btn btn-info">
                                 </div>
                             </div>
@@ -283,6 +284,10 @@
         });
         /*Add Scope*/
         $('#add').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             // let statutory_body_id = $('#statutory_body_id').val();
             // let name = $('#name').val();
             // let designation_id = $('#designation_id').val();
@@ -326,8 +331,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/program-delivery';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

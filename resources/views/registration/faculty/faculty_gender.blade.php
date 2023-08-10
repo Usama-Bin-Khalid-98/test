@@ -1,5 +1,7 @@
 @section('pageTitle', 'Faculty Gender')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -413,7 +415,11 @@ $('#updateForm').submit(function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/faculty-degree';
+                    @if($isActiveSAR)
+                        window.location = '/faculty-promotion';
+                    @else
+                        window.location = '/faculty-degree';
+                    @endif
                 }
             }, 1000)
         });

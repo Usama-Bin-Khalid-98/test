@@ -61,6 +61,7 @@
                   <div class="col-md-12">
                     <div class="form-group pull-right" style="margin-top: 40px">
                         <label for="sector">&nbsp;&nbsp;</label>
+                        <input type="button" name="update" id="update-and-next" value="Update & Next" class="btn btn-success">
                         <input type="button" name="update" id="update" value="Update" class="btn btn-info">
                     </div>
                 </div>
@@ -111,7 +112,11 @@
         });
 
          <?php if(@$course_detail->id==null) { ?>
-        $('#update').on('click', function (e) {
+        $('#update, #update-and-next').on('click', function (e) {
+            let next = false;
+            if(e.target.id === 'update-and-next'){
+                next = true;
+            }
             let summary = CKEDITOR.instances.summary.getData();
 
              !summary?addClass('summary'):removeClass('summary');
@@ -137,7 +142,11 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response here', response);
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/managerial-skill';
+                        }, 1000);
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -152,7 +161,11 @@
 
         <?php }else{ ?>
 
-        $('#update').on('click', function (e) {
+        $('#update, #update-and-next').on('click', function (e) {
+            let next = false;
+            if(e.target.id === 'update-and-next'){
+                next = true;
+            }
             let id = $('#id').val();
             let summary = CKEDITOR.instances.summary.getData();
 
@@ -180,7 +193,11 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response here', response);
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/managerial-skill';
+                        }, 1000);
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

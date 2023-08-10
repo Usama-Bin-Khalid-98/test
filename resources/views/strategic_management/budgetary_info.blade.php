@@ -1,5 +1,7 @@
 @section('pageTitle', 'Budgetary Information')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -467,7 +469,11 @@ $('#updateForm').submit(function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/strategic/mission-vision';
+                    @if($isActiveSAR)
+                        window.location = '/strategic/sources-funding';
+                    @else
+                        window.location = '/strategic/mission-vision';
+                    @endif
                 }
             }, 1000)
         });

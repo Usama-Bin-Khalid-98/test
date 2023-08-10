@@ -133,7 +133,7 @@ class StatutoryCommitteeController extends Controller
                     }
                 }
                 else{
-                    return response()->json(['error' => 'Statutory committee member '. $request->name[$i]. ' already exists.']);
+                    return response()->json(['error' => 'Statutory committee member '. $request->name[$i]. ' already exists.'], 409);
                 }
                 //}
             }

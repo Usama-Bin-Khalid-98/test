@@ -69,6 +69,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group pull-right" >
                                         <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="submit" name="add" id="add-and-next" value="Submit & Next" class="btn btn-success">
                                         <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                     </div>
                                 </div>
@@ -232,6 +233,10 @@
         });
 
          $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             // let funding_sources_id = $('#funding_sources_id').val();
             // let amount = $('#amount').val();
             // let percent_share = $('#percent_share').val();
@@ -265,8 +270,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/strategic/audit-report';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

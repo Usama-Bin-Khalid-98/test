@@ -109,7 +109,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
 
                                  <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" value="Add & Next" class="btn btn-success next">
+                                    <input type="submit" name="add" id="add-and-next" value="Add & Next" class="btn btn-success">
                                 </div>
                             </div>
                         </form>
@@ -300,6 +300,10 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
         });
 
          $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             let plan_period = $('#plan_period').val();
             let plan_period_to = $('#plan_period_to').val();
             let aproval_date = $('#aproval_date').val();
@@ -335,9 +339,13 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    check = true;
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/strategic/parent-institution';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
@@ -467,16 +475,6 @@ $('#updateForm').submit(function (e) {
                 } );
 
         })
-
-
-        $('.next').on('click', function (){
-
-            setTimeout(()=>{
-                if(check==true){
-                    window.location = '/strategic/parent-institution';
-                }
-            }, 2000)
-        });
     </script>
 
 

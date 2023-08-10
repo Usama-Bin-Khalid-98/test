@@ -120,6 +120,7 @@
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
+                                    <input type="submit" name="add" id="add-and-next" value="Add & Next" class="btn btn-success">
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -372,8 +373,11 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-             $('#form').submit(function (e) {
+        $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             let review_meeting = $('#review_meeting').val();
             let date = $('#date').val();
             let composition = $('#composition').val();
@@ -413,8 +417,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/program-objective';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

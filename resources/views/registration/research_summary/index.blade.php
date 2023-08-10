@@ -603,7 +603,11 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/financial-info';
+                    @if($isActiveSAR)
+                        window.location = '/research-output';
+                    @else
+                        window.location = '/financial-info';
+                    @endif
                 }
             }, 1000)
         });

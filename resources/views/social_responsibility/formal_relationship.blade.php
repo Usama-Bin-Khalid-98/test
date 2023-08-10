@@ -96,6 +96,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" id="add-and-next" value="Add & Next" class="btn btn-success">
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -296,6 +297,10 @@
         });
 
          $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             let org_name = $('#org_name').val();
             let mou_title = $('#mou_title').val();
             let signing_mou_date = $('#signing_mou_date').val();
@@ -333,8 +338,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/complaint-resolution';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
