@@ -38,8 +38,7 @@ class ScheduleMentorMeetingController extends Controller
         $id ? $query .= ' AND slips.id = ' . $id : '';
         $registrations = DB::select($query, array());
 
-        $mentors = User::where(['user_type'=>'Mentor', 'status'=>'active'])->get();
-//        dd($registrations);
+        $mentors = User::role('Mentor')->get();
 
         $MeetingMentors = MentoringMentor::with('slip', 'user')->where('slip_id', $id)->get();
 //        dd($MeetingMentors);
