@@ -478,7 +478,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_first_meeting_` + row_count + `" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -486,7 +486,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_second_meeting_` + row_count + `" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -494,7 +494,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_third_meeting_` + row_count + `" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -502,7 +502,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_fourth_meeting_` + row_count + `" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td style="font-size: 8px"><input type="file" name="file`+row_count+`"></td>
@@ -603,6 +603,8 @@
                             removeClass(field_id);
                         }else{
                             addClass(field_id);
+                            console.log("here")
+                            console.log(field_id)
                             hasEmptyField = true;
                         }
                     })
