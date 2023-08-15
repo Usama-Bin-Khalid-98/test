@@ -308,6 +308,8 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                 }
             });
             var formData = new FormData(this);
+            formData.set("mission", mission);
+            formData.set("vision", vision);
             formData.append('file', $("#file")[0].files[0]);
             formData.append('_method', 'PUT');
             $.ajax({
