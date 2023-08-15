@@ -532,10 +532,6 @@ class SlipController extends Controller
                 //     $message->from($mailInfo['from'],$mailInfo['from_name']);
                 // });
 
-                return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
-            }
-            else{
-                return response()->json(['message' => 'sending email Failed.'], 422);
             }
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
 
