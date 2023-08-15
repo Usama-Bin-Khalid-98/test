@@ -72,27 +72,26 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">University Budget</label>
-                                            <input type="text" name="uni_budget[]" id="uni_budget" class="form-control">
+                                            <input type="text" required name="uni_budget[]" id="uni_budget" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Budget Proposed by Business School</label>
-                                            <input type="text" name="uni_proposed_budget[]" id="uni_proposed_budget" class="form-control">
+                                            <input type="text" required name="uni_proposed_budget[]" id="uni_proposed_budget" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Budget Received by Business School</label>
-                                            <input type="text" name="budget_receive[]" id="budget_receive" class="form-control">
+                                            <input type="text" required name="budget_receive[]" id="budget_receive" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">Budget Type</label>
-                                            <select name="budget_type[]" id="budget_type" class="form-control select2" style="width: 100%;">
-                                                <option selected disabled>Select Budget type</option>
+                                            <select name="budget_type[]" required id="budget_type" class="form-control select2" style="width: 100%;">
                                                 <option value="Implicit">Implicit</option>
                                                 <option value="Explicit">Explicit</option>
                                             </select>
