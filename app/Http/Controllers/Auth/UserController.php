@@ -61,6 +61,13 @@ class UserController extends Controller
         return view('users.create',compact('roles'));
     }
 
+    public function verifyActivation(){
+        if(Auth::user()->status == "active"){
+            return redirect()->route('home');
+        }
+        Auth::logout();
+        return redirect()->route("login");
+    }
 
     /**
      * Store a newly created resource in storage.

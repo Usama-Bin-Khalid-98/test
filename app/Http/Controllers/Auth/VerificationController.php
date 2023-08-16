@@ -38,7 +38,7 @@ class VerificationController extends Controller
      */
 
 //    protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = '/';
+    protected $redirectTo = '/verify-activation';
 
     /**
      * Create a new controller instance.

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
     Route::get('/', function () {
-        return view('auth.login');
+        return Redirect::route('home');
     });
 
     Route::get('/login', function() {
+        if(Auth::check()){
+            return Redirect::route('home');
+        }
         return view('auth.login');
     });
 
@@ -27,6 +32,7 @@ Route::get('/email', function() {
     // Registration Routes...
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
+    Route::post('reRegister', 'Auth\RegisterController@reRegister')->name('reRegister')->withoutMiddleware(['guest']);
     Route::post('survey', 'SurveyQuestionnaireController@store');
     Route::get('get-campuses', 'CampusController@getCampuses');
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
@@ -45,6 +51,7 @@ Route::get('/email', function() {
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
         ////// Users permissions
         //Route::get('permission', 'Auth\UserController@permissions');
+        Route::get('/verify-activation','Auth\UserController@verifyActivation');
         Route::get('profile', 'Auth\UserController@profile');
         Route::post('profile/update', 'Auth\UserController@update_profile');
         Route::post('profile/updatePassword', 'Auth\UserController@updatePassword');
