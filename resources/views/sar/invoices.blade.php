@@ -504,6 +504,11 @@
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
             }
+            let file_size_in_mbs = $('#slip').prop('files')[0].size / 1024 / 1024;
+            if (file_size_in_mbs > 2){
+                Notiflix.Notify.Warning("File size greater than 2 mb");
+                return;
+            }
             // Yes button callback
             let formData = new FormData(this);
             formData.append('_method', 'PUT');
