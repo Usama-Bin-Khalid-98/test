@@ -268,9 +268,9 @@
                                                 <ol type="i">
                                                     @foreach($fte_program_wise as $key => $value)
                                                     @php
-                                                        $total = array_sum($value) + $vfe_program_wise[$key];
+                                                        $total = array_sum($value) + @$vfe_program_wise[$key];
                                                     @endphp
-                                                    <li>{{$key}} = {{round(array_sum($value) / $total * 100, 2)}} : {{round($vfe_program_wise[$key] / $total * 100, 2)}}</li>
+                                                    <li>{{$key}} = {{round(array_sum($value) / $total * 100, 2)}} : {{round(@$vfe_program_wise[$key] / $total * 100, 2)}}</li>
                                                     @endforeach
                                                 </ol></p>
                                                 <!-- <p> <strong>q)</strong>	No. of faculty with terminal degree from foreign institutions = {{@$faculty_degree->faculty_foreign}}</p>

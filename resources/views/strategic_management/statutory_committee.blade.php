@@ -603,8 +603,6 @@
                             removeClass(field_id);
                         }else{
                             addClass(field_id);
-                            console.log("here")
-                            console.log(field_id)
                             hasEmptyField = true;
                         }
                     })
@@ -740,6 +738,19 @@
             if(!name || !statutory_body_id || !designation_id || !date_first_meeting || !date_second_meeting || !date_third_meeting|| !date_fourth_meeting)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            let meetingDates = [
+                Date.parse(date_first_meeting),
+                Date.parse(date_second_meeting),
+                Date.parse(date_third_meeting),
+                Date.parse(date_fourth_meeting),
+            ];
+            let meetingsInOrder = meetingDates.every(function(value, index){
+                        return index === 0|| value >= meetingDates[index - 1];
+            })
+            if(!meetingsInOrder){
+                Notiflix.Notify.Warning("All meeting dates should be in ascending order");
                 return false;
             }
             e.preventDefault();
