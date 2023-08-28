@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangeResgistrationStatusMail;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Support\Facades\Log;
 
 class SlipController extends Controller
@@ -70,7 +71,16 @@ class SlipController extends Controller
             ->where('s.regStatus', '!=', 'Initiated')
             ->get();
         //dd($invoice_no);
-        return view('registration.index', compact('registrations'));
+        $programs = [];
+        foreach($registrations as $slip){
+
+            $scopes = Scope::with('program')->where(['campus_id' => $slip->campus_id, 'department_id' => $slip->department_id, 'type' => 'REG'])->get();
+            $programs[$slip->id] = [];
+            foreach($scopes as $scope){
+                array_push( $programs[$slip->id], @$scope->program->name);
+            }
+        }
+        return view('registration.index', compact('registrations', 'programs'));
     }
 
     public function invoicesList()
@@ -350,7 +360,7 @@ class SlipController extends Controller
     {
         $school = BusinessSchool::with('user', 'user.campus')->find(Auth::user()->business_school_id);
         try {
-            $getFee =DepartmentFee::findorfail(1)->first();
+            $getFee = FeeType::where(['name' => 'Registration Fee'])->first();
             if($getFee) {
                 
                 $getNbeacInfo = NbeacBasicInfo::all()->first();
@@ -370,7 +380,7 @@ class SlipController extends Controller
                     'business_school_id' => Auth::user()->campus_id,
                     'invoice_no' => $request->invoice_no,
                     'department_id' => Auth::user()->department_id,
-                    'amount' => $getFee->amount,
+                    'amount' => $getFee->amount * $request->number_of_programs,
                     'status' => 'unpaid',
                     'created_by' => Auth::id(),
                 ]);
@@ -496,7 +506,7 @@ class SlipController extends Controller
 //            ]);
             if($updateSlip) {
                 $mailData['school']= $school;
-                $mailData['slip']= $data;
+                $mailData['slip'] = Slip::where('id', $request->id)->first();
 
                 $getNbeacInfo = NbeacBasicInfo::all()->first();
 
@@ -504,14 +514,17 @@ class SlipController extends Controller
 
 //                dd($data['school']);
                 $mailInfo = [
-                    'to' => $school->user->email??'',
-                    'to_name' => $school->user->name??'',
+                    'from' => $school->user->email??'',
+                    'from_name' => $school->user->name??'',
                     'school' => $school->name??'',
-                    'from' => $getNbeacInfo->email??'info@nbeac.org.pk',
-                    'from_name' => $getNbeacInfo->director??'',
+                    'to' => $getNbeacInfo->email??'info@nbeac.org.pk',
+                    'to_name' => $getNbeacInfo->director??'',
                 ];
 
-                
+                Mail::send('registration.mail.registration_invoice_admin_mail', ['data' => $mailData], function ($message) use ($mailInfo){
+                    $message->to($mailInfo['to'], $mailInfo['to_name'])->subject('Registration Fee Paid');
+                    $message->from($mailInfo['from'], $mailInfo['from_name']);
+                });
                 // Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
                 //     //dd($user);
                 //     $message->to($mailInfo['to'],$mailInfo['to_name'] )
@@ -519,10 +532,6 @@ class SlipController extends Controller
                 //     $message->from($mailInfo['from'],$mailInfo['from_name']);
                 // });
 
-                return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
-            }
-            else{
-                return response()->json(['message' => 'sending email Failed.'], 422);
             }
             return response()->json(['success' => 'Invoice Slip Updated successfully.'], 200);
 

@@ -280,6 +280,11 @@
 
             !inputName?addClass('inputName'):removeClass('inputName');
             !inputEmail?addClass('inputEmail'):removeClass('inputEmail');
+            let picFile = $('#file').prop('files');
+            if (picFile.length > 0 && picFile[0].size / 1024 / 1024  > 2){
+                Notiflix.Notify.Warning("File size greater than 2 mb");
+                return;
+            }
 
             if(!inputName || !inputEmail)
             {

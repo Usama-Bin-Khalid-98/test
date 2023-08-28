@@ -1,4 +1,7 @@
 @section('pageTitle', 'Business School Facility')
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 
 @if(Auth::user())
@@ -96,6 +99,9 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
+                                    @if($isActiveSAR)
+                                    <input type="submit" name="add" id="add-and-next" value="Add & Next" class="btn btn-success">
+                                    @endif
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -235,9 +241,11 @@
             }
         });
 
-         $('#form').submit(function () {
-             // let radioVal = $('input:radio:checked').map(function(i, el){return {"id":$(el).data('id'),"value":$(el).val()};}).get();
-             console.log('submit button clicked');
+         $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
 
             let facility_id = $('input[type="textval"]').map(function(index, val) {
                 console.log('indes ', index, 'val', val);
@@ -277,8 +285,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/placement-office';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

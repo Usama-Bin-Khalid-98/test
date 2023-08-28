@@ -1,5 +1,7 @@
 @section('pageTitle', 'Budgetary Information')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -70,27 +72,26 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">University Budget</label>
-                                            <input type="text" name="uni_budget[]" id="uni_budget" class="form-control">
+                                            <input type="text" required name="uni_budget[]" id="uni_budget" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Budget Proposed by Business School</label>
-                                            <input type="text" name="uni_proposed_budget[]" id="uni_proposed_budget" class="form-control">
+                                            <input type="text" required name="uni_proposed_budget[]" id="uni_proposed_budget" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="name">Budget Received by Business School</label>
-                                            <input type="text" name="budget_receive[]" id="budget_receive" class="form-control">
+                                            <input type="text" required name="budget_receive[]" id="budget_receive" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="name">Budget Type</label>
-                                            <select name="budget_type[]" id="budget_type" class="form-control select2" style="width: 100%;">
-                                                <option selected disabled>Select Budget type</option>
+                                            <select name="budget_type[]" required id="budget_type" class="form-control select2" style="width: 100%;">
                                                 <option value="Implicit">Implicit</option>
                                                 <option value="Explicit">Explicit</option>
                                             </select>
@@ -467,7 +468,11 @@ $('#updateForm').submit(function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/strategic/mission-vision';
+                    @if($isActiveSAR)
+                        window.location = '/strategic/sources-funding';
+                    @else
+                        window.location = '/strategic/mission-vision';
+                    @endif
                 }
             }, 1000)
         });

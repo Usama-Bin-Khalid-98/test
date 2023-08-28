@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
 use function GuzzleHttp\Promise\queue;
 
 error_reporting(E_ALL ^ E_DEPRECATED);
@@ -40,15 +42,17 @@ class EligibilityScreeningController extends Controller
 
     public function changeConfirmStatus(Request $request)
     {
+        Log::debug($request);
         $validation = Validator::make($request->all(), ['slip_id'=>'required', 'dateVal' => 'required'], $this->messages());
         if($validation->fails())
         {
             return response()->json($validation->messages()->all(), 422);
         }else {
             try {
-                $update = ReviewerAvailability::where(['slip_id' => $request->slip_id])->update(['is_confirm' => $request->confirm]);
+                $update = ReviewerAvailability::where(['slip_id' => $request->slip_id, 'availability_dates' =>$request->dateVal])->update(['is_confirm' => $request->confirm]);
                 if($update){
-                    return response()->json($validation->messages()->all(), 200);
+                    ReviewerAvailability::where(['slip_id' => $request->slip_id, 'is_confirm' => 'no'])->delete();
+                    return response()->json(["success" =>"Successfully updated"], 200);
                 }
 
             } catch (Exception $e) {
@@ -221,7 +225,7 @@ class EligibilityScreeningController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function schedule($id=null)
+    public function schedule($id)
     {
         //
         $query = "
@@ -232,12 +236,11 @@ class EligibilityScreeningController extends Controller
         AND departments.id=slips.department_id
         AND campuses.business_school_id=business_schools.id
         AND users.id = slips.created_by
-        AND slips.status ='approved' AND slips.regStatus = 'Eligibility'";
+        AND slips.status ='approved'";
         $id ? $query .= ' AND slips.id = ' . $id : '';
         $registrations = DB::select($query, array());
-//        dd($registrations);
 
-        $reviewers_all = User::role('PeerReviewer')->get();
+        $reviewers_all = User::role('EligibilityScreening')->get();
 //        dd($reviewers_all);
         $reviewers = ReviewerAvailability::with('slip', 'user')->where('slip_id', $id)->get();
 //        dd($reviewers);
@@ -259,7 +262,6 @@ class EligibilityScreeningController extends Controller
             }
         }
         //dd($userDates);
-        $availability = ReviewerAvailability::where(['slip_id'=> $id, 'user_id'=>Auth::id()])->get();
         $availability_percent = ReviewerAvailability::where(['slip_id'=> $id])->get();
         $dates = [];
         $count=0;
@@ -270,8 +272,9 @@ class EligibilityScreeningController extends Controller
             $count++;
         }
         $count_val = array_count_values($dates);
+        $selectedReviewers = ESReviewer::where(['slip_id' => $id])->pluck('user_id')->toArray();
         if($count_val)  $maxSelectedDate = $this->doublemax($count_val);
-        return view('eligibility_screening.scheduler', compact('registrations', 'reviewers','userDates', 'availability','maxSelectedDate', 'reviewers_all'));
+        return view('eligibility_screening.scheduler', compact('registrations', 'reviewers','userDates','maxSelectedDate', 'reviewers_all', 'selectedReviewers'));
     }
 
     public function doublemax($mylist){
@@ -299,16 +302,13 @@ class EligibilityScreeningController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }else{
             try {
-
                 $getSchoolInfoCheck = EligibilityScreening::where('slip_id', $request->registrations)->exists();
-                if(!$getSchoolInfoCheck) {
-                    $getSchoolInfo = Slip::where('id', $request->registrations)->get()->first();
+                $getSchoolInfo = Slip::where('id', $request->registrations)->get()->first();
                     $esScheduleDateTime = $request->esScheduleDateTime;
                     $dateArray = explode('-', $esScheduleDateTime);
                     $start = Carbon::parse(trim($dateArray[0]));
                     $end = Carbon::parse(trim($dateArray[1]));
-                    //
-
+                if(!$getSchoolInfoCheck) {
                     $insert = EligibilityScreening::create([
                         'campus_id' => $getSchoolInfo->business_school_id,
                         'department_id' => $getSchoolInfo->department_id,
@@ -332,8 +332,31 @@ class EligibilityScreeningController extends Controller
                         $updateSlip = Slip::find($request->registrations)->update(['regStatus'=>'ScheduledES']);
                         return response()->json(['success' => 'Notification sent Successfully'], 200);
                     }
+                }else{
+                    EligibilityScreening::where('slip_id', $request->registrations)->update([
+                        'start' => $start->format('Y-m-d H:i:s'),
+                        'end' => $end->format('Y-m-d H:i:s'),
+                    ]);
+                    foreach ($request->reviewers as $reviewer)
+                        {
+                            if (ESReviewer::where(['slip_id' => $request->registrations, 'user_id' => $reviewer])->exists()){
+                                continue;
+                            }
+                            $ESReviewers = ESReviewer::create(['slip_id' => $request->registrations, 'user_id'=>$reviewer, 'created_by'=>Auth::id()]);
+                        }
+                    $existingReviewers = ESReviewer::where(['slip_id' => $request->registrations])->get();
+                    foreach ($existingReviewers as $existingReviewer){
+                        
+                        if(in_array($existingReviewer->user_id , $request->reviewers)){
+                            continue;
+                        }
+                        
+                        ESReviewer::destroy($existingReviewer->id);
+                        ReviewerAvailability::where(['slip_id' => $request->registrations, 'user_id' => $existingReviewer->user_id])->delete();
+                    }
+                    Slip::find($request->registrations)->update(['regStatus'=>'ScheduledES']);
+                    return response()->json(['success' => 'Existing Meeting updated'], 200);
                 }
-                return response()->json(['message' => 'Record already Exists'], 422);
             }catch (Exception $e)
             {
                 return response()->json(['message' =>$e->getMessage()], 422);
@@ -755,5 +778,21 @@ class EligibilityScreeningController extends Controller
         return [
             'required'=> 'The :attribute can not be blanked. '
         ];
+    }
+
+    public function resetMeeting(Request $request, $id)
+    {
+        Log::debug($id);
+        try{
+            EligibilityScreening::where('slip_id', '=', $id)->delete();
+            ESReviewer::where('slip_id', '=', $id)->delete();
+            ReviewerAvailability::where('slip_id', '=', $id)->delete();
+            Slip::find($id)->update([
+                'regStatus' => 'Eligibility'
+            ]);
+            return response()->json(['success' => 'Meeting Removed Successfully']);
+        }catch (Exception $e){
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
     }
 }

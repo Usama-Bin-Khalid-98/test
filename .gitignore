@@ -14,3 +14,4 @@ yarn-error.log
 /bootstrap/cache/*.php
 .idea
 .DS_Store
+/public/error_log

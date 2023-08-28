@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use PDO;
 
@@ -46,9 +47,8 @@ class WorkLoadController extends Controller
         $getTyear = BusinessSchoolTyear::where($where)->get()->first();
         ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
         $workloads = Workload::with('campus')->where($where)->get();
-
-
-         return view('registration.faculty.workload', compact('workloads', 'getTyear', 'designations'));
+        $appendix_file = AppendixFile::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->first();
+         return view('registration.faculty.workload', compact('workloads', 'getTyear', 'designations', 'appendix_file'));
     }
 
     /**
@@ -341,7 +341,7 @@ class WorkLoadController extends Controller
                     "campus_id" => $workLoad->campus_id,
                     "department_id" => $workLoad->department_id,
                     "faculty_name" => $workLoad->faculty_name,
-                    "designation" => $workLoad->designation,
+                    "designation_id" => $workLoad->designation_id,
                     "total_courses" => $workLoad->total_courses,
                     "phd" => $workLoad->phd,
                     "masters" => $workLoad->masters,
@@ -382,7 +382,8 @@ class WorkLoadController extends Controller
         }
         $appendix_file = AppendixFile::where([
             'campus_id'=> Auth::user()->campus_id,
-            'business_school_id'=>Auth::user()->business_school_id
+            'business_school_id'=>Auth::user()->business_school_id,
+            'department_id' => Auth::user()->department_id,
             ])->first();
 
         $path = 'uploads/workload_policy';
@@ -390,13 +391,19 @@ class WorkLoadController extends Controller
         $request->file('appendix_4A')->move($path, $imageName);
         if($appendix_file){
             if($appendix_file->workload_policy && $appendix_file->workload_policy !== ''){
-                unlink($appendix_file->workload_policy);
+                try{
+                    unlink($appendix_file->workload_policy);
+                }catch (Exception $e){
+                    Log::error($e);
+                }
             }
             AppendixFile::where(['id' => $appendix_file->id])->update(['workload_policy' => $path . '/' . $imageName]);        
         }else{
+            
             AppendixFile::create([
                 'campus_id' => Auth::user()->campus_id,
                 'business_school_id' => Auth::user()->business_school_id,
+                'department_id' => Auth::user()->department_id,
                 'workload_policy' => $path . '/' . $imageName
             ]);
         }

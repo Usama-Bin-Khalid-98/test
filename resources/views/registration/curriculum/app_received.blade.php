@@ -1,4 +1,7 @@
 @section('pageTitle', 'Application Received')
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 @if(Auth::user())
 
     @include("../includes.head")
@@ -15,7 +18,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Application Received
+                Applications Received
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -49,7 +52,11 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">2.3.	Provide data on the applications received and student intake in the past three years for each program in Table 2.3 </h3>
+                            @if($isActiveSAR)
+                                <h3 class="box-title">9.3.	Provide data on the applications received and student intake in the past three years for each program in Table 9.3 </h3>
+                            @else
+                                <h3 class="box-title">2.3.	Provide data on the applications received and student intake in the past three years for each program in Table 2.3 </h3>
+                            @endif
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -148,7 +155,11 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 2.3. Applications received.</h3>
+                            @if($isActiveSAR)
+                                <h3 class="box-title">Table 9.3. Applications received.</h3>
+                            @else
+                                <h3 class="box-title">Table 2.3. Applications received.</h3>
+                            @endif
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -193,6 +204,7 @@
                                     <th>Campus</th>
                                     <th>Program(s) under review</th>
                                     <th>Year</th>
+                                    <th>Semester</th>
                                     <th>Application Received</th>
                                     <th>Admission Offered</th>
                                     <th>Student Intake</th>
@@ -575,7 +587,11 @@ $('#updateForm').submit(function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/app-recvd';
+                    @if($isActiveSAR)
+                        window.location = '/credit-transfer';
+                    @else
+                        window.location = '/app-recvd';
+                    @endif
                 }
             }, 1000)
         });

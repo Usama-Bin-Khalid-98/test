@@ -230,7 +230,10 @@
                         <table class='jumbotron'  >   
                             <tr> 
                             <td style="padding:15px;" ><label for="file4A">Appendix 4A</label>
-                            <input type="file" name="appendix_4A" id="file4A"></td>
+                            <input type="file" name="appendix_4A" id="file4A">
+                            @if(@$appendix_file->workload_policy)
+                            <a href="{{$appendix_file->workload_policy}}">Current Policy <i class="glyphicon glyphicon-file"></i></a>
+                            @endif</td>
                             <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
                             </tr>
                         </table>
@@ -317,7 +320,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Faculty workload(t). </h4>
+                    <h4 class="modal-title">Edit Faculty workload (<span id="year_t"></span>).</h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
@@ -380,7 +383,7 @@
 
                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year T</label>
+                                    <label for="name">Year</label>
                                     <input type="text" name="edit_year_t" id="edit_year_t" value="{{old('edit_year_t')}}" class="form-control">
                                 </div>
                             </div>
@@ -621,7 +624,7 @@
             })
         });
 
-
+        var year_t = <?php echo $getTyear->tyear;?>;
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
             let data = JSON.parse(JSON.stringify($(this).data('row')));
@@ -632,6 +635,11 @@
                 $('#edit_designation_id').val(8).trigger('change');
                 $('#edit_designation').val(data.designation_name);
                 $('#edit_designation').removeClass('hide');
+            }
+            if (data.year_t == year_t){
+                $('#year_t').html("t");
+            }else{
+                $('#year_t').html("t-1");
             }
             $('#edit_faculty_name').val(data.faculty_name);
             $('#edit_total_courses').val(data.total_courses);

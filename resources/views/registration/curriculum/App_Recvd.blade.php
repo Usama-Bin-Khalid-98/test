@@ -15,12 +15,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Application Received
+            Degree Awarding Criteria
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> Application Received </li>
+                <li class="active"> Degree Awarding Criteria </li>
             </ol>
         </section>
         <section class="content-header">
@@ -111,7 +111,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 2.4. Application received.</h3>
+                            <h3 class="box-title">Table 2.4. Degree Awarding Criteria</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

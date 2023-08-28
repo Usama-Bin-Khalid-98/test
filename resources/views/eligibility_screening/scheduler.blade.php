@@ -85,6 +85,7 @@
                                     id="confirmDate" data-id="{{@request()->route('id')}}">@endhasrole Date: {{@$maxSelectedDate}}
                                 : @php $confirm = 'Not Confirmed yet'; @endphp @foreach($reviewers as $checkDate) @if($checkDate->availability_dates ==$maxSelectedDate && $checkDate->is_confirm =='yes' ) @php $confirm = 'confirmed'; @endphp @break @endif @endforeach @php echo $confirm @endphp
                             </div>
+                                <button id="btn-reset-meeting" class="btn-info pull-right" style="border-radius: 4px; margin-top:5px;"><span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Delete current meeting. Use ONLY if you want to setup a new meeting" style="margin-left: 0px;">Reset Meeting</span></button>
 
 {{--                            @foreach(@$availability as $available)--}}
 {{--                                @if($available->availability_dates !== $availability[$index - 1]->availability_dates)--}}
@@ -134,11 +135,10 @@
                         <div class="form-group">
                             <label>Registrations:</label>
                             <div class="input-group">
-                                <select name="registrations" id="registrations" class="form-control select2">
-                                    @foreach(@$registrations as $reg)
-                                        <option value="{{@$reg->id}}">{{@$reg->school}}-{{@$reg->department}}</option>
-                                    @endforeach
-                                </select>
+                                <input name="registrations" id="registrations" hidden value={{$registrations[0]->id}}>
+                                <p id="title">{{@$registrations[0]->school}}-{{@$registrations[0]->department}}</p>
+                                <input type="hidden" id="start_date">
+                                <input type="hidden" id="end_date">
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -146,7 +146,7 @@
                             <label>Reviewers:</label>
                             <select class="form-control select2" name="reviewers" id="reviewers" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
                                 @foreach(@$reviewers_all as $reviewer)
-                                    <option value="{{@$reviewer->id}}">{{@$reviewer->name}}</option>
+                                    <option value="{{@$reviewer->id}}" @if(in_array( @$reviewer->id, $selectedReviewers)) selected @endif >{{@$reviewer->name}}</option>
                                 @endforeach
                             </select>
                             <!-- /.input group -->
@@ -490,6 +490,8 @@
             eventClick: function(info) {
                 $('#peerReviewer-modal').modal('show');
                 console.log('Event: complete details' + info.event.id);
+                $('#start_date').val(info.event.start);
+                $('#end_date').val(info.event.end);
                 $('#eligibility_screenings_id').val(info.event.id);
                 console.log('Event: complete campus_id' + info.event.campus_id);
                 console.log('Event: complete title' + info.event.title);
@@ -560,6 +562,15 @@
 
         let dates = $('#multiDatesPicker').val();
         let eligibility_screenings_id = $('#eligibility_screenings_id').val();
+        let startDate = Date.parse($('#start_date').val());
+        let endDate = Date.parse($('#end_date').val());
+        for(d of dates.split(',')){
+            let date = Date.parse(d);
+            if (date<=startDate || date>=endDate){
+                Notiflix.Notify.Warning("All dates should be within the event limits");
+                return;
+            }
+        }
         console.log('working on datepicker.....', dates);
         $.ajax({
             url:"{{url('PRAvailability')}}",
@@ -795,16 +806,15 @@
 
     $('#notifyAll').on('click', function () {
         let registrations = $('#registrations').val();
-        let title = $('#registrations option:selected').text();
+        let title = $('#title').text();
         let reviewers = $('#reviewers').val();
         let esScheduleDateTime = $('#esScheduleDateTime').val();
         let color = $('#color').val();
 
-        !registrations?addClass('registrations'):removeClass('registrations');
         !reviewers?addClass('reviewers'):removeClass('reviewers');
         !esScheduleDateTime?addClass('esScheduleDateTime'):removeClass('esScheduleDateTime');
         !color?addClass('color'):removeClass('color');
-        if(!registrations || !reviewers || !esScheduleDateTime)
+        if(!reviewers || !esScheduleDateTime)
         {
             Notiflix.notify.error('Fill all the required Fields');
             return false;
@@ -846,6 +856,9 @@
                 $('#add-modal').modal('hide');
                 // location.reload();
                 console.log('response here', response);
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
             },
             error:function(response, exception){
                 Notiflix.Loading.Remove();
@@ -854,6 +867,34 @@
                 })
 
             }
+        })
+    })
+    $('#btn-reset-meeting').on('click', function(){
+        let slip_id = $('#registrations').val();
+        Notiflix.Confirm.Show( 'Confirm', 'Are you sure you want to delete Meeting Data?', 'Yes', 'No', function(){
+            $.ajax({
+                url:"{{url('delete-esc-meeting')}}/"+slip_id,
+                type:"GET",
+                beforeSend: function(){
+                    Notiflix.Loading.Pulse('Processing...');
+                },
+                success: function (response) {
+                    Notiflix.Loading.Remove();
+                    if(response.success){
+                        Notiflix.Notify.Success(response.success);
+                    }
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                },
+                error:function(response, exception){
+                    Notiflix.Loading.Remove();
+                    $.each(response.responseJSON, function (index, val) {
+                        Notiflix.Notify.Failure(val);
+                    })
+
+                }
+            })
         })
     })
 </script>

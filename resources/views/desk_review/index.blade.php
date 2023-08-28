@@ -102,10 +102,12 @@
                                     <th>Contact Person Name</th>
                                     <th>Contact</th>
                                     <th>Email</th>
+                                    <th>Programs</th>
+                                    <th>Submission Date</th>
                                     <th>Files</th>
                                     <th>Desk Review</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                                 </thead>
 
@@ -116,14 +118,20 @@
                                         <td>{{@$regist->school}}</td>
                                         <td>{{@$regist->campus??'Main Campus'}}</td>
                                         <td>{{@$regist->department}}</td>
-                                        <td>{{@$regist->user}}</td>
+                                        <td>{{@$regist->user}} {{@$programs[$regist->id][0]}}</td>
                                         <td>{{@$regist->contact_no}}</td>
                                         <td>{{@$regist->email}}</td>
+                                        <td>
+                                            @foreach(@$programs[$regist->id] as $program)
+                                                {{$program}}<br>
+                                            @endforeach
+                                        </td>
+                                        <td>{{@$regist->registration_date}}
                                         <td><a href="{{url('reg-files')}}/{{$regist->business_school_id}}/{{@$regist->department_id}}"><i class="fa fa-file text-green" ></i></a></td>
                                         <td><a href="{{url('deskreview')}}/{{@$regist->id}}">Click to Review</a></td>
                                         {{--<td>{{$regist->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
                                         <td><i style="cursor: default" class="badge {{$regist->regStatus == 'Review'?'bg-red':''}}" >{{$regist->regStatus != ''?ucwords($regist->regStatus):'created'}}</i></td>
-                                        <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td>
+                                        <!-- <td><i class="fa fa-trash text-info"></i> | <i class="fa fa-pencil text-blue" id="edit"></i> </td> -->
                                     </tr>
 
                                 @endforeach
@@ -137,10 +145,12 @@
                                     <th>Contact Person Name</th>
                                     <th>Contact</th>
                                     <th>Email</th>
-                                    {{--                                <th>Invoice Slip</th>--}}
+                                    <th>Programs</th>
+                                    <th>Submission Date</th>
+                                    <th>Files</th>
                                     <th>Desk Review</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                                 </tfoot>
                             </table>

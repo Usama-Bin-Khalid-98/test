@@ -1,5 +1,7 @@
-@section('pageTitle', 'Program Portfolio')
-
+@section('pageTitle', 'Program Courses')
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -162,7 +164,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">@if(@!$isSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title">@if(@!$isSAR)2.1.Programs Portfolio @else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -552,7 +554,11 @@ $('.delete').on('click', function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/entry-requirements';
+                    @if($isActiveSAR)
+                        window.location = '/program-courses';
+                    @else
+                        window.location = '/entry-requirements';
+                    @endif
                 }
             }, 1000)
         });

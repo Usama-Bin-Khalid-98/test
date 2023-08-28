@@ -71,6 +71,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="submit" name="add" id="add-and-next" value="Submit & Next" class="btn btn-success">
                                         <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
                                     </div>
                                 </div>
@@ -170,10 +171,13 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         <?php if(@$summary->id==null){ ?>
 
         $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             for ( instance in CKEDITOR.instances ) {
                 CKEDITOR.instances[instance].updateElement();
             }
@@ -205,6 +209,11 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/strategic/budgetary-info'
+                        }, 1000);
+                    }
                     console.log('response', response);
                     // location.reload();
                 },
@@ -220,6 +229,10 @@
         <?php }else { ?>
 
         $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             let id = $('#id').val();
             let summary = CKEDITOR.instances.summary.getData();
 
@@ -245,6 +258,11 @@
                     console.log("success resp ",response.success);
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
+                    }
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/strategic/budgetary-info'
+                        }, 1000);
                     }
                     console.log('response here', response);
                 },

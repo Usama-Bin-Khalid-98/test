@@ -133,7 +133,7 @@ class StatutoryCommitteeController extends Controller
                     }
                 }
                 else{
-                    return response()->json(['error' => 'Statutory committee member '. $request->name[$i]. ' already exists.']);
+                    return response()->json(['error' => 'Statutory committee member '. $request->name[$i]. ' already exists.'], 409);
                 }
                 //}
             }
@@ -185,7 +185,7 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            list($designation_id, $error) = Designation::getOrCreate($request->designation, $request->other_designation);
+            list($designation_id, $error) = Designation::getOrCreate($request->designation_id, $request->other_designation);
             if($error){
                 return $error;
             }

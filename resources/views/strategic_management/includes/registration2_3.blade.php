@@ -5,6 +5,7 @@
                               <thead>
                                 <tr>
                                   <th>Program under review</th>
+                                  <th>Year</th>
                                   <th>Semester</th>
                                   <th>Applications received</th>
                                   <th>Admissions offered</th>
@@ -19,8 +20,8 @@
                                   @foreach($applicationsReceived as $data)
                                     <tr>
                                       <td  >{{$data->programName}}</td>
-
-                                      <td>{{$data->semesterName}}</td>
+                                      <td>{{$data->year}}</td>
+                                      <td>{{@$data->semester}}</td>
                                       <td>{{$data->app_received}}</td>
                                      <td>{{$data->admission_offered}}</td>
                                       <td>{{$data->student_intake}}</td>

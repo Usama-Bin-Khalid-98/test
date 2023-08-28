@@ -64,6 +64,7 @@ class ReviewerAvailabilityController extends Controller
                             'department_id' => $getEvent->department_id,
                             'slip_id' => $getEvent->slip_id,
                             'user_id' => Auth::id(),
+                            'is_confirm' => 'no',
                             'availability_dates' => date('Y-m-d', strtotime($date_val))
                         ]);
                     }

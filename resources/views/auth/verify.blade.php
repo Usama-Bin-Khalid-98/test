@@ -47,5 +47,9 @@
     }
 </style>
 <div class="footer" style="margin-top: 350px !important;">
+    <form class="pull-right" method="POST" action="{{ route('reRegister') }}">
+        @csrf
+        <span style="font-size:medium; margin-right:12px">Not receiving email? <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Signup Again</button></span>
+    </form>
 @include("../includes.footer")
 </div>

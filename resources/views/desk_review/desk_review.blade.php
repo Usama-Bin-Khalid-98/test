@@ -266,7 +266,12 @@
                                                 <p> <strong>o)</strong>	Permanent/ regular faculty departed in last 3 years (FTE) (table 4.5: resigned + terminated+ retired) = @foreach($facultyStability as $fs) {{$fs->year}} ({{$fs->resigned + $fs->retired + $fs->terminated}}), @endforeach</p>
                                                 <p> <strong>p)</strong>	FT:PT (as per table 4.3 a 4.3 b)=
                                                 <ol type="i">
-                                                    @foreach($fulltime as $program => $number)<li>{{$program}} = {{$number}} : {{$parttime[$program]}} @endforeach
+                                                    @foreach($fte_program_wise as $key => $value)
+                                                    @php
+                                                        $total = array_sum($value) + @$vfe_program_wise[$key];
+                                                    @endphp
+                                                    <li>{{$key}} = {{round(array_sum($value) / $total * 100, 2)}} : {{round(@$vfe_program_wise[$key] / $total * 100, 2)}}</li>
+                                                    @endforeach
                                                 </ol></p>
                                                 <!-- <p> <strong>q)</strong>	No. of faculty with terminal degree from foreign institutions = {{@$faculty_degree->faculty_foreign}}</p>
                                                 <p> <strong>r)</strong>	No. of faculty with terminal degree from domestic institutions = {{@$faculty_degree->faculty_domestic}}</p>
@@ -467,8 +472,8 @@
                                     @hasrole('NBEACAdmin')<td><i class="badge {{@$review->regStatus == 'Review'?'bg-green':'bg-red'}}">{{$review->regStatus?$review->regStatus:'Inactive'}}</i></td>@endhasrole
                                     @hasrole('NBEACAdmin')
                                     <td>
-                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i>|
-                                        <i data-id='{"id":{{$review->id}}}' class="fa fa-pencil text-blue edit"></i>
+                                        <i class="fa fa-trash text-info delete" data-id="{{$review->id}}"></i>
+                                        <!-- |<i data-id='{"id":{{$review->id}}}' class="fa fa-pencil text-blue edit"></i> -->
                                     </td>
                                     @endhasrole
                                 </tr>

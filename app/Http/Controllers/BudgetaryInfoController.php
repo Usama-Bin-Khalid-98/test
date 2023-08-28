@@ -81,7 +81,9 @@ class BudgetaryInfoController extends Controller
 
             if($request->year){
                 foreach ($request->year as $key=>$year) {
-
+                    if(!$request->uni_budget[$key]){
+                        continue;
+                    }
                     $where_data = [
                         'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,

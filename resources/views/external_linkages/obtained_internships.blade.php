@@ -70,6 +70,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" id="add-and-next" value="Add & Next" class="btn btn-success">
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -223,6 +224,10 @@
         });
 
          $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
              for ( instance in CKEDITOR.instances ) {
                  CKEDITOR.instances[instance].updateElement();
              }
@@ -256,8 +261,11 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    // location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/placement-activity';
+                        }, 1000);
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();
