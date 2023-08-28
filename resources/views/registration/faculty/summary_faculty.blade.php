@@ -1,5 +1,7 @@
 @section('pageTitle', 'Summary BSF')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -421,7 +423,11 @@ $('.delete').on('click', function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/work-load';
+                    @if($isActiveSAR)
+                        window.location = '/faculty-detailed-info';
+                    @else
+                        window.location = '/work-load';
+                    @endif
                 }
             }, 1000)
         });

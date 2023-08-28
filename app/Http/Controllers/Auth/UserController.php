@@ -61,6 +61,13 @@ class UserController extends Controller
         return view('users.create',compact('roles'));
     }
 
+    public function verifyActivation(){
+        if(Auth::user()->status == "active"){
+            return redirect()->route('home');
+        }
+        Auth::logout();
+        return redirect()->route("login");
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -193,7 +200,7 @@ class UserController extends Controller
         }
 
         try {
-            $new_role = Role::find($request->input('role_id'));
+            $new_roles = Role::whereIn('id', $request->role_id)->get();
             User::where('id', $id)->update([
                 'name' => $request->name,
                 'cnic' => $request->cnic,
@@ -202,13 +209,15 @@ class UserController extends Controller
                 'designation_id' => $request->designation_id,
                 'email' => $request->email,
                 'status' => $request->status,
-                'user_type' => $new_role->name
+                'user_type' => $new_roles[0]->name //need to be fixed or removed altogether
             ]);
 
            $user = User::find($id);
           //$user->update($request->role_id);
           DB::table('model_has_roles')->where('model_id',$id)->delete();
-          $user->assignRole($request->input('role_id'));
+          foreach($new_roles as $new_role){
+              $user->assignRole($new_role->id);
+          }
             return response()->json(['success' => 'Record updated successfully.']);
 
         }catch (Exception $e)

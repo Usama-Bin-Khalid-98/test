@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
     Route::get('/', function () {
-        return view('auth.login');
+        return Redirect::route('home');
     });
 
     Route::get('/login', function() {
+        if(Auth::check()){
+            return Redirect::route('home');
+        }
         return view('auth.login');
     });
 
@@ -27,6 +32,7 @@ Route::get('/email', function() {
     // Registration Routes...
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
+    Route::post('reRegister', 'Auth\RegisterController@reRegister')->name('reRegister')->withoutMiddleware(['guest']);
     Route::post('survey', 'SurveyQuestionnaireController@store');
     Route::get('get-campuses', 'CampusController@getCampuses');
     Route::get('get-cities', 'Auth\RegisterController@get_cities');
@@ -45,6 +51,10 @@ Route::get('/email', function() {
     Route::group(['middleware' => ['auth']], function() {   /// if users not logged in will redirect to login page
         ////// Users permissions
         //Route::get('permission', 'Auth\UserController@permissions');
+        Route::get('/verify-activation','Auth\UserController@verifyActivation');
+        Route::get('profile', 'Auth\UserController@profile');
+        Route::post('profile/update', 'Auth\UserController@update_profile');
+        Route::post('profile/updatePassword', 'Auth\UserController@updatePassword');
         Route::group(['middleware' => ['role:NBEACAdmin']], function () {
             ///// Dashboard
             Route::patch('admin/{id}', 'DashboardController@schoolStatus');
@@ -256,6 +266,7 @@ Route::get('/email', function() {
             Route::get('PeerReviewerReport', 'EligibilityScreeningController@esReport');
             Route::post('PeerReviewerReport', 'EligibilityScreeningController@store');
             Route::patch('PeerReviewerReport/{id}', 'EligibilityScreeningController@update');
+            Route::get('delete-esc-meeting/{id}', 'EligibilityScreeningController@resetMeeting');
 
         });
 
@@ -281,7 +292,7 @@ Route::get('/email', function() {
             Route::post('accreditation-invoice-Status', 'SarInvoiceController@update_status');
         });
 
-        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson']], function () {
+        Route::group(['middleware' => ['role:ESScheduler|BusinessSchool|NbeacFocalPerson|Mentor']], function () {
             Route::resource('MentoringScheduler', 'ScheduleMentorMeetingController');
             Route::get('MentorScheduler/{id?}', 'ScheduleMentorMeetingController@MentorScheduler');
             Route::post('changeMentorConfirmStatus', 'ScheduleMentorMeetingController@changeConfirmStatus');
@@ -314,6 +325,7 @@ Route::get('/email', function() {
 
         Route::group(['middleware' => ['role:Mentor|BusinessSchool']], function () {
             Route::post('mentorsAvailability', 'ScheduleMentorMeetingController@mentorsAvailability');
+            Route::get('reg-files/{cid}/{did}', 'DeskReviewController@reg_files');
         });
 
         Route::group(['middleware' => ['role:BusinessSchool|NBEACAdmin']], function () {

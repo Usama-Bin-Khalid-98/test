@@ -1,5 +1,7 @@
-@section('pageTitle', 'Program Portfolio')
-
+@section('pageTitle', 'Program Courses')
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -552,7 +554,11 @@ $('.delete').on('click', function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/entry-requirements';
+                    @if($isActiveSAR)
+                        window.location = '/program-courses';
+                    @else
+                        window.location = '/entry-requirements';
+                    @endif
                 }
             }, 1000)
         });

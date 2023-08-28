@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppendixFile extends Model
 {
-    protected $fillable = ['campus_id', 'business_school_id', 'research_summary'];
 
+    protected $guarded = [];
     //
     public function business_school()
     {

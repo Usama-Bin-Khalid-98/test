@@ -466,7 +466,7 @@ $invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_sch
 
                             @foreach($memberShips as $user)
                                 <tr>
-                                    <td>{{$user->business_school->name}}</td>
+                                    <td>{{@$user->business_school->name}}</td>
                                     <td>{{$user->campus->location??'Main Campus'}}</td>
                                     <td>{{@$user->department->name}}</td>
                                     <td>{{$user->name}}</td>
@@ -1179,6 +1179,7 @@ $invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_sch
                           <th>Desk Review</th>
                           @hasrole('ESScheduler')<th>Mentors</th>@endhasrole
                           <th>Registration Print</th>
+                          <th>Appendix Files</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -1195,6 +1196,7 @@ $invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_sch
                               {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
                               <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->slip->campus->id}}&bid={{@$mentorMeeting->slip->business_school_id}}&did={{$mentorMeeting->slip->department_id}}">Registration Print </a></td>
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                              <td><a href="{{url('reg-files')}}/{{$mentorMeeting->slip->business_school_id}}/{{$mentorMeeting->slip->department_id}}"><i class = "fa fa-file text-green"></i></a></td>
                               <td><i class="badge" data-id="{{@$mentorMeeting->slip->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->slip->regStatus != ''?ucwords($mentorMeeting->slip->regStatus):'Initiated'}}</i></td>
                               <td>@if($mentorMeeting->slip->regStatus =='ScheduledMentoring' || $mentorMeeting->slip->regStatus =='ScheduledES' || $mentorMeeting->slip->regStatus =='Mentoring' )
                                       <a href="{{url('meetingsList')}}/{{$mentorMeeting->slip->id}}" class="btn-xs btn-info"> <i class="fa fa-calendar" data-toggle="tooltip" title="Mentoring Meeting Calendar"></i></a>
@@ -1214,6 +1216,7 @@ $invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_sch
                               {{--                              <a href="?cid=print<?php echo $school->campusID; ?>&bid=<?php echo $school->id; ?>">Print</a>--}}
                               <td><a href="{{url('registrationPrint?cid=')}}{{@$mentorMeeting->campus->id}}&bid={{@$mentorMeeting->business_school_id}}&did={{@$mentorMeeting->department_id}}">Registration Print </a></td>
                               {{--<td>{{$invoice->user_type === 'peer_review'?'Peer Review':"Business School"}}</td>--}}
+                              <td><a href="{{url('reg-files')}}/{{$mentorMeeting->business_school_id}}/{{$mentorMeeting->department_id}}"><i class = "fa fa-file text-green"></i></a></td>
                               <td><i class="badge" data-id="{{@$mentorMeeting->id}}"  style="background: {{$mentorMeeting->regStatus == 'Initiated'?'red':''}}{{$mentorMeeting->regStatus == 'Review'?'brown':''}}{{$mentorMeeting->regStatus == 'Approved'?'green':''}}" >{{@$mentorMeeting->regStatus != ''?ucwords($mentorMeeting->regStatus):'Initiated'}}</i></td>
                               <td>@if($mentorMeeting->regStatus =='ScheduledMentoring' || $mentorMeeting->regStatus =='ScheduledES' || $mentorMeeting->regStatus =='Mentoring' )
                                       <a href="{{url('meetingsList')}}/{{$mentorMeeting->id}}" class="btn-xs btn-info"> <i class="fa fa-calendar" data-toggle="tooltip" title="Mentoring Meeting Calendar"></i></a>
@@ -1232,6 +1235,7 @@ $invoicesIsCompleted = checkIsCompleted('App\Models\Common\Slip', ['business_sch
                           <th>Desk Review</th>
                           @hasrole('ESScheduler')<th>Mentors</th>@endhasrole
                           <th>Registration Print</th>
+                          <th>Appendix Files</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>

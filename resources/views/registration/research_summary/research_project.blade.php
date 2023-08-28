@@ -105,6 +105,7 @@
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
                                     <label for="sector">&nbsp;&nbsp;</label>
+                                    <input type="submit" name="add" id="add-and-next" value="Add & Next" class="btn btn-success">
                                     <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
                                 </div>
                             </div>
@@ -297,6 +298,10 @@
         });
 
         $('#form').submit(function (e) {
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
+            }
             // let uni_id = $('#uni_id').val();
             let title = $('#title').val();
             let start_date = $('#start_date').val();
@@ -337,8 +342,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/research-summary';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class ResearchSummaryController extends Controller
 {
@@ -39,9 +40,9 @@ class ResearchSummaryController extends Controller
         $years['yeart'] = @$getYears->tyear;
         $years['year_t_1'] = @$getYears->year_t_1;
         $years['year_t_2'] = @$getYears->year_t_2;
-
+        $appendix_file = AppendixFile::where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
 //        dd($years);
-        return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories', 'years'));
+        return view('registration.research_summary.index', compact('publications', 'summaries', 'publication_categories', 'years', 'appendix_file'));
     }
 
     /**
@@ -203,7 +204,8 @@ class ResearchSummaryController extends Controller
         }
         $appendix_file = AppendixFile::where([
             'campus_id' => Auth::user()->campus_id,
-            'business_school_id' => Auth::user()->business_school_id
+            'business_school_id' => Auth::user()->business_school_id,
+            'department_id' => Auth::user()->department_id,
             ])->first();
             
         $path = 'uploads/research_summary';
@@ -211,14 +213,18 @@ class ResearchSummaryController extends Controller
         $request->file('appendix_5A')->move($path, $imageName);
         if($appendix_file){
             if($appendix_file->research_summary && $appendix_file->research_summary !== ''){
-                unlink($appendix_file->research_summary);
+                try{
+                    unlink($appendix_file->research_summary);
+                }catch (Exception $e){
+                    Log::error($e);
+                }
             }
-            
             AppendixFile::where(['id' => $appendix_file->id])->update(['research_summary' => $path . '/' . $imageName]);        
         }else{
             AppendixFile::create([
                 'campus_id' => Auth::user()->campus_id,
                 'business_school_id' => Auth::user()->business_school_id,
+                'department_id' => Auth::user()->department_id,
                 'research_summary' => $path . '/' . $imageName
             ]);
         }

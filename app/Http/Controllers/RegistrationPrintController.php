@@ -146,11 +146,11 @@ WHERE designations.id=contact_infos.designation_id
                 FROM program_portfolios, programs, course_types, business_schools, campuses
                 WHERE program_portfolios.program_id=programs.id AND program_portfolios.type="REG" AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=campuses.id AND program_portfolios.campus_id=? AND program_portfolios.deleted_at is null', array($req->bid, $req->cid));
 
-             $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName FROM entry_requirements, eligibility_criterias, programs, campuses WHERE entry_requirements.program_id=programs.id AND entry_requirements.type="REG" AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=campuses.id AND entry_requirements.campus_id=?   AND entry_requirements.deleted_at is null
-             ', array($req->cid));
+             $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName FROM entry_requirements, eligibility_criterias, programs, campuses WHERE entry_requirements.program_id=programs.id AND entry_requirements.type="REG" AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=campuses.id AND entry_requirements.campus_id=?   AND entry_requirements.deleted_at is null AND entry_requirements.department_id=?
+             ', array($req->cid, $req->did));
              //dd($userCampus[0]->campus_id);
              //dd($entryRequirements);
-             $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName, `year` as semesterName
+             $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName
                 FROM application_receiveds, programs
                 WHERE application_receiveds.program_id=programs.id
                   AND application_receiveds.type="REG"
@@ -462,10 +462,11 @@ WHERE entry_requirements.program_id=programs.id
   AND entry_requirements.deleted_at is null
   AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id
   AND entry_requirements.campus_id=campuses.id
-  AND entry_requirements.campus_id=?', array($userCampus[0]->campus_id));
+  AND entry_requirements.campus_id=?
+  AND entry_requirements.department_id=?', array($userCampus[0]->campus_id, $department_id));
              //dd($userCampus[0]->campus_id);
              //dd($entryRequirements);
-             $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName, `year` as semesterName
+             $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName
 FROM application_receiveds, programs
 WHERE application_receiveds.program_id=programs.id
   AND application_receiveds.type="REG"

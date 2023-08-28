@@ -200,7 +200,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Contact</th>
-                                    <th>Role</th>
+                                    <th>Roles</th>
                                     <th>Business School</th>
 {{--                                    <th>Office Contact</th>--}}
 {{--                                    <th>CV</th>--}}
@@ -215,7 +215,11 @@
                                         <td>{{@$user->name}}</td>
                                         <td>{{@$user->email}}</td>
                                         <td>{{@$user->contact_no}}</td>
-                                        <td>{{@$user->roles[0]->name}}</td>
+                                        <td>
+                                        @foreach(@$user->roles as $role)    
+                                            {{@$role->name}}<br>
+                                        @endforeach
+                                        </td>
                                         <td>{{@$user->business_school->name}}</td>
 {{--                                        <td>{{$contact->school_contact}}</td>--}}
 {{--                                        <td><a href="{{url($contact->cv)}}"><i class="fa fa-file-word-o"></i></a> </td>--}}
@@ -224,7 +228,7 @@
                                         </td>
                                         <td>
                                             <!-- <i class="fa fa-check-square permissions" data-toggle="modal" data-target="#permissions-modal" data-row='{"id":{{@$user->id}},"role_id":"{{@$user->roles}}","permissions":"{{@$user->permissions}}"}'> </i> | -->
-                                            <i data-row='{"id":"{{$user->id}}","name":"{{$user->name}}","designation_id":"{{$user->designation_id}}","cnic":"{{$user->cnic}}","email":"{{$user->email}}","contact_no":"{{$user->contact_no}}","address":"{{$user->address}}","role_id":"{{@$user->roles[0]->id}}","status":"{{$user->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-edit text-blue edit"></i>
+                                            <i data-row='{"id":"{{$user->id}}","name":"{{$user->name}}","designation_id":"{{$user->designation_id}}","cnic":"{{$user->cnic}}","email":"{{$user->email}}","contact_no":"{{$user->contact_no}}","address":"{{$user->address}}","role_id":"@foreach(@$user->roles as $role){{$role->id}},@endforeach","status":"{{$user->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-edit text-blue edit"></i>
                                              | <i class="fa fa-trash text-info delete" data-id="{{@$user->id}}"></i> | <i data-row='{"Passid":"{{$user->id}}"}' class="fa fa-lock text-info changePassword" data-toggle="modal" data-target="#change-password" data-id="{{@$user->id}}"></i>
 
                                         </td>
@@ -316,7 +320,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Role</label>
-                                <select name="role_id" class="form-control select2" id="edit_role_id">
+                                <select name="role_id" class="form-control select2" multiple="multiple" id="edit_role_id">
                                     <option disabled selected >Select Role</option>
                                     @foreach($edit_roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
@@ -717,7 +721,7 @@
             $('#edit_email').val(data.email);
             $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
             $('#edit_address').val(data.address);
-            $('#edit_role_id').select2().val(data.role_id).trigger('change');
+            $('#edit_role_id').select2().val(data.role_id.split(',')).trigger('change');
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
@@ -751,6 +755,9 @@
             }
             e.preventDefault();
             var formData = new FormData(this);
+            for (let i = 0; i < role_id.length; i++) {
+                formData.append('role_id[]', role_id[i]);
+            }
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({

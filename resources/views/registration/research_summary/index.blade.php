@@ -1,5 +1,7 @@
 @section('pageTitle', 'Research Summary')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -39,7 +41,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title" style="width: 92%;">Provide a summary of 5.1  Provide a summary of research output<sup>6</sup> of business school in last three academic years in Table.5.1. Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly mentioning type of each item as impact factor or HEC category, as Appendix-5A.</h3>
+                            <h3 class="box-title" style="width: 92%;">Provide a summary of 5.1  Provide a summary of research output<sup>6</sup> of business school in last three academic years in Table.5.1. Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly mentioning type of each item as impact factor or HEC category, as @if($isActiveSAR) Appendix-5B @else Appendix-5A @endif.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -178,8 +180,12 @@
                         <form action="javascript:void(0)" id="fileform" method="POST" enctype="multipart/form-data">
                         <table class='jumbotron'>   
                             <tr> 
-                            <td style="padding:15px;" ><label for="file">Appendix 5A</label>
-                            <input type="file" name="appendix_5A" id="file"></td>
+                            <td style="padding:15px;" ><label for="file">@if($isActiveSAR) Appendix-5B @else Appendix-5A @endif</label>
+                            <input type="file" name="appendix_5A" id="file">
+                            @if(@$appendix_file->research_summary)
+                            <a href="{{$appendix_file->research_summary}}">Current File <i class="glyphicon glyphicon-file"></i></a>
+                            @endif
+                            </td>
                             <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
                             </tr>
                         </table>
@@ -597,7 +603,11 @@
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/financial-info';
+                    @if($isActiveSAR)
+                        window.location = '/research-output';
+                    @else
+                        window.location = '/financial-info';
+                    @endif
                 }
             }, 1000)
         });

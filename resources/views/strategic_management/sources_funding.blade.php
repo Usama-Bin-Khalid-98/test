@@ -50,35 +50,28 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Sources of Funding</label>
-                                    <select name="funding_sources_id" id="funding_sources_id" class="form-control select2" style="width: 100%;">
-                                        <option selected  disabled >Select Sources of Funding</option>
-                                        @foreach($fundings as $fund)
-                                            <option value="{{$fund->id}}">{{$fund->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Amount in million rupees</label>
-                                    <input type="number" name="amount" id="amount" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Percent Share</label>
-                                    <input type="number" name="percent_share" id="percent_share" class="form-control">
-                                </div>
-                            </div>
-
-                             <div class="col-md-12">
-                                <div class="form-group pull-right" style="margin-top: 40px">
-                                    <label for="sector">&nbsp;&nbsp;</label>
-                                    <input type="submit" name="add" id="add" value="Add" class="btn btn-info">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <th>Sources of Funding</th>
+                                        <th>Amount in million rupees</th>
+                                        <th>Percent share</th>
+                                    </thead>
+                                    @foreach($fundings as $funding) 
+                                    <tr>
+                                        <td>{{$funding->name}} </td>
+                                        <input type="hidden" name="funding_id[]" value="{{$funding->id}}"/>
+                                        <td><input type="number" name="amount[]" required class="form-control"/></td>
+                                        <td><input type="number" name="percent_share[]" required class="form-control"/></td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+                                <div class="col-md-12">
+                                    <div class="form-group pull-right" >
+                                        <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="submit" name="add" id="add-and-next" value="Submit & Next" class="btn btn-success">
+                                        <input type="submit" name="add" id="add" value="Submit" class="btn btn-info">
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -166,7 +159,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Sources of Funding</label>
-                                    <select name="funding_sources_id" id="edit_funding_sources_id" class="form-control select2" style="width: 100%;">
+                                    <select name="funding_id" id="edit_funding_sources_id" class="form-control select2" style="width: 100%;">
                                         <option selected  disabled >Select Sources of Funding</option>
                                         @foreach($fundings as $fund)
                                             <option value="{{$fund->id}}">{{$fund->name }}</option>
@@ -240,19 +233,23 @@
         });
 
          $('#form').submit(function (e) {
-            let funding_sources_id = $('#funding_sources_id').val();
-            let amount = $('#amount').val();
-            let percent_share = $('#percent_share').val();
-
-            !funding_sources_id?addClass('funding_sources_id'):removeClass('funding_sources_id');
-            !amount?addClass('amount'):removeClass('amount');
-            !percent_share?addClass('percent_share'):removeClass('percent_share');
-
-            if(!funding_sources_id || !amount || !percent_share)
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
+            let next = false;
+            if(e.originalEvent.submitter.id === 'add-and-next'){
+                next = true;
             }
+            // let funding_sources_id = $('#funding_sources_id').val();
+            // let amount = $('#amount').val();
+            // let percent_share = $('#percent_share').val();
+
+            // !funding_sources_id?addClass('funding_sources_id'):removeClass('funding_sources_id');
+            // !amount?addClass('amount'):removeClass('amount');
+            // !percent_share?addClass('percent_share'):removeClass('percent_share');
+
+            // if(!funding_sources_id || !amount || !percent_share)
+            // {
+            //     Notiflix.Notify.Warning("Fill all the required Fields.");
+            //     return;
+            // }
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
@@ -273,8 +270,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/strategic/audit-report';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

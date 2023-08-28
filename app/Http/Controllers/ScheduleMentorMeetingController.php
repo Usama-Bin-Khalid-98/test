@@ -34,12 +34,11 @@ class ScheduleMentorMeetingController extends Controller
         AND departments.id=slips.department_id
         AND campuses.business_school_id=business_schools.id
         AND users.id = slips.created_by
-        AND slips.status ='approved' AND slips.regStatus = 'Mentoring'";
+        AND slips.status ='approved'";
         $id ? $query .= ' AND slips.id = ' . $id : '';
         $registrations = DB::select($query, array());
 
-        $mentors = User::where(['user_type'=>'Mentor', 'status'=>'active'])->get();
-//        dd($registrations);
+        $mentors = User::role('Mentor')->get();
 
         $MeetingMentors = MentoringMentor::with('slip', 'user')->where('slip_id', $id)->get();
 //        dd($MeetingMentors);
@@ -64,6 +63,9 @@ class ScheduleMentorMeetingController extends Controller
                 $count++;
             }
         }
+        $isSchoolAvailable = ScheduleMentorMeeting::where(['user_id' => $registrations[0]->created_by])->exists();
+        $isAnyMentorAvailable = ScheduleMentorMeeting::where(['slip_id'=> $id])->where('user_id','!=',$registrations[0]->created_by)->exists();
+        $canConfirmDate = $isSchoolAvailable && $isAnyMentorAvailable;
 //        dd($userDates);
         $availability = ScheduleMentorMeeting::where(['slip_id'=> $id, 'user_id'=>Auth::id()])->get();
         $availability_percent = ScheduleMentorMeeting::where(['slip_id'=> $id])->get();
@@ -86,7 +88,8 @@ class ScheduleMentorMeetingController extends Controller
         $maxSelectedDate= '';
         $count_val = array_count_values($dates);
         if ($count_val) $maxSelectedDate = $this->doublemax($count_val);
-        return view('mentoring.scheduler', compact('registrations', 'mentors','MentorsDates', 'userDates', 'MeetingMentors', 'maxSelectedDate'));
+        $selectedMentors = MentoringMentor::where(['slip_id' => $id])->pluck('user_id')->toArray();
+        return view('mentoring.scheduler', compact('registrations', 'mentors','MentorsDates', 'userDates', 'MeetingMentors', 'maxSelectedDate', 'selectedMentors', 'canConfirmDate'));
     }
 
     public function doublemax($mylist){
@@ -109,6 +112,7 @@ class ScheduleMentorMeetingController extends Controller
             try {
                 $update = ScheduleMentorMeeting::where(['slip_id' => $request->slip_id, 'availability_dates' =>$request->dateVal])->update(['is_confirm' => $request->confirm]);
                 if($update){
+                    ScheduleMentorMeeting::where(['slip_id' => $request->slip_id, 'is_confirm' => 'no'])->delete();
                     return response()->json(['success' => 'updated successfully'], 200);
                 }
 
@@ -148,12 +152,12 @@ class ScheduleMentorMeetingController extends Controller
             try {
 
                 $getSchoolInfoCheck = MentoringMeeting::where('slip_id', $request->registrations)->exists();
+                $getSchoolInfo = Slip::where('id', $request->registrations)->get()->first();
+                $esScheduleDateTime = $request->esScheduleDateTime;
+                $dateArray = explode('-', $esScheduleDateTime);
+                $start = Carbon::parse(trim($dateArray[0]));
+                $end = Carbon::parse(trim($dateArray[1]));
                 if(!$getSchoolInfoCheck) {
-                    $getSchoolInfo = Slip::where('id', $request->registrations)->get()->first();
-                    $esScheduleDateTime = $request->esScheduleDateTime;
-                    $dateArray = explode('-', $esScheduleDateTime);
-                    $start = Carbon::parse(trim($dateArray[0]));
-                    $end = Carbon::parse(trim($dateArray[1]));
                     //
                     $insert = MentoringMeeting::create([
                         'campus_id' => $getSchoolInfo->business_school_id,
@@ -204,8 +208,28 @@ class ScheduleMentorMeetingController extends Controller
                         });
                         return response()->json(['success' => 'Notification sent Successfully'], 200);
                     }
+                }else{
+                    MentoringMeeting::where(['slip_id' => $request->registrations])->update([
+                        'start' => $start->format('Y-m-d H:i:s'),
+                        'end' => $end->format('Y-m-d H:i:s'),
+                    ]);
+                    foreach ($request->user_id as $mentor){
+                        if(MentoringMentor::where(['slip_id' => $request->registrations, 'user_id'=>$mentor])->exists()){
+                            continue;
+                        }
+                        MentoringMentor::create(['slip_id' => $request->registrations, 'user_id'=>$mentor, 'created_by'=>Auth::id()]);
+                    }
+                    $alreadySelectedMentors = MentoringMentor::where(['slip_id' => $request->registrations])->get();
+                    foreach($alreadySelectedMentors as $mentor){
+                        if(in_array($mentor->user_id, $request->user_id)){
+                            continue;
+                        }
+                        MentoringMentor::destroy($mentor->id);
+                        ScheduleMentorMeeting::where(['slip_id' => $request->registrations, 'user_id' => $mentor->user_id])->delete();
+                    }
+                    Slip::find($request->registrations)->update(['regStatus'=>'ScheduledMentoring']);
+                    return response()->json(['success' => 'Updated Successfully'], 200);
                 }
-                return response()->json(['message' => 'Record already Exists'], 422);
             }catch (Exception $e)
             {
                 return response()->json(['message' =>$e->getMessage()], 422);
@@ -254,7 +278,6 @@ class ScheduleMentorMeetingController extends Controller
                 ->where('s.status', 'approved')
                 ->where('mm.user_id', Auth::id())
                 ->get();
-            //dd($MentoringMeetings);
         }else {
             $MentoringMeetings = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -319,6 +342,7 @@ class ScheduleMentorMeetingController extends Controller
 //                            'department_id' => $getEvent->department_id,
                             'slip_id' => $getEvent->slip_id,
                             'user_id' => Auth::id(),
+                            'is_confirm' => 'no',
                             'availability_dates' => date('Y-m-d', strtotime($date_val))
                         ];
                         Auth::user()->user_type==='ESScheduler'? $mentorsData['status'] = 'active':

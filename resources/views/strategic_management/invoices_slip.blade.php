@@ -66,13 +66,19 @@ $is_processing_a_slip = isProcessingASlip();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Department Fee amount</label>
-                                    <input type="text" readonly id="fee_amount" readonly name="fee_amount" value="{{@$fee_amount->amount}}" class="form-control">
+                                    <input type="text" readonly id="fee_amount" readonly name="fee_amount" value="Rs. {{@$fee_amount->amount}} /Program" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Invoice No</label>
                                     <input type="text" readonly id="invoice_no" readonly name="invoice_no" value="{{@$invoice_no??old('invoice_no')}}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="number_of_programs">Number of Programs to be accreditated</label>
+                                    <input type="number" required id="number_of_programs" name="number_of_programs" class="form-control">
                                 </div>
                             </div>
 
@@ -553,10 +559,12 @@ $is_processing_a_slip = isProcessingASlip();
             let status = $('#add_status').val();
             let cheque_no = $('#add_cheque_no').val();
             let comments = $('#add_comments').val();
+            let number_of_programs = $('#number_of_programs').val();
 
             !department_id?addClass('department_id'):removeClass('department_id');
             !invoice_no?addClass('invoice_no'):removeClass('invoice_no');
-            if(!invoice_no || !department_id)
+            !number_of_programs?addClass('number_of_programs'):removeClass('number_of_programs');
+            if(!invoice_no || !department_id || !number_of_programs)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
@@ -572,7 +580,8 @@ $is_processing_a_slip = isProcessingASlip();
                         payment_method:payment_method,
                         status:status,
                         cheque_no:cheque_no,
-                        comments:comments
+                        comments:comments,
+                        number_of_programs:number_of_programs
                     },
                     beforeSend: function(){
                         Notiflix.Loading.Pulse('Processing...');
@@ -687,6 +696,9 @@ $is_processing_a_slip = isProcessingASlip();
                     // alert('If you say so...');
                 } );
 
+        })
+        $('#number_of_programs').on('input', function(e){
+            $('#fee_amount').val("Rs. " + ($('#number_of_programs').val() * {{@$fee_amount->amount}}));
         })
     </script>
 

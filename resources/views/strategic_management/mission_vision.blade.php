@@ -1,5 +1,7 @@
 @section('pageTitle', 'Mission Vision')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -34,7 +36,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.7  State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as Appendix-1C.</h3>
+                            <h3 class="box-title">1.7  State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as @if($isActiveSAR) Appendix-1D @else Appendix-1C @endif.</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -68,7 +70,7 @@
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="name">Attach Doc (Appendix-1C)</label>
+                        <label for="name">Attach Doc (@if($isActiveSAR) Appendix-1D @else Appendix-1C @endif)</label>
                         <input type="file" name="file" id="file">
                         <span class="text-red">Max upload file size 2mb.</span>
                          @if(@$get->file!=null)
@@ -152,7 +154,7 @@
 
                               <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Attach Doc (Appendix-1C)</label>
+                                <label for="name">Attach Doc (@if($isActiveSAR) Appendix-1D @else Appendix-1C @endif)</label>
                                 <input type="file" name="file" id="edit_file" >
                                 <input type="hidden" name="old_file" id="old_file" >
                                 <span class="text-blue" id="file-name"></span>
@@ -306,6 +308,8 @@
                 }
             });
             var formData = new FormData(this);
+            formData.set("mission", mission);
+            formData.set("vision", vision);
             formData.append('file', $("#file")[0].files[0]);
             formData.append('_method', 'PUT');
             $.ajax({

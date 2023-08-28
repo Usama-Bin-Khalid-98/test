@@ -96,7 +96,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_first_meeting_{{@$body->id}}" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_first_meeting_{{@$body->id}}" name="date_first_meeting[]" value="<?php echo date('Y-m-d'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -104,7 +104,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_second_meeting_{{@$body->id}}" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_second_meeting_{{@$body->id}}" name="date_second_meeting[]" value="<?php echo date('Y-m-d'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -112,7 +112,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_third_meeting_{{@$body->id}}" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_third_meeting_{{@$body->id}}" name="date_third_meeting[]" value="<?php echo date('Y-m-d'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td>
@@ -120,7 +120,7 @@
                                             <div class="input-group-addon">
 
                   </div>
-                                            <input type="date" id="date_fourth_meeting_{{@$body->id}}" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                                            <input type="date" id="date_fourth_meeting_{{@$body->id}}" name="date_fourth_meeting[]" value="<?php echo date('Y-m-d'); ?>" class="form-control">
                                             </div>
                                         </td>
                                          <td style="font-size: 8px"><input type="file" name="file{{$loop->iteration}}"></td>
@@ -478,7 +478,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_first_meeting" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_first_meeting_` + row_count + `" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -486,7 +486,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_second_meeting" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_second_meeting_` + row_count + `" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -494,7 +494,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_third_meeting" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_third_meeting_` + row_count + `" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -502,7 +502,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_fourth_meeting" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_fourth_meeting_` + row_count + `" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td style="font-size: 8px"><input type="file" name="file`+row_count+`"></td>
@@ -586,20 +586,28 @@
         $('#add').submit(function (e) {
             let hasEmptyField = false;
             let isEmptyForm = true;
-            let fields = ['designation_id', 'other_designation_id', 'date_first_meeting', 'date_second_meeting', 'date_third_meeting', 'date_fourth_meeting'];
+            let meetingsInOrder = true;
+            let fields = ['designation_id', 'date_first_meeting', 'date_second_meeting', 'date_third_meeting', 'date_fourth_meeting'];
             $('.designations').map(function(index, element){
                 let statutory_body_id = element.id.split('_').pop();
                 let name = $('#name_'+statutory_body_id).val();
                 if (name){
                     isEmptyForm = false;
+                    let meetingDates = [];
                     fields.forEach(function(value, index){
                         let field_id = value + '_' + statutory_body_id;
                         if ($('#' + field_id).val()){
+                            if(field_id.includes("meeting")){
+                                meetingDates.push(Date.parse($('#' + field_id).val()));
+                            }
                             removeClass(field_id);
                         }else{
                             addClass(field_id);
                             hasEmptyField = true;
                         }
+                    })
+                    meetingsInOrder = meetingsInOrder && meetingDates.every(function(value, index){
+                        return index === 0|| value >= meetingDates[index - 1];
                     })
                 }else{
                     fields.forEach(function(value, index){
@@ -612,6 +620,10 @@
             if(hasEmptyField)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            if(!meetingsInOrder){
+                Notiflix.Notify.Warning("All meeting dates should be in ascending order");
                 return;
             }
             if(isEmptyForm){
@@ -726,6 +738,19 @@
             if(!name || !statutory_body_id || !designation_id || !date_first_meeting || !date_second_meeting || !date_third_meeting|| !date_fourth_meeting)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
+                return false;
+            }
+            let meetingDates = [
+                Date.parse(date_first_meeting),
+                Date.parse(date_second_meeting),
+                Date.parse(date_third_meeting),
+                Date.parse(date_fourth_meeting),
+            ];
+            let meetingsInOrder = meetingDates.every(function(value, index){
+                        return index === 0|| value >= meetingDates[index - 1];
+            })
+            if(!meetingsInOrder){
+                Notiflix.Notify.Warning("All meeting dates should be in ascending order");
                 return false;
             }
             e.preventDefault();

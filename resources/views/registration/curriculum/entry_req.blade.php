@@ -1,5 +1,7 @@
 @section('pageTitle', 'Entry Requirements')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -60,7 +62,11 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">2.2.  Provide data on entryrequirements for each program under review in Table 2.2. .</h3>
+                            @if($isActiveSAR)
+                            <h3 class="box-title">9.2.  Provide data on entryrequirements for each program under review in Table 9.2. .</h3>
+                            @else
+                                <h3 class="box-title">2.2.  Provide data on entryrequirements for each program under review in Table 2.2. .</h3>
+                            @endif
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -147,7 +153,11 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 2.2. Entry requirements</h3>
+                            @if($isActiveSAR)
+                                <h3 class="box-title">Table 9.2. Entry requirements</h3>
+                            @else
+                                <h3 class="box-title">Table 2.2. Entry requirements</h3>
+                            @endif
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

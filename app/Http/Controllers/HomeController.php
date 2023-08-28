@@ -186,7 +186,7 @@ class HomeController extends Controller
 //                ->groupBy('s.id')
 //                ->get();
 
-                $MentoringMeetings = MentoringMentor::with(['slip' ])
+                $MentoringMeetings = MentoringMentor::with(['slip',  ])
                   ->where(['user_id'=> Auth::id(), 'status'=> 'active'])
                     ->get();
             }
@@ -430,7 +430,7 @@ class HomeController extends Controller
 
                 Mail::to($businessSchool->campus->user->email)->send(new ChangeResgistrationStatusMail($data));
 
-                return redirect('/home');
+                return response()->json(['success' => 'Application Submitted'], 200);
             }
             return redirect('/home');
 

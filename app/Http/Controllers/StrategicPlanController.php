@@ -118,7 +118,7 @@ class StrategicPlanController extends Controller
                 'created_by' => Auth::user()->id
             ]);
 
-            return response()->json(['success' => 'Strategic Plan added successfully.']);
+            return response()->json(['success' => 'Strategic Plan added successfully.'], 200);
         }catch (Exception $e)
         {
             return response()->json($e->getMessage(), 422);

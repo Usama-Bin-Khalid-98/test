@@ -366,7 +366,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="slip">Bank Deposit Slip</label>
-                                        <input type="file" name="slip" id="slip" accept=".pdf,.docx" value="{{old('slip')}}" class="form">
+                                        <input type="file" name="slip" id="slip" accept=".jpg,.jpeg,.png,.pdf,.docx" value="{{old('slip')}}" class="form">
                                         <span class="text-blue">Max 2mb file size allowed. </span>
                                     </div>
                                 </div>
@@ -502,6 +502,11 @@
             if(!transaction_date || !invoice_no || !payment_method)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
+                return;
+            }
+            let file_size_in_mbs = $('#slip').prop('files')[0].size / 1024 / 1024;
+            if (file_size_in_mbs > 2){
+                Notiflix.Notify.Warning("File size greater than 2 mb");
                 return;
             }
             // Yes button callback

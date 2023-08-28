@@ -11,6 +11,8 @@ use App\ProgramCourse;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
+use Illuminate\Support\Facades\Log;
+
 class ProgramCourseController extends Controller
 {
     /**
@@ -63,7 +65,10 @@ class ProgramCourseController extends Controller
         try {
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
+            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->first();
+            Log::debug($slip);
+            Log::debug($campus_id);
+            Log::debug($department_id);
             if($slip){
                 $type='SAR';
                 ProgramCourse::create([

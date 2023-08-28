@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StrategicManagement;
 use App\Http\Controllers\Controller;
 use App\Models\Common\Discipline;
+use App\Models\Common\FeeType;
 use App\Models\Common\Level;
 use App\Models\Common\Program;
 use App\Models\Common\Slip;
@@ -79,6 +80,13 @@ class ScopeController extends Controller
         try {
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
+
+            $slip = Slip::where(['business_school_id' => $campus_id, 'department_id' => $department_id])->first();
+            $number_of_registered_programs = Scope::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type' => 'REG'])->count();
+            $registration_fee = FeeType::where(['name' => 'Registration Fee'])->first();
+            if($slip->amount <= $number_of_registered_programs * $registration_fee->amount){
+                return response()->json(['error' => 'You have reached the limit for the number of programs with the invoice amount: Rs. '. $slip->amount], 405);
+            }
 
             $dateDifference = $this->dateDifference($request->date_program, date('Y-m-d'), '%y.%m');
             if($request->level_id == 1 && $dateDifference < 3.5){

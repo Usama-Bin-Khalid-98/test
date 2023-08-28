@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Input;
 use App\Models\Config\NbeacBasicInfo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 class RegisterController extends Controller
 {
@@ -316,4 +317,10 @@ class RegisterController extends Controller
 //        }
 //
 //    }
+    public function reRegister(){
+        $user = User::find(Auth::user()->id);
+        Auth::logout();
+        $user->forcedelete();
+        return redirect()->route('register');
+    }
 }

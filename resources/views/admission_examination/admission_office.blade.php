@@ -153,6 +153,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group pull-right" style="margin-top: 40px">
                                         <label for="sector">&nbsp;&nbsp;</label>
+                                        <input type="submit" name="update" id="update-and-next" value="Update & Next" class="btn btn-success">
                                         <input type="submit" name="update" id="update" value="Update" class="btn btn-info">
                                     </div>
                                 </div>
@@ -192,7 +193,10 @@
         <?php if(@$admission_office->id==null){ ?>
 
          $('#form').submit(function (e)  {
-
+            let next = false;
+            if(e.originalEvent.submitter.id === 'update-and-next'){
+                next = true;
+            }
             let hierarchical_position = $('input[name=hierarchical_position]:checked').val();
             let system_handling = $('input[name=system_handling]:checked').val();
             let head = $('#head').val();
@@ -249,8 +253,13 @@
                     if(response.success){
                         Notiflix.Notify.Success(response.success);
                     }
-                    console.log('response', response);
-                    location.reload();
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/entry-requirements';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

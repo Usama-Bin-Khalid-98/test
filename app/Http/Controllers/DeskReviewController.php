@@ -90,7 +90,17 @@ class DeskReviewController extends Controller
             ->get();
 //        dd($registrations);
 
-        return view('desk_review.index', compact('registrations'));
+        $programs = [];
+        foreach($registrations as $slip){
+
+            $scopes = Scope::with('program')->where(['campus_id' => $slip->business_school_id, 'department_id' => $slip->department_id, 'type' => 'REG'])->get();
+            $programs[$slip->id] = [];
+            foreach($scopes as $scope){
+                array_push( $programs[$slip->id], @$scope->program->name);
+            }
+        }
+
+        return view('desk_review.index', compact('registrations', 'programs'));
     }
 
 
@@ -564,31 +574,7 @@ class DeskReviewController extends Controller
             }
         }
 
-        $faculty_with_program = FacultyTeachingCources::with('faculty_program')->get();
-        $fulltime = [];
-        $parttime = [];
-        foreach($faculty_with_program as $faculty_program){
-            foreach($faculty_program->faculty_program as $faculty){
-                if(!$faculty->program){
-                    continue;
-                }
-                if(!array_key_exists($faculty->program->name, $parttime)){
-                    $parttime[$faculty->program->name] = 0;
-                    $fulltime[$faculty->program->name] = 0;
-                }
-                if ($faculty->tc_program == 0){
-                    continue;
-                }
-                if ($faculty_program->lookup_faculty_type_id == 3){
-                    $parttime[$faculty->program->name] += 1;
-                }
-                else{
-                    $fulltime[$faculty->program->name] += 1;
-                }
-            }
-        }
-
-        $other_faculty = FacultySummary::where(['type' => 'REG', 'discipline_id' => 5])->get()->sum('number_faculty');
+        $other_faculty = FacultySummary::where(['type' => 'REG', 'discipline_id' => 5, 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->sum('number_faculty');
         
         $facultyStability = DB::select('SELECT faculty_stability.*
                 FROM faculty_stability
@@ -638,8 +624,6 @@ class DeskReviewController extends Controller
             'vfe_program_wise',
             'teacher_student_ratio',
             'facultyStability',
-            'fulltime',
-            'parttime',
             'other_faculty'
         ));
     }
@@ -939,7 +923,7 @@ class DeskReviewController extends Controller
 //            dd($StrategicPlan);
             $ParentInstitution = ParentInstitution::where($whereReg)->first()->file ?? '';
 //            dd($CourseOutline);
-            $appendixFiles = AppendixFile::where(['campus_id' => $cid])->first();
+            $appendixFiles = AppendixFile::where(['campus_id' => $cid, 'department_id' => $did])->first();
             return  view('desk_review.reg_files', compact('schoolInfo','ContactInfo', 'StateryCommittee',
                     'MissionVision',
                     'StrategicPlan',

@@ -562,11 +562,15 @@ $('#updateForm').submit(function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = 'faculty-student-ratio';
+                    if (window.location.pathname === '/visiting_faculty'){
+                        window.location = 'faculty-student-ratio';
+                    }else{
+                        window.location = 'visiting_faculty';
+                    }
                 }
             }, 1000)
         });
-
+console.log(window.location.pathname)
 
     </script>
 

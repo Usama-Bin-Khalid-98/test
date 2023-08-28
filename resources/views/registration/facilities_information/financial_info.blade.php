@@ -1,5 +1,7 @@
 @section('pageTitle', 'Financial Info')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -564,7 +566,11 @@ $('#updateForm').submit(function (e) {
         $('.next').on('click', function (){
             setTimeout(()=>{
                 if(check){
-                    window.location = '/business-school-facility';
+                    @if($isActiveSAR)
+                        window.location = '/financial-risk';
+                    @else
+                        window.location = '/business-school-facility';
+                    @endif    
                 }
             }, 1000)
         });
