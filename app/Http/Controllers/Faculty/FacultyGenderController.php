@@ -87,7 +87,7 @@ class FacultyGenderController extends Controller
             }else {
                 $type = 'REG';
             }
-
+            $type = 'REG';  //hotfix to be removed in future
             $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,

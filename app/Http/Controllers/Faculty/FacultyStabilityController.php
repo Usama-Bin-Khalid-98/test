@@ -87,7 +87,7 @@ class FacultyStabilityController extends Controller
             }else {
                 $type = 'REG';
             }
-
+            $type = 'REG';  //hotfix to be removed in future
             if($request->year) {
                 foreach ($request->year as $key=>$year) {
                     if(!$request->total_faculty[$key]){

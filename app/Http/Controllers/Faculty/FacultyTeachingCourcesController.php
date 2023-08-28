@@ -132,7 +132,7 @@ class FacultyTeachingCourcesController extends Controller
             }else {
                 $type = 'REG';
             }
-
+            $type = 'REG';  //hotfix to be removed in future
             $path = '';
             if(@$request->file('file')) {
                 $path = @$request->file('file')->getRealPath();
