@@ -41,6 +41,7 @@
 {{--                           value="Add New"--}}
 {{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
                             <!-- <button class="btn gradient-bg-color" style="color: white;" onclick="Export2Doc('printIDABC');">Export as .doc <i class="fa fa-file-word-o"></i></button> -->
+                            <a href="{{url('reg-files')}}/{{@request('cid')}}/{{@request('did')}}" class="btn btn-primary">Appendix Files</a>
                             <button class="btn btn-primary" id="printDev">Print</button>
                 </div>
             </div>
