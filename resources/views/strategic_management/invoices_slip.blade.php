@@ -78,7 +78,7 @@ $is_processing_a_slip = isProcessingASlip();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="number_of_programs">Number of Programs to be accreditated</label>
-                                    <input type="number" required id="number_of_programs" name="number_of_programs" class="form-control">
+                                    <input type="number" required id="number_of_programs" name="number_of_programs" min=1 class="form-control">
                                 </div>
                             </div>
 
