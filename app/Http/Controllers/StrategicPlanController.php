@@ -172,8 +172,9 @@ class StrategicPlanController extends Controller
         }
 
         try {
+            $existing = StrategicPlan::find($strategicPlan->id);
             @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
-            StrategicPlan::where('id', $strategicPlan->id)->update([
+            $update = [
                 'plan_period' => $period,
                 'plan_period_from' => $request->plan_period,
                 'plan_period_to' => $request->plan_period_to,
@@ -181,7 +182,18 @@ class StrategicPlanController extends Controller
                 'aproving_authority' => $request->aproving_authority,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
-            ]);
+            ];
+
+            if($request->file('file')) {
+                $imageName = 'plan-' . time() . 'doc.' . '.' . $request->file->getClientOriginalExtension();
+                $path = 'uploads/strategic_plan';
+                if(StrategicPlan::exists($existing->file)){
+                    unlink($existing->file);
+               }
+                $request->file('file')->move($path, $imageName);
+                $update['file'] = $path . '/' . $imageName;
+            }
+            StrategicPlan::where('id', $strategicPlan->id)->update($update);
             return response()->json(['success' => 'Strategic Plan updated successfully.']);
 
         }catch (Exception $e)
