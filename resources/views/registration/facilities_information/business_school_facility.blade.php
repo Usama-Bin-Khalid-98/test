@@ -45,7 +45,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Business School Facility.</h3>
+                            <h3 class="box-title">6.2 Provide information about different facilities of the business school in Table 6.2.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -114,7 +114,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Business School Facilities Table.</h3>
+                            <h3 class="box-title">Table 6.2. Business schools’ resources</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
