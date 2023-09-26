@@ -95,7 +95,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Number of semesters</label>
-                                    <input type="text" name="total_semesters" id="total_semesters" class="form-control">
+                                    <input type="number" name="total_semesters" id="total_semesters" min=1 class="form-control">
                                 </div>
                             </div>
 

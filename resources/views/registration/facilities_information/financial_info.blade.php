@@ -64,38 +64,38 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">{{@$years->tyear - 3}}</label>
-                                    <input type="text" name="year_three" id="year_three" class="form-control">
+                                    <input type="number" min=0 name="year_three" id="year_three" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">{{@$years->tyear - 2}}</label>
-                                    <input type="text" name="year_two" id="year_two" class="form-control">
+                                    <input type="number" min=0 name="year_two" id="year_two" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">{{@$years->tyear - 1}}</label>
-                                    <input type="text" name="year_one" id="year_one" class="form-control">
+                                    <input type="number" min=0 name="year_one" id="year_one" class="form-control">
                                 </div>
                               </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">{{@$years->tyear}}</label>
-                                    <input type="text" name="year_t" id="year_t" class="form-control">
+                                    <input type="number" min=0 name="year_t" id="year_t" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">{{@$years->tyear + 1}}</label>
-                                    <input type="text" name="year_t_plus_one" id="year_t_plus_one" class="form-control">
+                                    <input type="number" min=0 name="year_t_plus_one" id="year_t_plus_one" class="form-control">
                                 </div>
                               </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">{{@$years->tyear + 2}}</label>
-                                    <input type="text" name="year_t_plus_two" id="year_t_plus_two" class="form-control">
+                                    <input type="number" min=0 name="year_t_plus_two" id="year_t_plus_two" class="form-control">
                                 </div>
                               </div>
 
@@ -135,7 +135,6 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <th>{{@$years->tyear}}</th>
                                     <th>{{@$years->tyear + 1}}</th>
                                     <th>{{@$years->tyear + 2}}</th>
-                                    <th>{{@$years->tyear + 3}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -303,39 +302,39 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-3</label>
-                                    <input type="text" name="year_three" id="edit_year_three" value="{{old('edit_year_three')}}" class="form-control">
+                                    <label for="name">{{@$years->tyear - 3}}</label>
+                                    <input type="number" min=0 name="year_three" id="edit_year_three" value="{{old('edit_year_three')}}" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-2</label>
-                                    <input type="text" name="year_two" id="edit_year_two" value="{{old('edit_year_two')}}" class="form-control">
+                                    <label for="name">{{@$years->tyear - 2}}</label>
+                                    <input type="number" min=0 name="year_two" id="edit_year_two" value="{{old('edit_year_two')}}" class="form-control">
                                 </div>
                               </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t-1</label>
-                                    <input type="text" name="year_one" id="edit_year_one" value="{{old('edit_year_one')}}" class="form-control">
+                                    <label for="name">{{@$years->tyear - 1}}</label>
+                                    <input type="number" min=0 name="year_one" id="edit_year_one" value="{{old('edit_year_one')}}" class="form-control">
                                 </div>
                               </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t</label>
-                                    <input type="text" name="year_t" id="edit_year_t" value="{{old('edit_year_t')}}" class="form-control">
+                                    <label for="name">{{@$years->tyear}}</label>
+                                    <input type="number" min=0 name="year_t" id="edit_year_t" value="{{old('edit_year_t')}}" class="form-control">
                                 </div>
                               </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t+1</label>
-                                    <input type="text" name="year_t_plus_one" id="edit_year_t_plus_one" value="{{old('edit_year_t_plus_one')}}" class="form-control">
+                                    <label for="name">{{@$years->tyear + 1}}</label>
+                                    <input type="number" min=0 name="year_t_plus_one" id="edit_year_t_plus_one" value="{{old('edit_year_t_plus_one')}}" class="form-control">
                                 </div>
                               </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Year t+2</label>
-                                    <input type="text" name="year_t_plus_two" id="edit_year_t_plus_two" value="{{old('edit_year_t_plus_two')}}" class="form-control">
+                                    <label for="name">{{@$years->tyear + 2}}</label>
+                                    <input type="number" min=0 name="year_t_plus_two" id="edit_year_t_plus_two" value="{{old('edit_year_t_plus_two')}}" class="form-control">
                                 </div>
                               </div>
                         <div class="col-md-6">

@@ -102,19 +102,19 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Applications received</label>
-                                    <input type="text" name="app_received" id="app_received" class="form-control">
+                                    <input type="number" min=0 name="app_received" id="app_received" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Admission offered</label>
-                                    <input type="text" name="admission_offered" id="admission_offered" class="form-control">
+                                    <input type="number" min=0 name="admission_offered" id="admission_offered" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Student Intake</label>
-                                    <input name="student_intake" id="student_intake" class="form-control" >
+                                    <input type="number" min=0 name="student_intake" id="student_intake" class="form-control" >
                                 </div>
                             </div>
                              {{--<div class="col-md-3">
