@@ -211,7 +211,7 @@ $is_processing_a_slip = isProcessingASlip();
                                     <td><i style="cursor: default;" class="badge bg-maroon">{{ucwords($invoice->regStatus)}}</i></td>
                                     <td><span data-toggle="tooltip" title="Submit Payment Details" >
                                             <i style="font-size:32px" class="fa fa-money text-info invoice-add my-invoice" data-toggle="modal"  data-target="#invoice_modal" data-id="{{$invoice->id}}"
-                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}'></i> </span><i style="font-size:32px" class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i>  </td>
+                                               data-row='{"id":"{{$invoice->id}}","department_id":"{{$invoice->department->name}}","slip":"{{$invoice->slip}}","payment_method_id":"{{$invoice->payment_method_id}}","status":"{{$invoice->status}}","cheque_no":"{{$invoice->cheque_no}}","comments":"{{str_replace(array("\r\n", "\r", "\n"), "", $invoice->comments)}}","transaction_date":"{{$invoice->transaction_date}}","invoice_no":"{{$invoice->invoice_no}}"}'></i> </span>@if($invoice->status != 'approved') <i style="font-size:32px" class="fa fa-trash text-info delete" data-id="{{$invoice->id}}"  ></i> @endif </td>
                                 </tr>
                                 @endforeach
 
