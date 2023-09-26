@@ -75,8 +75,8 @@ class FacultyDetailedInfoController extends Controller
                 'cnic' => $request->cnic,
                 'hec_experience' => $request->hec_experience,
                 'current_job_duration' => $request->current_job_duration,
-                'specialization' => $request->current_job_duration,
-                'industry' => $request->current_job_duration,
+                'specialization' => $request->specialization,
+                'industry' => $request->industry,
                 'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
