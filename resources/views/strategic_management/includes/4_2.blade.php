@@ -2,7 +2,7 @@
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
                                 <caption style="text-align: center;color: red">
-Table 4.2a. Faculty workload (t)
+Table 4.2a. Faculty workload ({{@$getYear->tyear}})
 </caption>
                                 <thead>
                                     <th >No </th>

@@ -30,12 +30,12 @@ Table 6.1. Financial information of the business school
                                     <tr>
                                     <th class="" style="text-align: center;"></th>
                                     <th>Particulars</th>
-                                    <th>Year t-3</th>
-                                    <th >Year t-2</th>
-                                    <th>Year t-1</th>
-                                    <th>Year t</th>
-                                    <th>Year t+1</th>
-                                    <th>Year t+2</th>
+                                    <th>{{@$getYear->tyear - 3}}</th>
+                                    <th>{{@$getYear->tyear - 2}}</th>
+                                    <th>{{@$getYear->tyear - 1}}</th>
+                                    <th>{{@$getYear->tyear}}</th>
+                                    <th>{{@$getYear->tyear + 1}}</th>
+                                    <th>{{@$getYear->tyear + 2}}</th>
                                     </tr>
 
                                 </thead>

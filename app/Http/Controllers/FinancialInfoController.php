@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use Auth;
 
 
@@ -41,10 +42,10 @@ class FinancialInfoController extends Controller
             })
             ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
             ->get();
+        
+        $years = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
 
-
-        //dd($infos_expense);
-        return view('registration.facilities_information.financial_info', compact('income','infos', 'infos_expense'));
+        return view('registration.facilities_information.financial_info', compact('income','infos', 'infos_expense', 'years'));
     }
 
     /**
