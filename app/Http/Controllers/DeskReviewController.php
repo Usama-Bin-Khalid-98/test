@@ -907,8 +907,12 @@ class DeskReviewController extends Controller
         ];
     }
 
-    public  function reg_files(Request $request, $cid, $did){
+    public  function reg_files(Request $request, $cid=null, $did=null){
         try {
+            if (!$cid){
+                $cid = Auth::user()->campus_id;
+                $did = Auth::user()->department_id;
+            }
             $where = ['campus_id' => $cid, 'department_id' => $did, 'type' => 'REG'];
             $whereReg = ['campus_id' => $cid, 'department_id' => $did];
 //            dd($where);

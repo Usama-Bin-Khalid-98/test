@@ -29,7 +29,7 @@
         </section><!-- Main content -->
 
 
-        @hasrole('NBEACAdmin|Mentor|PeerReviewer')
+        @hasrole('NBEACAdmin|Mentor|PeerReviewer|BusinessSchool')
         <section class="content">
 
             <div class="row" >
@@ -106,7 +106,7 @@
                         </div>
                         </div>
                         <div class="col-md-12" style="margin: 30px">
-                            <div> <strong> Note: </strong> The Red <span class="label label-danger"><i class="glyphicon glyphicon-file"></i> </span>  &nbsp; icon shows the file is not uploaded yet, The purple <span class="label label-success"><i class="glyphicon glyphicon-file"></i></span> shows the file is uploaded. </div>
+                            <div> <strong> Note: </strong> Missing  <span class="label label-success"><i class="glyphicon glyphicon-file"></i></span> icon means the file is not uploaded yet.</div>
 
                         </div>
                         <!-- /.box-header -->

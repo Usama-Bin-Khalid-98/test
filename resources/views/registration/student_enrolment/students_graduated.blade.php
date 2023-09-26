@@ -79,19 +79,19 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year {{$programs->tyear??''}}</label>
-                                    <input type="text" name="grad_std_t" id="grad_std_t"  class="form-control">
+                                    <input type="number" min=0 name="grad_std_t" id="grad_std_t"  class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year {{$programs->year_t_1??''}}</label>
-                                    <input type="text" name="grad_std_tt" id="grad_std_tt" class="form-control">
+                                    <input type="number" min=0 name="grad_std_tt" id="grad_std_tt" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Year {{$programs->year_t_2??''}}</label>
-                                    <input type="text" name="grad_std_ttt" id="grad_std_ttt" class="form-control">
+                                    <input type="number" min=0 name="grad_std_ttt" id="grad_std_ttt" class="form-control">
                                 </div>
                             </div>
 
@@ -195,14 +195,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{$programs->tyear??'Year t'}}</label>
-                                    <input type="text" name="grad_std_t"
+                                    <input type="number" min=0 name="grad_std_t"
                                     id="edit_grad_std_t" value="{{old('edit_grad_std_t')}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{$programs->year_t_1??'Year t-1'}}</label>
-                                    <input type="text" name="grad_std_t_2"
+                                    <input type="number" min=0 name="grad_std_t_2"
                                     id="edit_grad_std_t_2" value="{{old('edit_grad_std_t_2')}}" class="form-control">
                             </div>
                         </div>
@@ -210,7 +210,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">{{$programs->year_t_2??'Year t-2'}}</label>
-                                    <input type="text" name="grad_std_t_3"
+                                    <input type="number" min=0 name="grad_std_t_3"
                                     id="edit_grad_std_t_3" value="{{old('edit_grad_std_t_3')}}" class="form-control">
                             </div>
                         </div>

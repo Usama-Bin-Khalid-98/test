@@ -54,9 +54,9 @@
                                     <label for="name">Year</label>
                                     <select name="year" id="year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $years['yeart'] }}">{{ $years['yeart'] }}</option>
+                                        <option value="{{ $years['year_t_1'] }}">{{ $years['year_t_1'] }}</option>
+                                        <option value="{{ $years['year_t_2'] }}">{{ $years['year_t_2'] }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -205,9 +205,9 @@
                                     <label for="name">Year</label>
                                     <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Year</option>
-                                        <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                        <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                        <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                        <option value="{{ $years['yeart'] }}">{{ $years['yeart'] }}</option>
+                                        <option value="{{ $years['year_t_1'] }}">{{ $years['year_t_1'] }}</option>
+                                        <option value="{{ $years['year_t_2'] }}">{{ $years['year_t_2'] }}</option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="id" id="edit_id">

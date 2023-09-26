@@ -731,7 +731,7 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
             'studentsGenders','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses',
             'studentTeachersRatio','facultyStability',
             'facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData',
-            'programsUnderReview','mission','ratios', 'byProgramFTE', 'byProgramVFE','facultyDegree','faculty_qualifications','faculty_disciplines'));
+            'programsUnderReview','mission','ratios', 'byProgramFTE', 'byProgramVFE','facultyDegree','faculty_qualifications','faculty_disciplines', 'getYear'));
 
         // return view('strategic_management.registration_application', compact(
         //     'app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation',

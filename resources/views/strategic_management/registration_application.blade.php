@@ -40,7 +40,8 @@
 {{--                           style="color: white;"--}}
 {{--                           value="Add New"--}}
 {{--                            name="add" id="add">PDF <i class="fa fa-file-pdf-o"></i></button>--}}
-                            <button class="btn gradient-bg-color" style="color: white;" onclick="Export2Doc('printIDABC');">Export as .doc <i class="fa fa-file-word-o"></i></button>
+                            <!-- <button class="btn gradient-bg-color" style="color: white;" onclick="Export2Doc('printIDABC');">Export as .doc <i class="fa fa-file-word-o"></i></button> -->
+                            <a href="{{url('reg-files')}}/{{@request('cid')}}/{{@request('did')}}" class="btn btn-primary">Appendix Files</a>
                             <button class="btn btn-primary" id="printDev">Print</button>
                 </div>
             </div>
@@ -179,7 +180,7 @@
                     <p class="left">10  Articles, conference papers, journal articles, and other research work published in HEC recognized journals / ISI index journals, conference proceedings, and other reputable abstracting indexing service i.e. EMERALD, JSTOR, Science Direct, etc.</p>
                     <p class="left">11  Income generated through various trainings and workshops conducted by the business school.</p>
                     <br><br><br><br>
-                    <h1 class="center">Checklist of mandatory appendices with registration application</h1>
+                    <h1 class="center" style="page-break-before: always;">Checklist of mandatory appendices with registration application</h1>
                     @include('strategic_management.includes.registrationCheckList')
 
                         <!-- /.box-body -->
@@ -238,21 +239,7 @@
 
 
         $('#printDev').on('click', function (){
-            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-            mywindow.document.write('<html><head><title>' + document.title  + '</title>');
-            mywindow.document.write('</head><body >');
-            mywindow.document.write('<h1>' + document.title  + '</h1>');
-            mywindow.document.write(document.getElementById('printIDABC').innerHTML);
-            mywindow.document.write('</body></html>');
-
-            mywindow.document.close(); // necessary for IE >= 10
-            mywindow.focus(); // necessary for IE >= 10*/
-
-            mywindow.print();
-            mywindow.close();
-
-            return true;
+            window.print()
         });
     </script>
     <script type="text/javascript">
@@ -446,21 +433,6 @@ $('#updateForm').submit(function (e) {
 
             document.body.removeChild(downloadLink);
         }
-
-        $('#printDev').on('click', function () {
-            var divToPrint=document.getElementById('printIDABC');
-
-            var newWin=window.open('','Print-Window');
-
-            newWin.document.open();
-
-            newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
-
-            newWin.document.close();
-
-            setTimeout(function(){newWin.close();},10);
-        });
-
     </script>
 
 

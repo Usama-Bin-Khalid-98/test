@@ -86,13 +86,13 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                                     {{@$publication->name}}
                                                     <input type="hidden" name="publication_type_id[]" value="{{@$publication->id}}">
                                                 </td>
-                                                <td><input type="text" name="total_items[]" id="total_items" value="" placeholder="Total Items" class="form-control"></td>
-                                                <td><input type="text" name="contributing_core_faculty[]" id="contributing_core_faculty" value="" placeholder="Contributing Core Faculty" class="form-control"></td>
-                                                <td><input type="text" name="jointly_produced_other[]"
+                                                <td><input type="number" min=0 name="total_items[]" id="total_items" value="" placeholder="Total Items" class="form-control"></td>
+                                                <td><input type="number" min=0 name="contributing_core_faculty[]" id="contributing_core_faculty" value="" placeholder="Contributing Core Faculty" class="form-control"></td>
+                                                <td><input type="number" min=0 name="jointly_produced_other[]"
                                                            id="jointly_produced_other" value="" placeholder="Jointly Produced Other" class="form-control"></td>
-                                                <td><input type="text" name="jointly_produced_same[]"
+                                                <td><input type="number" min=0 name="jointly_produced_same[]"
                                                            id="jointly_produced_same" value="" placeholder="Jointly Produced Same " class="form-control"></td>
-                                                <td><input type="text" name="jointly_produced_multiple[]"
+                                                <td><input type="number" min=0 name="jointly_produced_multiple[]"
                                                            id="jointly_produced_multiple" value="" placeholder="Jointly Produced Multiple" class="form-control"></td>
                                             </tr>
                                         @endforeach
@@ -276,9 +276,9 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                 <label for="name">Year</label>
                                 <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
                                     <option selected disabled>Select Year</option>
-                                    <option value="{{ now()->year}}">{{ now()->year}}</option>
-                                    <option value="{{ now()->year-1}}">{{ now()->year - 1}}</option>
-                                    <option value="{{ now()->year -2}}">{{ now()->year -2 }}</option>
+                                    <option value="{{ $years['yeart'] }}">{{ $years['yeart'] }}</option>
+                                    <option value="{{ $years['year_t_1'] }}">{{ $years['year_t_1'] }}</option>
+                                    <option value="{{ $years['year_t_2'] }}">{{ $years['year_t_2'] }}</option>
                                 </select>
                             </div>
                         </div>
@@ -302,7 +302,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Total Items</label>
-                                    <input type="text" name="total_items" id="edit_total_items" value="{{old('total_items')}}" class="form-control">
+                                    <input type="number" min=0 name="total_items" id="edit_total_items" value="{{old('total_items')}}" class="form-control">
 
                             </div>
                         </div>
@@ -310,20 +310,20 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Contributing Core Faculty</label>
-                                    <input type="text" name="contributing_core_faculty" id="edit_contributing_core_faculty" value="{{old('contributing_core_faculty')}}"  class="form-control">
+                                    <input type="number" min=0 name="contributing_core_faculty" id="edit_contributing_core_faculty" value="{{old('contributing_core_faculty')}}"  class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Jointly Produced Other</label>
-                                    <input type="text" name="jointly_produced_other"
+                                    <input type="number" min=0 name="jointly_produced_other"
                                     id="edit_jointly_produced_other" value="{{old('jointly_produced_other')}}"  class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Jointly Produced Same</label>
-                                    <input type="text" name="jointly_produced_same"
+                                    <input type="number" min=0 name="jointly_produced_same"
                                     id="edit_jointly_produced_same" value="{{old('jointly_produced_same')}}" class="form-control">
                             </div>
                         </div>
@@ -331,7 +331,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                          <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Jointly Produced Multiple</label>
-                                    <input type="text" name="jointly_produced_multiple"
+                                    <input type="number" min=0 name="jointly_produced_multiple"
                                     id="edit_jointly_produced_multiple" value="{{old('jointly_produced_multiple')}}"  class="form-control">
                             </div>
                         </div>

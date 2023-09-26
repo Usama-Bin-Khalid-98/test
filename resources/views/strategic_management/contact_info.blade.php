@@ -292,6 +292,7 @@
                 $('#hs_job_title').val(ds_job_title);
                 $('#hs_tell_off').val(ds_tell_off);
                 $('#hs_tell_cell').val(ds_tell_cell);
+                $('#hs_cv')[0].files = $('#ds_cv')[0].files;
             }else{
                 let check = $(this).is(':checked');
                 console.log(check);
@@ -317,6 +318,7 @@
                 $('#fp_job_title').val(ds_job_title);
                 $('#fp_tell_off').val(ds_tell_off);
                 $('#fp_tell_cell').val(ds_tell_cell);
+                $('#fp_cv')[0].files = $('#ds_cv')[0].files;
             }else{
                 let check = $(this).is(':checked');
                 console.log(check);

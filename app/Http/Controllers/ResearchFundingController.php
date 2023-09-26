@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Research\ResearchFunding;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
@@ -22,8 +23,12 @@ class ResearchFundingController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $enrolments = ResearchFunding::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
+        $years['yeart'] = @$getYears->tyear;
+        $years['year_t_1'] = @$getYears->year_t_1;
+        $years['year_t_2'] = @$getYears->year_t_2;
 
-         return view('registration.research_summary.research_funding', compact('enrolments'));
+         return view('registration.research_summary.research_funding', compact('enrolments', 'years'));
     }
 
     /**

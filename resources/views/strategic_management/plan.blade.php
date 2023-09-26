@@ -121,7 +121,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 1.8 Approval of Strategic Plan List</h3>
+                            <h3 class="box-title">Table 1.7 Approval of Strategic Plan List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -148,7 +148,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <td>{{$plan->aproving_authority}}</td>
                                     <td>@if($plan->file && $plan->file !='/') <a href="../{{$plan->file}}" download="{{$plan->file}}"><i class="fa fa-file-word-o"></i> </a>@endif</td>
                                     <td><i class="badge {{$plan->status == 'active'?'bg-green':'bg-red'}}">{{$plan->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "plan_period":"{{$plan->plan_period}}","plan_period_from" : "{{$plan->plan_period_from}}","plan_period_to" : "{{$plan->plan_period_to}}", "aproval_date":"{{$plan->aproval_date}}", "aproving_authority":"{{$plan->aproving_authority}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "plan_period":"{{$plan->plan_period}}","plan_period_from" : "{{$plan->plan_period_from}}","plan_period_to" : "{{$plan->plan_period_to}}", "aproval_date":"{{$plan->aproval_date}}", "aproving_authority":"{{$plan->aproving_authority}}", "status":"{{$plan->status}}", "file":"/{{$plan->file}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -232,7 +232,17 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <input type="radio" name="status" class="flat-red" value="inactive">InActive</p>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Attach Doc</label>
+                                <input type="file" name="file" id="edit_file" >
+                                <input type="hidden" name="old_file" id="old_file" >
+                                <a class="text-blue" id="file-name"></a>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <input type="submit" name="update" value="update" class="btn btn-info">
@@ -387,6 +397,8 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
             $('#edit_aproving_authority').val(data.aproving_authority);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
+            $('#file-name').text(data.file);
+            $('#file-name').attr('href', data.file)
         });
 
 $('#updateForm').submit(function (e) {

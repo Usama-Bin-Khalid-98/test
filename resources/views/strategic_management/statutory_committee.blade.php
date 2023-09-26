@@ -607,7 +607,7 @@
                         }
                     })
                     meetingsInOrder = meetingsInOrder && meetingDates.every(function(value, index){
-                        return index === 0|| value >= meetingDates[index - 1];
+                        return index === 0 || value < meetingDates[index - 1];
                     })
                 }else{
                     fields.forEach(function(value, index){
@@ -623,7 +623,7 @@
                 return;
             }
             if(!meetingsInOrder){
-                Notiflix.Notify.Warning("All meeting dates should be in ascending order");
+                Notiflix.Notify.Warning("All meeting dates should be in descending order");
                 return;
             }
             if(isEmptyForm){
@@ -701,7 +701,7 @@
                 $('#edit_designation_id').val(data.designation_id).trigger('change');
                 $('#edit_designation').addClass('hide');
             }else{
-                $('#edit_designation_id').val(8).trigger('change');
+                $("#edit_designation_id option:contains('Other')").prop("selected", true).trigger('change');
                 $('#edit_designation').val(data.designation_name);
                 $('#edit_designation').removeClass('hide');
             }

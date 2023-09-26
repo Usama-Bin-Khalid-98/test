@@ -669,30 +669,39 @@ $isSARComplete = $isSAR1Complete && $isSAR2Complete && $isSAR3Complete && $isSAR
                             <i class="fa {{$workload==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+            @if($isActiveSAR)
+                <li  class="{{ (request()->is('faculty-stability')) ? 'active' : '' }}"><a href="{{url('faculty-stability')}}">4.3 Faculty Stability<span class="pull-right-container">
+                        <span class="text text-{{$stability==='C'?'green':'red'}} pull-right">
+                            <i class="fa {{$stability==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        </span>
+                </span></a></li>
+            @endif
             <li  class="{{ (request()->is('faculty-teaching')) ? 'active' : '' }}"><a href="{{url('faculty-teaching')}}">
-                    4.3a Regular/Adjunct Faculty <span class="pull-right-container">
+                    @if($isActiveSAR) 4.4a @else 4.3a @endif Regular/Adjunct Faculty <span class="pull-right-container">
                         <span class="text text-{{$visiting_perm==='C' || $visiting_adjunct==='C' ?'green':'red'}} pull-right">
                             <i class="fa {{$visiting_perm==='C' || $visiting_adjunct==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
 
               <li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{url('visiting_faculty')}}">
-                    4.3b Visiting Faculty<span class="pull-right-container">
+                    @if($isActiveSAR) 4.4b @else 4.3b @endif Visiting Faculty<span class="pull-right-container">
                         <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a>
               </li>
-             <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}">4.4 Student Teacher Ratio<span class="pull-right-container">
+             <li  class="{{ (request()->is('faculty-student-ratio')) ? 'active' : '' }}"><a href="{{url('faculty-student-ratio')}}">@if($isActiveSAR) 4.5 @else 4.4 @endif Student Teacher Ratio<span class="pull-right-container">
                         <span class="text text-{{$ratio==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$ratio==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+            @if(!$isActiveSAR)
              <li  class="{{ (request()->is('faculty-stability')) ? 'active' : '' }}"><a href="{{url('faculty-stability')}}">4.5 Faculty Stability<span class="pull-right-container">
                         <span class="text text-{{$stability==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$stability==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
                         </span>
                     </span></a></li>
+            @endif
             <li  class="{{ (request()->is('faculty-gender')) ? 'active' : '' }}"><a href="{{url('faculty-gender')}}">4.6 Faculty Gender Mix<span class="pull-right-container">
                         <span class="text text-{{$facultygender==='C'?'green':'red'}} pull-right">
                             <i class="fa {{$facultygender==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
