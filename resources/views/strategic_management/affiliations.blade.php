@@ -570,7 +570,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                 $('#edit_designation_id').val(data.designation).trigger('change');
                 $('#edit_designation').addClass('hide');
             }else{
-                $('#edit_designation_id').val(8).trigger('change');
+                $("#edit_designation_id option:contains('Other')").prop("selected", true).trigger('change');
                 $('#edit_designation').val(data.designation_name);
                 $('#edit_designation').removeClass('hide');
             }
