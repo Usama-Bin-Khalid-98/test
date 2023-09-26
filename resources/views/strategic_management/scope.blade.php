@@ -1,5 +1,7 @@
 @section('pageTitle', 'Scope Accreditation')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -40,6 +42,7 @@
         <section class="content">
             <div class=" form row">
                 <div class="col-md-12">
+                @if(!$isActiveSAR)
                 <form>
                     <div class="box box-primary">
                         <div class="box-header">
@@ -142,6 +145,7 @@
 
                     </div>
                 </form>
+                @endif
                     <!-- /.box -->
                 </div>
                 <!-- Main content -->
