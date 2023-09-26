@@ -17,7 +17,8 @@ class RegionSeeder extends Seeder
             ['name' => 'Federal'],
             ['name' => 'Gilgit Baltistan'],
             ['name' => 'KPK'],
-            ['name' => 'Punjab']
+            ['name' => 'Punjab'],
+            ['name' => 'Sindh'],
         ]);
     }
 }
