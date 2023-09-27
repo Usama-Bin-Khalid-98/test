@@ -128,7 +128,8 @@ $reg2Statuses = [$portfolio, $entry, $application, $app_receivd];
 $isReg2Complete = !(in_array('In', $reg2Statuses));
 $reg3Statuses = [$enrolment, $graduated, $gender];
 $isReg3Complete = !(in_array('In', $reg3Statuses));
-$reg4Statuses = [$bsf ,$workload, $visiting_perm, $visiting, $ratio, $stability, $facultygender, $faculty_degree];
+$faculty_perm_adjunct = $visiting_perm === 'C' ? $visiting_perm : $visiting_adjunct;
+$reg4Statuses = [$bsf ,$workload, $faculty_perm_adjunct, $visiting, $ratio, $stability, $facultygender, $faculty_degree];
 $isReg4Complete = !(in_array('In', $reg4Statuses));
 $isReg5Complete = $research === 'C';
 $isReg6Complete = $financialinfo === 'C' && $bsfacility === 'C';
@@ -138,7 +139,7 @@ $sar1Statuses = [$basic_info, $scope, $contact, $committee, $affiliation, $summa
 $sar2Statuses = [$portfolio, $program_courses, $curriculum_review, $program_objective, $learning_outcome, $mapping_pos, $aligned_program, $course_outline,
                  $course_detail, $cultural_material, $checklist_document, $managerial_skill, $program_delivery_method, $evaluation_method, $program_delivery, $question_paper, $plagiarism_case];
 $sar3Statuses = [$enrolment, $student_intake, $size, $dropout, $financial_assistance, $student_financial, $weak, $grooming, $counselling, $student_participation, $extra, $membership, $alumni];
-$sar4Statuses = [$bsf, $faculty_detail, $workload, $visiting_perm, $visiting, $ratio, $stability, $facultygender, $faculty_promotion, $faculty_workshop, $faculty_develop, $consultancy_project, $faculty_participation, $faculty_membership, $international_faculty, $faculty_exposure];
+$sar4Statuses = [$bsf, $faculty_detail, $workload, $faculty_perm_adjunct, $visiting, $ratio, $stability, $facultygender, $faculty_promotion, $faculty_workshop, $faculty_develop, $consultancy_project, $faculty_participation, $faculty_membership, $international_faculty, $faculty_exposure];
 $sar5Statuses = [$oric, $research_center, $research_agenda, $research_funding, $research_project, $research, $output, $curriculum_role, $faculty_development, $conference];
 $sar6Statuses = [$club, $detail, $env, $formal, $complaint, $internal, $social];
 $sar7Statuses = [$financialinfo, $financialrisk, $support_staff, $qecinfo, $bsfacility];
