@@ -30,8 +30,7 @@ class PeerReviewReportMail extends Mailable
      */
     public function build()
     {
-        return $this->from(Auth::user()->email)
-            ->subject('Peer Review Report')
+        return $this->subject('Peer Review Report')
             ->view('registration.mail.peer_review_report_mail')
             ->with('data', $this->data);
     }

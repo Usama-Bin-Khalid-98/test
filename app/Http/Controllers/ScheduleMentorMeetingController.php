@@ -204,7 +204,6 @@ class ScheduleMentorMeetingController extends Controller
                             //dd($user);
                             $message->to($mailInfo['to'], $mailInfo['to_name'])
                                 ->subject('Mentoring Schedule of ' . $mailInfo['school']);
-                            $message->from($mailInfo['from'], $mailInfo['from_name']);
                         });
                         return response()->json(['success' => 'Notification sent Successfully'], 200);
                     }
@@ -381,7 +380,6 @@ class ScheduleMentorMeetingController extends Controller
                                 //dd($user);
                                 $message->to($mailInfo['to'], $mailInfo['to_name'])
                                     ->subject('Mentoring Schedule of ' . $mailInfo['school']);
-                                $message->from($mailInfo['from'], $mailInfo['from_name']);
                             });
                             $insert_new = MentoringMentor::create(['slip_id' => $slip_id, 'user_id' => $mentor, 'status'=> 'active', 'created_by' => Auth::id()]);
 
@@ -408,7 +406,6 @@ class ScheduleMentorMeetingController extends Controller
                     //dd($user);
                     $message->to($mailToSchool['to'], $mailToSchool['to_name'])
                         ->subject('Mentoring Schedule of ' . $mailToSchool['school']);
-                    $message->from($mailToSchool['from'], $mailToSchool['from_name']);
                 });
 
 

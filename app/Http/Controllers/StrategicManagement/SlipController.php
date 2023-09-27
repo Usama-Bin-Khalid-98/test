@@ -25,6 +25,8 @@ use App\Mail\ChangeResgistrationStatusMail;
 use App\Models\StrategicManagement\Scope;
 use Illuminate\Support\Facades\Log;
 
+use function Psy\debug;
+
 class SlipController extends Controller
 {
     public function __construct()
@@ -35,6 +37,7 @@ class SlipController extends Controller
     public function index()
     {
         //
+        Log::debug('hereklqjrwlkqewj');
         @$school_id = Auth::user()->campus_id;
         @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
         //dd($invoices);
@@ -144,7 +147,6 @@ class SlipController extends Controller
                 //dd($user);
                 $message->to($mailInfo['to'], $mailInfo['to_name'])
                     ->subject('Acknowledgement of Registration Fee');
-                $message->from($mailInfo['from'], $mailInfo['from_name']);
             });
 
 
@@ -229,7 +231,6 @@ class SlipController extends Controller
                             //dd($user);
                             $message->to($mailInfo['to'],$mailInfo['to_name'] )
                                 ->subject('Travel Plan - '. $mailInfo['school']);
-                            $message->from($mailInfo['from'],$mailInfo['from_name']);
                         });
 
                     }
@@ -358,6 +359,7 @@ class SlipController extends Controller
      */
     public function generateInvoice(Request $request)
     {
+        Log::debug("here2");
         $school = BusinessSchool::with('user', 'user.campus')->find(Auth::user()->business_school_id);
         try {
             $getFee = FeeType::where(['name' => 'Registration Fee'])->first();
@@ -392,7 +394,6 @@ class SlipController extends Controller
                     //dd($user);
                     $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
                         ->subject('Invoice Generated');
-                    $message->from('mirkhan@nbeac.org.pk',$mailSchoolInfo['from_name']);
                 });
 
                  return response()->json(['success' => 'Invoice Slip added successfully.'], 200);
@@ -523,13 +524,11 @@ class SlipController extends Controller
 
                 Mail::send('registration.mail.registration_invoice_admin_mail', ['data' => $mailData], function ($message) use ($mailInfo){
                     $message->to($mailInfo['to'], $mailInfo['to_name'])->subject('Registration Fee Paid');
-                    $message->from($mailInfo['from'], $mailInfo['from_name']);
                 });
                 // Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
                 //     //dd($user);
                 //     $message->to($mailInfo['to'],$mailInfo['to_name'] )
                 //         ->subject('Acknowledgement of Registration Fee');
-                //     $message->from($mailInfo['from'],$mailInfo['from_name']);
                 // });
 
             }
@@ -565,7 +564,6 @@ class SlipController extends Controller
                     //dd($user);
                     $message->to($mailInfo['to'],$mailInfo['to_name'] )
                         ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
-                    $message->from($mailInfo['from'],$mailInfo['from_name']);
                 });
 
                 return response()->json(['success' => 'Feedback updated successfully.'], 200);

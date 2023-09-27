@@ -159,7 +159,6 @@ class AccreditationMeetingController extends Controller
                             //dd($user);
                             $message->to($mailInfo['to'],$mailInfo['to_name'] )
                                 ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
-                            $message->from($mailInfo['from'],$mailInfo['from_name']);
                         });
                         //////////////// End Email ////////////////////////////////
                         ///

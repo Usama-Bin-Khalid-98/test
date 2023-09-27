@@ -164,7 +164,6 @@ class MentoringReportController extends Controller
                         //dd($user);
                         $message->to($mailInfo['to'], $mailInfo['to_name'])
                             ->subject('Mentoring Report of - ' . $mailInfo['school']);
-                        $message->from($mailInfo['from'], $mailInfo['from_name']);
                     });
 
                     ///////////////////// End Email to Business School //////////////////////

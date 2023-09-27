@@ -416,7 +416,6 @@ class HomeController extends Controller
                     //dd($user);
                     $message->to($mailInfo['to'],$mailInfo['to_name'] )
                         ->subject('Registration Application Submitted');
-                    $message->from($mailInfo['from'],$mailInfo['from_name']);
                 });
                 
                 $data['user'] = $businessSchool->campus->user->name;

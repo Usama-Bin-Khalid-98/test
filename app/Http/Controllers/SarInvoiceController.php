@@ -198,14 +198,12 @@ class SarInvoiceController extends Controller
                     //dd($user);
                     $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
                         ->subject($mailSchoolInfo['school'].' paid accreditation fee - '. $mailSchoolInfo['school']);
-                    $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
                 });
 
                 Mail::send('registration.mail.acknowledgement_fee_mail', ['data' => $mailData], function($message) use ($mailInfo) {
                     //dd($user);
                     $message->to($mailInfo['to'],$mailInfo['to_name'] )
                         ->subject($mailInfo['school'].' paid accreditation fee - '. $mailInfo['school']);
-                    $message->from($mailInfo['from'],$mailInfo['from_name']);
                 });
 
                 return response()->json(['success' => 'Acknowledgment email sent successfully.'], 200);
@@ -256,7 +254,6 @@ class SarInvoiceController extends Controller
                 //dd($user);
                 $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
                     ->subject($mailSchoolInfo['school'].'Approval of Accreditation Fee - '. $mailSchoolInfo['school']);
-                $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
             });
             return response()->json(['success' => 'Invoice Slip approved successfully.'], 200);
         }

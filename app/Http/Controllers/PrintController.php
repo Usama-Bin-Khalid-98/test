@@ -622,7 +622,6 @@ WHERE po_plo_mappings.po_id=program_objectives.id
                     //dd($user);
                     $message->to($mailInfo['to'], $mailInfo['to_name'])
                         ->subject('SAR submitted by business school - ' . $mailInfo['school']);
-                    $message->from($mailInfo['from'], $mailInfo['from_name']);
                 });
 
             return response()->json(['success' => 'Successfully Shared with NBEAC']);
@@ -675,7 +674,6 @@ WHERE po_plo_mappings.po_id=program_objectives.id
                     //dd($user);
                     $message->to($mailInfo['to'], $mailInfo['to_name'])
                         ->subject('SAR submitted by business school - ' . $mailInfo['school']);
-                    $message->from($mailInfo['from'], $mailInfo['from_name']);
                 });
             return response()->json(['success' => 'Successfully Shared with Mentor']);
 

@@ -451,7 +451,6 @@ class EligibilityScreeningController extends Controller
                             //dd($user);
                             $message->to($mailInfo['to'], $mailInfo['to_name'])
                                 ->subject('Eligibility Screening Committee comments - ' . $mailInfo['school']);
-                            $message->from($mailInfo['from'], $mailInfo['from_name']);
                         });
                     }
 
@@ -554,7 +553,6 @@ class EligibilityScreeningController extends Controller
                         //dd($user);
                         $message->to($mailInfo['to'], $mailInfo['to_name'])
                             ->subject('Eligibility Screening Committee comments - ' . $mailInfo['school']);
-                        $message->from($mailInfo['from'], $mailInfo['from_name']);
                     });
 
                     /////////// Generate PDF ////////////////
@@ -732,7 +730,6 @@ class EligibilityScreeningController extends Controller
 //                        //dd($user);
 //                        $message->to($mailInfo['to'],$mailInfo['to_name'] )
 //                            ->subject('Eligibility Screening Committee comments - '. $mailInfo['school']);
-//                        $message->from($mailInfo['from'],$mailInfo['from_name']);
 //                    });
                     ///////////////////// End Email to Business School //////////////////////
 
