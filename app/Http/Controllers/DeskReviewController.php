@@ -732,7 +732,6 @@ class DeskReviewController extends Controller
                 //dd($user);
                 $message->to($mailInfo['to'], $mailInfo['to_name'])
                     ->subject('Registration Desk Review Comments - ' . $mailInfo['school']);
-                $message->from($mailInfo['from'], $mailInfo['from_name']);
             });
 
             return response()->json(['success' => 'Desk Review added successfully.'], 200);
@@ -782,7 +781,6 @@ class DeskReviewController extends Controller
             //dd($user);
             $message->to($mailInfo['to'], $mailInfo['to_name'])
                 ->subject('Registration Desk Review Comments - ' . $mailInfo['school']);
-            $message->from($mailInfo['from'], $mailInfo['from_name']);
         });
     }
     /**

@@ -125,7 +125,6 @@ class PeerReviewReportController extends Controller
                         //dd($user);
                         $message->to($mailInfo['to'],$mailInfo['to_name'] )
                             ->subject('AAC Decision & Recommendations - '. $mailInfo['school']);
-                        $message->from($mailInfo['from'],$mailInfo['from_name']);
                     });
                 return response()->json(['success' => 'Report updated successfully.'], 200);
 //                }else{
@@ -173,7 +172,6 @@ class PeerReviewReportController extends Controller
                 //dd($user);
                 $message->to($mailInfo['to'],$mailInfo['to_name'] )
                     ->subject('Thank you - '. $mailInfo['school']);
-                $message->from($mailInfo['from'],$mailInfo['from_name']);
             });
 
 

@@ -134,7 +134,6 @@ class UserController extends Controller
                     //dd($user);
                     $message->to($userData['to'],$userData['to_name'] )
                         ->subject('NBEAC user account info');
-                    $message->from($userData['from'],$userData['from_name']??'Admin');
                 });
             }
             return response()->json(['message'=> 'User created successfully'], 200);

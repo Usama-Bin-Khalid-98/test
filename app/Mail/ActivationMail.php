@@ -31,9 +31,7 @@ class ActivationMail extends Mailable
      */
     public function build()
     {
-        $getInfo = NbeacBasicInfo::all()->first();
-        return $this->from($getInfo->email,'NBEAC Admin')
-            ->subject('Account Activated')
+        return $this->subject('Account Activated')
             ->view('registration.mail.activation_temp')
             ->with('message', 'message here');
 

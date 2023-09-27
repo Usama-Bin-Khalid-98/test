@@ -194,7 +194,6 @@ class SchedulePeerReviewController extends Controller
 //                                //dd($user);
 //                                $message->to($mailInfo['to'],$mailInfo['to_name'] )
 //                                    ->subject($mailInfo['school'].' Peer Review Visit Scheduled');
-//                                $message->from($mailInfo['from'],$mailInfo['from_name']);
 //                            });
                         }
                         $updateSlip = Slip::find($request->registrations)->update(['regStatus'=>'ScheduledPRVisit']);
@@ -224,7 +223,6 @@ class SchedulePeerReviewController extends Controller
                             //dd($user);
                             $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
                                 ->subject('Schedule Peer Review Visit of '. $mailSchoolInfo['school']);
-                            $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
                         });
 
                         //////////////// Send and email to NBEAC for Reviewers Approval/////
@@ -292,7 +290,6 @@ class SchedulePeerReviewController extends Controller
                                 //dd($user);
                                 $message->to($mailInfo['to'],$mailInfo['to_name'] )
                                     ->subject($mailInfo['school'].' Peer Review Visit Scheduled');
-                                $message->from($mailInfo['from'],$mailInfo['from_name']);
                             });
                         }
 //                        $updateSlip = Slip::find($request->id)->update(['regStatus'=>'ScheduledPRVisit']);
@@ -321,7 +318,6 @@ class SchedulePeerReviewController extends Controller
                             //dd($user);
                             $message->to($mailSchoolInfo['to'],$mailSchoolInfo['to_name'] )
                                 ->subject('Schedule Peer Review Visit of '. $mailSchoolInfo['school']);
-                            $message->from($mailSchoolInfo['from'],$mailSchoolInfo['from_name']);
                         });
 
                         //////////////// Send and email to NBEAC for Reviewers Approval/////
