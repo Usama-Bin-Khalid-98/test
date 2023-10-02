@@ -49,11 +49,10 @@ class ScopeController extends Controller
         if($slip){
             $scopes = Scope::with('level', 'program')
                 ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
-                ->where('type','SAR')
                 ->get();
             $isSAR = true;
         }else {
-            $scopes = Scope::with('level', 'program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+            $scopes = Scope::with('level', 'program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         }
         return view('strategic_management.scope', compact('programs', 'levels', 'scopes', 'isSAR', 'disciplines'));
     }
@@ -82,7 +81,7 @@ class ScopeController extends Controller
             $department_id = Auth::user()->department_id;
 
             $slip = Slip::where(['business_school_id' => $campus_id, 'department_id' => $department_id])->first();
-            $number_of_registered_programs = Scope::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type' => 'REG'])->count();
+            $number_of_registered_programs = Scope::where(['campus_id' => $campus_id, 'department_id' => $department_id])->count();
             $registration_fee = FeeType::where(['name' => 'Registration Fee'])->first();
             if($slip->amount <= $number_of_registered_programs * $registration_fee->amount){
                 return response()->json(['error' => 'You have reached the limit for the number of programs with the invoice amount: Rs. '. $slip->amount], 405);
@@ -110,65 +109,26 @@ class ScopeController extends Controller
                     ]);
                     $request->program_id = $data->id;
                 }
-                $slip = Slip::where(['business_school_id' => $campus_id, 'department_id' => $department_id])->where('regStatus', 'SAR')->first();
                 $campus_id = auth()->user()->campus_id;
                 $department_id = auth()->user()->department_id;
                 $created_id = auth()->user()->id;
 
-                if ($slip) {
-                    $type = 'SAR';
-                    if (Scope::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id,
-                        'program_id' => $request->program_id, 'level_id' => $request->level_id, 'type' => $type])
-                        ->exists()) {
-                        return response()->json(['error' => 'Record already Exists.'], 422);
-                    }
-                    $create = Scope::create([
-                        'campus_id' => $campus_id,
-                        'department_id' => $department_id,
-                        'created_by' => $created_id,
-                        'isComplete' => 'yes',
-                        'type' => $type,
-                        'program_id' => $request->program_id,
-                        'level_id' => $request->level_id,
-                        'date_program' => $request->date_program,
-                        'status' => 'active'
-                    ]);
-
-                } else {
-                    $type = 'REG';
-                    if (Scope::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id,
-                        'program_id' => $request->program_id, 'level_id' => $request->level_id, 'type' => $type])
-                        ->exists()) {
-                        return response()->json(['error' => 'Record already Exists.'], 422);
-                    }
-                    $create = Scope::create([
-                        'campus_id' => $campus_id,
-                        'department_id' => $department_id,
-                        'created_by' => $created_id,
-                        'isComplete' => 'yes',
-                        'type' => $type,
-                        'program_id' => $request->program_id,
-                        'level_id' => $request->level_id,
-                        'date_program' => $request->date_program,
-                        'status' => 'active'
-                    ]);
-
-                    $request->merge(['type'=> 'SAR']);
-//                    dd($request);
-                    $createsar = Scope::create([
-                        'campus_id' => $campus_id,
-                        'department_id' => $department_id,
-                        'created_by' => $created_id,
-                        'isComplete' => 'yes',
-                        'type' => 'SAR',
-                        'program_id' => $request->program_id,
-                        'level_id' => $request->level_id,
-                        'date_program' => $request->date_program,
-                        'status' => 'active'
-                    ]);
-
-                    return response()->json(['success' => 'Added successfully.'], 200);
+                if (Scope::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id,
+                    'program_id' => $request->program_id, 'level_id' => $request->level_id])
+                    ->exists()) {
+                    return response()->json(['error' => 'Record already Exists.'], 422);
                 }
+                $create = Scope::create([
+                    'campus_id' => $campus_id,
+                    'department_id' => $department_id,
+                    'created_by' => $created_id,
+                    'isComplete' => 'yes',
+                    'program_id' => $request->program_id,
+                    'level_id' => $request->level_id,
+                    'date_program' => $request->date_program,
+                    'status' => 'active'
+                ]);
+                return response()->json(['success' => 'Added successfully.'], 200);
             }
         }catch (Exception $e)
         {

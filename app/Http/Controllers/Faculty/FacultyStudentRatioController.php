@@ -26,26 +26,15 @@ class FacultyStudentRatioController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
 
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $ratios = FacultyStudentRatio::with('campus','program')
-                ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
-                ->where('type','SAR')
-                ->where('deleted_at',null)
-                ->get();
-        }else {
-            $ratios = FacultyStudentRatio::with('campus','program')
-                ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
-                ->where('type','REG')
-                ->where('deleted_at',null)
-                ->get();
-        }
+        $ratios = FacultyStudentRatio::with('campus','program')
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
+            ->where('deleted_at',null)
+            ->get();
 
-        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $getFTE = FacultyTeachingCources::with('faculty_program')
             ->where('campus_id', $campus_id)
             ->where('department_id', $department_id)
-            ->where('type', $slip? 'SAR':'REG')
             ->where('deleted_at', null)
             ->where(function($query){
                 $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
@@ -77,7 +66,6 @@ class FacultyStudentRatioController extends Controller
             ->where('lookup_faculty_type_id' , 3)
             ->where('campus_id', $campus_id)
             ->where('department_id', $department_id)
-            ->where('type', $slip? 'SAR':'REG')
             ->where('deleted_at', null)
             ->get();
         $totalVFE = 0;
@@ -139,21 +127,12 @@ class FacultyStudentRatioController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $department_id = Auth::user()->department_id;
-            $campus_id = Auth::user()->campus_id;
-            $slip = Slip::where(['business_school_id'=> $campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
             $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'isCompleted' => 'yes',
-                'type' => $type];
+            ];
             $check = FacultyStudentRatio::where($check_data)->exists();
             if(!$check) {
 
@@ -163,17 +142,6 @@ class FacultyStudentRatioController extends Controller
                     'program_id' => $request->program_id,
                     'total_enrollments' => $request->total_enrollments,
                     'isCompleted' => 'yes',
-                    'type' => $type,
-                    'created_by' => Auth::user()->id
-                ]);
-
-                FacultyStudentRatio::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'program_id' => $request->program_id,
-                    'total_enrollments' => $request->total_enrollments,
-                    'isCompleted' => 'yes',
-                    'type' => 'SAR',
                     'created_by' => Auth::user()->id
                 ]);
             }else{

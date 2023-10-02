@@ -399,7 +399,7 @@ class SARDeskReviewController extends Controller
 
     public  function sar_files(Request $request){
         try {
-            $where = ['campus_id'=> $request->cid, 'department_id' => $request->did, 'type'=>'SAR'];
+            $where = ['campus_id'=> $request->cid, 'department_id' => $request->did];
             $whereReg = ['campus_id'=> $request->cid, 'department_id' => $request->did];
 //            dd($where);
             $schoolInfo = Slip::where(['business_school_id'=> $request->cid, 'department_id' => $request->did])->with('campus', 'department')->first();

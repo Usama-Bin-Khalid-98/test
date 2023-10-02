@@ -77,7 +77,7 @@ class SlipController extends Controller
         $programs = [];
         foreach($registrations as $slip){
 
-            $scopes = Scope::with('program')->where(['campus_id' => $slip->campus_id, 'department_id' => $slip->department_id, 'type' => 'REG'])->get();
+            $scopes = Scope::with('program')->where(['campus_id' => $slip->campus_id, 'department_id' => $slip->department_id])->get();
             $programs[$slip->id] = [];
             foreach($scopes as $scope){
                 array_push( $programs[$slip->id], @$scope->program->name);

@@ -33,7 +33,6 @@ class FinancialInfoController extends Controller
             $q->where('type', $income_type);
             })
             ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
-            ->where('type','REG')
             ->get();
         $income_type ='expense';
         $infos_expense = FinancialInfo::with('income_source')
@@ -73,16 +72,6 @@ class FinancialInfoController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $department_id = Auth::user()->department_id;
-            $campus_id = Auth::user()->campus_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-//            dd($slip);
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
             $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -92,7 +81,7 @@ class FinancialInfoController extends Controller
                 'year_one' => $request->year_one,
                 'year_t' => $request->year_t,
                 'isComplete' => 'yes',
-                'type' => $type];
+            ];
             $check = FinancialInfo::where($check_data)->exists();
             if(!$check) {
                 FinancialInfo::create([
@@ -106,7 +95,6 @@ class FinancialInfoController extends Controller
                     'year_t_plus_one' => $request->year_t_plus_one,
                     'year_t_plus_two' => $request->year_t_plus_two,
                     'isComplete' => 'yes',
-                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
             }else{

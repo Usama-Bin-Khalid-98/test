@@ -38,7 +38,7 @@ class SarInvoiceController extends Controller
 //        dd($payment_methods);
         $program_fee = DepartmentFee::with('fee_type')->where(['fee_type_id'=>6,'status'=> 'active'])->get()->first();
 
-        $getScopes =  Scope::where(['campus_id'=> $school_id->campus_id, 'department_id'=> $school_id->department_id, 'type'=>'SAR'])->with('program')->get();
+        $getScopes =  Scope::where(['campus_id'=> $school_id->campus_id, 'department_id'=> $school_id->department_id])->with('program')->get();
         $countPrograms = $getScopes->count()??0;
         $amount = $program_fee->amount??0;
         $fee_amount = $amount * $countPrograms;
@@ -78,7 +78,7 @@ class SarInvoiceController extends Controller
     {
         try {
             $getFee =DepartmentFee::where(['fee_type_id'=> 6])->first();
-            $getScops= Scope::where(['campus_id'=>Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'type'=>'SAR'])->get()->count();
+            $getScops= Scope::where(['campus_id'=>Auth::user()->campus_id,'department_id' => Auth::user()->department_id])->get()->count();
 //            dd($getScops);
             $netAmount = $getFee->amount *$getScops;
             if($getFee) {

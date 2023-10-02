@@ -27,15 +27,7 @@ class BusinessSchoolFacilityController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $facility_types = Facility::with('facility_type')->orderBy('facility_type_id')->orderBy('id')->get();
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
-
-
+        $facilitiess = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('registration.facilities_information.business_school_facility', compact('facility_types','facilitiess'));
     }
@@ -66,47 +58,31 @@ class BusinessSchoolFacilityController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $department_id = Auth::user()->department_id;
-            $campus_id = Auth::user()->campus_id;
-
-            $slip = Slip::where(['department_id'=> $department_id, 'business_school_id'=>$campus_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
-
-
             foreach ($request->all() as $key => $facility){
                 //dd();ount]['id']);
                 foreach ($facility as $value){
-            $check_data = [
-                'campus_id' => Auth::user()->campus_id,
-                'department_id' => Auth::user()->department_id,
-                'facility_id' => $value['id'],
-                'isComplete' => 'yes',
-                'type' => $type];
-            $check = BusinessSchoolFacility::where($check_data)->exists();
+                    $check_data = [
+                        'campus_id' => Auth::user()->campus_id,
+                        'department_id' => Auth::user()->department_id,
+                        'facility_id' => $value['id'],
+                        'isComplete' => 'yes',
+                    ];
+                    $check = BusinessSchoolFacility::where($check_data)->exists();
 
-            if(!$check) {
-                //dd($value['id']);
-                BusinessSchoolFacility::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'facility_id' => $value['id'],
-                    'remark' => $value['remark'],
-                    'isComplete' => 'yes',
-                    'type' => $type,
-                    'created_by' => Auth::user()->id
-                ]);
-            }else{
-            return response()->json(['error' => 'Business School Facility already exists.'], 422);
-
-            }
+                    if(!$check) {
+                        //dd($value['id']);
+                        BusinessSchoolFacility::create([
+                            'campus_id' => Auth::user()->campus_id,
+                            'department_id' => Auth::user()->department_id,
+                            'facility_id' => $value['id'],
+                            'remark' => $value['remark'],
+                            'isComplete' => 'yes',
+                            'created_by' => Auth::user()->id
+                        ]);
+                    } else {
+                        return response()->json(['error' => 'Business School Facility already exists.'], 422);
+                    }
                 }
-
-
             }
 
             return response()->json(['success' => 'Business School Facility added successfully.'], 200);

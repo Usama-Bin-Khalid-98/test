@@ -8,34 +8,13 @@ use Illuminate\Support\Facades\DB;
 
         function checkIsCompleted($model, $where)
         {
-    //        dd($where);
-    //        DB::enableQueryLog();
-
-            if ($model != 'App\Models\Common\Slip' && $model != 'App\Models\External_Linkages\Linkages' && $model != 'App\Models\MentoringInvoice' && $model != 'App\BusinessSchool' && $model != 'App\StudentIntake') {
-                $whereIs = ['business_school_id' => $where['campus_id'], 'department_id' => $where['department_id'], 'regStatus' => 'SAR'];
-                $isActiveSAR = getFirst('App\Models\Common\Slip', $whereIs);
-    //            dd($isActiveSAR);
-
-                $isActiveSAR ? $where['type'] = 'SAR' : '';
-            }
-    //        dd($where);
             $check = $model::where($where)->get()->first() ? 'C' : 'In';
-            //dd($check);
-            //dd(DB::getQueryLog());
             return $check;
         }
     }
     if(!function_exists('checkIsCompletedAllProg')) {
         function checkIsCompletedAllProg($model, $where)
         {
-
-            if ($model != 'App\Models\Common\Slip' && $model != 'App\Models\MentoringInvoice' && $model != 'App\BusinessSchool') {
-                $whereIs = ['business_school_id' => $where['campus_id'], 'department_id' => $where['department_id'], 'regStatus' => 'SAR'];
-                $isActiveSAR = getFirst('App\Models\Common\Slip', $whereIs);
-                $isActiveSAR ? $where['type'] = 'SAR' : '';
-            }
-
-
             $getScope = \App\Models\StrategicManagement\Scope::where(['campus_id' => $where['campus_id'], 'department_id' => $where['department_id']])->get();
             $check_program = false;
             foreach ($getScope as $key=>$scope)

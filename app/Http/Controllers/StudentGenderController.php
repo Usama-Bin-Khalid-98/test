@@ -23,13 +23,8 @@ class StudentGenderController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
-        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=>$slip?'SAR':'REG'])->get();
+        $genders = StudentGender::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         return view('registration.student_enrolment.student_gender', compact('programs','genders'));
     }
@@ -60,17 +55,10 @@ class StudentGenderController extends Controller
         try {
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$uni_id,'department_id'=> $dept_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
             $check_data = [
                 'campus_id' => $uni_id,
                 'department_id' => $dept_id,
                 'program_id' => $request->program_id,
-                'type' => $type,
             ];
             $check = StudentGender::where($check_data)->exists();
             if(!$check){
@@ -81,7 +69,6 @@ class StudentGenderController extends Controller
                     'male' => $request->male,
                     'female' => $request->female,
                     'isComplete' => 'yes',
-                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
     

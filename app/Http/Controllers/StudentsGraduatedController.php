@@ -24,13 +24,8 @@ class StudentsGraduatedController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
-        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=>$slip?'SAR':'REG'])->get();
+        $students = StudentsGraduated::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $programs = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $getYears = BusinessSchoolTyear::where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
         $programs->tyear =@$getYears->tyear??'';
         $programs->year_t_1 =@$getYears->year_t_1??'';
@@ -64,19 +59,13 @@ class StudentsGraduatedController extends Controller
         try {
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$uni_id,'department_id'=> $dept_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
 
             $check_data = [
                 'campus_id' => $uni_id,
                 'department_id' => $dept_id,
                 'isComplete' => 'yes',
                 'program_id' => $request->program_id,
-                'type' => $type];
+            ];
             $check = StudentsGraduated::where($check_data)->exists();
                 if(!$check) {
                     StudentsGraduated::create([
@@ -87,7 +76,6 @@ class StudentsGraduatedController extends Controller
                         'grad_std_t_1' => $request->grad_std_tt,
                         'grad_std_t_2' => $request->grad_std_ttt,
                         'isComplete' => 'yes',
-                        'type' => $type,
                         'created_by' => Auth::user()->id
                     ]);
                 }else{

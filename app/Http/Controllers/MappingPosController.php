@@ -24,7 +24,7 @@ class MappingPosController extends Controller
             'department_id'=> $userInfo->department_id,
             'status'=> 'active'];
 
-        $programs = Scope::with('program','level')->where($where)->where(['type'=> 'SAR'])->get();
+        $programs = Scope::with('program','level')->where($where)->get();
         $po_plos = [];
         foreach($programs as $program)
         {

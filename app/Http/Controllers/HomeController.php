@@ -424,7 +424,6 @@ class HomeController extends Controller
                 $data['scopes'] = Scope::where([
                     'campus_id' => $businessSchool->campus->id,
                     'department_id' => $businessSchool->department->id,
-                    'type' => 'REG'
                 ])->get();
 
                 Mail::to($businessSchool->campus->user->email)->send(new ChangeResgistrationStatusMail($data));

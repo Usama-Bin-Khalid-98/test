@@ -48,17 +48,7 @@ class FacultyTeachingCourcesController extends Controller
          }
 
 
-        //dd($faculty_types);
-        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $visitings = FacultyTeachingCources::with('campus','lookup_faculty_type','designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }*/
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
-        $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
-        $slip?$where['type'] = 'SAR':$where['type'] = 'REG';
+        $where = ['campus_id' => $campus_id, 'department_id' => $department_id,];
         $getScope = Scope::with('program')->where($where)->get();
 
         if($getUrl =='faculty-teaching') {
@@ -125,14 +115,6 @@ class FacultyTeachingCourcesController extends Controller
 
         try {
 
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
-            $type = 'REG';  //hotfix to be removed in future
             $path = '';
             if(@$request->file('file')) {
                 $path = @$request->file('file')->getRealPath();
@@ -162,7 +144,7 @@ class FacultyTeachingCourcesController extends Controller
                         'lookup_faculty_type_id' => $getFacultyType->id,
                         'designation_id' => $getDesignation->id,
                         'isCompleted' => 'yes',
-                        'type' => $type];
+                    ];
                     $check = FacultyTeachingCources::where($check_data)->exists();
 
                     if (!$check) {
@@ -182,7 +164,6 @@ class FacultyTeachingCourcesController extends Controller
                                 'designation_id' => $getDesignation->id,
                                 'max_cources_allowed' => @$addData[3],
                                 'isCompleted' => 'yes',
-                                'type' => $type,
                                 'created_by' => Auth::user()->id
                             ]);
                         } catch (QueryException $ex) {
@@ -222,7 +203,6 @@ class FacultyTeachingCourcesController extends Controller
                     $scopes = Scope::where([
                         'campus_id'=>Auth::user()->campus_id,
                         'department_id'=>Auth::user()->department_id,
-                        'type'=>'REG'
                     ])->get();
   
                     foreach($scopes as $scope){
@@ -255,7 +235,7 @@ class FacultyTeachingCourcesController extends Controller
                     'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                     'designation_id' => $request->designation_id,
                     'isCompleted' => 'yes',
-                    'type' => $type];
+                ];
                 $check = FacultyTeachingCources::where($check_data)->exists();
                 if (!$check) {
 
@@ -267,30 +247,6 @@ class FacultyTeachingCourcesController extends Controller
                         'designation_id' => $request->designation_id,
                         'max_cources_allowed' => $request->max_cources_allowed,
                         'isCompleted' => 'yes',
-                        'type' => $type,
-                        'created_by' => Auth::user()->id
-                    ]);
-
-                    foreach ($request->tc_program as $key => $program) {
-                        $insertTcProgram = FacultyProgram::create(
-                            [
-                                'faculty_teaching_cource_id' => $insert->id,
-                                'program_id' => $key,
-                                'tc_program' => $program,
-                                'created_by' => Auth::id()
-                            ]
-                        );
-                    }
-
-                    $insert = FacultyTeachingCources::create([
-                        'name' => $request->name,
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                        'designation_id' => $request->designation_id,
-                        'max_cources_allowed' => $request->max_cources_allowed,
-                        'isCompleted' => 'yes',
-                        'type' => 'SAR',
                         'created_by' => Auth::user()->id
                     ]);
 

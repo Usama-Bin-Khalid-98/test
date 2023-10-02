@@ -52,32 +52,32 @@ class PrintController extends Controller
         $campuses = Campus::where('business_school_id', $req->bid)->get();
         $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
 
-        $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.type="SAR" AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array($req->cid));
+        $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array($req->cid));
 
-        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, campuses WHERE designations.id=contact_infos.designation_id AND contact_infos.type="SAR" AND contact_infos.campus_id=? AND contact_infos.campus_id=campuses.id', array($req->cid));
+        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId FROM designations, contact_infos, campuses WHERE designations.id=contact_infos.designation_id AND contact_infos.campus_id=? AND contact_infos.campus_id=campuses.id', array($req->cid));
 
-        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($req->bid, $req->cid));
+        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($req->bid, $req->cid));
 
          $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
             FROM affiliations, statutory_bodies, business_schools
-            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="SAR" AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid, $req->cid));
+            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND business_schools.id=? AND affiliations.campus_id=?', array($req->bid, $req->cid));
 
-         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
+         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($req->bid, $req->cid));
 
-          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND financial_infos.type="SAR" AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( $req->cid));
+          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( $req->cid));
           $summary_policy = SummarizePolicy::where(['campus_id' => $req->cid, 'status'=> 'active'])->first();
 
-         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.type="SAR" AND strategic_plans.campus_id=?', array($req->cid));
+         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=?', array($req->cid));
 
          $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
             FROM program_portfolios, programs, course_types, business_schools
-            WHERE program_portfolios.program_id=programs.id AND program_portfolios.type="SAR" AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=?', array($req->bid, $req->cid));
+            WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=?', array($req->bid, $req->cid));
 
          $studentEnrolment = DB::select('SELECT student_enrolments.*
             FROM student_enrolments , business_schools
-            WHERE business_schools.id=? AND student_enrolments.type="SAR" AND student_enrolments.campus_id=?', array($req->bid, $req->cid));
+            WHERE business_schools.id=? AND student_enrolments.campus_id=?', array($req->bid, $req->cid));
 
-         $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id  AND student_enrolments.type="SAR"  AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($req->cid));
+         $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($req->cid));
 
          /*$facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, users WHERE work_loads.campus_id=campuses.id AND work_loads.designation_id=designations.id AND users.id=? AND work_loads.campus_id=?', array(auth()->user()->id,auth()->user()->campus_id));*/
 
@@ -95,16 +95,15 @@ class PrintController extends Controller
         }
          $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName
 FROM work_loads, designations, campuses, semesters
-WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id
+WHERE work_loads.designation_id=designations.id
 AND work_loads.campus_id=? AND campuses.id=work_loads.campus_id ', array($req->cid ));
 
          $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName
 FROM work_loads, designations, campuses,semesters
-WHERE work_loads.type="SAR"
-AND work_loads.designation_id=designations.id AND work_loads.campus_id=?
+WHERE work_loads.designation_id=designations.id AND work_loads.campus_id=?
 AND campuses.id=work_loads.campus_id ', array($req->cid));
 
-         $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.type="SAR" AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id  AND faculty_genders.campus_id=? ', array($req->cid));
+         $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id  AND faculty_genders.campus_id=? ', array($req->cid));
 
           $placementOffices = DB::select('SELECT placement_offices.* FROM placement_offices, campuses WHERE placement_offices.campus_id=campuses.id AND placement_offices.campus_id=? ', array( $req->cid));
 
@@ -118,9 +117,9 @@ AND campuses.id=work_loads.campus_id ', array($req->cid));
 
             $placementActivities = DB::select('SELECT placement_activities.* FROM placement_activities, campuses WHERE placement_activities.campus_id=campuses.id AND placement_activities.campus_id=?', array($req->cid));
 
-            $entryRequirements = DB::select('SELECT entry_requirements.*, programs.name as program, eligibility_criterias.name as eligibilityCriteria FROM entry_requirements, programs, eligibility_criterias, campuses WHERE entry_requirements.campus_id=campuses.id AND entry_requirements.type="SAR" AND entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=?', array($req->cid));
+            $entryRequirements = DB::select('SELECT entry_requirements.*, programs.name as program, eligibility_criterias.name as eligibilityCriteria FROM entry_requirements, programs, eligibility_criterias, campuses WHERE entry_requirements.campus_id=campuses.id AND entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=?', array($req->cid));
 
-            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program FROM application_receiveds, programs, semesters, campuses WHERE application_receiveds.campus_id=campuses.id  AND application_receiveds.type="SAR" AND application_receiveds.program_id=programs.id AND application_receiveds.campus_id=?', array($req->cid));
+            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program FROM application_receiveds, programs, semesters, campuses WHERE application_receiveds.campus_id=campuses.id AND application_receiveds.program_id=programs.id AND application_receiveds.campus_id=?', array($req->cid));
 
             $orics = DB::select('SELECT orics.* FROM orics, campuses WHERE orics.campus_id=campuses.id AND campuses.id=?', array( $req->cid));
 
@@ -137,7 +136,7 @@ AND campuses.id=work_loads.campus_id ', array($req->cid));
              $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName,
 publication_categories.name as publicationType
 FROM publication_categories,research_summaries, publication_types, campuses
-WHERE research_summaries.campus_id=campuses.id AND research_summaries.type="SAR"
+WHERE research_summaries.campus_id=campuses.id
 AND publication_categories.id=publication_types.publication_category_id
 AND research_summaries.publication_type_id=publication_types.id
 AND research_summaries.campus_id=? ORDER BY publication_categories.name', array($req->cid));
@@ -150,7 +149,7 @@ AND research_summaries.campus_id=? ORDER BY publication_categories.name', array(
 
              $conferences = DB::select('SELECT conferences.* FROM conferences, campuses WHERE conferences.campus_id=campuses.id AND conferences.campus_id=?', array($req->cid));
 
-             $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses WHERE financial_infos.campus_id=campuses.id AND financial_infos.type="SAR" AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=?  ORDER BY income_sources.type', array($req->cid));
+             $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses WHERE financial_infos.campus_id=campuses.id AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=?  ORDER BY income_sources.type', array($req->cid));
 
              $financialRisks = DB::select('SELECT financial_risks.* FROM financial_risks, campuses WHERE financial_risks.campus_id=campuses.id AND financial_risks.campus_id=?', array($req->cid));
 
@@ -160,7 +159,7 @@ AND research_summaries.campus_id=? ORDER BY publication_categories.name', array(
 
              $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName,
 facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, campuses
-WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.type ="SAR"
+WHERE business_school_facilities.campus_id=campuses.id
 AND business_school_facilities.facility_id=facilities.id  AND business_school_facilities.campus_id=?
 AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array($req->cid));
 
@@ -251,12 +250,11 @@ WHERE po.program_id=p.id
 
                $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
 
-               $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id  AND faculty_stability.type="SAR" AND faculty_stability.campus_id=? AND users.id=?', array($req->cid,auth()->user()->id));
+               $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND faculty_stability.campus_id=? AND users.id=?', array($req->cid,auth()->user()->id));
 
                $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName
 FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users
 WHERE faculty_teaching_cources.campus_id=campuses.id
-  AND faculty_teaching_cources.type="SAR"
   AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
   AND faculty_teaching_cources.designation_id=designations.id
   AND faculty_teaching_cources.campus_id=?
@@ -265,9 +263,7 @@ WHERE faculty_teaching_cources.campus_id=campuses.id
                $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs,  campuses
 WHERE faculty_student_ratio.campus_id=campuses.id
-AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.campus_id=?
-AND faculty_student_ratio.type=?',
-                   array( $req->cid, 'SAR'));
+AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.campus_id=?', array( $req->cid));
 
                $facultyDetailedInfos = DB::select('SELECT faculty_detailed_infos.*, lookup_faculty_types.faculty_type as facultyType, course_types.name as courseType, degrees.name as degree, designations.name as designation FROM faculty_detailed_infos, lookup_faculty_types, course_types, campuses, degrees, designations , users WHERE faculty_detailed_infos.designation_id=designations.id AND faculty_detailed_infos.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_detailed_infos.course_type_id=course_types.id AND faculty_detailed_infos.degree_id=degrees.id AND faculty_detailed_infos.campus_id=campuses.id AND faculty_detailed_infos.campus_id=? AND users.id=?', array($req->cid, auth()->user()->id));
 
@@ -312,32 +308,32 @@ AND faculty_student_ratio.type=?',
         $campuses = Campus::where('business_school_id', $bussinessSchool[0]->id)->get();
         $userCampus = DB::select('SELECT * from users where id=?', array(auth()->user()->id));
 
-        $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.type="SAR" AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(auth()->user()->campus_id));
+        $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id AND scopes.program_id=programs.id AND scopes.level_id=levels.id AND scopes.campus_id=?', array(auth()->user()->campus_id));
 
-        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND contact_infos.type="SAR" AND contact_infos.campus_id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
+        $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName FROM contact_infos, designations, campuses, users WHERE contact_infos.designation_id=designations.id AND contact_infos.campus_id=? AND users.id=?', array(auth()->user()->campus_id, auth()->user()->id));
 
-        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.type="SAR" AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+        $statutoryCommitties = DB::select('SELECT statutory_committees.*,statutory_bodies.name as statutoryName, designations.name as designationName from statutory_committees, statutory_bodies, business_schools, designations WHERE statutory_committees.statutory_body_id=statutory_bodies.id AND statutory_committees.designation_id=designations.id AND business_schools.id=? AND statutory_committees.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
          $affiliations = DB::select('SELECT affiliations.*, statutory_bodies.name as statutoryBody
             FROM affiliations, statutory_bodies, business_schools
-            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND affiliations.type="SAR" AND business_schools.id=? AND affiliations.campus_id=?', array($bussinessSchool[0]->id,auth()->user()->campus_id));
+            WHERE  affiliations.statutory_bodies_id=statutory_bodies.id AND business_schools.id=? AND affiliations.campus_id=?', array($bussinessSchool[0]->id,auth()->user()->campus_id));
 
-         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.type="SAR" AND budgetary_infos.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+         $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses WHERE business_schools.id=? AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
-          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND financial_infos.type="SAR" AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( auth()->user()->campus_id));
+          $sourceOfFunding = DB::select('SELECT financial_infos.*, income_sources.particular as incomeSource FROM financial_infos, income_sources, campuses WHERE financial_infos.income_source_id=income_sources.id AND   financial_infos.campus_id=campuses.id AND financial_infos.campus_id=?', array( auth()->user()->campus_id));
             $summary_policy = SummarizePolicy::where(['campus_id' => auth()->user()->campus_id, 'status'=> 'active', 'department_id'=> auth()->user()->department_id])->first();
 
-         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.type="SAR" AND strategic_plans.campus_id=?', array(auth()->user()->campus_id));
+         $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, campuses WHERE strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=?', array(auth()->user()->campus_id));
 
          $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
             FROM program_portfolios, programs, course_types, business_schools
-            WHERE program_portfolios.program_id=programs.id AND program_portfolios.type="SAR" AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+            WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
          $studentEnrolment = DB::select('SELECT student_enrolments.*
             FROM student_enrolments , business_schools
-            WHERE business_schools.id=? AND student_enrolments.type="SAR" AND student_enrolments.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+            WHERE business_schools.id=? AND student_enrolments.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
-         $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND student_enrolments.type="SAR" AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($userCampus[0]->campus_id));
+         $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($userCampus[0]->campus_id));
 
          /*$facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName FROM work_loads, designations, campuses, users WHERE work_loads.campus_id=campuses.id AND work_loads.designation_id=designations.id AND users.id=? AND work_loads.campus_id=?', array(auth()->user()->id,auth()->user()->campus_id));*/
 
@@ -356,16 +352,16 @@ AND faculty_student_ratio.type=?',
 
          $facultyWorkLoad = DB::select('SELECT work_loads.*, designations.name as designationName
 FROM work_loads, designations, campuses
-WHERE  work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=?
+WHERE work_loads.designation_id=designations.id AND work_loads.campus_id=?
 AND campuses.id=work_loads.campus_id', array($userCampus[0]->campus_id));
          //dd($facultyWorkLoad);
 
          $facultyWorkLoadb = DB::select('SELECT work_loads.*, designations.name as designationName
 FROM work_loads, designations, campuses,semesters
- WHERE work_loads.type="SAR" AND work_loads.designation_id=designations.id AND work_loads.campus_id=?
+ WHERE work_loads.designation_id=designations.id AND work_loads.campus_id=?
 AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id));
 
-         $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses, users WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.type="SAR" AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id AND users.id=? AND faculty_genders.campus_id=? AND users.department_id=?', array(auth()->user()->id, $userCampus[0]->campus_id, $userCampus[0]->department_id));
+         $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName FROM faculty_genders, lookup_faculty_types, campuses, users WHERE faculty_genders.campus_id=campuses.id AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id AND users.id=? AND faculty_genders.campus_id=? AND users.department_id=?', array(auth()->user()->id, $userCampus[0]->campus_id, $userCampus[0]->department_id));
 
           $placementOffices = DB::select('SELECT placement_offices.* FROM placement_offices, campuses, users WHERE placement_offices.campus_id=campuses.id AND placement_offices.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
@@ -379,9 +375,9 @@ AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id));
 
             $placementActivities = DB::select('SELECT placement_activities.* FROM placement_activities, campuses, users WHERE placement_activities.campus_id=campuses.id AND placement_activities.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
-            $entryRequirements = DB::select('SELECT entry_requirements.*, programs.name as program, eligibility_criterias.name as eligibilityCriteria FROM entry_requirements, programs, eligibility_criterias, campuses, users WHERE entry_requirements.campus_id=campuses.id AND entry_requirements.type="SAR" AND entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+            $entryRequirements = DB::select('SELECT entry_requirements.*, programs.name as program, eligibility_criterias.name as eligibilityCriteria FROM entry_requirements, programs, eligibility_criterias, campuses, users WHERE entry_requirements.campus_id=campuses.id AND entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
-            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program, semester FROM application_receiveds, programs, campuses, users WHERE application_receiveds.campus_id=campuses.id AND application_receiveds.type="SAR" AND application_receiveds.program_id=programs.id AND application_receiveds.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
+            $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as program, semester FROM application_receiveds, programs, campuses, users WHERE application_receiveds.campus_id=campuses.id AND application_receiveds.program_id=programs.id AND application_receiveds.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
             $orics = DB::select('SELECT orics.* FROM orics, campuses, users WHERE orics.campus_id=campuses.id AND campuses.id=? AND users.id=?', array( $userCampus[0]->campus_id, auth()->user()->id));
 
@@ -399,7 +395,7 @@ AND campuses.id=work_loads.campus_id  ', array($userCampus[0]->campus_id));
 publication_categories.name as publicationType FROM publication_categories,
 research_summaries, publication_types, campuses, users
 WHERE research_summaries.campus_id=campuses.id
-AND publication_categories.id=publication_types.publication_category_id AND research_summaries.type="SAR"
+AND publication_categories.id=publication_types.publication_category_id
 AND research_summaries.publication_type_id=publication_types.id AND users.id=? AND users.department_id=? AND research_summaries.campus_id=? ORDER BY publication_categories.name', array(auth()->user()->id, $userCampus[0]->department_id, $userCampus[0]->campus_id ));
 
              $topTenResearchOutput = DB::select('SELECT research_outputs.* FROM research_outputs, campuses, users
@@ -413,7 +409,7 @@ AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
              $conferences = DB::select('SELECT conferences.* FROM conferences, campuses, users WHERE conferences.campus_id=campuses.id AND conferences.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
-             $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.type="SAR" AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? ORDER BY income_sources.type', array( $userCampus[0]->campus_id, auth()->user()->id));
+             $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? ORDER BY income_sources.type', array( $userCampus[0]->campus_id, auth()->user()->id));
 
              $financialRisks = DB::select('SELECT financial_risks.* FROM financial_risks, campuses, users WHERE financial_risks.campus_id=campuses.id AND financial_risks.campus_id=? AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
@@ -424,7 +420,7 @@ AND users.id=?', array( $userCampus[0]->campus_id,auth()->user()->id ));
              $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName,
 facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses
 WHERE business_school_facilities.campus_id=campuses.id
-AND business_school_facilities.facility_id=facilities.id AND business_school_facilities.type ="SAR"
+AND business_school_facilities.facility_id=facilities.id
 AND users.id=? AND business_school_facilities.campus_id=?
 AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_id));
 
@@ -500,13 +496,13 @@ ORDER BY course_types.name', array( $userCampus[0]->campus_id,auth()->user()->id
 
                $facultySummary[0] = DB::select('SELECT * FROM faculty_qualifications', array());
 
-               $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND faculty_stability.type="SAR" AND users.department_id=? AND faculty_stability.campus_id=? AND users.id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id,auth()->user()->id));
+               $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND users.department_id=? AND faculty_stability.campus_id=? AND users.id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id,auth()->user()->id));
 
-               $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.type="SAR" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=? AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id, auth()->user()->id));
+               $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=? AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id, auth()->user()->id));
 
                $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_ratio.campus_id=campuses.id
- AND faculty_student_ratio.program_id=programs.id AND faculty_student_ratio.type ="SAR" AND users.department_id=?
+ AND faculty_student_ratio.program_id=programs.id AND users.department_id=?
  AND faculty_student_ratio.campus_id=?', array($userCampus[0]->department_id, $userCampus[0]->campus_id));
 
                $facultyDetailedInfos = DB::select('SELECT faculty_detailed_infos.*, lookup_faculty_types.faculty_type as facultyType, course_types.name as courseType, degrees.name as degree, designations.name as designation FROM faculty_detailed_infos, lookup_faculty_types, course_types, campuses, degrees, designations , users WHERE faculty_detailed_infos.designation_id=designations.id AND faculty_detailed_infos.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_detailed_infos.course_type_id=course_types.id AND faculty_detailed_infos.degree_id=degrees.id AND faculty_detailed_infos.campus_id=campuses.id AND faculty_detailed_infos.campus_id=? AND users.id=?', array($userCampus[0]->campus_id, auth()->user()->id));

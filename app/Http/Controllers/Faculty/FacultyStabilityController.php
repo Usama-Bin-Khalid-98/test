@@ -37,16 +37,7 @@ class FacultyStabilityController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
 
-        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $stabilities = FacultyStability::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $stabilities = FacultyStability::with('campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }*/
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
         $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
-        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
         $stabilities = FacultyStability::with('campus')->where($where)->get();
 
         $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get()->first();
@@ -79,15 +70,6 @@ class FacultyStabilityController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
-            $type = 'REG';  //hotfix to be removed in future
             if($request->year) {
                 foreach ($request->year as $key=>$year) {
                     if(!$request->total_faculty[$key]){
@@ -98,7 +80,7 @@ class FacultyStabilityController extends Controller
                         'department_id' => Auth::user()->department_id,
                         'year' => $request->year[$key],
                         'isCompleted' => 'yes',
-                        'type' => $type];
+                    ];
                     $check = FacultyStability::where($check_data)->exists();
                     if (!$check) {
                         FacultyStability::create([
@@ -111,20 +93,6 @@ class FacultyStabilityController extends Controller
                             'terminated' => $request->terminated[$key],
                             'new_induction' => $request->new_induction[$key],
                             'isCompleted' => 'yes',
-                            'type' => $type,
-                            'created_by' => Auth::user()->id
-                        ]);
-                        FacultyStability::create([
-                            'campus_id' => Auth::user()->campus_id,
-                            'department_id' => Auth::user()->department_id,
-                            'total_faculty' => $request->total_faculty[$key],
-                            'year' => $request->year[$key],
-                            'resigned' => $request->resigned[$key],
-                            'retired' => $request->retired[$key],
-                            'terminated' => $request->terminated[$key],
-                            'new_induction' => $request->new_induction[$key],
-                            'isCompleted' => 'yes',
-                            'type' => 'SAR',
                             'created_by' => Auth::user()->id
                         ]);
                     }else{
