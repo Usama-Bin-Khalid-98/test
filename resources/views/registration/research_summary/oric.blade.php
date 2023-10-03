@@ -62,7 +62,7 @@
                                     <tr>
                                     <td>a) Year of establishment</td>
                                     <td>
-                                        <input type="textval" id="year_establishment" name="year_establishment" value="{{@$oric->year_establishment}}"  class="form-control">
+                                        <input type="number" id="year_establishment" name="year_establishment" value="{{@$oric->year_establishment}}"  class="form-control">
 
                                     </td>
                                 </tr>

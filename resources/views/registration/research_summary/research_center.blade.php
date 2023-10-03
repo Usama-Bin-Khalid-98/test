@@ -76,7 +76,7 @@
                                     <tr>
                                     <td>c) Year of establishment</td>
                                     <td>
-                                        <input type="textval" id="year_establishment" name="year_establishment" value="{{@$research_center->year_establishment}}"  class="form-control">
+                                        <input type="number" id="year_establishment" name="year_establishment" value="{{@$research_center->year_establishment}}"  class="form-control">
                                     </td>
                                 </tr>
                                 <tr>
@@ -280,6 +280,13 @@
                 }
             });
         });
+        $('#year_establishment').datepicker({
+            autocomplete:false,
+            autoclose:true,
+            format:'yyyy',
+            viewMode: "years",
+            minViewMode: "years"
+        })
 
    <?php  } ?>
 

@@ -65,7 +65,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Number of individual covered</label>
-                                    <input type="text" name="no_of_individual_covered" id="no_of_individual_covered"  class="form-control">
+                                    <input type="number" name="no_of_individual_covered" id="no_of_individual_covered"  class="form-control">
                                 </div>
                             </div>
 
@@ -183,7 +183,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Number of individual covered</label>
-                                    <input type="text" name="no_of_individual_covered" id="edit_no_of_individual_covered" value="{{old('edit_no_of_individual_covered')}}" class="form-control">
+                                    <input type="number" name="no_of_individual_covered" id="edit_no_of_individual_covered" value="{{old('edit_no_of_individual_covered')}}" class="form-control">
                                 </div>
                               </div>
 

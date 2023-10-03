@@ -65,13 +65,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Program 1</label>
-                                    <input type="text" name="program_a" id="program_a" class="form-control">
+                                    <input type="number" name="program_a" id="program_a" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Program 2</label>
-                                    <input type="text" name="program_b" id="program_b" class="form-control">
+                                    <input type="number" name="program_b" id="program_b" class="form-control">
                                 </div>
                             </div>
 
@@ -172,14 +172,14 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Program 1</label>
-                                    <input type="text" name="program_a" id="edit_program_a" value="{{old('edit_program_a')}}" class="form-control">
+                                    <input type="number" name="program_a" id="edit_program_a" value="{{old('edit_program_a')}}" class="form-control">
                                 </div>
                               </div>
 
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Program 2</label>
-                                    <input type="text" name="program_b" id="edit_program_b" value="{{old('edit_program_b')}}" class="form-control">
+                                    <input type="number" name="program_b" id="edit_program_b" value="{{old('edit_program_b')}}" class="form-control">
                                 </div>
                               </div>
 

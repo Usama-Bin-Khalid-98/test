@@ -159,7 +159,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Current job duration(year)</label>
-                                    <input type="text" name="current_job_duration" id="current_job_duration" class="form-control">
+                                    <input type="number" name="current_job_duration" id="current_job_duration" class="form-control">
                                 </div>
                             </div>
                             </div>
@@ -341,7 +341,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Current job duration(year)</label>
-                                    <input type="text" name="current_job_duration" id="edit_current_job_duration" value="{{old('edit_current_job_duration')}}" class="form-control">
+                                    <input type="number" name="current_job_duration" id="edit_current_job_duration" value="{{old('edit_current_job_duration')}}" class="form-control">
                                 </div>
                             </div>
 

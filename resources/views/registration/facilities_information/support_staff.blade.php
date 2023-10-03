@@ -62,7 +62,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Total number of Staff members</label>
-                                    <input type="text" name="total_staff" id="total_staff" class="form-control">
+                                    <input type="number" name="total_staff" id="total_staff" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-3">
@@ -166,7 +166,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Total number of Staff members</label>
-                                    <input type="text" name="total_staff" id="edit_total_staff" value="{{old('edit_total_staff')}}" class="form-control">
+                                    <input type="number" name="total_staff" id="edit_total_staff" value="{{old('edit_total_staff')}}" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">

@@ -97,7 +97,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Funding amount (PKR)</label>
-                                    <input type="text" name="amount" id="amount" class="form-control">
+                                    <input type="number" name="amount" id="amount" class="form-control">
                                 </div>
                             </div>
 

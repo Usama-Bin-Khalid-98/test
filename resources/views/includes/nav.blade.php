@@ -395,8 +395,8 @@ $isSARComplete = $isSAR1Complete && $isSAR2Complete && $isSAR3Complete && $isSAR
         <li class=" treeview {{(request()->is('app-recvd'))?'active':''}}
         {{(request()->is('program-portfolio'))?'active':''}}
         {{ (request()->is('program-courses')) ? 'active' : '' }}
-        {{(request()->is('entry-requirements'))?'active':''}}
-        {{(request()->is('application-received'))?'active':''}}
+        {{!$isActiveSAR && (request()->is('entry-requirements'))?'active':''}}
+        {{!$isActiveSAR && (request()->is('application-received'))?'active':''}}
         {{(request()->is('checklist-document'))?'active':''}}
         {{(request()->is('mapping-pos'))?'active':''}}
         {{(request()->is('program-delivery'))?'active':''}}{{(request()->is('question-paper'))?'active':''}}{{(request()->is('aligned-program'))?'active':''}}{{(request()->is('course-detail'))?'active':''}}{{(request()->is('course-outline'))?'active':''}}{{(request()->is('plagiarism-case'))?'active':''}}{{(request()->is('cultural-material'))?'active':''}}{{(request()->is('program-delivery-method'))?'active':''}}{{(request()->is('evaluation-method'))?'active':''}}{{(request()->is('curriculum-review'))?'active':''}}{{(request()->is('program-objective'))?'active':''}}{{(request()->is('learning-outcome'))?'active':''}}{{(request()->is('managerial-skill'))?'active':''}}" >

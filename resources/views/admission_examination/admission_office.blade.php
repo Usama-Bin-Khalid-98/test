@@ -109,10 +109,10 @@
                                 <tr>
                                     <td>l) Total number of staff members</td>
                                     <td>
-                                        <input type="textval" id="total_staff" name="total_staff" value="{{@$admission_office->total_staff}}"  class="form-control">
+                                        <input type="number" id="total_staff" name="total_staff" value="{{@$admission_office->total_staff}}"  class="form-control">
                                     </td>
                                     <td>
-                                        <input type="textval" id="total_staffb" name="total_staffb" value="{{@$admission_office->total_staffb}}"  class="form-control">
+                                        <input type="number" id="total_staffb" name="total_staffb" value="{{@$admission_office->total_staffb}}"  class="form-control">
                                     </td>
                                 </tr>
                                 <tr>
@@ -120,18 +120,18 @@
 
                                        <tr>
                                            <td>Number of printers</td>
-                                           <td><input type="textval" id="printers" name="printers" value="{{@$admission_office->printers}}"  class="form-control"></td>
-                                           <td><input type="textval" id="printersb" name="printersb" value="{{@$admission_office->printersb}}"  class="form-control"></td>
+                                           <td><input type="number" id="printers" name="printers" value="{{@$admission_office->printers}}"  class="form-control"></td>
+                                           <td><input type="number" id="printersb" name="printersb" value="{{@$admission_office->printersb}}"  class="form-control"></td>
                                        </tr>
                                        <tr>
                                            <td>Number of photocopiers</td>
-                                           <td><input type="textval" id="photocopiers" name="photocopiers" value="{{@$admission_office->photocopiers}}"  class="form-control"></td>
-                                           <td><input type="textval" id="photocopiersb" name="photocopiersb" value="{{@$admission_office->photocopiersb}}"  class="form-control"></td>
+                                           <td><input type="number" id="photocopiers" name="photocopiers" value="{{@$admission_office->photocopiers}}"  class="form-control"></td>
+                                           <td><input type="number" id="photocopiersb" name="photocopiersb" value="{{@$admission_office->photocopiersb}}"  class="form-control"></td>
                                        </tr>
                                        <tr>
                                            <td>Number of secure caninets</td>
-                                           <td><input type="textval" id="secure_cabinets" name="secure_cabinets" value="{{@$admission_office->secure_cabinets}}"  class="form-control"></td>
-                                           <td><input type="textval" id="secure_cabinetsb" name="secure_cabinetsb" value="{{@$admission_office->secure_cabinetsb}}"  class="form-control"></td>
+                                           <td><input type="number" id="secure_cabinets" name="secure_cabinets" value="{{@$admission_office->secure_cabinets}}"  class="form-control"></td>
+                                           <td><input type="number" id="secure_cabinetsb" name="secure_cabinetsb" value="{{@$admission_office->secure_cabinetsb}}"  class="form-control"></td>
                                        </tr>
 
                                     </td>

@@ -61,13 +61,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Registered members of alumni association</label>
-                                    <input type="text" name="reg_members" id="reg_members"  class="form-control">
+                                    <input type="number" name="reg_members" id="reg_members"  class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Membership percentage</label>
-                                    <input type="text" name="membership_percentage" id="membership_percentage"  class="form-control">
+                                    <input type="number" max=100 name="membership_percentage" id="membership_percentage"  class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -192,13 +192,13 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Registered members of alumni association</label>
-                                    <input type="text" name="reg_members" id="edit_reg_members" value="{{old('edit_reg_members')}}" class="form-control">
+                                    <input type="number" name="reg_members" id="edit_reg_members" value="{{old('edit_reg_members')}}" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Membership percentage</label>
-                                    <input type="text" name="membership_percentage" id="edit_membership_percentage" value="{{old('edit_membership_percentage')}}" class="form-control">
+                                    <input type="number" name="membership_percentage" id="edit_membership_percentage" value="{{old('edit_membership_percentage')}}" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">
