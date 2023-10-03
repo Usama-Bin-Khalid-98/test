@@ -136,6 +136,7 @@ class ObtainedInternshipController extends Controller
                     [
                     'file' => $path.'/'.$imageName,
                     'status' => $request->status,
+                    'details' => $request->edit_details,
                     'updated_by' => Auth::user()->id
                     ]
                 );
@@ -144,6 +145,7 @@ class ObtainedInternshipController extends Controller
             }
            ObtainedInternship::where('id', $obtainedInternship->id)->update([
                'status' => $request->status,
+               'details' => $request->edit_details,
                'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Obtained Internship updated successfully.']);
