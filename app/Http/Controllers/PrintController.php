@@ -594,6 +594,7 @@ WHERE po_plo_mappings.po_id=program_objectives.id
                 $slipInfo = Slip::with('campus', 'department')
                     ->where(['business_school_id' => $campus_id, 'department_id' => Auth::user()->department_id])
                     ->first();
+                $slipInfo->update(['registration_date' => date('Y-m-d')]);
                 /////////////////// send email to NBEAC Admin //////////////////////
                 $getnbeacInfo = NbeacBasicInfo::first();
 
