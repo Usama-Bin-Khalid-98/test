@@ -189,6 +189,7 @@ Route::get('/email', function() {
 
             //Facilities-information
             Route::resource('financial-info','FinancialInfoController');
+            Route::post('financial-info/file','FinancialInfoController@uploadAppendixFile');
             Route::resource('financial-risk','FinancialRiskController');
             Route::resource('support-staff','SupportStaffController');
             Route::resource('qec-info','QecInfoController');

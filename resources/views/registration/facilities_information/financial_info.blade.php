@@ -111,7 +111,21 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                 </div>
                             </div>
                         </form>
-
+                        
+                        @if($isActiveSAR)
+                        <form action="javascript:void(0)" id="fileform" method="POST" enctype="multipart/form-data">
+                            <table class='jumbotron'  >   
+                                <tr> 
+                                    <td style="padding:15px;" ><label for="file7A">Appendix 7A</label>
+                                    <input type="file" required name="appendix_7A" id="file7A">
+                                    @if(@$appendix_file->financial_policy)
+                                    <a href="{{$appendix_file->financial_policy}}">Current Policy <i class="glyphicon glyphicon-file"></i></a>
+                                    @endif</td>
+                                    <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
+                                </tr>
+                            </table>
+                        </form>
+                        @endif
                         </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
@@ -574,6 +588,11 @@ $('#updateForm').submit(function (e) {
                 }
             }, 1000)
         });
+        $('#fileform').submit(function (e) {
+            let file = $('#file7A').val();
+            var formData = new FormData(this);
+            postFormToUrl(formData, "financial-info/file");
+        })
 
     </script>
 

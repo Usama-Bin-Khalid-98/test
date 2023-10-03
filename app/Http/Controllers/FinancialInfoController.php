@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AppendixFile;
 use App\Models\Facility\FinancialInfo;
 use App\Models\Facility\IncomeSource;
 use App\Models\Common\Slip;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use Auth;
-
+use Illuminate\Support\Facades\Log;
 
 class FinancialInfoController extends Controller
 {
@@ -43,8 +44,9 @@ class FinancialInfoController extends Controller
             ->get();
         
         $years = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
+        $appendix_file = AppendixFile::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->first();
 
-        return view('registration.facilities_information.financial_info', compact('income','infos', 'infos_expense', 'years'));
+        return view('registration.facilities_information.financial_info', compact('income','infos', 'infos_expense', 'years', 'appendix_file'));
     }
 
     /**
@@ -207,5 +209,40 @@ class FinancialInfoController extends Controller
         return [
             'required' => 'The :attribute can not be blank.'
         ];
+    }
+
+    public function uploadAppendixFile(Request $request){
+        Log::debug('here');
+        if(!$request->file('appendix_7A')){
+            return response()->json(['error' => 'Please upload a valid file']);
+        }
+        $appendix_file = AppendixFile::where([
+            'campus_id'=> Auth::user()->campus_id,
+            'business_school_id'=>Auth::user()->business_school_id,
+            'department_id' => Auth::user()->department_id,
+            ])->first();
+
+        $path = 'uploads/financial_policy';
+        $imageName = "-file-" . time() . '.' . $request->appendix_7A->getClientOriginalExtension();
+        $request->file('appendix_7A')->move($path, $imageName);
+        if($appendix_file){
+            if($appendix_file->financial_policy && $appendix_file->financial_policy !== ''){
+                try{
+                    unlink($appendix_file->financial_policy);
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+            }
+            AppendixFile::where(['id' => $appendix_file->id])->update(['financial_policy' => $path . '/' . $imageName]);        
+        }else{
+            
+            AppendixFile::create([
+                'campus_id' => Auth::user()->campus_id,
+                'business_school_id' => Auth::user()->business_school_id,
+                'department_id' => Auth::user()->department_id,
+                'financial_policy' => $path . '/' . $imageName
+            ]);
+        }
+        return response()->json(['success' => 'Appendix 7A uploaded successfully.']);
     }
 }
