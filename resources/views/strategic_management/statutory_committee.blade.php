@@ -450,9 +450,10 @@
     //     $('#date_fourth_meeting').datepicker({
     //   autoclose:true
     // });
-
+    var next_id = '<?php echo $bodies->last()->id; ?>'
     $(".btn-add-more-rows").on('click', function (e) {
         e.preventDefault();
+        next_id++;
         row_count++;
         var designation_raw_options = '';
         for (var i = 0; i < designations.length; i++){
@@ -463,22 +464,22 @@
         <tr>
             <td class="fontsize">
                 Any Other
-                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_`+row_count+`" value="7">
+                <input type="hidden" name="statutory_body_id[]" id="statutory_body_id_`+next_id+`" value="7">
             </td>
 
             <td class="fontsize">
-                <input type="text" name="name[]" placeholder="name" id="name_` + row_count + `" class="form-control" style="margin-bottom: 5px !important;">
-                <select name="designation_id[]" id="designation_id_` + row_count + `" class="form-control select2 designations" style="width: 100%;">
+                <input type="text" name="name[]" placeholder="name" id="name_` + next_id + `" class="form-control" style="margin-bottom: 5px !important;">
+                <select name="designation_id[]" id="designation_id_` + next_id + `" class="form-control select2 designations" style="width: 100%;">
                                                 <option value="">Select Designation</option>` + designation_raw_options + `
                                             </select>
-                <input type="text" name="other_designation[]" id="other_designation_id_` + row_count + `" placeholder="Designation" class="form-control hide">
+                <input type="text" name="other_designation[]" id="other_designation_id_` + next_id + `" placeholder="Designation" class="form-control hide">
             </td>
             <td>
                 <div class="input-group">
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_first_meeting_` + row_count + `" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_first_meeting_` + next_id + `" name="date_first_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -486,7 +487,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_second_meeting_` + row_count + `" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_second_meeting_` + next_id + `" name="date_second_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -494,7 +495,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_third_meeting_` + row_count + `" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_third_meeting_` + next_id + `" name="date_third_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td>
@@ -502,7 +503,7 @@
                     <div class="input-group-addon">
 
                     </div>
-                    <input type="date" id="date_fourth_meeting_` + row_count + `" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
+                    <input type="date" id="date_fourth_meeting_` + next_id + `" name="date_fourth_meeting[]" value="<?php echo date('m/d/Y'); ?>" class="form-control">
                 </div>
             </td>
             <td style="font-size: 8px"><input type="file" name="file`+row_count+`"></td>
@@ -747,10 +748,10 @@
                 Date.parse(date_fourth_meeting),
             ];
             let meetingsInOrder = meetingDates.every(function(value, index){
-                        return index === 0|| value >= meetingDates[index - 1];
+                        return index === 0|| value < meetingDates[index - 1];
             })
             if(!meetingsInOrder){
-                Notiflix.Notify.Warning("All meeting dates should be in ascending order");
+                Notiflix.Notify.Warning("All meeting dates should be in descending order");
                 return false;
             }
             e.preventDefault();
