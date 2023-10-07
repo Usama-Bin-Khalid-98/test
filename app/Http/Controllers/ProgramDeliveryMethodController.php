@@ -53,7 +53,7 @@ class ProgramDeliveryMethodController extends Controller
         }
         try {
             //$data = $request;
-          for($i =0; $i<=count(@$request->all()); $i++)
+          for($i =0; $i<=count($request->teaching_methods_id); $i++)
           {
               if(@$request->teaching_methods_id[$i] && @$request->course_title[$i] !=null) {
                   ProgramDeliveryMethod::create([

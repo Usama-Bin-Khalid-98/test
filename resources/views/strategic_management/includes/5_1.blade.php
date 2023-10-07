@@ -25,6 +25,10 @@
                                         <td class="left">c)  Qualification of the main  head/supervisor of research center</td>
                                         <td>{{$data->qualification}}</td>
                                     </tr>
+                                    <tr>
+                                        <td class="left">d)  Head/Supervisor reports to</td>
+                                        <td>{{$data->reports_to}}</td>
+                                    </tr>
                                     @endforeach
                                   
                                     

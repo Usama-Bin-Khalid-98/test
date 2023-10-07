@@ -20,7 +20,7 @@
                                     @foreach($sourceOfFunding as $data)
 
                                     <tr>
-                                        <td>{{$data->incomeSource}}</td>
+                                        <td>{{$data->funding_sources->name}}</td>
 
                                         <td>{{@$data->amount}}</td>
                                         <td>{{@$data->percent_share}}</td>

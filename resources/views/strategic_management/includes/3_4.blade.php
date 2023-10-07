@@ -42,8 +42,8 @@
                                       <td>{{$data->other_reason}}</td>
                                       <td>{{$data->pass}}</td>
                                       <td>{{$data->pending}}</td>
-                                      <td>{{($data->pass+$data->pending)/$data->intake*1}}</td>
-                                      <td>{{$data->academic_reason/$data->intake}}</td>
+                                      <td>{{($data->pass+$data->pending)/$data->intake*100}} %</td>
+                                      <td>{{$data->academic_reason/$data->intake*100}} %</td>
                                       
                                     </tr>
                                     

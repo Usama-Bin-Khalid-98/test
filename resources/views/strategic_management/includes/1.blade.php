@@ -18,5 +18,7 @@
                     @include('strategic_management.includes.1_7')
                     <br><p class="left">1.9.	Provide the latest audit report of the business school as Appendix -1C.</p>
                     <p class="left">1.10.	State the vision and mission of the university and of the business school. Describe the process of formation and approval of the vision and mission statements. Attach relevant pages of the official documents as Appendix-1D.</p>
+                    <div class="answer">{!!$missionVision->mission!!}<br>{!!$missionVision->vision!!}</div> 
                     <p class="left">1.11.	Provide the approved strategic plan including critical success factors and key performance indicators of the business school as Appendix-1E.  Fill in the required information on approval of the strategic plan in Table 1.8.</p>
                     @include('strategic_management.includes.1_8')
+                    <p class="left">1.12.   Provide organograms of the business school and the parent institution as Appendix-1F. </p>

@@ -13,10 +13,7 @@
                               </thead>
 
                               <tbody>
-                                <?php echo "<pre>";
-                                  //print_r(count($programsPortfolio));
-                                echo "</pre>";
-                                //print_r($programsPortfolio[1]->id);
+                                <?php 
                                 for ($i=0; $i < count($programsPortfolio); $i++) { 
                                  
                                 ?>

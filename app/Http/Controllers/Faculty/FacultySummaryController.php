@@ -25,7 +25,7 @@ class FacultySummaryController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $qualification = FacultyQualification::where('status', 'active')->get();
-        $discipline = Discipline::where('status', 'active')->get();
+        $discipline = Discipline::where('created_at', null)->get();
 
         $number = FacultySummary::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('number_faculty');
         $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];

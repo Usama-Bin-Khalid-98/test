@@ -9,6 +9,7 @@
                                 <tbody>
                                     @foreach($programObjectives as $data)
                                     <tr>
+                                        <td>{{$data->po_name}}</td>
                                         <td>{{$data->program}}</td>
                                         <td>{{$data->po}}</td>
                                      

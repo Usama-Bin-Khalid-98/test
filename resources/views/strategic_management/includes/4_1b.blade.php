@@ -4,19 +4,19 @@
                                 <caption style="text-align: center;color: red">Table 4.1(b). Detailed information of business schools’ faculty </caption>
                                 <thead>
                                     <th>No</th>
-                                    <th>Name/
+                                    <th>Name/ <br>
                                         CNIC
                                         </th>
-                                    <th>Designation / Faculty type </th>
-                                    <th>Academic degree/
+                                    <th>Designation / <br> Faculty type </th>
+                                    <th>Academic degree/ <br>
                                         Specialization
                                         </th>
-                                    <th>Degree awarding institution/
+                                    <th>Degree awarding institution/ <br>
                                     Country
                                     </th>
                                     <th>Teaching course type</th>
                                     <th>Experience in higher
-                                        education/
+                                        education/ <br>
                                         industry
                                         </th>
                                         <th>Current job duration (years)</th>
@@ -26,17 +26,17 @@
                                     @foreach($facultyDetailedInfos as $data)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$data->name}}{{"/ "}}
+                                        <td>{{$data->name}}{{"/ "}} <br>
                                         {{$data->cnic}}
                                         </td>
-                                        <td>{{$data->designation}}{{"/ "}}{{$data->facultyType}}
+                                        <td>{{$data->designation}}{{"/ "}} <br> {{$data->facultyType}}
                                         </td>
-                                        <td>{{$data->degree}}
+                                        <td>{{$data->degree}}/ <br> {{$data->specialization}}
                                         </td>
-                                        <td>{{$data->awarding_institute}}
+                                        <td>{{$data->awarding_institute}}/ <br> {{$data->country}}
                                         </td>
                                         <td>{{$data->courseType}}</td>
-                                        <td>{{$data->hec_experience}}
+                                        <td>{{$data->hec_experience}}/ <br> {{$data->industry}}
                                         </td>
                                        <td>{{$data->current_job_duration}}</td>
                                     </tr>

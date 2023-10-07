@@ -9,6 +9,7 @@
                                 <tbody>
                                     @foreach($programLearningOutcomes as $data)
                                     <tr>
+                                        <td>{{$data->plo_name}}</td>
                                         <td>{{$data->program}}</td>
                                         <td>{{$data->plo}}</td>
                                      
