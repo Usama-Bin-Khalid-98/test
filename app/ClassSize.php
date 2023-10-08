@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Common\Campus;
-use App\Models\Common\Semester;
+use App\Models\Common\Program;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ClassSize extends Model
@@ -17,7 +17,7 @@ class ClassSize extends Model
         return $this->belongsTo(Campus::class);
     }
 
-    public function semesters() {
-        return $this->belongsTo(Semester::class);
+    public function program() {
+        return $this->belongsTo(Program::class);
     }
 }

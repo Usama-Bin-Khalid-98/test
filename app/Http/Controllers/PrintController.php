@@ -8,6 +8,7 @@ use App\Models\MentoringMentor;
 use App\Models\StrategicManagement\SummarizePolicy;
 use App\User;
 use App\BusinessSchool;
+use App\ClassSize;
 use App\FinancialAssistance;
 use App\Models\Carriculum\AlignedProgram;
 use App\Models\Carriculum\ChecklistDocument;
@@ -197,24 +198,7 @@ AND facilities.facility_type_id=facility_types.id AND business_school_facilities
 
               $studentsIntake = DB::select('SELECT student_intakes.* FROM student_intakes, campuses WHERE student_intakes.campus_id=campuses.id AND campuses.id=?  AND student_intakes.year>YEAR(CURDATE())-3 AND student_intakes.deleted_at IS NULL', array($req->cid));
 
-              $classSize = DB::select("SELECT SUM( CASE
-            WHEN class_sizes.semesters_id='1' || class_sizes.semesters_id='3' || class_sizes.semesters_id='5' || class_sizes.semesters_id='7' || class_sizes.semesters_id='9' || class_sizes.semesters_id='11' THEN class_sizes.program_a
-            ELSE 0
-        END) AS fallA,
-        SUM( CASE
-            WHEN class_sizes.semesters_id='2' || class_sizes.semesters_id='4' || class_sizes.semesters_id='6' || class_sizes.semesters_id='8' || class_sizes.semesters_id='10' || class_sizes.semesters_id='12' THEN class_sizes.program_a
-            ELSE 0
-        END) AS springA,
-        SUM( CASE
-            WHEN class_sizes.semesters_id='1' || class_sizes.semesters_id='3' || class_sizes.semesters_id='5' || class_sizes.semesters_id='7' || class_sizes.semesters_id='9' || class_sizes.semesters_id='11' THEN class_sizes.program_b
-            ELSE 0
-        END) AS fallB,
-        SUM( CASE
-            WHEN class_sizes.semesters_id='2' || class_sizes.semesters_id='4' || class_sizes.semesters_id='6' || class_sizes.semesters_id='8' || class_sizes.semesters_id='10' || class_sizes.semesters_id='12' THEN class_sizes.program_b
-            ELSE 0
-        END) AS springB
-        FROM class_sizes, campuses WHERE class_sizes.campus_id=campuses.id AND class_sizes.campus_id=?  AND class_sizes.deleted_at IS NULL", array($req->cid));
-
+              $classSize = $this->getClassSizeMapping($req->cid, $req->did);
 
               $dropoutPercentage = DB::select('SELECT dropout_percentages.*, programs.name as program FROM dropout_percentages, programs, campuses WHERE dropout_percentages.campus_id=campuses.id AND dropout_percentages.program_id=programs.id AND dropout_percentages.campus_id=? ORDER BY dropout_percentages.program_id  AND dropout_percentages.deleted_at IS NULL', array($req->cid));
 
@@ -466,23 +450,7 @@ AND facilities.facility_type_id=facility_types.id AND business_school_facilities
 
               $studentsIntake = DB::select('SELECT student_intakes.* FROM student_intakes, campuses, users WHERE student_intakes.campus_id=campuses.id AND campuses.id=? AND users.id=? AND student_intakes.year>YEAR(CURDATE())-3  AND student_intakes.deleted_at IS NULL', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
-              $classSize = DB::select("SELECT SUM( CASE
-            WHEN class_sizes.semesters_id='1' || class_sizes.semesters_id='3' || class_sizes.semesters_id='5' || class_sizes.semesters_id='7' || class_sizes.semesters_id='9' || class_sizes.semesters_id='11' THEN class_sizes.program_a
-            ELSE 0
-        END) AS fallA,
-        SUM( CASE
-            WHEN class_sizes.semesters_id='2' || class_sizes.semesters_id='4' || class_sizes.semesters_id='6' || class_sizes.semesters_id='8' || class_sizes.semesters_id='10' || class_sizes.semesters_id='12' THEN class_sizes.program_a
-            ELSE 0
-        END) AS springA,
-        SUM( CASE
-            WHEN class_sizes.semesters_id='1' || class_sizes.semesters_id='3' || class_sizes.semesters_id='5' || class_sizes.semesters_id='7' || class_sizes.semesters_id='9' || class_sizes.semesters_id='11' THEN class_sizes.program_b
-            ELSE 0
-        END) AS fallB,
-        SUM( CASE
-            WHEN class_sizes.semesters_id='2' || class_sizes.semesters_id='4' || class_sizes.semesters_id='6' || class_sizes.semesters_id='8' || class_sizes.semesters_id='10' || class_sizes.semesters_id='12' THEN class_sizes.program_b
-            ELSE 0
-        END) AS springB
-        FROM class_sizes, campuses, users WHERE class_sizes.campus_id=campuses.id AND class_sizes.campus_id=? AND users.id=? AND class_sizes.deleted_at IS NULL", array( $userCampus[0]->campus_id,auth()->user()->id ));
+              $classSize = $this->getClassSizeMapping(auth()->user()->campus_id, auth()->user()->department_id);
 
               $dropoutPercentage = DB::select('SELECT dropout_percentages.*, programs.name as program FROM dropout_percentages, programs, campuses, users WHERE dropout_percentages.campus_id=campuses.id AND dropout_percentages.program_id=programs.id AND dropout_percentages.campus_id=? AND users.id=? AND dropout_percentages.deleted_at IS NULL ORDER BY dropout_percentages.program_id ', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
@@ -608,6 +576,17 @@ WHERE po_plo_mappings.po_id=program_objectives.id
          return $facultySummary12;
      }
 
+    private function getClassSizeMapping($campus_id, $department_id){
+        $classSizes = ClassSize::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->orderBy('program_id')->get();
+        $mapping = ['programs' => [], 'sizes' =>[]];
+        foreach($classSizes as $classSize){
+            if(!in_array($classSize->program->name, $mapping['programs'])){
+                array_push($mapping['programs'], $classSize->program->name);
+            }
+            $mapping['sizes'][$classSize->year . '-' . $classSize->semester][$classSize->program->name] = $classSize->size;
+        }
+        return $mapping;
+    }
 
     public function applyNBEAC(Request $user,  $id)
     {
