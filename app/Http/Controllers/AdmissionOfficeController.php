@@ -134,25 +134,36 @@ class AdmissionOfficeController extends Controller
         }
 
         try {
-            AdmissionOffice::where('id', $id)->update([
+            $admission_office = AdmissionOffice::find($id);
+            $update = [
                 'hierarchical_position' => $request->hierarchical_position,
-                        'system_handling' => $request->system_handling,
-                        'head' => $request->head,
-                        'qualification' => $request->qualification,
-                        'total_staff' => $request->total_staff,
-                        'printers' => $request->printers,
-                        'photocopiers' => $request->photocopiers,
-                        'secure_cabinets' => $request->secure_cabinets,
-                        'hierarchical_positionb' => $request->hierarchical_positionb,
-                        'system_handlingb' => $request->system_handlingb,
-                        'headb' => $request->headb,
-                        'qualificationb' => $request->qualificationb,
-                        'total_staffb' => $request->total_staffb,
-                        'printersb' => $request->printersb,
-                        'photocopiersb' => $request->photocopiersb,
-                        'secure_cabinetsb' => $request->secure_cabinetsb,
+                'system_handling' => $request->system_handling,
+                'head' => $request->head,
+                'qualification' => $request->qualification,
+                'total_staff' => $request->total_staff,
+                'printers' => $request->printers,
+                'photocopiers' => $request->photocopiers,
+                'secure_cabinets' => $request->secure_cabinets,
+                'hierarchical_positionb' => $request->hierarchical_positionb,
+                'system_handlingb' => $request->system_handlingb,
+                'headb' => $request->headb,
+                'qualificationb' => $request->qualificationb,
+                'total_staffb' => $request->total_staffb,
+                'printersb' => $request->printersb,
+                'photocopiersb' => $request->photocopiersb,
+                'secure_cabinetsb' => $request->secure_cabinetsb,
                 'updated_by' => Auth::user()->id
-            ]);
+            ];
+            if($request->file('file')) {
+                $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
+                $path = 'uploads/admission_office';
+                if(AdmissionOffice::exists($admission_office->file)){
+                    unlink($admission_office->file);
+                }
+                $request->file('file')->move($path, $imageName);
+                $update['file'] = $path.'/'.$imageName;
+            }
+            AdmissionOffice::where('id', $id)->update($update);
             return response()->json(['success' => 'Admission Office updated successfully.']);
 
         }catch (Exception $e)
