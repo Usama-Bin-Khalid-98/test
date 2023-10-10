@@ -26,14 +26,8 @@ class EntryRequirementController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $criterias = EligibilityCriteria::where('status', 'active')->get();
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
-        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
+        $entryRequirements  = EntryRequirement::with('campus','program','eligibility_criteria')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
          return view('registration.curriculum.entry_req', compact('scopes','criterias','entryRequirements'));
 
@@ -63,17 +57,8 @@ class EntryRequirementController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            $campus_id = Auth::user()->campus_id;
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip) {
-                $type = 'SAR';
-            }else {
-                $type = 'REG';
-            }
-
+            
             $program_id = $request->program_id;
-
 
            // dd($program_id);
             for ($i = 0; $i<= count($request->eligibility_criteria_id)-1; $i++) {
@@ -83,7 +68,7 @@ class EntryRequirementController extends Controller
                     'program_id' => $program_id,
                     'eligibility_criteria_id' => $request->eligibility_criteria_id[$i],
                     'isComplete' => 'yes',
-                    'type' => $type];
+                ];
                 $check = EntryRequirement::where($check_data)->exists();
                 if(!$check){
                 $add = EntryRequirement::firstOrCreate([
@@ -93,7 +78,6 @@ class EntryRequirementController extends Controller
                     'eligibility_criteria_id' => $request->eligibility_criteria_id[$i],
                     'min_req' => $request->min_req[$i],
                     'isComplete' => 'yes',
-                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
                 }else{

@@ -26,12 +26,8 @@ class StatutoryCommitteeController extends Controller
         $department_id = Auth::user()->department_id;
         $bodies = StatutoryBody::all();
         $designations = Designation::where(['status' => 'active', 'is_default' => true])->get();
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $statutory_committees = StatutoryCommittee::with('statutory_body', 'designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $statutory_committees = StatutoryCommittee::with('statutory_body', 'designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
+        $statutory_committees = StatutoryCommittee::with('statutory_body', 'designation')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+
         return view('strategic_management.statutory_committee', compact('bodies', 'designations', 'statutory_committees'));
     }
 
@@ -62,12 +58,6 @@ class StatutoryCommitteeController extends Controller
         try {
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type ='SAR';
-            }else {
-                $type = 'REG';
-            }
 
             for($i =0; $i<count(@$request->name); $i++)
             {
@@ -84,7 +74,6 @@ class StatutoryCommitteeController extends Controller
                     'department_id' => Auth::user()->department_id,
                     'statutory_body_id' => @$request->statutory_body_id[$i],
                     'name' => @$request->name[$i],
-                    'type'=>$type,
                     'designation_id' => $designation_id
                 ])->exists();
     //dd($check);
@@ -112,22 +101,6 @@ class StatutoryCommitteeController extends Controller
                             'date_fourth_meeting' => $request->date_fourth_meeting[$i],
                             'file' => $path . '/' . $fileName,
                             'isComplete' => 'yes',
-                            'type' => $type,
-                            'created_by' => Auth::user()->id
-                        ]);
-                        StatutoryCommittee::create([
-                            'campus_id' => Auth::user()->campus_id,
-                            'department_id' => Auth::user()->department_id,
-                            'statutory_body_id' => $request->statutory_body_id[$i],
-                            'name' => $request->name[$i],
-                            'designation_id' => $designation_id,
-                            'date_first_meeting' => $request->date_first_meeting[$i],
-                            'date_second_meeting' => $request->date_second_meeting[$i],
-                            'date_third_meeting' => $request->date_third_meeting[$i],
-                            'date_fourth_meeting' => $request->date_fourth_meeting[$i],
-                            'file' => $path . '/' . $fileName,
-                            'isComplete' => 'yes',
-                            'type' => 'SAR',
                             'created_by' => Auth::user()->id
                         ]);
                     }

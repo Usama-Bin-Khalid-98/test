@@ -38,17 +38,7 @@ class FacultyGenderController extends Controller
         $dept_id = Auth::user()->department_id;
 
         $faculty_type = LookupFacultyType::get();
-
-        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $dept_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'department_id'=> $dept_id])->where('type','SAR')->get();
-        }else {
-            $genders = FacultyGender::with('campus','lookup_faculty_type')->where(['campus_id'=> $campus_id,'department_id'=> $dept_id])->where('type','REG')->get();
-        }*/
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $dept_id, 'regStatus' => 'SAR'])->first();
         $where = ['campus_id'=> $campus_id,'department_id'=> $dept_id];
-        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
         $genders = FacultyGender::with('campus','lookup_faculty_type')->where($where)->get();
 
 
@@ -79,21 +69,12 @@ class FacultyGenderController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
-            $type = 'REG';  //hotfix to be removed in future
             $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
                 'isCompleted' => 'yes',
-                'type' => $type];
+            ];
             $check = FacultyGender::where($check_data)->exists();
 
             if(!$check) {
@@ -104,17 +85,6 @@ class FacultyGenderController extends Controller
                     'male' => $request->male,
                     'female' => $request->female,
                     'isCompleted' => 'yes',
-                    'type' => $type,
-                    'created_by' => Auth::user()->id
-                ]);
-                FacultyGender::create([
-                    'campus_id' => Auth::user()->campus_id,
-                    'department_id' => Auth::user()->department_id,
-                    'lookup_faculty_type_id' => $request->lookup_faculty_type_id,
-                    'male' => $request->male,
-                    'female' => $request->female,
-                    'isCompleted' => 'yes',
-                    'type' => 'SAR',
                     'created_by' => Auth::user()->id
                 ]);
             }

@@ -93,7 +93,7 @@ class DeskReviewController extends Controller
         $programs = [];
         foreach($registrations as $slip){
 
-            $scopes = Scope::with('program')->where(['campus_id' => $slip->business_school_id, 'department_id' => $slip->department_id, 'type' => 'REG'])->get();
+            $scopes = Scope::with('program')->where(['campus_id' => $slip->business_school_id, 'department_id' => $slip->department_id])->get();
             $programs[$slip->id] = [];
             foreach($scopes as $scope){
                 array_push( $programs[$slip->id], @$scope->program->name);
@@ -140,14 +140,13 @@ class DeskReviewController extends Controller
                 'status'=> 'active',
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
-                'type'=>'REG'
             ])->get();
 
 
 //        dd($campus_id, ' dep', $department_id);
 
         $accreditation=  Scope::with('program')
-            ->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG'])
+            ->where(['status'=> 'active', 'campus_id' => $campus_id, 'department_id' => $department_id])
             ->get();
 
 //        dd($accreditation);
@@ -166,20 +165,20 @@ class DeskReviewController extends Controller
 
 //        dd($program_dates);
 
-        $mission_vision = MissionVision::where(['campus_id' => $campus_id, 'department_id' => $department_id , 'type'=>'REG'])->get()->first();
-        @$strategic_plan = StrategicPlan::where(['campus_id' => $campus_id, 'department_id' => $department_id , 'type'=>'REG', 'deleted_at' => Null])->get()->first();
+        $mission_vision = MissionVision::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+        @$strategic_plan = StrategicPlan::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'deleted_at' => Null])->get()->first();
 
         @$strategic_plan['date_diff'] = $this->dateDifference($strategic_plan->plan_period_from, $strategic_plan->plan_period_to, '%y.%m');
 
         @$application_received = ApplicationReceived::with('program')
-            ->where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG'])
+            ->where(['campus_id' => $campus_id, 'department_id' => $department_id])
             ->orderby('program_id')
             ->get();
 //dd($application_received);
-        $student_enrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND student_enrolments.type="REG" AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($campus_id));
-        // $student_enrolment = StudentEnrolment::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG', 'deleted_at' => Null ])->get();
+        $student_enrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-3', array($campus_id));
+        // $student_enrolment = StudentEnrolment::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'deleted_at' => Null ])->get();
         // dd($student_enrolment);
-        $graduated_students = StudentsGraduated::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type'=>'REG'])->get();
+        $graduated_students = StudentsGraduated::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 
         $getYears = BusinessSchoolTyear::where(['campus_id' => $campus_id, 'department_id' => $department_id])->first();
         $graduated_students->tyear =@$getYears->tyear??'';
@@ -188,21 +187,21 @@ class DeskReviewController extends Controller
 //        dd($graduated_students);
 
 
-        $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('number_faculty');
-        $faculty_summary_full= FacultyTeachingCources::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG', 'lookup_faculty_type_id'=>2, 'deleted_at'=>Null])->count();
+        $faculty_summary= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('number_faculty');
+        $faculty_summary_full= FacultyTeachingCources::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'lookup_faculty_type_id'=>2, 'deleted_at'=>Null])->count();
 //        dd($faculty_summary_full);
         @$faculty_summary==0?$faculty_summary = 1:$faculty_summary;
 
 //        dd($faculty_summary);
 //        dd($faculty_summary);
-        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' =>1, 'type'=>'REG'])->get()->sum('number_faculty');
+        $faculty_summary_doc= FacultySummary::where(['campus_id'=> $campus_id, 'department_id' => $department_id, 'status' => 'active', 'faculty_qualification_id' => 1])->get()->sum('number_faculty');
         // dd($faculty_summary_doc);
 
         $getFullProfessors = FacultyTeachingCources::where(
             ['status' => 'active',
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
-                'designation_id'=>10, 'type'=>'REG'])
+                'designation_id'=>10])
             ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $AssociateProfessors = FacultyTeachingCources::
@@ -211,7 +210,7 @@ class DeskReviewController extends Controller
                     'status' => 'active',
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
-                    'designation_id'=>1, 'type'=>'REG'])
+                    'designation_id'=>1])
             ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $AssistantProfessors = FacultyTeachingCources::
@@ -220,7 +219,7 @@ class DeskReviewController extends Controller
                     'status' => 'active',
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
-                    'designation_id'=>2, 'type'=>'REG'])
+                    'designation_id'=>2])
             ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $lecturers = FacultyTeachingCources::
@@ -229,7 +228,7 @@ class DeskReviewController extends Controller
                     'status' => 'active',
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
-                    'designation_id'=>6, 'type'=>'REG'])
+                    'designation_id'=>6])
             ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $permanent_faculty = FacultyTeachingCources::
@@ -238,7 +237,7 @@ class DeskReviewController extends Controller
                     'status' => 'active',
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
-                    'lookup_faculty_type_id'=>2, 'type'=>'REG'])
+                    'lookup_faculty_type_id'=>2])
             ->count();
         $adjunct_faculty = FacultyTeachingCources::
             where(
@@ -246,7 +245,7 @@ class DeskReviewController extends Controller
                     'status' => 'active',
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
-                    'lookup_faculty_type_id'=>1, 'type'=>'REG'])
+                    'lookup_faculty_type_id'=>1])
             ->count();
         $other = FacultyTeachingCources::
             where(
@@ -254,7 +253,7 @@ class DeskReviewController extends Controller
                     'status' => 'active',
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
-                    'designation_id'=>8, 'type'=>'REG'])
+                    'designation_id'=>8])
             ->where('lookup_faculty_type_id', '!=', 3)
             ->count();
         $female_faculty = FacultyGender::
@@ -263,17 +262,17 @@ class DeskReviewController extends Controller
                     'status' => 'active',
                     'campus_id' => $campus_id,
                     'department_id' => $department_id,
-                    'lookup_faculty_type_id'=>2, 'type'=>'REG'])
+                    'lookup_faculty_type_id'=>2])
             ->first()->female;
         $faculty_degree = FacultyDegree::where(['campus_id' => $campus_id, "department_id" => $department_id])->get()->first();
-        $total_induction = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('new_induction');
-        $faculty_terminated = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('terminated');
-        $faculty_resigned = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('resigned');
-        $faculty_retired = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'])->get()->sum('retired');
+        $total_induction = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('new_induction');
+        $faculty_terminated = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('terminated');
+        $faculty_resigned = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('resigned');
+        $faculty_retired = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('retired');
 
         $total_courses = WorkLoad::where(
             [
-                'campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active', 'type'=>'REG'
+                'campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active',
             ]
         )->get()->sum('total_courses');
         
@@ -283,7 +282,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> $professor->id, 'type'=>'REG'
+                'designation_id'=> $professor->id,
             ]
         )->get()->sum('total_courses');
         $assocprofessor = Designation::where('name','Associate Professor')->first();
@@ -293,7 +292,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> $assocprofessor->id, 'type'=>'REG'
+                'designation_id'=> $assocprofessor->id,
             ]
         )->get()->sum('total_courses');
         $assistprofessor = Designation::where('name','Assistant Professor')->first();
@@ -302,7 +301,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> $assistprofessor->id, 'type'=>'REG'
+                'designation_id'=> $assistprofessor->id,
             ]
         )->get()->sum('total_courses');
         $lecturer = Designation::where('name','Lecturer')->first();
@@ -311,13 +310,13 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'designation_id'=> $lecturer->id, 'type'=>'REG'
+                'designation_id'=> $lecturer->id,
             ]
         )->get()->sum('total_courses');
 
 //        dd($total_courses_lec);
-        $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 35, 'type'=>'REG', 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
-        $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 32, 'type'=>'REG', 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+        $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 35, 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
+        $comp_ratio = BusinessSchoolFacility::where(['facility_id'=> 32, 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
 
         $summaries =[];
         $summaries['impact_factor'] = ResearchSummary::where(
@@ -325,7 +324,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 1, 'type'=>'REG'
+                'publication_type_id'=> 1,
             ]
         )->get()->sum('total_items');
 
@@ -334,7 +333,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 2, 'type'=>'REG'
+                'publication_type_id'=> 2,
             ]
         )->get()->sum('total_items');
 
@@ -343,7 +342,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 3, 'type'=>'REG'
+                'publication_type_id'=> 3,
             ]
         )->get()->sum('total_items');
         $summaries['category_y'] = ResearchSummary::where(
@@ -351,7 +350,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 4, 'type'=>'REG'
+                'publication_type_id'=> 4,
             ]
         )->get()->sum('total_items');
 
@@ -360,7 +359,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 5, 'type'=>'REG'
+                'publication_type_id'=> 5,
             ]
         )->get()->sum('total_items');
         $summaries['other_list'] = ResearchSummary::where(
@@ -368,7 +367,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 5, 'type'=>'REG'
+                'publication_type_id'=> 5,
             ]
         )->get()->sum('total_items');
         $summaries['conf_paper'] = ResearchSummary::where(
@@ -376,7 +375,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 6, 'type'=>'REG'
+                'publication_type_id'=> 6,
             ]
         )->get()->sum('total_items');
 
@@ -385,7 +384,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id'=> 7, 'type'=>'REG'
+                'publication_type_id'=> 7,
             ]
         )->get()->sum('total_items');
 
@@ -394,8 +393,7 @@ class DeskReviewController extends Controller
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
                 'status' => 'active',
-                'publication_type_id' => 10, 
-                'type' => 'REG'
+                'publication_type_id' => 10,
             ]
         )->get()->sum('total_items');
 
@@ -405,7 +403,6 @@ class DeskReviewController extends Controller
                 'department_id' => $department_id,
                 'status' => 'active',
                 'publication_type_id' => 11, 
-                'type' => 'REG'
             ]
         )->get()->sum('total_items');
 
@@ -449,7 +446,7 @@ class DeskReviewController extends Controller
 //        dd($desk_reviews);
         $desk_reviews_report = DeskReview::where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
 
-        $where = ['campus_id'=> $campus_id, 'department_id'=> $department_id, 'type' => 'REG'];
+        $where = ['campus_id'=> $campus_id, 'department_id'=> $department_id];
         
         $facultyTeachingCourses = FacultyTeachingCources::
         with('campus','designation', 'faculty_program')
@@ -477,7 +474,6 @@ class DeskReviewController extends Controller
                 'lookup_faculty_type_id' => 3,
                 'campus_id' => $campus_id,
                 'department_id' => $department_id,
-                'type' => 'REG',
                 'deleted_at' => null
             ])
             ->get();
@@ -505,13 +501,11 @@ class DeskReviewController extends Controller
         
         $facultyStudentRatio = FacultyStudentRatio::with('campus','program')
                 ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
-                ->where('type','REG')
                 ->where('deleted_at',null)
                 ->get();
             
         $getFTE = FacultyTeachingCources::with('faculty_program')->where('deleted_at', null)
                     ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
-                    ->where('type', 'REG')
                     ->where('lookup_faculty_type_id', '<>', 3)
                     ->get();
         $byProgramFTE = [];
@@ -538,7 +532,6 @@ class DeskReviewController extends Controller
             ->where('lookup_faculty_type_id' , 3)
             ->where('campus_id', $campus_id)
             ->where('department_id', $department_id)
-            ->where('type', 'REG')
             ->where('deleted_at', null)
             ->get();
 
@@ -574,12 +567,11 @@ class DeskReviewController extends Controller
             }
         }
 
-        $other_faculty = FacultySummary::where(['type' => 'REG', 'discipline_id' => 5, 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->sum('number_faculty');
+        $other_faculty = FacultySummary::where(['discipline_id' => 5, 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->sum('number_faculty');
         
         $facultyStability = DB::select('SELECT faculty_stability.*
                 FROM faculty_stability
-                WHERE faculty_stability.type="REG"
-                  AND faculty_stability.department_id=?
+                WHERE faculty_stability.department_id=?
                   AND faculty_stability.campus_id=?', array($department_id, $campus_id));
         
         
@@ -911,7 +903,7 @@ class DeskReviewController extends Controller
                 $cid = Auth::user()->campus_id;
                 $did = Auth::user()->department_id;
             }
-            $where = ['campus_id' => $cid, 'department_id' => $did, 'type' => 'REG'];
+            $where = ['campus_id' => $cid, 'department_id' => $did];
             $whereReg = ['campus_id' => $cid, 'department_id' => $did];
 //            dd($where);
             $schoolInfo = Slip::where(['business_school_id' => $cid, 'department_id' => $did])->with('campus', 'department')->first();

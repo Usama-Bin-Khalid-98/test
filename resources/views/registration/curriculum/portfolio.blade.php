@@ -18,12 +18,12 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                @if(@!$isSAR)Program Portfolio @else Program Courses @endif
+                @if(!$isActiveSAR)Program Portfolio @else Program Courses @endif
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> @if(@!$isSAR)Program Portfolio @else Program Courses @endif</li>
+                <li class="active"> @if(!$isActiveSAR)Program Portfolio @else Program Courses @endif</li>
             </ol>
         </section>
 {{--        <section class="content-header">--}}
@@ -65,7 +65,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">@if(@!$isSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title">@if(!$isActiveSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -124,7 +124,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <input type="number" name="credit_hours" id="credit_hours" class="form-control">
                                 </div>
                             </div>
-                                @if(@!$isSAR)
+                                @if(!$isActiveSAR)
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Internship requirements</label>
@@ -132,7 +132,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                 </div>
                             </div>
                                 @endif
-                                @if(@!$isSAR)
+                                @if(!$isActiveSAR)
                             <div class="col-md-4">
                                 <div class="form-group">
 
@@ -164,7 +164,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">@if(@!$isSAR)2.1.Programs Portfolio @else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title">@if(!$isActiveSAR)2.1.Programs Portfolio @else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -177,7 +177,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <th>Course Type</th>
                                     <th>No of Courses</th>
                                     <th>Credit Hours</th>
-                                    @if(@!$isSAR)<th>Internship Requirement</th>
+                                    @if(!$isActiveSAR)<th>Internship Requirement</th>
                                     <th>FYP Requirement</th>@endif
                                     <th>Status</th>
                                     <th>Action</th>
@@ -200,7 +200,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <td>{{$portfolio->course_type->name}}</td>
                                    <td>{{$portfolio->no_of_course}}</td>
                                     <td>{{$portfolio->credit_hours}}</td>
-                                    @if(@!$isSAR)<td>{{$portfolio->internship_req}}</td>
+                                    @if(!$isActiveSAR)<td>{{$portfolio->internship_req}}</td>
                                     <td>{{$portfolio->fyp_req}}</td>@endif
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":{{$portfolio->program_id}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"internship_req":"{{$portfolio->internship_req}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
@@ -232,7 +232,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     <th>Course Type</th>
                                     <th>No of Courses</th>
                                     <th>Credit Hours</th>
-                                    @if(@!$isSAR)<th>Internship Requirement</th>
+                                    @if(!$isActiveSAR)<th>Internship Requirement</th>
                                     <th>FYP Requirement</th>@endif
                                     <th>Status</th>
                                     <th>Action</th>
@@ -316,7 +316,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                     id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
                             </div>
                         </div>
-                        @if(@!$isSAR)
+                        @if(!$isActiveSAR)
                          <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Internship Requirements</label>
@@ -391,16 +391,16 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
              $('#form').submit(function (e) {
             // let program = $('#program').val();
             let program_id = $('#program_id').val();
-            @if(!$isSAR) let total_semesters = $('#total_semesters').val(); @endif
+            @if(!$isActiveSAR) let total_semesters = $('#total_semesters').val(); @endif
             let course_type_id = $('#course_type_id').val();
-            @if(!$isSAR) let no_of_course = $('#no_of_course').val(); @endif
+            @if(!$isActiveSAR) let no_of_course = $('#no_of_course').val(); @endif
             let credit_hours = $('#credit_hours').val();
 
             // !program?addClass('program'):removeClass('program');
             !program_id?addClass('program_id'):removeClass('program_id');
-                 @if(!$isSAR)!total_semesters?addClass('total_semesters'):removeClass('total_semesters');@endif
+                 @if(!$isActiveSAR)!total_semesters?addClass('total_semesters'):removeClass('total_semesters');@endif
             !course_type_id?addClass('course_type_id'):removeClass('course_type_id');
-                 @if(!$isSAR)!no_of_course?addClass('no_of_course'):removeClass('no_of_course');@endif
+                 @if(!$isActiveSAR)!no_of_course?addClass('no_of_course'):removeClass('no_of_course');@endif
             !credit_hours?addClass('credit_hours'):removeClass('credit_hours');
 
             if(!program_id || !course_type_id || !credit_hours)

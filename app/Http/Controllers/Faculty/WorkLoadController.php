@@ -34,18 +34,8 @@ class WorkLoadController extends Controller
             'Lecturer', 
             'Professor', 
             'Other'])->get();
-        /*$slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $workloads = WorkLoad::with('campus','designation', 'semester')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }*/
-
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus' => 'SAR'])->first();
         $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
         $getTyear = BusinessSchoolTyear::where($where)->get()->first();
-        ($slip)?$where['type'] = 'SAR':$where['type'] = 'REG';
         $workloads = Workload::with('campus')->where($where)->get();
         $appendix_file = AppendixFile::where(['campus_id'=> $campus_id,'department_id'=> $department_id])->first();
          return view('registration.faculty.workload', compact('workloads', 'getTyear', 'designations', 'appendix_file'));
@@ -75,15 +65,6 @@ class WorkLoadController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['department_id' => $department_id])->where('regStatus', 'SAR')->first();
-            if ($slip) {
-                $type = 'SAR';
-            } else {
-                $type = 'REG';
-            }
-            $type = 'REG';  //hotfix to be removed in future
             $path = '';
             if (@$request->file('file')) {
                 $path = @$request->file('file')->getRealPath();
@@ -135,7 +116,6 @@ class WorkLoadController extends Controller
                                 'bachleors' => @$addData[6],
                                 'year_t' => @$addData[7],
                                 'isCompleted' => 'yes',
-                                'type' => $type,
                                 'created_by' => Auth::user()->id
                             ]);
                         } catch (QueryException $ex) {
@@ -174,22 +154,6 @@ class WorkLoadController extends Controller
                             'admin_responsibilities' => $request->admin_responsibilities,
                             'year_t' => $request->year_t,
                             'isCompleted' => 'yes',
-                            'type' => $type,
-                            'created_by' => Auth::user()->id
-                        ]);
-                        WorkLoad::create([
-                            'campus_id' => Auth::user()->campus_id,
-                            'department_id' => Auth::user()->department_id,
-                            'faculty_name' => $request->faculty_name,
-                            'designation_id' => $designation_id,
-                            'total_courses' => $request->total_courses,
-                            'phd' => $request->phd,
-                            'masters' => $request->masters,
-                            'bachleors' => $request->bachleors,
-                            'admin_responsibilities' => $request->admin_responsibilities,
-                            'year_t' => $request->year_t,
-                            'isCompleted' => 'yes',
-                            'type' => 'SAR',
                             'created_by' => Auth::user()->id
                         ]);
                     }else {
@@ -223,24 +187,6 @@ class WorkLoadController extends Controller
                                 'admin_responsibilities' => $request->admin_responsibilities_1,
                                 'year_t' => $request->year_t_1,
                                 'isCompleted' => 'yes',
-                                'type' => $type,
-                                'created_by' => Auth::user()->id
-                            ]
-                        );
-                        WorkLoad::create(
-                            [
-                                'campus_id' => Auth::user()->campus_id,
-                                'department_id' => Auth::user()->department_id,
-                                'faculty_name' => $request->faculty_name_1,
-                                'designation_id' => $designation_id,
-                                'total_courses' => $request->total_courses_1,
-                                'phd' => $request->phd_1,
-                                'masters' => $request->masters_1,
-                                'bachleors' => $request->bachleors_1,
-                                'admin_responsibilities' => $request->admin_responsibilities_1,
-                                'year_t' => $request->year_t_1,
-                                'isCompleted' => 'yes',
-                                'type' => 'SAR',
                                 'created_by' => Auth::user()->id
                             ]
                         );

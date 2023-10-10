@@ -67,7 +67,6 @@ class RegistrationPrintController extends Controller
            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
                FROM scopes, programs, levels, campuses
                WHERE scopes.campus_id=campuses.id
-                 AND scopes.type="REG"
                  AND scopes.program_id=programs.id
                  AND scopes.level_id=levels.id
                  AND scopes.campus_id=?
@@ -82,7 +81,6 @@ class RegistrationPrintController extends Controller
             $contactInformation = DB::select('SELECT contact_infos.*, designations.name as designationName, designations.id as designationId
 FROM designations, contact_infos, campuses
 WHERE designations.id=contact_infos.designation_id
-  AND contact_infos.type="REG"
   AND contact_infos.campus_id=?
   AND contact_infos.department_id=?
   AND contact_infos.deleted_at is null
@@ -93,7 +91,6 @@ WHERE designations.id=contact_infos.designation_id
             $statutoryCommitties = DB::table('statutory_committees')
                 ->join('designations', 'statutory_committees.designation_id', '=', 'designations.id')
                 ->join('statutory_bodies', 'statutory_committees.statutory_body_id', '=', 'statutory_bodies.id')
-                ->where('statutory_committees.type', 'REG')
                 ->whereNull('statutory_committees.deleted_at')
                 ->where('statutory_committees.campus_id', $req->cid)
                 ->where('statutory_committees.department_id', $req->did)
@@ -107,7 +104,6 @@ WHERE designations.id=contact_infos.designation_id
             $affiliations = DB::table('affiliations')
                 ->join('statutory_bodies', 'affiliations.statutory_bodies_id', '=', 'statutory_bodies.id')
                 ->join('designations', 'affiliations.designation_id', '=', 'designations.id')
-                ->where('affiliations.type', '=', 'REG')
                 ->whereNull('affiliations.deleted_at')
                 ->where('affiliations.campus_id', $req->cid)
                 ->where('affiliations.department_id', $req->did)
@@ -118,56 +114,55 @@ WHERE designations.id=contact_infos.designation_id
                 )
                 ->get();
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* from budgetary_infos, business_schools, campuses
-                WHERE business_schools.id=? AND budgetary_infos.type="REG"
+                WHERE business_schools.id=?
                 AND budgetary_infos.campus_id=campuses.id AND budgetary_infos.campus_id=? AND budgetary_infos.deleted_at is null', array($req->bid, $req->cid));
 
 
             $app_Received = DB::select('SELECT app_receiveds.*, programs.name as programName
             FROM app_receiveds, programs
-            WHERE app_receiveds.program_id=programs.id AND app_receiveds.type="REG" AND app_receiveds.deleted_at is null
+            WHERE app_receiveds.program_id=programs.id AND app_receiveds.deleted_at is null
 
             AND campus_id=?', array($req->cid));
 
-            $whereb = ['campus_id'=> $req->cid, 'type' => 'REG', 'lookup_faculty_type_id' => 3];
+            $whereb = ['campus_id'=> $req->cid, 'lookup_faculty_type_id' => 3];
 
             $facultyTeachingCourses4b = FacultyTeachingCources::
             with('campus','lookup_faculty_type','designation', 'faculty_program')
                 ->where($whereb)->get();
 
             $mission = DB::select(' SELECT mission_visions.* from mission_visions, business_schools, campuses
-            WHERE business_schools.id=?  AND mission_visions.campus_id=campuses.id AND mission_visions.campus_id=? AND mission_visions.deleted_at is null AND mission_visions.type = "REG"',
+            WHERE business_schools.id=?  AND mission_visions.campus_id=campuses.id AND mission_visions.campus_id=? AND mission_visions.deleted_at is null',
                 array($req->bid, $req->cid));
                 
 
-            $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools, campuses WHERE business_schools.id=? AND strategic_plans.type="REG" AND strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=? AND strategic_plans.deleted_at is null', array($req->bid, $req->cid));
+            $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools, campuses WHERE business_schools.id=? AND strategic_plans.campus_id=campuses.id AND strategic_plans.campus_id=? AND strategic_plans.deleted_at is null', array($req->bid, $req->cid));
 
 
              $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
                 FROM program_portfolios, programs, course_types, business_schools, campuses
-                WHERE program_portfolios.program_id=programs.id AND program_portfolios.type="REG" AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=campuses.id AND program_portfolios.campus_id=? AND program_portfolios.deleted_at is null', array($req->bid, $req->cid));
+                WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=campuses.id AND program_portfolios.campus_id=? AND program_portfolios.deleted_at is null ORDER BY program_portfolios.program_id', array($req->bid, $req->cid));
 
-             $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName FROM entry_requirements, eligibility_criterias, programs, campuses WHERE entry_requirements.program_id=programs.id AND entry_requirements.type="REG" AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=campuses.id AND entry_requirements.campus_id=?   AND entry_requirements.deleted_at is null AND entry_requirements.department_id=?
+             $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName FROM entry_requirements, eligibility_criterias, programs, campuses WHERE entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=campuses.id AND entry_requirements.campus_id=?   AND entry_requirements.deleted_at is null AND entry_requirements.department_id=?
              ', array($req->cid, $req->did));
              //dd($userCampus[0]->campus_id);
              //dd($entryRequirements);
              $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName
                 FROM application_receiveds, programs
                 WHERE application_receiveds.program_id=programs.id
-                  AND application_receiveds.type="REG"
                   AND application_receiveds.deleted_at is null
                   AND campus_id=?', array($req->cid));
 
 
-             $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND student_enrolments.type="REG" AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-4 AND student_enrolments.deleted_at is null', array($req->cid));
+             $studentsEnrolment = DB::select('SELECT student_enrolments.* FROM student_enrolments, campuses WHERE student_enrolments.campus_id=campuses.id AND campuses.id=? AND student_enrolments.year>YEAR(CURDATE())-4 AND student_enrolments.deleted_at is null', array($req->cid));
 
-             $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName FROM students_graduateds, programs, campuses WHERE students_graduateds.campus_id=campuses.id AND students_graduateds.type="REG" AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id=? AND students_graduateds.deleted_at is null', array($req->cid));
+             $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName FROM students_graduateds, programs, campuses WHERE students_graduateds.campus_id=campuses.id AND students_graduateds.program_id=programs.id AND students_graduateds.campus_id=? AND students_graduateds.deleted_at is null', array($req->cid));
 
 
-             $studentsGenders = DB::select('SELECT student_genders.*, programs.name as programName from student_genders, programs, campuses WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG" AND student_genders.program_id=programs.id AND student_genders.campus_id=? AND student_genders.deleted_at is null', array($req->cid));
+             $studentsGenders = DB::select('SELECT student_genders.*, programs.name as programName from student_genders, programs, campuses WHERE student_genders.campus_id=campuses.id AND student_genders.program_id=programs.id AND student_genders.campus_id=? AND student_genders.deleted_at is null', array($req->cid));
 
 
              $faculty_summaries = FacultySummary::with('campus','faculty_qualification','discipline')
-                ->where(['campus_id' => $req->cid, 'department_id' => $req->did, 'type' => 'REG'])
+                ->where(['campus_id' => $req->cid, 'department_id' => $req->did])
                 ->whereNull('deleted_at')
                 ->orderBy('faculty_qualification_id')
                 ->orderBy('discipline_id')
@@ -206,7 +201,7 @@ WHERE designations.id=contact_infos.designation_id
             $facultyWorkLoad = DB::table('work_loads')
                 ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
                 ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
-                ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $req->cid, 'work_loads.year_t' => $getYear->tyear])
+                ->where(['work_loads.campus_id' => $req->cid, 'work_loads.year_t' => $getYear->tyear])
                 ->whereNull('work_loads.deleted_at')
                 ->select(
                     'work_loads.*',
@@ -217,7 +212,7 @@ WHERE designations.id=contact_infos.designation_id
             $facultyWorkLoadb = DB::table('work_loads')
                 ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
                 ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
-                ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $req->cid, 'work_loads.year_t' => $getYear->year_t_1])
+                ->where(['work_loads.campus_id' => $req->cid, 'work_loads.year_t' => $getYear->year_t_1])
                 ->whereNull('work_loads.deleted_at')
                 ->select(
                     'work_loads.*',
@@ -232,12 +227,11 @@ WHERE designations.id=contact_infos.designation_id
                SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType,
                designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users
                WHERE faculty_teaching_cources.campus_id=campuses.id
-               AND faculty_teaching_cources.type="REG"
                AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
                AND faculty_teaching_cources.designation_id=designations.id
                AND faculty_teaching_cources.campus_id=? AND users.id=?',
                 array($req->cid, auth()->user()->id));
-            $where = ['campus_id'=> $req->cid, 'department_id'=> $req->did, 'type' => 'REG'];
+            $where = ['campus_id'=> $req->cid, 'department_id'=> $req->did];
 
 
             $facultyTeachingCourses = FacultyTeachingCources::
@@ -250,33 +244,31 @@ WHERE designations.id=contact_infos.designation_id
             // dd($facultyTeachingCourses);
              $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs, campuses WHERE faculty_student_ratio.campus_id=campuses.id
-AND faculty_student_ratio.type="REG" AND faculty_student_ratio.program_id=programs.id
+AND faculty_student_ratio.program_id=programs.id
 AND faculty_student_ratio.deleted_at is null
 AND  faculty_student_ratio.campus_id=?', array( $req->cid));
 
-              $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND faculty_stability.type="REG" AND faculty_stability.campus_id=? AND users.id=? AND faculty_stability.deleted_at is null', array( $req->cid,auth()->user()->id));
+              $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND faculty_stability.campus_id=? AND users.id=? AND faculty_stability.deleted_at is null', array( $req->cid,auth()->user()->id));
               $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName
                 FROM faculty_genders, lookup_faculty_types, campuses, users
                 WHERE faculty_genders.campus_id=campuses.id
-                AND faculty_genders.type="REG" AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id
+                AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id
                 AND faculty_genders.deleted_at is null
                 AND faculty_genders.campus_id=? ', array($req->cid));
                 $facultyDegree = FacultyDegree::where(['campus_id' => $req->cid])->get()->first();
                $researchOutput = DB::select('SELECT research_summaries.*, publication_types.name as publicationName,
 publication_categories.name as publicationType FROM publication_categories,research_summaries, publication_types,
-campuses, users WHERE research_summaries.campus_id=campuses.id AND research_summaries.type="REG" AND publication_categories.id=publication_types.publication_category_id AND research_summaries.publication_type_id=publication_types.id AND users.id=? AND research_summaries.campus_id=? AND research_summaries.deleted_at is null ORDER BY publication_categories.name', array(auth()->user()->id, $req->cid ));
+campuses, users WHERE research_summaries.campus_id=campuses.id AND publication_categories.id=publication_types.publication_category_id AND research_summaries.publication_type_id=publication_types.id AND users.id=? AND research_summaries.campus_id=? AND research_summaries.deleted_at is null ORDER BY publication_categories.name', array(auth()->user()->id, $req->cid ));
 
-               $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.type="REG" AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? AND financial_infos.deleted_at is null ORDER BY income_sources.type', array($req->cid, auth()->user()->id));
+               $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType FROM financial_infos, income_sources, campuses, users WHERE financial_infos.campus_id=campuses.id AND financial_infos.income_source_id=income_sources.id AND financial_infos.campus_id=? AND users.id=? AND financial_infos.deleted_at is null ORDER BY income_sources.type', array($req->cid, auth()->user()->id));
                
                $ratios = FacultyStudentRatio::with('campus','program')
                 ->where(['campus_id'=> $req->cid,'department_id'=> $req->did])
-                ->where('type','REG')
                 ->where('deleted_at',null)
                 ->get();
                 $getFTE = FacultyTeachingCources::with('faculty_program')
                     ->where('campus_id', $req->cid)
                     ->where('department_id', $req->did)
-                    ->where('type', 'REG')
                     ->where('deleted_at', null)
                     ->where(function($query){
                         $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
@@ -305,7 +297,6 @@ campuses, users WHERE research_summaries.campus_id=campuses.id AND research_summ
                     ->where('lookup_faculty_type_id' , 3)
                     ->where('campus_id', $req->cid)
                     ->where('department_id', $req->did)
-                    ->where('type', 'REG')
                     ->where('deleted_at', null)
                     ->get();
                 $byProgramVFE = [];
@@ -329,7 +320,6 @@ campuses, users WHERE research_summaries.campus_id=campuses.id AND research_summ
                $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName, facility_types.name as facilityType
 FROM business_school_facilities, facilities, facility_types, users, campuses
 WHERE business_school_facilities.campus_id=campuses.id
-AND business_school_facilities.type="REG"
 AND business_school_facilities.facility_id=facilities.id
 ANd business_school_facilities.deleted_at is null
 AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id,$req->cid));
@@ -366,7 +356,6 @@ AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facilit
 
            $scopeOfAcredation = DB::select('SELECT scopes.*, programs.name as programName, levels.name as levelName
 FROM scopes, programs, levels, campuses WHERE scopes.campus_id=campuses.id
-AND scopes.type="REG"
 AND scopes.program_id=programs.id
 AND scopes.level_id=levels.id
 AND scopes.campus_id=?
@@ -378,19 +367,17 @@ AND scopes.department_id=?', array($campus_id, $department_id));
 //dd($scopeOfAcredation);
 //            $contactInformation = DB::select('SELECT contact_infos.*
 //                FROM contact_infos
-//                WHERE contact_infos.type="REG"
 //                AND contact_infos.campus_id=?
 //                AND contact_infos.department_id=?',
 //                array($campus_id, $department_id));
 
-            $contactInformation = ContactInfo::where(['type'=> 'REG', 'department_id'=>$department_id, 'campus_id'=>$campus_id, 'deleted_at'=> null])->get();
+            $contactInformation = ContactInfo::where(['department_id'=>$department_id, 'campus_id'=>$campus_id, 'deleted_at'=> null])->get();
 //            dd($contactInformation);
 
 
             $statutoryCommitties = DB::table('statutory_committees')
                 ->join('statutory_bodies', 'statutory_committees.statutory_body_id', '=', 'statutory_bodies.id')
                 ->join('designations', 'statutory_committees.designation_id', '=', 'designations.id')
-                ->where('statutory_committees.type', '=', 'REG')
                 ->whereNull('statutory_committees.deleted_at')
                 ->where('statutory_committees.campus_id', $campus_id)
                 ->where('statutory_committees.department_id', $department_id)
@@ -406,7 +393,6 @@ AND scopes.department_id=?', array($campus_id, $department_id));
             $affiliations = DB::table('affiliations')
                 ->join('statutory_bodies', 'affiliations.statutory_bodies_id', '=', 'statutory_bodies.id')
                 ->join('designations', 'affiliations.designation_id', '=', 'designations.id')
-                ->where('affiliations.type', '=', 'REG')
                 ->whereNull('affiliations.deleted_at')
                 ->where('affiliations.campus_id', $campus_id)
                 ->where('affiliations.department_id', $department_id)
@@ -418,7 +404,7 @@ AND scopes.department_id=?', array($campus_id, $department_id));
                 ->get();
 
              $budgetoryInfo = DB::select(' SELECT budgetary_infos.* FROM budgetary_infos, business_schools, campuses
- WHERE business_schools.id=? AND budgetary_infos.type="REG"
+ WHERE business_schools.id=?
    AND  budgetary_infos.campus_id=campuses.id
    AND budgetary_infos.deleted_at is null
    AND budgetary_infos.campus_id=?
@@ -429,7 +415,7 @@ AND scopes.department_id=?', array($campus_id, $department_id));
 
 
              $strategicPlans = DB::select(' SELECT strategic_plans.* from strategic_plans, business_schools, campuses
- WHERE business_schools.id=? AND strategic_plans.type="REG"
+ WHERE business_schools.id=?
    AND strategic_plans.campus_id=campuses.id
    AND strategic_plans.campus_id=?
    AND strategic_plans.department_id=?
@@ -441,24 +427,21 @@ AND scopes.department_id=?', array($campus_id, $department_id));
    AND mission_visions.campus_id=campuses.id
    AND mission_visions.deleted_at is null
    AND mission_visions.campus_id=?
-   AND mission_visions.type =?
-   AND mission_visions.department_id=?', array($bussinessSchool[0]->id, $campus_id,"REG", $department_id));
+   AND mission_visions.department_id=?', array($bussinessSchool[0]->id, $campus_id,$department_id));
 
 
              $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
                 FROM program_portfolios, programs, course_types, business_schools, campuses
                 WHERE program_portfolios.program_id=programs.id
-                  AND program_portfolios.type="REG"
                   AND program_portfolios.course_type_id=course_types.id
                   AND program_portfolios.deleted_at is null
                   AND business_schools.id=?
                   AND program_portfolios.campus_id=campuses.id
-                  AND program_portfolios.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+                  AND program_portfolios.campus_id=? ORDER BY program_portfolios.program_id', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
              $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName
 FROM entry_requirements, eligibility_criterias, programs, campuses
 WHERE entry_requirements.program_id=programs.id
-  AND entry_requirements.type="REG"
   AND entry_requirements.deleted_at is null
   AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id
   AND entry_requirements.campus_id=campuses.id
@@ -469,14 +452,13 @@ WHERE entry_requirements.program_id=programs.id
              $applicationsReceived = DB::select('SELECT application_receiveds.*, programs.name as programName
 FROM application_receiveds, programs
 WHERE application_receiveds.program_id=programs.id
-  AND application_receiveds.type="REG"
   AND application_receiveds.deleted_at is null
   AND campus_id=?
   AND application_receiveds.department_id=?', array($campus_id, $department_id));
 
              $app_Received = DB::select('SELECT app_receiveds.*, programs.name as programName
             FROM app_receiveds, programs
-            WHERE app_receiveds.program_id=programs.id AND app_receiveds.type="REG"
+            WHERE app_receiveds.program_id=programs.id
               AND app_receiveds.deleted_at is null
             AND campus_id=?
            AND app_receiveds.department_id=?', array($campus_id, $department_id));
@@ -486,7 +468,6 @@ WHERE application_receiveds.program_id=programs.id
 WHERE student_enrolments.campus_id=campuses.id
 AND campuses.id=?
 AND student_enrolments.department_id=?
-AND student_enrolments.type="REG"
 AND student_enrolments.deleted_at is null
 AND student_enrolments.year>YEAR(CURDATE())-4', array($campus_id, $department_id));
 
@@ -494,7 +475,6 @@ AND student_enrolments.year>YEAR(CURDATE())-4', array($campus_id, $department_id
              $graduatedStudents = DB::select('SELECT students_graduateds.*, programs.name as programName
                 FROM students_graduateds, programs, campuses
                 WHERE students_graduateds.campus_id=campuses.id
-                AND students_graduateds.type="REG"
                   AND students_graduateds.deleted_at is null
                 AND students_graduateds.program_id=programs.id
                 AND students_graduateds.campus_id=?
@@ -503,7 +483,7 @@ AND student_enrolments.year>YEAR(CURDATE())-4', array($campus_id, $department_id
 
              $studentsGenders = DB::select('SELECT student_genders.*, programs.name as programName
 from student_genders, programs, campuses
-WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
+WHERE student_genders.campus_id=campuses.id
   AND student_genders.program_id=programs.id
   AND student_genders.deleted_at is null
   AND student_genders.campus_id=?
@@ -511,7 +491,7 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
 
 
              $faculty_summaries = FacultySummary::with('campus','faculty_qualification','discipline')
-                ->where(['campus_id' => $campus_id, 'department_id' => $department_id, 'type' => 'REG'])
+                ->where(['campus_id' => $campus_id, 'department_id' => $department_id])
                 ->whereNull('deleted_at')
                 ->orderBy('faculty_qualification_id')
                 ->orderBy('discipline_id')
@@ -551,7 +531,7 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
                 $facultyWorkLoad = DB::table('work_loads')
                     ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
                     ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
-                    ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $userCampus[0]->campus_id, 'work_loads.year_t' => $getYear->tyear, 'work_loads.department_id' =>$department_id])
+                    ->where(['work_loads.campus_id' => $userCampus[0]->campus_id, 'work_loads.year_t' => $getYear->tyear, 'work_loads.department_id' =>$department_id])
                     ->whereNull('work_loads.deleted_at')
                     ->select(
                         'work_loads.*',
@@ -562,7 +542,7 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
                 $facultyWorkLoadb = DB::table('work_loads')
                     ->join('campuses', 'work_loads.campus_id', '=', 'campuses.id')
                     ->join('designations', 'work_loads.designation_id', '=', 'designations.id')
-                    ->where(['work_loads.type' => 'REG', 'work_loads.campus_id' => $userCampus[0]->campus_id, 'work_loads.year_t' => $getYear->year_t_1, 'work_loads.department_id' =>$department_id])
+                    ->where(['work_loads.campus_id' => $userCampus[0]->campus_id, 'work_loads.year_t' => $getYear->year_t_1, 'work_loads.department_id' =>$department_id])
                     ->whereNull('work_loads.deleted_at')
                     ->select(
                         'work_loads.*',
@@ -578,13 +558,12 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
             // $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*,
             // lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources,
             // lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id
-            // AND faculty_teaching_cources.type="REG" AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
+            // AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
             // AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=?
             // AND users.department_id=? AND users.id=?', array($userCampus[0]->campus_id, $userCampus[0]->department_id,
             // auth()->user()->id));
 
-             $where = ['campus_id'=> Auth::user()->campus_id,'department_id'=>Auth::user()->department_id, 'type' => 'REG', 'deleted_at'=> null];
-//            $where = ['campus_id'=> $req->cid, 'department_id'=> Auth::user()->department_id, 'type' => 'REG'];
+             $where = ['campus_id'=> Auth::user()->campus_id,'department_id'=>Auth::user()->department_id, 'deleted_at'=> null];
              $facultyTeachingCourses = FacultyTeachingCources::
              with('campus','lookup_faculty_type','designation', 'faculty_program')
                 //  ->where('lookup_faculty_type_id',  1)
@@ -596,7 +575,7 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
                  ->get();
 
             // dd($facultyTeachingCourses);
-             $whereb = ['campus_id'=> $userInfo->campus_id,'department_id'=>$userInfo->department_id, 'deleted_at'=> null,  'type' => 'REG', 'lookup_faculty_type_id' => 3];
+             $whereb = ['campus_id'=> $userInfo->campus_id,'department_id'=>$userInfo->department_id, 'deleted_at'=> null, 'lookup_faculty_type_id' => 3];
              $facultyTeachingCourses4b = FacultyTeachingCources::
              with('campus','lookup_faculty_type','designation', 'faculty_program')
                 ->where($whereb)->get();
@@ -606,7 +585,6 @@ WHERE student_genders.campus_id=campuses.id AND student_genders.type="REG"
              $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs, campuses, users
 WHERE faculty_student_ratio.campus_id=campuses.id
-AND faculty_student_ratio.type="REG"
   AND faculty_student_ratio.program_id=programs.id
   AND faculty_student_ratio.deleted_at = null
 AND users.department_id=?
@@ -615,7 +593,6 @@ AND users.department_id=?
               $facultyStability = DB::select('SELECT faculty_stability.*
                 FROM faculty_stability, campuses, users
                 WHERE faculty_stability.campus_id=campuses.id
-                  AND faculty_stability.type="REG"
                   AND users.department_id=?
                   AND faculty_stability.campus_id=?
                   AND faculty_stability.deleted_at is null
@@ -625,7 +602,6 @@ AND users.department_id=?
               $facultyGenders = DB::select('SELECT faculty_genders.*, lookup_faculty_types.faculty_type as facultyTypeName
                 FROM faculty_genders, lookup_faculty_types, campuses, users
                 WHERE faculty_genders.campus_id=campuses.id
-                AND faculty_genders.type="REG"
                 AND faculty_genders.lookup_faculty_type_id=lookup_faculty_types.id
                 AND users.id=?
                 AND faculty_genders.campus_id=?
@@ -637,7 +613,6 @@ AND users.department_id=?
                 publication_categories.name as publicationType
                 FROM publication_categories,research_summaries, publication_types, campuses, users
                 WHERE research_summaries.campus_id=campuses.id
-                    AND research_summaries.type="REG"
                     AND publication_categories.id=publication_types.publication_category_id
                     AND research_summaries.publication_type_id=publication_types.id
                     AND users.id=? AND users.department_id=?
@@ -647,15 +622,14 @@ AND users.department_id=?
                $financialInfos = DB::select('SELECT financial_infos.*, income_sources.particular as particularName, income_sources.type as particularType
                 FROM financial_infos, income_sources, campuses, users
                 WHERE financial_infos.campus_id=campuses.id
-                  AND financial_infos.type="REG"
                   AND financial_infos.income_source_id=income_sources.id
                   AND financial_infos.deleted_at is null
                   AND financial_infos.campus_id=? AND users.id=? ORDER BY income_sources.type', array( $userCampus[0]->campus_id, auth()->user()->id));
 
-                // $BIResources = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
+                // $BIResources = BusinessSchoolFacility::with('facility_types','facility')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
               $BIResources = DB::select('SELECT business_school_facilities.*, facilities.name as facilityName,
 facility_types.name as facilityType FROM business_school_facilities, facilities, facility_types, users, campuses
-WHERE business_school_facilities.campus_id=campuses.id AND business_school_facilities.type="REG"
+WHERE business_school_facilities.campus_id=campuses.id 
 AND business_school_facilities.facility_id=facilities.id AND users.id=?
   AND business_school_facilities.campus_id=?
   AND business_school_facilities.department_id=?
@@ -665,13 +639,11 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
 // dd($BIResources);
             $ratios = FacultyStudentRatio::with('campus','program')
                 ->where(['campus_id'=> $userCampus[0]->campus_id,'department_id'=> $userCampus[0]->department_id])
-                ->where('type','REG')
                 ->where('deleted_at',null)
                 ->get();
             $getFTE = FacultyTeachingCources::with('faculty_program')
                 ->where('campus_id', $userCampus[0]->campus_id)
                 ->where('department_id', $userCampus[0]->department_id)
-                ->where('type', 'REG')
                 ->where('deleted_at', null)
                 ->where(function($query){
                     $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
@@ -700,7 +672,6 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
                 ->where('lookup_faculty_type_id' , 3)
                 ->where('campus_id', $userCampus[0]->campus_id)
                 ->where('department_id', $userCampus[0]->department_id)
-                ->where('type', 'REG')
                 ->where('deleted_at', null)
                 ->get();
             $byProgramVFE = [];
@@ -743,7 +714,7 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
         //     'programsUnderReview','mission','ratios', 'totalFTE', 'totalVFE'));
     }
 
-     public static function getfacultySummary($i, $facultySummary, $userCampus, $type){
+     public static function getfacultySummary($i, $facultySummary, $userCampus){
 //        dd($i,$facultySummary,$userCampus);
 
 
@@ -755,8 +726,7 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
             AND faculty_summaries.faculty_qualification_id=?
             AND faculty_summaries.campus_id=?
             AND users.id=?
-            AND faculty_summaries.type =?
-            ', array($facultySummary[$i]->id,$userCampus,auth()->user()->id,$type));
+            ', array($facultySummary[$i]->id,$userCampus,auth()->user()->id));
             return $facultySummary12;
     }
 

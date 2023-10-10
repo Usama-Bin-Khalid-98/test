@@ -30,19 +30,14 @@ class ApplicationReceivedController extends Controller
         $department_id = Auth::user()->department_id;
         $semesters = Semester::where('status', 'active')->get();
 
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $apps  = ApplicationReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $apps  = ApplicationReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
+        $apps  = ApplicationReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
         $years['yeart'] = @$getYears->tyear;
         $years['year_t_1'] = @$getYears->year_t_1;
         $years['year_t_2'] = @$getYears->year_t_2;
 
-        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         return view('registration.curriculum.app_received', compact('scopes','semesters','apps', 'years'));
     }
 
@@ -71,15 +66,6 @@ class ApplicationReceivedController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $campus_id = Auth::user()->campus_id;
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
             $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -87,7 +73,7 @@ class ApplicationReceivedController extends Controller
                 'year' => $request->year,
                 'semester' => $request->semester,
                 'isComplete'=>'yes',
-                'type'=>$type];
+            ];
             $check = ApplicationReceived::where($check_data)->exists();
 
             if(!$check) {
@@ -102,7 +88,6 @@ class ApplicationReceivedController extends Controller
                     'student_intake' => $request->student_intake,
                     'semester_comm_date' => $request->semester_comm_date,
                     'isComplete' => 'yes',
-                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
             }else{

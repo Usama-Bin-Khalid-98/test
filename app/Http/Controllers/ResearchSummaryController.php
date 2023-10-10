@@ -30,12 +30,7 @@ class ResearchSummaryController extends Controller
         $department_id = Auth::user()->department_id;
         $publications = PublicationType::where('status', 'active')->get();
         $publication_categories = PublicationCategory::all();
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
+        $summaries = ResearchSummary::with('publication_type', 'campus')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         $getYears = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->get()->first();
         $years['yeart'] = @$getYears->tyear;
         $years['year_t_1'] = @$getYears->year_t_1;
@@ -69,16 +64,6 @@ class ResearchSummaryController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $department_id = Auth::user()->department_id;
-            $campus_id = Auth::user()->campus_id;
-            $slip = Slip::where(['business_school_id'=> $campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
-
             //dd($request->all());
             for($i = 0; $i <= count($request->total_items); $i++)
             {
@@ -87,8 +72,7 @@ class ResearchSummaryController extends Controller
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'year' => @$request->year,
-                'isComplete' => 'yes',
-                'type' => $type];
+                'isComplete' => 'yes'];
                 $check = ResearchSummary::where($check_data)->exists();
                // dd($request->total_items[$i]);
 //                for($j = 0; $j<=count($request->publication_type_id); $j++)
@@ -107,7 +91,6 @@ class ResearchSummaryController extends Controller
                             'jointly_produced_same' => $request->jointly_produced_same[$i],
                             'jointly_produced_multiple' => $request->jointly_produced_multiple[$i],
                             'isComplete' => 'yes',
-                            'type' => $type,
                             'created_by' => Auth::user()->id
                         ]);
                     }

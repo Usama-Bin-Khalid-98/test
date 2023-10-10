@@ -121,14 +121,6 @@ class BasicInfoController extends Controller
 
 
         try {
-            $campus_id = Auth::user()->campus_id;
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=> $campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
             $validation= Validator::make($request->all(), $this->rules(), $this->messages());
             if($validation->fails())
             {
@@ -150,7 +142,6 @@ class BasicInfoController extends Controller
                                 'sector' => $request->sector,
                                 'profit_status' => $request->profit_status,
                                 'isCompleted' => 'yes',
-                                'type' => $type,
                                 'hierarchical_context' => $request->hierarchical_context,
 
                             ]

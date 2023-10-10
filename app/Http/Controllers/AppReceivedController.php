@@ -25,15 +25,8 @@ class AppReceivedController extends Controller
     {
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $apps  = AppReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $apps  = AppReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
-
-        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type'=> $slip?'SAR':'REG'])->get();
+        $apps  = AppReceived::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
         return view('registration.curriculum.App_Recvd',compact('scopes','apps'));
     }
 
@@ -61,21 +54,12 @@ class AppReceivedController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            $campus_id = Auth::user()->campus_id;
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
             $check_data = [
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
                 'program_id' => $request->program_id,
                 'isComplete'=>'yes',
-                'type'=>$type];
+            ];
 
             $check = AppReceived::where($check_data)->exists();
             if(!$check) {
@@ -85,7 +69,6 @@ class AppReceivedController extends Controller
                     'program_id' => $request->program_id,
                     'degree_awarding_criteria' => $request->degree_req,
                     'isComplete' => 'yes',
-                    'type' => $type,
                     'created_by' => Auth::user()->id
                 ]);
             }else{

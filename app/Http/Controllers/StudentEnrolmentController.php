@@ -26,17 +26,11 @@ class StudentEnrolmentController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $programs = Program::where('status', 'active')->get();
-        $bs = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active', 'type'=>'REG'])->get()->sum('bs_level');
-        $ms = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active', 'type'=>'REG'])->get()->sum('ms_level');
-        $phd = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active', 'type'=>'REG'])->get()->sum('phd_level');
-        $t_students = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active', 'type'=>'REG'])->get()->sum('total_students');
-
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-        if($slip){
-            $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','SAR')->get();
-        }else {
-            $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->where('type','REG')->get();
-        }
+        $bs = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('bs_level');
+        $ms = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('ms_level');
+        $phd = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('phd_level');
+        $t_students = StudentEnrolment::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('total_students');
+        $enrolments = StudentEnrolment::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
 
         $t_year = BusinessSchoolTyear::where(['campus_id' =>$campus_id, 'department_id' =>$department_id])->get()->first();
         @$years = ['tyear' => @$t_year->tyear, 'year_t_1'=>@$t_year->year_t_1, 'year_t_2'=>@$t_year->year_t_2];
@@ -67,14 +61,6 @@ class StudentEnrolmentController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            $campus_id = Auth::user()->campus_id;
-            $department_id = Auth::user()->department_id;
-            $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->where('regStatus','SAR')->first();
-            if($slip) {
-                $type = 'SAR';
-            }else {
-                $type = 'REG';
-            }
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
 
@@ -89,19 +75,6 @@ class StudentEnrolmentController extends Controller
                         'phd_level' => $request->phd_level[$key],
                         'total_students' => $request->bs_level[$key] + $request->ms_level[$key] + $request->phd_level[$key],
                         'isComplete' => 'yes',
-                        'type' => $type,
-                        'created_by' => Auth::user()->id
-                    ]);
-                    StudentEnrolment::create([
-                        'campus_id' => $uni_id,
-                        'department_id' => $dept_id,
-                        'year' => $request->year[$key],
-                        'bs_level' => $request->bs_level[$key],
-                        'ms_level' => $request->ms_level[$key],
-                        'phd_level' => $request->phd_level[$key],
-                        'total_students' => $request->bs_level[$key] + $request->ms_level[$key] + $request->phd_level[$key],
-                        'isComplete' => 'yes',
-                        'type' => 'SAR',
                         'created_by' => Auth::user()->id
                     ]);
                 }

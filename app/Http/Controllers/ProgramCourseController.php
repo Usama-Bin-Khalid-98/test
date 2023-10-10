@@ -66,11 +66,7 @@ class ProgramCourseController extends Controller
             $campus_id = Auth::user()->campus_id;
             $department_id = Auth::user()->department_id;
             $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id])->first();
-            Log::debug($slip);
-            Log::debug($campus_id);
-            Log::debug($department_id);
             if($slip){
-                $type='SAR';
                 ProgramCourse::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,

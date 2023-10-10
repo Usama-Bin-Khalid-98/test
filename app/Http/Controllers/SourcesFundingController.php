@@ -26,14 +26,8 @@ class SourcesFundingController extends Controller
         @$amount = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('amount');
         @$percent_share = SourcesFunding::where(['campus_id'=> $campus_id,'department_id' => $department_id,'status' => 'active'])->get()->sum('percent_share')??0;
         $fundings = FundingSources::get();
-        $slip = Slip::where(['business_school_id'=>$campus_id,'department_id'=> $department_id, 'regStatus'=>'SAR'])->first();
-        if($slip){
-            $type='SAR';
-        }else {
-            $type = 'REG';
-        }
         $sources  = SourcesFunding::with('campus','funding_sources')
-            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id, 'type' => $type])
+            ->where(['campus_id'=> $campus_id,'department_id'=> $department_id])
             ->get();
 
          return view('strategic_management.sources_funding', compact('fundings','sources','amount','percent_share'));
@@ -68,13 +62,6 @@ class SourcesFundingController extends Controller
             if($alreadyExists){
                 return response()->json(['error' => 'Funding sources already exist'], 422);
             }
-            $slip = Slip::where(['business_school_id'=>$userInfo->campus_id,'department_id'=> $userInfo->department_id, 'regStatus'=>'SAR'])->first();
-            if($slip){
-                $type='SAR';
-            }else {
-                $type = 'REG';
-            }
-
             foreach($request->funding_id as $index => $funding_id){
                 SourcesFunding::create([
                     'campus_id' => $userInfo->campus_id,
@@ -82,7 +69,6 @@ class SourcesFundingController extends Controller
                     'funding_sources_id' => $funding_id,
                     'amount' => $request->amount[$index],
                     'percent_share' => $request->percent_share[$index],
-                    'type' => $type,
                     'isComplete' => 'yes',
                     'created_by' => Auth::user()->id
                 ]);
