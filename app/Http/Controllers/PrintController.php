@@ -13,6 +13,7 @@ use App\FinancialAssistance;
 use App\Models\Carriculum\AlignedProgram;
 use App\Models\Carriculum\ChecklistDocument;
 use App\Models\Carriculum\CourseDetail;
+use App\Models\Carriculum\MappingPos;
 use App\Models\Common\Campus;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\Facility\IncomeSource;
@@ -283,9 +284,7 @@ AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.camp
 
                 $facultyExposures = DB::select('SELECT faculty_exposures.* FROM faculty_exposures, campuses, users WHERE faculty_exposures.campus_id=campuses.id AND faculty_exposures.campus_id=? AND users.id=? AND faculty_exposures.deleted_at IS NULL', array($req->cid, $user->id));
 
-               $PoPLOMappings = DB::select('SELECT po_plo_mappings.*, program_objectives.po as po, learning_outcomes.plo as plo FROM po_plo_mappings, program_objectives, learning_outcomes, campuses, users WHERE po_plo_mappings.po_id=program_objectives.id AND po_plo_mappings.plo_id=learning_outcomes.id AND po_plo_mappings.campus_id=campuses.id AND po_plo_mappings.campus_id=? AND users.id=? AND po_plo_mappings.deleted_at IS NULL', array($req->cid, $user->id));
-
-               $PoMappings = DB::select('SELECT * FROM program_objectives WHERE program_objectives.deleted_at IS NULL', array());
+                $ploMappings = $this->getPloMapping($req->cid, $req->did);
                 $missionVision = MissionVision::where(['campus_id' => $req->cid, 'department_id' => $req->did])->first();
                 $alignedProgram = AlignedProgram::where(['campus_id'=> $req->cid,'department_id'=> $req->did])->first();
                 $courseDetail = CourseDetail::where(['campus_id'=> $req->cid,'department_id'=> $req->did])->first();
@@ -514,16 +513,7 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
                 $internationalFaculties = DB::select('SELECT international_faculties.* FROM international_faculties, campuses, users WHERE international_faculties.campus_id=campuses.id AND international_faculties.campus_id=? AND users.id=? AND international_faculties.deleted_at IS NULL', array($userCampus[0]->campus_id, auth()->user()->id));
 
                 $facultyExposures = DB::select('SELECT faculty_exposures.* FROM faculty_exposures, campuses, users WHERE faculty_exposures.campus_id=campuses.id AND faculty_exposures.campus_id=? AND users.id=? AND faculty_exposures.deleted_at IS NULL', array($userCampus[0]->campus_id, auth()->user()->id));
-
-               $PoPLOMappings = DB::select('SELECT po_plo_mappings.*, program_objectives.po_name as po, learning_outcomes.plo as plo
-FROM po_plo_mappings, program_objectives, learning_outcomes, campuses, users
-WHERE po_plo_mappings.po_id=program_objectives.id
-  AND po_plo_mappings.plo_id=learning_outcomes.id
-  AND po_plo_mappings.campus_id=campuses.id
-  AND po_plo_mappings.campus_id=?
-  AND users.id=? AND po_plo_mappings.deleted_at IS NULL', array($userCampus[0]->campus_id, auth()->user()->id));
-
-               $PoMappings = DB::select('SELECT * FROM program_objectives WHERE program_objectives.deleted_at IS NULL', array());
+                $ploMappings = $this->getPloMapping(auth()->user()->campus_id, auth()->user()->department_id);
                $missionVision = MissionVision::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id])->first();
                $alignedProgram = AlignedProgram::where(['campus_id'=> auth()->user()->campus_id, 'department_id'=> auth()->user()->department_id])->first();
                $courseDetail = CourseDetail::where(['campus_id'=> auth()->user()->campus_id, 'department_id'=> auth()->user()->department_id])->first();
@@ -534,7 +524,7 @@ WHERE po_plo_mappings.po_id=program_objectives.id
 
         }
 
-        return view('strategic_management.printAll', compact('programsUnderReview','docHeaderData','classSize','summary_policy','studentsFinancial','PoMappings','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','PoPLOMappings','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake','user','missionVision','alignedProgram','courseDetail','checklistDocument','financialAssistance','weakStudent','studentParticipation'));
+        return view('strategic_management.printAll', compact('programsUnderReview','docHeaderData','classSize','summary_policy','studentsFinancial','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake','user','missionVision','alignedProgram','courseDetail','checklistDocument','financialAssistance','weakStudent','studentParticipation', 'ploMappings'));
     }
 
 
@@ -575,6 +565,15 @@ WHERE po_plo_mappings.po_id=program_objectives.id
          $facultySummary12 = DB::select('SELECT faculty_summaries.*, disciplines.name as disciplineName FROM faculty_summaries, disciplines,users WHERE faculty_summaries.discipline_id=disciplines.id AND faculty_summaries.faculty_qualification_id=? AND faculty_summaries.campus_id=?', array($facultySummary[$i]->id,auth()->user()->campus_id));
          return $facultySummary12;
      }
+
+    private function getPloMapping($campus_id, $department_id){
+        $plos = MappingPos::with('outcome', 'objective')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->get();
+        $mapping = [];
+        foreach($plos as $plo){
+            $mapping[$plo->program->name][$plo->objective->po_name][$plo->col] = true;
+        }
+        return $mapping;
+    }
 
     private function getClassSizeMapping($campus_id, $department_id){
         $classSizes = ClassSize::with('program')->where(['campus_id' => $campus_id, 'department_id' => $department_id])->orderBy('program_id')->get();
