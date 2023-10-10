@@ -38,7 +38,13 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                 <li class="active"> Print </li>
             </ol>
         </section>
-
+        <section class="content-header">
+            <div class="col-md-12 new-button">
+                <div class="pull-right">
+                    <button class="btn btn-primary" onclick="window.print()">Print</button>
+                </div>
+            </div>
+        </section>
 
         {{--Dean section --}}
         {{--Dean section --}}

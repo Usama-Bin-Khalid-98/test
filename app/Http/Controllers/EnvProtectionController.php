@@ -52,6 +52,9 @@ class EnvProtectionController extends Controller
         }
         try {
 //            dd($fileName);
+                if(EnvProtection::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
+                    return response()->json(['message'=> 'Environment protection already exists.'], 422);
+                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();

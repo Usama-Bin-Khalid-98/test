@@ -52,6 +52,9 @@ class StrategicPlanController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            if(StrategicPlan::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
+                return response()->json(['message'=> 'Strategic plan already exists.'], 422);
+            }
         @$period = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y Year %m Month');
         @$period_date = $this->dateDifference($request->plan_period, $request->plan_period_to, '%y.%m');
             //dd($period);
