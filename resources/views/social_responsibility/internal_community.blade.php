@@ -34,7 +34,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">Providedata on internal community welfare programs in Table 6.6. Attach policy on internal community welfare as Appendix-6D.</p>
+                            <p class="box-title">6.6 Provide data on internal community welfare programs in Table 6.6. Attach policy on internal community welfare as Appendix-6D.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -93,7 +93,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Internal Community WP List</h3>
+                            <h3 class="box-title">Table 6.6 Internal Community WP List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

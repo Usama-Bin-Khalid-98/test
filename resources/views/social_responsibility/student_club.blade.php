@@ -34,7 +34,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">Provide data on student societies/clubs in Table 6.1.</p>
+                            <p class="box-title">6.1 Provide data on student societies/clubs in Table 6.1.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -92,7 +92,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Student clubs/societies List</h3>
+                            <h3 class="box-title">Table 6.1 Student clubs/societies List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

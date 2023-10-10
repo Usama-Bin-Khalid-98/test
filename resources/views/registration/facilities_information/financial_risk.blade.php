@@ -33,7 +33,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data on Financial Risks along with remedial measures in Table 6.2.</h3>
+                            <h3 class="box-title">7.2 Provide data on Financial Risks along with remedial measures in Table 7.2.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -83,7 +83,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Financial Risk Table.</h3>
+                            <h3 class="box-title">Table 7.2 Financial Risk Table.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

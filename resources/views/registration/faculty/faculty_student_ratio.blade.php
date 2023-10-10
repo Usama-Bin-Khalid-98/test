@@ -1,5 +1,7 @@
 @section('pageTitle', 'Student to teacher Ratio')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -48,7 +50,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">4.4 Fill in data to calculate student to teacher ratio for last year of each program under review in Table 4.4.</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 4.5 @else 4.4 @endif Fill in data to calculate student to teacher ratio for last year of each program under review in Table @if($isActiveSAR) 4.5 @else 4.4 @endif.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -122,7 +124,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">4.4 Student to teacher ratio</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 4.5 @else 4.4 @endif Student to teacher ratio</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

@@ -1,4 +1,7 @@
 @section('pageTitle', 'Visiting Faculty ')
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 @if(Auth::user())
 
     @include("../includes.head")
@@ -32,11 +35,11 @@
                         <div class="box-header">
                             <h3 class="box-title">
                                 @if( Request::segment(1) == 'faculty-teaching')
-                                    4.3 Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table 4.3a.
+                                    @if($isActiveSAR) 4.4 @else 4.3 @endif Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table @if($isActiveSAR) 4.4a @else 4.3a @endif .
                                 @endif
 
                                 @if( Request::segment(1) == 'visiting_faculty')
-                                        4.3b Provide data for Visiting Faculty Equivalent (VFE) of last year in table 4.3.b for the program under review.
+                                    @if($isActiveSAR) 4.4b @else 4.3b @endif  Provide data for Visiting Faculty Equivalent (VFE) of last year in table @if($isActiveSAR) 4.4b @else 4.3b @endif  for the program under review.
                                 @endif
                             </h3>
                             <div class="box-tools pull-right">
@@ -153,11 +156,11 @@
                         <div class="box-header">
                             <h3 class="box-title">
                                 @if( Request::segment(1) == 'faculty-teaching')
-                                    4.3 Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table 4.3a.
+                                    @if($isActiveSAR) 4.4 @else 4.3 @endif Provide data for Full Time Equivalent (FTE) for the permanent, regular and adjunct faculty of last year in Table @if($isActiveSAR) 4.4a @else 4.3a @endif.
                                 @endif
 
                                 @if( Request::segment(1) == 'visiting_faculty')
-                                        4.3b Provide data for Visiting Faculty Equivalent (VFE) of last year in table 4.3.b for the program under review.
+                                    @if($isActiveSAR) 4.4b @else 4.3b @endif Provide data for Visiting Faculty Equivalent (VFE) of last year in table @if($isActiveSAR) 4.4b @else 4.3b @endif for the program under review.
                                 @endif
                             </h3>
                         </div>

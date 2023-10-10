@@ -35,7 +35,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">Attach the business school’s code of moral principles and ethics applicable to faculty, students and staff as Appendix-6C. Provide data on complaint resolution in Table 6.5</p>
+                            <p class="box-title">6.5 Attach the business school’s code of moral principles and ethics applicable to faculty, students and staff as Appendix-6C. Provide data on complaint resolution in Table 6.5</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -106,7 +106,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Complaint Resolution List</h3>
+                            <h3 class="box-title">Table 6.5 Complaint Resolution List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

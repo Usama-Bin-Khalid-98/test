@@ -36,7 +36,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">4.1 Provide information about core business school faculty : present aggregate numbers in Table 4.1</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 4.1 Provide information about core business school faculty [Core business faculty: Faculty with terminal degree in business, management and related areas and teaching core business courses.] as follows: present aggregate numbers in Table 4.1(a) and information on individual faculty members in Table 4.1(b). Note that the data in grey font is given only for illustrative purposes; please replace it with actual data. @else 4.1 Provide information about core business school faculty : present aggregate numbers in Table 4.1 @endif</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -95,7 +95,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.1. Summary of the business schools’ faculty</h3>
+                            <h3 class="box-title">@if($isActiveSAR) Table 4.1(a). Business School Faculty @else Table 4.1 Summary of the business schools’ faculty @endif</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

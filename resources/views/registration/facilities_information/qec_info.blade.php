@@ -34,7 +34,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">Provide basic information of Quality Enhancement Cell (QEC) in Table 6.4. Attach policy for enhancing the quality function of education delivery as Appendix-6B</p>
+                            <p class="box-title">7.4 Provide basic information of Quality Enhancement Cell (QEC) in Table 7.4. Attach policy for enhancing the quality function of education delivery as Appendix-7B</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -93,7 +93,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Qec Info List</h3>
+                            <h3 class="box-title">Table 7.4 Qec Info List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

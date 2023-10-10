@@ -16,6 +16,7 @@ use App\Models\Carriculum\CourseDetail;
 use App\Models\Carriculum\MappingPos;
 use App\Models\Common\Campus;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
+use App\Models\External_Linkages\ObtainedInternship;
 use App\Models\Facility\IncomeSource;
 use App\Models\Faculty\WorkLoad;
 use App\Models\StrategicManagement\MissionVision;
@@ -113,13 +114,13 @@ class PrintController extends Controller
             $currSemester = "Spring t";
             $prevSemester = "Fall t-1";
         }
-        $yearT = BusinessSchoolTyear::where(['campus_id' => $req->cid, 'department_id' => $req->did])->first();
-        $facultyWorkLoad = WorkLoad::with('designation')->where(['campus_id' => $req->cid, 'department_id' => $req->did, 'year_t' => $yearT->tyear])->get()->map(function ($workLoad) {
+        $getYear = BusinessSchoolTyear::where(['campus_id' => $req->cid, 'department_id' => $req->did])->first();
+        $facultyWorkLoad = WorkLoad::with('designation')->where(['campus_id' => $req->cid, 'department_id' => $req->did, 'year_t' => $getYear->tyear])->get()->map(function ($workLoad) {
             $workLoad->designationName = $workLoad->designation->name;
             unset($workLoad->designation);
             return $workLoad;
         });
-        $facultyWorkLoadb = WorkLoad::with('designation')->where(['campus_id' => $req->cid, 'department_id' => $req->did, 'year_t' => $yearT->year_t_1])->get()->map(function ($workLoad) {
+        $facultyWorkLoadb = WorkLoad::with('designation')->where(['campus_id' => $req->cid, 'department_id' => $req->did, 'year_t' => $getYear->year_t_1])->get()->map(function ($workLoad) {
             $workLoad->designationName = $workLoad->designation->name;
             unset($workLoad->designation);
             return $workLoad;
@@ -292,6 +293,7 @@ AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.camp
                 $financialAssistance = FinancialAssistance::where(['campus_id'=> $req->cid,'department_id'=> $req->did])->first();
                 $weakStudent = WeakStudent::where(['campus_id'=> $req->cid,'department_id'=> $req->did])->first();
                 $studentParticipation = StudentParticipation::where(['campus_id'=> $req->cid,'department_id'=> $req->did])->first();
+                $obtainedInternships = ObtainedInternship::where(['campus_id'=> $req->cid,'department_id'=> $req->did])->first();
 
 
 
@@ -361,13 +363,13 @@ AND faculty_student_ratio.program_id=programs.id AND  faculty_student_ratio.camp
             $currSemester = "Spring t";
             $prevSemester = "Fall t-1";
         }
-        $yearT = BusinessSchoolTyear::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id])->first();
-        $facultyWorkLoad = WorkLoad::with('designation')->where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id, 'year_t' => $yearT->tyear])->get()->map(function ($workLoad) {
+        $getYear = BusinessSchoolTyear::where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id])->first();
+        $facultyWorkLoad = WorkLoad::with('designation')->where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id, 'year_t' => $getYear->tyear])->get()->map(function ($workLoad) {
             $workLoad->designationName = $workLoad->designation->name;
             unset($workLoad->designation);
             return $workLoad;
         });
-        $facultyWorkLoadb = WorkLoad::with('designation')->where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id, 'year_t' => $yearT->year_t_1])->get()->map(function ($workLoad) {
+        $facultyWorkLoadb = WorkLoad::with('designation')->where(['campus_id' => auth()->user()->campus_id, 'department_id' => auth()->user()->department_id, 'year_t' => $getYear->year_t_1])->get()->map(function ($workLoad) {
             $workLoad->designationName = $workLoad->designation->name;
             unset($workLoad->designation);
             return $workLoad;
@@ -521,10 +523,10 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
                $financialAssistance = FinancialAssistance::where(['campus_id'=> auth()->user()->campus_id, 'department_id'=> auth()->user()->department_id])->first();
                $weakStudent = WeakStudent::where(['campus_id'=> auth()->user()->campus_id,'department_id'=> auth()->user()->department_id])->first();
                $studentParticipation = StudentParticipation::where(['campus_id'=> auth()->user()->campus_id,'department_id'=> auth()->user()->department_id])->first();
-
+               $obtainedInternships = ObtainedInternship::where(['campus_id'=> auth()->user()->campus_id,'department_id'=> auth()->user()->department_id])->first();
         }
 
-        return view('strategic_management.printAll', compact('programsUnderReview','docHeaderData','classSize','summary_policy','studentsFinancial','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake','user','missionVision','alignedProgram','courseDetail','checklistDocument','financialAssistance','weakStudent','studentParticipation', 'ploMappings'));
+        return view('strategic_management.printAll', compact('programsUnderReview','docHeaderData','classSize','summary_policy','studentsFinancial','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake','user','missionVision','alignedProgram','courseDetail','checklistDocument','financialAssistance','weakStudent','studentParticipation', 'ploMappings', 'getYear', 'obtainedInternships'));
     }
 
 
