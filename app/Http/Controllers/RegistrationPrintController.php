@@ -141,7 +141,7 @@ WHERE designations.id=contact_infos.designation_id
 
              $programsPortfolio = DB::select('SELECT program_portfolios.*, programs.name as programName, course_types.name as courseType
                 FROM program_portfolios, programs, course_types, business_schools, campuses
-                WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=campuses.id AND program_portfolios.campus_id=? AND program_portfolios.deleted_at is null', array($req->bid, $req->cid));
+                WHERE program_portfolios.program_id=programs.id AND program_portfolios.course_type_id=course_types.id AND business_schools.id=? AND program_portfolios.campus_id=campuses.id AND program_portfolios.campus_id=? AND program_portfolios.deleted_at is null ORDER BY program_portfolios.program_id', array($req->bid, $req->cid));
 
              $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName FROM entry_requirements, eligibility_criterias, programs, campuses WHERE entry_requirements.program_id=programs.id AND entry_requirements.eligibility_criteria_id=eligibility_criterias.id AND entry_requirements.campus_id=campuses.id AND entry_requirements.campus_id=?   AND entry_requirements.deleted_at is null AND entry_requirements.department_id=?
              ', array($req->cid, $req->did));
@@ -439,7 +439,7 @@ AND scopes.department_id=?', array($campus_id, $department_id));
                   AND program_portfolios.deleted_at is null
                   AND business_schools.id=?
                   AND program_portfolios.campus_id=campuses.id
-                  AND program_portfolios.campus_id=?', array($bussinessSchool[0]->id, auth()->user()->campus_id));
+                  AND program_portfolios.campus_id=? ORDER BY program_portfolios.program_id', array($bussinessSchool[0]->id, auth()->user()->campus_id));
 
              $entryRequirements = DB::select('SELECT entry_requirements.*, eligibility_criterias.name as eligibilityCriteria, programs.name as programName
 FROM entry_requirements, eligibility_criterias, programs, campuses
