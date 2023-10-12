@@ -63,7 +63,10 @@ class StudentEnrolmentController extends Controller
         try {
             $uni_id = Auth::user()->campus_id;
             $dept_id = Auth::user()->department_id;
-
+            
+            if(StudentEnrolment::where(['campus_id' => $uni_id, 'department_id' => $dept_id,])->exists()){
+                return response()->json(['error' => 'Student enrolment already exists'], 422);
+            }
             if($request->year) {
                 foreach ($request->year as $key=>$year) {
                     StudentEnrolment::create([

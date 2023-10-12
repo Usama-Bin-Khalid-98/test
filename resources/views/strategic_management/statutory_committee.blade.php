@@ -747,10 +747,10 @@
                 Date.parse(date_fourth_meeting),
             ];
             let meetingsInOrder = meetingDates.every(function(value, index){
-                        return index === 0|| value >= meetingDates[index - 1];
+                        return index === 0|| value < meetingDates[index - 1];
             })
             if(!meetingsInOrder){
-                Notiflix.Notify.Warning("All meeting dates should be in ascending order");
+                Notiflix.Notify.Warning("All meeting dates should be in descending order");
                 return false;
             }
             e.preventDefault();

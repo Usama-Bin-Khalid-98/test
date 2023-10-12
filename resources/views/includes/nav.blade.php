@@ -67,7 +67,7 @@ $research_center = isCompletedSAR('App\Models\Research\ResearchCenter', ['campus
 $research_agenda = isCompletedSAR('App\Models\Research\ResearchAgenda', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_funding = isCompletedSAR('App\Models\Research\ResearchFunding', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $research_project = isCompletedSAR('App\Models\Research\ResearchProject', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
-$program_courses = checkIsCompleted('App\Models\StrategicManagement\ProgramPortfolio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
+$program_courses = checkIsCompleted('App\ProgramCourse', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $intake = isCompletedSAR('App\StudentIntake', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $size = isCompletedSAR('App\ClassSize', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $dropout = isCompletedSAR('App\DropoutPercentage', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);

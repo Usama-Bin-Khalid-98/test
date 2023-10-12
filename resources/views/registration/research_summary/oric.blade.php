@@ -135,7 +135,7 @@
 
         <?php if(@$oric->id==null){ ?>
 
-        $('#update-and-next').on('click', function (e) {
+        $('#update, #update-and-next').on('click', function (e) {
             let next = false;
             if(e.target.id === 'update-and-next'){
                 next = true;

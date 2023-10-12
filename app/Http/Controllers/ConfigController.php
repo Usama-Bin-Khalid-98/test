@@ -35,6 +35,8 @@ use App\PublicationType;
 use App\ActivityEngagement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Common\AcademyLevel;
+use App\Models\Common\AcademyType;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
@@ -212,6 +214,16 @@ class ConfigController extends Controller
                 $this->TableRows =EvaluationItem::all();
                 break;
             }
+            case 'academy_levels';
+            {
+                $this->TableRows =AcademyLevel::all();
+                break;
+            }
+            case 'academy_types';
+            {
+                $this->TableRows =AcademyType::all();
+                break;
+            }
         }
 
 
@@ -322,6 +334,8 @@ class ConfigController extends Controller
         $EvaluationItem= EvaluationItem::all()->count();
         $counter['EvaluationItem'] = $EvaluationItem;
 
+        $counter['AcademyLevel'] = AcademyLevel::all()->count();
+        $counter['AcademyType'] = AcademyType::all()->count();
 
         return $counter;
     }
@@ -528,6 +542,18 @@ class ConfigController extends Controller
             case 'evaluation_items':
             {
                 $this->TableRows =EvaluationItem::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'academy_levels':
+            {
+                $this->TableRows = AcademyLevel::create($request->all());
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
+            case 'academy_types':
+            {
+                $this->TableRows = AcademyType::create($request->all());
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
@@ -743,6 +769,18 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
+            case 'academy_levels':
+            {
+                $this->TableRows = AcademyLevel::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
+            case 'academy_types':
+            {
+                $this->TableRows = AcademyType::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
         }
     }
 
@@ -940,6 +978,18 @@ class ConfigController extends Controller
              case 'evaluation_items':
             {
                 $this->TableRows  = EvaluationItem::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'academy_levels':
+            {
+                $this->TableRows  = AcademyLevel::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'academy_types':
+            {
+                $this->TableRows  = AcademyType::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }

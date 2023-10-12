@@ -8,17 +8,17 @@
 <br><p class="left">3.4.	Provide the average success percentage and drop-out percentage of the last three batches which have graduated in the program(s) under accreditation in Table 3.4. The highlighted row at the bottom of the table provides an example on how to calculate the ratios.</p>
 @include('strategic_management.includes.3_4')
 <br><p class="left">3.5.	Summarize the policy and process of financial assistance . Attach relevant policy documents as Appendix-3A. </p>
-<div class="answer">{!!$financialAssistance->summary!!}</div>
+<div class="answer">{!!@$financialAssistance->summary!!}</div>
 <p class="left">3.6.	Provide a summary of the amount in million rupees dispersed as financial assistance over the last three years for the program under review in Table 3.5. </p>
 @include('strategic_management.includes.3_5')
 <br><p class="left">3.7.	Summarize the strategy for identifying and counselling of academically weak students though faculty advisors and remedial classes.  Provide an analysis to show the impact of the strategy.</p>
-<div class="answer">{!!$weakStudent->summary!!}</div>
+<div class="answer">{!!@$weakStudent->summary!!}</div>
 <p class="left">3.8.	List activities aimed at personal grooming skills conducted during last year in Table 3.6.</p>
 @include('strategic_management.includes.3_6')
 <br><p class="left">3.9.	What counselling policies and processes are available to provide guidance to students in studies or in personal issues? Provide data on these activities conducted during last year in the Table 3.7.</p>
 @include('strategic_management.includes.3_7')
 <br><p class="left">3.10.	Summarize the plan of business school to encourage student participation in extra-curricular and co-curricular 	activities . </p>
-<div class="answer">{!!$studentParticipation->summary!!}</div>
+<div class="answer">{!!@$studentParticipation->summary!!}</div>
 <p class="left">3.11.	Provide data on extra-curricular and co-curricular activities conducted during last year in the Table 3.8.</p>
 @include('strategic_management.includes.3_8')
 <br><p class="left">3.12.	Provide documents supporting the structure and bye-laws of alumni association of the business school as Appendix-	3B. Furthermore, provide data on alumni membership in the Table 3.9. </p>

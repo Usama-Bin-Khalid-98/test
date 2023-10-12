@@ -200,8 +200,8 @@ class RegisterController extends Controller
                     //dd($user);
                     $getNbeacInfo = NbeacBasicInfo::all()->first();
                     $message->to($getNbeacInfo->email ?? 'info@nbeac.org.pk', 'NBEAC Admin')
-                        ->subject('New User Registered')
-                        ->cc(['mirkhan@hec.gov.pk']);
+                        ->subject('New User Registered');
+                        // ->cc(['mirkhan@hec.gov.pk']);
                 });
                 // End New User mail
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class StatutoryCommitteeController extends Controller
 {
@@ -158,6 +159,7 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            Log::debug($request->all());
             list($designation_id, $error) = Designation::getOrCreate($request->designation_id, $request->other_designation);
             if($error){
                 return $error;
@@ -173,6 +175,9 @@ class StatutoryCommitteeController extends Controller
                     unlink($update->file);
                }
                 $request->file('file')->move($path, $fileName);
+                $statutoryCommittee->update([
+                    'file' => $path.'/'.$fileName
+                ]);
             }
 
             StatutoryCommittee::where('id', $statutoryCommittee->id)->update([
@@ -183,7 +188,6 @@ class StatutoryCommitteeController extends Controller
                 'date_second_meeting' => $request->date_second_meeting,
                 'date_third_meeting' => $request->date_third_meeting,
                 'date_fourth_meeting' => $request->date_fourth_meeting,
-                'file' => $path.'/'.$fileName,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -249,14 +253,14 @@ class StatutoryCommitteeController extends Controller
             'date_second_meeting' => 'required',
             'date_third_meeting' => 'required',
             'date_fourth_meeting' => 'required',
-            'file' => 'mimes:pdf,docx'
+            // 'file' => 'mimes:pdf,docx'
         ];
     }
 
     protected function messages() {
         return [
             'required' => 'The :attribute can not be blank.',
-            'file.mimes' => 'CV must be of the following file type: pdf, doc or docx.'
+            // 'file.mimes' => 'CV must be of the following file type: pdf, doc or docx.'
         ];
     }
 }
