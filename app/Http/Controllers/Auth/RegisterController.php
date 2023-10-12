@@ -40,7 +40,9 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers {
+        register as protected traitRegister;
+    }
 
     /**
      * Where to redirect users after registration.
@@ -57,6 +59,15 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function register(Request $request)
+    {
+        $data = request()->all();
+        if ($data['account_type'] === 'BusinessSchool' && User::where(['campus_id' => $data['campus_id']])->exists()){
+            return redirect('user-already-exists');
+        }
+        return $this->traitRegister($request);
     }
 
     /**

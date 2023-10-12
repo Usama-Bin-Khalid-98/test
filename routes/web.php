@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Route;
         return view('auth.login');
     });
 
-Route::get('/email', function() {
-    return view('registration.mail.travel_plan');
-});
+    Route::get('/user-already-exists', function() {
+        return view('auth.user_exists');
+    });
 
     // Registration Routes...
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
