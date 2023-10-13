@@ -25,7 +25,7 @@ class FacultySummaryController extends Controller
         $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $qualification = FacultyQualification::where('status', 'active')->get();
-        $discipline = Discipline::where('status', 'active')->get();
+        $discipline = Discipline::where('created_at', null)->get();
 
         $number = FacultySummary::where(['campus_id'=> $campus_id,'department_id'=> $department_id,'status' => 'active'])->get()->sum('number_faculty');
         $where = ['campus_id'=> $campus_id,'department_id'=> $department_id];
@@ -54,28 +54,20 @@ class FacultySummaryController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            if(FacultySummary::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id,])->exists()){
+                return response()->json(['error' => 'Faculty Summary already exists.'], 422);
+            }
             for($i = 0; $i < count($request->faculty_qualification_id); $i++) {
                 foreach ($request->discipline_id as $discipline_id) {
-                    $check_data = ['campus_id' => Auth::user()->campus_id,
+                    FacultySummary::create([
+                        'campus_id' => Auth::user()->campus_id,
                         'department_id' => Auth::user()->department_id,
                         'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                        'discipline_id' => @$request->discipline_id[$j],
+                        'discipline_id' => $discipline_id,
+                        'number_faculty' => @$request->number_faculty[$discipline_id][$i],
                         'isComplete' => 'yes',
-                    ];
-                    $check = FacultySummary::where($check_data)->exists();
-                    if(!$check) {
-                        FacultySummary::create([
-                            'campus_id' => Auth::user()->campus_id,
-                            'department_id' => Auth::user()->department_id,
-                            'faculty_qualification_id' => @$request->faculty_qualification_id[$i],
-                            'discipline_id' => $discipline_id,
-                            'number_faculty' => @$request->number_faculty[$discipline_id][$i],
-                            'isComplete' => 'yes',
-                            'created_by' => Auth::user()->id
-                        ]);
-                    }else{
-                        return response()->json(['error' => 'Faculty Summary already exists.'], 422);
-                    }
+                        'created_by' => Auth::user()->id
+                    ]);
                 }
             }
             

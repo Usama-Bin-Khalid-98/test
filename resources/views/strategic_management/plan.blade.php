@@ -37,7 +37,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.8 Provide the approved strategic plan including critical success factors and key performance indicators of the business school as @if($isActiveSAR) Appendix-1E @else Appendix-1D @endif. Fill in the required information on approval of the strategic plan in the Table 1.8.</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 1.11 @else 1.8 @endif Provide the approved strategic plan including critical success factors and key performance indicators of the business school as @if($isActiveSAR) Appendix-1E @else Appendix-1D @endif. Fill in the required information on approval of the strategic plan in the Table @if($isActiveSAR) 1.8 @else 1.7 @endif.</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -121,7 +121,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 1.7 Approval of Strategic Plan List</h3>
+                            <h3 class="box-title">Table @if($isActiveSAR) 1.8  @else 1.7 @endif Approval of Strategic Plan List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

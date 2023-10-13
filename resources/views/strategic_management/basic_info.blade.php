@@ -129,7 +129,7 @@
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="year_estb" value="{{@$basic_info->year_estb}}" autocomplete="off" class="form-control">
+                                        <input type="number" id="year_estb" value="{{@$basic_info->year_estb}}" autocomplete="off" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="campus_year_estb" value="{{@$basic_info->campus_year_estb}}" autocomplete="off" class="form-control">
+                                        <input type="number" id="campus_year_estb" value="{{@$basic_info->campus_year_estb}}" autocomplete="off" class="form-control">
                                         </div>
                                     </div>
                                 </div>

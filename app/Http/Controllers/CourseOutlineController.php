@@ -51,6 +51,9 @@ class CourseOutlineController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            if(CourseOutline::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
+                return response()->json(['message'=> 'Course Outline already exists.'], 422);
+            }
 //            dd($fileName);
                 $path = ''; $imageName = '';
                 if($request->file('file')) {

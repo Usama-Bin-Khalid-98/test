@@ -19,7 +19,7 @@
 @include('strategic_management.includes.4_6')
 <br><p class="left">4.7	Attach policy documents related to faculty recruitment, retention, promotion and annual evaluation as Appendix-4B.</p>
 <p class="left">4.8	List of professional trainings/workshops organized by core business faculty in the last three years in Table.4.7. </p>
-@include('strategic_management.includes.4_7')
+@include('strategic_management.includes.sar4_7')
 <br><p class="left">4.9 Attach faculty development policy as Appendix-4C.</p>
 <p class="left">4.10 List consultancy projects carried out by core business faculty during the last three years in Table.4.8. Attach policy for faculty consultancy and trainings as Appendix-4D.</p>
 @include('strategic_management.includes.4_8')

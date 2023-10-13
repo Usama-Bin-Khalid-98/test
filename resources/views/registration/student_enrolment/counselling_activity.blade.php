@@ -73,7 +73,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Number of students covered</label>
-                                    <input type="text" name="students_covered" id="students_covered" class="form-control">
+                                    <input type="number" name="students_covered" id="students_covered" class="form-control">
                                 </div>
                             </div>
 
@@ -186,7 +186,7 @@
                                <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Number of Students Covered</label>
-                                    <input type="text" name="students_covered" id="edit_students_covered" value="{{old('edit_students_covered')}}" class="form-control">
+                                    <input type="number" name="students_covered" id="edit_students_covered" value="{{old('edit_students_covered')}}" class="form-control">
                                 </div>
                               </div>
 

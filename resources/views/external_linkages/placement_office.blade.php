@@ -70,7 +70,7 @@
                                 <tr>
                                     <td>b) Year of establishment</td>
                                     <td>
-                                        <input type="textval" id="year_establishment" name="year_establishment" value="{{@$placement_office->year_establishment}}"  class="form-control">
+                                        <input type="number" id="year_establishment" name="year_establishment" value="{{@$placement_office->year_establishment}}"  class="form-control">
                                     </td>
                                 </tr>
                                 <tr>
@@ -94,7 +94,7 @@
                                 <tr>
                                     <td>f) Total number of staff members</td>
                                     <td>
-                                        <input type="textval" id="total_staff" name="total_staff" value="{{@$placement_office->total_staff}}"  class="form-control">
+                                        <input type="number" id="total_staff" name="total_staff" value="{{@$placement_office->total_staff}}"  class="form-control">
                                     </td>
                                 </tr>
                                 <tr>
@@ -102,11 +102,11 @@
 
                                        <tr>
                                            <td>Number of printers</td>
-                                           <td><input type="textval" id="printers" name="printers" value="{{@$placement_office->printers}}"  class="form-control"></td>
+                                           <td><input type="number" id="printers" name="printers" value="{{@$placement_office->printers}}"  class="form-control"></td>
                                        </tr>
                                        <tr>
                                            <td>Number of photocopiers</td>
-                                           <td><input type="textval" id="photocopiers" name="photocopiers" value="{{@$placement_office->photocopiers}}"  class="form-control"></td>
+                                           <td><input type="number" id="photocopiers" name="photocopiers" value="{{@$placement_office->photocopiers}}"  class="form-control"></td>
                                        </tr>
 
                                     </td>
@@ -292,7 +292,13 @@
                 }
             });
         });
-
+        $('#year_establishment').datepicker({
+            autocomplete:false,
+            autoclose:true,
+            format:'yyyy',
+            viewMode: "years",
+            minViewMode: "years"
+        })
    <?php  } ?>
 
     </script>

@@ -6,6 +6,8 @@ use App\ClassSize;
 use App\Models\Common\Semester;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
+use App\Models\StrategicManagement\Scope;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
@@ -23,9 +25,10 @@ class ClassSizeController extends Controller
          $campus_id = Auth::user()->campus_id;
         $department_id = Auth::user()->department_id;
         $semesters = Semester::get();
-        $sizes  = ClassSize::with('campus','semesters')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
-
-         return view('registration.student_enrolment.class_size', compact('semesters','sizes'));
+        $sizes  = ClassSize::with('campus','program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        $years = BusinessSchoolTyear::where(['campus_id'=> $campus_id, 'department_id'=> $department_id])->first();
+        $scopes = Scope::with('program')->where(['campus_id'=> $campus_id,'department_id'=> $department_id])->get();
+        return view('registration.student_enrolment.class_size', compact('semesters','sizes', 'years', 'scopes'));
     }
 
     /**
@@ -52,16 +55,26 @@ class ClassSizeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-
-            ClassSize::create([
+            $sizeExists = ClassSize::where([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
-                'semesters_id' => $request->semesters_id,
-                'program_a' => $request->program_a,
-                'program_b' => $request->program_b,
-                'isComplete' => 'yes',
-                'created_by' => Auth::user()->id
-            ]);
+                'semester' => $request->semester,
+                'year' => $request->year,
+            ])->exists();
+            if($sizeExists){
+                return response()->json(['error' => 'Class Size for given semester already exists.'], 422);
+            }
+            for($i = 0; $i < count($request->program); $i++){
+                ClassSize::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'semester' => $request->semester,
+                    'year' => $request->year,
+                    'program_id' => $request->program[$i],
+                    'size' => $request->size[$i],
+                    'isComplete' => 'yes',
+                ]);
+            }
 
             return response()->json(['success' => 'Class Size added successfully.']);
 
@@ -112,9 +125,9 @@ class ClassSizeController extends Controller
         try {
 
             ClassSize::where('id', $classSize->id)->update([
-                'semesters_id' => $request->semesters_id,
-                'program_a' => $request->program_a,
-                'program_b' => $request->program_b,
+                'semester' => $request->semester,
+                'size' => $request->size,
+                'year' => $request->year,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -148,9 +161,8 @@ class ClassSizeController extends Controller
 
     protected function rules() {
         return [
-            'semesters_id' => 'required',
-            'program_a' => 'required',
-            'program_b' => 'required'
+            'year' => 'required',
+            'semester' => 'required'
         ];
     }
 

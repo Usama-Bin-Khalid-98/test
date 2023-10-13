@@ -1,7 +1,7 @@
 
 <div class="box-body table-responsive">
                             <table   class="table table-bordered table-striped ">
-                                <caption style="text-align: center;color: red">Table 1.8. Sources of funding</caption>
+                                <caption style="text-align: center;color: red">Table 1.7. Sources of funding</caption>
                                 <thead>
                                     <th>Sources of funding
                                         (A)
@@ -20,7 +20,7 @@
                                     @foreach($sourceOfFunding as $data)
 
                                     <tr>
-                                        <td>{{$data->incomeSource}}</td>
+                                        <td>{{$data->funding_sources->name}}</td>
 
                                         <td>{{@$data->amount}}</td>
                                         <td>{{@$data->percent_share}}</td>

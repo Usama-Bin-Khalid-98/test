@@ -4,23 +4,17 @@
                                 <caption style="text-align: center;color: red">Table 3.3. Class size</caption>
                                 <thead>
                                     <th>Semesters</th>
-                                    <th>Program (1)</th>
-                                    <th>Program (2)</th>
-                                     
+                                    @foreach($classSize['programs'] as $program)
+                                        <th>{{$program}}</th>
+                                    @endforeach
                                 </thead>
                                 <tbody>
-                                    @foreach($classSize as $data)
+                                    @foreach($classSize['sizes'] as $key=>$data)
                                     <tr>
-                                        <td>Fall t</td>
-                                        <td>{{$data->fallA}}</td>
-                                        <td>{{$data->fallB}}</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td> Spring  t</td>
-                                        <td>{{$data->springA}}</td>
-                                        <td>{{$data->springB}}</td>
-                                         
+                                        <td>{{$key}}</td>
+                                        @foreach($classSize['programs'] as $program)
+                                            <td>{{$data[$program] ?? 0}}</td>
+                                        @endforeach
                                     </tr>
                                     @endforeach
                               

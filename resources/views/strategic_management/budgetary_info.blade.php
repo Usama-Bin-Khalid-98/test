@@ -43,7 +43,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.6 Provide budgetary information of the business school in the Table 1.6.</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 1.7 @else 1.6 @endif Provide budgetary information of the business school in the Table 1.6.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

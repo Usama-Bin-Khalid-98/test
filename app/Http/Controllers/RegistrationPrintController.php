@@ -12,6 +12,7 @@ use App\Models\StrategicManagement\ContactInfo;
 use App\Models\StrategicManagement\Scope;
 use App\Models\Facility\BusinessSchoolFacility;
 use App\Models\Faculty\FacultySummary;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -36,7 +37,7 @@ class RegistrationPrintController extends Controller
 //        dd($programsUnderReview);
         ///////////////////////////// end header data ///////////
         if(isset($req->cid) && isset($req->bid)){
-
+            $user = User::with('designation')->where(['campus_id' => $req->cid, 'department_id' => $req->did])->first();
             /////////////////header data ////////
             $docHeaderData = Slip::with('campus', 'department')
                 ->where(
@@ -325,6 +326,7 @@ ANd business_school_facilities.deleted_at is null
 AND users.id=? AND business_school_facilities.campus_id=? AND facilities.facility_type_id=facility_types.id ORDER BY facility_types.name', array(auth()->user()->id,$req->cid));
         }
         else{
+            $user = User::with('designation')->where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->first();
             $department_id = Auth::user()->department_id;
             $campus_id = Auth::user()->campus_id;
             /////////////////header data ////////
@@ -700,7 +702,7 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
             'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'strategicPlans',
             'programsPortfolio','entryRequirements','applicationsReceived','studentsEnrolment','graduatedStudents',
             'studentsGenders','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses',
-            'studentTeachersRatio','facultyStability',
+            'studentTeachersRatio','facultyStability', 'user',
             'facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData',
             'programsUnderReview','mission','ratios', 'byProgramFTE', 'byProgramVFE','facultyDegree','faculty_qualifications','faculty_disciplines', 'getYear'));
 

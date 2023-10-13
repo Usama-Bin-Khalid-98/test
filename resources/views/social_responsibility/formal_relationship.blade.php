@@ -35,7 +35,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">Provide a list of associations or MOUs with organizations or institutes(NGOs/Public/Private) extending CSR activities in Table 6.4.</p>
+                            <p class="box-title">6.4 Provide a list of associations or MOUs with organizations or institutes(NGOs/Public/Private) extending CSR activities in Table 6.4.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -109,7 +109,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Formal Relationship List</h3>
+                            <h3 class="box-title">Table 6.4 Formal Relationship List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

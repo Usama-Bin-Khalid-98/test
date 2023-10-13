@@ -20,8 +20,8 @@
                                 </tr>
                                 <tr class="left">
                                     <td>c)  Chief administrative officer</td>
-                                    <td><?php if(isset($bussinessSchool[0]->designationName))
-                                    print_r($bussinessSchool[0]->designationName);
+                                    <td><?php if(isset($user->designation->name))
+                                    print_r($user->designation->name);
                                     ?></td>
                                 </tr>
                                 <tr class="left">

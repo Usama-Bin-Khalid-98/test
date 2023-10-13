@@ -35,7 +35,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="box-title">List social initiatives carried out by the business school during the last three years in Table 6.2. Attach policy on community development and social responsibility as Appendix-6A.</p>
+                            <p class="box-title">6.2 List social initiatives carried out by the business school during the last three years in Table 6.2. Attach policy on community development and social responsibility as Appendix-6A.</p>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
@@ -94,7 +94,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Project Detail List</h3>
+                            <h3 class="box-title">Table 6.2 Project Detail List</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

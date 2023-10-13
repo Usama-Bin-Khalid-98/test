@@ -35,7 +35,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">6.1   Provide complete financial information of the business school in Table.6.1 (Rupees in million). </h3>
+                            <h3 class="box-title">@if($isActiveSAR) 7.1 @else 6.1 @endif Provide complete financial information of the business school in Table @if($isActiveSAR) 7.1 @else 6.1 @endif (Rupees in million). </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -111,7 +111,21 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                                 </div>
                             </div>
                         </form>
-
+                        
+                        @if($isActiveSAR)
+                        <form action="javascript:void(0)" id="fileform" method="POST" enctype="multipart/form-data">
+                            <table class='jumbotron'  >   
+                                <tr> 
+                                    <td style="padding:15px;" ><label for="file7A">Appendix 7A</label>
+                                    <input type="file" required name="appendix_7A" id="file7A">
+                                    @if(@$appendix_file->financial_policy)
+                                    <a href="{{$appendix_file->financial_policy}}">Current Policy <i class="glyphicon glyphicon-file"></i></a>
+                                    @endif</td>
+                                    <td style="padding:15px;" ><input type="submit" name="submit" style="margin-top:15px;" value="Submit File" class="btn btn-success"></td>
+                                </tr>
+                            </table>
+                        </form>
+                        @endif
                         </div>
                         <!-- /.box-body -->
                         <!-- /.box -->
@@ -119,7 +133,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 6.1. Financial information of the business school</h3>
+                            <h3 class="box-title">Table @if($isActiveSAR) 7.1 @else 6.1 @endif Financial information of the business school</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -574,6 +588,11 @@ $('#updateForm').submit(function (e) {
                 }
             }, 1000)
         });
+        $('#fileform').submit(function (e) {
+            let file = $('#file7A').val();
+            var formData = new FormData(this);
+            postFormToUrl(formData, "financial-info/file");
+        })
 
     </script>
 

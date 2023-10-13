@@ -10,6 +10,7 @@
 
 @include('strategic_management.includes.8_4b')
 <br><p class="left">8.5.	How many number of students obtained internships during last year. Attach policy on internship and placement as Appendix-8C.</p>
+<div class="answer">{!!@$obtainedInternships->details!!}</div>
 <p class="left">8.6.	List various activities conducted by the placement office during last year in Table 8.5. </p>
 @include('strategic_management.includes.8_5')
 <!-- <hr>

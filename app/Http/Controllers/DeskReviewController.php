@@ -270,12 +270,6 @@ class DeskReviewController extends Controller
         $faculty_resigned = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('resigned');
         $faculty_retired = FacultyStability::where(['campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active'])->get()->sum('retired');
 
-        $total_courses = WorkLoad::where(
-            [
-                'campus_id' => $campus_id, 'department_id' => $department_id, 'status' => 'active',
-            ]
-        )->get()->sum('total_courses');
-        
         $professor = Designation::where('name','Professor')->first();
         $total_courses_prof = WorkLoad::where(
             [
@@ -284,7 +278,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'designation_id'=> $professor->id,
             ]
-        )->get()->sum('total_courses');
+        )->get()->max('total_courses');
         $assocprofessor = Designation::where('name','Associate Professor')->first();
         
         $total_courses_assoc = WorkLoad::where(
@@ -294,7 +288,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'designation_id'=> $assocprofessor->id,
             ]
-        )->get()->sum('total_courses');
+        )->get()->max('total_courses');
         $assistprofessor = Designation::where('name','Assistant Professor')->first();
         $total_courses_assis = WorkLoad::where(
             [
@@ -303,7 +297,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'designation_id'=> $assistprofessor->id,
             ]
-        )->get()->sum('total_courses');
+        )->get()->max('total_courses');
         $lecturer = Designation::where('name','Lecturer')->first();
          $total_courses_lec = WorkLoad::where(
             [
@@ -312,7 +306,7 @@ class DeskReviewController extends Controller
                 'status' => 'active',
                 'designation_id'=> $lecturer->id,
             ]
-        )->get()->sum('total_courses');
+        )->get()->max('total_courses');
 
 //        dd($total_courses_lec);
         $bandwidth = BusinessSchoolFacility::where(['facility_id'=> 35, 'campus_id' => $campus_id, 'department_id' => $department_id])->get()->first();
@@ -598,7 +592,6 @@ class DeskReviewController extends Controller
             'faculty_terminated',
             'faculty_resigned',
             'faculty_retired',
-            'total_courses',
             'bandwidth',
             'comp_ratio',
             'summaries',

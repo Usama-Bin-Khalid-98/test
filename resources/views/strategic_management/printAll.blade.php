@@ -1,5 +1,7 @@
 @section('pageTitle', 'Print All')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -16,13 +18,19 @@
             border: 0.5px solid black !important;
             border-collapse: collapse !important;
         }
+
+        .answer {
+            text-align: left;
+            margin-left: 1rem;
+            padding: 1rem;
+            border: solid 1px;
+        }
     </style>
     @include("../includes.nav")
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Print
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -30,7 +38,13 @@
                 <li class="active"> Print </li>
             </ol>
         </section>
-
+        <section class="content-header">
+            <div class="col-md-12 new-button">
+                <div class="pull-right">
+                    <button class="btn btn-primary" onclick="window.print()">Print</button>
+                </div>
+            </div>
+        </section>
 
         {{--Dean section --}}
         {{--Dean section --}}
@@ -41,9 +55,6 @@
 
                     <!-- .box -->
                     <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Print</h3>
-                        </div>
                     <br><br><br><br>
                         <div style="text-align: center; font-size: 14px;">
                             <p style="text-align: justify; margin-left: 10%;">
@@ -186,15 +197,15 @@
                             <p class="left">5.  I confirm that my institution will provide the following arrangements for the PRT team: room and board at a local hotel or guest house and all local transport. </p>
                             <p class="left">6.  In confirm that, in case we need to interrupt the accreditation process, we will submit a cancellation request in writing to the NBEAC Secretariat at least 4 weeks before the PRT visit.</p>
                             <br><br>
-                            <p>
-                            Signature: _______________________________________ Stamp of the organization: ________________________</p>
-                            <p>Name of the signatory: _____________________________ Date __________________________________________</p>
-                            <p>Position of the signatory __________________________________________________________________________</p>
-                            <p>Name of University/Institute: ______________________________________________________________________</p>
-                            <p>Department/Business School under review: ___________________________________________________________</p>
-                            <p>Postal address: __________________________________________________________________________________</p>
-                            <p>City and country: ________________________________________________________________________________</p>
-                            <p>Telephone: ______________________________________ Fax: __________________________________________</p>
+                            <p class="left">Signature: _______________________________________ Stamp of the organization: ________________________</p>
+                            <p class="left">Name of the signatory: _____________________________ Date __________________________________________</p>
+                            <p class="left">Position of the signatory __________________________________________________________________________</p>
+                            <p class="left">Name of University/Institute: <strong>{{$docHeaderData->campus->business_school->name??''}}</strong></p>
+                            <p class="left">Department/Business School under review: <strong>{{$docHeaderData->department->name??''}}</strong></p>
+                            <p class="left">Postal address: <strong>{{$docHeaderData->campus->user->address??''}}</strong></p>
+                            <p class="left">City and country: <strong>{{$docHeaderData->campus->user->city??''}}, {{$docHeaderData->campus->user->country??''}}</strong></p>
+                            <p class="left">Telephone: <strong>{{$docHeaderData->campus->user->contact_no??''}}</strong></p>
+
 
 
                         </div>

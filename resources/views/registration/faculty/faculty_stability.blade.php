@@ -1,5 +1,7 @@
 @section('pageTitle', 'Faculty Stability')
-
+@php
+$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+@endphp
 
 @if(Auth::user())
 
@@ -34,7 +36,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">4.5 Provide data on faculty stability in Table 4.5.</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 4.3 Provide data on faculty turnover in Table 4.3. @else 4.5 Provide data on faculty stability in Table 4.5. @endif</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -115,7 +117,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Table 4.5.Faculty Stability</h3>
+                            <h3 class="box-title">@if($isActiveSAR) Table 4.3. Faculty Turnover @else Table 4.5.Faculty Stability @endif</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

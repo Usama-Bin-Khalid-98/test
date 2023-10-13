@@ -36,7 +36,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">1.7  State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as @if($isActiveSAR) Appendix-1D @else Appendix-1C @endif.</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 1.10 @else 1.7 @endif  State the vision and mission of the university and that of the business school. Describe the process of formation and approval of the vision and mission statements. Attached the relevant pages of the official documents as @if($isActiveSAR) Appendix-1D @else Appendix-1C @endif.</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>

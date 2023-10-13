@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AcademyType extends Model
 {
-    //
+    protected $guarded = [];
 }

@@ -234,6 +234,18 @@
                         <span class="label label-success pull-right">{{$counter['ActivityEngagement']}}</span>
                     </span>
                     </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/academy_levels')}}" class="text-purple"><b>Academy Levels</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['AcademyLevel']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{url('config/academy_types')}}" class="text-purple"><b>Academy Types</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['AcademyType']}}</span>
+                    </span>
+                    </li>
                 </ul>
 
               <hr>

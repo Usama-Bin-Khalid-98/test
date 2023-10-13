@@ -18,12 +18,12 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                @if(!$isActiveSAR)Program Portfolio @else Program Courses @endif
+                @if($isActiveSAR) Program Courses @else Program Portfolio @endif
                 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
-                <li class="active"> @if(!$isActiveSAR)Program Portfolio @else Program Courses @endif</li>
+                <li class="active"> @if($isActiveSAR)Program Courses @else Program Portfolio @endif</li>
             </ol>
         </section>
 {{--        <section class="content-header">--}}
@@ -65,7 +65,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">@if(!$isActiveSAR)2.1.Provide the portfolio of the program(s) under review in Table 2.1.@else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title">@if($isActiveSAR) 2.2. Provide information on individual courses of each program under review in Table 2.2. @else 2.1.Provide the portfolio of the program(s) under review in Table 2.1. @endif</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -164,7 +164,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">@if(!$isActiveSAR)2.1.Programs Portfolio @else 2.2.	Provide information on individual courses of each program under review in Table 2.2. @endif</h3>
+                            <h3 class="box-title">@if($isActiveSAR)2.2.	Provide information on individual courses of each program under review in Table 2.2. @else 2.1.Programs Portfolio @endif</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -555,9 +555,9 @@ $('.delete').on('click', function (e) {
             setTimeout(()=>{
                 if(check){
                     @if($isActiveSAR)
-                        window.location = '/program-courses';
-                    @else
                         window.location = '/entry-requirements';
+                    @else
+                        window.location = '/program-courses';
                     @endif
                 }
             }, 1000)

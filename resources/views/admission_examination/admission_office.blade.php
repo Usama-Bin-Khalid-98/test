@@ -109,10 +109,10 @@
                                 <tr>
                                     <td>l) Total number of staff members</td>
                                     <td>
-                                        <input type="textval" id="total_staff" name="total_staff" value="{{@$admission_office->total_staff}}"  class="form-control">
+                                        <input type="number" id="total_staff" name="total_staff" value="{{@$admission_office->total_staff}}"  class="form-control">
                                     </td>
                                     <td>
-                                        <input type="textval" id="total_staffb" name="total_staffb" value="{{@$admission_office->total_staffb}}"  class="form-control">
+                                        <input type="number" id="total_staffb" name="total_staffb" value="{{@$admission_office->total_staffb}}"  class="form-control">
                                     </td>
                                 </tr>
                                 <tr>
@@ -120,18 +120,18 @@
 
                                        <tr>
                                            <td>Number of printers</td>
-                                           <td><input type="textval" id="printers" name="printers" value="{{@$admission_office->printers}}"  class="form-control"></td>
-                                           <td><input type="textval" id="printersb" name="printersb" value="{{@$admission_office->printersb}}"  class="form-control"></td>
+                                           <td><input type="number" id="printers" name="printers" value="{{@$admission_office->printers}}"  class="form-control"></td>
+                                           <td><input type="number" id="printersb" name="printersb" value="{{@$admission_office->printersb}}"  class="form-control"></td>
                                        </tr>
                                        <tr>
                                            <td>Number of photocopiers</td>
-                                           <td><input type="textval" id="photocopiers" name="photocopiers" value="{{@$admission_office->photocopiers}}"  class="form-control"></td>
-                                           <td><input type="textval" id="photocopiersb" name="photocopiersb" value="{{@$admission_office->photocopiersb}}"  class="form-control"></td>
+                                           <td><input type="number" id="photocopiers" name="photocopiers" value="{{@$admission_office->photocopiers}}"  class="form-control"></td>
+                                           <td><input type="number" id="photocopiersb" name="photocopiersb" value="{{@$admission_office->photocopiersb}}"  class="form-control"></td>
                                        </tr>
                                        <tr>
                                            <td>Number of secure caninets</td>
-                                           <td><input type="textval" id="secure_cabinets" name="secure_cabinets" value="{{@$admission_office->secure_cabinets}}"  class="form-control"></td>
-                                           <td><input type="textval" id="secure_cabinetsb" name="secure_cabinetsb" value="{{@$admission_office->secure_cabinetsb}}"  class="form-control"></td>
+                                           <td><input type="number" id="secure_cabinets" name="secure_cabinets" value="{{@$admission_office->secure_cabinets}}"  class="form-control"></td>
+                                           <td><input type="number" id="secure_cabinetsb" name="secure_cabinetsb" value="{{@$admission_office->secure_cabinetsb}}"  class="form-control"></td>
                                        </tr>
 
                                     </td>
@@ -272,70 +272,27 @@
 
    <?php  }else{ ?>
 
-    $('#update').on('click', function (e) {
+    $('#update, #update-and-next').on('click', function (e) {
+            let next = false;
+            if (e.currentTarget.id == 'update-and-next'){
+                next = true;
+            }
+            e.preventDefault();
 
-            let hierarchical_position = $('input[name=hierarchical_position]:checked').val();
-            let system_handling = $('input[name=system_handling]:checked').val();
-            let head = $('#head').val();
-            let qualification = $('#qualification').val();
-            let total_staff = $('#total_staff').val();
-            let printers = $('#printers').val();
-            let photocopiers = $('#photocopiers').val();
-            let secure_cabinets = $('#secure_cabinets').val();
-            let hierarchical_positionb = $('input[name=hierarchical_positionb]:checked').val();
-            let system_handlingb = $('input[name=system_handlingb]:checked').val();
-            let headb = $('#headb').val();
-            let qualificationb = $('#qualificationb').val();
-            let total_staffb = $('#total_staffb').val();
-            let printersb = $('#printersb').val();
-            let photocopiersb = $('#photocopiersb').val();
-            let secure_cabinetsb = $('#secure_cabinetsb').val();
             let id = $('#id').val();
-
-             !hierarchical_position?addClass('hierarchical_position'):removeClass('hierarchical_position');
-             !system_handling?addClass('system_handling'):removeClass('system_handling');
-             !head?addClass('head'):removeClass('head');
-             !qualification?addClass('qualification'):removeClass('qualification');
-             !total_staff?addClass('total_staff'):removeClass('total_staff');
-             !printers?addClass('printers'):removeClass('printers');
-             !photocopiers?addClass('photocopiers'):removeClass('photocopiers');
-             !secure_cabinets?addClass('secure_cabinets'):removeClass('secure_cabinets');
-             !hierarchical_positionb?addClass('hierarchical_positionb'):removeClass('hierarchical_positionb');
-             !system_handlingb?addClass('system_handlingb'):removeClass('system_handlingb');
-             !headb?addClass('headb'):removeClass('headb');
-             !qualificationb?addClass('qualificationb'):removeClass('qualificationb');
-             !total_staffb?addClass('total_staffb'):removeClass('total_staffb');
-             !printersb?addClass('printersb'):removeClass('printersb');
-             !photocopiersb?addClass('photocopiersb'):removeClass('photocopiersb');
-             !secure_cabinetsb?addClass('secure_cabinetsb'):removeClass('secure_cabinetsb');
-
+            let formData = new FormData($('#form')[0])
+            formData.append('_method', 'PUT');
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-                type: 'PUT',
+                type: 'POST',
                 url: "{{url('admission-office')}}/"+id,
-                data: {
-                    id: id,
-                    hierarchical_position: hierarchical_position,
-                    system_handling: system_handling,
-                    head: head,
-                    qualification: qualification,
-                    total_staff: total_staff,
-                    printers: printers,
-                    photocopiers: photocopiers,
-                    secure_cabinets: secure_cabinets,
-                    hierarchical_positionb: hierarchical_positionb,
-                    system_handlingb: system_handlingb,
-                    headb: headb,
-                    qualificationb: qualificationb,
-                    total_staffb: total_staffb,
-                    printersb: printersb,
-                    photocopiersb: photocopiersb,
-                    secure_cabinetsb: secure_cabinetsb,
-                },
+                data: formData,
+                contentType: false,
+                processData: false,
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -347,6 +304,13 @@
                         Notiflix.Notify.Success(response.success);
                     }
                     console.log('response here', response);
+                    if(next){
+                        setTimeout(() => {
+                            window.location = '/entry-requirements';
+                        }, 1000);
+                    }else{
+                        location.reload();
+                    }
                 },
                 error:function(response, exception){
                     Notiflix.Loading.Remove();

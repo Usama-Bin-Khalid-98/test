@@ -106,7 +106,7 @@
                                     <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
                                     <td>{!!$contact->details !!}</td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
-                                    <td><i class="fa fa-trash text-info delete" data-id="{{str_replace(array("\r\n", "\r", "\n"), "",$contact->details)}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
+                                    <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","file":"{{$contact->file}}","status":"{{$contact->status}}","details":"{{$contact->details}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
                                 @endforeach
 
@@ -285,6 +285,7 @@
              let data = JSON.parse(JSON.stringify($(this).data('row')));
             $('#file-name').text(data.file);
             $('#edit_id').val(data.id);
+            CKEDITOR.instances['edit_details'].setData(data.details)
 
              $('input[value='+data.status+']').iCheck('check');
         });
@@ -297,6 +298,7 @@ $('#updateForm').submit(function (e) {
 
             e.preventDefault();
              var formData = new FormData(this);
+             formData.append('edit_details',CKEDITOR.instances['edit_details'].getData());
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({

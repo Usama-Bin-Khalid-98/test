@@ -6,7 +6,7 @@
                                     <th>Curriculum review meeting</th>
                                     <th>Date</th>
                                     <th>Composition</th>
-{{--                                    <th>Reviewer names</th>--}}
+                                    <th>Reviewer names</th>
                                     <th>Designation & affiliation</th>
                                 </thead>
                                 <tbody>
@@ -19,6 +19,7 @@
 {{--                                                @foreach(@$portfolio->curriculum_reviewer as $reviewers) {{$reviewers->user->name}},--}}
 {{--                                                @endforeach @endif--}}
 {{--                                        </td>--}}
+                                        <td>{{$data->reviewer_names}}</td>
                                         <td>{{$data->designation}}{{": "}}{{$data->affiliation}}</td>
                                     </tr>
                                      @endforeach

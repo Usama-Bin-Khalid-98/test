@@ -12,11 +12,14 @@
 <br><p class="left">2.6.	Provide the alignment of POs and PLOs for each program under review in Table 2.6.</p>
 @include('strategic_management.includes.2_6')
 <br><p class="left">2.7.	Explain how the POs and PLOs of each program under review are aligned with the vision and mission of the business school.</p>
+<div class="answer">{!!@$alignedProgram->summary!!}</div>
 <br><p class="left">2.8.	Provide course outlines  for one core course, one elective course and one support course for each program under review as Appendix-2A.</p>
 <br><p class="left">2.9.	List and provide details of any ten courses which have been carefully designed in line with corporate needs during last three years.</p>
+<div class="answer">{!!@$courseDetail->summary!!}</div>
 <br><p class="left">2.10.	List indigenous and culturally relevant materials and recent courses in which such materials were used in Table 2.7 </p>
 @include('strategic_management.includes.2_7')
 <br><p class="left">2.11.	Provide a checklist of all documents required to prepare the course files as per university policy.</p>
+<div class="answer">{!!@$checklistDocument->summary!!}</div>
 <p class="left">
 2.12.	Explain how the program curriculum helps develop managerial skills  in Table 2.8.
 </p>

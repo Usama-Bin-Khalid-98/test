@@ -26,7 +26,7 @@
                                         <td><?php print_r($facultySummary[0][$i]->name);?></td>
                                         <td>
                                             @php
-    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,@$facultySummary[0],auth()->user()->campus_id);
+    $facSum =  App\Http\Controllers\RegistrationPrintController::getfacultySummary($i,@$facultySummary[0],$user->campus_id);
    @endphp
    <?php
    $total=0;

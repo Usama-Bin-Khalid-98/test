@@ -73,7 +73,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Budget Allocation</label>
-                                    <input type="text" name="budget_allocation" id="budget_allocation" class="form-control">
+                                    <input type="number" name="budget_allocation" id="budget_allocation" class="form-control">
                                 </div>
                             </div>
 
@@ -182,7 +182,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Budget Allocation</label>
-                                    <input type="text" name="budget_allocation" id="edit_budget_allocation" value="{{old('edit_budget_allocation')}}" class="form-control">
+                                    <input type="number" name="budget_allocation" id="edit_budget_allocation" value="{{old('edit_budget_allocation')}}" class="form-control">
                                 </div>
                               </div>
 

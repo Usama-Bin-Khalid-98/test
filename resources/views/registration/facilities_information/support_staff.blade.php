@@ -33,7 +33,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide data of staff of various offices in Table 6.3.</h3>
+                            <h3 class="box-title">7.3 Provide data of staff of various offices in Table 7.3.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -62,7 +62,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Total number of Staff members</label>
-                                    <input type="text" name="total_staff" id="total_staff" class="form-control">
+                                    <input type="number" name="total_staff" id="total_staff" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-3">
@@ -88,7 +88,7 @@
                     <!-- .box -->
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Support Staff Table.</h3>
+                            <h3 class="box-title">Table 7.3 Support Staff Table.</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -166,7 +166,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Total number of Staff members</label>
-                                    <input type="text" name="total_staff" id="edit_total_staff" value="{{old('edit_total_staff')}}" class="form-control">
+                                    <input type="number" name="total_staff" id="edit_total_staff" value="{{old('edit_total_staff')}}" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">

@@ -73,7 +73,7 @@
             <div class="col-xs-12">
                 <p style="margin: 0px 10px 0px 10px;font-size:16px">Mail us the Cheque bearing the above stated amount in favor of <strong>NBEAC-HEC</strong> at National Business Education Accreditation Council, Room # 201, HRD Building, Gate # 2, Higher Education Commission, H-8, and Islamabad, Pakistan.</p><br>
                 <p style="margin: 0px 10px 0px 10px;font-size:16px">CC: Mr. Ahtesham Ali Raja (Program Director-NBEAC)</p>
-                <p style="margin: 0px 10px 0px 10px;font-size:16px">CC: Dr. Farrukh Iqbal (Chairman –NBEAC)</p>
+                <p style="margin: 0px 10px 0px 10px;font-size:16px">CC: Dr. Naukhez Sarwar (Chairman –NBEAC)</p>
             </div>
             <div class="col-xs-6"></div>
             <div class="col-xs-6">

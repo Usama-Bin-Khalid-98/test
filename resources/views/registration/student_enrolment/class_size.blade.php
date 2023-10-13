@@ -50,30 +50,33 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                           <form action="javascript:void(0)" id="form" method="POST">
-                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Semesters</label>
-                                    <select name="semesters_id" id="semesters_id" class="form-control select2" style="width: 100%;">
-                                        <option selected  disabled >Select Semester</option>
-                                        @foreach($semesters as $sem)
-                                            <option value="{{$sem->id}}">{{$sem->name }}</option>
-                                        @endforeach
+                              <div class="form-group col-md-3">
+                                    <label for="name">Year</label>
+                                    <select name="year" id="year" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Year</option>
+                                        <option value="{{$years->tyear}}">{{ $years->tyear}}</option>
+                                        <option value="{{$years->year_t_1}}">{{ $years->year_t_1}}</option>
+                                        <option value="{{$years->year_t_2}}">{{ $years->year_t_2}}</option>
                                     </select>
                                 </div>
-                            </div>
+                                <div class="form-group col-md-3">
+                                    <label for="semester">Select Semester</label>
+                                    <select name="semester" id="semester" class="form-control select2">
+                                        <option selected disabled>Select Semester</option>
+                                        <option value="Fall">Fall</option>
+                                        <option value="Spring">Spring</option>
+                                    </select>
+                                </div>
 
+                            @foreach($scopes as $scope)
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Program 1</label>
-                                    <input type="text" name="program_a" id="program_a" class="form-control">
+                                    <label for="name">{{$scope->program->name}}</label>
+                                    <input type="hidden" name="program[]" value="{{$scope->program->id}}">
+                                    <input type="number" name="size[]" class="form-control" required>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="name">Program 2</label>
-                                    <input type="text" name="program_b" id="program_b" class="form-control">
-                                </div>
-                            </div>
+                            @endforeach
 
                              <div class="col-md-12">
                                 <div class="form-group pull-right" style="margin-top: 40px">
@@ -98,9 +101,10 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th>Year</th>
                                     <th>Semester</th>
-                                    <th>Program 1</th>
-                                    <th>Program 2</th>
+                                    <th>Program</th>
+                                    <th>Class Size</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -108,20 +112,22 @@
                                 <tbody>
                                @foreach($sizes as $plan)
                                 <tr>
-                                    <td>{{$plan->semesters->name}}</td>
-                                    <td>{{$plan->program_a}}</td>
-                                    <td>{{$plan->program_b}}</td>
+                                    <td>{{$plan->year}}</td>
+                                    <td>{{$plan->semester}}</td>
+                                    <td>{{$plan->program->name}}</td>
+                                    <td>{{$plan->size}}</td>
                                     <td><i class="badge {{$plan->status == 'active'?'bg-green':'bg-red'}}">{{$plan->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "semesters_id":"{{$plan->semesters_id}}", "program_a":"{{$plan->program_a}}", "program_b":"{{$plan->program_b}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$plan->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$plan->id}}", "semester":"{{$plan->semester}}", "year":"{{$plan->year}}", "program":"{{$plan->program_id}}", "size":"{{$plan->size}}", "status":"{{$plan->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
+                                    <th>Year</th>
                                     <th>Semester</th>
-                                    <th>Program 1</th>
-                                    <th>Program 2</th>
+                                    <th>Program</th>
+                                    <th>Class Size</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -157,32 +163,28 @@
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Semesters</label>
-                                    <select name="semesters_id" id="edit_semesters_id" class="form-control select2" style="width: 100%;">
-                                        <option selected  disabled >Select Semester</option>
-                                        @foreach($semesters as $sem)
-                                            <option value="{{$sem->id}}">{{$sem->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <input type="hidden" id="edit_id">
-                            </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Program 1</label>
-                                    <input type="text" name="program_a" id="edit_program_a" value="{{old('edit_program_a')}}" class="form-control">
-                                </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Program 2</label>
-                                    <input type="text" name="program_b" id="edit_program_b" value="{{old('edit_program_b')}}" class="form-control">
-                                </div>
-                              </div>
-
+                        <div class="form-group col-md-6">
+                            <label for="name">Year</label>
+                            <select name="year" id="edit_year" class="form-control select2" style="width: 100%;">
+                                <option selected disabled>Select Year</option>
+                                <option value="{{$years->tyear}}">{{ $years->tyear}}</option>
+                                <option value="{{$years->year_t_1}}">{{ $years->year_t_1}}</option>
+                                <option value="{{$years->year_t_2}}">{{ $years->year_t_2}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="semester">Select Semester</label>
+                            <select name="semester" id="edit_semester" class="form-control select2">
+                                <option selected disabled>Select Semester</option>
+                                <option value="Fall">Fall</option>
+                                <option value="Spring">Spring</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="size">Class Size</label>
+                            <input type="number" name="size" id="edit_size" value="{{old('edit_size')}}" class="form-control" required>
+                        </div>
+                        <input type="hidden" name="id" id="edit_id">
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -238,19 +240,6 @@
             if(e.originalEvent.submitter.id === 'add-and-next'){
                 next = true;
             }
-            let semesters_id = $('#semesters_id').val();
-            let program_a = $('#program_a').val();
-            let program_b = $('#program_b').val();
-
-            !semesters_id?addClass('semesters_id'):removeClass('semesters_id');
-            !program_a?addClass('program_a'):removeClass('program_a');
-            !program_b?addClass('program_b'):removeClass('program_b');
-
-            if(!semesters_id || !program_a || !program_b)
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
-            }
             // Yes button callback
             e.preventDefault();
             var formData = new FormData(this);
@@ -292,29 +281,17 @@
          $('.edit').on('click', function () {
             // let data = JSON.parse(JSON.stringify($(this).data('row')));
              let data = JSON.parse(JSON.stringify($(this).data('row')));
-            $('#edit_semesters_id').select2().val(data.semesters_id).trigger('change');
-            $('#edit_program_a').val(data.program_a);
-            $('#edit_program_b').val(data.program_b);
+            $('#edit_year').select2().val(data.year).trigger('change');
+            $('#edit_semester').val(data.semester).trigger('change');
+            $('#edit_size').val(data.size);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let semesters_id = $('#edit_semesters_id').val();
-            let program_a = $('#edit_program_a').val();
-            let program_b = $('#edit_program_b').val();
+
             let id = $('#edit_id').val();
 
-            let status = $('input[name=edit_status]:checked').val();
-            !semesters_id?addClass('edit_semesters_id'):removeClass('edit_semesters_id');
-            !program_a?addClass('edit_program_a'):removeClass('edit_program_a');
-            !program_b?addClass('edit_program_b'):removeClass('edit_program_b');
-
-            if(!semesters_id || !program_a || !program_b)
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()

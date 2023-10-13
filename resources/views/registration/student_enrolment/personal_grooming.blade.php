@@ -79,7 +79,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Number Of Participants</label>
-                                    <input type="text" name="total_participants" id="total_participants" class="form-control">
+                                    <input type="number" name="total_participants" id="total_participants" class="form-control">
                                 </div>
                             </div>
 
@@ -197,7 +197,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Number of Participants</label>
-                                    <input type="text" name="total_participants" id="edit_total_participants" value="{{old('edit_total_participants')}}" class="form-control">
+                                    <input type="number" name="total_participants" id="edit_total_participants" value="{{old('edit_total_participants')}}" class="form-control">
                                 </div>
                               </div>
 

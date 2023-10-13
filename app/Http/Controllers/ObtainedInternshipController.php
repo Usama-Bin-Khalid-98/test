@@ -53,6 +53,9 @@ class ObtainedInternshipController extends Controller
         }
         try {
 //            dd($fileName);
+                if(ObtainedInternship::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
+                    return response()->json(['message'=> 'Internship Policy already exists.'], 422);
+                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName =Auth::user()->id."-file-" . time() . '.' . $request->file->getClientOriginalExtension();
@@ -136,6 +139,7 @@ class ObtainedInternshipController extends Controller
                     [
                     'file' => $path.'/'.$imageName,
                     'status' => $request->status,
+                    'details' => $request->edit_details,
                     'updated_by' => Auth::user()->id
                     ]
                 );
@@ -144,6 +148,7 @@ class ObtainedInternshipController extends Controller
             }
            ObtainedInternship::where('id', $obtainedInternship->id)->update([
                'status' => $request->status,
+               'details' => $request->edit_details,
                'updated_by' => Auth::user()->id
            ]);
             return response()->json(['success' => 'Obtained Internship updated successfully.']);

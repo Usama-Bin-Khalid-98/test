@@ -146,20 +146,20 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Experience in higher education</label>
-                                    <input type="text" name="hec_experience" id="hec_experience" class="form-control">
+                                    <label for="name">Experience in higher education(years)</label>
+                                    <input type="number" name="hec_experience" id="hec_experience" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Industry</label>
-                                    <input type="text" name="industry" id="industry" class="form-control">
+                                    <label for="name">Experience in Industry(years)</label>
+                                    <input type="number" name="industry" id="industry" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Current job duration(year)</label>
-                                    <input type="text" name="current_job_duration" id="current_job_duration" class="form-control">
+                                    <label for="name">Current job duration(years)</label>
+                                    <input type="number" name="current_job_duration" id="current_job_duration" class="form-control">
                                 </div>
                             </div>
                             </div>
@@ -341,7 +341,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Current job duration(year)</label>
-                                    <input type="text" name="current_job_duration" id="edit_current_job_duration" value="{{old('edit_current_job_duration')}}" class="form-control">
+                                    <input type="number" name="current_job_duration" id="edit_current_job_duration" value="{{old('edit_current_job_duration')}}" class="form-control">
                                 </div>
                             </div>
 
