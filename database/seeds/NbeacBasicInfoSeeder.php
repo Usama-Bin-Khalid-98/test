@@ -23,7 +23,7 @@ class NbeacBasicInfoSeeder extends Seeder
                 'address' => 'National Business Education Accreditation Council (NBEAC), 201, 2nd Floor, HRD Building, Higher Education Commission, H-8, Islamabad',
                 'website' => 'https://www.nbeac.org.pk/',
                 'director' => 'Mr. Ahtesham Ali Raja',
-                'chairman' => 'Mr. Muhammad Irfan Khan',
+                'chairman' => 'Dr. Naukhez Sarwar',
                 'user_id' => 1,
 
             ]

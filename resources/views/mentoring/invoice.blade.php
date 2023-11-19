@@ -120,7 +120,7 @@
           <p class="lead" style="font-size: 16px">HEC is Tax Exempted and FTN Number is 9011007-2.:</p>
           <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
               Mail us the Cheque bearing the above stated amount in favor of NBEAC-HEC at National Business Education Accreditation Council, Room # 201, HRD Building, Gate # 2, Higher Education Commission, H-8, and Islamabad, Pakistan.
-              <br>CC: Mr. Ahtesham Ali Raja (Program Director-NBEAC) <br>CC: Dr. Naukhez Sarwar (Chairman –NBEAC)
+              <br>CC: {{@$nbeacInfo->director}} (Program Director-NBEAC) <br>CC: {{@$nbeacInfo->chairman}} (Chairman –NBEAC)
           </p>
         </div>
         <!-- /.col -->

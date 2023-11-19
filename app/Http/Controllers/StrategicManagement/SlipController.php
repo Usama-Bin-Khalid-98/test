@@ -413,8 +413,9 @@ class SlipController extends Controller
         //dd('invoice here ');
         $user_data = Auth::user();
         $getInvoice = Slip::with('campus', 'department')->where(['id' => $id])->get()->first();
+        $nbeacInfo = NbeacBasicInfo::first();
         // dd($getInvoice);
-        return view('strategic_management.invoice', compact('getInvoice'));
+        return view('strategic_management.invoice', compact('getInvoice', 'nbeacInfo'));
     }
 
     public function invoicePrint($id=null)
@@ -422,8 +423,9 @@ class SlipController extends Controller
         //dd('invoice here ');
         $user_data = Auth::user();
         $getInvoice = Slip::with('campus', 'department')->where(['id' => $id])->get()->first();
+        $nbeacInfo = NbeacBasicInfo::first();
 //        dd($getInvoice);
-        return view('strategic_management.print', compact('getInvoice'));
+        return view('strategic_management.print', compact('getInvoice', 'nbeacInfo'));
     }
 
     /**
