@@ -94,7 +94,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">Provide basic information about the business school in Table 1.1</h3>
+                            <h3 class="box-title">1.1 Provide basic information about the business school in Table 1.1</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
