@@ -27,6 +27,7 @@
 Table 5.1. Summary of research output
 </caption>
                                 <thead>
+                                    <th>No.</th>
                                     <th class="" style="text-align: center;">Publication<br> category</th>
                                     <th>Publication type</th>
                                     <th>Year</th>
@@ -40,6 +41,7 @@ Table 5.1. Summary of research output
                                 <tbody>
                                     @foreach($researchOutput as $data)
                                     <tr>
+                                        <td>{{$loop->iteration}}</td>
                                         <td>{{$data->publicationType}}</td>
                                         <td>{{$data->publicationName}}</td>
                                         <td>{{$data->year}}</td>
