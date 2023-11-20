@@ -7,6 +7,7 @@ use App\Models\Common\Department;
 use App\Models\Common\FeeType;
 use App\Models\Common\PaymentMethod;
 use App\Models\Common\Slip;
+use App\Models\Config\NbeacBasicInfo;
 use App\Models\MentoringInvoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -122,10 +123,11 @@ class MentoringInvoiceController extends Controller
 //        dd('invoice here ', $id);
 //        $user_data = Auth::user();
         $getInvoice = MentoringInvoice::with('campus', 'department', 'user')->where(['id' => $id])->get()->first();
+        $nbeacInfo = NbeacBasicInfo::first();
 //        dd($getInvoice);
 //        $getFee =
         //dd($getInvoice);
-        return view('mentoring.invoice', compact('getInvoice'));
+        return view('mentoring.invoice', compact('getInvoice', 'nbeacInfo'));
     }
     /**
      * Show the form for creating a new resource.
