@@ -67,7 +67,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Membership percentage</label>
-                                    <input type="number" max=100 name="membership_percentage" id="membership_percentage"  class="form-control">
+                                    <input type="number" step="any" max=100 name="membership_percentage" id="membership_percentage"  class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -198,7 +198,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Membership percentage</label>
-                                    <input type="number" name="membership_percentage" id="edit_membership_percentage" value="{{old('edit_membership_percentage')}}" class="form-control">
+                                    <input type="number" step="any" name="membership_percentage" id="edit_membership_percentage" value="{{old('edit_membership_percentage')}}" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">
