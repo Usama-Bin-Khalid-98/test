@@ -25,7 +25,7 @@ class InstituteFeedbackController extends Controller
     {
         //
         $user = Auth::user();
-        if($user->user_type === 'NBEACAdmin' || $user->user_type === 'NbeacFocalPerson' ) {
+        if($user->hasRole(['NBEACAdmin', 'NbeacFocalPerson'])) {
 
             $feedbacks = DB::table('slips as s')
             ->join('institute_feedback as if', 'if.slip_id', 's.id')
@@ -41,7 +41,7 @@ class InstituteFeedbackController extends Controller
                 )
                 ->get();
 //            dd($feedbacks);
-        }elseif($user->user_type === 'BusinessSchool'){
+        }elseif($user->hasRole('BusinessSchool')){
             $feedbacks = DB::table('slips as s')
                 ->join('institute_feedback as if', 'if.slip_id', 's.id')
                 ->join('campuses as c', 'c.id', 's.business_school_id')

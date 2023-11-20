@@ -48,11 +48,11 @@ class MentoringReportController extends Controller
     public function getReports()
     {
         $userInfo = Auth::user();
-        if ($userInfo->user_type == 'BusinessSchool') {
+        if ($userInfo->hasRole('BusinessSchool')) {
             $where = ['campus_id' => $userInfo->campus_id, 'department_id' => $userInfo->department_id];
             $mentor_reports = MentoringInvoice::with('mentoring_report', 'campus', 'department')
                 ->where($where)->get();
-        }elseif($userInfo->user_type == 'NBEACAdmin'){
+        }elseif($userInfo->hasRole('NBEACAdmin')){
             $mentor_reports = MentoringInvoice::with('mentoring_report', 'campus', 'department')->get();
         }else{
             $where = [];
