@@ -53,9 +53,6 @@ class LinkagesController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-                if(Linkages::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
-                    return response()->json(['message'=> 'Linkage already exists.'], 422);
-                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName = Auth::user()->id."file-" . time() . '.' . $request->file->getClientOriginalExtension();
@@ -63,24 +60,23 @@ class LinkagesController extends Controller
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
-
-                    Linkages::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'name' => $request->name,
-                        'type' => $request->type,
-                        'location' => $request->location,
-                        'level' => $request->level,
-                        'signing_date' => $request->signing_date,
-                        'last_activity_date' => $request->last_activity_date,
-                        'last_activity_title' => $request->last_activity_title,
-                        'file' => $path.'/'.$imageName,
-                        'isComplete' => 'yes',
-                        'created_by' => Auth::user()->id
+                }
+                Linkages::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'name' => $request->name,
+                    'type' => $request->type,
+                    'location' => $request->location,
+                    'level' => $request->level,
+                    'signing_date' => $request->signing_date,
+                    'last_activity_date' => $request->last_activity_date,
+                    'last_activity_title' => $request->last_activity_title,
+                    'file' => $path.'/'.$imageName,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
                 ]);
 
-                    return response()->json(['success' => 'Linkages added successfully.']);
-                }
+                return response()->json(['success' => 'Linkages added successfully.']);
 
         }catch (Exception $e)
         {

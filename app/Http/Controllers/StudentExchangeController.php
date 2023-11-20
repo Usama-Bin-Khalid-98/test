@@ -56,9 +56,6 @@ class StudentExchangeController extends Controller
         }
         try {
 //            dd($fileName);
-                if(StudentExchange::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
-                    return response()->json(['message'=> 'Student exchange already exists.'], 422);
-                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName = Auth::user()->id."file-" . time() . '.' . $request->file->getClientOriginalExtension();
@@ -66,25 +63,25 @@ class StudentExchangeController extends Controller
                     $diskName = env('DISK');
                     $disk = Storage::disk($diskName);
                     $request->file('file')->move($path, $imageName);
-
+                }
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
 
-                    StudentExchange::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'year' => $request->year,
-                        'destination_country' => $request->destination_country,
-                        'student_name' => $request->student_name,
-                        'source_country' => $request->source_country,
-                        'name_student' => $request->name_student,
-                        'file' => $path.'/'.$imageName,
-                        'isComplete' => 'yes',
-                        'created_by' => Auth::user()->id
+                StudentExchange::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'year' => $request->year,
+                    'destination_country' => $request->destination_country,
+                    'student_name' => $request->student_name,
+                    'source_country' => $request->source_country,
+                    'name_student' => $request->name_student,
+                    'file' => $path.'/'.$imageName,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
                 ]);
 
-                    return response()->json(['success' => 'Student Exchange added successfully.']);
-                }
+                return response()->json(['success' => 'Student Exchange added successfully.']);
+            
 
         }catch (Exception $e)
         {

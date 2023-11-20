@@ -117,7 +117,7 @@
                                     <td>{{$contact->campus->location}}</td>
                                     <td>{{$contact->welfare_program->name}}</td>
                                     <td>{{$contact->no_of_individual_covered}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td>@if($contact->file !== '/')<a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> @endif</td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","welfare_program_id":"{{$contact->welfare_program_id}}","no_of_individual_covered":"{{$contact->no_of_individual_covered}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
@@ -261,13 +261,11 @@
             }
             let welfare_program_id = $('#welfare_program_id').val();
             let no_of_individual_covered = $('#no_of_individual_covered').val();
-            let file = $('#file').val();
 
             !welfare_program_id?addClass('welfare_program_id'):removeClass('welfare_program_id');
             !no_of_individual_covered?addClass('no_of_individual_covered'):removeClass('no_of_individual_covered');
-            !file?addClass('file'):removeClass('file');
 
-            if(!welfare_program_id || !no_of_individual_covered || !file)
+            if(!welfare_program_id || !no_of_individual_covered)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

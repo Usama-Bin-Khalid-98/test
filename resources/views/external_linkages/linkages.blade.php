@@ -171,7 +171,7 @@
                                     <td>{{$enrolement->signing_date}}</td>
                                     <td>{{$enrolement->last_activity_date}}</td>
                                     <td>{{$enrolement->last_activity_title}}</td>
-                                    <td><a href="{{url($enrolement->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td>@if($enrolement->file !== '/')<a href="{{url($enrolement->file)}}"><i class="fa fa-file-word-o"></i></a> @endif</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","name":"{{$enrolement->name}}","type":"{{$enrolement->type}}","location":"{{$enrolement->location}}","level":"{{$enrolement->level}}","signing_date":"{{$enrolement->signing_date}}","last_activity_date":"{{$enrolement->last_activity_date}}","last_activity_title":"{{$enrolement->last_activity_title}}","file":"{{$enrolement->file}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
@@ -378,7 +378,6 @@
             let signing_date = $('#signing_date').val();
             let last_activity_date = $('#last_activity_date').val();
             let last_activity_title = $('#last_activity_title').val();
-            let file = $('#file').val();
 
             !name?addClass('name'):removeClass('name');
             !type?addClass('type'):removeClass('type');
@@ -387,9 +386,8 @@
             !signing_date?addClass('signing_date'):removeClass('signing_date');
             !last_activity_date?addClass('last_activity_date'):removeClass('last_activity_date');
             !last_activity_title?addClass('last_activity_title'):removeClass('last_activity_title');
-            !file?addClass('file'):removeClass('file');
 
-            if(!name || !type || !location || !level || !signing_date || !last_activity_date || !last_activity_title || !file )
+            if(!name || !type || !location || !level || !signing_date || !last_activity_date || !last_activity_title)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

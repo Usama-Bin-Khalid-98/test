@@ -118,7 +118,7 @@
                                     <td>{{$contact->campus->location}}</td>
                                     <td>{{$contact->date}}</td>
                                     <td>{{$contact->activity_desc}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td>@if($contact->file !== '/')<a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> @endif</td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","date":"{{$contact->date}}","activity_desc":"{{$contact->activity_desc}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
@@ -271,13 +271,11 @@
             }
             let date = $('#date').val();
             let activity_desc = $('#activity_desc').val();
-            let file = $('#file').val();
 
             !date?addClass('date'):removeClass('date');
             !activity_desc?addClass('activity_desc'):removeClass('activity_desc');
-            !file?addClass('file'):removeClass('file');
 
-            if(!date || !activity_desc || !file)
+            if(!date || !activity_desc)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

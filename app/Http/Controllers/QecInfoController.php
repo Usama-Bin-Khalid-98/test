@@ -53,7 +53,7 @@ class QecInfoController extends Controller
         }
         try {
 //            dd($fileName);
-                if(QecInfo::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
+                if(QecInfo::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id, 'qec_type_id' => $request->qec_type_id])->exists()){
                     return response()->json(['message'=> 'QEC information already exists.'], 422);
                 }
                 $path = ''; $imageName = '';
@@ -66,19 +66,19 @@ class QecInfoController extends Controller
 
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
-                    QecInfo::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'qec_type_id' => $request->qec_type_id,
-                        'level' => $request->level,
-                        'file' => $path.'/'.$imageName,
-                        'isComplete' => 'yes',
-                        'created_by' => Auth::user()->id
+                }
+                QecInfo::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'qec_type_id' => $request->qec_type_id,
+                    'level' => $request->level,
+                    'file' => $path.'/'.$imageName,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
                 ]);
 
-                    return response()->json(['success' => 'Qec Info added successfully.']);
-                }
+                return response()->json(['success' => 'Qec Info added successfully.']);
+            
 
         }catch (Exception $e)
         {

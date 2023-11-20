@@ -62,20 +62,20 @@ class FacultyExposureController extends Controller
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
 
-                    FacultyExposure::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'faculty_name' => $request->faculty_name,
-                        'activity' => $request->activity,
-                        'date' => $request->date,
-                        'duration' => $request->duration,
-                        'file' => $path.'/'.$imageName, 
-                        'isComplete' => 'yes', 
-                        'created_by' => Auth::user()->id 
+                }
+                FacultyExposure::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'faculty_name' => $request->faculty_name,
+                    'activity' => $request->activity,
+                    'date' => $request->date,
+                    'duration' => $request->duration,
+                    'file' => $path.'/'.$imageName, 
+                    'isComplete' => 'yes', 
+                    'created_by' => Auth::user()->id 
                 ]);
 
-                    return response()->json(['success' => 'Record added successfully.']);
-                }
+                return response()->json(['success' => 'Record added successfully.']);
 
         }catch (Exception $e)
         {
