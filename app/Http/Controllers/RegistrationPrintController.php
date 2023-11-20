@@ -28,7 +28,7 @@ class RegistrationPrintController extends Controller
     }
 
     public function index(Request $req)
-    {  
+    {
 
             //dd($docHeaderData);
         $programsUnderReview = Scope::with('program')->where(
@@ -363,10 +363,6 @@ AND scopes.level_id=levels.id
 AND scopes.campus_id=?
 AND scopes.deleted_at is null
 AND scopes.department_id=?', array($campus_id, $department_id));
-
-Log::debug($department_id);
-Log::debug($campus_id);
-
 
 //
 //dd($scopeOfAcredation);

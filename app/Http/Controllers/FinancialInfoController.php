@@ -212,7 +212,6 @@ class FinancialInfoController extends Controller
     }
 
     public function uploadAppendixFile(Request $request){
-        Log::debug('here');
         if(!$request->file('appendix_7A')){
             return response()->json(['error' => 'Please upload a valid file']);
         }
