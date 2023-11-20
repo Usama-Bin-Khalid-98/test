@@ -14,16 +14,22 @@ class ChangeVarcharToTextResearchCenterFinancialRisk extends Migration
     public function up()
     {
         Schema::table('research_centers', function (Blueprint $table) {
-            $table->dropColumn('composition');
+            // $table->dropColumn('composition');
         });
         Schema::table('research_centers', function (Blueprint $table) {
-            $table->text('composition')->after('reports_to');
+            // $table->text('composition')->after('reports_to');
+        });
+        Schema::table('cultural_materials', function (Blueprint $table) {
+            $table->dropColumn('cultural_material');
+        });
+        Schema::table('cultural_materials', function (Blueprint $table) {
+            $table->string('cultural_material', 255)->after('department_id');
         });
         Schema::table('financial_risks', function (Blueprint $table) {
-            $table->dropColumn('remedial_measure');
+            // $table->dropColumn('remedial_measure');
         });
         Schema::table('financial_risks', function (Blueprint $table) {
-            $table->text('remedial_measure')->after('stakeholder_involved');
+            // $table->text('remedial_measure')->after('stakeholder_involved');
         });
     }
 
