@@ -70,6 +70,7 @@ class ProgramCourseController extends Controller
                 ProgramCourse::create([
                     'campus_id' => Auth::user()->campus_id,
                     'department_id' => Auth::user()->department_id,
+                    'program_id' => $request->program_id,
                     'title' => $request->title,
                     'code' => $request->code,
                     'course_type_id' => $request->course_type_id,
@@ -129,13 +130,12 @@ class ProgramCourseController extends Controller
 
             ProgramCourse::where('id', $id)->update([
                 'program_id' => $request->program_id,
-                'total_semesters' => $request->total_semesters,
                 'course_type_id' => $request->course_type_id,
-                'no_of_course' => $request->no_of_course,
                 'credit_hours' => $request->credit_hours,
-                'internship_req' => $request->internship_req,
-                'fyp_req' => $request->fyp_req,
                 'status' => $request->status,
+                'title' => $request->title,
+                'code' => $request->code,
+                'prerequisite' => $request->prerequisite??'',
                 'updated_by' => Auth::user()->id
             ]);
             return response()->json(['success' => 'Program Course updated successfully.']);

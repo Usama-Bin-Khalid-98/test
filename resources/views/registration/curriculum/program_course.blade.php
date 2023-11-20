@@ -78,16 +78,22 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <form action="javascript:void(0)" id="form" method="POST">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Program</label>
+                                    <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Program(s) under review</option>
+                                        @foreach($scopes as $scope)
+                                            <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Course Title</label>
                                     <input type="text" name="title" id="title" class="form-control">
-{{--                                   <select name="program_id" id="program_id" class="form-control select2" style="width: 100%;">--}}
-{{--                                        <option selected disabled>Select Program(s) under review</option>--}}
-{{--                                        @foreach($scopes as $scope)--}}
-{{--                                         <option value="{{$scope->program->id}}">{{$scope->program->name}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                        </select>--}}
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -145,7 +151,7 @@
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-{{--                                    <th>Program</th>--}}
+                                    <th>Program</th>
                                     <th>Course Title</th>
                                     <th>Course Code</th>
                                     <th>Course Type</th>
@@ -158,20 +164,20 @@
                                 <tbody>
                                  @foreach($portfolios as $portfolio)
                                 <tr>
-{{--                                    <td>{{$portfolio->program}}</td>--}}
+                                    <td>{{@$portfolio->program->name}}</td>
                                     <td>{{@$portfolio->title}}</td>
                                     <td>{{@$portfolio->code}}</td>
                                     <td>{{$portfolio->course_type->name}}</td>
                                     <td>{{$portfolio->credit_hours}}</td>
                                     <td>{{$portfolio->prerequisite}}</td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","title":{{$portfolio->title}},"total_semesters":{{$portfolio->total_semesters}},"course_type_id":{{$portfolio->course_type_id}},"no_of_course":{{$portfolio->no_of_course}},"credit_hours":{{$portfolio->credit_hours}},"prerequisite":"{{$portfolio->prerequisite}}","fyp_req":"{{$portfolio->fyp_req}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":"{{$portfolio->id}}","program_id":{{@$portfolio->program->id}},"title":{{$portfolio->title}},"code":{{$portfolio->code}},"course_type_id":{{$portfolio->course_type_id}},"credit_hours":{{$portfolio->credit_hours}},"prerequisite":"{{$portfolio->prerequisite}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-{{--                                    <th>Program</th>--}}
+                                    <th>Program</th>
                                     <th>Course Title</th>
                                     <th>Course Code</th>
                                     <th>Course Type</th>
@@ -198,7 +204,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Program Portfolio. </h4>
+                    <h4 class="modal-title">Edit Program Course. </h4>
                 </div>
                 <form role="form" id="updateForm" >
                     <div class="modal-body">
@@ -214,7 +220,7 @@
 {{--                            </div>--}}
                         <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">Program under review</label>
+                                    <label for="name">Program</label>
                                    <select name="program_id" id="edit_program_id" class="form-control select2" style="width: 100%;">
                                         <option selected disabled>Select Program</option>
                                         @foreach($scopes as $scope)
@@ -227,8 +233,8 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Total Semesters</label>
-                                <input type="text" name="total_semesters" id="edit_total_semesters" value="{{old('edit_total_semesters')}}" class="form-control">
+                                <label for="name">Course Title</label>
+                                <input type="text" required name="title" id="edit_title" value="{{old('edit_title')}}" class="form-control">
 
                             </div>
                         </div>
@@ -247,16 +253,23 @@
                         </div>
                          <div class="col-md-6">
                             <div class="form-group">
-                                    <label for="name">Number of Course</label>
-                                    <input type="text" name="no_of_course" id="edit_no_of_course" value="{{old('edit_no_of_course')}}" class="form-control">
+                                    <label for="name">Course Code</label>
+                                    <input type="text" required name="code" id="edit_code" value="{{old('edit_code')}}" class="form-control">
 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Credit Hours</label>
-                                    <input type="text" name="credit_hours"
+                                    <input type="text" required name="credit_hours"
                                     id="edit_credit_hours" value="{{old('edit_credit_hours')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Prerequisite (if any)</label>
+                                    <textarea type="text" required name="prerequisite"
+                                    id="edit_prerequisite" value="{{old('edit_prerequisite')}}" class="form-control"></textarea>
                             </div>
                         </div>
 
@@ -369,9 +382,9 @@ $('.edit').on('click', function () {
             let data = JSON.parse(JSON.stringify($(this).data('row')));
 
             $('#edit_program_id').select2().val(data.program_id).trigger('change');
-            $('#edit_total_semesters').val(data.total_semesters);
+            $('#edit_code').val(data.code);
             $('#edit_course_type_id').select2().val(data.course_type_id).trigger('change');
-            $('#edit_no_of_course').val(data.no_of_course);
+            $('#edit_title').val(data.title);
             $('#edit_credit_hours').val(data.credit_hours);
             $('#edit_prerequisite').val(data.prerequisite);
             $('#edit_fyp_req').val(data.fyp_req);
@@ -380,35 +393,13 @@ $('.edit').on('click', function () {
         });
 
 $('#updateForm').submit(function (e) {
-            let program_id = $('#edit_program_id').val();
-            let total_semesters = $('#edit_total_semesters').val();
-            let course_type_id = $('#edit_course_type_id').val();
-            let no_of_course = $('#edit_no_of_course').val();
-            let credit_hours = $('#edit_credit_hours').val();
-            let prerequisite = $('#edit_prerequisite').val();
-            let fyp_req = $('#edit_fyp_req').val();
-            let id = $('#edit_id').val();
-
-            let status = $('input[name=edit_status]:checked').val();
-            !program_id?addClass('edit_program_id'):removeClass('edit_program_id');
-            !total_semesters?addClass('edit_total_semesters'):removeClass('edit_total_semesters');
-            !course_type_id?addClass('edit_course_type_id'):removeClass('edit_course_type_id');
-            !no_of_course?addClass('edit_no_of_course'):removeClass('edit_no_of_course');
-            !credit_hours?addClass('edit_credit_hours'):removeClass('edit_credit_hours');
-            !prerequisite?addClass('edit_prerequisite'):removeClass('edit_prerequisite');
-            !fyp_req?addClass('edit_fyp_req'):removeClass('edit_fyp_req');
-
-            if(!program_id || !total_semesters || !course_type_id || !no_of_course || !credit_hours)
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
+            let id = $('#edit_id').val()
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
             formData.append('_method', 'PUT');
             $.ajax({
-                url:'{{url("program-portfolio")}}/'+id,
+                url:'{{url("program-courses")}}/'+id,
                 type:'POST',
                 // dataType:"JSON",
                 data: formData,
