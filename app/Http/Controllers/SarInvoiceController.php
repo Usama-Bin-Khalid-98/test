@@ -6,6 +6,7 @@ use App\BusinessSchool;
 use App\DepartmentFee;
 use App\Models\Common\Department;
 use App\Models\Common\PaymentMethod;
+use App\Models\Common\Slip;
 use App\Models\Config\NbeacBasicInfo;
 use App\Models\Sar\SarInvoice;
 use App\Models\StrategicManagement\Scope;
@@ -77,6 +78,10 @@ class SarInvoiceController extends Controller
     public function store(Request $request)
     {
         try {
+            $isRegInvoiceCompleted = Slip::where(['business_school_id' => Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'status'=>'approved' ])->exists();
+            if(!$isRegInvoiceCompleted){
+                return response()->json(['error' => 'Please complete Registration invoice first'], 422);
+            }
             $getFee =DepartmentFee::where(['fee_type_id'=> 6])->first();
             $getScops= Scope::where(['campus_id'=>Auth::user()->campus_id,'department_id' => Auth::user()->department_id])->get()->count();
 //            dd($getScops);
@@ -232,6 +237,7 @@ class SarInvoiceController extends Controller
         try {
             SarInvoice::find($request->id)->update([
                 'status' => $request->status,
+                'regStatus' => 'SAR',
                 'updated_by' => Auth::id(),
             ]);
 

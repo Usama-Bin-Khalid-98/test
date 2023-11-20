@@ -1,6 +1,6 @@
 @php
 use \Illuminate\Support\Facades\Auth;
-$isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
+$isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id]);
 $invoices = checkIsCompleted('App\Models\Common\Slip', ['business_school_id' => Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
 $Mentoringinvoice = checkIsCompleted('App\Models\MentoringInvoice', ['campus_id' => Auth::user()->campus_id,'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
 $AccreditationInvoice = isCompletedSAR('App\Models\Sar\SarInvoice', ['campus_id' => Auth::user()->campus_id, 'department_id'=> Auth::user()->department_id, 'status'=>'approved' ]);
