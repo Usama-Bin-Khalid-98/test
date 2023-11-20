@@ -170,7 +170,7 @@ class HomeController extends Controller
 
         //$MentoringMeetings = DB::select($mentoringQuery);
         $MentoringMeetings = [];
-        if(Auth::user()->user_type=='Mentor') {
+        if(Auth::user()->hasRole('Mentor')) {
 //            dd('mentors ');
 //            $MentoringMeetings = DB::table('slips as s')
 //                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -190,7 +190,7 @@ class HomeController extends Controller
                   ->where(['user_id'=> Auth::id(), 'status'=> 'active'])
                     ->get();
             }
-        else if(Auth::user()->user_type=='ESScheduler'){
+        else if(Auth::user()->hasRole('ESScheduler')){
             $MentoringMeetings = Slip::with('campus', 'department','mentoring_mentor')
 //                    ->whereHas('mentoring_mentor', function ($q) {
 //                        $q->where('user_id', Auth::id());
@@ -200,7 +200,7 @@ class HomeController extends Controller
 
 //            dd($MentoringMeetings);
         }
-        else if(Auth::user()->user_type== 'BusinessSchool'){
+        else if(Auth::user()->hasRole('BusinessSchool')){
 //            $MentoringMeetings = DB::table('slips as s')
 //                ->join('campuses as c', 'c.id', '=', 's.business_school_id')
 //                ->join('departments as d', 'd.id', '=', 's.department_id')
@@ -225,18 +225,15 @@ class HomeController extends Controller
 
         $PeerReviewVisit=[];
 
-        if(Auth::user()->user_type=='NbeacFocalPerson' ||
-            Auth::user()->user_type== 'NBEACAdmin'||
-             Auth::user()->user_type== 'ESScheduler') {
+        if(Auth::user()->hasRole(['NbeacFocalPerson', 'NBEACAdmin', 'ESScheduler'])) {
 //            dd('mentors ');
-
             $PeerReviewVisit = Slip::with('campus', 'department')
                 ->whereIn('regStatus', ['ScheduledPRVisit', 'PeerReviewVisit'])
                 ->where('status', 'approved')
                 ->get();
 
             }
-            else if(Auth::user()->user_type === 'Mentor' || Auth::user()->user_type === 'PeerReviewer'){
+            else if(Auth::user()->hasRole(['Mentor', 'PeerReviewer'])){
                 $PeerReviewVisit = Slip::with(['campus', 'department','peer_review_reviewer' => function($q) {
                     $q->where(['user_id'=>Auth::id()]);
                 }])
@@ -277,7 +274,7 @@ class HomeController extends Controller
         $feedbacks = InstituteFeedback::where(['created_by' => Auth::id(), 'slip_id' => @$PeerReviewVisit[0]->id])->get()->first();
 
 //        dd($travel_plan->pr_travel_plan);
-        if(Auth::user()->user_type == 'NBEACAdmin') {
+        if(Auth::user()->hasRole('NBEACAdmin')) {
             $campus_count = Campus::where(['status' => 'active'])->get()->count('location');
         }else{
             $campus_count = User::with('campus')->where(['status' => 'active', 'id' =>Auth::id()])->get()->count('location');
@@ -294,7 +291,10 @@ class HomeController extends Controller
         $desk_count = Slip::where(['regStatus'=>'Review'])->get()->count();
         $sar_desk_count = Slip::where(['regStatus'=>'SARDeskReview'])->get()->count();
 //        dd($mentoring_slip_count);
-        $PeerReviewers = User::whereIn('user_type', ['Mentor', 'PeerReviewer'])->get();
+        $peerReviewers = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['Mentor', 'PeerReviewer']);
+        })->get();
+
 
 
         return view('home' , compact( 'registrations', 'invoices', 'memberShips',

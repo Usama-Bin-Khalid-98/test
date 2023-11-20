@@ -263,7 +263,7 @@ class ScheduleMentorMeetingController extends Controller
 
  public function MentorScheduler($scheduleMentorMeeting = null)
     {
-        if(Auth::user()->user_type=='Mentor') {
+        if(Auth::user()->hasRole('Mentor')) {
 //            dd('mentors ');
             $MentoringMeetings = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -344,7 +344,7 @@ class ScheduleMentorMeetingController extends Controller
                             'is_confirm' => 'no',
                             'availability_dates' => date('Y-m-d', strtotime($date_val))
                         ];
-                        Auth::user()->user_type==='ESScheduler'? $mentorsData['status'] = 'active':
+                        Auth::user()->hasRole('ESScheduler')? $mentorsData['status'] = 'active':
 
                         ScheduleMentorMeeting::create($mentorsData);
                     }

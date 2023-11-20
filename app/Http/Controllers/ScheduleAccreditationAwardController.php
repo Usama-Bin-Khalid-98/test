@@ -25,7 +25,7 @@ class ScheduleAccreditationAwardController extends Controller
     public function index()
     {
 
-        if(Auth::user()->user_type == 'NbeacFocalPerson' || Auth::user()->user_type == 'AccreditationAwardCommittee') {
+        if(Auth::user()->hasRole(['NbeacFocalPerson', 'AccreditationAwardCommittee'])) {
 //            dd('mentors ');
             $registrations = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
@@ -47,7 +47,7 @@ class ScheduleAccreditationAwardController extends Controller
 //                ->where('mm.user_id', Auth::id())
                 ->get();
 //            dd($PeerReviewVisit);
-        }elseif(Auth::user()->user_type=='BusinessSchool') {
+        }elseif(Auth::user()->hasRole('BusinessSchool')) {
             $registrations = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
                 ->join('departments as d', 'd.id', '=', 's.department_id')
@@ -63,7 +63,7 @@ class ScheduleAccreditationAwardController extends Controller
                 ->orWhere('s.regStatus', 'AACFinal')
                 ->get();
         }
-        elseif(Auth::user()->user_type=='ESScheduler') {
+        elseif(Auth::user()->hasRole('ESScheduler')) {
             $registrations = DB::table('slips as s')
                 ->join('campuses as c', 'c.id', '=', 's.business_school_id')
                 ->join('departments as d', 'd.id', '=', 's.department_id')
@@ -292,7 +292,11 @@ class ScheduleAccreditationAwardController extends Controller
 //        $id ? $query .= ' AND slips.id = ' . $id : '';
         $registrations = DB::select($query, array());
 
-        $NbeacFocalPerson = User::where(['user_type'=>'NbeacFocalPerson', 'status'=>'active'])->get();
+        $NbeacFocalPerson = User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'NbeacFocalPerson');
+            }
+        )->get();
 //        dd($registrations);
 
         $MeetingMentors = AccreditationReviewer::with('slip', 'user')->where('slip_id', $id)->get();
