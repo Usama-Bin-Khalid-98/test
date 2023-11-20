@@ -4,6 +4,7 @@
                             <caption style="text-align: center;color: red">Table 2.3. Applications received </caption>
                               <thead>
                                 <tr>
+                                  <th>No.</th>
                                   <th>Program under review</th>
                                   <th>Year</th>
                                   <th>Semester</th>
@@ -19,6 +20,7 @@
                               <tbody>
                                   @foreach($applicationsReceived as $data)
                                     <tr>
+                                      <td>{{$loop->iteration}}</td>
                                       <td  >{{$data->programName}}</td>
                                       <td>{{$data->year}}</td>
                                       <td>{{@$data->semester}}</td>

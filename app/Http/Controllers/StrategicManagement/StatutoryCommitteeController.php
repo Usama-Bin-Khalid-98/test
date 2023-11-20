@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
-use Illuminate\Support\Facades\Log;
 
 class StatutoryCommitteeController extends Controller
 {
@@ -159,7 +158,6 @@ class StatutoryCommitteeController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            Log::debug($request->all());
             list($designation_id, $error) = Designation::getOrCreate($request->designation_id, $request->other_designation);
             if($error){
                 return $error;

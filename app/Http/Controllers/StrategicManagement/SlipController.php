@@ -23,7 +23,6 @@ use Mockery\Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangeResgistrationStatusMail;
 use App\Models\StrategicManagement\Scope;
-use Illuminate\Support\Facades\Log;
 
 use function Psy\debug;
 
@@ -37,7 +36,6 @@ class SlipController extends Controller
     public function index()
     {
         //
-        Log::debug('hereklqjrwlkqewj');
         @$school_id = Auth::user()->campus_id;
         @$invoices = Slip::with('department')->where('business_school_id', $school_id)->get();
         //dd($invoices);
@@ -359,7 +357,6 @@ class SlipController extends Controller
      */
     public function generateInvoice(Request $request)
     {
-        Log::debug("here2");
         $school = BusinessSchool::with('user', 'user.campus')->find(Auth::user()->business_school_id);
         try {
             $getFee = FeeType::where(['name' => 'Registration Fee'])->first();

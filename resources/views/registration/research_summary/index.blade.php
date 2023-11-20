@@ -41,7 +41,7 @@ $isActiveSAR = getFirst('App\Models\MentoringInvoice' ,['regStatus'=>'SAR','camp
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title" style="width: 92%;">Provide a summary of @if($isActiveSAR) 5.6 @else 5.1 @endif Provide a summary of research output<sup>6</sup> of business school in last three academic years in Table @if($isActiveSAR) 5.5 @else 5.1 @endif. Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly mentioning type of each item as impact factor or HEC category, as @if($isActiveSAR) Appendix-5B @else Appendix-5A @endif.</h3>
+                            <h3 class="box-title" style="width: 92%;">@if($isActiveSAR) 5.6 @else 5.1 @endif Provide a summary of @if($isActiveSAR) 5.6 @else 5.1 @endif Provide a summary of research output<sup>6</sup> of business school in last three academic years in Table @if($isActiveSAR) 5.5 @else 5.1 @endif. Attach a complete list of items mentioned in the table using APA end-text referencing along with clearly mentioning type of each item as impact factor or HEC category, as @if($isActiveSAR) Appendix-5B @else Appendix-5A @endif.</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>

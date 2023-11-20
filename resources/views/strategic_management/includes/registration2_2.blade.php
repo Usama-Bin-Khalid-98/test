@@ -4,6 +4,7 @@
                             <caption style="text-align: center;color: red">Table 2.2. Entry requirements </caption>
                               <thead>
                                 <tr>
+                                  <th>No.</th>
                                   <th>Program under review</th>
                                   <th>Eligibility criteria </th>
                                   <th>Minimum requirements/relative weightage</th>
@@ -14,6 +15,7 @@
                               <tbody>
                                   @foreach($entryRequirements as $data)
                                     <tr>
+                                      <td>{{$loop->iteration}}</td>
                                       <td >{{$data->programName}}</td>
 
                                       <td>{{$data->eligibilityCriteria}}</td>

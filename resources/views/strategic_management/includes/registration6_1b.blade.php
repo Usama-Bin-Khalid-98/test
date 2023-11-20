@@ -28,7 +28,9 @@ Table 6.1. Financial information of the business school
 </caption>
                                 <thead>
                                     <tr>
-                                    <th class="" style="text-align: center;"></th>
+                                      <th>No.</th>
+                                      <th>Income/Expense</th>
+                                    <!-- <th class="" style="text-align: center;"></th> -->
                                     <th>Particulars</th>
                                     <th>{{@$getYear->tyear - 3}}</th>
                                     <th>{{@$getYear->tyear - 2}}</th>
@@ -52,6 +54,7 @@ Table 6.1. Financial information of the business school
                                         $iyt_p1+=floatval($data->year_t_plus_one);
                                         $iyt_p2+=floatval($data->year_t_plus_two);
                                         ?><tr>
+                                          <td>{{$loop->iteration}}</td>
                                         <td>{{$data->particularType}}</td>
                                         <td>{{$data->particularName}}</td>
                                         <td>{{$data->year_three}}</td>
@@ -85,6 +88,7 @@ Table 6.1. Financial information of the business school
                                         $eyt_p1+=floatval($data->year_t_plus_one);
                                         $eyt_p2+=floatval($data->year_t_plus_two);
                                         ?><tr>
+                                          <td>{{$loop->iteration}}</td>
                                         <td>{{$data->particularType}}</td>
                                         <td>{{$data->particularName}}</td>
                                         <td>{{$data->year_three}}</td>

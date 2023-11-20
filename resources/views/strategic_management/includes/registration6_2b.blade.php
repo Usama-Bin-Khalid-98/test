@@ -33,6 +33,7 @@ Table 6.2. Business schools’ resources
                                     @foreach($BIResources as $data)
                                         @if(!empty($data->remark))
                                         <tr>
+                                            <td>{{$loop->iteration}}</td>
                                             <td>{{$data->facilityType}}</td>
                                             <td>{{$data->facilityName}}</td>
                                             <td>{{$data->remark}}</td>

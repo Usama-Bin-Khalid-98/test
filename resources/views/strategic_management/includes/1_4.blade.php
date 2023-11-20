@@ -3,6 +3,7 @@
                             <table   class="table table-bordered table-striped " style="width: 100%">
                                 <caption style="text-align: center;color: red">Table 1.4. Business school’s statutory committees</caption>
                                 <thead>
+                                    <th>No</th>
                                     <th>Body name</th>
                                     <th>Name and designation of Chairperson</th>
                                     <th colspan="4" >Dates of last four meetings</th>
@@ -19,6 +20,7 @@
                                     </tr>
                                     @foreach($statutoryCommitties as $data)
                                     <tr>
+                                        <td>{{$loop->iteration}}</td>
                                         <td>{{$data->statutoryName}}</td>
                                         <td>{{$data->name.": ".$data->designationName}}</td>
                                         <td>{{$data->date_first_meeting}}</td>

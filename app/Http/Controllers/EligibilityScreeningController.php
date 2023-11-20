@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 use function GuzzleHttp\Promise\queue;
 
@@ -42,7 +41,6 @@ class EligibilityScreeningController extends Controller
 
     public function changeConfirmStatus(Request $request)
     {
-        Log::debug($request);
         $validation = Validator::make($request->all(), ['slip_id'=>'required', 'dateVal' => 'required'], $this->messages());
         if($validation->fails())
         {
@@ -779,7 +777,6 @@ class EligibilityScreeningController extends Controller
 
     public function resetMeeting(Request $request, $id)
     {
-        Log::debug($id);
         try{
             EligibilityScreening::where('slip_id', '=', $id)->delete();
             ESReviewer::where('slip_id', '=', $id)->delete();
