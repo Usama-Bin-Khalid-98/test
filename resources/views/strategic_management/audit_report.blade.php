@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="name">Attach Doc</label>
                                     <input type="file" name="file" id="file" >
-                                    <span class="text-red">Max upload file size 2mb.</span>
+                                    <span class="text-red">Max upload file size 30mb.</span>
                                 </div>
                             </div>
 
