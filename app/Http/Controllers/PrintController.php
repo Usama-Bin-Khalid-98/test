@@ -18,6 +18,8 @@ use App\Models\Common\Campus;
 use App\Models\Common\StrategicManagement\BusinessSchoolTyear;
 use App\Models\External_Linkages\ObtainedInternship;
 use App\Models\Facility\IncomeSource;
+use App\Models\Faculty\FacultyStudentRatio;
+use App\Models\Faculty\FacultyTeachingCources;
 use App\Models\Faculty\WorkLoad;
 use App\Models\StrategicManagement\MissionVision;
 use App\Models\StrategicManagement\Scope;
@@ -258,13 +260,74 @@ WHERE po.program_id=p.id
 
                $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND faculty_stability.campus_id=? AND users.id=? AND faculty_stability.deleted_at IS NULL', array($req->cid, $user->id));
 
-               $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName
-FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users
-WHERE faculty_teaching_cources.campus_id=campuses.id
-  AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id
-  AND faculty_teaching_cources.designation_id=designations.id
-  AND faculty_teaching_cources.campus_id=?
-  AND users.id=? AND faculty_teaching_cources.deleted_at IS NULL', array($req->cid, $user->id));
+                $facultyTeachingCourses = FacultyTeachingCources::
+                    with('campus','lookup_faculty_type','designation', 'faculty_program')
+                    ->where(['campus_id'=> $req->cid, 'department_id'=> $req->did])
+                    ->where(function($query){
+                        $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
+                    })
+                    ->get();
+
+                $whereb = ['campus_id'=> $req->cid, 'lookup_faculty_type_id' => 3];
+                $facultyTeachingCourses4b = FacultyTeachingCources::
+                with('campus','lookup_faculty_type','designation', 'faculty_program')
+                    ->where($whereb)->get();
+                $ratios = FacultyStudentRatio::with('campus','program')
+                    ->where(['campus_id'=> $req->cid,'department_id'=> $req->did])
+                    ->where('deleted_at',null)
+                    ->get();
+                
+                $getFTE = FacultyTeachingCources::with('faculty_program')
+                    ->where('campus_id', $req->cid)
+                    ->where('department_id', $req->did)
+                    ->where('deleted_at', null)
+                    ->where(function($query){
+                        $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
+                    })
+                    ->get();
+                $byProgramFTE = [];
+                if($getFTE){
+                    foreach ($getFTE as $val)
+                    {
+                        foreach ($val->faculty_program as $key => $progs)
+                        {
+                            if(count($byProgramFTE) == 0){
+                                $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                            }else{
+                                if(array_key_exists($progs->program_id, $byProgramFTE)){
+                                    $byProgramFTE[$progs->program_id] = $byProgramFTE[$progs->program_id] + round($progs->tc_program/$val->max_cources_allowed, 2);
+                                }else{
+                                    $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                                }
+                            }
+                        }
+                    }
+                }
+        
+                $getVFE = FacultyTeachingCources::with('faculty_program')
+                    ->where('lookup_faculty_type_id' , 3)
+                    ->where('campus_id', $req->cid)
+                    ->where('department_id', $req->did)
+                    ->where('deleted_at', null)
+                    ->get();
+                $byProgramVFE = [];
+                if($getVFE){
+                    foreach ($getVFE as $vfe)
+                    {
+                        foreach ($vfe->faculty_program as $key => $prog)
+                        {
+                            if(count($byProgramVFE) == 0){
+                                $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            }else{
+                                if(array_key_exists($prog->program_id, $byProgramVFE)){
+                                    $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                                }else{
+                                    $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                                }
+                            }
+                        }
+                    }
+                }
 
                $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs,  campuses
@@ -495,7 +558,74 @@ ORDER BY course_types.name', array( $userCampus[0]->campus_id,auth()->user()->id
 
                $facultyStability = DB::select('SELECT faculty_stability.* FROM faculty_stability, campuses, users WHERE faculty_stability.campus_id=campuses.id AND users.department_id=? AND faculty_stability.campus_id=? AND users.id=? AND faculty_stability.deleted_at IS NULL', array($userCampus[0]->department_id, $userCampus[0]->campus_id,auth()->user()->id));
 
-               $facultyTeachingCourses = DB::select('SELECT faculty_teaching_cources.*, lookup_faculty_types.faculty_type as lookupFacultyType, designations.name as desName FROM faculty_teaching_cources, lookup_faculty_types, designations, campuses, users WHERE faculty_teaching_cources.campus_id=campuses.id AND faculty_teaching_cources.lookup_faculty_type_id=lookup_faculty_types.id AND faculty_teaching_cources.designation_id=designations.id AND faculty_teaching_cources.campus_id=? AND users.department_id=? AND users.id=? AND faculty_teaching_cources.deleted_at IS NULL', array($userCampus[0]->campus_id, $userCampus[0]->department_id, auth()->user()->id));
+                $where = ['campus_id'=> Auth::user()->campus_id,'department_id'=>Auth::user()->department_id, 'deleted_at'=> null];
+                $facultyTeachingCourses = FacultyTeachingCources::
+                    with('campus','lookup_faculty_type','designation', 'faculty_program')
+                    ->where($where)
+                    ->where(function($query){
+                        $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
+                    })
+                    ->get();
+                $whereb = ['campus_id'=> Auth::user()->campus_id,'department_id'=>Auth::user()->department_id, 'deleted_at'=> null, 'lookup_faculty_type_id' => 3];
+                $facultyTeachingCourses4b = FacultyTeachingCources::
+                with('campus','lookup_faculty_type','designation', 'faculty_program')
+                    ->where($whereb)->get();
+                $ratios = FacultyStudentRatio::with('campus','program')
+                    ->where(['campus_id'=> Auth::user()->campus_id,'department_id'=> Auth::user()->department_id])
+                    ->where('deleted_at',null)
+                    ->get();
+
+                $getFTE = FacultyTeachingCources::with('faculty_program')
+                    ->where('campus_id', $userCampus[0]->campus_id)
+                    ->where('department_id', $userCampus[0]->department_id)
+                    ->where('deleted_at', null)
+                    ->where(function($query){
+                        $query->where('lookup_faculty_type_id', 1)->orwhere('lookup_faculty_type_id', 2);
+                    })
+                    ->get();
+                $byProgramFTE = [];
+                if($getFTE){
+                    foreach ($getFTE as $val)
+                    {
+                        foreach ($val->faculty_program as $key => $progs)
+                        {
+                            if(count($byProgramFTE) == 0){
+                                $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                            }else{
+                                if(array_key_exists($progs->program_id, $byProgramFTE)){
+                                    $byProgramFTE[$progs->program_id] = $byProgramFTE[$progs->program_id] + round($progs->tc_program/$val->max_cources_allowed, 2);
+                                }else{
+                                    $byProgramFTE[$progs->program_id] = round($progs->tc_program/$val->max_cources_allowed, 2);
+                                }
+                            }
+                        }
+                    }
+                }
+        
+                $getVFE = FacultyTeachingCources::with('faculty_program')
+                    ->where('lookup_faculty_type_id' , 3)
+                    ->where('campus_id', $userCampus[0]->campus_id)
+                    ->where('department_id', $userCampus[0]->department_id)
+                    ->where('deleted_at', null)
+                    ->get();
+                $byProgramVFE = [];
+                if($getVFE){
+                    foreach ($getVFE as $vfe)
+                    {
+                        foreach ($vfe->faculty_program as $key => $prog)
+                        {
+                            if(count($byProgramVFE) == 0){
+                                $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                            }else{
+                                if(array_key_exists($prog->program_id, $byProgramVFE)){
+                                    $byProgramVFE[$prog->program_id] = round($byProgramVFE[$prog->program_id], 2) + round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                                }else{
+                                    $byProgramVFE[$prog->program_id] = round($prog->tc_program/$vfe->max_cources_allowed, 2);
+                                }
+                            }
+                        }
+                    }
+                }
 
                $studentTeachersRatio = DB::select('SELECT faculty_student_ratio.*, programs.name as programName
 FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_ratio.campus_id=campuses.id
@@ -526,7 +656,7 @@ FROM faculty_student_ratio, programs, campuses, users WHERE faculty_student_rati
                $obtainedInternships = ObtainedInternship::where(['campus_id'=> auth()->user()->campus_id,'department_id'=> auth()->user()->department_id])->first();
         }
 
-        return view('strategic_management.printAll', compact('programsUnderReview','docHeaderData','classSize','summary_policy','studentsFinancial','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake','user','missionVision','alignedProgram','courseDetail','checklistDocument','financialAssistance','weakStudent','studentParticipation', 'ploMappings', 'getYear', 'obtainedInternships'));
+        return view('strategic_management.printAll', compact('programsUnderReview','docHeaderData','classSize','summary_policy','studentsFinancial','internationalFaculties','facultyDetailedInfos','facultyWorkshops','facultyExposures','facultyConsultancyProjects','facultyParticipations','studentTeachersRatio','facultyMemberships','facultyTeachingCourses','facultyTeachingCourses4b','ratios','byProgramFTE','byProgramVFE','programCourses','facultySummary','extraActivities','plagiarismCases','facultyStability','cultralMaterial','programLearningOutcomes','programObjectives','evaluationMethods','programDeliveryMethods','managerialSkills','curriculumReviews','counselingActivities','personalGroomings','alumniMembership','alumniParticipation','dropoutPercentage','bussinessSchool','campuses','scopeOfAcredation', 'contactInformation','statutoryCommitties','affiliations','budgetoryInfo', 'sourceOfFunding', 'strategicPlans', 'programsPortfolio','studentEnrolment','studentsEnrolment','facultyWorkLoad','facultyWorkLoadb','facultyGenders','placementOffices','linkages','statutoryBodyMeetings','studentsExchangePrograms','facultyExchangePrograms','placementActivities','entryRequirements','applicationsReceived','orics','admissionOffices','researchCenters','researchAgendas','researchFundings','researchProjects','researchOutput','topTenResearchOutput','curriculumRoles','facultyDevelopments','conferences','financialInfos','financialRisks','supportStaff','qecInformation','BIResources','studentsClubs','projectDetails','environmentalProtectionActivities','formalRelationships','complaintResolution','internalCommunityWelfareProgram','studentsIntake','user','missionVision','alignedProgram','courseDetail','checklistDocument','financialAssistance','weakStudent','studentParticipation', 'ploMappings', 'getYear', 'obtainedInternships'));
     }
 
 
