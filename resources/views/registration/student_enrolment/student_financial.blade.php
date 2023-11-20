@@ -74,37 +74,37 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Enrollment in program(A)</label>
-                                    <input type="number" name="enrolment" id="enrolment" class="form-control">
+                                    <input type="number" step="any" name="enrolment" id="enrolment" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Tuition Revenue(B)</label>
-                                    <input type="number" name="tution" id="tution" class="form-control">
+                                    <input type="number" step="any" name="tution" id="tution" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Merit Scholarship(C)</label>
-                                    <input type="number" name="merit" id="merit" class="form-control">
+                                    <input type="number" step="any" name="merit" id="merit" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Need Scholarship(D)</label>
-                                    <input type="number" name="need" id="need" class="form-control">
+                                    <input type="number" step="any" name="need" id="need" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Other Financial Assistance(E)</label>
-                                    <input type="number" name="other" id="other" class="form-control">
+                                    <input type="number" step="any" name="other" id="other" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Total Financial Assistance(F)</label>
-                                    <input type="number" name="total" id="total" class="form-control">
+                                    <input type="number" step="any" name="total" id="total" class="form-control">
                                 </div>
                             </div>
 
@@ -225,37 +225,37 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Enrolment in program(A)</label>
-                                    <input type="number" name="enrolment" id="edit_enrolment" value="{{old('edit_enrolment')}}" class="form-control">
+                                    <input type="number" step="any" name="enrolment" id="edit_enrolment" value="{{old('edit_enrolment')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Tuition Revenue(B)</label>
-                                    <input type="number" name="tution" id="edit_tution" value="{{old('edit_tution')}}" class="form-control">
+                                    <input type="number" step="any" name="tution" id="edit_tution" value="{{old('edit_tution')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Merit Scholarship(C)</label>
-                                    <input type="number" name="merit" id="edit_merit" value="{{old('edit_merit')}}" class="form-control">
+                                    <input type="number" step="any" name="merit" id="edit_merit" value="{{old('edit_merit')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Need Scholarship(D)</label>
-                                    <input type="number" name="need" id="edit_need" value="{{old('edit_need')}}" class="form-control">
+                                    <input type="number" step="any" name="need" id="edit_need" value="{{old('edit_need')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Other Financial Assistance(E)</label>
-                                    <input type="number" name="other" id="edit_other" value="{{old('edit_other')}}" class="form-control">
+                                    <input type="number" step="any" name="other" id="edit_other" value="{{old('edit_other')}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Total Financial Assistance(F)</label>
-                                    <input type="number" name="total" id="edit_total" value="{{old('edit_total')}}" class="form-control">
+                                    <input type="number" step="any" name="total" id="edit_total" value="{{old('edit_total')}}" class="form-control">
                                 </div>
                             </div>
 

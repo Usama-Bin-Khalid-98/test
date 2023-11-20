@@ -4,7 +4,7 @@
                                 <caption style="text-align: center;color: red">Table 2.11. List of academic dishonesty and plagiarism cases</caption>
                                 <thead>
                                     <th>Date of incident</th>
-                                    <th>Initial of students</th>
+                                    <th>Name of Students</th>
                                     <th>Degree program</th>
                                     <th>Nature of dishonesty</th>
                                     <th>Penalty/consequences</th>

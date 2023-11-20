@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Initial of students</label>
+                                    <label for="name">Name of Students</label>
                                     <input type="text" name="students_initial" id="students_initial"  class="form-control">
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                 <thead>
                                 <tr>
                                     <th>Date of incident</th>
-                                    <th>Initial of students</th>
+                                    <th>Name of Students</th>
                                     <th>Degree program</th>
                                     <th>Nature of dishonesty</th>
                                     <th>Penalty/consequences</th>
@@ -148,7 +148,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>Date of incident</th>
-                                    <th>Initial of students</th>
+                                    <th>Name of Students</th>
                                     <th>Degree program</th>
                                     <th>Nature of dishonesty</th>
                                     <th>Penalty/consequences</th>
@@ -202,7 +202,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Initial of students</label>
+                                    <label for="name">Name of Students</label>
                                     <input type="text" name="students_initial" id="edit_students_initial" value="{{old('edit_students_initial')}}" class="form-control">
                                 </div>
                               </div>

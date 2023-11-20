@@ -66,7 +66,7 @@
                                     <label for="name">University’s R&D budget allocation
 (A)
 </label>
-                                    <input type="number" name="uni_budget" id="uni_budget" class="form-control">
+                                    <input type="number" step="any" name="uni_budget" id="uni_budget" class="form-control">
                                 </div>
                             </div>
 
@@ -75,7 +75,7 @@
                                     <label for="name">Business school’s R&D budget allocation
 (B)
 </label>
-                                    <input type="number" name="bs_budget" id="bs_budget" class="form-control">
+                                    <input type="number" step="any" name="bs_budget" id="bs_budget" class="form-control">
                                 </div>
                             </div>
 
@@ -84,7 +84,7 @@
                                     <label for="name">Government grants
 (C)
 </label>
-                                    <input type="number" name="gov_grant" id="gov_grant" class="form-control">
+                                    <input type="number" step="any" name="gov_grant" id="gov_grant" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -92,7 +92,7 @@
                                     <label for="name">Corporate grants
 (D)
 </label>
-                                    <input type="number" name="corp_grant" id="corp_grant" class="form-control">
+                                    <input type="number" step="any" name="corp_grant" id="corp_grant" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -100,7 +100,7 @@
                                     <label for="name">International grants
 (E)
 </label>
-                                    <input type="number" name="int_grant" id="int_grant" class="form-control">
+                                    <input type="number" step="any" name="int_grant" id="int_grant" class="form-control">
                                 </div>
                             </div>
 
@@ -216,7 +216,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">University’s R&D budget allocation(A)</label>
-                                    <input type="number" name="uni_budget" id="edit_uni_budget" value="{{old('uni_budget')}}" class="form-control">
+                                    <input type="number" step="any" name="uni_budget" id="edit_uni_budget" value="{{old('uni_budget')}}" class="form-control">
 
                             </div>
                         </div>
@@ -224,28 +224,28 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Business school’s R&D budget allocation(B)</label>
-                                    <input type="number" name="bs_budget" id="edit_bs_budget" value="{{old('bs_budget')}}" class="form-control">
+                                    <input type="number" step="any" name="bs_budget" id="edit_bs_budget" value="{{old('bs_budget')}}" class="form-control">
 
                             </div>
                         </div>
                          <div class="col-md-6">
                             <div class="form-group">
                                     <label for="name">Government grants(C)</label>
-                                    <input type="number" name="gov_grant" id="edit_gov_grant" value="{{old('gov_grant')}}" class="form-control">
+                                    <input type="number" step="any" name="gov_grant" id="edit_gov_grant" value="{{old('gov_grant')}}" class="form-control">
 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Corporate grants(D)</label>
-                                    <input type="number"  name="corp_grant"
+                                    <input type="number" step="any"  name="corp_grant"
                                     id="edit_corp_grant" value="{{old('corp_grant')}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">International grants(E)</label>
-                                    <input type="number" name="int_grant"
+                                    <input type="number" step="any" name="int_grant"
                                     id="edit_int_grant" value="{{old('int_grant')}}" class="form-control">
                             </div>
                         </div>
