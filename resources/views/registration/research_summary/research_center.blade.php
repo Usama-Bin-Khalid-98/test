@@ -102,7 +102,7 @@
                                 <tr>
                                     <td>g) Research committee composition</td>
                                     <td>
-                                        <input type="textval" id="composition" name="composition" value="{{@$research_center->composition}}"  class="form-control">
+                                        <textarea type="textval" id="composition" name="composition" class="form-control">{{@$research_center->composition}}</textarea>
                                     </td>
                                 </tr>
                                 </tbody>

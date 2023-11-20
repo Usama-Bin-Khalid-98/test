@@ -64,7 +64,7 @@
                               <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="name">Remedial measures</label>
-                                    <input type="text" name="remedial_measure" id="remedial_measure" class="form-control">
+                                    <textarea type="text" name="remedial_measure" id="remedial_measure" class="form-control"></textarea>
                                 </div>
                               </div>
                              <div class="col-md-12">
@@ -163,7 +163,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Remedial Measure</label>
-                                    <input type="text" name="remedial_measure" id="edit_remedial_measure" value="{{old('edit_remedial_measure')}}" class="form-control">
+                                    <textarea type="text" name="remedial_measure" id="edit_remedial_measure"  class="form-control">{{old('edit_remedial_measure')}}</textarea>
                                 </div>
                               </div>
 
