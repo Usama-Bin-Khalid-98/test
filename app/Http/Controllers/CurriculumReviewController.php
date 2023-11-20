@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
-use Illuminate\Support\Facades\Log;
 
 class CurriculumReviewController extends Controller
 {
@@ -56,7 +55,6 @@ class CurriculumReviewController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
-            Log::debug($request->all());
            $add_record=  CurriculumReview::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
