@@ -51,9 +51,6 @@ class ConsultancyProjectController extends Controller
         }
         try {
 //            dd($fileName);
-                if(FacultyConsultancyProject::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
-                    return response()->json(['message'=> 'Consultancy project already exists.'], 422);
-                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
@@ -64,23 +61,23 @@ class ConsultancyProjectController extends Controller
 
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
-                    FacultyConsultancyProject::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'faculty_name' => $request->faculty_name,
-                        'project_name' => $request->project_name,
-                        'client_name' => $request->client_name,
-                        'start_date' => $request->start_date,
-                        'end_date' => $request->end_date,
-                        'all_participants' => $request->all_participants,
-                        'file' => $path.'/'.$imageName, 
-                        'isComplete' => 'yes', 
-                        'created_by' => Auth::user()->id 
+                }
+                FacultyConsultancyProject::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'faculty_name' => $request->faculty_name,
+                    'project_name' => $request->project_name,
+                    'client_name' => $request->client_name,
+                    'start_date' => $request->start_date,
+                    'end_date' => $request->end_date,
+                    'all_participants' => $request->all_participants,
+                    'file' => $path.'/'.$imageName, 
+                    'isComplete' => 'yes', 
+                    'created_by' => Auth::user()->id 
                 ]);
 
-                    return response()->json(['success' => 'Record added successfully.']);
-                }
+                return response()->json(['success' => 'Record added successfully.']);
+                
 
         }catch (Exception $e)
         {

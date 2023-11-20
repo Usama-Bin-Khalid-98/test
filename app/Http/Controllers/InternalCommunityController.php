@@ -63,19 +63,19 @@ class InternalCommunityController extends Controller
 
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
-                    InternalCommunity::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'welfare_program_id' => $request->welfare_program_id,
-                        'no_of_individual_covered' => $request->no_of_individual_covered,
-                        'file' => $path.'/'.$imageName,
-                        'isComplete' => 'yes',
-                        'created_by' => Auth::user()->id
+                }
+                InternalCommunity::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'welfare_program_id' => $request->welfare_program_id,
+                    'no_of_individual_covered' => $request->no_of_individual_covered,
+                    'file' => $path.'/'.$imageName,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
                 ]);
 
-                    return response()->json(['success' => 'Internal Community Welfare Program added successfully.']);
-                }
+                return response()->json(['success' => 'Internal Community Welfare Program added successfully.']);
+            
 
         }catch (Exception $e)
         {

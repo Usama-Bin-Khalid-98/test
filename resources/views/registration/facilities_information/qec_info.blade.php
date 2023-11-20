@@ -117,7 +117,7 @@
                                     <td>{{$contact->campus->location}}</td>
                                     <td>{{$contact->qec_type->name}}</td>
                                     <td>{{$contact->level}}</td>
-                                    <td><a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td>@if($contact->file !== '/')<a href="{{url($contact->file)}}"><i class="fa fa-file-word-o"></i></a>@endif </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="badge {{$contact->isComplete == 'yes'?'bg-green':'bg-red'}}">{{$contact->isComplete == 'yes'?'Yes':'No'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","qec_type_id":"{{$contact->qec_type_id}}","level":"{{$contact->level}}","file":"{{$contact->file}}","isComplete":"{{$contact->isComplete}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
@@ -261,13 +261,11 @@
             }
             let qec_type_id = $('#qec_type_id').val();
             let level = $('#level').val();
-            let file = $('#file').val();
 
             !qec_type_id?addClass('qec_type_id'):removeClass('qec_type_id');
             !level?addClass('level'):removeClass('level');
-            !file?addClass('file'):removeClass('file');
 
-            if(!qec_type_id || !level || !file)
+            if(!qec_type_id || !level)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

@@ -52,9 +52,6 @@ class EnvProtectionController extends Controller
         }
         try {
 //            dd($fileName);
-                if(EnvProtection::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
-                    return response()->json(['message'=> 'Environment protection already exists.'], 422);
-                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName = Auth::user()->id . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
@@ -65,19 +62,19 @@ class EnvProtectionController extends Controller
 
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
-                    EnvProtection::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'date' => $request->date,
-                        'activity_desc' => $request->activity_desc,
-                        'file' => $path.'/'.$imageName,
-                        'isComplete' => 'yes',
-                        'created_by' => Auth::user()->id
+                }
+                EnvProtection::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'date' => $request->date,
+                    'activity_desc' => $request->activity_desc,
+                    'file' => $path.'/'.$imageName,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
                 ]);
 
-                    return response()->json(['success' => 'Environmental Protection added successfully.']);
-                }
+                return response()->json(['success' => 'Environmental Protection added successfully.']);
+                
 
         }catch (Exception $e)
         {

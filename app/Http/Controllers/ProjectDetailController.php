@@ -51,9 +51,6 @@ class ProjectDetailController extends Controller
         }
         try {
 //            dd($fileName);
-                if(ProjectDetail::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
-                    return response()->json(['message'=> 'Project detail already exists.'], 422);
-                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName = $request->activity_title . "-file-" . time() . '.' . $request->file->getClientOriginalExtension();
@@ -64,19 +61,19 @@ class ProjectDetailController extends Controller
 
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
-                    ProjectDetail::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'date' => $request->date,
-                        'activity_title' => $request->activity_title,
-                        'file' => $path.'/'.$imageName,
-                        'isComplete' => 'yes',
-                        'created_by' => Auth::user()->id
+                }
+                ProjectDetail::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'date' => $request->date,
+                    'activity_title' => $request->activity_title,
+                    'file' => $path.'/'.$imageName,
+                    'isComplete' => 'yes',
+                    'created_by' => Auth::user()->id
                 ]);
 
-                    return response()->json(['success' => 'Project Detail added successfully.']);
-                }
+                return response()->json(['success' => 'Project Detail added successfully.']);
+                
 
         }catch (Exception $e)
         {

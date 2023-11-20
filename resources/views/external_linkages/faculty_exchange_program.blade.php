@@ -141,7 +141,7 @@
                                     <td>{{$enrolement->faculty_name}}</td>
                                     <td>{{$enrolement->source_country}}</td>
                                     <td>{{$enrolement->name_faculty}}</td>
-                                    <td><a href="{{url($enrolement->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td>@if($enrolement->file !== '/')<a href="{{url($enrolement->file)}}"><i class="fa fa-file-word-o"></i></a>@endif </td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","year":"{{$enrolement->year}}","destination_country":"{{$enrolement->destination_country}}","faculty_name":"{{$enrolement->faculty_name}}","source_country":"{{$enrolement->source_country}}","name_faculty":"{{$enrolement->name_faculty}}","file":"{{$enrolement->file}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
@@ -301,16 +301,14 @@
             let faculty_name = $('#faculty_name').val();
             let source_country = $('#source_country').val();
             let name_faculty = $('#name_faculty').val();
-            let file = $('#file').val();
 
             !year?addClass('year'):removeClass('year');
             !destination_country?addClass('destination_country'):removeClass('destination_country');
             !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
             !source_country?addClass('source_country'):removeClass('source_country');
             !name_faculty?addClass('name_faculty'):removeClass('name_faculty');
-            !file?addClass('file'):removeClass('file');
 
-            if(!year || !destination_country || !faculty_name || !source_country || !name_faculty || !file )
+            if(!year || !destination_country || !faculty_name || !source_country || !name_faculty)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;

@@ -158,7 +158,7 @@
                                     <td>{{$contact->client_name}}</td>
                                     <td>{{$contact->start_date}} | {{$contact->end_date}} </td>
                                     <td>{{$contact->all_participants}}</td>
-                                    <td><a href="{{($contact->file)}}"><i class="fa fa-file-word-o"></i></a> </td>
+                                    <td>@if($contact->file !== "/")<a href="{{($contact->file)}}"><i class="fa fa-file-word-o"></i></a>@endif </td>
                                     <td><i class="badge {{$contact->status == 'active'?'bg-green':'bg-red'}}">{{$contact->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$contact->id}}"></i> | <i data-row='{"id":"{{$contact->id}}","faculty_name":"{{$contact->faculty_name}}","project_name":"{{$contact->project_name}}","client_name":"{{$contact->client_name}}","start_date":"{{$contact->start_date}}","end_date":"{{$contact->end_date}}","all_participants":"{{$contact->all_participants}}","file":"{{$contact->file}}","status":"{{$contact->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
@@ -341,7 +341,6 @@
             let start_date = $('#start_date').val();
             let end_date = $('#end_date').val();
             let all_participants = $('#all_participants').val();
-            let file = $('#file').val();
 
             !faculty_name?addClass('faculty_name'):removeClass('faculty_name');
             !project_name?addClass('project_name'):removeClass('project_name');
@@ -349,9 +348,8 @@
             !start_date?addClass('start_date'):removeClass('start_date');
             !end_date?addClass('end_date'):removeClass('end_date');
             !all_participants?addClass('all_participants'):removeClass('all_participants');
-            !file?addClass('file'):removeClass('file');
 
-            if(!faculty_name || !project_name || !client_name || !start_date  || !end_date || !all_participants || !file)
+            if(!faculty_name || !project_name || !client_name || !start_date  || !end_date || !all_participants)
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
