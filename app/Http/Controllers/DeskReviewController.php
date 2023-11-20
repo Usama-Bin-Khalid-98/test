@@ -277,6 +277,7 @@ class DeskReviewController extends Controller
                 'department_id' => $department_id,
                 'status' => 'active',
                 'designation_id'=> $professor->id,
+                'year_t' => $getYears->tyear
             ]
         )->get()->max('total_courses');
         $assocprofessor = Designation::where('name','Associate Professor')->first();
@@ -287,6 +288,7 @@ class DeskReviewController extends Controller
                 'department_id' => $department_id,
                 'status' => 'active',
                 'designation_id'=> $assocprofessor->id,
+                'year_t' => $getYears->tyear
             ]
         )->get()->max('total_courses');
         $assistprofessor = Designation::where('name','Assistant Professor')->first();
@@ -296,6 +298,7 @@ class DeskReviewController extends Controller
                 'department_id' => $department_id,
                 'status' => 'active',
                 'designation_id'=> $assistprofessor->id,
+                'year_t' => $getYears->tyear
             ]
         )->get()->max('total_courses');
         $lecturer = Designation::where('name','Lecturer')->first();
@@ -305,6 +308,7 @@ class DeskReviewController extends Controller
                 'department_id' => $department_id,
                 'status' => 'active',
                 'designation_id'=> $lecturer->id,
+                'year_t' => $getYears->tyear
             ]
         )->get()->max('total_courses');
 

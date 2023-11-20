@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class CurriculumReviewController extends Controller
 {
@@ -55,6 +56,7 @@ class CurriculumReviewController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            Log::debug($request->all());
            $add_record=  CurriculumReview::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,
@@ -62,8 +64,7 @@ class CurriculumReviewController extends Controller
                 'date' => $request->date,
                 'composition' => $request->composition,
                 'reviewer_names' => $request->reviewer_names,
-                'designation_id' => $request->designation_id,
-                'affiliations_id' => $request->affiliations_id,
+                'designations_affiliations' => $request->designations_affiliations,
                 'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
@@ -121,8 +122,7 @@ class CurriculumReviewController extends Controller
                 'date' => $request->date,
                 'composition' => $request->composition,
                 'reviewer_names' => $request->reviewer_names,
-                'designation_id' => $request->designation_id,
-                'affiliations_id' => $request->affiliations_id,
+                'designations_affiliations' => $request->designations_affiliations,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -161,8 +161,6 @@ class CurriculumReviewController extends Controller
             'date' => 'required',
             'composition' => 'required',
             'reviewer_names' => 'required',
-            'designation_id' => 'required',
-            'affiliations_id' => 'required',
         ];
     }
 
