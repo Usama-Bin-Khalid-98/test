@@ -62,8 +62,7 @@ class CurriculumReviewController extends Controller
                 'date' => $request->date,
                 'composition' => $request->composition,
                 'reviewer_names' => $request->reviewer_names,
-                'designation_id' => $request->designation_id,
-                'affiliations_id' => $request->affiliations_id,
+                'designations_affiliations' => $request->designations_affiliations,
                 'isComplete' => 'yes',
                 'created_by' => Auth::user()->id
             ]);
@@ -121,8 +120,7 @@ class CurriculumReviewController extends Controller
                 'date' => $request->date,
                 'composition' => $request->composition,
                 'reviewer_names' => $request->reviewer_names,
-                'designation_id' => $request->designation_id,
-                'affiliations_id' => $request->affiliations_id,
+                'designations_affiliations' => $request->designations_affiliations,
                 'status' => $request->status,
                 'updated_by' => Auth::user()->id
             ]);
@@ -161,8 +159,6 @@ class CurriculumReviewController extends Controller
             'date' => 'required',
             'composition' => 'required',
             'reviewer_names' => 'required',
-            'designation_id' => 'required',
-            'affiliations_id' => 'required',
         ];
     }
 

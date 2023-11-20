@@ -293,7 +293,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                7. Faculty Course load (table 4.2 a 4.2 b: No. of courses taught) <br>
+                                                7. Faculty Course load (table 4.2 a : No. of courses taught) <br>
                                                 <p class="{{$total_courses_prof<4?'text-red':''}}">i.	Professor: {{@$total_courses_prof}} </p>
                                                 <p class="{{$total_courses_assoc<4?'text-red':''}}">ii.	Associate Professor: {{@$total_courses_assoc}} </p>
                                                 <p class="{{$total_courses_assis<6?'text-red':''}}">iii.	Assistant Professor: {{@$total_courses_assis}} </p>

@@ -75,7 +75,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                    <label for="name">Composition</label>
-                                    <input type="text" name="composition" id="composition" value="" class="form-control">
+                                    <textarea required type="text" name="composition" id="composition" value="" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -86,35 +86,13 @@
 {{--                                    <option value="{{$user->id}}">{{$user->name}}</option>--}}
 {{--                                @endforeach--}}
 {{--                            </select>--}}
-                                    <input type="text" name="reviewer_names" id="reviewer_names" value="" class="form-control">
+                                    <textarea required type="text" name="reviewer_names" id="reviewer_names" value="" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <select name="designation_id" id="designation_id" class="form-control select2" multiple="multiple" data-placeholder="Select Designation">
-{{--                                        <option selected disabled>Select Designation</option>--}}
-                                        @foreach($designations as $program)
-                                            <option value="{{$program->id}}">{{$program->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3 form-row">
-                                <div class="form-group">
-                                <div class="input-group">
-                                    <label for="name">Affiliation</label>
-                                    <select name="affiliations_id" id="affiliations_id" class="form-control select2" style="width: 100%;">
-                                        <option selected disabled>Select Affiliation</option>
-                                        @foreach($affiliation as $degree)
-                                        <option value="{{$degree->id}}">{{$degree->affiliation}}</option>
-                                        @endforeach
-
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button type="button" data-toggle="modal" data-target="#add-modal"  class="btn btn-info btn-flat" style="margin-top: 21px;"><i class="fa fa-plus"></i></button>
-                                    </span>
-                                </div>
+                                    <label for="name">Designations and Affiliations</label>
+                                    <textarea required name="designations_affiliations" id="designations_affiliations" class="form-control"></textarea>
                                 </div>
                             </div>
 
@@ -157,9 +135,9 @@
                                     <td>{{$portfolio->date}}</td>
                                     <td>{{$portfolio->composition}}</td>
                                     <td>{{$portfolio->reviewer_names}}</td>
-                                    <td>{{$portfolio->designation->name}}-{{$portfolio->affiliations->affiliation}} </td>
+                                    <td>{{$portfolio->designations_affiliations}} </td>
                                     <td><i class="badge {{$portfolio->status == 'active'?'bg-green':'bg-red'}}">{{$portfolio->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"review_meeting":"{{$portfolio->review_meeting}}","date":"{{$portfolio->date}}","composition":"{{$portfolio->composition}}","reviewer_names":"{{$portfolio->reviewer_names}}","designation_id":"{{$portfolio->designation_id}}","affiliations_id":"{{$portfolio->affiliations_id}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$portfolio->id}}"></i> | <i data-row='{"id":{{$portfolio->id}},"review_meeting":"{{$portfolio->review_meeting}}","date":"{{$portfolio->date}}","composition":"{{$portfolio->composition}}","reviewer_names":"{{$portfolio->reviewer_names}}","designations_affiliations":"{{$portfolio->designations_affiliations}}","status":"{{$portfolio->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -279,7 +257,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                    <label for="name">Composition</label>
-                                    <input type="text" name="composition" id="edit_composition" value="{{old('edit_composition')}}"class="form-control">
+                                    <textarea required type="text" name="composition" id="edit_composition" class="form-control">{{old('edit_composition')}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -290,33 +268,15 @@
 {{--                                            <option value="{{$user->id}}">{{$user->name}}</option>--}}
 {{--                                        @endforeach--}}
 {{--                                    </select>--}}
-                                    <input type="text" name="reviewer_names" id="edit_reviewer_names" value="{{old('edit_reviewer_names')}}"class="form-control">
+                                    <textarea required type="text" name="reviewer_names" id="edit_reviewer_names" class="form-control">{{old('edit_reviewer_names')}}</textarea>
                                 </div>
                             </div>
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Designation</label>
-                                    <select name="designation_id" id="edit_designation_id" class="form-control select2">
-                                        <option selected disabled>Select Designation</option>
-                                        @foreach($designations as $program)
-                                            <option value="{{$program->id}}">{{$program->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="name">Designations and Affiliations</label>
+                                    <textarea required name="designations_affiliations" id="edit_designations_affiliations" class="form-control">{{old('edit_designations_affiliations')}}</textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Affiliation</label>
-                                    <select name="affiliations_id" id="edit_affiliations_id" class="form-control select2">
-                                        <option selected disabled>Select Affiliation</option>
-                                        @foreach($affiliation as $degree)
-                                        <option value="{{$degree->id}}">{{$degree->affiliation}}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-                            </div>
-
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -377,25 +337,6 @@
             let next = false;
             if(e.originalEvent.submitter.id === 'add-and-next'){
                 next = true;
-            }
-            let review_meeting = $('#review_meeting').val();
-            let date = $('#date').val();
-            let composition = $('#composition').val();
-            let reviewer_names = $('#reviewer_names').val();
-            let designation_id = $('#designation_id').val();
-            let affiliations_id = $('#affiliations_id').val();
-
-            !review_meeting?addClass('review_meeting'):removeClass('review_meeting');
-            !date?addClass('date'):removeClass('date');
-            !composition?addClass('composition'):removeClass('composition');
-            !reviewer_names?addClass('reviewer_names'):removeClass('reviewer_names');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !affiliations_id?addClass('affiliations_id'):removeClass('affiliations_id');
-
-            if(!review_meeting || !date || !composition || !reviewer_names || !designation_id || !affiliations_id )
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return;
             }
             // Yes button callback
             e.preventDefault();
@@ -490,34 +431,14 @@
             $('#edit_date').val(data.date).datepicker('getDate');
             $('#edit_composition').val(data.composition);
             $('#edit_reviewer_names').val(data.reviewer_names);
-            $('#edit_designation_id').select2().val(data.designation_id).trigger('change');
-            $('#edit_affiliations_id').select2().val(data.affiliations_id).trigger('change');
+            $('#edit_designations_affiliations').val(data.designations_affiliations);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
         });
 
 $('#updateForm').submit(function (e) {
-            let review_meeting = $('#edit_review_meeting').val();
-            let date = $('#edit_date').val();
-            let composition = $('#edit_composition').val();
-            let reviewer_names = $('#edit_reviewer_names').val();
-            let designation_id = $('#edit_designation_id').val();
-            let affiliations_id = $('#edit_affiliations_id').val();
             let id = $('#edit_id').val();
 
-            let status = $('input[name=edit_status]:checked').val();
-            !review_meeting?addClass('review_meeting'):removeClass('review_meeting');
-            !date?addClass('date'):removeClass('date');
-            !composition?addClass('composition'):removeClass('composition');
-            !reviewer_names?addClass('reviewer_names'):removeClass('reviewer_names');
-            !designation_id?addClass('designation_id'):removeClass('designation_id');
-            !affiliations_id?addClass('affiliations_id'):removeClass('affiliations_id');
-
-            if(!review_meeting || !date || !composition || !reviewer_names || !designation_id || !affiliations_id)
-            {
-                Notiflix.Notify.Warning("Fill all the required Fields.");
-                return false;
-            }
             e.preventDefault();
              var formData = new FormData(this);
             //var formData = $("#updateForm").serialize()
