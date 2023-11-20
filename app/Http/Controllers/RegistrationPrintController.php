@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use PDF;
 
 class RegistrationPrintController extends Controller
@@ -30,7 +29,6 @@ class RegistrationPrintController extends Controller
 
     public function index(Request $req)
     {  
-        Log::debug("here i am");
 
             //dd($docHeaderData);
         $programsUnderReview = Scope::with('program')->where(
