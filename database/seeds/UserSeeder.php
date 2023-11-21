@@ -34,24 +34,6 @@ class UserSeeder extends Seeder
             ],
         ]);
 
-    DB::table('users')->insert([
-        [
-            'name' => 'Muhammad Saboor Sethi',
-            'designation_id' => '1',
-            'cnic' => '17101-1234324-1',
-            'contact_no' => '+92-51-90800206',
-            'email' => 'city@gmail.com',
-            'email_verified_at' => '2020-08-13 23:13:12',
-            'password' => Hash::make('admin!@#$'),
-            'business_school_id' => '1',
-            'campus_id' => '209',
-            'department_id' => '1',
-            'country' => 'pakistan',
-            'city' => 'peshawar',
-            'user_type' => 'BusinessSchool',
-            'status' => 'active',
-        ],
-    ]);
     }
 
 }

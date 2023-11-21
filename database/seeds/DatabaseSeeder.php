@@ -103,5 +103,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(FacultyDetailedInfosSeeder::class);
         $this->call(NbeacBasicInfoSeeder::class);
         $this->call(SpecializationSeeder::class);
+        $this->call(AcademyLevelSeeder::class);
+        $this->call(AcademyTypeSeeder::class);
     }
 }
