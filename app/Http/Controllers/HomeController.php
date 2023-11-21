@@ -301,7 +301,7 @@ class HomeController extends Controller
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
             'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks',
             'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips',
-            'mentoring_slip_count', 'PeerReviewers','profileSheet', 'user_count', 'desk_count', 'sar_desk_count', 'user_pending'));
+            'mentoring_slip_count', 'peerReviewers','profileSheet', 'user_count', 'desk_count', 'sar_desk_count', 'user_pending'));
     }
 
     /**
