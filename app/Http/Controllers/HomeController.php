@@ -291,7 +291,7 @@ class HomeController extends Controller
         $desk_count = Slip::where(['regStatus'=>'Review'])->get()->count();
         $sar_desk_count = Slip::where(['regStatus'=>'SARDeskReview'])->get()->count();
 //        dd($mentoring_slip_count);
-        $peerReviewers = User::whereHas('roles', function ($query) {
+        $PeerReviewers = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['Mentor', 'PeerReviewer']);
         })->get();
 
@@ -301,7 +301,7 @@ class HomeController extends Controller
             'registration_apply','businessSchools', 'eligibility_registrations', 'eligibility_screening',
             'MentoringMeetings', 'PeerReviewVisit', 'travel_plan', 'feedbacks',
             'campus_count' ,'dept_count' ,'bs_count','fm_count','fem_count','programs','count_slips',
-            'mentoring_slip_count', 'peerReviewers','profileSheet', 'user_count', 'desk_count', 'sar_desk_count', 'user_pending'));
+            'mentoring_slip_count', 'PeerReviewers','profileSheet', 'user_count', 'desk_count', 'sar_desk_count', 'user_pending'));
     }
 
     /**
