@@ -12,7 +12,7 @@
                                 <tbody>
                                     @foreach($curriculumReviews as $data)
                                     <tr>
-                                        <td>{{"Meeting "}}{{$loop->index+1}}</td>
+                                        <td>{{$data->review_meeting}}</td>
                                         <td>{{$data->date}}</td>
                                         <td>{{$data->composition}}</td>
 {{--                                        <td>@if($portfolio->curriculum_reviewer)--}}
@@ -20,7 +20,7 @@
 {{--                                                @endforeach @endif--}}
 {{--                                        </td>--}}
                                         <td>{{$data->reviewer_names}}</td>
-                                        <td>{{$data->designation}}{{": "}}{{$data->affiliation}}</td>
+                                        <td>{{$data->designations_affiliations}}</td>
                                     </tr>
                                      @endforeach
 

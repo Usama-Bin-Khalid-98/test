@@ -13,6 +13,7 @@
                                     <tr>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td>Meeting 1</td>
                                         <td>Meeting 2</td>
                                         <td>Meeting 3</td>

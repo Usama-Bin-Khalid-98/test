@@ -55,6 +55,9 @@ class CurriculumReviewController extends Controller
             return response()->json($validation->messages()->all(), 422);
         }
         try {
+            if(CurriculumReview::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id, 'review_meeting' => $request->review_meeting,])->exists()){
+                return response()->json(['error' => 'Record for this meeting already exists'], 422);
+            }
            $add_record=  CurriculumReview::create([
                 'campus_id' => Auth::user()->campus_id,
                 'department_id' => Auth::user()->department_id,

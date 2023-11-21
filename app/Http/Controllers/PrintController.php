@@ -234,7 +234,7 @@ ORDER BY course_types.name', array( $req->cid,$user->id ));
 //                AND curriculum_reviews.affiliations_id=affiliations.id
 //                AND curriculum_reviews.campus_id=?', array($req->cid));
 
-            $curriculumReviews = DB::select('SELECT curriculum_reviews.*, designations.name as designation, affiliations.name as affiliation FROM curriculum_reviews, campuses, users, designations, affiliations WHERE curriculum_reviews.campus_id=campuses.id AND curriculum_reviews.designation_id=designations.id AND curriculum_reviews.affiliations_id=affiliations.id AND curriculum_reviews.campus_id=? AND users.id=? AND curriculum_reviews.deleted_at IS NULL', array( $req->cid,$user->id ));
+                $curriculumReviews = DB::select('SELECT curriculum_reviews.* FROM curriculum_reviews, campuses WHERE curriculum_reviews.campus_id=campuses.id AND curriculum_reviews.campus_id=? AND curriculum_reviews.deleted_at IS NULL', array( $req->cid));
 
 
                $programObjectives = DB::select('SELECT po.*, p.name as program
@@ -538,7 +538,7 @@ AND program_courses.campus_id=?
 AND users.id=? AND program_courses.deleted_at IS NULL
 ORDER BY course_types.name', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
-               $curriculumReviews = DB::select('SELECT curriculum_reviews.*, designations.name as designation, affiliations.name as affiliation FROM curriculum_reviews, campuses, users, designations, affiliations WHERE curriculum_reviews.campus_id=campuses.id AND curriculum_reviews.designation_id=designations.id AND curriculum_reviews.affiliations_id=affiliations.id AND curriculum_reviews.campus_id=? AND users.id=? AND curriculum_reviews.deleted_at IS NULL', array( $userCampus[0]->campus_id,auth()->user()->id ));
+               $curriculumReviews = DB::select('SELECT curriculum_reviews.* FROM curriculum_reviews, campuses WHERE curriculum_reviews.campus_id=campuses.id AND curriculum_reviews.campus_id=? AND curriculum_reviews.deleted_at IS NULL', array( $userCampus[0]->campus_id));
 
                $programObjectives = DB::select('SELECT program_objectives.*, programs.name as program FROM program_objectives, programs, campuses, users WHERE program_objectives.program_id=programs.id AND program_objectives.campus_id=campuses.id AND program_objectives.campus_id=? AND users.id=? AND program_objectives.deleted_at IS NULL ', array( $userCampus[0]->campus_id,auth()->user()->id ));
 
