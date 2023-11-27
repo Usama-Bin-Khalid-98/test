@@ -52,7 +52,7 @@ class EvaluationMethodController extends Controller
         try {
             //$data = $request;
 //            dd($request->file('file1'));
-          for($i =0; $i<=count(@$request->all()); $i++)
+          for($i =0; $i<=count(@$request['evaluation_items_id']); $i++)
           {
 //              dd($data->statutory_body_id[$i]);
 //              dd($request[$i]['name']);

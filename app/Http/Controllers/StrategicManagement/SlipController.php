@@ -132,6 +132,7 @@ class SlipController extends Controller
             $getNbeacInfo = NbeacBasicInfo::all()->first();
 
             $mailData['nbeac'] = $getNbeacInfo;
+            $mailData['amount'] = $slip->amount;
 
             $mailInfo = [
                 'to' => $school->user->email ?? '',

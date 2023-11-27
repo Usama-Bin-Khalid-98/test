@@ -359,7 +359,7 @@
                                         <p>Hope you are doing well,</p>
 
                                         <p>This email is with reference to registration fee received from {{@$data['school']->name}}, {{@$data['school']->user->campus->location}}. It is to acknowledge you that we have received the registration fee </p>
-                                        <p>{{@$data['slip']['cheque_no']?'Cheque No: '. $data['slip']['cheque_no']:''}} Amount Rs: 50,000/- dated:
+                                        <p>{{@$data['slip']['cheque_no']?'Cheque No: '. $data['slip']['cheque_no']:''}} Amount Rs: {{@$data['amount']}}/- dated:
                                             {{@$data['slip']['transaction_date']}}.</p>
 
                                         <p>The registration application is under desk review process.  You can check the status of your application on the following link:</p>

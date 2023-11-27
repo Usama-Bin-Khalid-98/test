@@ -181,6 +181,7 @@ class SarInvoiceController extends Controller
                 $getNbeacInfo = NbeacBasicInfo::all()->first();
 
                 $mailData['nbeac']= $getNbeacInfo;
+                $mailData['amount']= SarInvoice::find($request->id)->amount;
 
 //                dd($data['school']);
                 $mailInfo = [

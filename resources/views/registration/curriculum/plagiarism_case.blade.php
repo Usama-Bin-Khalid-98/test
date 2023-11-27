@@ -301,16 +301,14 @@
             let degree = $('#degree').val();
             let nature = $('#nature').val();
             let penalty = $('#penalty').val();
-            let file = $('#file').val();
 
             !date?addClass('date'):removeClass('date');
             !students_initial?addClass('students_initial'):removeClass('students_initial');
             !degree?addClass('degree'):removeClass('degree');
             !nature?addClass('nature'):removeClass('nature');
             !penalty?addClass('penalty'):removeClass('penalty');
-            !file?addClass('file'):removeClass('file');
 
-            if(!date || !students_initial || !degree || !nature || !penalty || !file)
+            if(!date || !students_initial || !degree || !nature || !penalty )
             {
                 Notiflix.Notify.Warning("Fill all the required Fields.");
                 return;
