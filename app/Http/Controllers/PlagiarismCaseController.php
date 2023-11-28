@@ -51,9 +51,6 @@ class PlagiarismCaseController extends Controller
         }
         try {
 //            dd($fileName);
-                if(PlagiarismCase::where(['campus_id' => Auth::user()->campus_id, 'department_id' => Auth::user()->department_id])->exists()){
-                    return response()->json(['message'=> 'Plagiarism case already exists.'], 422);
-                }
                 $path = ''; $imageName = '';
                 if($request->file('file')) {
                     $imageName ="-file-" . time() . '.' . $request->file->getClientOriginalExtension();
