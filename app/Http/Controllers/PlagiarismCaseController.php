@@ -61,22 +61,22 @@ class PlagiarismCaseController extends Controller
 
                     //dd($request->all());
                     // $data = $request->replace(array_merge($request->all(), ['cv' => $path.'/'.$imageName]));
-
-                    PlagiarismCase::create([
-                        'campus_id' => Auth::user()->campus_id,
-                        'department_id' => Auth::user()->department_id,
-                        'date' => $request->date,
-                        'students_initial' => $request->students_initial,
-                        'degree' => $request->degree,
-                        'nature' => $request->nature,
-                        'penalty' => $request->penalty,
-                        'file' => $path.'/'.$imageName, 
-                        'isComplete' => 'yes', 
-                        'created_by' => Auth::user()->id 
+                }
+                PlagiarismCase::create([
+                    'campus_id' => Auth::user()->campus_id,
+                    'department_id' => Auth::user()->department_id,
+                    'date' => $request->date,
+                    'students_initial' => $request->students_initial,
+                    'degree' => $request->degree,
+                    'nature' => $request->nature,
+                    'penalty' => $request->penalty,
+                    'file' => $path.'/'.$imageName, 
+                    'isComplete' => 'yes', 
+                    'created_by' => Auth::user()->id 
                 ]);
 
-                    return response()->json(['success' => 'Plagiarism Case added successfully.']);
-                }
+                return response()->json(['success' => 'Plagiarism Case added successfully.']);
+                
 
         }catch (Exception $e)
         {
