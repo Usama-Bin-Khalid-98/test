@@ -103,8 +103,6 @@ class RolePermissionSeeder extends Seeder
         $admin = User::find(1);
         $admin->assignRole('NBEACAdmin');
 
-        $BusinessSchool = User::find(3);
-        $BusinessSchool->assignRole('BusinessSchool');
 
 
     }
