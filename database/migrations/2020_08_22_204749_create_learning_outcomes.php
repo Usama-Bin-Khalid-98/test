@@ -27,7 +27,7 @@ class CreateLearningOutcomes extends Migration
             $table->foreign('department_id')
                 ->references('id')
                 ->on('departments');
-            $table->string('plo',255);
+            $table->text('plo');
             $table->enum('status', ['active','inactive'])->default('active');
             $table->enum('isComplete',['yes','no'])->default('no');
             $table->integer('created_by')->unsigned()->nullable();
