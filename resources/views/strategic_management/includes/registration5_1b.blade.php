@@ -34,6 +34,7 @@ Table 5.1. Summary of research output
                                     <th>Total number of items</th>
                                     <th >Number of contributing core faculty members</th>
                                     <th>Number of items jointly produced in collaboration with other institutions</th>
+                                    <th>Number of items jointly produced by faculty of same university</th>
                                     <th>Number of items jointly produced by more than 3 authors</th>
 
 
@@ -48,6 +49,7 @@ Table 5.1. Summary of research output
                                         <td>{{$data->total_items}}</td>
                                         <td>{{$data->contributing_core_faculty}}</td>
                                         <td>{{$data->jointly_produced_other}}</td>
+                                        <td>{{$data->jointly_produced_same}}</td>
                                         <td>{{$data->jointly_produced_multiple}}</td>
                                     </tr>
                                     @endforeach
