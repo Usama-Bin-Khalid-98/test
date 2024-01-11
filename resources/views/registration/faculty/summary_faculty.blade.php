@@ -131,7 +131,7 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                     <th>Campus</th>
                                     <th>Faculty Qualification</th>
                                     <th>Discipline</th>
-                                    <th>Total : {{@$number/2}}</th>
+                                    <th>Total : {{@$number}}</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

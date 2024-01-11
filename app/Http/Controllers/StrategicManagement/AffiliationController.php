@@ -108,6 +108,8 @@ class AffiliationController extends Controller
                         ]);
                     } catch (QueryException $ex) {
                         return response()->json(['error' => 'Import file has invalid character in Name or Affiliation on line '. ($index + 2)], 422);
+                    } catch (Exception $ex) {
+                        return response()->json(['error' => 'Import file has invalid character in name or max courses on line '. ($index + 2)], 422);
                     }
                 }
 
