@@ -694,7 +694,8 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
                 }
             }
         }
-        
+
+        $userCampus = Campus::find($userCampus[0]->campus_id);
         // dd($facultyTeachingCourses);
         return view('strategic_management.registration_application', compact(
             'app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation',
@@ -703,7 +704,7 @@ ORDER BY facility_types.name', array(auth()->user()->id, $userCampus[0]->campus_
             'studentsGenders','facultyWorkLoad','facultyWorkLoadb','facultyTeachingCourses',
             'studentTeachersRatio','facultyStability', 'user',
             'facultyGenders','financialInfos','researchOutput','BIResources','docHeaderData',
-            'programsUnderReview','mission','ratios', 'byProgramFTE', 'byProgramVFE','facultyDegree','faculty_qualifications','faculty_disciplines', 'getYear'));
+            'programsUnderReview','mission','ratios', 'byProgramFTE', 'byProgramVFE','facultyDegree','faculty_qualifications','faculty_disciplines', 'getYear', 'userCampus'));
 
         // return view('strategic_management.registration_application', compact(
         //     'app_Received','facultyTeachingCourses4b','bussinessSchool','campuses','scopeOfAcredation',

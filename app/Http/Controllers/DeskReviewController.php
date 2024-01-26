@@ -556,12 +556,12 @@ class DeskReviewController extends Controller
 
         $teacher_student_ratio = [];
         foreach($facultyStudentRatio as $req){
-            if(isset($byProgramFTE[$req->program_id], $byProgramVFE[$req->program_id])){
-                if(($byProgramFTE[$req->program_id] + $byProgramVFE[$req->program_id]) == 0 ){
+            if(isset($byProgramFTE[$req->program_id])){
+                if(($byProgramFTE[$req->program_id] + @$byProgramVFE[$req->program_id]) == 0 ){
                     $teacher_student_ratio[$req->program->name] = 0;
                     continue;
                 }
-                $teacher_student_ratio[$req->program->name] = (round($req->total_enrollments / ($byProgramFTE[$req->program_id] + $byProgramVFE[$req->program_id]), 2));
+                $teacher_student_ratio[$req->program->name] = (round($req->total_enrollments / ($byProgramFTE[$req->program_id] + @$byProgramVFE[$req->program_id]), 2));
             }
         }
 

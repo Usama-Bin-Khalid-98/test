@@ -32,8 +32,8 @@
                                 </tr>
                                 <tr class="left">
                                     <td>e)  Name of the business school and campus (if relevant)</td>
-                                    <td><?php if(isset($bussinessSchool[0]->name))
-                                    print_r($bussinessSchool[0]->name);
+                                    <td><?php if(isset($userCampus))
+                                    print_r($userCampus->location);
                                     ?> </td>
                                 </tr>
                                 <tr class="left">

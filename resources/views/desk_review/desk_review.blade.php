@@ -258,7 +258,7 @@
                                                 <p> <strong>j)</strong>	Total number of adjunct faculty: {{@$adjunct_faculty}}</p>
                                                 <p> <strong>k)</strong>
                                                     Full-time equivalent (Table 4.3a FTE for the permanent, regular and adjunct faculty in program(s)) : <ol type="i">@foreach($fte_program_wise as $key => $value) <li>{{$key}} = {{array_sum($value)}} @endforeach</ol></p>
-                                                <p> <strong>l)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)) : <ol type="i">@foreach($vfe_program_wise as $key => $value) <li>{{$key}} = {{($value)}} @endforeach</ol></p>
+                                                <p> <strong>l)</strong>	Visiting Faculty Equivalent (Table 4.3b Visiting Faculty Equivalent (VFE) in program(s)) : <ol type="i">@if($vfe_program_wise) @foreach($vfe_program_wise as $key => $value) <li>{{$key}} = {{($value)}} @endforeach @else None @endif</ol></p>
                                                 <p> <strong>m)</strong>	Student to teacher ratio: (Total enrollment (B)/(Total FTE (C)+Total VFE(D)) (Table 4.4) =  <ol type="i">@foreach($teacher_student_ratio as $key => $value) <li>{{$key}} = {{($value)}} @endforeach</ol></p>
 {{--                                                <p> BBA (program1) = </p>--}}
 {{--                                                <p> MBA (program2) = </p>--}}

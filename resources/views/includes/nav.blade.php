@@ -35,7 +35,6 @@ $graduated = checkIsCompletedAllProg('App\StudentsGraduated', ['campus_id' => Au
 $gender = checkIsCompletedAllProg('App\StudentGender', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $bsf = checkIsCompleted('App\Models\Faculty\FacultySummary', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isComplete'=>'yes']);
 $workload = checkIsCompleted('App\Models\Faculty\WorkLoad', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active','isCompleted'=>'yes']);
-$visiting = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>3]);
 $visiting_perm = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>2]);
 $visiting_adjunct = checkIsCompleted('App\Models\Faculty\FacultyTeachingCources', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes','lookup_faculty_type_id'=>1]);
 $ratio = checkIsCompletedAllProg('App\Models\Faculty\FacultyStudentRatio', ['campus_id' => Auth::user()->campus_id,'department_id' => Auth::user()->department_id, 'status'=>'active' , 'isCompleted'=>'yes']);
@@ -129,7 +128,7 @@ $isReg2Complete = !(in_array('In', $reg2Statuses));
 $reg3Statuses = [$enrolment, $graduated, $gender];
 $isReg3Complete = !(in_array('In', $reg3Statuses));
 $faculty_perm_adjunct = $visiting_perm === 'C' ? $visiting_perm : $visiting_adjunct;
-$reg4Statuses = [$bsf ,$workload, $faculty_perm_adjunct, $visiting, $ratio, $stability, $facultygender, $faculty_degree];
+$reg4Statuses = [$bsf ,$workload, $faculty_perm_adjunct, $ratio, $stability, $facultygender, $faculty_degree];
 $isReg4Complete = !(in_array('In', $reg4Statuses));
 $isReg5Complete = $research === 'C';
 $isReg6Complete = $financialinfo === 'C' && $bsfacility === 'C';
@@ -139,7 +138,7 @@ $sar1Statuses = [$basic_info, $scope, $contact, $committee, $affiliation, $summa
 $sar2Statuses = [$portfolio, $program_courses, $curriculum_review, $program_objective, $learning_outcome, $mapping_pos, $aligned_program, $course_outline,
                  $course_detail, $cultural_material, $checklist_document, $managerial_skill, $program_delivery_method, $evaluation_method, $program_delivery, $question_paper, $plagiarism_case];
 $sar3Statuses = [$enrolment, $student_intake, $size, $dropout, $financial_assistance, $student_financial, $weak, $grooming, $counselling, $student_participation, $extra, $membership, $alumni];
-$sar4Statuses = [$bsf, $faculty_detail, $workload, $faculty_perm_adjunct, $visiting, $ratio, $stability, $facultygender, $faculty_promotion, $faculty_workshop, $faculty_develop, $consultancy_project, $faculty_participation, $faculty_membership, $international_faculty, $faculty_exposure];
+$sar4Statuses = [$bsf, $faculty_detail, $workload, $faculty_perm_adjunct, $ratio, $stability, $facultygender, $faculty_promotion, $faculty_workshop, $faculty_develop, $consultancy_project, $faculty_participation, $faculty_membership, $international_faculty, $faculty_exposure];
 $sar5Statuses = [$oric, $research_center, $research_agenda, $research_funding, $research_project, $research, $output, $curriculum_role, $faculty_development, $conference];
 $sar6Statuses = [$club, $detail, $env, $formal, $complaint, $internal, $social];
 $sar7Statuses = [$financialinfo, $financialrisk, $support_staff, $qecinfo, $bsfacility];
@@ -686,8 +685,8 @@ $isSARComplete = $isSAR1Complete && $isSAR2Complete && $isSAR3Complete && $isSAR
 
               <li  class="{{ (request()->is('visiting_faculty')) ? 'active' : '' }}"><a href="{{url('visiting_faculty')}}">
                     @if($isActiveSAR) 4.4b @else 4.3b @endif Visiting Faculty<span class="pull-right-container">
-                        <span class="text text-{{$visiting==='C'?'green':'red'}} pull-right">
-                            <i class="fa {{$visiting==='C'?'fa-check-square':'fa-minus-square'}}" ></i>
+                        <span class="text text-green pull-right">
+                            <i class="fa fa-check-square" ></i>
                         </span>
                     </span></a>
               </li>

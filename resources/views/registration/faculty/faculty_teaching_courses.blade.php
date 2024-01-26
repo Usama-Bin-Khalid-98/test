@@ -88,7 +88,7 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="name">Max teaching courses Allowed(E)</label>
-                                    <input type="number" name="max_cources_allowed" id="max_cources_allowed" class="form-control">
+                                    <input type="number" min=1 name="max_cources_allowed" id="max_cources_allowed" class="form-control">
                                 </div>
                             </div>
 
