@@ -13,9 +13,9 @@
                                     @foreach($budgetoryInfo as $data)
                                     <tr>
                                         <td>{{$data->year}}</td>
-                                        <td>{{$data->uni_budget}}</td>
-                                        <td>{{$data->uni_proposed_budget}}</td>
-                                        <td>{{$data->budget_receive}}</td>
+                                        <td>{{number_format($data->uni_budget)}}</td>
+                                        <td>{{number_format($data->uni_proposed_budget)}}</td>
+                                        <td>{{number_format($data->budget_receive)}}</td>
                                         <td>{{$data->budget_type}}</td>
                                     </tr>
                                     @endforeach

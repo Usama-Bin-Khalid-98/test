@@ -52,12 +52,12 @@ Table 7.1. Financial information of the business school
                                         ?><tr>
                                         <td>{{$data->particularType}}</td>
                                         <td>{{$data->particularName}}</td>
-                                        <td>{{$data->year_three}}</td>
-                                        <td>{{$data->year_two}}</td>
-                                        <td>{{$data->year_one}}</td>
-                                        <td>{{$data->year_t}}</td>
-                                        <td>{{$data->year_t_plus_one}}</td>
-                                        <td>{{$data->year_t_plus_two}}</td>
+                                        <td>{{number_format($data->year_three)}}</td>
+                                        <td>{{number_format($data->year_two)}}</td>
+                                        <td>{{number_format($data->year_one)}}</td>
+                                        <td>{{number_format($data->year_t)}}</td>
+                                        <td>{{number_format($data->year_t_plus_one)}}</td>
+                                        <td>{{number_format($data->year_t_plus_two)}}</td>
                                     </tr><?php
                                       }?>
                                       
@@ -65,12 +65,12 @@ Table 7.1. Financial information of the business school
                                       <tr> 
                                         <td></td>
                                           <td><b>TOTAL REVENUE (A)</b></td>
-                                          <td><b><?php echo $iyt_3; ?></b></td>
-                                          <td><b><?php echo $iyt_2; ?></b></td>
-                                          <td><b><?php echo $iyt_1; ?></b></td>
-                                          <td><b><?php echo $iyt; ?></b></td>
-                                          <td><b><?php echo $iyt_p1; ?></b></td>
-                                          <td><b><?php echo $iyt_p2; ?></b></td>
+                                          <td><b><?php echo number_format($iyt_3); ?></b></td>
+                                          <td><b><?php echo number_format($iyt_2); ?></b></td>
+                                          <td><b><?php echo number_format($iyt_1); ?></b></td>
+                                          <td><b><?php echo number_format($iyt); ?></b></td>
+                                          <td><b><?php echo number_format($iyt_p1); ?></b></td>
+                                          <td><b><?php echo number_format($iyt_p2); ?></b></td>
                                          
                                       </tr>
                                       @foreach($financialInfos as $data)
@@ -85,12 +85,12 @@ Table 7.1. Financial information of the business school
                                         ?><tr>
                                         <td>{{$data->particularType}}</td>
                                         <td>{{$data->particularName}}</td>
-                                        <td>{{$data->year_three}}</td>
-                                        <td>{{$data->year_two}}</td>
-                                        <td>{{$data->year_one}}</td>
-                                        <td>{{$data->year_t}}</td>
-                                        <td>{{$data->year_t_plus_one}}</td>
-                                        <td>{{$data->year_t_plus_two}}</td>
+                                        <td>{{number_format($data->year_three)}}</td>
+                                        <td>{{number_format($data->year_two)}}</td>
+                                        <td>{{number_format($data->year_one)}}</td>
+                                        <td>{{number_format($data->year_t)}}</td>
+                                        <td>{{number_format($data->year_t_plus_one)}}</td>
+                                        <td>{{number_format($data->year_t_plus_two)}}</td>
                                     </tr><?php
                                       }
                                       ?>
@@ -98,24 +98,24 @@ Table 7.1. Financial information of the business school
                                    <tr> 
                                         <td></td>
                                           <td><b>TOTAL EXPENSES  (B)</b></td>
-                                          <td><b><?php echo $eyt_3; ?></b></td>
-                                          <td><b><?php echo $eyt_2; ?></b></td>
-                                          <td><b><?php echo $eyt_1; ?></b></td>
-                                          <td><b><?php echo $eyt; ?></b></td>
-                                          <td><b><?php echo $eyt_p1; ?></b></td>
-                                          <td><b><?php echo $eyt_p2; ?></b></td>
+                                          <td><b><?php echo number_format($eyt_3); ?></b></td>
+                                          <td><b><?php echo number_format($eyt_2); ?></b></td>
+                                          <td><b><?php echo number_format($eyt_1); ?></b></td>
+                                          <td><b><?php echo number_format($eyt); ?></b></td>
+                                          <td><b><?php echo number_format($eyt_p1); ?></b></td>
+                                          <td><b><?php echo number_format($eyt_p2); ?></b></td>
                                          
                                       </tr>
 
                                        <tr style="border: 1px solid black">
                                         <td></td>
                                         <td >ANNUAL BALANCE (A–B)</td>
-                                        <td><?php echo $iyt_3-$eyt_3;?></td> 
-                                        <td><?php echo $iyt_2-$eyt_2;?></td>
-                                        <td><?php echo $iyt_1-$eyt_1;?></td> 
-                                        <td><?php echo $iyt-$eyt;?></td>
-                                        <td><?php echo $iyt_p1-$eyt_p1;?></td>
-                                        <td><?php echo $iyt_p2-$eyt_p2;?></td> 
+                                        <td><?php echo number_format($iyt_3-$eyt_3);?></td> 
+                                        <td><?php echo number_format($iyt_2-$eyt_2);?></td>
+                                        <td><?php echo number_format($iyt_1-$eyt_1);?></td> 
+                                        <td><?php echo number_format($iyt-$eyt);?></td>
+                                        <td><?php echo number_format($iyt_p1-$eyt_p1);?></td>
+                                        <td><?php echo number_format($iyt_p2-$eyt_p2);?></td> 
                                                                         
 
                                     </tr>

@@ -35,7 +35,7 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <h3 class="box-title">@if($isActiveSAR) 7.1 @else 6.1 @endif Provide complete financial information of the business school in Table @if($isActiveSAR) 7.1 @else 6.1 @endif (Rupees in million). </h3>
+                            <h3 class="box-title">@if($isActiveSAR) 7.1 @else 6.1 @endif Provide complete financial information of the business school in Table @if($isActiveSAR) 7.1 @else 6.1 @endif </h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus" data-toggle="tooltip" data-placement="left" title="Minimize"></i>
                                 </button>
@@ -183,12 +183,12 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
 {{--                                    <td>{{$summary->campus->business_school->name}}</td>--}}
 {{--                                    <td>{{$summary->campus->location}}</td>--}}
                                     <td>{{@$summary->income_source->particular}}</td>
-                                    <td>{{$summary->year_three}}</td>
-                                    <td>{{$summary->year_two}}</td>
-                                    <td>{{$summary->year_one}}</td>
-                                    <td>{{$summary->year_t}}</td>
-                                    <td>{{$summary->year_t_plus_one}}</td>
-                                    <td>{{$summary->year_t_plus_two}}</td>
+                                    <td>{{number_format($summary->year_three)}}</td>
+                                    <td>{{number_format($summary->year_two)}}</td>
+                                    <td>{{number_format($summary->year_one)}}</td>
+                                    <td>{{number_format($summary->year_t)}}</td>
+                                    <td>{{number_format($summary->year_t_plus_one)}}</td>
+                                    <td>{{number_format($summary->year_t_plus_two)}}</td>
                                     <td><i class="badge {{$summary->status == 'active'?'bg-green':'bg-red'}}">{{$summary->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$summary->id}}"></i> | <i data-row='{"id":{{$summary->id}},"income_source_id":"{{$summary->income_source_id}}","year_three":"{{$summary->year_three}}","year_two":"{{$summary->year_two}}","year_one":"{{$summary->year_one}}","year_t":"{{$summary->year_t}}","year_t_plus_one":"{{$summary->year_t_plus_one}}","year_t_plus_two":"{{$summary->year_t_plus_two}}","status":"{{$summary->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>
@@ -233,12 +233,12 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
 {{--                                    <td>{{$summary_expense->campus->business_school->name}}</td>--}}
 {{--                                    <td>{{$summary_expense->campus->location}}</td>--}}
                                     <td>{{@$summary_expense->income_source->particular}}</td>
-                                    <td>{{$summary_expense->year_three}}</td>
-                                    <td>{{$summary_expense->year_two}}</td>
-                                    <td>{{$summary_expense->year_one}}</td>
-                                    <td>{{$summary_expense->year_t}}</td>
-                                    <td>{{$summary_expense->year_t_plus_one}}</td>
-                                    <td>{{$summary_expense->year_t_plus_two}}</td>
+                                    <td>{{number_format($summary_expense->year_three)}}</td>
+                                    <td>{{number_format($summary_expense->year_two)}}</td>
+                                    <td>{{number_format($summary_expense->year_one)}}</td>
+                                    <td>{{number_format($summary_expense->year_t)}}</td>
+                                    <td>{{number_format($summary_expense->year_t_plus_one)}}</td>
+                                    <td>{{number_format($summary_expense->year_t_plus_two)}}</td>
                                     <td><i class="badge {{$summary_expense->status == 'active'?'bg-green':'bg-red'}}">{{$summary_expense->status == 'active'?'Active':'Inactive'}}</i></td>
                                     <td><i class="fa fa-trash text-info delete" data-id="{{$summary_expense->id}}"></i> | <i data-row='{"id":{{$summary_expense->id}},"income_source_id":"{{$summary_expense->income_source_id}}","year_three":"{{$summary_expense->year_three}}","year_two":"{{$summary_expense->year_two}}","year_one":"{{$summary_expense->year_one}}","year_t":"{{$summary_expense->year_t}}","year_t_plus_one":"{{$summary_expense->year_t_plus_one}}","year_t_plus_two":"{{$summary_expense->year_t_plus_two}}","status":"{{$summary_expense->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
                                 </tr>

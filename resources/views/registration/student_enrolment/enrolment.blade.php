@@ -109,7 +109,6 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                     <th>16 Year</th>
                                     <th>18 Year</th>
                                     <th>Doctoral</th>
-                                    <th>Total Enrolment</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -121,7 +120,6 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                     <td>{{$enrolement->bs_level}}</td>
                                     <td>{{$enrolement->ms_level}}</td>
                                     <td>{{$enrolement->phd_level}}</td>
-                                    <td>{{$enrolement->total_students}}</td>
                                     <td><i class="badge {{$enrolement->status == 'active'?'bg-green':'bg-red'}}">{{$enrolement->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$enrolement->id}}"></i> | <i data-row='{"id":"{{$enrolement->id}}","year":{{$enrolement->year}},"bs_level":"{{$enrolement->bs_level}}","ms_level":"{{$enrolement->ms_level}}","phd_level":"{{$enrolement->phd_level}}","total_students":"{{$enrolement->total_students}}","status":"{{$enrolement->status}}"}' data-toggle="modal" data-target="#edit-modal" class="fa fa-pencil text-blue edit"></i> </td>
 
@@ -132,11 +130,12 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                     <td style="font-weight: bold;">{{@$bs}}</td>
                                     <td style="font-weight: bold;">{{@$ms}}</td>
                                     <td style="font-weight: bold;">{{@$phd}}</td>
-                                    <td style="font-weight: bold;">{{@$t_students}}</td>
                                     <td></td>
                                     <td></td>
                                 </tr>
-
+                                <tr style="background-color: grey;color: white;">
+                                    <td colspan="6" style="font-weight: bold;text-align: center;">Grand Total: {{@$t_students}}</td>
+                                </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -144,7 +143,6 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                     <th>16 Year</th>
                                     <th>18 Year</th>
                                     <th>Doctoral</th>
-                                    <th>Total Enrolment</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

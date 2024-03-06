@@ -163,9 +163,9 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                     <td>{{$budget->campus->business_school->name}}</td>
                                     <td>{{$budget->campus->location}}</td>
                                     <td>{{$budget->year}}</td>
-                                    <td>{{$budget->uni_budget}}</td>
-                                    <td>{{$budget->uni_proposed_budget}}</td>
-                                    <td>{{$budget->budget_receive}}</td>
+                                    <td>{{number_format($budget->uni_budget)}}</td>
+                                    <td>{{number_format($budget->uni_proposed_budget)}}</td>
+                                    <td>{{number_format($budget->budget_receive)}}</td>
                                     <td>{{$budget->budget_type}}</td>
                                     <td><i class="badge {{$budget->status == 'active'?'bg-green':'bg-red'}}">{{$budget->status == 'active'?'Active':'Inactive'}}</i></td>
                                <td><i class="fa fa-trash text-info delete" data-id="{{$budget->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$budget->id}}","year":"{{$budget->year}}","uni_budget":"{{$budget->uni_budget}}","uni_proposed_budget":"{{$budget->uni_proposed_budget}}","budget_receive":"{{$budget->budget_receive}}","budget_type":"{{$budget->budget_type}}", "status":"{{$budget->status}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>

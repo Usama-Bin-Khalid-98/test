@@ -6,10 +6,6 @@
                                     <th >Year <sup>4</sup></th>
                                     <th style="text-align: center;" colspan="3">Enrollment in all study programs</th>
 
-                                    <th>Total annual enrollment<sup>5</sup>
-                                    A+B+C
-                                    </th>
-
                                 </thead>
                                  <tbody>
                                     <tr>
@@ -23,7 +19,6 @@
                                         <td>Doctoral programs
 (C)
 </td>
-                                        <td></td>
 
 
                                     </tr>
@@ -42,19 +37,22 @@
                                         <td>{{$data->bs_level}}</td>
                                         <td>{{$data->ms_level}}</td>
                                          <td>{{$data->phd_level}}</td>
-                                        <td>{{$data->total_students}}</td>
-
 
                                     </tr>
 
                                    @endforeach
                                 </tbody>
                                 <tfoot>
+                                    <tr>
                                     <th>Total</th>
                                     <th>{{$pa}}</th>
                                     <th>{{$pb}}</th>
                                     <th>{{$pc}}</th>
-                                    <th>{{$pTotal}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Grand Total</th>
+                                        <th>{{$pTotal}}</th>
+                                    </tr>
                                 </tfoot>
 
 
