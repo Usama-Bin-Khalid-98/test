@@ -88,12 +88,17 @@ class ScopeController extends Controller
                 return response()->json(['error' => 'You have reached the limit for the number of programs with the invoice amount: Rs. '. $slip->amount], 405);
             }
 
-            $dateDifference = $this->dateDifference($request->date_program, date('Y-m-d'), '%y.%m');
-            if($request->level_id == 1 && $dateDifference < 3.5){
-                return response()->json(['error' => 'Graduated should be greater then 3.5 years.'], 422);
+            $dateDifferenceYear = $this->dateDifference($request->date_program, date('Y-m-d'), '%y');
+            $dateDifferenceMonth = $this->dateDifference($request->date_program, date('Y-m-d'), '%m');
+            if($request->level_id == 1){
+                if ($dateDifferenceYear < 3 || ($dateDifferenceYear == 3 && $dateDifferenceMonth < 6)){
+                    return response()->json(['error' => 'Graduated should be greater then 3.5 years.'], 422);
+                }
             }
-            elseif($request->level_id == 2 && $dateDifference < 5.5){
-                return response()->json(['error' => 'Under-graduated should be greater then 5.5 years.'], 422);
+            elseif($request->level_id == 2){
+                if ($dateDifferenceYear < 5 || ($dateDifferenceYear == 5 && $dateDifferenceMonth < 6)){
+                    return response()->json(['error' => 'Under-graduated should be greater then 5.5 years.'], 422);
+                }
             }
            // dd($dateDifference);
 
