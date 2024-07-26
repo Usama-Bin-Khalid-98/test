@@ -37,6 +37,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Common\AcademyLevel;
 use App\Models\Common\AcademyType;
+use App\Models\Common\Campus;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Illuminate\Support\Facades\Storage;
@@ -224,6 +225,11 @@ class ConfigController extends Controller
                 $this->TableRows =AcademyType::all();
                 break;
             }
+            case 'campuses';
+            {
+                $this->TableRows = Campus::all();
+                break;
+            }
         }
 
 
@@ -231,10 +237,11 @@ class ConfigController extends Controller
         $counter = $this->counter();
         $departments = Department::all();
         $publication_categories = PublicationCategory::all();
+        $business_schools = BusinessSchool::all();
         //dd($counter);
         $TableName = ucwords(str_replace('_',' ', $table));
 //        dd();
-        return view('config', compact('TableRows', 'TableName', 'counter', 'departments', 'publication_categories'));
+        return view('config', compact('TableRows', 'TableName', 'counter', 'departments', 'publication_categories', 'business_schools'));
     }
 
     public function counter()
@@ -336,6 +343,7 @@ class ConfigController extends Controller
 
         $counter['AcademyLevel'] = AcademyLevel::all()->count();
         $counter['AcademyType'] = AcademyType::all()->count();
+        $counter['campuses'] = Campus::all()->count();
 
         return $counter;
     }
@@ -557,6 +565,15 @@ class ConfigController extends Controller
                 return response()->json(['success' => 'Record inserted successfully.']);
                 break;
             }
+            case 'campuses';
+            {
+                $data = $request->all();
+                $data['location'] = $data['name'];
+                unset($data['name']);
+                $this->TableRows = Campus::create($data);
+                return response()->json(['success' => 'Record inserted successfully.']);
+                break;
+            }
         }
 
 
@@ -760,6 +777,15 @@ class ConfigController extends Controller
             case 'teaching_methods':
             {
                 $this->TableRows =TeachingMethod::find($id)->update($request->all());
+                return response()->json(['success' => 'Record updated successfully.']);
+                break;
+            }
+            case 'campuses':
+            {
+                $data = $request->all();
+                $data['location'] = $data['name'];
+                unset($data['name']);
+                $this->TableRows = Campus::find($id)->update($data);
                 return response()->json(['success' => 'Record updated successfully.']);
                 break;
             }
@@ -972,6 +998,12 @@ class ConfigController extends Controller
              case 'teaching_methods':
             {
                 $this->TableRows  =TeachingMethod::find($request->id)->delete();
+                return response()->json(['success' => 'Record deleted successfully.']);
+                break;
+            }
+            case 'campuses':
+            {
+                $this->TableRows = Campus::find($request->id)->delete();
                 return response()->json(['success' => 'Record deleted successfully.']);
                 break;
             }

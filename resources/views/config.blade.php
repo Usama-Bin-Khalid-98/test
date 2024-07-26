@@ -97,6 +97,12 @@
                     </span>
                     </li>
                     <li class="list-group-item">
+                        <a href="{{url('config/campuses')}}" class="text-purple"><b>Campuses</b> </a>
+                        <span class="pull-right-container">
+                        <span class="label label-success pull-right">{{$counter['campuses']}}</span>
+                    </span>
+                    </li>
+                    <li class="list-group-item">
                         <a href="{{url('config/designations')}}" class="text-purple"><b>Designations</b> </a>
                         <span class="pull-right-container">
                         <span class="label label-success pull-right">{{$counter['Designation']}}</span>
@@ -286,6 +292,9 @@
                                     <th>Publication Category</th>
                                     @endif
                                     <th>Name</th>
+                                    @if(request()->is('config/campuses'))
+                                    <th>Business School</th>
+                                    @endif
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -300,9 +309,12 @@
                                     @if(request()->is('config/publication_types'))
                                     <td>{{$row->publication_category->name}}</td>
                                     @endif
-                                    <td>{{$row->name}}</td>
+                                    <td>{{$row->name?? $row->location}}</td>
+                                    @if(request()->is('config/campuses'))
+                                    <td>{{$row->business_school->name}}</td>
+                                    @endif
                                     <td><i class="badge {{$row->status == 'active'?'bg-green':'bg-red'}}">{{$row->status == 'active'?'Active':'Inactive'}}</i></td>
-                               <td><i class="fa fa-trash text-info delete" data-id="{{$row->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$row->id}}","name":"{{$row->name}}","status":"{{$row->status}}","department_id":"{{@$row->department_id}}","publication_category_id":"{{@$row->publication_category_id}}"}' data-toggle="modal" data-target="#edit-modal"></i></td>
+                               <td><i class="fa fa-trash text-info delete" data-id="{{$row->id}}"></i> | <i class="fa fa-pencil text-blue edit" data-row='{"id":"{{$row->id}}","name":"{{$row->name?? $row->location}}","status":"{{$row->status}}","department_id":"{{@$row->department_id}}","publication_category_id":"{{@$row->publication_category_id}}", "business_school_id": {{@$row->business_school_id}}}' data-toggle="modal" data-target="#edit-modal"></i></td>
 
                                 </tr>
                                 @endforeach
@@ -352,6 +364,18 @@
                                         <option selected disabled>Select Publication Category</option>
                                         @foreach($publication_categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+                        @if(request()->is('config/campuses'))
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select name="business_school_id" id="business_school_id" class="form-control select2" style="width: 100%;">
+                                        <option selected disabled>Select Business School</option>
+                                        @foreach($business_schools as $business_school)
+                                            <option value="{{$business_school->id}}">{{$business_school->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -410,6 +434,19 @@
                                 </select>
                             </div>
                         </div>
+                        @endif
+                        @if(request()->is('config/campuses'))
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="program">Business School</label>
+                                    <select id="edit_business_school_id" name="business_school_id" class="form-control select2" style="width: 100%;">
+                                        <option value="">Select Busines School</option>
+                                        @foreach($business_schools as $business_school)
+                                            <option value="{{$business_school->id}}" {{$business_school->id==old('business_school')?'selected':''}}>{{$business_school->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         @endif
 
                         <div class="col-md-6">
@@ -506,7 +543,7 @@
             $.ajax({
                 url:'{{request()->route()->parameters['table']}}',
                 type:'POST',
-                data:{name:name, @if(request()->is('config/programs'))department_id: $('#department_id').val()  @endif @if(request()->is('config/publication_types')) publication_category_id: $('#publication_category_id').val()  @endif },
+                data:{name:name, @if(request()->is('config/campuses'))business_school_id: $('#business_school_id').val() @endif @if(request()->is('config/programs'))department_id: $('#department_id').val()  @endif @if(request()->is('config/publication_types')) publication_category_id: $('#publication_category_id').val()  @endif },
                 beforeSend: function(){
                     Notiflix.Loading.Pulse('Processing...');
                 },
@@ -534,6 +571,7 @@
              let data = JSON.parse(JSON.stringify($(this).data('row')));
              $('#edit_department_id').select2().val(data.department_id).trigger('change');
              $('#edit_publication_category_id').select2().val(data.publication_category_id).trigger('change');
+             $('#edit_business_school_id').select2().val(data.business_school_id).trigger('change');
              $('#edit_name').val(data.name);
             $('#edit_id').val(data.id);
             $('input[value='+data.status+']').iCheck('check');
