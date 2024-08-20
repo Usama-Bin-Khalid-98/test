@@ -42,7 +42,7 @@
 
                                    @endforeach
                                 </tbody>
-                                <tfoot>
+                                <!-- <tfoot>
                                     <tr>
                                     <th>Total</th>
                                     <th>{{$pa}}</th>
@@ -53,7 +53,7 @@
                                         <th>Grand Total</th>
                                         <th>{{$pTotal}}</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> -->
 
 
 
