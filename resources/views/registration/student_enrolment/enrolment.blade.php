@@ -125,7 +125,8 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
 
                                 </tr>
                                 @endforeach
-                                <tr style="background-color: grey;color: white;">
+                            </tbody>
+                                <!-- <tr style="background-color: grey;color: white;">
                                     <td style="font-weight: bold;">Total</td>
                                     <td style="font-weight: bold;">{{@$bs}}</td>
                                     <td style="font-weight: bold;">{{@$ms}}</td>
@@ -136,7 +137,6 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                 <tr style="background-color: grey;color: white;">
                                     <td colspan="6" style="font-weight: bold;text-align: center;">Grand Total: {{@$t_students}}</td>
                                 </tr>
-                                </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>Year</th>
@@ -146,7 +146,7 @@ $isActiveSAR = getFirst('App\Models\Sar\SarInvoice' ,['regStatus'=>'SAR','campus
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
-                                </tfoot>
+                                </tfoot>-->
                             </table>
                         </div>
                         <!-- /.box-body -->

@@ -45,19 +45,19 @@
 
                                    @endforeach
                               <tr>
-                                        <td>Total</td>
+                            </tbody>
+                                        <!-- <td>Total</td>
                                         <td>{{$pa}}</td>
                                         <td>{{$pb}}</td>
                                          <td>{{$pc}}</td>
 
 
                                     </tr>
-                                </tbody>
 
                                 <tfoot>
                                     <th class="text-center">Grand Total</th>
                                     <th class="text-center">{{$pTotal}}</th>
-                                </tfoot>
+                                </tfoot> -->
 
 
 
