@@ -40,7 +40,7 @@ class MentoringInvoiceController extends Controller
             $string = preg_replace("/[^0-9\.]/", '', $latest->invoice_no);
             $invoice_no = 'NBEAC-HEC/ MI:'. sprintf('%05d', $string + 1);
         }
-        $fee_amount = DepartmentFee::where('id', 4)->get()->first();
+        $fee_amount = DepartmentFee::where('fee_type_id', 4)->get()->first();
         //dd($invoice_no);
         return view('mentoring.invoices_slip', compact('invoices','departments','invoice_no', 'payment_methods', 'fee_amount'));
     }
