@@ -4,10 +4,12 @@ namespace App\Models\Carriculum;
 
 use App\Models\Common\Program;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MappingPos extends Model
 {
     protected $guarded = [];
+    use SoftDeletes;
 
     public function program() {
         return $this->belongsTo(Program::class);

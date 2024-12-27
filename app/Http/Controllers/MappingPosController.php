@@ -74,6 +74,9 @@ class MappingPosController extends Controller
     public function store(Request $request)
     {
         $userInfo = Auth::user();
+        MappingPos::where('campus_id', $userInfo->campus_id)
+            ->where('department_id', $userInfo->department_id)
+            ->delete();
         foreach ($request->plo_po as $program_id=>$map)
         {
             foreach ($map as $po_key=> $po)
